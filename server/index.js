@@ -210,7 +210,7 @@ app.get('/api/config/all', (req, res) => {
 });
 
 // --- 实时计算 API ---
-app.post('/api/calculate', (req, res) => {
+app.post('/api/calculate', async (req, res) => {
   const assessmentData = req.body;
 
   try {
@@ -253,15 +253,20 @@ app.post('/api/calculate', (req, res) => {
         [],
         (err, row) => {
           if (err) reject(err);
-          else resolve(row?.total || 10800); // 默认值10800元/月（向后兼容）
+          else resolve(row?.total || 10800); // 默认值10800元/人/月（向后兼容）
         }
       );
     });
-    const travelCost = (assessmentData.travel_months || 0) * (travelCostPerMonth / 10000); // 转换为万元
+    const travelMonths = Number(assessmentData.travel_months || 0);
+    const travelHeadcount = Number(assessmentData.travel_headcount || 0);
+    const travelCost = travelMonths * travelHeadcount * (travelCostPerMonth / 10000); // 转换为万元：月数 × 人数 × (元/人/月 ÷ 10000)
 
-    // 3.2 维护成本（待配置化，当前使用硬编码）
-    const maintenanceWorkload = (assessmentData.maintenance_months || 0) * (assessmentData.maintenance_headcount || 0) * 21.5;
-    const maintenanceCost = maintenanceWorkload * 0.16;
+    // 3.2 维护成本
+    const maintenanceWorkload = Number(assessmentData.maintenance_months || 0)
+      * Number(assessmentData.maintenance_headcount || 0)
+      * 21.5;
+    const maintenanceDailyCost = Number(assessmentData.maintenance_daily_cost || 1600);
+    const maintenanceCost = maintenanceWorkload * (maintenanceDailyCost / 10000);
 
     // 3.3 风险成本
     const riskCost = (assessmentData.risk_items || []).reduce((sum, item) => sum + Number(item.cost || 0), 0);
@@ -288,7 +293,7 @@ app.post('/api/calculate', (req, res) => {
 // --- 项目管理 API ---
 
 // POST: 创建一个新项目
-app.post('/api/projects', (req, res) => {
+app.post('/api/projects', async (req, res) => {
   const { name, description, is_template, assessmentData } = req.body;
 
   // --- 在后端重新执行完整的计算逻辑，以确保数据一致性 ---
@@ -320,14 +325,19 @@ app.post('/api/projects', (req, res) => {
         [],
         (err, row) => {
           if (err) reject(err);
-          else resolve(row?.total || 10800); // 默认值10800元/月（向后兼容）
+          else resolve(row?.total || 10800); // 默认值10800元/人/月（向后兼容）
         }
       );
     });
-    const travelCost = (assessmentData.travel_months || 0) * (travelCostPerMonth / 10000); // 转换为万元
+    const travelMonths = Number(assessmentData.travel_months || 0);
+    const travelHeadcount = Number(assessmentData.travel_headcount || 0);
+    const travelCost = travelMonths * travelHeadcount * (travelCostPerMonth / 10000); // 转换为万元：月数 × 人数 × (元/人/月 ÷ 10000)
 
-    const maintenanceWorkload = (assessmentData.maintenance_months || 0) * (assessmentData.maintenance_headcount || 0) * 21.5;
-    const maintenanceCost = maintenanceWorkload * 0.16;
+    const maintenanceWorkload = Number(assessmentData.maintenance_months || 0)
+      * Number(assessmentData.maintenance_headcount || 0)
+      * 21.5;
+    const maintenanceDailyCost = Number(assessmentData.maintenance_daily_cost || 1600);
+    const maintenanceCost = maintenanceWorkload * (maintenanceDailyCost / 10000);
     const riskCost = (assessmentData.risk_items || []).reduce((sum, item) => sum + Number(item.cost || 0), 0);
 
     const totalExactCost = dev.totalCost + integration.totalCost + travelCost + maintenanceCost + riskCost;

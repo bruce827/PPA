@@ -102,8 +102,10 @@ const handleCalculate = async () => {
   
   // 步骤3: 其他成本
   travel_months: 2,              // 差旅月数
+  travel_headcount: 2,           // 每月差旅人数（新增）
   maintenance_months: 12,        // 运维月数
   maintenance_headcount: 2,      // 运维每月投入人数
+  maintenance_daily_cost: 1600,  // 运维人员日成本（元/天，可配置，默认1600）
   risk_items: [                  // 风险成本列表
     { id: 1, content: "风险内容", cost: 5 },
     ...
@@ -327,52 +329,70 @@ const integration = calculateWorkloadCost(
 #### 3.4.1 差旅成本
 
 ```javascript
-const travelCost = (assessmentData.travel_months || 0) * 1.08;
+// 从配置表汇总所有差旅成本项（元/人/月）
+const travelCostPerMonth = await new Promise((resolve, reject) => {
+  db.get('SELECT SUM(cost_per_month) as total FROM config_travel_costs WHERE is_active = 1', [], (err, row) => {
+    if (err) reject(err); else resolve(row?.total || 10800); // 默认10800元/人/月
+  });
+});
+
+// 差旅成本（万元） = 差旅月数 × 每月差旅人数 × (每人每月差旅费用 ÷ 10000)
+const travelCost = (assessmentData.travel_months || 0)
+  * (assessmentData.travel_headcount || 0)
+  * (travelCostPerMonth / 10000);
 ```
 
-**公式**:
+**公式**:  
 $$
-\text{差旅成本} = \text{差旅月数} \times 1.08 \text{ (万元/月)}
+	ext{差旅成本(万元)} = \text{差旅月数} \times \text{每月差旅人数} \times \frac{\text{每人每月差旅费用(元/人/月)}}{10000}
 $$
 
 **说明**:
-- 固定单价: 1.08万元/月 (可配置化改进)
-- 示例: 差旅2个月 → 成本 = 2.16万元
+- 每人每月差旅费用来源：`config_travel_costs` 表所有启用项之和 (市内通勤+住宿+餐补+出差补助 = 10800元/人/月)
+- 增加了差旅人数维度，更贴合真实场景
+- 单位换算：元 → 万元（除以10000）
 
-**改进建议**:
-- 当前单价硬编码，应从 `config_travel_costs` 表读取
-- 支持多项差旅成本配置
+**示例**:
+```
+差旅月数 = 3 个月
+差旅人数 = 2 人
+每人每月差旅费用合计 = 10800 元/人/月
+差旅成本 = 3 × 2 × (10800 / 10000) = 6.48 万元 → 四舍五入 = 6 万元 (展示层取整)
+```
 
 #### 3.4.2 运维成本
 
 ```javascript
-const maintenanceWorkload = 
-  (assessmentData.maintenance_months || 0) 
-  * (assessmentData.maintenance_headcount || 0) 
-  * 21.5;
+// 运维工作量（人天）
+const maintenanceWorkload = (assessmentData.maintenance_months || 0)
+  * (assessmentData.maintenance_headcount || 0)
+  * 21.5; // 平均每月工作日
 
-const maintenanceCost = maintenanceWorkload * 0.16;
+// 运维人员每日成本（元/天，前端表单填写，默认1600）
+const maintenanceDailyCost = assessmentData.maintenance_daily_cost || 1600;
+
+// 运维成本（万元） = 运维工作量 × (每日成本 ÷ 10000)
+const maintenanceCost = maintenanceWorkload * (maintenanceDailyCost / 10000);
 ```
 
 **公式**:
-
 $$
-\text{运维工作量} = \text{运维月数} \times \text{投入人数} \times 21.5 \text{ (天/月)}
+	ext{运维工作量(人天)} = \text{运维月数} \times \text{平均每月运维人数} \times 21.5
 $$
-
 $$
-\text{运维成本} = \text{运维工作量} \times 0.16 \text{ (万元/天)}
+	ext{运维成本(万元)} = \text{运维工作量} \times \frac{\text{运维人员每日成本(元/天)}}{10000}
 $$
 
 **说明**:
-- **21.5**: 每月平均工作日数 (行业标准)
-- **0.16**: 运维人员平均日单价 (万元)
+- 运维人员每日成本由用户在表单中填写，默认 1600 元/天（即 0.16 万元/天）
+- 将原硬编码 0.16 替换为可配置变量 `maintenance_daily_cost`
+- 保留 21.5 作为行业标准月工作日基准
 
 **示例**:
 ```
-运维12个月，每月2人
+运维 12 个月，每月 2 人，每日成本 1600 元
 工作量 = 12 × 2 × 21.5 = 516 人天
-成本 = 516 × 0.16 = 82.56 万元
+运维成本 = 516 × (1600 / 10000) = 516 × 0.16 = 82.56 万元 → 展示取整 83 万元
 ```
 
 #### 3.4.3 风险成本
@@ -528,9 +548,9 @@ res.json({ data: result });
 
 #### **第4步: 其他成本**
 ```
-差旅成本 = 2 × 1.08 = 2.16万 → 取整为 2万
+差旅成本 = 2(月) × 2(人) × (10800 ÷ 10000) = 4.32万 → 取整为 4万
 运维工作量 = 12 × 2 × 21.5 = 516人天
-运维成本 = 516 × 0.16 = 82.56万 → 取整为 83万
+运维成本 = 516 × (1600 ÷ 10000) = 82.56万 → 取整为 83万
 风险成本 = 5 + 3 = 8万
 ```
 
@@ -850,9 +870,9 @@ CREATE TABLE projects (
 | 角色成本 | `Σ(天数 × 日单价)` |
 | 工作量 | `总天数 × 交付系数` |
 | 单项成本 | `角色成本 × 交付系数 × 评分因子 × 范围系数 × 技术系数` |
-| 差旅成本 | `月数 × 1.08万` |
-| 运维工作量 | `月数 × 人数 × 21.5` |
-| 运维成本 | `工作量 × 0.16万` |
+| 差旅成本 | `差旅月数 × 差旅人数 × (每人每月差旅费用 ÷ 10000)` |
+| 运维工作量 | `运维月数 × 平均每月运维人数 × 21.5` |
+| 运维成本 | `运维工作量 × (运维每日成本 ÷ 10000)` |
 | 风险成本 | `Σ(风险项金额)` |
 | 报价总计 | `软件研发 + 系统对接 + 差旅 + 运维 + 风险` |
 
