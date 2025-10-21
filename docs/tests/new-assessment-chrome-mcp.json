@@ -1,0 +1,184 @@
+{
+  "description": "端到端验证“新建评估”四步向导可以成功创建项目并生成报价总览",
+  "tags": ["chrome-devtools-mcp", "e2e", "assessment"],
+  "preconditions": [
+    "前端运行在 http://localhost:8000",
+    "后端运行在 http://localhost:3001",
+    "参数配置中至少存在一个角色、一个差旅成本项以及一个风险评估项（可使用 /docs/csv 下的数据初始化）"
+  ],
+  "teardown": [
+    "调用 browser_evaluate_script 删除本次测试创建的项目（根据项目名称模糊匹配删除）"
+  ],
+  "steps": [
+    {
+      "tool": "browser_new_tab",
+      "params": {}
+    },
+    {
+      "tool": "browser_navigate",
+      "params": {
+        "url": "http://localhost:8000/assessment/new"
+      }
+    },
+    {
+      "tool": "browser_wait_for_selector",
+      "params": {
+        "selector": "main .ant-steps"
+      }
+    },
+    {
+      "tool": "browser_assert_text",
+      "params": {
+        "selector": "main .ant-steps",
+        "expected": "风险评分"
+      }
+    },
+    {
+      "tool": "browser_evaluate_script",
+      "params": {
+        "script": "const form = document.querySelector('form'); form.scrollIntoView({behavior: 'instant', block: 'center'});"
+      }
+    },
+    {
+      "tool": "browser_select_option",
+      "params": {
+        "selector": "form .ant-select",
+        "optionText": "技术风险"
+      }
+    },
+    {
+      "tool": "browser_assert_text",
+      "params": {
+        "selector": "[data-testid=\"risk-total-score\"]",
+        "expected": "分"
+      }
+    },
+    {
+      "tool": "browser_click",
+      "params": {
+        "selector": "button.ant-btn-primary span:has-text('下一步')"
+      }
+    },
+    {
+      "tool": "browser_wait_for_selector",
+      "params": {
+        "selector": "#new-function-workload button.ant-btn-dashed"
+      }
+    },
+    {
+      "tool": "browser_click",
+      "params": {
+        "selector": "#new-function-workload button.ant-btn-dashed"
+      }
+    },
+    {
+      "tool": "browser_wait_for_selector",
+      "params": {
+        "selector": "#new-function-workload input[placeholder='一级模块']"
+      }
+    },
+    {
+      "tool": "browser_type",
+      "params": {
+        "selector": "#new-function-workload input[placeholder='一级模块']",
+        "text": "自动化测试模块"
+      }
+    },
+    {
+      "tool": "browser_type",
+      "params": {
+        "selector": "#new-function-workload input[placeholder='功能说明']",
+        "text": "Chrome MCP 自动创建"
+      }
+    },
+    {
+      "tool": "browser_type",
+      "params": {
+        "selector": "#new-function-workload input[aria-label='开发工程师']",
+        "text": "5"
+      }
+    },
+    {
+      "tool": "browser_click",
+      "params": {
+        "selector": "button.ant-btn-primary span:has-text('下一步')"
+      }
+    },
+    {
+      "tool": "browser_wait_for_selector",
+      "params": {
+        "selector": "input[placeholder='差旅月数']"
+      }
+    },
+    {
+      "tool": "browser_type",
+      "params": {
+        "selector": "input[placeholder='差旅月数']",
+        "text": "1"
+      }
+    },
+    {
+      "tool": "browser_type",
+      "params": {
+        "selector": "input[placeholder='运维月数']",
+        "text": "6"
+      }
+    },
+    {
+      "tool": "browser_click",
+      "params": {
+        "selector": "button.ant-btn-primary span:has-text('下一步')"
+      }
+    },
+    {
+      "tool": "browser_wait_for_selector",
+      "params": {
+        "selector": "button span:has-text('计算最新报价')"
+      }
+    },
+    {
+      "tool": "browser_click",
+      "params": {
+        "selector": "button span:has-text('计算最新报价')"
+      }
+    },
+    {
+      "tool": "browser_wait_for_selector",
+      "params": {
+        "selector": "[data-testid=\"summary-total\"]"
+      }
+    },
+    {
+      "tool": "browser_type",
+      "params": {
+        "selector": "input[placeholder='请输入项目名称']",
+        "text": "自动化评估-"
+      }
+    },
+    {
+      "tool": "browser_evaluate_script",
+      "params": {
+        "script": "const input = document.querySelector('input[placeholder=\\'请输入项目名称\\']'); input.value += Date.now(); input.dispatchEvent(new Event('change', { bubbles: true }));"
+      }
+    },
+    {
+      "tool": "browser_click",
+      "params": {
+        "selector": "button.ant-btn-primary span:has-text('提交')"
+      }
+    },
+    {
+      "tool": "browser_wait_for_selector",
+      "params": {
+        "selector": ".ant-result-success"
+      }
+    },
+    {
+      "tool": "browser_assert_text",
+      "params": {
+        "selector": ".ant-result-success .ant-result-title",
+        "expected": "提交成功"
+      }
+    }
+  ]
+}
