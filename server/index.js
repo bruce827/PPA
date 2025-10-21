@@ -245,10 +245,25 @@ app.post('/api/calculate', (req, res) => {
     const dev = calculateWorkloadCost(assessmentData.development_workload || [], assessmentData.roles || []);
     const integration = calculateWorkloadCost(assessmentData.integration_workload || [], assessmentData.roles || []);
 
-    // 3. 计算其他成本 (此处为简化版，实际应从配置读取)
-    const travelCost = (assessmentData.travel_months || 0) * 1.08; // 假设每月1.08万
+    // 3. 计算其他成本
+    // 3.1 差旅成本：从配置表查询所有差旅成本项的总和（元/人/月）
+    const travelCostPerMonth = await new Promise((resolve, reject) => {
+      db.get(
+        'SELECT SUM(cost_per_month) as total FROM config_travel_costs WHERE is_active = 1',
+        [],
+        (err, row) => {
+          if (err) reject(err);
+          else resolve(row?.total || 10800); // 默认值10800元/月（向后兼容）
+        }
+      );
+    });
+    const travelCost = (assessmentData.travel_months || 0) * (travelCostPerMonth / 10000); // 转换为万元
+
+    // 3.2 维护成本（待配置化，当前使用硬编码）
     const maintenanceWorkload = (assessmentData.maintenance_months || 0) * (assessmentData.maintenance_headcount || 0) * 21.5;
     const maintenanceCost = maintenanceWorkload * 0.16;
+
+    // 3.3 风险成本
     const riskCost = (assessmentData.risk_items || []).reduce((sum, item) => sum + Number(item.cost || 0), 0);
 
     // 4. 汇总
@@ -298,7 +313,19 @@ app.post('/api/projects', (req, res) => {
     const dev = calculateWorkloadCost(assessmentData.development_workload || [], assessmentData.roles || []);
     const integration = calculateWorkloadCost(assessmentData.integration_workload || [], assessmentData.roles || []);
 
-    const travelCost = (assessmentData.travel_months || 0) * 1.08;
+    // 差旅成本：从配置表查询所有差旅成本项的总和（元/人/月）
+    const travelCostPerMonth = await new Promise((resolve, reject) => {
+      db.get(
+        'SELECT SUM(cost_per_month) as total FROM config_travel_costs WHERE is_active = 1',
+        [],
+        (err, row) => {
+          if (err) reject(err);
+          else resolve(row?.total || 10800); // 默认值10800元/月（向后兼容）
+        }
+      );
+    });
+    const travelCost = (assessmentData.travel_months || 0) * (travelCostPerMonth / 10000); // 转换为万元
+
     const maintenanceWorkload = (assessmentData.maintenance_months || 0) * (assessmentData.maintenance_headcount || 0) * 21.5;
     const maintenanceCost = maintenanceWorkload * 0.16;
     const riskCost = (assessmentData.risk_items || []).reduce((sum, item) => sum + Number(item.cost || 0), 0);
