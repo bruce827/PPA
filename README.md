@@ -27,6 +27,14 @@ cd server
 # 安装依赖
 npm install
 
+# 初始化数据库表结构
+node init-db.js
+
+# 初始化基础数据（角色、差旅成本等）
+cd seed-data
+node seed-all.js
+cd ..
+
 # 启动后端服务器 (运行于 http://localhost:3001)
 node index.js
 ```

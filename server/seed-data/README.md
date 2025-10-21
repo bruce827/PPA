@@ -4,6 +4,17 @@
 
 本目录包含用于初始化系统基础数据的脚本。
 
+## 🚀 快速开始
+
+### 一键初始化所有数据
+
+```bash
+cd server/seed-data
+node seed-all.js
+```
+
+这将按顺序运行所有数据初始化脚本，包括角色、差旅成本和风险评估项。
+
 ## 可用脚本
 
 ### 1. seed-roles.js - 角色数据初始化
@@ -23,7 +34,7 @@
 
 **运行方式：**
 ```bash
-cd server
+cd server/seed-data
 node seed-roles.js
 ```
 
@@ -38,7 +49,7 @@ node seed-roles.js
 
 **运行方式：**
 ```bash
-cd server
+cd server/seed-data
 node seed-risk-items.js
 ```
 
@@ -55,7 +66,7 @@ node seed-risk-items.js
 
 **运行方式：**
 ```bash
-cd server
+cd server/seed-data
 node seed-travel-costs.js
 ```
 
@@ -68,11 +79,13 @@ node seed-travel-costs.js
 
 1. 首先运行数据库初始化脚本：
    ```bash
+   cd server
    node init-db.js
    ```
 
 2. 然后运行各个数据初始化脚本：
    ```bash
+   cd seed-data
    node seed-roles.js
    node seed-risk-items.js
    node seed-travel-costs.js
@@ -80,6 +93,7 @@ node seed-travel-costs.js
 
 3. 启动后端服务：
    ```bash
+   cd ..
    node index.js
    ```
 

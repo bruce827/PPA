@@ -5,8 +5,8 @@
 
 const sqlite3 = require('sqlite3').verbose();
 
-// 连接到SQLite数据库
-const db = new sqlite3.Database('./ppa.db', (err) => {
+// 连接到SQLite数据库（数据库文件在上级目录）
+const db = new sqlite3.Database('../ppa.db', (err) => {
   if (err) {
     console.error('Error opening database', err.message);
     process.exit(1);
