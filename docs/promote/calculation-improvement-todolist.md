@@ -1,5 +1,7 @@
 # 计算逻辑改进待办清单
 
+<!-- markdownlint-disable -->
+
 **创建日期**: 2025-10-21  
 **相关文档**: [calculation-logic-spec.md](./calculation-logic-spec.md)  
 **优先级定义**: 🔴 高优先级 | 🟡 中优先级 | 🟢 低优先级
@@ -11,10 +13,10 @@
 | 编号 | 问题 | 优先级 | 状态 | 预估工作量 |
 |------|------|--------|------|-----------|
 | TODO-1 | 差旅成本硬编码 | 🟡 中 | ✅ 已完成 | 2小时 → 1小时 |
-| TODO-2 | 运维成本单价硬编码 | 🟡 中 | ⏸️ 待讨论 | 1小时 |
-| TODO-3 | 评分因子计算逻辑优化 | 🔴 高 | ⏸️ 待讨论 | 3小时 |
-| TODO-4 | 四舍五入时机优化 | 🟢 低 | ⏸️ 待讨论 | 1小时 |
-| TODO-5 | 工作量数据返回前端 | 🟡 中 | ⏸️ 待讨论 | 2小时 |
+| TODO-2 | 运维成本单价硬编码 | 🟡 中 | ✅ 已完成 | 1小时 |
+| TODO-3 | 评分因子计算逻辑优化 | 🔴 高 | ✅ 已完成 | 3小时 → 4小时 |
+| TODO-4 | 四舍五入时机优化 | 🟢 低 | ✅ 已完成 | 1小时 → 1.5小时 |
+| TODO-5 | 工作量数据返回前端 | 🟡 中 | ✅ 已完成 | 2小时 → 3小时 |
 
 ---
 
@@ -124,175 +126,104 @@ const travelCost = (assessmentData.travel_months || 0) * (travelCostPerMonth / 1
 
 ## TODO-2: 运维成本单价配置化
 
-### 当前问题
+### 原始问题（TODO-2）
+
 ```javascript
 // server/index.js - POST /api/calculate
 const maintenanceCost = maintenanceWorkload * 0.16;  // ❌ 硬编码
 ```
 
 **问题分析**:
+
 - 运维人员日单价 `0.16万` 硬编码
 - 实际运维单价可能随角色/经验变化
 
-### 改进方案
+### 实施方案（TODO-2）
 
-#### 方案A: 统一运维单价 (简单)
-添加一个系统级配置项
+✅ **已完成：读取表单字段 + 默认配置值**
 
-**实现**:
-```javascript
-// 方式1: 新增配置表 config_system_params
-CREATE TABLE config_system_params (
-  param_key TEXT PRIMARY KEY,
-  param_value REAL,
-  description TEXT
-);
+- 前端在其他成本页新增 `maintenance_daily_cost` 字段，默认 1600 元/人天，可由用户覆盖
+- 评估计算请求透传该字段，后端 `calculateProjectCost` 使用 `assessmentData.maintenance_daily_cost`
+- 若未填写，回退到 `DEFAULTS.MAINTENANCE_DAILY_COST`（1600）
+- 维护成本计算公式：`maintenanceWorkload * (maintenanceDailyCost / 10000)`，以万元计费
 
-INSERT INTO config_system_params VALUES 
-  ('maintenance_unit_price', 1600, '运维人员日单价（元）');
+### 实施记录（已完成）
 
-// 方式2: 使用现有 config_roles 表
-// 假设有"运维工程师"角色，直接取其单价
-```
+**完成时间**: 2025-10-22  
+**修改文件**:
 
-#### 方案B: 按角色计算运维成本 (复杂)
-前端选择运维人员角色组成
+1. `frontend/ppa_frontend/src/pages/Assessment/components/OtherCostsForm.tsx`
+2. `frontend/ppa_frontend/src/pages/Assessment/New.tsx`
+3. `server/services/calculationService.js`
+4. `server/utils/constants.js`
 
-**优点**:
-- 更精确反映实际成本
-- 复用角色配置
+**验证要点**:
 
-**缺点**:
-- 前端表单复杂化
-- 用户填写成本高
-
-**数据结构**:
-```typescript
-type AssessmentData = {
-  // 原: maintenance_headcount: number;
-  maintenance_roles: Array<{
-    role_name: string;
-    headcount: number;
-  }>;
-}
-```
-
-### 讨论点
-1. **运维团队构成**：实际运维是否有不同角色（如初级/高级）？
-2. **简化 vs 精确**：是否值得为精确性牺牲易用性？
-3. **历史数据兼容**：已保存项目如何迁移？
-
-### 推荐方案
-🎯 **建议采用方案A（统一单价）+ 新增配置表**
-- 创建 `config_system_params` 存储系统级参数
-- 支持在配置页面修改
-- 保持前端表单简洁
+- 无硬编码 `0.16`，统一走用户输入或默认常量
+- 后端返回的维护成本随输入单价变化而变化
+- 默认值 1600 元保证历史数据向后兼容
 
 ---
 
-## TODO-3: 评分因子计算逻辑优化 ⚠️ 重要
+## TODO-3: 评分因子计算逻辑优化 ✅ 已上线
 
-### 当前问题
-```javascript
-const ratingFactor = riskScore / 100;
-```
+### 背景回顾（TODO-3）
+旧实现直接使用 `riskScore / 100` 作为系数，导致风险越低报价越低（60 分项目仅按 0.6 倍结算），与“风险越高利润越高”的业务预期相反。
+ 
+### 最终算法（2025-10-22）
 
-**业务逻辑问题**:
-```
-风险总分 = 60  → 系数 = 0.6 → 报价降低 40% ❌ 不合理
-风险总分 = 100 → 系数 = 1.0 → 基准报价
-风险总分 = 150 → 系数 = 1.5 → 报价提高 50%
-```
+1. **风险得分**：汇总 `assessmentData.risk_scores` 中各风险项的选项分值。
+2. **动态上限**：解析 `config_risk_items.options_json`，按每个风险项的最高可选分值求和；如配置为空则回退到默认 100 分。
+3. **得分占比**：`ratio = clamp(riskScore / maxScore, 0, 1.2)`，最多按 120% 参与计算。
+4. **分段线性映射**（与前端 Tooltip 描述一致）：
+  - `ratio ≤ 0.8` → 系数 `1.0`（基准价）
+  - `0.8 < ratio ≤ 1.0` → 在线性区间内从 `1.0` 递增到 `1.2`
+  - `1.0 < ratio ≤ 1.2` → 在线性区间内从 `1.2` 递增到封顶 `1.5`
+  - `ratio > 1.2` → 直接取封顶 `1.5`
 
-**问题本质**:
-- 低风险项目报价反而降低，违反常识
-- 应该是：低风险 = 基准报价，高风险 = 报价上浮
+#### 系数映射表
 
-### 改进方案
+| 风险占比（ratio） | 报价系数 | 报价调整 |
+|------------------|----------|----------|
+| ≤ 80%            | 1.00     | 基准价 |
+| 90%              | ≈1.10    | +10% |
+| 100%             | 1.20     | +20% |
+| 110%             | ≈1.35    | +35% |
+| ≥ 120%           | 1.50     | +50%（封顶） |
 
-#### 方案A: 分段线性映射
-```javascript
-const ratingFactor = 
-  riskScore < 80  ? 1.0  :  // 低风险：基准价
-  riskScore < 100 ? 1.0 + (riskScore - 80) * 0.01  :  // 80-100: 1.0-1.2
-  riskScore < 120 ? 1.2 + (riskScore - 100) * 0.015 :  // 100-120: 1.2-1.5
-                    1.5;  // 高风险：封顶1.5倍
-```
+风险等级仍按照占比阈值 40% / 70% 划分“低/中/高风险”，保持与前端展示一致。
 
-**映射关系**:
-| 风险总分 | 系数 | 报价调整 |
-|---------|------|---------|
-| 0-80 | 1.0 | 基准价 |
-| 80 | 1.0 | 基准价 |
-| 90 | 1.1 | +10% |
-| 100 | 1.2 | +20% |
-| 110 | 1.35 | +35% |
-| 120+ | 1.5 | +50% (封顶) |
+### 前后端改动要点（TODO-3）
 
-#### 方案B: 非线性映射（指数）
-```javascript
-const ratingFactor = Math.min(
-  1.5,  // 封顶
-  1.0 + Math.pow((riskScore - 80) / 100, 1.5)
-);
-```
+- **后端计算**：在 `server/utils/rating.js` 中新增 `computeRatingFactor`，供 `server/services/calculationService.js` 调用，并随响应返回 `rating_factor`、`rating_ratio` 与 `risk_max_score`。
+- **前端复用**：新增 `frontend/ppa_frontend/src/utils/rating.ts` 复用同一套解析与分段逻辑，`New.tsx` 的统计卡增加 Tooltip“风险得分占比 xx%（动态阈值）”。
+- **结果展示**：`Overview.tsx` 在报价结果区新增“评分因子”卡片，并通过 Tooltip 说明“当前风险得分合计 N，占配置上限 M%”；详情图标使用 `InfoCircleOutlined`。
 
-**特点**:
-- 风险增长，系数加速增长
-- 更符合风险影响的非线性特征
+### 实施记录（TODO-3）
 
-#### 方案C: 可配置分段
-在配置表中定义分段规则
+**完成时间**: 2025-10-22  
+**主要修改文件**:
 
-```sql
-CREATE TABLE config_rating_rules (
-  id INTEGER PRIMARY KEY,
-  score_min INTEGER,
-  score_max INTEGER,
-  factor_base REAL,
-  factor_increment REAL
-);
+- `server/utils/constants.js`
+- `server/utils/rating.js`
+- `server/services/calculationService.js`
+- `frontend/ppa_frontend/src/utils/rating.ts`
+- `frontend/ppa_frontend/src/pages/Assessment/New.tsx`
+- `frontend/ppa_frontend/src/pages/Assessment/components/Overview.tsx`
+- `frontend/ppa_frontend/src/pages/Assessment/components/RiskScoringForm.tsx`
+- `frontend/ppa_frontend/src/services/assessment/typings.d.ts`
 
--- 示例数据
-INSERT INTO config_rating_rules VALUES
-  (1, 0, 80, 1.0, 0),
-  (2, 80, 100, 1.0, 0.01),
-  (3, 100, 120, 1.2, 0.015),
-  (4, 120, 999, 1.5, 0);
-```
+**验证要点**:
 
-**优点**:
-- 灵活可调整
-- 业务人员可配置
-
-**缺点**:
-- 实现复杂
-- 需要验证配置合法性
-
-### 讨论点
-1. **基准分数定义**：哪个风险总分应该是"正常项目"的基准？
-2. **上浮比例**：高风险项目最多上浮多少合理（50%? 100%?）？
-3. **低风险优惠**：是否给低风险项目打折（如0.9倍）？
-4. **风险分布**：历史项目的风险总分通常在什么范围？
-
-### 推荐方案
-🎯 **建议采用方案A（分段线性）**
-- 逻辑清晰，易于理解和调试
-- 先固定分段规则，积累数据后再考虑方案C
-
-**建议分段** (需要根据业务确认):
-```javascript
-const ratingFactor = 
-  riskScore <= 80  ? 1.0  :    // 低风险项目：基准价
-  riskScore <= 120 ? 1.0 + (riskScore - 80) * 0.0125 :  // 中等风险：1.0-1.5
-                     1.5;       // 高风险项目：封顶1.5倍
-```
+- 不填写风险项时使用默认上限 100 分，系数保持 1.0。
+- 任意风险项配置变化（新增选项/修改分值）会自动推导新的上限并同步到前端。
+- 结果接口额外字段 `rating_factor`、`rating_ratio`、`risk_max_score` 与前端展示一致，Tooltip 文案直观说明系数来源。
 
 ---
 
-## TODO-4: 四舍五入时机优化
+## TODO-4: 四舍五入时机优化 ✅ 已上线
 
-### 当前问题
+### 背景问题
 ```javascript
 // 最后统一取整
 const result = {
@@ -313,201 +244,63 @@ const result = {
 相差 2 万元！
 ```
 
-### 改进方案
+### 改造要点
 
-#### 方案A: 先求和再取整
-```javascript
-const totalExactCost = 
-  dev.totalCost           // 4.83
-  + integration.totalCost  // 1.94
-  + travelCost            // 2.16
-  + maintenanceCost       // 82.56
-  + riskCost;             // 8
+1. **后端计算调整**（2025-10-22）
+   - 引入 `roundToDecimals` 辅助函数，统一将各分项金额保留两位小数，避免浮点误差。
+   - 分项字段（研发/对接/差旅/运维/风险）返回两位小数精度，额外暴露 `total_cost_exact` 用于总额提示。
+   - 总额仍按万元四舍五入（`Math.round(totalExactCost)`），用于对外报价与历史记录。
 
-const result = {
-  software_dev_cost: dev.totalCost.toFixed(2),               // 保留2位小数
-  system_integration_cost: integration.totalCost.toFixed(2),
-  travel_cost: travelCost.toFixed(2),
-  maintenance_cost: maintenanceCost.toFixed(2),
-  risk_cost: riskCost.toFixed(2),
-  total_cost: Math.round(totalExactCost),  // 只有总额取整
-};
-```
+2. **前端展示策略**
+   - `Overview` 页面成本面板统一设置 `precision={2}`，直观展示小数金额。
+   - 报价总计包裹 Tooltip，悬停显示精确总成本（两位小数），兼顾报价沟通与审核需求。
 
-**优点**:
-- 总额准确
-- 明细展示精确
+### 实施记录
+**完成时间**: 2025-10-22  
+**修改文件**:
+- `server/services/calculationService.js`
+- `frontend/ppa_frontend/src/services/assessment/typings.d.ts`
+- `frontend/ppa_frontend/src/pages/Assessment/components/Overview.tsx`
 
-**缺点**:
-- 明细显示小数（如 4.83万元）
-
-#### 方案B: 分项取整后调整总额
-```javascript
-const roundedItems = {
-  software_dev_cost: Math.round(dev.totalCost),
-  system_integration_cost: Math.round(integration.totalCost),
-  travel_cost: Math.round(travelCost),
-  maintenance_cost: Math.round(maintenanceCost),
-  risk_cost: Math.round(riskCost),
-};
-
-// 计算取整误差
-const roundedSum = Object.values(roundedItems).reduce((a, b) => a + b, 0);
-const exactSum = dev.totalCost + integration.totalCost + travelCost + maintenanceCost + riskCost;
-const diff = Math.round(exactSum) - roundedSum;
-
-// 将误差加到最大项上
-const maxKey = Object.keys(roundedItems).reduce((a, b) => 
-  roundedItems[a] > roundedItems[b] ? a : b
-);
-roundedItems[maxKey] += diff;
-```
-
-**优点**:
-- 明细和总额都是整数
-- 总额 = 明细之和
-
-**缺点**:
-- 有一项会"吸收"误差，不够直观
-
-#### 方案C: 保留1位小数
-```javascript
-const result = {
-  software_dev_cost: Math.round(dev.totalCost * 10) / 10,  // 4.8
-  // ... 其他类似
-  total_cost: Math.round(totalExactCost * 10) / 10,
-};
-```
-
-### 讨论点
-1. **UI接受度**：用户能否接受 "4.83万元" 这样的显示？
-2. **精度需求**：财务报价是否需要精确到小数？
-3. **一致性**：总额与明细不一致是否可以接受？
-
-### 推荐方案
-🎯 **建议采用方案A（先求和再取整）**
-- 明细保留2位小数，符合财务习惯
-- 总额取整，方便对外报价
-- 前端显示时可以格式化（如 `4.83` 显示为 `5`，hover显示精确值）
+**验证要点**:
+- 分项金额与数据库导出保持两位小数，避免累加误差。
+- 报价总计 Tooltip 显示与精确总和一致，圆整值用于对外沟通。
+- 历史记录仍存储圆整总额，兼容现有报表与导出逻辑。
 
 ---
 
-## TODO-5: 工作量数据返回前端
+## TODO-5: 工作量数据返回前端 ✅ 已上线
 
-### 当前问题
-```javascript
-// 后端计算了工作量，但未返回
-const dev = calculateWorkloadCost(...);  // 返回 { totalWorkload, totalCost }
-// 只使用了 totalCost，totalWorkload 被丢弃
+### 实施摘要
+- 后端 `calculateProjectCost` 现返回研发/对接/运维三类工作量（人天）及总工作量，并对数据统一取整，确保与报价明细一致。
+- `/api/calculate` 与项目保存流程沿用 `total_workload_days` 字段写入数据库，同时补充模块级字段，兼容旧数据。
+- 前端类型 `API.CalculationResult` 同步扩展，`Overview` 总览页将成本与工作量成对展示，新增「总工作量」高亮指标，便于评估资源投入。
 
-// 前端类型定义中有 total_workload，但实际未使用
-type CalculationResult = {
-  total_cost: number;
-  total_workload: number;  // ❌ 未实现
-};
-```
+### 实施记录
+**完成时间**: 2025-10-22  
+**主要修改文件**:
 
-### 改进方案
+- `server/services/calculationService.js`
+- `frontend/ppa_frontend/src/services/assessment/typings.d.ts`
+- `frontend/ppa_frontend/src/pages/Assessment/components/Overview.tsx`
 
-#### 后端修改
-```javascript
-// server/index.js - POST /api/calculate
-const result = {
-  software_dev_cost: Math.round(dev.totalCost),
-  software_dev_workload: Math.round(dev.totalWorkload),  // ✅ 新增
-  
-  system_integration_cost: Math.round(integration.totalCost),
-  system_integration_workload: Math.round(integration.totalWorkload),  // ✅ 新增
-  
-  travel_cost: Math.round(travelCost),
-  
-  maintenance_cost: Math.round(maintenanceCost),
-  maintenance_workload: Math.round(maintenanceWorkload),  // ✅ 新增
-  
-  risk_cost: Math.round(riskCost),
-  
-  total_cost: Math.round(totalExactCost),
-  total_workload: Math.round(
-    dev.totalWorkload + 
-    integration.totalWorkload + 
-    maintenanceWorkload
-  ),  // ✅ 新增
-};
-```
+**验证要点**:
 
-#### 前端类型定义修改
-```typescript
-// typings.d.ts
-type CalculationResult = {
-  software_dev_cost: number;
-  software_dev_workload: number;  // ✅ 新增
-  
-  system_integration_cost: number;
-  system_integration_workload: number;  // ✅ 新增
-  
-  travel_cost: number;
-  
-  maintenance_cost: number;
-  maintenance_workload: number;  // ✅ 新增
-  
-  risk_cost: number;
-  
-  total_cost: number;
-  total_workload: number;  // ✅ 已存在，现在真正实现
-};
-```
-
-#### 前端展示修改
-```typescript
-// Overview.tsx
-<Descriptions bordered>
-  <Descriptions.Item label="软件研发成本" span={2}>
-    <Statistic value={calculationResult.software_dev_cost} suffix="万元" />
-  </Descriptions.Item>
-  <Descriptions.Item label="研发工作量" span={1}>
-    <Statistic value={calculationResult.software_dev_workload} suffix="人天" />
-  </Descriptions.Item>
-  
-  <Descriptions.Item label="系统对接成本" span={2}>
-    <Statistic value={calculationResult.system_integration_cost} suffix="万元" />
-  </Descriptions.Item>
-  <Descriptions.Item label="对接工作量" span={1}>
-    <Statistic value={calculationResult.system_integration_workload} suffix="人天" />
-  </Descriptions.Item>
-  
-  {/* ... 其他项 */}
-  
-  <Descriptions.Item label="报价总计" span={2}>
-    <Statistic value={calculationResult.total_cost} suffix="万元" valueStyle={{ color: '#cf1322' }} />
-  </Descriptions.Item>
-  <Descriptions.Item label="总工作量" span={1}>
-    <Statistic value={calculationResult.total_workload} suffix="人天" valueStyle={{ color: '#1890ff' }} />
-  </Descriptions.Item>
-</Descriptions>
-```
-
-### 讨论点
-1. **展示位置**：工作量数据是否需要在总览中展示？
-2. **颗粒度**：是否需要更细粒度的工作量（如按角色）？
-3. **用途**：工作量数据主要用于什么场景（报表？资源规划？）？
-
-### 推荐方案
-🎯 **建议实现完整工作量返回**
-- 后端返回所有工作量数据
-- 前端在总览表格中展示
-- 为未来的工作量分析、资源规划做准备
+- 按照不同维度填写工作量并重新计算，前端能准确显示各模块成本与人天。 
+- 保存项目后，历史记录中的 `final_workload_days` 与界面展示一致。 
+- 未填写运维或对接工作量时，对应字段显示为 0 人天，不影响其他部分。
 
 ---
 
 ## 实施建议
 
 ### 阶段1: 高优先级 (1周)
-- [ ] **TODO-3**: 评分因子逻辑优化（需先确认业务规则）
+- [x] **TODO-3**: 评分因子逻辑优化（2025-10-22 上线，动态阈值 + Tooltip 已落地）
 
 ### 阶段2: 中优先级 (1周)
-- [ ] **TODO-1**: 差旅成本配置化
-- [ ] **TODO-2**: 运维成本配置化
-- [ ] **TODO-5**: 工作量数据返回
+- [x] **TODO-1**: 差旅成本配置化
+- [x] **TODO-2**: 运维成本配置化
+- [x] **TODO-5**: 工作量数据返回
 
 ### 阶段3: 低优先级 (按需)
 - [ ] **TODO-4**: 四舍五入优化（可选）
@@ -521,9 +314,9 @@ type CalculationResult = {
 **议题**: 评分因子基准分数确定
 
 **决议**:
-- [ ] 确定基准风险分数（建议80-100分）
-- [ ] 确定最大上浮比例（建议50%）
-- [ ] 确定是否给低风险项目折扣
+- [x] 确定基准风险分数（80% 起步，超 120% 封顶）
+- [x] 确定最大上浮比例（封顶 1.5 倍 ≈ +50%）
+- [ ] 确定是否给低风险项目折扣（暂不折扣，保持 1.0）
 
 ---
 
@@ -542,7 +335,9 @@ type CalculationResult = {
 
 - [计算逻辑技术文档](./calculation-logic-spec.md)
 - [后端代码](../../server/index.js) (line 211-340)
+- [评分系数核心逻辑](../../server/utils/rating.js)
 - [前端组件](../../frontend/ppa_frontend/src/pages/Assessment/components/Overview.tsx)
+- [前端评分工具](../../frontend/ppa_frontend/src/utils/rating.ts)
 - [类型定义](../../frontend/ppa_frontend/src/services/assessment/typings.d.ts)
 
 ---

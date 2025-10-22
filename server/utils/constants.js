@@ -8,6 +8,20 @@ const DEFAULTS = {
   AVERAGE_UNIT_PRICE: 0.16 // 平均单价（万元）
 };
 
+const RISK = {
+  DEFAULT_MAX_SCORE: 100,
+  BASE_THRESHOLD_RATIO: 0.8,
+  MID_THRESHOLD_RATIO: 1.0,
+  PEAK_THRESHOLD_RATIO: 1.2,
+  MID_FACTOR: 1.2,
+  FACTOR_CAP: 1.5,
+  LEVEL_THRESHOLDS: {
+    LOW: 0.4,
+    HIGH: 0.7
+  }
+};
+
 module.exports = {
-  DEFAULTS
+  DEFAULTS,
+  RISK
 };

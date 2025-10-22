@@ -1,5 +1,6 @@
 const configModel = require('../models/configModel');
 const { DEFAULTS } = require('../utils/constants');
+const { computeRatingFactor } = require('../utils/rating');
 
 /**
  * 计算工作量和费用
@@ -8,10 +9,20 @@ const { DEFAULTS } = require('../utils/constants');
  * @param {Number} ratingFactor - 评分因子
  * @returns {Object} { totalWorkload, totalCost }
  */
+const roundToDecimals = (value, decimals = 2) => {
+  const numericValue = Number(value);
+  if (!Number.isFinite(numericValue)) {
+    return 0;
+  }
+  const factor = 10 ** decimals;
+  return Math.round((numericValue + Number.EPSILON) * factor) / factor;
+};
+
 const calculateWorkloadCost = (workloadItems, roles, ratingFactor) => {
   let totalWorkload = 0;
   let totalCost = 0;
   const rolePriceMap = new Map(roles.map(r => [r.role_name, r.unit_price / 10000])); // 转换为万元
+  const normalizedFactor = Number.isFinite(Number(ratingFactor)) ? Number(ratingFactor) : 1;
 
   workloadItems.forEach(item => {
     let itemRoleCost = 0;
@@ -24,7 +35,7 @@ const calculateWorkloadCost = (workloadItems, roles, ratingFactor) => {
     });
 
     const workload = itemRoleDays * Number(item.delivery_factor || 1);
-    const cost = itemRoleCost * Number(item.delivery_factor || 1) * ratingFactor * 
+    const cost = itemRoleCost * Number(item.delivery_factor || 1) * normalizedFactor * 
                  (item.scope_factor || 1) * (item.tech_factor || 1);
     
     totalWorkload += workload;
@@ -43,7 +54,7 @@ const calculateProjectCost = async (assessmentData) => {
   // 1. 计算评分因子
   const riskScore = Object.values(assessmentData.risk_scores || {})
     .reduce((sum, score) => sum + Number(score), 0);
-  const ratingFactor = riskScore / 100;
+  const { factor: ratingFactor, ratio: ratingRatio, maxScore: ratingMaxScore } = await computeRatingFactor(riskScore);
 
   // 2. 计算各项工作量和费用
   const dev = calculateWorkloadCost(
@@ -79,16 +90,35 @@ const calculateProjectCost = async (assessmentData) => {
   // 4. 汇总
   const totalExactCost = dev.totalCost + integration.totalCost + travelCost + maintenanceCost + riskCost;
 
+  const softwareDevWorkload = dev.totalWorkload;
+  const systemIntegrationWorkload = integration.totalWorkload;
+  const maintenanceWorkloadDays = maintenanceWorkload;
+  const totalWorkload = softwareDevWorkload + systemIntegrationWorkload + maintenanceWorkloadDays;
+
+  const softwareDevCost = roundToDecimals(dev.totalCost);
+  const systemIntegrationCost = roundToDecimals(integration.totalCost);
+  const travelCostRounded = roundToDecimals(travelCost);
+  const maintenanceCostRounded = roundToDecimals(maintenanceCost);
+  const riskCostRounded = roundToDecimals(riskCost);
+  const totalCostExact = roundToDecimals(totalExactCost);
+
   return {
-    software_dev_cost: Math.round(dev.totalCost),
-    system_integration_cost: Math.round(integration.totalCost),
-    travel_cost: Math.round(travelCost),
-    maintenance_cost: Math.round(maintenanceCost),
-    risk_cost: Math.round(riskCost),
+    software_dev_cost: softwareDevCost,
+    system_integration_cost: systemIntegrationCost,
+    travel_cost: travelCostRounded,
+    maintenance_cost: maintenanceCostRounded,
+    risk_cost: riskCostRounded,
+    total_cost_exact: totalCostExact,
     total_cost: Math.round(totalExactCost),
     // 额外返回工作量数据（用于项目保存）
-    total_workload_days: dev.totalWorkload + integration.totalWorkload + maintenanceWorkload,
-    risk_score: riskScore
+    software_dev_workload_days: Math.round(softwareDevWorkload),
+    system_integration_workload_days: Math.round(systemIntegrationWorkload),
+    maintenance_workload_days: Math.round(maintenanceWorkloadDays),
+    total_workload_days: Math.round(totalWorkload),
+    risk_score: riskScore,
+    rating_factor: Number(ratingFactor.toFixed(4)),
+    rating_ratio: Number(ratingRatio.toFixed(4)),
+    risk_max_score: ratingMaxScore
   };
 };
 
