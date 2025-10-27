@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<story-context id="bmad/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>1</epicId>
+    <storyId>4</storyId>
+    <title>提示词模板变量管理与预览</title>
+    <status>Draft</status>
+    <generatedAt>2025-10-24T12:00:00.000Z</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/stories/story-1.4.md</sourceStoryPath>
+  </metadata>
+  <story>
+    <asA>系统管理员（System Administrator）或项目经理（Project Manager）</asA>
+    <iWant>管理提示词模板中的变量定义，并能预览填充后的完整提示词</iWant>
+    <soThat>确保模板正确并在使用前验证效果。</soThat>
+    <tasks>
+- [ ] **Task 1: 实现变量管理前端组件** (AC: #1, #2, #3, #4)
+- [ ] **Task 2: 实现模板预览后端 API** (AC: #5)
+- [ ] **Task 3: 实现前端预览对话框** (AC: #6)
+- [ ] **Task 4: 实现模板复制功能** (AC: #7, #8)
+- [ ] **Task 5: 集成测试与验证** (所有 AC)
+    </tasks>
+  </story>
+  <acceptanceCriteria>
+    ...
+  </acceptanceCriteria>
+  <artifacts>
+    <docs>
+      <doc path="docs/prd/model-config-spec.md" title="模型配置功能详细规格 (PRD)" section="4.5.2 变量管理" snippet="添加、编辑、删除变量的交互流程。"/>
+      <doc path="docs/prd/model-config-spec.md" title="模型配置功能详细规格 (PRD)" section="4.5.3 预览功能" snippet="点击预览按钮，填写变量测试值，生成并查看完整提示词。"/>
+      <doc path="docs/prd/model-config-spec.md" title="模型配置功能详细规格 (PRD)" section="4.5.4 复制模板" snippet="点击复制按钮，创建模板副本并跳转到编辑页面。"/>
+      <doc path="docs/prd/model-config-spec.md" title="模型配置功能详细规格 (PRD)" section="4.7 API接口" snippet="POST /api/config/prompts/:id/preview, POST /api/config/prompts/:id/copy"/>
+    </docs>
+    <code>
+      <artifact path="server/controllers/promptTemplateController.js" kind="controller" reason="需要添加 previewTemplate 和 copyTemplate 方法。"/>
+      <artifact path="server/models/promptTemplateModel.js" kind="model" reason="需要添加 preview 和 copy 的数据库逻辑。"/>
+      <artifact path="frontend/ppa_frontend/src/pages/ModelConfig/Prompts/Form.tsx" kind="component" reason="需要集成变量管理列表和预览按钮。"/>
+      <artifact path="frontend/ppa_frontend/src/pages/ModelConfig/Prompts/index.tsx" kind="component" reason="需要实现复制按钮的点击事件。"/>
+    </code>
+    <dependencies>
+        <dependency name="express" version="^5.1.0" ecosystem="npm"/>
+        <dependency name="sqlite3" version="^5.1.7" ecosystem="npm"/>
+    </dependencies>
+  </artifacts>
+  <constraints>
+    <constraint>后端: Node.js, Express, SQLite3</constraint>
+    <constraint>前端: React, Ant Design Pro</constraint>
+  </constraints>
+  <interfaces>
+    <interface name="Prompt Template Preview API" kind="REST endpoint" signature="POST /api/config/prompts/:id/preview" path="server/routes/config.js"/>
+    <interface name="Prompt Template Copy API" kind="REST endpoint" signature="POST /api/config/prompts/:id/copy" path="server/routes/config.js"/>
+  </interfaces>
+  <tests>
+    <standards>使用 Jest 和 Supertest 为后端 API 编写集成测试。</standards>
+    <locations>
+      <location>server/tests/promptTemplate.test.js</location>
+    </locations>
+    <ideas>
+      <idea acId="5">测试预览API，包括变量成功替换、缺少必填变量等场景。</idea>
+      <idea acId="7">测试复制API，验证新模板是否正确创建。</idea>
+    </ideas>
+  </tests>
+</story-context>

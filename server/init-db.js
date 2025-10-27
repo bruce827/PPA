@@ -44,10 +44,28 @@ const CREATE_TABLES_SQL = `
       password_hash TEXT NOT NULL,
       role TEXT DEFAULT 'user'
   );
+
+  CREATE TABLE IF NOT EXISTS prompt_templates (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    template_name TEXT NOT NULL,
+    category TEXT NOT NULL,
+    description TEXT,
+    system_prompt TEXT NOT NULL,
+    user_prompt_template TEXT NOT NULL,
+    variables_json TEXT, -- Stored as JSON string, use JSON1 functions for querying
+    is_system BOOLEAN DEFAULT 0,
+    is_active BOOLEAN DEFAULT 1,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+  );
+
+  CREATE INDEX IF NOT EXISTS idx_prompt_category ON prompt_templates(category);
+  CREATE INDEX IF NOT EXISTS idx_prompt_active ON prompt_templates(is_active);
+  CREATE INDEX IF NOT EXISTS idx_prompt_system ON prompt_templates(is_system);
 `;
 
 // 连接数据库并执行
-const db = new sqlite3.Database('./ppa.db', (err) => {
+const db = new sqlite3.Database('./ppa.db', sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE, (err) => {
   if (err) {
     return console.error(err.message);
   }

@@ -1,32 +1,18 @@
 const express = require('express');
-const { getDatabase } = require('./config/database');
-const serverConfig = require('./config/server');
-const routes = require('./routes');
-const errorHandler = require('./middleware/errorHandler');
-const healthController = require('./controllers/healthController');
-
 const app = express();
+const allRoutes = require('./routes');
 
-// 初始化数据库连接
-getDatabase();
-
-// 中间件
 app.use(express.json());
+app.use(allRoutes);
 
-// 根路由
-app.get('/', healthController.root);
+let server;
+if (process.env.NODE_ENV !== 'test') {
+  server = app.listen(3001, () => {
+    console.log('Server is running on port 3001');
+  });
+}
 
-// 挂载所有路由
-app.use(routes);
-
-// 全局错误处理中间件（必须放在最后）
-app.use(errorHandler);
-
-// 启动服务器
-app.listen(serverConfig.port, () => {
-  console.log(`Server is running on http://localhost:${serverConfig.port}`);
-  console.log(`Environment: ${serverConfig.env}`);
-});
+module.exports = { app, server };
 
 // 优雅退出
 process.on('SIGINT', () => {

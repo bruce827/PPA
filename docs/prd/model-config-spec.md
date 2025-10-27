@@ -14,16 +14,13 @@
 
 ### 1.2 业务价值
 
-- **灵活性**: 支持多种AI服务商（OpenAI、阿里云、百度等），用户自主选择
+- **灵活性**: 支持多种AI服务商（OpenAI、阿里云、百度等），快速切换测试不同模型效果
 - **可扩展**: 通过提示词模板系统，快速扩展新的AI应用场景
-- **安全性**: API密钥加密存储，保障企业数据安全
-- **用户控制**: 完全由用户配置和管理，不依赖外部服务
+- **简单实用**: 个人使用场景，配置简单直观，无需复杂权限和加密机制
 
 ### 1.3 目标用户
 
-- **系统管理员**: 配置AI模型连接、管理API密钥
-- **项目经理**: 使用预置提示词模板进行智能分析
-- **未来扩展**: 支持普通用户使用AI辅助功能
+- **个人用户**: bruce（项目所有者），配置和使用AI模型进行项目评估辅助
 
 ---
 
@@ -88,12 +85,14 @@
 - 配置名称（如"OpenAI GPT-4"）
 - 配置描述（备注信息）
 - 服务商类型（下拉选择）
-- API Key（加密存储）
+- API Key（明文存储，通过环境变量或配置文件管理）
 - API Host/Endpoint
 - 模型名称（如gpt-4, qwen-max等）
 - Temperature（温度参数，0.0-2.0，默认0.7）
 - Max Tokens（最大输出，默认2000）
 - Timeout（超时时间，默认30秒）
+
+> **简化说明**: 个人使用场景，API Key 直接存储在数据库或环境变量中，无需加密。如果担心安全，可以将敏感配置放在 `.env` 文件中（已在 `.gitignore` 中排除）。
 
 #### 3.2.2 当前模型选择
 
@@ -703,7 +702,7 @@ POST   /api/config/prompts/:id/copy       # 复制模板
 
 ---
 
-## 5. 数据库设计
+## 5. 数据库设计（简化版）
 
 ### 5.1 表1: ai_model_configs
 
@@ -713,7 +712,7 @@ CREATE TABLE ai_model_configs (
   config_name TEXT NOT NULL,           -- 配置名称
   description TEXT,                    -- 配置描述
   provider TEXT NOT NULL,              -- 服务商
-  api_key TEXT NOT NULL,               -- API密钥（加密存储）
+  api_key TEXT NOT NULL,               -- API密钥（明文存储）
   api_host TEXT NOT NULL,              -- API地址
   model_name TEXT NOT NULL,            -- 模型名称
   
@@ -741,6 +740,8 @@ CREATE UNIQUE INDEX idx_current_model
 CREATE INDEX idx_config_name 
   ON ai_model_configs(config_name);
 ```
+
+> **简化说明**: 移除了加密相关字段，API Key 直接明文存储。个人使用场景下，数据库文件已通过文件系统权限保护。
 
 ### 5.2 表2: prompt_templates
 
@@ -796,60 +797,7 @@ CREATE INDEX idx_prompt_system
 
 ---
 
-## 6. 安全性设计
-
-### 6.1 API密钥加密
-
-**加密方案**:
-- 使用AES-256-CBC加密
-- 密钥存储在环境变量中（不提交到代码仓库）
-- 加密后存储到数据库
-
-**实现**:
-```javascript
-// server/utils/encryption.js
-const crypto = require('crypto');
-
-const ENCRYPTION_KEY = process.env.API_KEY_ENCRYPTION_KEY; // 32字节
-const IV_LENGTH = 16;
-
-function encrypt(text) {
-  const iv = crypto.randomBytes(IV_LENGTH);
-  const cipher = crypto.createCipheriv('aes-256-cbc', 
-    Buffer.from(ENCRYPTION_KEY), iv);
-  let encrypted = cipher.update(text);
-  encrypted = Buffer.concat([encrypted, cipher.final()]);
-  return iv.toString('hex') + ':' + encrypted.toString('hex');
-}
-
-function decrypt(text) {
-  const textParts = text.split(':');
-  const iv = Buffer.from(textParts.shift(), 'hex');
-  const encryptedText = Buffer.from(textParts.join(':'), 'hex');
-  const decipher = crypto.createDecipheriv('aes-256-cbc', 
-    Buffer.from(ENCRYPTION_KEY), iv);
-  let decrypted = decipher.update(encryptedText);
-  decrypted = Buffer.concat([decrypted, decipher.final()]);
-  return decrypted.toString();
-}
-```
-
-### 6.2 前端脱敏显示
-
-**API Key显示**:
-- 列表：显示为`sk-***...***abc`（前后各显示3个字符）
-- 编辑表单：可切换"显示/隐藏"
-- 测试日志：不记录完整Key
-
-### 6.3 权限控制
-
-**访问权限**:
-- 仅管理员可访问模型配置模块
-- 普通用户可查看系统预置模板（只读）
-
----
-
-## 7. 实现优先级
+## 6. 实现优先级（简化版）
 
 ### P0 (第一期 - MVP) - 必须实现
 
@@ -857,14 +805,14 @@ function decrypt(text) {
 - ✅ 基础CRUD功能
 - ✅ 设置当前使用模型
 - ✅ 连接测试功能
-- ✅ API密钥加密存储
+- ❌ ~~API密钥加密存储~~（简化：明文存储）
 
 **提示词模板管理**:
 - ✅ 基础CRUD功能
 - ✅ 2个系统预置模板（风险分析、成本分析）
 - ✅ 变量定义和管理
 
-**预计工期**: 8-10天
+**预计工期**: 6-8天（简化后减少2天）
 
 ### P1 (第二期 - 增强) - 重要
 
@@ -986,13 +934,19 @@ server/
 - ✅ 预览功能
 - ✅ 模板复制
 
-### 9.2 安全测试
+### 9.2 安全测试（简化版）
 
-- ✅ API Key加密存储
-- ✅ 前端脱敏显示
+- ✅ API Key 存储和读取正常
 - ✅ SQL注入防护
 - ✅ XSS防护
 - ✅ CSRF防护
+- ❌ ~~加密/解密测试~~（已移除加密功能）
+- ❌ ~~前端脱敏显示~~（不需要脱敏）
+
+> **安全建议**: 虽然是个人使用，但建议：
+> 1. 数据库文件设置适当的文件系统权限
+> 2. 敏感配置可选择存储在 `.env` 文件
+> 3. 定期备份数据库
 
 ### 9.3 性能测试
 
@@ -1042,10 +996,10 @@ A: 系统使用AI提供智能分析功能（如风险分析、成本优化建议
 A: 目前支持OpenAI、Azure OpenAI、阿里云通义千问、百度文心一言等主流服务商。
 
 **Q: API Key会泄露吗？**
-A: 不会。API Key使用AES-256加密存储，前端仅显示脱敏信息（如sk-***...***abc）。
+A: 个人使用场景下，API Key 存储在本地数据库中。建议通过文件系统权限保护数据库文件，或者将敏感配置放在 `.env` 文件中（已在 `.gitignore` 排除，不会提交到 Git）。
 
 **Q: 可以同时使用多个模型吗？**
-A: 可以配置多个模型，但同一时间只能有一个"当前使用"模型。您可以随时切换。
+A: 可以配置多个模型，但同一时间只能有一个"当前使用"模型。您可以随时切换，方便对比不同模型的效果。
 
 **Q: 系统预置模板可以修改吗？**
 A: 系统预置模板不可修改，但您可以复制后创建自定义版本。
@@ -1080,16 +1034,17 @@ A: 访问"提示词模板管理" → 点击"+ 新建模板" → 编写系统提�
 - ✅ 连接测试超时设置合理（30秒）
 - ✅ 编辑器输入无卡顿
 
-### 11.4 安全标准
+### 11.4 安全标准（简化版）
 
-- ✅ API Key加密存储
-- ✅ 前端脱敏显示
+- ✅ API Key 正常存储和读取
 - ✅ 无SQL注入风险
 - ✅ 无XSS风险
+- ❌ ~~API Key加密存储~~（个人使用，已简化）
+- ❌ ~~前端脱敏显示~~（个人使用，已简化）
 
 ### 11.5 文档完整性
 
-- ✅ 用户操作手册
+- ✅ 用户操作手册（简化版）
 - ✅ API接口文档
 - ✅ 数据库设计文档
 - ✅ FAQ常见问题
@@ -1133,3 +1088,4 @@ A: 访问"提示词模板管理" → 点击"+ 新建模板" → 编写系统提�
 
 **修订历史**:
 - v1.0 (2025-10-21): 初始版本，定义核心功能和实现计划
+- v1.1 (2025-10-23): 简化版本，移除加密和权限控制（个人使用场景）
