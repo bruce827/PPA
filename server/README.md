@@ -22,6 +22,34 @@ server/
 └── seed-data/            # 初始数据脚本（角色 / 差旅 / 风险项）
 ```
 
+## 技术架构
+
+```marmad
+graph TD
+    Controller[Controller 层]
+    Service[Service 层]
+    Model[Model 层]
+    Database[Database (SQLite)]
+
+    Controller --> Service
+    Service --> Model
+    Model --> Database
+
+    subgraph Example
+        ControllerExample[exportController]
+        ServiceExample[projectService]
+        ModelExample[dashboardModel]
+    end
+
+    ControllerExample --> ServiceExample
+    ServiceExample --> ModelExample
+```
+
+* Controller 层负责处理 HTTP 请求。
+* Service 层封装业务逻辑。
+* Model 层负责与数据库交互。
+* Database 是 SQLite 数据库。
+
 ## 🚀 快速开始
 
 ### 1. 安装依赖
