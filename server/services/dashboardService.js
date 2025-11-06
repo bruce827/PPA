@@ -6,7 +6,7 @@ exports.getSummary = async () => {
   const averageCost = await db.get('SELECT AVG(final_total_cost) as avgCost FROM projects');
   return {
     totalProjects: totalProjects ? totalProjects.count : 0,
-    averageCost: averageCost ? parseFloat(averageCost.avgCost).toFixed(2) : 0,
+    averageCost: averageCost && averageCost.avgCost !== null ? parseFloat(averageCost.avgCost).toFixed(2) : 0,
   };
 };
 
@@ -49,27 +49,36 @@ exports.getRoleCostDistribution = async () => {
   projects.forEach(project => {
     try {
       const details = JSON.parse(project.assessment_details_json);
-      if (details.workload && details.workload.newFeatures) {
-        details.workload.newFeatures.forEach(feature => {
-          if (feature.roles) {
-            Object.keys(feature.roles).forEach(roleName => {
-              const manDays = parseFloat(feature.roles[roleName] || 0);
+      
+      // 处理新功能开发工作量 (development_workload)
+      if (details.development_workload && Array.isArray(details.development_workload)) {
+        details.development_workload.forEach(feature => {
+          // 遍历所有可能的角色字段
+          Object.keys(rolePrices).forEach(roleName => {
+            if (feature[roleName] !== undefined) {
+              const manDays = parseFloat(feature[roleName] || 0);
               const unitPrice = rolePrices[roleName] || 0;
-              roleCosts[roleName] = (roleCosts[roleName] || 0) + (manDays * unitPrice);
-            });
-          }
+              if (manDays > 0) {
+                roleCosts[roleName] = (roleCosts[roleName] || 0) + (manDays * unitPrice);
+              }
+            }
+          });
         });
       }
-      // Similar logic for systemIntegration workload
-      if (details.workload && details.workload.systemIntegration) {
-        details.workload.systemIntegration.forEach(integration => {
-          if (integration.roles) {
-            Object.keys(integration.roles).forEach(roleName => {
-              const manDays = parseFloat(integration.roles[roleName] || 0);
+      
+      // 处理系统对接工作量 (integration_workload)
+      if (details.integration_workload && Array.isArray(details.integration_workload)) {
+        details.integration_workload.forEach(integration => {
+          // 遍历所有可能的角色字段
+          Object.keys(rolePrices).forEach(roleName => {
+            if (integration[roleName] !== undefined) {
+              const manDays = parseFloat(integration[roleName] || 0);
               const unitPrice = rolePrices[roleName] || 0;
-              roleCosts[roleName] = (roleCosts[roleName] || 0) + (manDays * unitPrice);
-            });
-          }
+              if (manDays > 0) {
+                roleCosts[roleName] = (roleCosts[roleName] || 0) + (manDays * unitPrice);
+              }
+            }
+          });
         });
       }
     } catch (e) {

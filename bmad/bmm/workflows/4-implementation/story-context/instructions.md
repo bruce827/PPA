@@ -1,84 +1,127 @@
 <!-- BMAD BMM Story Context Assembly Instructions (v6) -->
 
-````xml
-<critical>The workflow execution engine is governed by: {project_root}/bmad/core/tasks/workflow.xml</critical>
+```xml
+<critical>The workflow execution engine is governed by: {project-root}/bmad/core/tasks/workflow.xml</critical>
 <critical>You MUST have already loaded and processed: {installed_path}/workflow.yaml</critical>
 <critical>Communicate all responses in {communication_language}</critical>
-<critical>This workflow assembles a Story Context XML for a single user story by extracting ACs, tasks, relevant docs/code, interfaces, constraints, and testing guidance to support implementation.</critical>
-<critical>Default execution mode: #yolo (non-interactive). Only ask if {{non_interactive}} == false. If auto-discovery fails, HALT and request 'story_path' or 'story_dir'.</critical>
+<critical>Generate all documents in {document_output_language}</critical>
+<critical>This workflow assembles a Story Context file for a single drafted story by extracting acceptance criteria, tasks, relevant docs/code, interfaces, constraints, and testing guidance.</critical>
+<critical>If story_path is provided, use it. Otherwise, find the first story with status "drafted" in sprint-status.yaml. If none found, HALT.</critical>
+<critical>Check if context file already exists. If it does, ask user if they want to replace it, verify it, or cancel.</critical>
+
+<critical>DOCUMENT OUTPUT: Technical context file (.context.xml). Concise, structured, project-relative paths only.</critical>
+
+## 📚 Document Discovery - Selective Epic Loading
+
+**Strategy**: This workflow needs only ONE specific epic and its stories, not all epics. This provides huge efficiency gains when epics are sharded.
+
+**Epic Discovery Process (SELECTIVE OPTIMIZATION):**
+
+1. **Determine which epic** you need (epic_num from story key - e.g., story "3-2-feature-name" needs Epic 3)
+2. **Check for sharded version**: Look for `epics/index.md`
+3. **If sharded version found**:
+   - Read `index.md` to understand structure
+   - **Load ONLY `epic-{epic_num}.md`** (e.g., `epics/epic-3.md` for Epic 3)
+   - DO NOT load all epic files - only the one needed!
+   - This is the key efficiency optimization for large multi-epic projects
+4. **If whole document found**: Load the complete `epics.md` file and extract the relevant epic
+
+**Other Documents (prd, architecture, ux-design) - Full Load:**
+
+1. **Search for whole document first** - Use fuzzy file matching
+2. **Check for sharded version** - If whole document not found, look for `{doc-name}/index.md`
+3. **If sharded version found**:
+   - Read `index.md` to understand structure
+   - Read ALL section files listed in the index
+   - Treat combined content as single document
+4. **Brownfield projects**: The `document-project` workflow creates `{output_folder}/docs/index.md`
+
+**Priority**: If both whole and sharded versions exist, use the whole document.
+
+**UX-Heavy Projects**: Always check for ux-design documentation as it provides critical context for UI-focused stories.
 
 <workflow>
-  <step n="1" goal="Check and load workflow status file">
-    <action>Search {output_folder}/ for files matching pattern: bmm-workflow-status.md</action>
-    <action>Find the most recent file (by date in filename: bmm-workflow-status.md)</action>
+  <step n="1" goal="Find drafted story and check for existing context" tag="sprint-status">
+    <check if="{{story_path}} is provided">
+      <action>Use {{story_path}} directly</action>
+      <action>Read COMPLETE story file and parse sections</action>
+      <action>Extract story_key from filename or story metadata</action>
+      <action>Verify Status is "drafted" - if not, HALT with message: "Story status must be 'drafted' to generate context"</action>
+    </check>
 
-    <check if="exists">
-      <action>Load the status file</action>
-      <action>Extract key information:</action>
-      - current_step: What workflow was last run
-      - next_step: What workflow should run next
-      - planned_workflow: The complete workflow journey table
-      - progress_percentage: Current progress
-      - IN PROGRESS story: The story being worked on (from Implementation Progress section)
+    <check if="{{story_path}} is NOT provided">
+      <critical>MUST read COMPLETE sprint-status.yaml file from start to end to preserve order</critical>
+      <action>Load the FULL file: {{output_folder}}/sprint-status.yaml</action>
+      <action>Read ALL lines from beginning to end - do not skip any content</action>
+      <action>Parse the development_status section completely</action>
 
-      <action>Set status_file_found = true</action>
-      <action>Store status_file_path for later updates</action>
+      <action>Find FIRST story (reading in order from top to bottom) where:
+        - Key matches pattern: number-number-name (e.g., "1-2-user-auth")
+        - NOT an epic key (epic-X) or retrospective (epic-X-retrospective)
+        - Status value equals "drafted"
+      </action>
 
-      <check if='next_step != "story-context" AND current_step != "story-ready"'>
-        <ask>**⚠️ Workflow Sequence Note**
+      <check if="no story with status 'drafted' found">
+        <output>📋 No drafted stories found in sprint-status.yaml
 
-Status file shows:
-- Current step: {{current_step}}
-- Expected next: {{next_step}}
+All stories are either still in backlog or already marked ready/in-progress/done.
 
-This workflow (story-context) is typically run after story-ready.
+**Next Steps:**
+1. Run `create-story` to draft more stories
+2. Run `sprint-planning` to refresh story tracking
+        </output>
+        <action>HALT</action>
+      </check>
 
-Options:
-1. Continue anyway (story-context is optional)
-2. Exit and run the expected workflow: {{next_step}}
-3. Check status with workflow-status
+      <action>Use the first drafted story found</action>
+      <action>Find matching story file in {{story_dir}} using story_key pattern</action>
+      <action>Read the COMPLETE story file</action>
+    </check>
 
-What would you like to do?</ask>
-        <action>If user chooses exit → HALT with message: "Run workflow-status to see current state"</action>
+    <action>Extract {{epic_id}}, {{story_id}}, {{story_title}}, {{story_status}} from filename/content</action>
+    <action>Parse sections: Story, Acceptance Criteria, Tasks/Subtasks, Dev Notes</action>
+    <action>Extract user story fields (asA, iWant, soThat)</action>
+    <template-output file="{default_output_file}">story_tasks</template-output>
+    <template-output file="{default_output_file}">acceptance_criteria</template-output>
+
+    <!-- Check if context file already exists -->
+    <action>Check if file exists at {default_output_file}</action>
+
+    <check if="context file already exists">
+      <output>⚠️ Context file already exists: {default_output_file}
+
+**What would you like to do?**
+1. **Replace** - Generate new context file (overwrites existing)
+2. **Verify** - Validate existing context file
+3. **Cancel** - Exit without changes
+      </output>
+      <ask>Choose action (replace/verify/cancel):</ask>
+
+      <check if="user chooses verify">
+        <action>GOTO validation_step</action>
+      </check>
+
+      <check if="user chooses cancel">
+        <action>HALT with message: "Context generation cancelled"</action>
+      </check>
+
+      <check if="user chooses replace">
+        <action>Continue to generate new context file</action>
       </check>
     </check>
 
-    <check if="not exists">
-      <ask>**No workflow status file found.**
-
-The status file tracks progress across all workflows and provides context about which story to work on.
-
-Options:
-1. Run workflow-status first to create the status file (recommended)
-2. Continue in standalone mode (no progress tracking)
-3. Exit
-
-What would you like to do?</ask>
-      <action>If user chooses option 1 → HALT with message: "Please run workflow-status first, then return to story-context"</action>
-      <action>If user chooses option 2 → Set standalone_mode = true and continue</action>
-      <action>If user chooses option 3 → HALT</action>
-    </check>
-  </step>
-
-  <step n="2" goal="Locate story and initialize output">
-    <action>If {{story_path}} provided and valid → use it; else auto-discover from {{story_dir}}.</action>
-    <action>Auto-discovery: read {{story_dir}} (dev_story_location). If invalid/missing or contains no .md files, ASK for a story file path or directory to scan.</action>
-    <action>If a directory is provided, list markdown files named "story-*.md" recursively; sort by last modified time; display top {{story_selection_limit}} with index, filename, path, modified time.</action>
-    <ask optional="true" if="{{non_interactive}} == false">"Select a story (1-{{story_selection_limit}}) or enter a path:"</ask>
-    <action>If {{non_interactive}} == true: choose the most recently modified story automatically. If none found, HALT with a clear message to provide 'story_path' or 'story_dir'. Else resolve selection into {{story_path}} and READ COMPLETE file.</action>
-    <action>Extract {{epic_id}}, {{story_id}}, {{story_title}}, {{story_status}} from filename/content; parse sections: Story, Acceptance Criteria, Tasks/Subtasks, Dev Notes.</action>
-    <action>Extract user story fields (asA, iWant, soThat).</action>
-    <action>Store project root path for relative path conversion: extract from {project-root} variable.</action>
-    <action>Define path normalization function: convert any absolute path to project-relative by removing project root prefix.</action>
-    <action>Initialize output by writing template to {default_output_file}.</action>
+    <action>Store project root path for relative path conversion: extract from {project-root} variable</action>
+    <action>Define path normalization function: convert any absolute path to project-relative by removing project root prefix</action>
+    <action>Initialize output by writing template to {default_output_file}</action>
     <template-output file="{default_output_file}">as_a</template-output>
     <template-output file="{default_output_file}">i_want</template-output>
     <template-output file="{default_output_file}">so_that</template-output>
   </step>
 
-  <step n="3" goal="Collect relevant documentation">
+  <step n="2" goal="Collect relevant documentation">
     <action>Scan docs and src module docs for items relevant to this story's domain: search keywords from story title, ACs, and tasks.</action>
-    <action>Prefer authoritative sources: PRD, Architecture, Front-end Spec, Testing standards, module-specific docs.</action>
+    <action>Prefer authoritative sources: PRD, Tech-Spec, Architecture, Front-end Spec, Testing standards, module-specific docs.</action>
+    <action>Note: Tech-Spec is used for Level 0-1 projects (instead of PRD). It contains comprehensive technical context, brownfield analysis, framework details, existing patterns, and implementation guidance.</action>
     <action>For each discovered document: convert absolute paths to project-relative format by removing {project-root} prefix. Store only relative paths (e.g., "docs/prd.md" not "/Users/.../docs/prd.md").</action>
     <template-output file="{default_output_file}">
       Add artifacts.docs entries with {path, title, section, snippet}:
@@ -89,7 +132,7 @@ What would you like to do?</ask>
     </template-output>
   </step>
 
-  <step n="4" goal="Analyze existing code, interfaces, and constraints">
+  <step n="3" goal="Analyze existing code, interfaces, and constraints">
     <action>Search source tree for modules, files, and symbols matching story intent and AC keywords (controllers, services, components, tests).</action>
     <action>Identify existing interfaces/APIs the story should reuse rather than recreate.</action>
     <action>Extract development constraints from Dev Notes and architecture (patterns, layers, testing requirements).</action>
@@ -114,7 +157,7 @@ What would you like to do?</ask>
     </template-output>
   </step>
 
-  <step n="5" goal="Gather dependencies and frameworks">
+  <step n="4" goal="Gather dependencies and frameworks">
     <action>Detect dependency manifests and frameworks in the repo:
       - Node: package.json (dependencies/devDependencies)
       - Python: pyproject.toml/requirements.txt
@@ -126,7 +169,7 @@ What would you like to do?</ask>
     </template-output>
   </step>
 
-  <step n="6" goal="Testing standards and ideas">
+  <step n="5" goal="Testing standards and ideas">
     <action>From Dev Notes, architecture docs, testing docs, and existing tests, extract testing standards (frameworks, patterns, locations).</action>
     <template-output file="{default_output_file}">
       Populate tests.standards with a concise paragraph
@@ -135,77 +178,57 @@ What would you like to do?</ask>
     </template-output>
   </step>
 
-  <step n="7" goal="Validate and save">
-    <action>Validate output XML structure and content.</action>
+  <step n="6" goal="Validate and save">
+    <anchor id="validation_step" />
+    <action>Validate output context file structure and content</action>
     <invoke-task>Validate against checklist at {installed_path}/checklist.md using bmad/core/tasks/validate-workflow.xml</invoke-task>
   </step>
 
-  <step n="8" goal="Update story status and context reference">
-    <action>Open {{story_path}}; if Status == 'Draft' then set to 'ContextReadyDraft'; otherwise leave unchanged.</action>
+  <step n="7" goal="Update story file and mark ready for dev" tag="sprint-status">
+    <action>Open {{story_path}}</action>
+    <action>Find the "Status:" line (usually at the top)</action>
+    <action>Update story file: Change Status to "ready-for-dev"</action>
     <action>Under 'Dev Agent Record' → 'Context Reference' (create if missing), add or update a list item for {default_output_file}.</action>
     <action>Save the story file.</action>
-  </step>
 
-  <step n="9" goal="Update status file on completion">
-    <action>Search {output_folder}/ for files matching pattern: bmm-workflow-status.md</action>
-    <action>Find the most recent file (by date in filename)</action>
+    <!-- Update sprint status to mark ready-for-dev -->
+    <action>Load the FULL file: {{output_folder}}/sprint-status.yaml</action>
+    <action>Find development_status key matching {{story_key}}</action>
+    <action>Verify current status is "drafted" (expected previous state)</action>
+    <action>Update development_status[{{story_key}}] = "ready-for-dev"</action>
+    <action>Save file, preserving ALL comments and structure including STATUS DEFINITIONS</action>
 
-    <check if="status file exists">
-      <action>Load the status file</action>
+    <check if="story key not found in file">
+      <output>⚠️ Story file updated, but could not update sprint-status: {{story_key}} not found
 
-      <template-output file="{{status_file_path}}">current_step</template-output>
-      <action>Set to: "story-context (Story {{story_id}})"</action>
-
-      <template-output file="{{status_file_path}}">current_workflow</template-output>
-      <action>Set to: "story-context (Story {{story_id}}) - Complete"</action>
-
-      <template-output file="{{status_file_path}}">progress_percentage</template-output>
-      <action>Calculate per-story weight: remaining_40_percent / total_stories / 5</action>
-      <action>Increment by: {{per_story_weight}} * 1 (story-context weight is ~1% per story)</action>
-
-      <template-output file="{{status_file_path}}">decisions_log</template-output>
-      <action>Add entry:</action>
-      ```
-      - **{{date}}**: Completed story-context for Story {{story_id}} ({{story_title}}). Context file: {{default_output_file}}. Next: DEV agent should run dev-story to implement.
-      ```
-
-      <output>**✅ Story Context Generated Successfully, {user_name}!**
-
-**Story Details:**
-- Story ID: {{story_id}}
-- Title: {{story_title}}
-- Context File: {{default_output_file}}
-
-**Status file updated:**
-- Current step: story-context (Story {{story_id}}) ✓
-- Progress: {{new_progress_percentage}}%
-
-**Next Steps:**
-1. Load DEV agent (bmad/bmm/agents/dev.md)
-2. Run `dev-story` workflow to implement the story
-3. The context file will provide comprehensive implementation guidance
-
-Check status anytime with: `workflow-status`
+You may need to run sprint-planning to refresh tracking.
       </output>
     </check>
 
-    <check if="status file not found">
-      <output>**✅ Story Context Generated Successfully, {user_name}!**
+    <output>✅ Story context generated successfully, {user_name}!
 
 **Story Details:**
-- Story ID: {{story_id}}
-- Title: {{story_title}}
-- Context File: {{default_output_file}}
 
-Note: Running in standalone mode (no status file).
+- Story: {{epic_id}}.{{story_id}} - {{story_title}}
+- Story Key: {{story_key}}
+- Context File: {default_output_file}
+- Status: drafted → ready-for-dev
 
-To track progress across workflows, run `workflow-status` first.
+**Context Includes:**
+
+- Documentation artifacts and references
+- Existing code and interfaces
+- Dependencies and frameworks
+- Testing standards and ideas
+- Development constraints
 
 **Next Steps:**
-1. Load DEV agent and run `dev-story` to implement
-      </output>
-    </check>
+
+1. Review the context file: {default_output_file}
+2. Run `dev-story` to implement the story
+3. Generate context for more drafted stories if needed
+    </output>
   </step>
 
 </workflow>
-````
+```

@@ -1,6 +1,6 @@
 # Story: 后端API与数据聚合实现
 
-Status: InProgress
+Status: review
 
 ## Story
 
@@ -23,8 +23,8 @@ so that 为前端提供稳定、高效的数据支持，确保仪表板能展示
 
 - [x] 在 `server/controllers/dashboardController.js` 中实现新的 API 路由处理函数。
 - [x] 在 `server/services/dashboardService.js` 中编写数据聚合逻辑。
-- [ ] 编写单元测试，验证数据聚合逻辑的准确性。
-- [ ] 编写集成测试，验证 API 接口响应和数据格式。
+- [x] 编写单元测试，验证数据聚合逻辑的准确性。
+- [x] 编写集成测试，验证 API 接口响应和数据格式。
 
 ## Dev Notes
 
@@ -51,16 +51,30 @@ so that 为前端提供稳定、高效的数据支持，确保仪表板能展示
 
 ### Agent Model Used
 
-<!-- Will be populated during dev-story execution -->
+GitHub Copilot (Claude 3.5 Sonnet)
 
 ### Debug Log References
 
 - 2025-10-27: Backend API and data aggregation implementation complete. Testing pending.
+- 2025-11-06: 完成所有测试实现
+  - 创建单元测试文件 `server/tests/dashboardService.test.js` (17个测试用例)
+  - 创建集成测试文件 `server/tests/dashboardAPI.test.js` (8个测试用例)
+  - 修复 `getSummary` 函数处理 null 平均成本的边缘情况
+  - 所有测试通过 (25/25)，包括性能测试 (AC7: <500ms)
 
 ### Completion Notes List
 
-<!-- Will be populated during dev-story execution -->
+- ✅ 完成后端 API 和数据聚合逻辑实现 (2025-10-27)
+- ✅ 完成全面的测试覆盖 (2025-11-06)
+  - 单元测试：覆盖所有 dashboardService 函数的核心逻辑、边缘情况和错误处理
+  - 集成测试：验证所有 6 个 API 端点的功能、数据格式和性能要求
+  - 所有 8 个验收标准均通过测试验证
+  - 性能测试确认所有接口响应时间 < 500ms
 
 ### File List
 
-<!-- Will be populated during dev-story execution -->
+- `server/controllers/dashboardController.js` - Dashboard API 控制器 (已修改)
+- `server/services/dashboardService.js` - 数据聚合服务逻辑 (已修改)
+- `server/routes/dashboard.js` - Dashboard 路由配置 (已存在)
+- `server/tests/dashboardService.test.js` - 单元测试 (新增)
+- `server/tests/dashboardAPI.test.js` - 集成测试 (新增)

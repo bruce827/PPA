@@ -1,12 +1,11 @@
 installation:
-  version: 6.0.0-alpha.0
-  installDate: '2025-10-17T02:56:31.691Z'
-  lastUpdated: '2025-10-17T02:56:31.691Z'
+  version: 6.0.0-alpha.6
+  installDate: '2025-11-06T01:41:05.153Z'
+  lastUpdated: '2025-11-06T01:41:05.153Z'
 modules:
   - core
   - bmb
   - bmm
-  - cis
 ides:
   - claude-code
   - codex
@@ -22,3 +21,4 @@ ides:
   - qwen
   - roo
   - trae
+  - opencode

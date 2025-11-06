@@ -1,6 +1,6 @@
 # 前端 Bug 修复记录（整合版）
 
-> **最后更新**: 2025-11-01  
+> **最后更新**: 2025-11-06  
 > **适用范围**: PPA 项目前端 (frontend/ppa_frontend/)  
 > **框架版本**: UMI Max v4+ + Ant Design Pro + React 18
 
@@ -14,6 +14,7 @@
 4. [表单数据绑定与重渲染](#4-表单数据绑定与重渲染)
 5. [UMI Max 配置限制](#5-umi-max-配置限制)
 6. [组件化最佳实践](#6-组件化最佳实践)
+7. [@ant-design/charts 图表配置问题](#7-ant-designcharts-图表配置问题)
 
 ---
 
@@ -529,6 +530,227 @@ export async function getAllProjects(options?: { [key: string]: any }) {
 
 ---
 
+### 6.2 重新评估功能实现（Sprint 12）
+
+**需求背景**:  
+历史项目不允许直接编辑，用户希望以现有项目为基础创建新的评估项目。将"编辑"改为"重新评估"，语义更符合业务场景。
+
+**业务规则**:
+1. **历史项目只读**：所有已保存的项目不允许修改
+2. **重新评估**：可以基于任何历史项目创建新项目
+3. **模板导入**：重新评估功能与"从模板导入"功能相同，都是导入数据后创建新项目
+
+**实现改动**:
+
+#### 详情页按钮修改
+```tsx
+// ❌ 修改前
+<Button key="edit" type="primary" onClick={() => history.push(`/assessment/new?edit_id=${project.id}`)}>
+  编辑
+</Button>
+
+// ✅ 修改后
+<Button 
+  key="reassess" 
+  type="primary" 
+  onClick={() => history.push(`/assessment/new?template_id=${project.id}`)}
+>
+  重新评估
+</Button>
+```
+
+#### 历史项目列表操作栏修改
+```tsx
+// ❌ 修改前
+<Link key="edit" to={`/assessment/new?edit_id=${record.id}`}>编辑</Link>
+
+// ✅ 修改后
+<Link key="reassess" to={`/assessment/new?template_id=${record.id}`}>重新评估</Link>
+```
+
+#### 新建评估页面参数修改
+```tsx
+// ❌ 修改前：使用 edit_id 参数加载项目进行编辑
+const editId = searchParams.get('edit_id');
+
+// ✅ 修改后：使用 template_id 参数加载项目作为模板
+const templateId = searchParams.get('template_id');
+
+useEffect(() => {
+  const loadInitialData = async () => {
+    if (templateId) {
+      const projectResult = await getProjectDetail(templateId);
+      // 加载并规范化数据
+      message.success(`已导入项目"${projectResult.data.name}"的数据作为模板`);
+    }
+  };
+  loadInitialData();
+}, [templateId, form]);
+```
+
+**用户使用流程**:
+
+**场景一：从详情页重新评估**
+1. 用户访问历史项目详情页
+2. 点击"重新评估"按钮
+3. 跳转到新建评估页面，自动导入该项目的所有数据
+4. 显示提示信息："已导入项目"xxx"的数据作为模板"
+5. 用户可以修改数据并保存为新项目
+
+**场景二：从模板选择弹窗导入**
+1. 用户在新建评估页面点击"从模板导入"
+2. 从列表中选择项目
+3. 点击"导入"
+4. 自动填充所有评估数据
+5. 用户可以修改数据并保存为新项目
+
+**关键测试点**:
+- [x] 详情页显示"重新评估"按钮（而非"编辑"）
+- [x] 历史项目列表操作栏显示"重新评估"（而非"编辑"）
+- [x] 点击"重新评估"跳转到新建评估页面
+- [x] 所有评估数据正确导入
+- [x] 显示导入成功提示消息
+- [x] 可以修改导入的数据
+- [x] 保存后创建新项目（不覆盖原项目）
+
+**相关文件**:
+- `frontend/ppa_frontend/src/pages/Assessment/Detail.tsx` - 详情页按钮
+- `frontend/ppa_frontend/src/pages/Assessment/History.tsx` - 历史列表操作
+- `frontend/ppa_frontend/src/pages/Assessment/New.tsx` - 新建页面逻辑
+
+---
+
+### 6.3 ProTable actionRef 无限循环修复（Sprint 13）
+
+**问题描述**:  
+在 AI 模型配置列表页面中，页面加载后立即崩溃，浏览器控制台抛出错误：
+
+```
+Error: Maximum update depth exceeded. This can happen when a component 
+repeatedly calls setState inside componentWillUpdate or componentDidUpdate. 
+React limits the number of nested updates to prevent infinite loops.
+```
+
+**根本原因**:  
+在 ProTable 组件中使用 `useState` 来保存 `actionRef`，并通过回调函数设置状态，导致无限循环：
+
+```tsx
+// ❌ 错误：触发无限循环
+const [actionRef, setActionRef] = useState<any>();
+
+<ProTable
+  actionRef={(ref) => setActionRef(ref)}  // 每次渲染都调用 setState
+  // ...
+/>
+```
+
+**触发机制**:
+1. 每次渲染时，`actionRef` 回调函数都会执行
+2. 回调函数调用 `setActionRef(ref)` 触发状态更新
+3. 状态更新导致组件重新渲染
+4. 重新渲染又触发回调函数执行
+5. 形成无限循环 ♻️
+
+**解决方案**:
+
+使用 `useRef` 替代 `useState` 来保存 ProTable 的 `actionRef`：
+
+```tsx
+// ✅ 修改前
+import { useState } from 'react';
+
+const AIModelApplication: React.FC = () => {
+  const [actionRef, setActionRef] = useState<any>();
+
+  const handleDelete = async (id: number) => {
+    // ...
+    actionRef?.reload();  // ❌ 错误调用方式
+  };
+
+  return (
+    <ProTable
+      actionRef={(ref) => setActionRef(ref)}  // ❌ 触发无限循环
+      // ...
+    />
+  );
+};
+
+// ✅ 修改后
+import { useRef } from 'react';
+import type { ActionType } from '@ant-design/pro-components';
+
+const AIModelApplication: React.FC = () => {
+  const actionRef = useRef<ActionType>();
+
+  const handleDelete = async (id: number) => {
+    // ...
+    actionRef.current?.reload();  // ✅ 正确调用方式
+  };
+
+  return (
+    <ProTable
+      actionRef={actionRef}  // ✅ 直接传递 ref 对象
+      // ...
+    />
+  );
+};
+```
+
+**关键改动总结**:
+
+| 步骤 | 改动内容 | 说明 |
+|------|---------|------|
+| 1 | 导入 `useRef` 和 `ActionType` | 使用正确的 Hook 和类型 |
+| 2 | 使用 `useRef` 替代 `useState` | 避免触发重新渲染 |
+| 3 | 直接传递 ref 对象 | 不使用回调函数 |
+| 4 | 使用 `.current` 访问 | 通过 `.current` 访问 ref 值 |
+
+**技术原理**:
+
+| 特性 | useState | useRef |
+|------|----------|--------|
+| 更新触发渲染 | ✅ 是 | ❌ 否 |
+| 持久化存储 | ✅ 是 | ✅ 是 |
+| 适用场景 | 影响 UI 的状态 | DOM 引用、组件实例引用 |
+
+**ProTable actionRef 正确用法**:
+
+ProTable 的 `actionRef` 设计用于接收一个 React ref 对象，而不是回调函数。
+
+```tsx
+// ✅ 官方推荐方式
+const actionRef = useRef<ActionType>();
+
+<ProTable actionRef={actionRef} />
+
+// 调用方法
+actionRef.current?.reload();        // 刷新表格
+actionRef.current?.reloadAndRest(); // 刷新并重置
+actionRef.current?.reset();         // 重置表格
+```
+
+**识别此类问题的特征**:
+- 错误信息包含 "Maximum update depth exceeded"
+- 组件在加载后立即崩溃
+- 开发工具显示组件不断重新渲染
+- 使用了 `actionRef={(ref) => setXxx(ref)}` 模式
+
+**检查清单**:
+- [ ] 所有 ProTable/ProList 等 Pro 组件的 actionRef 使用 `useRef`
+- [ ] 避免在渲染回调中调用 `setState`
+- [ ] Form 组件的 form 实例使用 `Form.useForm()`
+- [ ] 不在 `render` 函数中调用 setState
+
+**相关文件**:
+- `frontend/ppa_frontend/src/pages/ModelConfig/Application/index.tsx` - 修复主文件
+
+**参考资料**:
+- [React Hooks - useRef](https://react.dev/reference/react/useRef)
+- [ProTable 官方文档 - actionRef](https://procomponents.ant.design/components/table#actionref)
+- [React 常见错误 - Maximum update depth exceeded](https://react.dev/reference/react/Component#componentdidupdate)
+
+---
+
 ## 7. 通用前端最佳实践
 
 ### 7.1 Ant Design Pro 表单处理
@@ -688,7 +910,10 @@ yarn build
 
 | 日期 | 变更内容 | 相关 Sprint |
 |------|--------|-----------|
+| 2025-11-06 | 整合 Sprint 12-13，更新文档结构 | Sprint 12-13 |
 | 2025-11-01 | 整合文档，删除过时内容 | - |
+| 2025-10-23 | 修复 ProTable actionRef 无限循环问题 | Sprint 13 |
+| 2025-10-22 | 实现重新评估功能（替换编辑功能） | Sprint 12 |
 | 2025-10-22 | 添加从模板导入功能 | Sprint 11 |
 | 2025-10-21 | 完成组件化重构 | Sprint 8 |
 | 2025-10-27 | ProTable 数据渲染修复 | - |
@@ -702,5 +927,230 @@ yarn build
 
 **维护说明**: 本文档应随项目演进持续更新。当出现新的问题或重构时，应及时补充新的最佳实践，删除过时内容。
 
-**文档版本**: 2.0（整合版）  
-**最后审核**: 2025-11-01
+**文档版本**: 2.2（整合版）  
+**最后审核**: 2025-11-06
+
+---
+
+## 7. @ant-design/charts 图表配置问题
+
+### 7.1 图表 Label 配置兼容性错误（Dashboard 实现）
+
+**故障现象**:  
+使用 @ant-design/charts (v2.6.5) 时，浏览器控制台抛出多个错误：
+
+```javascript
+ExpressionError: Undefined variable: value
+ExpressionError: Unexpected character: }
+Error: Unknown Component: shape.inner
+```
+
+**发生时间**: 2025-11-06（Story 2: Dashboard 前端UI/UX实现）
+
+**根本原因**:  
+@ant-design/charts 的 label 配置与原生 G2Plot 存在兼容性差异：
+
+1. **不支持字符串模板格式**: `label: { content: '{value}' }` 或 `'{name} {percentage}'`
+2. **不支持特定 type 值**: `label: { type: 'inner' }` 会触发 "Unknown Component" 错误
+3. **formatter 参数可能为 undefined**: 需要添加空值检查
+
+**错误代码示例**:
+
+```typescript
+// ❌ 错误：使用字符串模板（不被支持）
+const pieConfig = {
+  label: {
+    content: '{value}',  // 导致 "Undefined variable" 错误
+  }
+};
+
+// ❌ 错误：使用 type: 'inner'（不被支持）
+const pieConfig = {
+  label: {
+    type: 'inner',  // 导致 "Unknown Component: shape.inner" 错误
+    content: '{name}\n{percentage}'
+  }
+};
+
+// ❌ 错误：formatter 没有空值检查
+const columnConfig = {
+  label: {
+    formatter: (datum: any) => `¥${datum.cost.toLocaleString()}`
+    // 当 datum.cost 为 undefined 时报错
+  }
+};
+```
+
+**解决方案**:
+
+```typescript
+// ✅ 方案 1: 使用 formatter 函数 + 空值检查
+const pieConfig = {
+  data: chartData,
+  angleField: 'value',
+  colorField: 'type',
+  label: {
+    formatter: (datum: any) => {
+      const type = datum?.type ?? '';
+      const value = datum?.value ?? 0;
+      return `${type}: ${value}`;
+    },
+  },
+};
+
+// ✅ 方案 2: 完全禁用 label（最保险）
+const pieConfig = {
+  data: chartData,
+  angleField: 'value',
+  colorField: 'type',
+  label: false,  // 禁用标签，通过图例识别数据
+  legend: {
+    position: 'bottom' as const,
+  },
+};
+
+// ✅ 方案 3: 简化配置，避免复杂的 label 选项
+const columnConfig = {
+  data: roleCostData,
+  xField: 'role',
+  yField: 'cost',
+  label: false,  // 暂时禁用，避免兼容性问题
+  yAxis: {
+    label: {
+      formatter: (v: string) => `¥${Number(v || 0).toLocaleString()}`,
+    },
+  },
+};
+```
+
+**最佳实践检查清单**:
+
+- [ ] 使用 formatter 函数而非字符串模板
+- [ ] formatter 中添加空值检查（使用 `?.` 和 `??`）
+- [ ] 避免使用 `type: 'inner'`, `type: 'outer'` 等配置
+- [ ] 避免使用 `offset`, `style` 等高级 label 配置
+- [ ] 优先考虑禁用 label，通过图例展示数据
+- [ ] 测试各种数据状态（空数据、部分字段缺失等）
+
+**影响范围**:
+- 所有使用 @ant-design/charts 的图表组件
+- Pie、Donut、Column、Line、Scatter 等图表类型
+
+**相关文件**:
+- `frontend/ppa_frontend/src/pages/Dashboard.tsx` - Dashboard 图表配置
+- `frontend/ppa_frontend/package.json` - @ant-design/charts 版本
+
+**参考资料**:
+- [@ant-design/charts 官方文档](https://charts.ant.design/)
+- [G2Plot API 文档](https://g2plot.antv.antgroup.com/)
+
+---
+
+### 7.2 Spin 组件 tip 属性警告
+
+**故障现象**:  
+浏览器控制台显示警告：
+
+```
+Warning: [antd: Spin] `tip` only work in nest or fullscreen pattern.
+```
+
+**发生时间**: 2025-11-06（Dashboard 实现）
+
+**根本原因**:  
+Ant Design 的 Spin 组件的 `tip` 属性只能在嵌套模式（有子元素）或全屏模式下使用。单独使用 `<Spin tip="..." />` 会触发警告。
+
+**错误代码**:
+
+```typescript
+// ❌ 错误：单独使用 tip 属性
+<Spin size="large" tip="加载数据中..." />
+```
+
+**解决方案**:
+
+```typescript
+// ✅ 方案 1: 使用嵌套模式
+<Spin size="large">
+  <div style={{ padding: '50px' }}>加载数据中...</div>
+</Spin>
+
+// ✅ 方案 2: 使用嵌套模式包裹实际内容
+<Spin spinning={loading} tip="加载中...">
+  <div>
+    {/* 实际内容 */}
+  </div>
+</Spin>
+```
+
+**最佳实践**:
+- 始终在 Spin 组件中包含子元素
+- 或者移除 `tip` 属性，仅使用 loading 动画
+
+**相关文件**:
+- `frontend/ppa_frontend/src/pages/Dashboard.tsx`
+
+---
+
+### 7.3 图表数据格式化最佳实践
+
+**背景**:  
+在实现 Dashboard 时发现，正确的数据格式化对图表显示至关重要。
+
+**常见问题**:
+
+1. **坐标轴标签格式化**: 数值显示不友好
+2. **Tooltip 格式化**: 悬浮提示信息不完整
+3. **数据单位处理**: 货币、百分比等单位显示
+
+**最佳实践示例**:
+
+```typescript
+// ✅ Y轴标签格式化（货币）
+const config = {
+  yAxis: {
+    label: {
+      formatter: (v: string) => `¥${Number(v || 0).toLocaleString()}`,
+    },
+  },
+};
+
+// ✅ Tooltip 格式化
+const config = {
+  tooltip: {
+    formatter: (datum: any) => {
+      const cost = datum?.totalCost ?? 0;
+      return {
+        name: '总成本',
+        value: `¥${cost.toLocaleString()}`,
+      };
+    },
+  },
+};
+
+// ✅ 数据转换（风险等级分类）
+const riskChartData = riskDistribution.map(item => ({
+  type: item.final_risk_score < 50 ? '低风险' 
+      : item.final_risk_score < 100 ? '中风险' 
+      : '高风险',
+  value: item.count,
+}));
+
+// ✅ 安全的数据映射（防止空对象）
+const roleCostData = Object.entries(roleCostDistribution || {}).map(([role, cost]) => ({
+  role,
+  cost: cost || 0,
+}));
+```
+
+**重要提示**:
+1. 始终对 API 返回数据进行验证和默认值处理
+2. 使用 TypeScript 类型定义确保数据结构正确
+3. 添加空数据状态处理（Empty 组件）
+4. 在 useEffect 中添加错误处理
+
+**相关文件**:
+- `frontend/ppa_frontend/src/pages/Dashboard.tsx`
+- `frontend/ppa_frontend/src/services/dashboard/typings.d.ts`
+
+---

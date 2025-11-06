@@ -1,6 +1,6 @@
 # 后端 Bug 修复记录（整合版）
 
-> **最后更新**: 2025-11-01  
+> **最后更新**: 2025-11-06  
 > **适用范围**: PPA 项目后端 (server/)  
 > **架构版本**: 当前三层架构（Controller-Service-Model）
 
@@ -12,6 +12,7 @@
 2. [异步函数与 async/await 问题](#2-异步函数与-asyncawait-问题)
 3. [SQLite JSON 函数陷阱](#3-sqlite-json-函数陷阱)
 4. [服务器重启与开发流程](#4-服务器重启与开发流程)
+5. [数据查询与字段映射问题](#5-数据查询与字段映射问题)
 
 ---
 
@@ -407,6 +408,7 @@ curl -X POST http://localhost:3001/api/calculate \
 
 | 日期 | 变更内容 | 相关 Sprint |
 |------|---------|------------|
+| 2025-11-06 | 新增数据查询与字段映射问题 | Story 2 |
 | 2025-11-01 | 整合文档，删除过时内容 | - |
 | 2025-10-29 | 修复 prompts 接口挂起问题 | - |
 | 2025-10-21 | 修复差旅成本计算错误 | Sprint 9 |
@@ -416,3 +418,247 @@ curl -X POST http://localhost:3001/api/calculate \
 ---
 
 **维护说明**: 本文档应随项目架构演进持续更新。当引入新的技术栈或重构架构时，应及时删除过时内容，添加新的最佳实践。
+
+---
+
+## 5. 数据查询与字段映射问题
+
+### 5.1 角色成本分布查询字段映射错误（Dashboard API）
+
+**故障现象**:  
+调用 `/api/dashboard/role-cost-distribution` 接口返回空对象 `{}`，但数据库中确实存在项目数据和角色配置。
+
+**发生时间**: 2025-11-06（Story 2: Dashboard 前端UI/UX实现）
+
+**根本原因**:  
+代码中查找的 JSON 字段名与数据库中实际存储的字段名不匹配：
+
+1. **字段名不一致**:
+   - 代码查找: `details.workload.newFeatures`
+   - 实际数据: `details.development_workload`
+   - 代码查找: `details.workload.systemIntegration`
+   - 实际数据: `details.integration_workload`
+
+2. **数据结构不一致**:
+   - 代码查找: `feature.roles.角色名` (嵌套结构)
+   - 实际数据: `feature.角色名` (角色名直接作为字段)
+
+**错误代码**:
+
+```javascript
+// ❌ 错误：字段名不匹配
+exports.getRoleCostDistribution = async () => {
+  const projects = await db.all('SELECT assessment_details_json FROM projects');
+  const roles = await db.all('SELECT role_name, unit_price FROM config_roles');
+  const rolePrices = roles.reduce((acc, role) => { 
+    acc[role.role_name] = role.unit_price; 
+    return acc; 
+  }, {});
+
+  const roleCosts = {};
+  projects.forEach(project => {
+    try {
+      const details = JSON.parse(project.assessment_details_json);
+      
+      // ❌ 错误：查找不存在的字段
+      if (details.workload && details.workload.newFeatures) {
+        details.workload.newFeatures.forEach(feature => {
+          // ❌ 错误：假设有 roles 对象
+          if (feature.roles) {
+            Object.keys(feature.roles).forEach(roleName => {
+              const manDays = parseFloat(feature.roles[roleName] || 0);
+              // ...
+            });
+          }
+        });
+      }
+    } catch (e) {
+      console.error('Error parsing assessment_details_json:', e);
+    }
+  });
+  return roleCosts;
+};
+```
+
+**实际数据结构**:
+
+```json
+{
+  "development_workload": [
+    {
+      "id": "1761180558013-b422",
+      "module1": "碳资产管理子系统",
+      "项目经理": 1.5,
+      "技术经理": 1.2,
+      "DBA": 0.5,
+      "产品经理": 1
+    }
+  ],
+  "integration_workload": [
+    {
+      "id": "1761180558014-0db2",
+      "module1": "系统对接",
+      "项目经理": 1.5,
+      "技术经理": 2,
+      "DBA": 0.5
+    }
+  ]
+}
+```
+
+**解决方案**:
+
+```javascript
+// ✅ 正确：使用实际字段名 + 正确的数据结构
+exports.getRoleCostDistribution = async () => {
+  const projects = await db.all('SELECT assessment_details_json FROM projects');
+  const roles = await db.all('SELECT role_name, unit_price FROM config_roles');
+  const rolePrices = roles.reduce((acc, role) => { 
+    acc[role.role_name] = role.unit_price; 
+    return acc; 
+  }, {});
+
+  const roleCosts = {};
+
+  projects.forEach(project => {
+    try {
+      const details = JSON.parse(project.assessment_details_json);
+      
+      // ✅ 正确：使用 development_workload
+      if (details.development_workload && Array.isArray(details.development_workload)) {
+        details.development_workload.forEach(feature => {
+          // ✅ 正确：遍历所有角色配置，直接从 feature 对象读取
+          Object.keys(rolePrices).forEach(roleName => {
+            if (feature[roleName] !== undefined) {
+              const manDays = parseFloat(feature[roleName] || 0);
+              const unitPrice = rolePrices[roleName] || 0;
+              if (manDays > 0) {
+                roleCosts[roleName] = (roleCosts[roleName] || 0) + (manDays * unitPrice);
+              }
+            }
+          });
+        });
+      }
+      
+      // ✅ 正确：使用 integration_workload
+      if (details.integration_workload && Array.isArray(details.integration_workload)) {
+        details.integration_workload.forEach(integration => {
+          Object.keys(rolePrices).forEach(roleName => {
+            if (integration[roleName] !== undefined) {
+              const manDays = parseFloat(integration[roleName] || 0);
+              const unitPrice = rolePrices[roleName] || 0;
+              if (manDays > 0) {
+                roleCosts[roleName] = (roleCosts[roleName] || 0) + (manDays * unitPrice);
+              }
+            }
+          });
+        });
+      }
+    } catch (e) {
+      console.error('Error parsing assessment_details_json for role costs:', e);
+    }
+  });
+
+  return roleCosts;
+};
+```
+
+**调试技巧**:
+
+```bash
+# 1. 直接查看数据库中的 JSON 数据结构
+cd server
+sqlite3 ppa.db "SELECT assessment_details_json FROM projects WHERE id = 8;" | python3 -m json.tool
+
+# 2. 在 service 中添加 console.log 调试
+console.log('Parsed details:', JSON.stringify(details, null, 2));
+console.log('Available keys:', Object.keys(details));
+
+# 3. 检查角色配置
+curl http://localhost:3001/api/config/roles
+
+# 4. 测试 API 返回
+curl http://localhost:3001/api/dashboard/role-cost-distribution
+```
+
+**最佳实践检查清单**:
+
+- [ ] 在编写查询逻辑前，先查看数据库中的实际数据结构
+- [ ] 使用 `sqlite3` 命令行工具或 SQL 客户端查看 JSON 数据
+- [ ] 不要假设 JSON 字段名，要查看实际数据确认
+- [ ] 添加详细的错误日志，便于调试
+- [ ] 对 JSON 数据添加类型检查（Array.isArray）
+- [ ] 对可能缺失的字段添加空值检查
+- [ ] 遍历配置的角色列表，而不是假设数据结构
+
+**相关文件**:
+- `server/services/dashboardService.js` - 角色成本分布查询逻辑
+- `server/controllers/dashboardController.js` - Dashboard API 控制器
+
+**预防措施**:
+1. **文档化数据结构**: 在 README 或单独文档中记录 assessment_details_json 的完整结构
+2. **数据结构验证**: 添加 JSON Schema 验证
+3. **单元测试**: 为 service 层添加测试，使用真实的数据样本
+4. **类型定义**: 考虑使用 TypeScript 或 JSDoc 定义数据类型
+
+---
+
+### 5.2 数据结构假设的常见陷阱
+
+**背景**:  
+在开发新功能时，开发者容易根据需求文档或想象来假设数据结构，而不是查看实际存储的数据。
+
+**常见错误假设**:
+
+1. **假设嵌套结构**: 假设 `obj.parent.child`，实际可能是 `obj.child`
+2. **假设数组**: 假设某字段是数组，实际可能是对象或字符串
+3. **假设字段存在**: 直接访问字段不检查 undefined
+4. **假设字段名**: 使用驼峰命名，实际可能是下划线命名
+
+**最佳实践**:
+
+```javascript
+// ✅ 正确：先检查数据结构再使用
+const data = JSON.parse(jsonString);
+
+// 1. 检查顶层字段是否存在
+if (!data.workload) {
+  console.warn('Missing workload field');
+  return {};
+}
+
+// 2. 检查字段类型
+if (!Array.isArray(data.workload.items)) {
+  console.warn('workload.items is not an array');
+  return {};
+}
+
+// 3. 安全访问嵌套字段
+const value = data?.workload?.items?.[0]?.value ?? 0;
+
+// 4. 使用实际字段名（查看数据库确认）
+const features = data.development_workload; // 而不是 data.workload.newFeatures
+```
+
+**调试工作流**:
+
+```bash
+# 步骤 1: 查看实际数据
+sqlite3 ppa.db "SELECT * FROM projects LIMIT 1;"
+
+# 步骤 2: 查看 JSON 字段的完整结构
+sqlite3 ppa.db "SELECT assessment_details_json FROM projects WHERE id = 1;" | python3 -m json.tool
+
+# 步骤 3: 提取特定字段查看
+sqlite3 ppa.db "SELECT json_extract(assessment_details_json, '$.development_workload') FROM projects LIMIT 1;"
+
+# 步骤 4: 验证字段是否存在
+sqlite3 ppa.db "SELECT COUNT(*) FROM projects WHERE json_extract(assessment_details_json, '$.development_workload') IS NOT NULL;"
+```
+
+**相关工具**:
+- SQLite JSON 函数: `json_extract()`, `json_each()`, `json_type()`
+- Python `json.tool`: 格式化 JSON 输出
+- VS Code SQLite 扩展: 可视化查看数据库
+
+---

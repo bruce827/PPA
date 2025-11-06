@@ -71,7 +71,7 @@ This command activates the Disruptive Innovation Oracle agent from the BMAD CIS 
 
 ## File Reference
 
-Complete agent definition: [cis/agents/innovation-strategist.md](cis/agents/innovation-strategist.md)
+Complete agent definition: [bmad/cis/agents/innovation-strategist.md](bmad/cis/agents/innovation-strategist.md)
 
 ## Module
 

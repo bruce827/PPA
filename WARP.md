@@ -16,7 +16,7 @@ This file provides guidance to WARP (warp.dev) when working with code in this re
 ## Repository Structure
 
 ```
-server/
+server/                         # 后端服务（Node.js + Express）
 ├── index.js                    # Express 应用入口，中间件加载、路由注册、错误处理
 ├── init-db.js                  # SQLite 数据库表结构初始化脚本
 ├── ppa.db                       # SQLite 数据库文件
@@ -52,50 +52,63 @@ server/
 │   ├── seed-roles.js          # 初始化角色配置
 │   ├── seed-travel-costs.js   # 初始化差旅成本配置
 │   └── seed-risk-items.js     # 初始化风险评估项配置
-├── tests/                      # 测试文件
-│   ├── dashboardService.test.js
-│   ├── dashboardController.test.js
-│   ├── promptTemplate.test.js
-│   └── api-smoke-runner.js
-└── migrations/                 # 数据库迁移脚本（如有）
+└── tests/                      # 测试文件
+
+frontend/ppa_frontend/          # 前端应用（UMI Max + React）
+├── .umirc.ts                   # UMI 配置文件（路由、代理、插件等）
+├── src/
+│   ├── pages/                  # 页面组件
+│   │   ├── Dashboard/         # 数据看板
+│   │   ├── Assessment/        # 项目评估（新建、历史、详情）
+│   │   ├── Config/            # 参数配置
+│   │   └── ModelConfig/       # 模型配置（AI应用、提示词模板）
+│   ├── services/              # API 调用层（使用 UMI request）
+│   ├── components/            # 可复用组件
+│   ├── models/                # 全局状态管理（UMI Model）
+│   ├── utils/                 # 工具函数
+│   ├── constants/             # 常量定义
+│   ├── access.ts             # 权限配置
+│   └── app.ts                 # 运行时配置
+└── package.json
 ```
 
 ## Key Commands
 
-### 开发命令
+### 完整启动流程（首次运行）
 
 ```bash
-# 后端相关
+# 1. 初始化后端
 cd server
-
-# 安装依赖
 npm install
-
-# 初始化数据库表结构（幂等操作，可重复执行）
-node init-db.js
-
-# 初始化基础配置数据（角色、差旅、风险项）
-cd seed-data
-node seed-all.js
+node init-db.js                  # 创建数据库表结构
+cd seed-data && node seed-all.js # 初始化基础数据
 cd ..
 
-# 启动开发服务器（端口 3001）
+# 2. 启动后端服务（端口 3001）
 node index.js
 
-# 运行所有测试
-npm test
-
-# 前端相关
+# 3. 在另一个终端，启动前端
 cd frontend/ppa_frontend
+yarn install
+yarn start                        # 端口 8000
+```
 
-# 安装依赖（使用 yarn）
-yarn
+### 日常开发命令
 
-# 启动前端开发服务器（端口 8000）
-yarn start
+```bash
+# 后端开发
+cd server && node index.js        # 启动后端服务
+npm test                          # 运行测试
 
-# 前端构建
-yarn build
+# 前端开发
+cd frontend/ppa_frontend && yarn start   # 启动开发服务器
+yarn build                                # 生产构建
+yarn format                               # 代码格式化（Prettier）
+
+# 数据库操作
+cd server
+node init-db.js                   # 重新创建表结构（幂等）
+cd seed-data && node seed-all.js  # 重新初始化数据
 ```
 
 ## Core Architecture Patterns
@@ -183,41 +196,71 @@ yarn build
 ## 常见开发任务
 
 ### 添加新的成本类别
-1. 在 `seed-data/` 中新增种子数据脚本或更新现有文件
-2. 在 `services/calculationService.js` 中添加计算逻辑
-3. 在 `routes/calculation.js` 验证请求字段
-4. 更新前端表单和数据结构
+1. **后端**: 在 `seed-data/` 中新增种子数据脚本或更新现有文件
+2. **后端**: 在 `services/calculationService.js` 中添加计算逻辑
+3. **后端**: 在 `routes/calculation.js` 验证请求字段
+4. **前端**: 在 `pages/Assessment/New` 中更新表单组件
+5. **前端**: 在 `services/` 中添加对应的 API 调用
 
 ### 修改风险评分算法
-- 编辑 `utils/constants.js` 中 `RISK` 对象的阈值
-- 更新 `utils/rating.js` 中 `computeFactorFromRatio` 函数
-- 通过单元测试验证分段计算结果
+1. 编辑 `server/utils/constants.js` 中 `RISK` 对象的阈值
+2. 更新 `server/utils/rating.js` 中 `computeFactorFromRatio` 函数
+3. 通过单元测试验证分段计算结果：`cd server && npm test`
+
+### 添加新的前端页面
+1. 在 `.umirc.ts` 的 `routes` 数组中添加路由配置
+2. 在 `src/pages/` 中创建对应的页面组件
+3. 如需菜单显示，配置 `name` 和 `icon` 属性
+4. 如需权限控制，在 `access.ts` 中配置权限规则
 
 ### 调试 SQLite 查询
-- 使用 `npm test` 前缀在测试环境验证
-- 或临时输出 SQL 语句到控制台（在 `models/` 中加 `console.log`）
-- SQLite 文件位于 `server/ppa.db`，可用 SQLite 客户端工具打开
+- 使用 SQLite 客户端打开 `server/ppa.db` 查看数据
+- 在 `models/` 层函数中临时添加 `console.log(sql, params)` 输出 SQL
+- 通过测试环境验证：`cd server && npm test`
 
 ### 处理新的导出格式
-- PDF/Excel 导出逻辑位于 `services/exportService.js`
+- PDF/Excel 导出逻辑位于 `server/services/exportService.js`
 - 使用 `pdfkit` 和 `exceljs` 库
 - 导出的数据需从 `projects` 表中读取 `assessment_details_json` 并解析
 
 ## 重要注意事项
 
-- **单价单位**: 数据库存储为"元"，计算时需转为"万元"（除以 10000）
-- **初始化幂等性**: `node init-db.js` 使用 `IF NOT EXISTS`，可安全重复执行
-- **模板机制**: 通过 `is_template` 标志共用 `projects` 表，查询时注意过滤
-- **评分因子动态计算**: 最大分值由已配置的风险项选项 JSON 动态计算，无硬编码值
+### 后端
+- **单价单位转换**: 数据库存储为"元"，计算时需转为"万元"（除以 10000）
+- **数据库初始化**: `node init-db.js` 使用 `IF NOT EXISTS`，可安全重复执行
+- **模板与项目**: 通过 `is_template` 字段共用 `projects` 表，查询时注意过滤
+- **评分因子**: 最大分值由已配置的风险项 `options_json` 动态计算，无硬编码值
 - **Graceful Shutdown**: Ctrl+C 会触发 SIGINT，自动关闭数据库连接
-- **测试数据库**: `npm test` 时使用内存数据库或临时文件，避免污染生产数据
+- **测试隔离**: `npm test` 时使用内存数据库或临时文件，避免污染生产数据
 
-## 前端项目信息
+### 前端
+- **包管理器**: 使用 yarn，不要用 npm（package.json 中指定）
+- **代理配置**: 开发环境 API 请求通过 `/api` 代理到后端 3001 端口
+- **路由配置**: 所有路由在 `.umirc.ts` 中定义，不使用文件系统路由
+- **状态管理**: 使用 UMI Model，避免引入额外的状态管理库
 
-- **技术**: UMI Max (React) + Ant Design + TypeScript
-- **启动**: `cd frontend/ppa_frontend && yarn start` (端口 8000)
-- **API 代理**: `/api` 转发到 `http://localhost:3001`
-- **构建**: `yarn build`
+## 前端架构详解
+
+### UMI Max 约定式路由
+前端使用 UMI Max 的约定式路由机制，在 `.umirc.ts` 中定义了以下主要页面：
+
+- `/dashboard` - 数据看板（首页）
+- `/assessment/new` - 新建评估向导
+- `/assessment/history` - 历史项目列表
+- `/assessment/detail/:id` - 项目详情（不在菜单显示）
+- `/config` - 参数配置（角色、风险项、差旅成本）
+- `/model-config/application` - 模型应用管理
+- `/model-config/prompts` - 提示词模板管理
+
+### 数据流
+1. **API 服务层** (`src/services/`) - 封装所有后端 API 调用，使用 UMI 的 `request` 工具
+2. **全局状态** (`src/models/`) - 使用 UMI Model 管理跨页面状态
+3. **页面组件** (`src/pages/`) - 业务页面，消费 API 和全局状态
+4. **通用组件** (`src/components/`) - 可复用的 UI 组件
+
+### 代理配置
+`.umirc.ts` 中配置了开发代理：`/api` → `http://localhost:3001`
+确保前后端能在本地同时运行，前端不受跨域限制。
 
 ## 相关文档
 

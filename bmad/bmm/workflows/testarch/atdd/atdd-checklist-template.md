@@ -296,7 +296,7 @@ test('should do something', async ({ {fixtureName} }) => {
 4. **Work one test at a time** (red → green for each)
 5. **Share progress** in daily standup
 6. **When all tests pass**, refactor code for quality
-7. **When refactoring complete**, run `bmad sm story-approved` to move story to DONE
+7. **When refactoring complete**, run `bmad sm story-done` to move story to DONE
 
 ---
 
@@ -355,8 +355,8 @@ See `tea-index.csv` for complete knowledge fragment mapping.
 
 - Ask in team standup
 - Tag @{tea_agent_username} in Slack/Discord
-- Refer to `testarch/README.md` for workflow documentation
-- Consult `testarch/knowledge/` for testing best practices
+- Refer to `./bmm/docs/tea-README.md` for workflow documentation
+- Consult `./bmm/testarch/knowledge` for testing best practices
 
 ---
 

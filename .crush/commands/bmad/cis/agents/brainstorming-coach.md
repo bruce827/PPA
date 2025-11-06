@@ -71,7 +71,7 @@ This command activates the Elite Brainstorming Specialist agent from the BMAD CI
 
 ## File Reference
 
-Complete agent definition: [cis/agents/brainstorming-coach.md](cis/agents/brainstorming-coach.md)
+Complete agent definition: [bmad/cis/agents/brainstorming-coach.md](bmad/cis/agents/brainstorming-coach.md)
 
 ## Module
 

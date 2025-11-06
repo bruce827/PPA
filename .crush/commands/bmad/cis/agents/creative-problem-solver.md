@@ -71,7 +71,7 @@ This command activates the Master Problem Solver agent from the BMAD CIS module.
 
 ## File Reference
 
-Complete agent definition: [cis/agents/creative-problem-solver.md](cis/agents/creative-problem-solver.md)
+Complete agent definition: [bmad/cis/agents/creative-problem-solver.md](bmad/cis/agents/creative-problem-solver.md)
 
 ## Module
 

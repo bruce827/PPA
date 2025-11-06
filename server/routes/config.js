@@ -22,6 +22,7 @@ router.post('/prompts', promptTemplateController.createPromptTemplate);
 router.put('/prompts/:id', promptTemplateController.updatePromptTemplate);
 router.delete('/prompts/:id', promptTemplateController.deletePromptTemplate);
 router.post('/prompts/:id/copy', promptTemplateController.copyTemplate);
+router.post('/prompts/:id/preview', promptTemplateController.previewTemplate);
 
 // 角色配置路由
 router.get('/roles', configController.getAllRoles);

@@ -1,6 +1,6 @@
 # Brainstorm Project - Workflow Instructions
 
-````xml
+```xml
 <critical>The workflow execution engine is governed by: {project_root}/bmad/core/tasks/workflow.xml</critical>
 <critical>You MUST have already loaded and processed: {installed_path}/workflow.yaml</critical>
 <critical>Communicate all responses in {communication_language}</critical>
@@ -8,30 +8,40 @@
 
 <workflow>
 
-  <step n="1" goal="Check and load workflow status file">
-    <action>Search {output_folder}/ for files matching pattern: bmm-workflow-status.md</action>
-    <action>Find the most recent file (by date in filename: bmm-workflow-status.md)</action>
+  <step n="1" goal="Validate workflow readiness" tag="workflow-status">
+    <action>Check if {output_folder}/bmm-workflow-status.yaml exists</action>
 
-    <check if="exists">
-      <action>Load the status file</action>
-      <action>Set status_file_found = true</action>
-      <action>Store status_file_path for later updates</action>
+    <check if="status file not found">
+      <output>No workflow status file found. Brainstorming is optional - you can continue without status tracking.</output>
+      <action>Set standalone_mode = true</action>
     </check>
 
-    <check if="not exists">
-      <ask>**No workflow status file found.**
+    <check if="status file found">
+      <action>Load the FULL file: {output_folder}/bmm-workflow-status.yaml</action>
+      <action>Parse workflow_status section</action>
+      <action>Check status of "brainstorm-project" workflow</action>
+      <action>Get project_level from YAML metadata</action>
+      <action>Find first non-completed workflow (next expected workflow)</action>
 
-This workflow generates brainstorming ideas for project ideation (optional Phase 1 workflow).
+      <check if="brainstorm-project status is file path (already completed)">
+        <output>⚠️ Brainstorming session already completed: {{brainstorm-project status}}</output>
+        <ask>Re-running will create a new session. Continue? (y/n)</ask>
+        <check if="n">
+          <output>Exiting. Use workflow-status to see your next step.</output>
+          <action>Exit workflow</action>
+        </check>
+      </check>
 
-Options:
-1. Run workflow-status first to create the status file (recommended for progress tracking)
-2. Continue in standalone mode (no progress tracking)
-3. Exit
+      <check if="brainstorm-project is not the next expected workflow (anything after brainstorm-project is completed already)">
+        <output>⚠️ Next expected workflow: {{next_workflow}}. Brainstorming is out of sequence.</output>
+        <ask>Continue with brainstorming anyway? (y/n)</ask>
+        <check if="n">
+          <output>Exiting. Run {{next_workflow}} instead.</output>
+          <action>Exit workflow</action>
+        </check>
+      </check>
 
-What would you like to do?</ask>
-      <action>If user chooses option 1 → HALT with message: "Please run workflow-status first, then return to brainstorm-project"</action>
-      <action>If user chooses option 2 → Set standalone_mode = true and continue</action>
-      <action>If user chooses option 3 → HALT</action>
+      <action>Set standalone_mode = false</action>
     </check>
   </step>
 
@@ -56,64 +66,45 @@ What would you like to do?</ask>
     </invoke-workflow>
   </step>
 
-  <step n="4" goal="Update status file on completion">
-    <action>Search {output_folder}/ for files matching pattern: bmm-workflow-status.md</action>
-    <action>Find the most recent file (by date in filename)</action>
+  <step n="4" goal="Update status and complete" tag="workflow-status">
+    <check if="standalone_mode != true">
+      <action>Load the FULL file: {output_folder}/bmm-workflow-status.yaml</action>
+      <action>Find workflow_status key "brainstorm-project"</action>
+      <critical>ONLY write the file path as the status value - no other text, notes, or metadata</critical>
+      <action>Update workflow_status["brainstorm-project"] = "{output_folder}/bmm-brainstorming-session-{{date}}.md"</action>
+      <action>Save file, preserving ALL comments and structure including STATUS DEFINITIONS</action>
 
-    <check if="status file exists">
-      <action>Load the status file</action>
+      <action>Find first non-completed workflow in workflow_status (next workflow to do)</action>
+      <action>Determine next agent from path file based on next workflow</action>
+    </check>
 
-      <template-output file="{{status_file_path}}">current_step</template-output>
-      <action>Set to: "brainstorm-project"</action>
-
-      <template-output file="{{status_file_path}}">current_workflow</template-output>
-      <action>Set to: "brainstorm-project - Complete"</action>
-
-      <template-output file="{{status_file_path}}">progress_percentage</template-output>
-      <action>Increment by: 5% (optional Phase 1 workflow)</action>
-
-      <template-output file="{{status_file_path}}">decisions_log</template-output>
-      <action>Add entry:</action>
-      ```
-      - **{{date}}**: Completed brainstorm-project workflow. Generated brainstorming session results saved to {output_folder}/brainstorming-session-results-{{date}}.md. Next: Review ideas and consider running research or product-brief workflows.
-      ```
-
-      <output>**✅ Brainstorming Session Complete, {user_name}!**
+    <output>**✅ Brainstorming Session Complete, {user_name}!**
 
 **Session Results:**
-- Brainstorming results saved to: {output_folder}/brainstorming-session-results-{{date}}.md
 
-**Status file updated:**
-- Current step: brainstorm-project ✓
-- Progress: {{new_progress_percentage}}%
+- Brainstorming results saved to: {output_folder}/bmm-brainstorming-session-{{date}}.md
+
+{{#if standalone_mode != true}}
+**Status Updated:**
+
+- Progress tracking updated
 
 **Next Steps:**
-1. Review brainstorming results
-2. Consider running:
-   - `research` workflow for market/technical research
-   - `product-brief` workflow to formalize product vision
-   - Or proceed directly to `plan-project` if ready
+
+- **Next required:** {{next_workflow}} ({{next_agent}} agent)
+- **Optional:** You can run other analysis workflows (research, product-brief) before proceeding
 
 Check status anytime with: `workflow-status`
-      </output>
-    </check>
-
-    <check if="status file not found">
-      <output>**✅ Brainstorming Session Complete, {user_name}!**
-
-**Session Results:**
-- Brainstorming results saved to: {output_folder}/brainstorming-session-results-{{date}}.md
-
-Note: Running in standalone mode (no status file).
-
-To track progress across workflows, run `workflow-status` first.
-
+{{else}}
 **Next Steps:**
-1. Review brainstorming results
-2. Run research or product-brief workflows
-      </output>
-    </check>
+
+Since no workflow is in progress:
+
+- Refer to the BMM workflow guide if unsure what to do next
+- Or run `workflow-init` to create a workflow path and get guided next steps
+{{/if}}
+    </output>
   </step>
 
 </workflow>
-````
+```

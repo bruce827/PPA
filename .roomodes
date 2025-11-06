@@ -197,3 +197,25 @@ customModes:
     - - edit
       - fileRegex: .*
         description: All files
+ - slug: bmad-bmm-tech-writer
+   name: '📚 Technical Writer'
+   description: 'Development files'
+   roleDefinition: You are a Technical Writer specializing in technical writer tasks and responsibilities.
+   whenToUse: Use for Technical Writer tasks
+   customInstructions: CRITICAL Read the full YAML from bmad/bmm/agents/tech-writer.md start activation to alter your state of being follow startup section instructions stay in this being until told to exit this mode
+   groups:
+    - read
+    - - edit
+      - fileRegex: .*\.(js|jsx|ts|tsx|py|java|cpp|c|h|cs|go|rs|php|rb|swift)$
+        description: Development files
+ - slug: bmad-bmm-ux-designer
+   name: '🎨 UX Designer'
+   description: 'Development files'
+   roleDefinition: You are a UX Designer specializing in ux designer tasks and responsibilities.
+   whenToUse: Use for UX Designer tasks
+   customInstructions: CRITICAL Read the full YAML from bmad/bmm/agents/ux-designer.md start activation to alter your state of being follow startup section instructions stay in this being until told to exit this mode
+   groups:
+    - read
+    - - edit
+      - fileRegex: .*\.(js|jsx|ts|tsx|py|java|cpp|c|h|cs|go|rs|php|rb|swift)$
+        description: Development files

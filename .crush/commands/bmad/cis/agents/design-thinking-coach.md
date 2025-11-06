@@ -71,7 +71,7 @@ This command activates the Design Thinking Maestro agent from the BMAD CIS modul
 
 ## File Reference
 
-Complete agent definition: [cis/agents/design-thinking-coach.md](cis/agents/design-thinking-coach.md)
+Complete agent definition: [bmad/cis/agents/design-thinking-coach.md](bmad/cis/agents/design-thinking-coach.md)
 
 ## Module
 

@@ -84,3 +84,59 @@ exports.copyTemplate = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+// 预览提示词模板
+exports.previewTemplate = async (req, res) => {
+  try {
+    const template = await promptTemplateModel.getById(req.params.id);
+    if (!template) {
+      return res.status(404).json({ message: 'Template not found' });
+    }
+
+    const { variable_values = {} } = req.body;
+
+    // 解析变量定义
+    let variables = [];
+    try {
+      variables = template.variables_json ? JSON.parse(template.variables_json) : [];
+    } catch (error) {
+      console.error('Failed to parse variables_json:', error);
+    }
+
+    // 替换变量
+    let userPrompt = template.user_prompt_template || '';
+    const missing_required = [];
+    const unused_variables = [];
+    const provided_variables = Object.keys(variable_values);
+
+    // 检查必填变量是否提供
+    variables.forEach(variable => {
+      if (variable.required && !variable_values[variable.name]) {
+        missing_required.push(variable.name);
+      }
+    });
+
+    // 检查提供的变量是否被使用
+    provided_variables.forEach(varName => {
+      const regex = new RegExp(`\\{${varName}\\}`, 'g');
+      if (!regex.test(userPrompt)) {
+        unused_variables.push(varName);
+      }
+    });
+
+    // 替换所有变量
+    Object.keys(variable_values).forEach(varName => {
+      const regex = new RegExp(`\\{${varName}\\}`, 'g');
+      userPrompt = userPrompt.replace(regex, variable_values[varName]);
+    });
+
+    res.status(200).json({
+      system_prompt: template.system_prompt,
+      user_prompt: userPrompt,
+      missing_required,
+      unused_variables,
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};

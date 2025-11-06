@@ -68,7 +68,7 @@ This command activates the Master Storyteller agent from the BMAD CIS module.
 
 ## File Reference
 
-Complete agent definition: [cis/agents/storyteller.md](cis/agents/storyteller.md)
+Complete agent definition: [bmad/cis/agents/storyteller.md](bmad/cis/agents/storyteller.md)
 
 ## Module
 

@@ -116,7 +116,7 @@ This command activates the README agent from the BMAD CIS module.
 
 ## File Reference
 
-Complete agent definition: [cis/agents/README.md](cis/agents/README.md)
+Complete agent definition: [bmad/cis/agents/README.md](bmad/cis/agents/README.md)
 
 ## Module
 

@@ -8,6 +8,8 @@ config_source: "{project-root}/bmad/bmm/config.yaml"
 output_folder: "{config_source}:output_folder"
 user_name: "{config_source}:user_name"
 communication_language: "{config_source}:communication_language"
+document_output_language: "{config_source}:document_output_language"
+user_skill_level: "{config_source}:user_skill_level"
 date: system-generated
 
 # Workflow components
@@ -23,3 +25,5 @@ recommended_inputs:
   - game_brief: "{output_folder}/game-brief.md"
   - gdd: "{output_folder}/GDD.md"
   - product_brief: "{output_folder}/product-brief.md"
+
+standalone: true
