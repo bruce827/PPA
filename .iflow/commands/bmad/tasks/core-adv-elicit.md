@@ -4,7 +4,7 @@ When this command is used, execute the following task:
 
 ## Adv Elicit Task
 
-<task id="bmad/core/tasks/adv-elicit.xml" name="Advanced Elicitation">
+<task id="bmad/core/tasks/adv-elicit.xml" name="Advanced Elicitation" standalone="true">
   <llm critical="true">
     <i>MANDATORY: Execute ALL steps in the flow section IN EXACT ORDER</i>
     <i>DO NOT skip steps or change the sequence</i>

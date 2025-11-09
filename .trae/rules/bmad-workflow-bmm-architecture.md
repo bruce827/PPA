@@ -76,6 +76,7 @@ features:
 
 standalone: true
 
+# Web bundle configuration for standalone deployment
 
 ## Usage
 
