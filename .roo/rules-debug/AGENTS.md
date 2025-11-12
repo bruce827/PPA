@@ -9,3 +9,8 @@
 ## Common Issues
 - 数据库连接错误通常显示为 "Database connection failed"，检查后端服务是否运行
 - 前端代理错误可能显示为 CORS 或网络错误，确认后端服务运行在 3001 端口
+
+## Testing Debug
+- 测试使用独立数据库 `ppa.test.db`，测试后自动清理
+- 所有 API 测试硬编码 500ms 响应时间限制，超时即失败
+- 测试环境需要设置 `NODE_ENV=test`
