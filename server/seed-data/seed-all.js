@@ -12,6 +12,7 @@ const path = require('path');
 const scripts = [
   'seed-roles.js',
   'seed-travel-costs.js',
+  'seed-ai-prompts.js',
   // 'seed-risk-items.js', // 暂时注释，等待创建
 ];
 

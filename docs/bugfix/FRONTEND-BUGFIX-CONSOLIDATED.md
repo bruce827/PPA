@@ -1,3 +1,5 @@
+<!-- markdownlint-disable -->
+
 # 前端 Bug 修复记录（整合版）
 
 > **最后更新**: 2025-11-06  
@@ -748,6 +750,49 @@ actionRef.current?.reset();         // 重置表格
 - [React Hooks - useRef](https://react.dev/reference/react/useRef)
 - [ProTable 官方文档 - actionRef](https://procomponents.ant.design/components/table#actionref)
 - [React 常见错误 - Maximum update depth exceeded](https://react.dev/reference/react/Component#componentdidupdate)
+
+---
+
+### 6.4 AI 模块分析服务复用（Sprint 14）
+
+**问题描述**:  `ProjectModuleAnalyzer` 组件早期直接在组件内调用 `fetch('/api/ai/...')` 访问后端接口，绕过了 `@/services/assessment` 的统一封装。
+
+**风险影响**:
+
+- ❌ 失去全局请求拦截器、超时处理与鉴权注入
+- ❌ 接口类型定义分散，service 层的变更无法同步
+- ❌ 与 `AIAssessmentModal` 等其它 AI 流程重复实现，维护成本增加
+
+**修复措施**:
+
+```typescript
+// ✅ 统一通过 assessment service 请求
+const result = await analyzeProjectModules({
+  description: trimmedDescription,
+  projectType,
+  projectScale,
+  prompt: selectedPrompt,
+  promptId: selectedPrompt?.id,
+  variables: sanitizedVariables,
+  template: 'project_module_analysis',
+});
+```
+
+- 在 `frontend/ppa_frontend/src/services/assessment/index.ts` 中新增 `getModuleAnalysisPrompts`、`analyzeProjectModules` 以及对应的类型定义
+- `ProjectModuleAnalyzer.tsx` 替换为使用上述 service，并对提示词变量进行字符串化处理
+- 统一错误提示文案，成功时基于返回模块数量提示用户
+
+**检查清单**:
+
+- [ ] 所有 AI 组件请求均通过 `@/services/assessment`
+- [ ] 新增 API 在 service 层导出并具备类型定义
+- [ ] 组件内不再出现裸 `fetch('/api/...')`
+- [ ] 错误 message 提示与其它 AI 功能保持一致
+
+**相关文件**:
+
+- `frontend/ppa_frontend/src/services/assessment/index.ts`
+- `frontend/ppa_frontend/src/pages/Assessment/components/ProjectModuleAnalyzer.tsx`
 
 ---
 

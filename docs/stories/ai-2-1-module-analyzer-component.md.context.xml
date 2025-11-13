@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<story-context id="bmad/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>AI-2</epicId>
+    <storyId>AI-2.1</storyId>
+    <title>AI项目模块分析器组件</title>
+    <status>drafted</status>
+    <generatedAt>2025-11-12T03:40:00.000Z</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/stories/ai-2-1-module-analyzer-component.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>项目评估人员</asA>
+    <iWant>在工作量估算步骤中输入项目需求描述，以便AI能够自动分析并生成结构化的功能模块列表(包含一、二、三级模块)</iWant>
+    <soThat>然后一键导入到工作量估算表中</soThat>
+    <tasks>
+      <task id="1" name="创建ProjectModuleAnalyzer组件" status="pending">
+        <description>创建基础组件结构，包括props定义、状态管理和Tab布局</description>
+        <ac>[AC1, AC2]</ac>
+        <files>frontend/ppa_frontend/src/pages/Assessment/components/ProjectModuleAnalyzer.tsx</files>
+      </task>
+      <task id="2" name="实现智能输入区域" status="pending">
+        <description>创建项目信息输入区域，包括类型、规模选择和详细描述输入</description>
+        <ac>[AC2]</ac>
+      </task>
+      <task id="3" name="实现提示词配置功能" status="pending">
+        <description>集成AI提示词配置，动态加载模板和变量</description>
+        <ac>[AC3]</ac>
+      </task>
+      <task id="4" name="实现AI分析功能" status="pending">
+        <description>调用AI分析API，处理分析结果和错误</description>
+        <ac>[AC4, AC8]</ac>
+      </task>
+      <task id="5" name="实现分析结果展示" status="pending">
+        <description>以Tree结构展示分析结果，支持统计信息和操作</description>
+        <ac>[AC5]</ac>
+      </task>
+      <task id="6" name="实现模块导入功能" status="pending">
+        <description>将AI分析结果标准化并导入到新功能开发或系统对接Tab</description>
+        <ac>[AC6]</ac>
+      </task>
+      <task id="7" name="在WorkloadEstimation中集成" status="pending">
+        <description>修改现有WorkloadEstimation组件，添加第三个Tab</description>
+        <ac>[AC1]</ac>
+      </task>
+      <task id="8" name="实现默认模板生成" status="pending">
+        <description>根据项目类型自动生成默认描述模板</description>
+        <ac>[AC7]</ac>
+      </task>
+      <task id="9" name="添加样式" status="pending">
+        <description>创建完整的Less样式文件</description>
+        <ac>[AC1-6]</ac>
+      </task>
+      <task id="10" name="错误处理和测试" status="pending">
+        <description>添加完整的错误处理和测试覆盖</description>
+        <ac>[AC8]</ac>
+      </task>
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+    <criterion id="AC1">
+      <given>用户在新建评估页面的工作量估算步骤</given>
+      <when>用户查看页面布局</when>
+      <then>系统显示Tab标签页组件，包含三个Tab: "AI模块梳理"、"新功能开发"、"系统对接"，默认选中"AI模块梳理"标签</then>
+    </criterion>
+    <criterion id="AC2">
+      <given>AI模块梳理Tab已激活</given>
+      <when>用户查看输入区域</when>
+      <then>系统显示智能项目分析Card，包含项目类型选择器、项目规模选择器、详细项目描述多行文本框</then>
+    </criterion>
+    <criterion id="AC3">
+      <given>AI模块梳理Tab已激活</given>
+      <when>系统从后端加载提示词列表成功</then>
+      <then>显示智能配置Card，包含分析模板下拉选择框，当选择模板时动态显示变量输入框</then>
+    </criterion>
+    <criterion id="AC4">
+      <given>用户已输入项目描述</given>
+      <when>用户点击"开始AI模块分析"按钮</when>
+      <then>系统验证项目描述非空，设置loading状态，调用aiService.analyzeProjectModules方法</then>
+    </criterion>
+    <criterion id="AC5">
+      <given>AI分析成功完成</given>
+      <when>系统接收到分析结果</when>
+      <then>显示分析结果Card，包含项目分析总结、建议模块结构预览、Tree结构展示模块层级、统计信息和操作按钮</then>
+    </criterion>
+    <criterion id="AC6">
+      <given>AI分析结果已显示</given>
+      <when>用户点击"导入到新功能开发"或"导入到系统对接"按钮</then>
+      <then>系统将分析结果标准化处理，生成唯一ID，设置复杂度对应的交付系数，初始化所有角色工作量为0，调用onModulesGenerated回调</then>
+    </criterion>
+    <criterion id="AC7">
+      <given>项目描述为空</given>
+      <when>用户选择项目类型(非"自定义")</when>
+      <then>系统根据项目类型生成默认项目描述模板，自动填充到描述文本框</then>
+    </criterion>
+    <criterion id="AC8">
+      <given>错误场景</given>
+      <when>项目描述为空或AI分析API调用失败</when>
+      <then>显示适当的错误消息或警告</then>
+    </criterion>
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <doc path="docs/new-assessment-ai-design-step2.md" title="新建评估页面 - AI智能工作量估算功能设计">
+        <section>第1-300行：ProjectModuleAnalyzer组件详细设计</section>
+        <snippet>在WorkloadEstimation组件中添加AI功能，通过项目描述自动梳理模块结构，并为任意模块提供一键智能工作量评估</snippet>
+      </doc>
+      <doc path="docs/tech-spec.md" title="软件项目评估系统技术规范">
+        <section>第5-7章：前端架构设计</section>
+        <snippet>React + Ant Design技术栈，UMI Max框架，评估向导页面设计，工作量估算组件结构</snippet>
+      </doc>
+      <doc path="docs/stories/ai-1-1-risk-assessment-ai-modal.md" title="AI风险评估弹窗组件">
+        <section>Dev Notes：技术栈和组件层次</section>
+        <snippet>AI评估功能参考实现，UMI Max + React + TypeScript，Ant Design组件库使用模式</snippet>
+      </doc>
+    </docs>
+    <code>
+      <file path="frontend/ppa_frontend/src/pages/Assessment/components/WorkloadEstimation.tsx" kind="component">
+        <symbol>WorkloadEstimation</symbol>
+        <lines>1-100</lines>
+        <reason>现有工作量估算主组件，需要在此基础上集成AI模块梳理Tab</reason>
+      </file>
+      <file path="frontend/ppa_frontend/src/pages/Assessment/components/AIAssessmentModal.tsx" kind="component">
+        <symbol>AIAssessmentModal</symbol>
+        <lines>1-50</lines>
+        <reason>已实现的AI评估组件，可参考AI功能和API调用模式</reason>
+      </file>
+      <file path="frontend/ppa_frontend/src/pages/Assessment/New.tsx" kind="component">
+        <symbol>NewAssessmentPage</symbol>
+        <lines>50-150</lines>
+        <reason>新建评估主页面，了解页面布局和状态管理方式</reason>
+      </file>
+    </code>
+    <dependencies>
+      <framework name="react" version="18+"/>
+      <framework name="antd" version="5+"/>
+      <framework name="typescript" version="4+"/>
+      <library name="@ant-design/pro-components"/>
+      <library name="@ant-design/charts"/>
+      <api endpoint="POST /api/ai/module-prompts" description="获取模块分析提示词列表"/>
+      <api endpoint="POST /api/ai/analyze-project-modules" description="执行AI模块分析"/>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+    <constraint type="技术栈">
+      <description>必须使用UMI Max + React + TypeScript技术栈</description>
+      <source>docs/tech-spec.md 第5章</source>
+    </constraint>
+    <constraint type="UI组件">
+      <description>必须使用Ant Design组件库，确保界面一致性</description>
+      <source>docs/tech-spec.md 第5章</source>
+    </constraint>
+    <constraint type="数据流">
+      <description>模块导入后必须调用父组件的onModulesGenerated回调</description>
+      <source>故事任务第6项</source>
+    </constraint>
+    <constraint type="复杂度映射">
+      <description>复杂度到交付系数映射：简单→0.6, 中等→1.0, 复杂→1.4</description>
+      <source>docs/new-assessment-ai-design-step2.md</source>
+    </constraint>
+    <constraint type="ID生成">
+      <description>使用createRowId工具函数生成唯一ID：时间戳+随机数</description>
+      <source>现有WorkloadEstimation组件实现</source>
+    </constraint>
+  </constraints>
+
+  <interfaces>
+    <interface name="ProjectModuleAnalyzer" kind="React组件接口">
+      <signature>
+        interface ProjectModuleAnalyzerProps {
+          onModulesGenerated: (type: 'dev' | 'integration', modules: WorkloadRecord[]) => void;
+          aiEnabled: boolean;
+          roles: RoleConfig[];
+        }
+      </signature>
+      <path>frontend/ppa_frontend/src/pages/Assessment/components/ProjectModuleAnalyzer.tsx</path>
+    </interface>
+    <interface name="aiService.analyzeProjectModules" kind="API方法">
+      <signature>
+        analyzeProjectModules(params: {
+          description: string;
+          projectType: string;
+          projectScale: string;
+          prompt?: Prompt;
+          variables: Record<string, string>;
+        }): Promise&lt;AnalysisResult&gt;
+      </signature>
+      <path>services/aiService.js (待实现)</path>
+    </interface>
+    <interface name="GET /api/ai/module-prompts" kind="REST API">
+      <signature>HTTP GET /api/ai/module-prompts</signature>
+      <path>routes/ai.js (待实现)</path>
+    </interface>
+    <interface name="WorkloadRecord" kind="数据接口">
+      <signature>
+        interface WorkloadRecord {
+          id: string;
+          module1: string;
+          module2: string;
+          module3: string;
+          description: string;
+          delivery_factor: number;
+          workload: number;
+          [roleName: string]: number;
+        }
+      </signature>
+      <path>前端组件中定义</path>
+    </interface>
+  </interfaces>
+
+  <tests>
+    <standards>
+      使用Jest进行单元测试，Cypress进行端到端测试。遵循现有测试模式：组件测试、API测试、集成测试。测试文件放在tests/目录下，与被测试文件同名。
+    </standards>
+    <locations>
+      <location>tests/components/ProjectModuleAnalyzer.test.tsx</location>
+      <location>tests/integration/workload-estimation.test.tsx</location>
+      <location>cypress/integration/assessment-ai-features.spec.js</location>
+    </locations>
+    <ideas>
+      <test id="TC1" ac="AC4" title="AI模块分析成功流程测试">
+        <description>输入项目描述，选择类型和规模，点击AI分析，验证loading状态、API调用和结果展示</description>
+      </test>
+      <test id="TC2" ac="AC2,AC7" title="项目类型和规模选择测试">
+        <description>测试8种项目类型和4种规模选择，验证默认模板生成逻辑</description>
+      </test>
+      <test id="TC3" ac="AC6" title="模块导入功能测试">
+        <description>验证AI分析结果到WorkloadRecord的标准化转换，ID生成，复杂度映射</description>
+      </test>
+      <test id="TC4" ac="AC3" title="提示词配置测试">
+        <description>测试提示词列表加载，模板选择，变量配置动态显示</description>
+      </test>
+      <test id="TC5" ac="AC8" title="错误处理测试">
+        <description>测试空描述验证，API失败处理，UI状态恢复</description>
+      </test>
+      <test id="TC6" ac="AC1" title="Tab集成测试">
+        <description>验证在WorkloadEstimation中成功集成第三个Tab，Tab切换和数据保持</description>
+      </test>
+    </ideas>
+  </tests>
+</story-context>

@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<story-context id="bmad/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>AI-3</epicId>
+    <storyId>AI-3.1</storyId>
+    <title>单模块AI工作量评估功能</title>
+    <status>drafted</status>
+    <generatedAt>2025-11-12T04:33:00.000Z</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/stories/ai-3-1-single-module-evaluation.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>项目评估人员</asA>
+    <iWant>在工作量估算表中针对任意功能模块点击"一键评估"按钮</iWant>
+    <soThat>以便AI能够立即分析模块复杂度并给出按角色划分的建议工作量(人/天),为成本估算提供快速可靠的参考</soThat>
+    <tasks>
+      <task id="1" name="在工作量表中添加一键评估操作" status="pending">
+        <description>在WorkloadEstimation组件的表格操作列中添加"一键评估"按钮</description>
+        <ac>[AC1]</ac>
+        <files>frontend/ppa_frontend/src/pages/Assessment/components/WorkloadEstimation.tsx</files>
+      </task>
+      <task id="2" name="实现单模块评估触发逻辑" status="pending">
+        <description>实现点击按钮后的评估触发流程，包括loading状态管理</description>
+        <ac>[AC2]</ac>
+      </task>
+      <task id="3" name="实现工作量评估API调用" status="pending">
+        <description>调用aiService.evaluateWorkload方法，实现后端API集成</description>
+        <ac>[AC3]</ac>
+      </task>
+      <task id="4" name="创建评估结果弹窗组件" status="pending">
+        <description>创建WorkloadEvaluationModal组件显示评估结果</description>
+        <ac>[AC4, AC5]</ac>
+      </task>
+      <task id="5" name="实现评估结果应用功能" status="pending">
+        <description>将AI评估结果应用到工作量记录中</description>
+        <ac>[AC6]</ac>
+      </task>
+      <task id="6" name="添加AI评估错误处理" status="pending">
+        <description>处理AI评估过程中的各种错误场景</description>
+        <ac>[AC7]</ac>
+      </task>
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+    <criterion id="AC1">
+      <given>用户在新功能开发或系统对接Tab页</given>
+      <when>用户查看工作量表格</when>
+      <then>每一行记录的操作列包含"一键评估"按钮</then>
+      <and>按钮显示机器人图标和"一键评估"文本</and>
+      <and>按钮类型为link,颜色为primary</and>
+    </criterion>
+    <criterion id="AC2">
+      <given>工作量表中存在模块记录</given>
+      <when>用户点击某个模块的"一键评估"按钮</when>
+      <then>系统设置evaluationLoading为true</then>
+      <and>设置currentEvaluatedRecord为当前记录</and>
+      <and>禁用该按钮,显示loading状态</and>
+      <and>调用aiService.evaluateWorkload方法</then>
+      <and>传递参数: module1, module2, module3, description, template</and>
+    </criterion>
+    <criterion id="AC3">
+      <given>用户触发单模块评估</given>
+      <when>系统调用aiService.evaluateWorkload</when>
+      <then>构建评估请求包含模块完整信息</then>
+      <and>向后端POST请求 `/api/ai/evaluate-workload`</then>
+      <and>请求体包含: module1, module2, module3, description</then>
+      <and>使用当前配置的AI模型</then>
+      <and>使用工作量评估提示词模板</and>
+    </criterion>
+    <criterion id="AC4">
+      <given>AI评估成功完成</given>
+      <when>系统接收到评估结果</when>
+      <then>显示WorkloadEvaluationModal弹窗</then>
+      <and>弹窗标题为"🤖 AI工作量评估结果"</then>
+      <and>宽度为800px</and>
+      <and>包含"应用评估结果"和"取消"按钮</and>
+      <and>显示模块信息卡片</and>
+      <and>显示各角色工作量建议表格</and>
+      <and>显示成本预估信息</and>
+      <and>显示AI评估说明文本</and>
+    </criterion>
+    <criterion id="AC5">
+      <given>AI评估结果弹窗已显示</given>
+      <when>系统显示评估结果</when>
+      <then>弹窗标题为"🤖 AI工作量评估结果"</then>
+      <and>宽度为800px</and>
+      <and>包含模块信息卡片(一级、二级、三级模块及描述)</and>
+      <and>包含各角色工作量建议表格(角色名、建议工时、单价、成本)</and>
+      <and>包含成本预估信息(总工作量、总成本、评分因子)</and>
+      <and>包含AI评估说明文本(置信度、建议依据)</and>
+    </criterion>
+    <criterion id="AC6">
+      <given>AI评估结果弹窗显示</given>
+      <when>用户点击"应用评估结果"按钮</when>
+      <then>系统将评估结果应用到当前工作量记录</then>
+      <and>更新所有角色的工作量字段</and>
+      <and>更新交付系数(delivery_factor)</and>
+      <and>重新计算总工作量</and>
+      <and>关闭弹窗并显示成功消息</then>
+    </criterion>
+    <criterion id="AC7">
+      <given>单模块评估过程中发生错误</given>
+      <when>出现网络错误、API错误或评估失败</when>
+      <then>显示错误消息"AI评估失败,请重试"</then>
+      <and>重置loading状态</and>
+      <and>恢复按钮状态</and>
+      <and>关闭弹窗</and>
+    </criterion>
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <doc path="docs/PRD.md" title="软件项目评估系统产品需求文档">
+        <section>第1-2章：产品愿景与目标</section>
+        <snippet>PPA是一个面向软件项目成本和风险评估的专业Web应用平台，通过算法化的评估方法、模板化的工作流程和数据驱动的洞察能力，为组织提供统一的项目评估标准。</snippet>
+      </doc>
+      <doc path="docs/tech-spec.md" title="软件项目评估系统技术规范">
+        <section>第2-3章：技术架构与数据库设计</section>
+        <snippet>采用React + Ant Design前端，Node.js + Express后端，SQLite3数据库，实现完整的项目评估系统架构。</snippet>
+      </doc>
+      <doc path="docs/new-assessment-ai-design-step2.md" title="新建评估页面AI智能工作量估算功能设计">
+        <section>第1-100行：AI工作量估算功能详细设计</section>
+        <snippet>基于项目描述的AI模块分析功能，为单个模块提供智能工作量评估和角色工作分配建议。</snippet>
+      </doc>
+    </docs>
+    <code>
+      <file path="frontend/ppa_frontend/src/pages/Assessment/components/WorkloadEstimation.tsx" kind="component">
+        <symbol>WorkloadEstimation</symbol>
+        <lines>1-100</lines>
+        <reason>现有工作量估算主组件，需要在此基础上添加一键评估功能</reason>
+      </file>
+      <file path="frontend/ppa_frontend/src/pages/Assessment/components/AIAssessmentModal.tsx" kind="component">
+        <symbol>AIAssessmentModal</symbol>
+        <lines>1-50</lines>
+        <reason>已实现的AI评估组件，可参考弹窗设计和API调用模式</reason>
+      </file>
+      <file path="frontend/ppa_frontend/src/pages/Assessment/components/ProjectModuleAnalyzer.tsx" kind="component">
+        <symbol>ProjectModuleAnalyzer</symbol>
+        <lines>1-50</lines>
+        <reason>AI模块分析器，可参考AI服务调用模式和结果处理逻辑</reason>
+      </file>
+      <file path="server/index.js" kind="server">
+        <symbol>main</symbol>
+        <lines>1-50</lines>
+        <reason>后端服务器入口，需要在此添加AI评估API端点</reason>
+      </file>
+    </code>
+    <dependencies>
+      <framework name="react" version="18+"/>
+      <framework name="antd" version="5+"/>
+      <framework name="typescript" version="4+"/>
+      <library name="@ant-design/pro-components"/>
+      <library name="antd"/>
+      <api endpoint="POST /api/ai/evaluate-workload" description="执行单模块AI工作量评估"/>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+    <constraint type="技术栈">
+      <description>必须使用UMI Max + React + TypeScript技术栈</description>
+      <source>docs/tech-spec.md 第2章</source>
+    </constraint>
+    <constraint type="UI组件">
+      <description>必须使用Ant Design组件库，确保界面一致性</description>
+      <source>docs/tech-spec.md 第2章</source>
+    </constraint>
+    <constraint type="数据流">
+      <description>评估结果应用后必须更新WorkloadRecord数据结构和重新计算工作量</description>
+      <source>故事任务第5项</source>
+    </constraint>
+    <constraint type="错误处理">
+      <description>必须包含完整的错误处理机制，包括网络错误、API错误和评估失败场景</description>
+      <source>AC7要求</source>
+    </constraint>
+    <constraint type="加载状态">
+      <description>评估过程中必须显示loading状态，防止重复操作</description>
+      <source>AC2要求</source>
+    </constraint>
+  </constraints>
+
+  <interfaces>
+    <interface name="WorkloadEvaluationModal" kind="React组件接口">
+      <signature>
+        interface WorkloadEvaluationModalProps {
+          visible: boolean;
+          record: API.WorkloadRecord;
+          evaluation: {
+            roleWorkloads: Record<string, number>;
+            delivery_factor: number;
+            total_workload: number;
+            confidence: number;
+          };
+          onApply: (workloads: Record<string, number>, factor: number) => void;
+          onCancel: () => void;
+        }
+      </signature>
+      <path>frontend/ppa_frontend/src/pages/Assessment/components/WorkloadEvaluationModal.tsx (待创建)</path>
+    </interface>
+    <interface name="aiService.evaluateWorkload" kind="API方法">
+      <signature>
+        evaluateWorkload(params: {
+          module1: string;
+          module2: string;
+          module3: string;
+          description: string;
+          template?: string;
+        }): Promise&lt;WorkloadEvaluationResult&gt;
+      </signature>
+      <path>services/aiService.js (待实现)</path>
+    </interface>
+    <interface name="POST /api/ai/evaluate-workload" kind="REST API">
+      <signature>HTTP POST /api/ai/evaluate-workload</signature>
+      <path>routes/ai.js (待实现)</path>
+    </interface>
+    <interface name="WorkloadRecord" kind="数据接口">
+      <signature>
+        interface WorkloadRecord {
+          id: string;
+          module1: string;
+          module2: string;
+          module3: string;
+          description: string;
+          delivery_factor: number;
+          workload: number;
+          [roleName: string]: number;
+        }
+      </signature>
+      <path>前端组件中定义</path>
+    </interface>
+  </interfaces>
+
+  <tests>
+    <standards>
+      使用Jest进行单元测试，Cypress进行端到端测试。遵循现有测试模式：组件测试、API测试、集成测试。测试文件放在tests/目录下，与被测试文件同名。
+    </standards>
+    <locations>
+      <location>tests/components/WorkloadEvaluationModal.test.tsx</location>
+      <location>tests/integration/workload-evaluation.test.tsx</location>
+      <location>cypress/integration/ai-single-module-evaluation.spec.js</location>
+    </locations>
+    <ideas>
+      <test id="TC1" ac="AC1" title="一键评估按钮显示测试">
+        <description>验证工作量表格中每行记录的操作列都包含一键评估按钮，按钮样式和文本正确</description>
+      </test>
+      <test id="TC2" ac="AC2,AC3" title="AI评估调用流程测试">
+        <description>点击一键评估按钮，验证loading状态设置、API调用参数和响应处理</description>
+      </test>
+      <test id="TC3" ac="AC4,AC5" title="评估结果弹窗显示测试">
+        <description>验证弹窗UI组件完整显示，包括模块信息、角色工作量表格、成本预估等</description>
+      </test>
+      <test id="TC4" ac="AC6" title="评估结果应用测试">
+        <description>点击应用评估结果按钮，验证数据更新、重新计算和状态重置</description>
+      </test>
+      <test id="TC5" ac="AC7" title="错误处理测试">
+        <description>测试各种错误场景（网络错误、API错误、评估失败），验证错误消息和状态恢复</description>
+      </test>
+      <test id="TC6" ac="AC2" title="loading状态管理测试">
+        <description>验证评估过程中按钮状态变化、loading动画显示和状态重置机制</description>
+      </test>
+    </ideas>
+  </tests>
+</story-context>

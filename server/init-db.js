@@ -62,6 +62,32 @@ const CREATE_TABLES_SQL = `
   CREATE INDEX IF NOT EXISTS idx_prompt_category ON prompt_templates(category);
   CREATE INDEX IF NOT EXISTS idx_prompt_active ON prompt_templates(is_active);
   CREATE INDEX IF NOT EXISTS idx_prompt_system ON prompt_templates(is_system);
+
+  CREATE TABLE IF NOT EXISTS ai_prompts (
+    id TEXT PRIMARY KEY,
+    name TEXT NOT NULL,
+    description TEXT,
+    content TEXT NOT NULL,
+    variables_json TEXT,
+    model_hint TEXT,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+  );
+
+  CREATE INDEX IF NOT EXISTS idx_ai_prompts_model_hint ON ai_prompts(model_hint);
+
+  CREATE TABLE IF NOT EXISTS ai_assessment_logs (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    prompt_id TEXT,
+    model_used TEXT,
+    request_hash TEXT,
+    duration_ms INTEGER,
+    status TEXT NOT NULL,
+    error_message TEXT,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+  );
+
+  CREATE INDEX IF NOT EXISTS idx_ai_assessment_logs_prompt ON ai_assessment_logs(prompt_id);
 `;
 
 // 连接数据库并执行
