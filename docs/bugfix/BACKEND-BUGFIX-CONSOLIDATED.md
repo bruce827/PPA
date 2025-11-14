@@ -603,6 +603,36 @@ curl http://localhost:3001/api/dashboard/role-cost-distribution
 
 ---
 
+## 6. AI 调用文件日志未落盘（2025-11-14）
+
+**故障现象**:  
+执行第1步（风险评分）和第2步（模块梳理）后端调用成功，但未在 `server/logs/ai` 目录看到任何日志文件。
+
+**根本原因**:  
+接入文件日志保存逻辑后，Service 中遗漏导入 `aiFileLogger`，导致 `aiFileLogger.save(...)` 在 `try { ... } catch {}` 保护块内抛出 `ReferenceError` 被吞掉，实际没有写盘也没有显式报错。
+
+**修复方案**:  
+- 明确导入写盘模块，并在写入成功时输出落盘路径：
+  - `server/services/aiModuleAnalysisService.js` 顶部新增 `const aiFileLogger = require('./aiFileLogger');`
+  - `server/services/aiRiskAssessmentService.js` 顶部新增 `const aiFileLogger = require('./aiFileLogger');`
+  - `server/services/aiFileLogger.js` 在写入完成后 `console.info('[AI File Logger] saved to: <dir>')`
+
+**验证步骤**:  
+1. 在 `server` 目录启动后端（需重启以加载改动）：`node index.js`
+2. 触发第1步或第2步任一AI接口。
+3. 控制台应出现：`[AI File Logger] saved to: server/logs/ai/<step>/<date>/<time>_<hash>`
+4. 对应目录下应存在：`index.json`、`request.json`、`response.raw.txt`、`response.parsed.json`、`notes.log`。
+
+**默认行为与配置**:  
+- 日志默认开启：未设置 `AI_LOG_ENABLED` 时会写盘；将其设为 `false` 可关闭。
+- 可通过 `AI_LOG_DIR` 修改落盘目录（默认 `server/logs/ai`）。
+
+**涉及文件**:  
+- `server/services/aiModuleAnalysisService.js`
+- `server/services/aiRiskAssessmentService.js`
+- `server/services/aiFileLogger.js`
+
+
 ### 5.2 数据结构假设的常见陷阱
 
 **背景**:  

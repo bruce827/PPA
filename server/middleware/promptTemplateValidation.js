@@ -2,7 +2,9 @@ const { body, param, query } = require('express-validator');
 
 const validateCreatePromptTemplate = [
   body('template_name').notEmpty().withMessage('Template name is required.'),
-  body('category').isIn(['risk_analysis', 'cost_estimation', 'report_generation', 'custom']).withMessage('Invalid category.'),
+  body('category')
+    .isIn(['risk_analysis', 'cost_estimation', 'report_generation', 'module_analysis', 'custom'])
+    .withMessage('Invalid category.'),
   body('system_prompt').notEmpty().withMessage('System prompt is required.'),
   body('user_prompt_template').notEmpty().withMessage('User prompt template is required.'),
 ];
@@ -10,7 +12,10 @@ const validateCreatePromptTemplate = [
 const validateUpdatePromptTemplate = [
     param('id').isInt().withMessage('ID must be an integer.'),
     body('template_name').optional().notEmpty().withMessage('Template name cannot be empty.'),
-    body('category').optional().isIn(['risk_analysis', 'cost_estimation', 'report_generation', 'custom']).withMessage('Invalid category.'),
+    body('category')
+      .optional()
+      .isIn(['risk_analysis', 'cost_estimation', 'report_generation', 'module_analysis', 'custom'])
+      .withMessage('Invalid category.'),
 ];
 
 const validatePromptTemplateId = [

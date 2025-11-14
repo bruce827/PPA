@@ -17,6 +17,8 @@
 5. [UMI Max 配置限制](#5-umi-max-配置限制)
 6. [组件化最佳实践](#6-组件化最佳实践)
 7. [@ant-design/charts 图表配置问题](#7-ant-designcharts-图表配置问题)
+8. [AntD v5 组件用法警告（Assessment）](#8-antd-v5-组件用法警告assessment)
+9. [ProFormList 误用 recordCreatorProps 警告](#9-proformlist-误用-recordcreatorprops-警告)
 
 ---
 
@@ -1197,5 +1199,117 @@ const roleCostData = Object.entries(roleCostDistribution || {}).map(([role, cost
 **相关文件**:
 - `frontend/ppa_frontend/src/pages/Dashboard.tsx`
 - `frontend/ppa_frontend/src/services/dashboard/typings.d.ts`
+
+---
+
+## 8. AntD v5 组件用法警告（Assessment）
+
+### 8.1 message 静态函数上下文警告（Assessment 页面）
+
+**故障现象**:  
+浏览器控制台持续输出：
+
+```
+Warning: [antd: message] Static function can not consume context like dynamic theme. Please use 'App' component instead.
+```
+
+**发生时间**: 2025-11-14（执行“第一步/第二步”流程时）
+
+**根本原因**:  
+Ant Design v5 中，`message.success/error/warning/info` 等静态调用无法消费动态主题/上下文（如 App/ConfigProvider 的 context），在复杂的运行时主题或嵌套场景下会触发上述警告。
+
+**解决方案**:  
+改为使用作用域消息 API：
+
+```tsx
+const [messageApi, contextHolder] = message.useMessage();
+// 在组件 JSX 顶层渲染 {contextHolder}
+messageApi.success('操作成功');
+```
+
+并将组件内所有 `message.*` 静态调用替换为 `messageApi.*`。
+
+**受影响文件**:
+- `frontend/ppa_frontend/src/pages/Assessment/components/ProjectModuleAnalyzer.tsx`
+- `frontend/ppa_frontend/src/pages/Assessment/components/AIAssessmentModal.tsx`
+- `frontend/ppa_frontend/src/pages/Assessment/Detail.tsx`
+
+**验证**:
+- 进入“新建评估 → AI模块梳理”，点击“开始AI模块分析”，无上述 message 警告。
+- 打开“风险评分 → AI评估弹窗”，进行评估与应用结果流程，无上述 message 警告。
+
+---
+
+## 9. ProFormList 误用 recordCreatorProps 警告
+
+**故障现象**:  
+控制台出现 React 警告：
+
+```
+Warning: React does not recognize the `recordCreatorProps` prop on a DOM element. If you intentionally want it to appear in the DOM as a custom attribute, spell it as lowercase `recordcreatorprops` instead. If you accidentally passed it from a parent component, remove it from the DOM element.
+```
+
+**根本原因**:  
+`recordCreatorProps` 是 `EditableProTable` 的属性，不是 `ProFormList` 的属性。将其误传给 `ProFormList` 会被继续传递到原生 DOM 节点，从而触发 React 未识别属性的警告。
+
+**错误用法（已移除）**:
+
+```tsx
+<ProFormList
+  name="risk_items"
+  label="风险成本"
+  creatorButtonProps={{ creatorButtonText: '新增风险项' }}
+  recordCreatorProps={{              // ❌ 非法属性（仅适用于 EditableProTable）
+    newRecordType: 'dataSource',
+    record: () => ({ id: Date.now(), content: '', cost: 0 }),
+  }}
+>
+```
+
+**正确做法**:
+- 若需新增按钮文案，使用 `creatorButtonProps`（已使用）。
+- 若需默认值，使用 `initialValue` 提供初始数组项，或在外层 `form.setFieldsValue` 设置。
+- 仅在 `EditableProTable` 上使用 `recordCreatorProps`。
+
+**修复变更**:
+- 从 `ProFormList` 上移除 `recordCreatorProps`：
+  - `frontend/ppa_frontend/src/pages/Config.tsx`
+  - `frontend/ppa_frontend/src/pages/Assessment/components/OtherCostsForm.tsx`
+- 保留 `EditableProTable` 的合法 `recordCreatorProps`：
+  - `frontend/ppa_frontend/src/pages/Assessment/components/WorkloadEstimation.tsx`
+
+**验证**:
+- 在“配置 → 新建/编辑风险评估项”与“其他成本 → 风险成本”中新增条目，不再出现该 React 警告；表单功能正常。
+
+---
+
+### 8.2 Spin tip 使用方式（Assessment 页面补充）
+
+**故障现象**:  
+控制台出现：
+
+```
+Warning: [antd: Spin] `tip` only work in nest or fullscreen pattern.
+```
+
+**根本原因**:  
+Spin 的 `tip` 仅在“嵌套（有子元素）”或“全屏”模式下生效，孤立使用 `<Spin tip="..." />` 会告警。
+
+**修复方式（在 Assessment 页面落地）**:
+
+```tsx
+// 嵌套一个最小子元素，或拆出说明文本
+<Spin size="large" tip="AI正在分析项目需求，生成模块结构中...">
+  <div style={{ minHeight: 24 }} />
+  {/* 或者移除 tip，将文字放到下方 */}
+</Spin>
+```
+
+**受影响文件**:
+- `frontend/ppa_frontend/src/pages/Assessment/components/ProjectModuleAnalyzer.tsx`
+- `frontend/ppa_frontend/src/pages/Assessment/Detail.tsx`
+
+**验证**:
+- 模块梳理加载态与详情页加载态下，不再出现 Spin tip 警告；UI 展示保持一致。
 
 ---

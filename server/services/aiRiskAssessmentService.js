@@ -4,6 +4,7 @@ const aiModelModel = require('../models/aiModelModel');
 const openaiProvider = require('../providers/ai/openaiProvider');
 const doubaoProvider = require('../providers/ai/doubaoProvider');
 const aiAssessmentLogModel = require('../models/aiAssessmentLogModel');
+const aiFileLogger = require('./aiFileLogger');
 const logger = require('../utils/logger');
 const {
   validationError,
@@ -421,6 +422,37 @@ async function assessRisk(payload) {
       status,
     });
 
+    // 文件日志（成功）
+    try {
+      await aiFileLogger.save({
+        step: 'risk',
+        route: '/api/ai/assess-risk',
+        requestHash,
+        promptTemplateId: String(promptId),
+        modelProvider: selectedProvider,
+        modelName: providerResult.model || providerParams.model,
+        status: 'success',
+        durationMs,
+        providerTimeoutMs,
+        serviceTimeoutMs,
+        request: {
+          promptId,
+          template_content: promptDefinition.content,
+          variables: templateVariables,
+          document,
+          final_prompt: promptContent,
+          extras: { currentRiskItems, currentScores },
+        },
+        responseRaw: typeof rawContent === 'string' ? rawContent : JSON.stringify(rawContent),
+        responseParsed: parsed,
+        notesLines: [
+          `[provider] ${selectedProvider} model=${providerResult.model || providerParams.model}`,
+          `[timing] durationMs=${durationMs} providerTimeoutMs=${providerTimeoutMs} serviceTimeoutMs=${serviceTimeoutMs}`,
+          `[counts] risk_scores=${Array.isArray(parsed.risk_scores) ? parsed.risk_scores.length : 0}`,
+        ],
+      });
+    } catch (e) {}
+
     return {
       raw_response: typeof rawContent === 'string' ? rawContent : JSON.stringify(rawContent),
       parsed,
@@ -448,6 +480,35 @@ async function assessRisk(payload) {
       status,
       errorMessage,
     });
+
+    // 文件日志（失败）
+    try {
+      await aiFileLogger.save({
+        step: 'risk',
+        route: '/api/ai/assess-risk',
+        requestHash,
+        promptTemplateId: String(promptId),
+        modelProvider: selectedProvider,
+        modelName: providerParams.model,
+        status,
+        durationMs,
+        providerTimeoutMs,
+        serviceTimeoutMs,
+        request: {
+          promptId,
+          template_content: promptDefinition.content,
+          variables: templateVariables,
+          document,
+          final_prompt: promptContent,
+          extras: { currentRiskItems, currentScores },
+        },
+        responseRaw: undefined,
+        responseParsed: undefined,
+        notesLines: [
+          `[error] ${error.message}`,
+        ],
+      });
+    } catch (e) {}
 
     if (error.statusCode) {
       throw error;
@@ -555,6 +616,35 @@ async function normalizeRiskNames(payload) {
       status: 'success',
     });
 
+    // 文件日志（成功）
+    try {
+      await aiFileLogger.save({
+        step: 'risk-normalize',
+        route: '/api/ai/normalize-risk-names',
+        requestHash,
+        promptTemplateId: 'normalize',
+        modelProvider: selectedProvider,
+        modelName: providerResult.model || providerParams.model,
+        status: 'success',
+        durationMs,
+        providerTimeoutMs,
+        serviceTimeoutMs,
+        request: {
+          promptId: 'normalize',
+          template_content: promptContent,
+          variables: { allowed_item_names, risk_scores },
+          final_prompt: promptContent,
+        },
+        responseRaw: typeof rawContent === 'string' ? rawContent : JSON.stringify(rawContent),
+        responseParsed: parsed,
+        notesLines: [
+          `[provider] ${selectedProvider} model=${providerResult.model || providerParams.model}`,
+          `[timing] durationMs=${durationMs} providerTimeoutMs=${providerTimeoutMs} serviceTimeoutMs=${serviceTimeoutMs}`,
+          `[counts] normalized_risk_scores=${Array.isArray(parsed.risk_scores) ? parsed.risk_scores.length : 0}`,
+        ],
+      });
+    } catch (e) {}
+
     return {
       raw_response: typeof rawContent === 'string' ? rawContent : JSON.stringify(rawContent),
       parsed,
@@ -571,6 +661,32 @@ async function normalizeRiskNames(payload) {
       status: error.statusCode === 504 ? 'timeout' : 'fail',
       errorMessage: error.message,
     });
+    // 文件日志（失败）
+    try {
+      await aiFileLogger.save({
+        step: 'risk-normalize',
+        route: '/api/ai/normalize-risk-names',
+        requestHash,
+        promptTemplateId: 'normalize',
+        modelProvider: selectedProvider,
+        modelName: providerParams.model,
+        status: error.statusCode === 504 ? 'timeout' : 'fail',
+        durationMs: 0,
+        providerTimeoutMs,
+        serviceTimeoutMs,
+        request: {
+          promptId: 'normalize',
+          template_content: promptContent,
+          variables: { allowed_item_names, risk_scores },
+          final_prompt: promptContent,
+        },
+        responseRaw: undefined,
+        responseParsed: undefined,
+        notesLines: [
+          `[error] ${error.message}`,
+        ],
+      });
+    } catch (e) {}
     if (error.statusCode) throw error;
     throw internalError(error.message || 'AI 名称归一失败');
   }

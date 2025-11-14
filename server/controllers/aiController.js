@@ -1,6 +1,7 @@
 const crypto = require('crypto');
 const aiPromptService = require('../services/aiPromptService');
 const aiRiskAssessmentService = require('../services/aiRiskAssessmentService');
+const aiModuleAnalysisService = require('../services/aiModuleAnalysisService');
 const logger = require('../utils/logger');
 const { internalError } = require('../utils/errors');
 
@@ -25,6 +26,27 @@ async function getPrompts(req, res, next) {
     });
 
     next(error.statusCode ? error : internalError('获取提示词失败'));
+  }
+}
+
+async function getModulePrompts(req, res, next) {
+  const startedAt = Date.now();
+  try {
+    const prompts = await aiPromptService.getPromptsByCategory('module_analysis');
+    const durationMs = Date.now() - startedAt;
+    logger.info('模块梳理提示词查询成功', {
+      route: 'GET /api/ai/module-prompts',
+      count: prompts.length,
+      durationMs,
+    });
+
+    res.json({ success: true, data: prompts });
+  } catch (error) {
+    logger.error('获取 模块梳理 提示词失败', {
+      route: 'GET /api/ai/module-prompts',
+      error: error.message,
+    });
+    next(error.statusCode ? error : internalError('获取模块梳理提示词失败'));
   }
 }
 
@@ -115,8 +137,39 @@ async function normalizeRiskNames(req, res, next) {
   }
 }
 
+async function analyzeProjectModules(req, res, next) {
+  const startedAt = Date.now();
+  try {
+    const result = await aiModuleAnalysisService.analyzeProjectModules(req.body || {});
+    const durationMs = Date.now() - startedAt;
+    logger.info('AI 模块梳理成功', {
+      route: 'POST /api/ai/analyze-project-modules',
+      durationMs,
+      moduleCount: Array.isArray(result?.modules) ? result.modules.length : 0,
+      model: result?.model_used,
+    });
+
+    res.json({ success: true, data: result });
+  } catch (error) {
+    const durationMs = Date.now() - startedAt;
+    logger.error('AI 模块梳理失败', {
+      route: 'POST /api/ai/analyze-project-modules',
+      durationMs,
+      error: error.message,
+      statusCode: error.statusCode || 500,
+    });
+    if (error.statusCode) {
+      next(error);
+    } else {
+      next(internalError('AI 模块梳理失败'));
+    }
+  }
+}
+
 module.exports = {
   getPrompts,
+  getModulePrompts,
   assessRisk,
   normalizeRiskNames,
+  analyzeProjectModules,
 };

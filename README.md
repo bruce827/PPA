@@ -60,3 +60,24 @@ yarn start
 - ✅ **M3 & M4: 核心评估流程实现 (评估主流程)**
 - ✅ **M5: 支撑模块与效率功能完善**
 - ✅ **M6 & M7: Bug修复、测试与优化**
+
+## 🧪 AI 日志与调试
+
+为便于后续回放与对比，后端会在调用 AI 模型（风险评分、名称归一、模块梳理）时将完整的请求/响应/解析结果写入文件。
+
+- 默认开启，无需配置。
+- 日志目录：`server/logs/ai/{step}/YYYY-MM-DD/{HHmmss}_{requestHash}/`
+- 文件包含：`index.json`、`request.json`、`response.raw.txt`、`response.parsed.json`、`notes.log`
+- 成功写入后控制台会打印：`[AI File Logger] saved to: ...`
+
+可选环境变量（启动后端时传入）：
+
+```bash
+# 显式开启/关闭
+AI_LOG_ENABLED=true node index.js
+
+# 自定义日志目录
+AI_LOG_ENABLED=true AI_LOG_DIR=/absolute/path/to/logs node index.js
+```
+
+更多说明见：`docs/bugfix/AI-LOGGING-NOTES.md`

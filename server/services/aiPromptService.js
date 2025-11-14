@@ -91,6 +91,36 @@ async function getAllPrompts() {
 }
 
 /**
+ * 按类别获取提示词模板（例如：'module_analysis'）
+ */
+async function getPromptsByCategory(category) {
+  const now = Date.now();
+
+  // 获取当前模型
+  const currentModel = await aiModelModel.getCurrentModel();
+  if (!currentModel) {
+    throw new Error('当前没有设置使用的模型，请先配置并设置一个模型为当前使用');
+  }
+
+  // 仅拉取分类下的活跃模板
+  const templatesResult = await promptTemplateModel.getAll({
+    is_active: 1,
+    category,
+    pageSize: 1000,
+  });
+
+  const prompts = await Promise.all(
+    templatesResult.data.map(async (t) => {
+      const fullTemplate = await promptTemplateModel.getById(t.id);
+      return convertToAiPrompt(fullTemplate, currentModel);
+    })
+  );
+
+  // 不缓存分类结果，避免混淆全量缓存；如需缓存，可单独维护 keyed cache
+  return prompts;
+}
+
+/**
  * 根据ID获取单个提示词模板
  */
 async function getPromptById(promptId) {
@@ -130,6 +160,7 @@ function invalidateCache() {
 
 module.exports = {
   getAllPrompts,
+  getPromptsByCategory,
   getPromptById,
   invalidateCache,
 };
