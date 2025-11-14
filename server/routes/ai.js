@@ -5,9 +5,13 @@ const aiController = require('../controllers/aiController');
 router.get('/prompts', aiController.getPrompts);
 // 模块梳理提示词
 router.get('/module-prompts', aiController.getModulePrompts);
+// 工作量评估提示词
+router.get('/workload-prompts', aiController.getWorkloadPrompts);
 router.post('/assess-risk', aiController.assessRisk);
 router.post('/normalize-risk-names', aiController.normalizeRiskNames);
 // 模块梳理分析
 router.post('/analyze-project-modules', aiController.analyzeProjectModules);
+// 工作量评估
+router.post('/evaluate-workload', aiController.evaluateWorkload);
 
 module.exports = router;

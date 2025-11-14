@@ -34,7 +34,13 @@ exports.getAll = async (filters) => {
   const countParams = [];
 
   // Append filters
-  if (category) {
+  if (Array.isArray(category) && category.length > 0) {
+    const placeholders = category.map(() => '?').join(',');
+    countSql += ` AND category IN (${placeholders})`;
+    sql += ` AND category IN (${placeholders})`;
+    countParams.push(...category);
+    params.push(...category);
+  } else if (category) {
     countSql += " AND category = ?";
     sql += " AND category = ?";
     countParams.push(category);

@@ -27,10 +27,16 @@ server/logs/ai/
     ...
   risk-normalize/2025-11-14/082015_7f2e...aa10/
     ...
+  workload/2025-11-15/093012_abcd...ef12/
+    index.json
+    request.json
+    response.raw.txt
+    response.parsed.json
+    notes.log
 ```
 
 生成规则：`{step}/YYYY-MM-DD/{HHmmss}_{requestHash}/`
-- `step`：`risk` / `risk-normalize` / `modules`
+- `step`：`risk` / `risk-normalize` / `modules` / `workload`
 - `requestHash`：服务内生成的唯一请求哈希（前缀展示）
 
 ## 3. 文件说明
@@ -53,6 +59,7 @@ server/logs/ai/
 - 风险评分：`/api/ai/assess-risk`（成功/失败）
 - 名称归一：`/api/ai/normalize-risk-names`（成功/失败）
 - 模块梳理：`/api/ai/analyze-project-modules`（成功/失败）
+- 工作量评估：`/api/ai/evaluate-workload`（成功/失败）
 
 ## 5. 常见问题
 - 看不到 `server/logs/ai`：
@@ -64,4 +71,3 @@ server/logs/ai/
 ## 6. 清理建议
 - 小型单人项目可暂不做清理。
 - 若空间需要，可定期手动删除某天目录或后续添加简单清理脚本（按日期删除）。
-

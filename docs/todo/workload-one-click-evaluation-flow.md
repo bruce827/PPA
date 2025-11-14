@@ -102,19 +102,26 @@
 ## TODO（实现清单）
 
 - 后端
-  - [ ] 新增路由：POST `/api/ai/evaluate-workload`
-  - [ ] 新增控制器：`aiController.evaluateWorkload`
-  - [ ] 新增服务：`aiWorkloadEvaluationService.evaluate(payload)`（复用解析/日志/超时模式）
-  - [ ] 提示词分类：`workload_evaluation` 与模板变量定义
-  - [ ] 角色名对齐策略（与 `config_roles`）
+  - [x] 新增路由：POST `/api/ai/evaluate-workload`
+  - [x] 新增控制器：`aiController.evaluateWorkload`
+  - [x] 新增服务：`aiWorkloadEvaluationService.evaluate(payload)`（复用解析/日志/超时模式）
+  - [ ] 提示词分类：`workload_evaluation` 与模板变量定义（需在提示词管理中新增/启用对应模板）
+  - [x] 角色名对齐策略（与 `config_roles`）
 
 - 前端
-  - [ ] 新增前端服务方法：`evaluateWorkload(payload)`
-  - [ ] 在 `handleSingleEvaluation` 调用真实 API，移除 mock
-  - [ ] 映射响应为 `evaluationResult`，复用现有弹窗与应用逻辑
+  - [x] 新增前端服务方法：`evaluateWorkload(payload)`
+  - [x] 在 `handleSingleEvaluation` 调用真实 API，移除 mock
+  - [x] 映射响应为 `evaluationResult`，复用现有弹窗与应用逻辑
+  - [x] 新增“提示词模板”按钮与弹窗：选择模板、编辑变量、预览提示词
+  - [x] 详情弹窗内增加“AI评估”按钮，支持完善信息后再评估
 
 - 测试/验证
   - [ ] 单模块评估端到端联调（200ms~3s 目标）
   - [ ] 角色名对齐与缺省处理用例
   - [ ] 超时/失败兜底与日志核对
 
+### 交互补充
+
+- 快速评估入口：保留表格操作栏“一键评估”按钮；当未配置模板或行数据不完整时，分别引导至“提示词模板”弹窗或“详情”弹窗。
+- 稳妥评估入口：在“工作量详情”弹窗内提供“AI评估”按钮，使用当前表单值进行评估。
+- 模板共用：新功能开发与系统对接共用同一套模板配置；系统对接 Tab 显示当前模板名 Tag，不重复放置按钮。

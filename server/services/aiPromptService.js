@@ -102,10 +102,16 @@ async function getPromptsByCategory(category) {
     throw new Error('当前没有设置使用的模型，请先配置并设置一个模型为当前使用');
   }
 
-  // 仅拉取分类下的活跃模板
+  // 分类别名兼容（例如：'成本估算' / '工作量评估' 视为 'workload_evaluation' 的等价分类）
+  let categories = category;
+  if (category === 'workload_evaluation') {
+    categories = ['workload_evaluation', 'cost_estimation', '成本估算', '工作量评估'];
+  }
+
+  // 仅拉取分类下的活跃模板（支持多分类 IN 查询）
   const templatesResult = await promptTemplateModel.getAll({
     is_active: 1,
-    category,
+    category: categories,
     pageSize: 1000,
   });
 
