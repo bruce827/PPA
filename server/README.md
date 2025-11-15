@@ -7,48 +7,38 @@
 ```text
 server/
 ├── index.js              # 应用入口：加载中间件、路由、错误处理、启动服务
+├── index.js.backup       # 应用入口备份文件
 ├── init-db.js            # 数据库表结构初始化脚本
 ├── ppa.db                # 主 SQLite 数据库文件（首次连接自动生成）
 ├── package.json          # 依赖配置
-├── config/
+├── config/               # 配置层
 │   ├── server.js         # 端口 & 环境变量读取（PORT / NODE_ENV）
 │   └── database.js       # 数据库单例管理 (getDatabase / closeDatabase)
 ├── controllers/          # 路由控制器（拆分业务逻辑与响应）
-├── routes/               # 模块化路由定义（health/config/calculate/projects）
-├── services/             # 领域服务层（计算、项目、配置）
+├── routes/               # 模块化路由定义（health/config/calculate/projects/ai）
+├── services/             # 领域服务层（计算、项目、配置、AI服务）
 ├── models/               # 数据访问层（SQLite SQL 封装）
 ├── middleware/           # 错误处理等中间件
-├── utils/                # 公共工具（常量、评分因子）
-└── seed-data/            # 初始数据脚本（角色 / 差旅 / 风险项）
+├── providers/            # AI提供商集成（OpenAI、Doubao等）
+├── migrations/           # 数据库迁移脚本
+├── scripts/              # 脚本工具
+├── tests/                # 测试用例
+├── utils/                # 公共工具（常量、评分因子、日志等）
+├── seed-data/            # 初始数据脚本（角色 / 差旅 / 风险项）
+└── ARCHITECTURE.md       # 详细的技术架构说明文档
 ```
 
-## 技术架构
+## 📚 技术架构
 
-```marmad
-graph TD
-    Controller[Controller 层]
-    Service[Service 层]
-    Model[Model 层]
-    Database[Database (SQLite)]
+详细的技术架构设计说明请参考：[ARCHITECTURE.md](./ARCHITECTURE.md)
 
-    Controller --> Service
-    Service --> Model
-    Model --> Database
-
-    subgraph Example
-        ControllerExample[exportController]
-        ServiceExample[projectService]
-        ModelExample[dashboardModel]
-    end
-
-    ControllerExample --> ServiceExample
-    ServiceExample --> ModelExample
-```
-
-* Controller 层负责处理 HTTP 请求。
-* Service 层封装业务逻辑。
-* Model 层负责与数据库交互。
-* Database 是 SQLite 数据库。
+该文档包含：
+- 分层架构设计详解
+- 各层职责与实现
+- AI集成架构特点
+- 性能优化特性
+- 测试架构说明
+- 部署与运维指南
 
 ## 🚀 快速开始
 
