@@ -2,13 +2,6 @@ const promptTemplateModel = require('../models/promptTemplateModel');
 const aiModelModel = require('../models/aiModelModel');
 const logger = require('../utils/logger');
 
-const CACHE_TTL_MS = 5 * 60 * 1000; // 5 minutes
-
-let cache = {
-  data: null,
-  expiresAt: 0,
-};
-
 /**
  * 转换 PromptTemplate 为 AiPrompt 格式
  */
@@ -56,11 +49,6 @@ function convertToAiPrompt(template, currentModel) {
  * 获取所有AI评估用的提示词模板
  */
 async function getAllPrompts() {
-  const now = Date.now();
-  if (cache.data && cache.expiresAt > now) {
-    return cache.data;
-  }
-
   // 获取当前使用的模型
   const currentModel = await aiModelModel.getCurrentModel();
   if (!currentModel) {
@@ -81,12 +69,6 @@ async function getAllPrompts() {
     })
   );
 
-  // 更新缓存
-  cache = {
-    data: prompts,
-    expiresAt: now + CACHE_TTL_MS,
-  };
-
   return prompts;
 }
 
@@ -94,8 +76,6 @@ async function getAllPrompts() {
  * 按类别获取提示词模板（例如：'module_analysis'）
  */
 async function getPromptsByCategory(category) {
-  const now = Date.now();
-
   // 获取当前模型
   const currentModel = await aiModelModel.getCurrentModel();
   if (!currentModel) {
@@ -134,39 +114,22 @@ async function getPromptById(promptId) {
     throw new Error('promptId 为必填字段');
   }
 
-  // 先从缓存中查找
-  const cachedPrompts = cache.data;
-  if (cachedPrompts) {
-    const found = cachedPrompts.find((item) => item.id === promptId);
-    if (found) {
-      return found;
-    }
+  // 获取当前使用的模型
+  const currentModel = await aiModelModel.getCurrentModel();
+  if (!currentModel) {
+    throw new Error('当前没有设置使用的模型，请先配置并设置一个模型为当前使用');
   }
 
-  // 缓存中没有，重新获取所有数据
-  const prompts = await getAllPrompts();
-  const found = prompts.find((item) => item.id === promptId);
-
-  if (!found) {
+  const template = await promptTemplateModel.getById(promptId);
+  if (!template) {
     throw new Error(`提示词 ${promptId} 不存在`);
   }
 
-  return found;
-}
-
-/**
- * 清除缓存
- */
-function invalidateCache() {
-  cache = {
-    data: null,
-    expiresAt: 0,
-  };
+  return convertToAiPrompt(template, currentModel);
 }
 
 module.exports = {
   getAllPrompts,
   getPromptsByCategory,
   getPromptById,
-  invalidateCache,
 };
