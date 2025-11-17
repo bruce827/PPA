@@ -1,10 +1,8 @@
+---
+description: "Interactive product brief creation workflow that guides users through defining their product vision with multiple input sources and conversational collaboration"
+---
+
 # product-brief Workflow
-
-## Description
-Interactive product brief creation workflow that guides users through defining their product vision with multiple input sources and conversational collaboration
-
-## Activation
-Type `@workflow-product-brief` to execute this workflow.
 
 # Product Brief - Interactive Workflow Configuration
 name: product-brief
@@ -20,26 +18,26 @@ document_output_language: "{config_source}:document_output_language"
 user_skill_level: "{config_source}:user_skill_level"
 date: system-generated
 
-# Optional input documents
-recommended_inputs:
-  - market_research: "Market research document (optional)"
-  - brainstorming_results: "Brainstorming session outputs (optional)"
-  - competitive_analysis: "Competitive analysis (optional)"
-  - initial_ideas: "Initial product ideas or notes (optional)"
-
 # Smart input file references - handles both whole docs and sharded docs
 # Priority: Whole document first, then sharded version
+# Strategy: How to load sharded documents (FULL_LOAD, SELECTIVE_LOAD, INDEX_GUIDED)
 input_file_patterns:
   research:
+    description: "Market research or competitive analysis (optional)"
     whole: "{output_folder}/*research*.md"
     sharded: "{output_folder}/*research*/index.md"
+    load_strategy: "FULL_LOAD"
 
   brainstorming:
+    description: "Brainstorming session outputs (optional)"
     whole: "{output_folder}/*brainstorm*.md"
     sharded: "{output_folder}/*brainstorm*/index.md"
+    load_strategy: "FULL_LOAD"
 
   document_project:
-    sharded: "{output_folder}/docs/index.md"
+    description: "Brownfield project documentation (optional)"
+    sharded: "{output_folder}/index.md"
+    load_strategy: "INDEX_GUIDED"
 
 # Module path and component files
 installed_path: "{project-root}/bmad/bmm/workflows/1-analysis/product-brief"

@@ -1,10 +1,8 @@
+---
+description: "Autonomous documentation system that maintains module, workflow, and agent documentation using a reverse-tree approach (leaf folders first, then parents). Understands BMAD conventions and produces technical writer quality output."
+---
+
 # redoc Workflow
-
-## Description
-Autonomous documentation system that maintains module, workflow, and agent documentation using a reverse-tree approach (leaf folders first, then parents). Understands BMAD conventions and produces technical writer quality output.
-
-## Activation
-Type `@workflow-redoc` to execute this workflow.
 
 # ReDoc - Reverse-Tree Documentation Engine
 name: "redoc"

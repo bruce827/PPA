@@ -1,7 +1,8 @@
-# Index Docs Task
+---
+description: "Execute the Index Docs task"
+---
 
-## Activation
-Type `@task-index-docs` to execute this task.
+# Index Docs Task
 
 <task id="bmad/core/tasks/index-docs" name="Index Docs"
   description="Generates or updates an index.md of all documents in the specified directory" webskip="true" standalone="true">

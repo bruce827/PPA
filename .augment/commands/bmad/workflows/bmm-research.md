@@ -1,10 +1,8 @@
+---
+description: "Adaptive research workflow supporting multiple research types: market research, deep research prompt generation, technical/architecture evaluation, competitive intelligence, user research, and domain analysis"
+---
+
 # research Workflow
-
-## Description
-Adaptive research workflow supporting multiple research types: market research, deep research prompt generation, technical/architecture evaluation, competitive intelligence, user research, and domain analysis
-
-## Activation
-Type `@workflow-research` to execute this workflow.
 
 # Research Workflow - Multi-Type Research System
 name: research

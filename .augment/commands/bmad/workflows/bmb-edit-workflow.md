@@ -1,10 +1,8 @@
+---
+description: "Edit existing BMAD workflows while following all best practices and conventions"
+---
+
 # edit-workflow Workflow
-
-## Description
-Edit existing BMAD workflows while following all best practices and conventions
-
-## Activation
-Type `@workflow-edit-workflow` to execute this workflow.
 
 # Edit Workflow - Workflow Editor Configuration
 name: "edit-workflow"
@@ -20,10 +18,8 @@ user_name: "{config_source}:user_name"
 workflow_creation_guide: "{project-root}/bmad/bmb/workflows/create-workflow/workflow-creation-guide.md"
 workflow_execution_engine: "{project-root}/bmad/core/tasks/workflow.xml"
 
-# Optional docs that can be used to understand the target workflow
-recommended_inputs:
-  - target_workflow: "Path to the workflow.yaml file to edit"
-  - workflow_examples: "{project-root}/bmad/bmm/workflows/"
+# Reference examples
+workflow_examples_dir: "{project-root}/bmad/bmm/workflows/"
 
 # Module path and component files
 installed_path: "{project-root}/bmad/bmb/workflows/edit-workflow"

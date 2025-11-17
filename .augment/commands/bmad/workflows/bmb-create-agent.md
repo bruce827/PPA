@@ -1,10 +1,8 @@
+---
+description: "Interactive workflow to build BMAD Core compliant agents (YAML source compiled to .md during install) with optional brainstorming, persona development, and command structure"
+---
+
 # create-agent Workflow
-
-## Description
-Interactive workflow to build BMAD Core compliant agents (YAML source compiled to .md during install) with optional brainstorming, persona development, and command structure
-
-## Activation
-Type `@workflow-create-agent` to execute this workflow.
 
 # Build Agent Workflow Configuration
 name: create-agent
@@ -23,10 +21,9 @@ agent_architecture: "{installed_path}/agent-architecture.md"
 agent_commands: "{installed_path}/agent-command-patterns.md"
 communication_styles: "{installed_path}/communication-styles.md"
 
-# Optional docs that help understand agent patterns
-recommended_inputs:
-  - example_agents: "{project-root}/bmad/bmm/agents/"
-  - agent_activation_rules: "{project-root}/src/utility/models/agent-activation-ide.xml"
+# Reference examples and conventions
+example_agents_dir: "{project-root}/bmad/bmm/agents/"
+agent_activation_rules: "{project-root}/src/utility/models/agent-activation-ide.xml"
 
 # Module path and component files
 installed_path: "{project-root}/bmad/bmb/workflows/create-agent"

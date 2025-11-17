@@ -1,10 +1,8 @@
+---
+description: "Facilitate project brainstorming sessions by orchestrating the CIS brainstorming workflow with project-specific context and guidance."
+---
+
 # brainstorm-project Workflow
-
-## Description
-Facilitate project brainstorming sessions by orchestrating the CIS brainstorming workflow with project-specific context and guidance.
-
-## Activation
-Type `@workflow-brainstorm-project` to execute this workflow.
 
 # Brainstorm Project Workflow Configuration
 name: "brainstorm-project"

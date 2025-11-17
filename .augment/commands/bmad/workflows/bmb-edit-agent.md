@@ -1,10 +1,8 @@
+---
+description: "Edit existing BMAD agents while following all best practices and conventions"
+---
+
 # edit-agent Workflow
-
-## Description
-Edit existing BMAD agents while following all best practices and conventions
-
-## Activation
-Type `@workflow-edit-agent` to execute this workflow.
 
 # Edit Agent - Agent Editor Configuration
 name: "edit-agent"
@@ -25,11 +23,9 @@ communication_styles: "{project-root}/bmad/bmb/workflows/create-agent/communicat
 # Workflow execution engine reference
 workflow_execution_engine: "{project-root}/bmad/core/tasks/workflow.xml"
 
-# Optional docs that can be used to understand the target agent
-recommended_inputs:
-  - target_agent: "Path to the agent.yaml or agent.md file to edit"
-  - example_agents: "{project-root}/bmad/bmm/agents/"
-  - agent_activation_rules: "{project-root}/src/utility/models/agent-activation-ide.xml"
+# Reference examples and conventions
+example_agents_dir: "{project-root}/bmad/bmm/agents/"
+agent_activation_rules: "{project-root}/src/utility/models/agent-activation-ide.xml"
 
 # Module path and component files
 installed_path: "{project-root}/bmad/bmb/workflows/edit-agent"

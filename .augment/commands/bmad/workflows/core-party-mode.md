@@ -1,10 +1,8 @@
+---
+description: "Orchestrates group discussions between all installed BMAD agents, enabling natural multi-agent conversations"
+---
+
 # party-mode Workflow
-
-## Description
-Orchestrates group discussions between all installed BMAD agents, enabling natural multi-agent conversations
-
-## Activation
-Type `@workflow-party-mode` to execute this workflow.
 
 # Party Mode - Multi-Agent Group Discussion Workflow
 name: "party-mode"
@@ -13,7 +11,6 @@ author: "BMad"
 
 # Critical data sources - manifest and config overrides
 agent_manifest: "{project-root}/bmad/_cfg/agent-manifest.csv"
-agent_overrides: "{project-root}/bmad/_cfg/agents/*.customize.yaml"
 date: system-generated
 
 # This is an interactive action workflow - no template output
@@ -23,12 +20,18 @@ instructions: "{project-root}/bmad/core/workflows/party-mode/instructions.md"
 # Exit conditions
 exit_triggers:
   - "*exit"
-  - "end party mode"
-  - "stop party mode"
 
 standalone: true
 
-web_bundle: false
+web_bundle:
+  name: "party-mode"
+  description: "Orchestrates group discussions between all installed BMAD agents, enabling natural multi-agent conversations"
+  author: "BMad"
+  instructions: "bmad/core/workflows/party-mode/instructions.md"
+  agent_manifest: "bmad/_cfg/agent-manifest.csv"
+  web_bundle_files:
+    - "bmad/core/workflows/party-mode/instructions.md"
+    - "bmad/_cfg/agent-manifest.csv"
 
 
 ## Module

@@ -61,13 +61,13 @@ That's it! To execute, tell the BMAD agent: `workflow path/to/my-workflow/`
 
 ### Tasks vs Workflows
 
-| Aspect         | Task               | Workflow                |
-| -------------- | ------------------ | ----------------------- |
-| **Purpose**    | Single operation   | Multi-step process      |
-| **Format**     | XML                | Folder with YAML config |
-| **Location**   | `/src/core/tasks/` | `/bmad/*/workflows/`    |
-| **User Input** | Minimal            | Extensive               |
-| **Output**     | Variable           | Usually documents       |
+| Aspect         | Task               | Workflow                      |
+| -------------- | ------------------ | ----------------------------- |
+| **Purpose**    | Single operation   | Multi-step process            |
+| **Format**     | XML                | Folder with YAML config       |
+| **Location**   | `/src/core/tasks/` | `/bmad/*/workflows/` |
+| **User Input** | Minimal            | Extensive                     |
+| **Output**     | Variable           | Usually documents             |
 
 ### Workflow Types
 
@@ -855,7 +855,6 @@ _Generated on {{date}}_
 **Output:**
 
 - `<template-output>` - Save checkpoint
-- `<invoke-task halt="true">{project-root}/bmad/core/tasks/adv-elicit.xml</invoke-task>` - Trigger AI enhancement
 - `<critical>` - Important info
 - `<example>` - Show example
 
@@ -904,7 +903,6 @@ _Generated on {{date}}_
   <step n="2" goal="Define requirements">
     Create functional and non-functional requirements.
     <template-output>requirements</template-output>
-    <invoke-task halt="true">{project-root}/bmad/core/tasks/adv-elicit.xml</invoke-task>
   </step>
 
   <step n="3" goal="Validate">
@@ -975,6 +973,27 @@ _Generated on {{date}}_
 2. **Provide examples** - Show expected output format
 3. **Set limits** - "3-5 items maximum"
 4. **Explain why** - Context helps AI make better decisions
+
+### Time Estimate Prohibition
+
+**CRITICAL:** For all planning, analysis, and estimation workflows, include this prohibition:
+
+```xml
+<critical>⚠️ ABSOLUTELY NO TIME ESTIMATES - NEVER mention hours, days, weeks, months, or ANY time-based predictions. AI has fundamentally changed development speed - what once took teams weeks/months can now be done by one person in hours. DO NOT give ANY time estimates whatsoever.</critical>
+```
+
+**When to include this:**
+
+- Planning workflows (PRDs, tech specs, architecture)
+- Analysis workflows (research, brainstorming, product briefs)
+- Retrospective workflows (reviews, post-mortems)
+- Any workflow discussing project scope or complexity
+
+**When NOT needed:**
+
+- Pure implementation workflows (code generation, refactoring)
+- Simple action workflows (file operations, status updates)
+- Workflows that only process existing data
 
 ### Conditional Execution Best Practices
 
@@ -1069,7 +1088,7 @@ input_file_patterns:
     sharded: '{output_folder}/*architecture*/index.md'
 
   document_project:
-    sharded: '{output_folder}/docs/index.md' # Brownfield always uses index
+    sharded: '{output_folder}/index.md' # Brownfield always uses index
 ```
 
 #### 2. Add Discovery Instructions to instructions.md
@@ -1089,7 +1108,7 @@ This workflow requires: [list required documents]
    - Read `index.md` to understand the document structure
    - Read ALL section files listed in the index (or specific sections for selective load)
    - Treat the combined content as if it were a single document
-4. **Brownfield projects**: The `document-project` workflow creates `{output_folder}/docs/index.md`
+4. **Brownfield projects**: The `document-project` workflow creates `{output_folder}/index.md`
 
 **Priority**: If both whole and sharded versions exist, use the whole document.
 

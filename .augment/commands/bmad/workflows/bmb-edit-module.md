@@ -1,10 +1,8 @@
+---
+description: "Edit existing BMAD modules (structure, agents, workflows, documentation) while following all best practices"
+---
+
 # edit-module Workflow
-
-## Description
-Edit existing BMAD modules (structure, agents, workflows, documentation) while following all best practices
-
-## Activation
-Type `@workflow-edit-module` to execute this workflow.
 
 # Edit Module - Module Editor Configuration
 name: "edit-module"
@@ -23,14 +21,12 @@ module_structure_guide: "{project-root}/bmad/bmb/workflows/create-module/module-
 agent_editor: "{project-root}/bmad/bmb/workflows/edit-agent/workflow.yaml"
 workflow_editor: "{project-root}/bmad/bmb/workflows/edit-workflow/workflow.yaml"
 
-# Optional docs that can be used to understand the target module
-recommended_inputs:
-  - target_module: "Path to the module directory to edit"
-  - bmm_module: "{project-root}/bmad/bmm/"
-  - bmb_module: "{project-root}/bmad/bmb/"
-  - cis_module: "{project-root}/bmad/cis/"
-  - existing_agents: "{project-root}/bmad/*/agents/"
-  - existing_workflows: "{project-root}/bmad/*/workflows/"
+# Reference examples - for learning patterns
+bmm_module_dir: "{project-root}/bmad/bmm/"
+bmb_module_dir: "{project-root}/bmad/bmb/"
+cis_module_dir: "{project-root}/bmad/cis/"
+existing_agents_dir: "{project-root}/bmad/*/agents/"
+existing_workflows_dir: "{project-root}/bmad/*/workflows/"
 
 # Module path and component files
 installed_path: "{project-root}/bmad/bmb/workflows/edit-module"

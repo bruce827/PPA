@@ -1,10 +1,8 @@
+---
+description: "Initialize a new BMM project by determining level, type, and creating workflow path"
+---
+
 # workflow-init Workflow
-
-## Description
-Initialize a new BMM project by determining level, type, and creating workflow path
-
-## Activation
-Type `@workflow-workflow-init` to execute this workflow.
 
 # Workflow Init - Initial Project Setup
 name: workflow-init
@@ -14,6 +12,7 @@ author: "BMad"
 # Critical variables from config
 config_source: "{project-root}/bmad/bmm/config.yaml"
 output_folder: "{config_source}:output_folder"
+sprint_artifacts: "{config_source}:sprint_artifacts"
 user_name: "{config_source}:user_name"
 project_name: "{config_source}:project_name"
 communication_language: "{config_source}:communication_language"

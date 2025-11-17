@@ -1,10 +1,8 @@
+---
+description: "Lightweight status checker - answers "what should I do now?" for any agent. Reads YAML status file for workflow tracking. Use workflow-init for new projects."
+---
+
 # workflow-status Workflow
-
-## Description
-Lightweight status checker - answers "what should I do now?" for any agent. Reads YAML status file for workflow tracking. Use workflow-init for new projects.
-
-## Activation
-Type `@workflow-workflow-status` to execute this workflow.
 
 # Workflow Status - Master Router and Status Tracker
 name: workflow-status

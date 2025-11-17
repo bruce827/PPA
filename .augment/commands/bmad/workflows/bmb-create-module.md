@@ -1,10 +1,8 @@
+---
+description: "Interactive workflow to build complete BMAD modules with agents, workflows, tasks, and installation infrastructure"
+---
+
 # create-module Workflow
-
-## Description
-Interactive workflow to build complete BMAD modules with agents, workflows, tasks, and installation infrastructure
-
-## Activation
-Type `@workflow-create-module` to execute this workflow.
 
 # Build Module Workflow Configuration
 name: create-module
@@ -27,14 +25,22 @@ workflow_builder: "{project-root}/bmad/bmb/workflows/create-workflow/workflow.ya
 brainstorming_workflow: "{project-root}/bmad/core/workflows/brainstorming/workflow.yaml"
 brainstorming_context: "{installed_path}/brainstorm-context.md"
 
-# Optional docs that help understand module patterns
-recommended_inputs:
-  - module_brief: "{output_folder}/module-brief-*.md"
-  - brainstorming_results: "{output_folder}/brainstorming-*.md"
-  - bmm_module: "{project-root}/bmad/bmm/"
-  - cis_module: "{project-root}/bmad/cis/"
-  - existing_agents: "{project-root}/bmad/*/agents/"
-  - existing_workflows: "{project-root}/bmad/*/workflows/"
+# Reference examples - for learning patterns
+bmm_module_dir: "{project-root}/bmad/bmm/"
+cis_module_dir: "{project-root}/bmad/cis/"
+existing_agents_dir: "{project-root}/bmad/*/agents/"
+existing_workflows_dir: "{project-root}/bmad/*/workflows/"
+
+# Optional user inputs - discovered if they exist
+input_file_patterns:
+  module_brief:
+    description: "Module brief with vision and requirements (optional)"
+    whole: "{output_folder}/module-brief-*.md"
+    load_strategy: "FULL_LOAD"
+  brainstorming:
+    description: "Brainstorming session outputs (optional)"
+    whole: "{output_folder}/brainstorming-*.md"
+    load_strategy: "FULL_LOAD"
 
 # Module path and component files
 installed_path: "{project-root}/bmad/bmb/workflows/create-module"

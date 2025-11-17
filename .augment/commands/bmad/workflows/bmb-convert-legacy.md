@@ -1,10 +1,8 @@
+---
+description: "Converts legacy BMAD v4 or similar items (agents, workflows, modules) to BMad Core compliant format with proper structure and conventions"
+---
+
 # convert-legacy Workflow
-
-## Description
-Converts legacy BMAD v4 or similar items (agents, workflows, modules) to BMad Core compliant format with proper structure and conventions
-
-## Activation
-Type `@workflow-convert-legacy` to execute this workflow.
 
 # Convert Legacy - BMAD v4 to v6 Converter Configuration
 name: "convert-legacy"
@@ -17,10 +15,6 @@ output_folder: "{config_source}:output_folder"
 user_name: "{config_source}:user_name"
 communication_language: "{config_source}:communication_language"
 date: system-generated
-
-# Optional docs that can be provided as input
-recommended_inputs:
-  - legacy_file: "Path to v4 agent, workflow, or module to convert"
 
 # Module path and component files
 installed_path: "{project-root}/bmad/bmb/workflows/convert-legacy"

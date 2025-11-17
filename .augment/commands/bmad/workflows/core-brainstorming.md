@@ -1,10 +1,8 @@
+---
+description: "Facilitate interactive brainstorming sessions using diverse creative techniques. This workflow facilitates interactive brainstorming sessions using diverse creative techniques. The session is highly interactive, with the AI acting as a facilitator to guide the user through various ideation methods to generate and refine creative solutions."
+---
+
 # brainstorming Workflow
-
-## Description
-Facilitate interactive brainstorming sessions using diverse creative techniques. This workflow facilitates interactive brainstorming sessions using diverse creative techniques. The session is highly interactive, with the AI acting as a facilitator to guide the user through various ideation methods to generate and refine creative solutions.
-
-## Activation
-Type `@workflow-brainstorming` to execute this workflow.
 
 # Brainstorming Session Workflow Configuration
 name: "brainstorming"
@@ -16,11 +14,6 @@ config_source: "{project-root}/bmad/cis/config.yaml"
 output_folder: "{config_source}:output_folder"
 user_name: "{config_source}:user_name"
 date: system-generated
-
-# Optional inputs for guided brainstorming
-recommended_inputs:
-  - session_context: "Context document passed via data attribute"
-  - previous_results: "{output_folder}/brainstorming-*.md"
 
 # Context can be provided via data attribute when invoking
 # Example: data="{path}/context.md" provides domain-specific guidance
