@@ -92,6 +92,8 @@ Environment: development
 | ---- | ------ | ---- |
 | PORT | 3001   | 服务监听端口 |
 | NODE_ENV | development | 运行环境标识（影响日志等） |
+| EXPORT_LOG_ENABLED | true | 是否启用导出日志（logs/export） |
+| EXPORT_LOG_DIR | (空) | 导出日志目录覆盖路径，默认 `server/logs/export` |
 
 ## ⚙️ 核心概念
 
@@ -189,7 +191,29 @@ POST /api/calculate
 | DELETE | /api/projects/:id | 删除项目 |
 | GET | /api/templates | 获取所有模板（路由与 projects 共用） |
 | GET | /api/projects/:id/export/pdf | 导出 PDF 报告 |
-| GET | /api/projects/:id/export/excel | 导出 Excel 报告 |
+| GET | /api/projects/:id/export/excel | 导出 Excel 报告（支持 internal/external 双版本） |
+
+#### 导出 Excel（FR-6）
+
+- 接口：`GET /api/projects/:id/export/excel`
+- 查询参数：
+  - `version`: 导出版本，`internal`（内部版，默认）或 `external`（对外版）
+- 成功响应：`200` + Excel 文件流
+  - `Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet`
+  - `Content-Disposition: attachment; filename={项目名称}_{version}_{YYYYMMDD_HHmmss}.xlsx`
+- 失败响应示例：
+  - 项目不存在：`404 { "error": "Project not found", "project_id": ":id" }`
+  - 非法版本：`400 { "error": "Invalid export version", "project_id": ":id" }`
+
+导出实现细节：
+
+- 数据来源：`assessment_details_json`（包含 `calculation_snapshot/role_costs/travel_costs/maintenance/risk_items` 等）
+- 内部版包含 6 个工作表：`Summary/角色成本明细/差旅成本明细/维护成本/风险评估明细/Rating Factor 说明`
+- 对外版包含 2 个工作表：`项目概览/模块报价明细`，将总成本按模块角色成本比例分摊
+- 元数据与日志：
+  - 工作簿属性写入 `creator/created/modified`
+  - 导出日志写入 `server/logs/export/{YYYY-MM-DD}/{HHmmss}_{projectId}/`（可通过 `EXPORT_LOG_ENABLED/EXPORT_LOG_DIR` 控制）
+  - 日志结构与字段说明详见 `docs/prd/export-spec.md`
 
 创建项目示例：
 
@@ -266,4 +290,3 @@ curl http://localhost:3001/api/config/all
 ## 📝 版本信息
 
 最后更新日期：2025-10-22
-

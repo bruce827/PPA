@@ -1,0 +1,25 @@
+# generated: 2025-11-17T16:09:48Z
+# project: PPA
+# selected_track: quick-flow
+# field_type: greenfield
+# workflow_path: bmad/bmm/workflows/workflow-status/paths/quick-flow-greenfield.yaml
+
+Generated on: "2025-11-17T16:09:48Z"
+project: "PPA"
+project_type: "product"
+selected_track: "quick-flow"
+field_type: "greenfield"
+workflow_path: "bmad/bmm/workflows/workflow-status/paths/quick-flow-greenfield.yaml"
+workflow_status:
+  phase_1_planning:
+    - id: tech-spec
+      agent: pm
+      command: tech-spec
+      status: required
+      output: "Technical Specification with stories"
+  phase_2_implementation:
+    - id: sprint-planning
+      agent: sm
+      command: sprint-planning
+      status: required
+      note: "Creates sprint plan with stories"

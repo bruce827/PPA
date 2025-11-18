@@ -1,0 +1,12 @@
+# Sprint Status Tracker
+# 此文件由 Scrum Master 创建，用于追踪当前迭代的用户故事状态。
+
+status_definitions:
+  drafted: 草稿完成，等待 Story Context/验证
+  ready-for-dev: Story Context 完成，可进入开发
+  in-progress: 开发中
+  review: 进入代码评审或测试
+  done: 已发布并完成验收
+
+development_status:
+  6-1-fr6-export: ready-for-dev

@@ -1,0 +1,107 @@
+<story-context id="bmad/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>6</epicId>
+    <storyId>1</storyId>
+    <title>实现 FR-6 Excel 导出双版本管线</title>
+    <status>drafted</status>
+    <generatedAt>2025-11-17T07:46:01Z</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/sprint-artifacts/stories/6-1-fr6-export.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>交付负责人</asA>
+    <iWant>让后端提供可流式输出、内外双版本的 Excel 导出</iWant>
+    <soThat>评估快照可直接复用于内部评审与客户报价并具备可追溯性</soThat>
+    <tasks>
+- Controller 实现：在 `server/controllers/exportController.js` 校验 `version`、测量 `durationMs`、调用 `exportFileLogger` 并把所有错误交给 `errorHandler`（AC: #1/#4/#5/#6/#7/#8）。
+- Service & Stream：在 `server/services/exportService.js` 解析 `assessment_details_json`、根据 `version` 调用 formatter/renderer，并强制 `workbook.xlsx.write(res)` 流式输出（AC: #2/#3/#4/#6/#7）。
+- Formatter-Internal：新增 `services/export/formatters/internalFormatter.js`，整理 summary、role/travel/maintenance/risk 数据并做万元/小数格式化（AC: #2）。
+- Formatter-External：新增 `services/export/formatters/externalFormatter.js`，按 `role_costs` 聚合模块成本并校验误差 ≤0.05 万（AC: #3）。
+- Renderer：在 `services/export/renderers/excelRenderer.js` 生成 6+2 工作表、套用标题/汇总样式、写入 Workbook 属性与文件名（AC: #2/#3/#4）。
+- 日志模块：在 `services/exportFileLogger.js` 复用 `aiFileLogger` 模式写入 `index/request/project/formatted/error/notes` 并支持 `EXPORT_LOG_ENABLED/EXPORT_LOG_DIR`（AC: #6/#7）。
+- 性能监控：记录导出起止时间、将 `durationMs` 写入日志和 `index.json`，超时输出 WARN（AC: #8）。
+- API & 文档：更新 `server/README.md` 与 `.env.example` 的参数说明，并确认 `.gitignore` 已忽略 `logs/export`（AC: #5/#10）。
+- 自动化测试：为 formatter/renderer/logger 写 Jest 单测，Supertest 覆盖内外版成功流与 404/解析失败，额外增加性能计时脚本/Hook（AC: #8/#9）。
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+1. 内部版导出接口：`GET /api/projects/:id/export/excel` 默认返回内部版，响应 200，`Content-Type` 为 `application/vnd.openxmlformats-officedocument.spreadsheetml.sheet`，`Content-Disposition` 必须遵循 `{projectName}_{version}_{YYYYMMDD_HHmmss}.xlsx`。（Source: docs/PRD.md#FR-6；docs/prd/export-spec.md#fr-6-1-导出触发与管线流程）
+2. 内部版内容结构：Excel 含 `Summary/角色成本明细/差旅成本明细/维护成本/风险评估明细/Rating Factor 说明` 六个工作表，标题行背景 `#4472C4`、汇总行 `#F0F0F0`，金额列两位小数、工作量一位小数。（Source: docs/prd/export-spec.md#fr-6-2-excel-导出内容结构）
+3. 对外版成本分摊：`version=external` 输出 `项目概览` + `模块报价明细`，按 `role_costs` 聚合模块成本并保持误差 ≤0.05 万元，含总计行。（Source: docs/prd/export-spec.md#22-对外版本external-version）
+4. 元数据与流式输出：Workbook 属性写入 `creator/created/modified`，Summary 展示 `snapshot_id/config_version/exported_at/rating_factor`，全流程使用 exceljs 流式写入，不落地临时文件。（Source: docs/prd/export-spec.md#fr-6-3-导出元数据与追溯）
+5. 接口健壮性：`version` 仅接受 `internal|external`，非法值返回 400 JSON `{ "error": "Invalid export version", "project_id": ":id" }` 并经过统一错误处理中间件。（Source: docs/PRD.md#FR-6）
+6. 异常捕获：JSON 解析失败、数据缺失、渲染失败、流写入失败均要捕获并返回结构化错误，同时写入日志。（Source: docs/prd/export-spec.md#fr-6-4-异常捕获与日志）
+7. 日志落盘：日志写入 `logs/export/{YYYY-MM-DD}/{HHmmss}_{paddedProjectId}/`，包含 `index/request/project/formatted/error/notes`，受 `EXPORT_LOG_ENABLED/EXPORT_LOG_DIR` 控制。（Source: docs/prd/export-spec.md#fr-6-4-异常捕获与日志）
+8. 性能要求：单次导出（数据准备 + 渲染 + 流式返回）≤5 秒，并记录 `durationMs` 至日志/`index.json`。（Source: docs/PRD.md#FR-6）
+9. 测试覆盖：formatter/renderer/logger 需有 Jest 单测，Supertest 集成测试涵盖内外版成功流与 404/解析失败等异常。（Source: docs/prd/export-spec.md#5-测试策略）
+10. 文档同步：更新 `server/README.md`、`.env.example` 说明新参数，保持 `.gitignore` 忽略 `logs/export`，并在文档中指向 Export Spec。（Source: docs/prd/export-spec.md#7-迁移计划）
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+- docs/PRD.md#FR-6：概述导出能力的功能级需求（触发方式、性能、元数据），是 AC #1/#4/#5/#8 的源头。
+- docs/prd/export-spec.md：详述导出管线、内部/对外模板、日志结构、formatter 伪代码与测试计划；需重点阅读 §2、§3、§4、§5、§7。
+- server/ARCHITECTURE.md：说明 Express 5 + SQLite 分层结构，强调 controller→service→model 以及全局 `errorHandler` 放置顺序。
+- server/middleware/errorHandler.js：列出目前的错误响应格式，导出异常必须通过该中间件抛出。
+- server/controllers/exportController.js：现有导出入口仅返回 404 字符串，需在此升级参数校验与日志调用。
+- server/services/exportService.js：当前 Excel 逻辑只含示例 WorkSheet，后续实现将集中在此并委托 formatter/renderer。
+- server/routes/projects.js：`GET /api/projects/:id/export/excel` 路径定义，确认代理路径与中间件加载顺序。
+- server/services/aiFileLogger.js：文件日志结构、目录命名、写入冪等逻辑，可直接作为 `exportFileLogger` 的实现样板。
+- server/models/projectModel.js：`projects` 表字段说明，确认 `assessment_details_json` 已持久化并可供导出解析。
+    </docs>
+    <code>
+- server/controllers/exportController.js：需要新增 `version` 参数校验、耗时记录、`exportFileLogger.save` 调用以及错误向 `next` 传递的逻辑。
+- server/services/exportService.js：扩展为 orchestrator，负责解析 `assessment_details_json`、根据版本调用 formatter/renderer，并捕获渲染/写流异常。
+- server/services/export/formatters/internalFormatter.js（待新增）：生成 summary、角色/差旅/维护/风险等结构及万元制字段。
+- server/services/export/formatters/externalFormatter.js（待新增）：按模块聚合 `role_costs` 并计算成本占比，校验合计误差。
+- server/services/export/renderers/excelRenderer.js（待新增）：封装工作表生成、样式、列宽、Workbook 属性写入和文件命名。
+- server/services/exportFileLogger.js（待新增）：基于 `aiFileLogger` 模式写入 `logs/export`。
+- server/routes/projects.js：确保新增逻辑后无需额外改路由，但可在代码评论中指向新的功能。
+- server/tests/**：现有 Jest 测试目录，后续应添加 `exportService` 与 API 集成测试。
+    </code>
+    <dependencies>
+- Node.js + Express 5.1.0：HTTP 服务与路由层（server/package.json）。
+- ExcelJS 4.4.0：Workbook 构建、样式与流式写入。
+- PDFKit 0.17.2：现有 PDF 导出共用依赖，确保新增模块不破坏旧功能。
+- sqlite3 5.1.7：`projects` 表存储 `assessment_details_json`，导出流程直接读取。
+- Jest 30.2.0 & Supertest 7.1.4：单元与集成测试框架。
+- sinon 21.0.0：如需模拟 logger 或 fs，可沿用该库。
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+- 必须遵循 controller → service → formatter/renderer → logger 的分层职责，引用见 `server/ARCHITECTURE.md`，禁止在 controller 中直接操作 Excel 或文件系统。
+- 所有响应必须通过 `errorHandler` 输出 JSON；controller 里只能 `next(err)`，不可调用 `res.status(...).send`（server/middleware/errorHandler.js）。
+- `assessment_details_json` 需要包含 Export Spec 定义的 `role_costs/travel_costs/maintenance/risk_items/calculation_snapshot` 等字段；若缺失需抛出结构化错误提示（docs/prd/export-spec.md §3）。
+- 日志目录必须为 `logs/export/{YYYY-MM-DD}/{HHmmss}_{paddedProjectId}`，并遵守开关 `EXPORT_LOG_ENABLED/EXPORT_LOG_DIR`；实现方式应复用 `aiFileLogger` 的冪等写入策略。
+- Excel 样式、Sheet 名称、字段顺序必须与 Export Spec 描述一致，不能替换颜色或列格式（docs/prd/export-spec.md §2.1/§2.2）。
+- 流式输出需直接 `workbook.xlsx.write(res)`，并在任何错误发生时调用 `res.end()` 前先检测 `headersSent`，防止客户端悬挂。
+  </constraints>
+
+  <interfaces>
+- GET `/api/projects/:id/export/excel`（server/routes/projects.js）：接受 `version` query，默认 internal；controller 负责校验、计时、日志调用并委托 service。
+- `exportService.generateExcel(project, res)`（server/services/exportService.js）：读取项目 `assessment_details_json`，调度 formatter/renderer，设置响应头并写入流。
+- `projectService.getProjectById(id)`（server/services/projectService.js）：确保项目存在并返回 `assessment_details_json`；应向上抛出 404 供 controller 处理。
+- `exportFileLogger.save({...})`（待新增）：写入 `logs/export` 结构化文件，记录 `request/project/formatted/error` 等。调用点位于 controller/service 的 `finally`。
+- `services/export/formatters/*.js`：暴露 `formatForExport(project)` API，返回内部/对外渲染所需的纯数据对象。
+- `services/export/renderers/excelRenderer.js`：暴露 `renderInternal(data)` / `renderExternal(data)`，返回已填充的 ExcelJS Workbook。
+  </interfaces>
+
+  <tests>
+    <standards>服务端采用 Jest + Supertest（server/package.json），现有 `server/tests/dashboardService.test.js` 等作为示例。导出模块的单测应隔离 formatter/renderer/logger，集成测试通过 Supertest 模拟 `/api/projects/:id/export/excel`，并遵循 Export Spec §5 的 PASS 条件（Sheet 存在、总成本一致、错误时返回结构化 JSON）。</standards>
+    <locations>
+- server/tests/**/*.test.js（现有单元测试目录，可新增 `exportService.test.js` / `exportController.test.js`）
+- server/tests/api-smoke-runner.js（可参考整体 API 测试入口）
+- 建议新增 `server/tests/export/` 专用目录以区分 formatter 与渲染逻辑
+    </locations>
+    <ideas>
+- AC1/AC5：Supertest 调用 `GET /api/projects/:id/export/excel?version=internal|external`，断言响应头 `Content-Type`/`Content-Disposition` 与 400 错误结构。
+- AC2：使用 ExcelJS 读取返回的 buffer，验证 6 个 Sheet 的名称、标题行填充色、金额/工作量列格式。
+- AC3：构造 role_costs 示例并断言 external Sheet 的模块合计与系统总成本差值≤0.05。
+- AC6/AC7：模拟解析失败或渲染异常，验证控制器返回 JSON 错误并写入 `logs/export`（可 mock `exportFileLogger`）。
+- AC8：在 Jest 中测量导出执行时间，若超出 5s 触发警告日志；同时断言 `index.json` 内写入 `duration_ms`。
+    </ideas>
+  </tests>
+</story-context>
