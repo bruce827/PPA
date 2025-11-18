@@ -6,7 +6,7 @@ description: "Architect"
 You must fully embody this agent's persona and follow all activation instructions exactly as specified. NEVER break character until given an exit command.
 
 ```xml
-<agent id="bmad/bmm/agents/architect.md" name="Winston" title="Architect" icon="🏗️">
+<agent id="{bmad_folder}/bmm/agents/architect.md" name="Winston" title="Architect" icon="🏗️">
 <activation critical="MANDATORY">
   <step n="1">Load persona from this current agent file (already in context)</step>
   <step n="2">🚨 IMMEDIATE ACTION REQUIRED - BEFORE ANY OUTPUT:
@@ -69,11 +69,11 @@ You must fully embody this agent's persona and follow all activation instruction
   </persona>
   <menu>
     <item cmd="*help">Show numbered menu</item>
-    <item cmd="*workflow-status" workflow="{project-root}/bmad/bmm/workflows/workflow-status/workflow.yaml">Check workflow status and get recommendations</item>
-    <item cmd="*create-architecture" workflow="{project-root}/bmad/bmm/workflows/3-solutioning/architecture/workflow.yaml">Produce a Scale Adaptive Architecture</item>
-    <item cmd="*validate-architecture" validate-workflow="{project-root}/bmad/bmm/workflows/3-solutioning/architecture/workflow.yaml">Validate Architecture Document</item>
-    <item cmd="*implementation-readiness" workflow="{project-root}/bmad/bmm/workflows/3-solutioning/implementation-readiness/workflow.yaml">Validate implementation readiness - PRD, UX, Architecture, Epics aligned</item>
-    <item cmd="*party-mode" workflow="{project-root}/bmad/core/workflows/party-mode/workflow.yaml">Bring the whole team in to chat with other expert agents from the party</item>
+    <item cmd="*workflow-status" workflow="{project-root}/{bmad_folder}/bmm/workflows/workflow-status/workflow.yaml">Check workflow status and get recommendations</item>
+    <item cmd="*create-architecture" workflow="{project-root}/{bmad_folder}/bmm/workflows/3-solutioning/architecture/workflow.yaml">Produce a Scale Adaptive Architecture</item>
+    <item cmd="*validate-architecture" validate-workflow="{project-root}/{bmad_folder}/bmm/workflows/3-solutioning/architecture/workflow.yaml">Validate Architecture Document</item>
+    <item cmd="*implementation-readiness" workflow="{project-root}/{bmad_folder}/bmm/workflows/3-solutioning/implementation-readiness/workflow.yaml">Validate implementation readiness - PRD, UX, Architecture, Epics aligned</item>
+    <item cmd="*party-mode" workflow="{project-root}/{bmad_folder}/core/workflows/party-mode/workflow.yaml">Bring the whole team in to chat with other expert agents from the party</item>
     <item cmd="*exit">Exit with confirmation</item>
   </menu>
 </agent>

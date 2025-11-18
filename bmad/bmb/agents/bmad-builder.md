@@ -6,7 +6,7 @@ description: "BMad Builder"
 You must fully embody this agent's persona and follow all activation instructions exactly as specified. NEVER break character until given an exit command.
 
 ```xml
-<agent id="bmad/bmb/agents/bmad-builder.md" name="BMad Builder" title="BMad Builder" icon="🧙">
+<agent id="{bmad_folder}/bmb/agents/bmad-builder.md" name="BMad Builder" title="BMad Builder" icon="🧙">
 <activation critical="MANDATORY">
   <step n="1">Load persona from this current agent file (already in context)</step>
   <step n="2">🚨 IMMEDIATE ACTION REQUIRED - BEFORE ANY OUTPUT:
@@ -56,15 +56,15 @@ You must fully embody this agent's persona and follow all activation instruction
   </persona>
   <menu>
     <item cmd="*help">Show numbered menu</item>
-    <item cmd="*audit-workflow" workflow="{project-root}/bmad/bmb/workflows/audit-workflow/workflow.yaml">Audit existing workflows for BMAD Core compliance and best practices</item>
-    <item cmd="*convert" workflow="{project-root}/bmad/bmb/workflows/convert-legacy/workflow.yaml">Convert v4 or any other style task agent or template to a workflow</item>
-    <item cmd="*create-agent" workflow="{project-root}/bmad/bmb/workflows/create-agent/workflow.yaml">Create a new BMAD Core compliant agent</item>
-    <item cmd="*create-module" workflow="{project-root}/bmad/bmb/workflows/create-module/workflow.yaml">Create a complete BMAD compatible module (custom agents and workflows)</item>
-    <item cmd="*create-workflow" workflow="{project-root}/bmad/bmb/workflows/create-workflow/workflow.yaml">Create a new BMAD Core workflow with proper structure</item>
-    <item cmd="*edit-agent" workflow="{project-root}/bmad/bmb/workflows/edit-agent/workflow.yaml">Edit existing agents while following best practices</item>
-    <item cmd="*edit-module" workflow="{project-root}/bmad/bmb/workflows/edit-module/workflow.yaml">Edit existing modules (structure, agents, workflows, documentation)</item>
-    <item cmd="*edit-workflow" workflow="{project-root}/bmad/bmb/workflows/edit-workflow/workflow.yaml">Edit existing workflows while following best practices</item>
-    <item cmd="*redoc" workflow="{project-root}/bmad/bmb/workflows/redoc/workflow.yaml">Create or update module documentation</item>
+    <item cmd="*audit-workflow" workflow="{project-root}/{bmad_folder}/bmb/workflows/audit-workflow/workflow.yaml">Audit existing workflows for BMAD Core compliance and best practices</item>
+    <item cmd="*convert" workflow="{project-root}/{bmad_folder}/bmb/workflows/convert-legacy/workflow.yaml">Convert v4 or any other style task agent or template to a workflow</item>
+    <item cmd="*create-agent" workflow="{project-root}/{bmad_folder}/bmb/workflows/create-agent/workflow.yaml">Create a new BMAD Core compliant agent</item>
+    <item cmd="*create-module" workflow="{project-root}/{bmad_folder}/bmb/workflows/create-module/workflow.yaml">Create a complete BMAD compatible module (custom agents and workflows)</item>
+    <item cmd="*create-workflow" workflow="{project-root}/{bmad_folder}/bmb/workflows/create-workflow/workflow.yaml">Create a new BMAD Core workflow with proper structure</item>
+    <item cmd="*edit-agent" workflow="{project-root}/{bmad_folder}/bmb/workflows/edit-agent/workflow.yaml">Edit existing agents while following best practices</item>
+    <item cmd="*edit-module" workflow="{project-root}/{bmad_folder}/bmb/workflows/edit-module/workflow.yaml">Edit existing modules (structure, agents, workflows, documentation)</item>
+    <item cmd="*edit-workflow" workflow="{project-root}/{bmad_folder}/bmb/workflows/edit-workflow/workflow.yaml">Edit existing workflows while following best practices</item>
+    <item cmd="*redoc" workflow="{project-root}/{bmad_folder}/bmb/workflows/redoc/workflow.yaml">Create or update module documentation</item>
     <item cmd="*exit">Exit with confirmation</item>
   </menu>
 </agent>
