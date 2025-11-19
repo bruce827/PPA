@@ -152,7 +152,7 @@ const generateExcel = async (project, version) => {
   const formatter =
     normalizedVersion === 'external' ? externalFormatter : internalFormatter;
 
-  const formattedData = formatter.formatForExport(project);
+  const formattedData = await formatter.formatForExport(project);
 
   // 使用配置中的风险评估项信息，补充风险评估明细中的“类别”和“选项”列
   await enrichRiskItemsFromConfig(formattedData, normalizedVersion);

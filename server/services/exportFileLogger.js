@@ -43,7 +43,6 @@ async function ensureDir(dir) {
  * @param {string} params.status - 导出状态（success/fail）。
  * @param {number} params.durationMs - 导出耗时（毫秒）。
  * @param {number} params.fileSizeKb - 导出文件大小（KB，若未知可为 0）。
- * @param {string} params.configVersion - 配置版本号。
  * @param {string|number} params.userId - 操作用户标识。
  * @param {Object} params.request - 原始请求信息（路由、方法、参数等）。
  * @param {Object|null} params.projectSnapshot - 项目数据快照（成功时记录）。
@@ -59,7 +58,6 @@ async function save({
   status,
   durationMs,
   fileSizeKb,
-  configVersion,
   userId,
   request,
   projectSnapshot,
@@ -93,8 +91,7 @@ async function save({
       duration_ms: durationMs,
       file_size_kb: fileSizeKb,
       timestamp: now.toISOString(),
-      user_id: userId,
-      config_version: configVersion
+      user_id: userId
     };
 
     await fs.writeFile(

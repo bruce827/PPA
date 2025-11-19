@@ -99,7 +99,6 @@ function renderInternal(formatted) {
   ]);
   summarySheet.addRow(['评估完成时间', summary.completedAt || '']);
   summarySheet.addRow(['导出时间', summary.exportedAt || '']);
-  summarySheet.addRow(['配置版本', summary.configVersion || '']);
   autoWidth(summarySheet);
 
   const roleSheet = workbook.addWorksheet('角色成本明细');
@@ -258,6 +257,35 @@ function renderInternal(formatted) {
   styleTotalRow(riskTotalRow);
   riskSheet.getColumn('score').numFmt = '0.0';
   autoWidth(riskSheet);
+
+  const riskCostSheet = workbook.addWorksheet('风险成本明细');
+  riskCostSheet.columns = [
+    { header: '风险内容', key: 'description', width: 40 },
+    { header: '预估费用（万元）', key: 'costWan', width: 20 }
+  ];
+  styleHeaderRow(riskCostSheet.getRow(1));
+
+  const riskCosts = Array.isArray(formatted.riskCosts) ? formatted.riskCosts : [];
+  let riskCostTotal = 0;
+
+  riskCosts.forEach((rc) => {
+    const costWan = Number(rc.costWan || 0);
+    riskCostTotal += costWan;
+    riskCostSheet.addRow({
+      description: rc.description || '',
+      costWan
+    });
+  });
+
+  if (riskCosts.length) {
+    const riskCostTotalRow = riskCostSheet.addRow({
+      description: '总计',
+      costWan: riskCostTotal
+    });
+    styleTotalRow(riskCostTotalRow);
+  }
+  riskCostSheet.getColumn('costWan').numFmt = '0.00';
+  autoWidth(riskCostSheet);
 
   const ratingSheet = workbook.addWorksheet('Rating Factor 说明');
   ratingSheet.columns = [

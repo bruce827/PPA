@@ -142,7 +142,7 @@
   - 状态: ✅ 已完成
   - 优先级: P0
   - 版本: v1.0.0-alpha
-  - 说明: 携带 snapshot_id、config_version、exported_at
+  - 说明: 携带 snapshot_id、exported_at
 
 - **FR-6.4** Excel 多工作表导出
   - 状态: ✅ 已完成

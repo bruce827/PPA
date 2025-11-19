@@ -5,6 +5,96 @@
  */
 const { HttpError } = require('../../../utils/errors');
 const { DEFAULTS } = require('../../../utils/constants');
+const { computeRatingFactor } = require('../../../utils/rating');
+
+/**
+ * 描述：根据项目的更新时间/创建时间生成“评估完成时间”字段。
+ * @param {Object} project - 项目记录，包含 updated_at / created_at。
+ * @returns {string|null} 格式化后的时间（YYYY-MM-DD HH:mm），不可用时返回 null。
+ */
+function formatCompletedAt(project) {
+  if (!project) return null;
+  const raw = project.updated_at || project.created_at;
+  if (!raw) return null;
+
+  const date = new Date(raw);
+  if (Number.isNaN(date.getTime())) {
+    if (typeof raw === 'string' && raw.length >= 16) {
+      return raw.replace('T', ' ').slice(0, 16);
+    }
+    return null;
+  }
+
+  const pad = (num) => String(num).padStart(2, '0');
+  const yyyy = date.getFullYear();
+  const mm = pad(date.getMonth() + 1);
+  const dd = pad(date.getDate());
+  const hh = pad(date.getHours());
+  const mi = pad(date.getMinutes());
+  return `${yyyy}-${mm}-${dd} ${hh}:${mi}`;
+}
+
+/**
+ * 描述：将时间格式化为“YYYY-MM-DD HH:mm:ss”字符串。
+ * @param {string|number|Date} value - 可被 Date 解析的时间输入。
+ * @returns {string|null} 格式化结果，解析失败返回 null。
+ */
+function formatExportedAtDisplay(value) {
+  if (!value) return null;
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return null;
+  const pad = (num) => String(num).padStart(2, '0');
+  const yyyy = date.getFullYear();
+  const mm = pad(date.getMonth() + 1);
+  const dd = pad(date.getDate());
+  const hh = pad(date.getHours());
+  const mi = pad(date.getMinutes());
+  const ss = pad(date.getSeconds());
+  return `${yyyy}-${mm}-${dd} ${hh}:${mi}:${ss}`;
+}
+
+function buildLegacyRiskCosts(details) {
+  const candidates = [];
+
+  if (Array.isArray(details?.risk_cost_items)) {
+    candidates.push(details.risk_cost_items);
+  }
+
+  if (Array.isArray(details?.other_costs?.risk_items)) {
+    candidates.push(details.other_costs.risk_items);
+  }
+
+  if (Array.isArray(details?.risk_items)) {
+    candidates.push(details.risk_items);
+  }
+
+  const result = [];
+
+  candidates.forEach((list) => {
+    list.forEach((entry) => {
+      if (!entry || typeof entry !== 'object') return;
+      const description =
+        entry.description ||
+        entry.content ||
+        entry.title ||
+        entry.name ||
+        '';
+      const rawCost =
+        entry.cost ??
+        entry.estimated_cost ??
+        entry.value ??
+        entry.amount;
+      const cost = Number(rawCost);
+      if (!description || !Number.isFinite(cost) || cost <= 0) return;
+      result.push({
+        description,
+        costWan: cost
+      });
+    });
+  });
+
+  return result;
+}
 
 /**
  * 描述：从项目记录中解析评估详情 JSON 字段。
@@ -175,9 +265,11 @@ function buildLegacyRiskItems(details) {
  * @returns {Object} 包含 summary、roleCosts、travelCosts、maintenance、riskItems 等字段的导出数据对象。
  * @throws {HttpError} 当评估详情缺失或解析失败时抛出错误。
  */
-exports.formatForExport = (project) => {
+exports.formatForExport = async (project) => {
   const details = parseDetails(project);
-  const exportedAt = new Date().toISOString();
+  const exportedAtISO = new Date().toISOString();
+  const exportedAtDisplay = formatExportedAtDisplay(exportedAtISO);
+  const completedAt = formatCompletedAt(project);
 
   if (isNewExportShape(details)) {
     const snapshot = details.calculation_snapshot || {};
@@ -211,9 +303,9 @@ exports.formatForExport = (project) => {
             ? snapshot.final_workload_days
             : project.final_workload_days,
         ratingFactor: snapshot.rating_factor,
-        completedAt: details.completed_at,
-        exportedAt,
-        configVersion: details.config_version
+        completedAt,
+        exportedAt: exportedAtDisplay,
+        exportedAtISO
       },
       roleCosts: roleCosts.map((rc) => ({
         module1: rc.module1,
@@ -259,6 +351,17 @@ exports.formatForExport = (project) => {
           score: ri.score
         };
       }),
+      riskCosts: Array.isArray(details.risk_cost_items)
+        ? details.risk_cost_items
+            .map((item) => ({
+              description: item.description || item.content || '',
+              costWan: Number(item.cost || item.estimated_cost || 0)
+            }))
+            .filter(
+              (item) =>
+                item.description && Number.isFinite(item.costWan) && item.costWan > 0
+            )
+        : [],
       riskCalculation
     };
   }
@@ -270,6 +373,43 @@ exports.formatForExport = (project) => {
     0
   );
 
+  let resolvedRatingFactor = null;
+  const finalRiskScore =
+    project.final_risk_score != null ? project.final_risk_score : riskScoreFromDetails;
+  const normalizedRiskScore = Number(finalRiskScore);
+
+  let ratingRatio = null;
+  let ratingMaxScore = null;
+  let amplificationFactor = null;
+
+  if (Number.isFinite(normalizedRiskScore)) {
+    try {
+      const { factor, ratio, maxScore } = await computeRatingFactor(
+        normalizedRiskScore
+      );
+      if (Number.isFinite(ratio)) {
+        ratingRatio = Number(ratio.toFixed(4));
+      }
+      if (Number.isFinite(maxScore)) {
+        ratingMaxScore = Number(maxScore);
+      }
+      if (Number.isFinite(Number(factor))) {
+        resolvedRatingFactor = Number(Number(factor).toFixed(4));
+        if (ratingRatio && ratingRatio !== 0) {
+          amplificationFactor = Number(
+            ((resolvedRatingFactor - 1) / ratingRatio).toFixed(4)
+          );
+        } else {
+          amplificationFactor = Number(
+            (resolvedRatingFactor - 1).toFixed(4)
+          );
+        }
+      }
+    } catch (_error) {
+      // 评分因子计算失败时保持为 null，导出流程不因此中断
+    }
+  }
+
   const summary = {
     snapshotId: project.id,
     projectName: project.name,
@@ -280,16 +420,23 @@ exports.formatForExport = (project) => {
         ? project.final_risk_score
         : riskScoreFromDetails,
     workloadDays: project.final_workload_days,
-    ratingFactor: null,
-    completedAt: null,
-    exportedAt,
-    configVersion: null
+    ratingFactor: resolvedRatingFactor,
+    completedAt,
+    exportedAt: exportedAtDisplay,
+    exportedAtISO
+  };
+
+  const legacyRiskCalculation = {
+    max_risk_score: ratingMaxScore,
+    amplification_factor: amplificationFactor,
+    rating_ratio: ratingRatio
   };
 
   const roleCostsLegacy = buildLegacyRoleCosts(details);
   const travelCostsLegacy = buildLegacyTravelCosts(details);
   const maintenanceLegacy = buildLegacyMaintenance(details);
   const riskItemsLegacy = buildLegacyRiskItems(details);
+  const riskCostsLegacy = buildLegacyRiskCosts(details);
 
   return {
     summary,
@@ -297,6 +444,7 @@ exports.formatForExport = (project) => {
     travelCosts: travelCostsLegacy,
     maintenance: maintenanceLegacy,
     riskItems: riskItemsLegacy,
-    riskCalculation: {}
+    riskCosts: riskCostsLegacy,
+    riskCalculation: legacyRiskCalculation
   };
 };

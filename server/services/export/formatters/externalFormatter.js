@@ -4,6 +4,20 @@
  */
 const { HttpError } = require('../../../utils/errors');
 
+function formatExportedAtDisplay(value) {
+  if (!value) return null;
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return null;
+  const pad = (num) => String(num).padStart(2, '0');
+  const yyyy = date.getFullYear();
+  const mm = pad(date.getMonth() + 1);
+  const dd = pad(date.getDate());
+  const hh = pad(date.getHours());
+  const mi = pad(date.getMinutes());
+  const ss = pad(date.getSeconds());
+  return `${yyyy}-${mm}-${dd} ${hh}:${mi}:${ss}`;
+}
+
 /**
  * 描述：从项目记录中解析评估详情 JSON 字段。
  * @param {Object} project - 包含 assessment_details_json 字段的项目记录。
@@ -71,26 +85,27 @@ function buildModulesFromRoleCosts(roleCosts) {
  * @param {Object} details - 评估详情对象，包含 roles、development_workload、integration_workload 等字段。
  * @returns {Array<Object>} 模块级聚合结果数组。
  */
-function buildModulesFromLegacy(details) {
-  const roles = Array.isArray(details.roles) ? details.roles : [];
-  const devItems = Array.isArray(details.development_workload)
-    ? details.development_workload
-    : [];
-  const integrationItems = Array.isArray(details.integration_workload)
-    ? details.integration_workload
-    : [];
-  const items = [...devItems, ...integrationItems];
+function aggregateModulesFromWorkloads(workloads, roles) {
+  if (
+    !Array.isArray(workloads) ||
+    !workloads.length ||
+    !Array.isArray(roles) ||
+    !roles.length
+  ) {
+    return [];
+  }
 
   const modules = {};
 
-  items.forEach((item) => {
+  workloads.forEach((item) => {
+    if (!item || typeof item !== 'object') return;
     const module1 = item.module1;
     const module2 = item.module2;
     const module3 = item.module3;
     const moduleName =
-      module3 || module2 || module1 || '未命名模块';
-
+      item.module || module3 || module2 || module1 || '未命名模块';
     const key = `${module1 || ''}|||${module2 || ''}|||${module3 || ''}`;
+
     if (!modules[key]) {
       modules[key] = {
         module1,
@@ -121,6 +136,18 @@ function buildModulesFromLegacy(details) {
   return Object.values(modules);
 }
 
+function buildModulesFromLegacy(details) {
+  const roles = Array.isArray(details.roles) ? details.roles : [];
+  const devItems = Array.isArray(details.development_workload)
+    ? details.development_workload
+    : [];
+  const integrationItems = Array.isArray(details.integration_workload)
+    ? details.integration_workload
+    : [];
+  const items = [...devItems, ...integrationItems];
+  return aggregateModulesFromWorkloads(items, roles);
+}
+
 /**
  * 描述：根据项目记录生成对外版导出所需的标准化数据结构，
  *       将总报价按模块角色成本比例分摊，形成模块报价明细。
@@ -135,10 +162,33 @@ exports.formatForExport = (project) => {
     ? details.role_costs
     : [];
   const snapshot = details.calculation_snapshot || {};
+  const roles = Array.isArray(details.roles) ? details.roles : [];
 
   let moduleListRaw;
   if (roleCosts.length > 0) {
     moduleListRaw = buildModulesFromRoleCosts(roleCosts);
+    const integrationModules = aggregateModulesFromWorkloads(
+      Array.isArray(details.integration_workload) ? details.integration_workload : [],
+      roles
+    );
+    if (integrationModules.length) {
+      const moduleMap = new Map();
+      const append = (list) => {
+        list.forEach((m) => {
+          const key = `${m.module1 || ''}|||${m.module2 || ''}|||${m.module3 || ''}`;
+          if (!moduleMap.has(key)) {
+            moduleMap.set(key, { ...m });
+          } else {
+            const existing = moduleMap.get(key);
+            existing.workloadDays += Number(m.workloadDays || 0);
+            existing.roleCost += Number(m.roleCost || 0);
+          }
+        });
+      };
+      append(moduleListRaw);
+      append(integrationModules);
+      moduleListRaw = Array.from(moduleMap.values());
+    }
   } else {
     moduleListRaw = buildModulesFromLegacy(details);
   }
@@ -194,7 +244,8 @@ exports.formatForExport = (project) => {
     );
   }
 
-  const exportedAt = new Date().toISOString();
+  const exportedAtISO = new Date().toISOString();
+  const exportedAtDisplay = formatExportedAtDisplay(exportedAtISO);
 
   return {
     summary: {
@@ -203,7 +254,8 @@ exports.formatForExport = (project) => {
       description: project.description,
       totalCost: totalCostWan,
       totalWorkloadDays,
-      exportedAt
+      exportedAt: exportedAtDisplay,
+      exportedAtISO
     },
     modules: moduleList
   };

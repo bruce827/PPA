@@ -692,3 +692,190 @@ sqlite3 ppa.db "SELECT COUNT(*) FROM projects WHERE json_extract(assessment_deta
 - VS Code SQLite 扩展: 可视化查看数据库
 
 ---
+
+### 5.3 内部导出 Summary Rating Factor 为空
+
+**故障现象**:  
+用户执行内部版 Excel 导出时，Summary 工作表中的 `Rating Factor` 列始终为空（`formatted.json` 中对应字段为 `null`），导致报价追溯链断裂。
+
+**发生时间**: 2025-11-19（Excel 导出验收回归）
+
+**根本原因**:  
+`internalFormatter.formatForExport()` 在兼容旧版 `assessment_details_json` 结构时，直接将 `ratingFactor` 设为 `null`，并未基于项目的 `final_risk_score` 重新计算评分因子：
+
+```javascript
+// ❌ 旧逻辑：legacy 分支 ratingFactor 永远为 null
+const summary = {
+  snapshotId: project.id,
+  // ...
+  ratingFactor: null,
+  exportedAt
+};
+```
+
+即便项目的 `final_risk_score` 已经在外层聚合字段中保存，也没有再次调用评分算法，导致 Summary 页缺数。
+
+**解决方案**:
+
+1. 将 `internalFormatter.formatForExport` 改为 `async`，在 legacy 分支内读取最终风险分数（`project.final_risk_score` 或 `risk_scores` 求和），并调用 `utils/rating.computeRatingFactor()` 动态得到评分因子，失败时保持 `null` 而不阻断导出。
+2. `computeRatingFactor` 依赖配置库（SQLite），因此需要补充 `exportService.generateExcel()` 对 formatter 结果 `await`，确保外层流程能够正确处理异步。
+
+```javascript
+// ✅ 新逻辑：legacy 结构也计算 ratingFactor
+if (Number.isFinite(normalizedRiskScore)) {
+  const { factor } = await computeRatingFactor(normalizedRiskScore);
+  resolvedRatingFactor = Number(Number(factor).toFixed(4));
+}
+
+const summary = {
+  // ...
+  ratingFactor: resolvedRatingFactor,
+  exportedAt
+};
+```
+
+**验证步骤**:
+1. 在 `server` 目录 `node` 运行脚本，先 `await db.init()`（或启动 API 服务）。
+2. 读取一条 legacy 项目（例如 `server/logs/export/2025-11-19/151308_000017/project.json`），执行 `internalFormatter.formatForExport`。
+3. 断言 `result.summary.ratingFactor` 为介于 `1~1.5` 的数值（示例测试得到 `1`）。
+4. 重新通过接口导出 Excel，Summary 页应显示对应值。
+
+**涉及文件**:
+- `server/services/export/formatters/internalFormatter.js`
+- `server/services/exportService.js`
+- `server/utils/rating.js`, `server/models/configModel.js`
+
+### 5.4 内部导出评估完成时间为空
+
+**故障现象**:  
+内部版 Excel Summary 的“评估完成时间”列一直为空，落盘的 `formatted.json.summary.completedAt` 也是 `null`，无法追溯具体的评估交付时间。
+
+**发生时间**: 2025-11-19（Excel 导出回归）
+
+**根本原因**:  
+`internalFormatter.formatForExport()` 仅在新数据结构下读取 `details.completed_at`；legacy 分支直接写死 `completedAt: null`。线上老项目没有 `completed_at` 字段，即使数据库行存在 `updated_at` 也未被利用。
+
+**解决方案**:
+
+1. 在 formatter 中新增 `formatCompletedAt(project)`，优先使用项目记录的 `updated_at`，否则回退到 `created_at`，并统一格式化为 `YYYY-MM-DD HH:mm`。
+2. 新旧两种数据结构都复用该值，异常格式自动容错为空，不阻断导出。
+
+```javascript
+const completedAt = formatCompletedAt(project);
+
+return {
+  summary: {
+    // ...
+    completedAt,
+    exportedAt
+  }
+};
+```
+
+**验证步骤**:
+1. 在 `server` 目录跑脚本，`await db.init()` 后读取示例项目（如 `logs/export/.../project.json`），调用 `internalFormatter.formatForExport()`。
+2. 断言 `result.summary.completedAt` 输出 `YYYY-MM-DD HH:mm`（示例：`2025-11-19 07:13`）。
+3. 重新导出 Excel，Summary 页显示对应时间。
+
+**涉及文件**:
+- `server/services/export/formatters/internalFormatter.js`
+
+### 5.5 导出时间显示/下载文件名不一致
+
+**故障现象**:  
+导出记录与 Excel Summary 中的“导出时间”使用 ISO 字符串（`2025-11-19T07:13:08.894Z`），既不符合业务要求的 `YYYY-MM-DD HH:mm:ss` 展示格式，也导致后续希望按照“人类可读”时间排序时比较困难。
+
+**发生时间**: 2025-11-19（Excel 导出回归）
+
+**根本原因**:  
+`internalFormatter.formatForExport()` 直接将 `new Date().toISOString()` 写入 `summary.exportedAt`；控制器与渲染器都使用同一个字段，无法区分“文件命名/追溯用的原始时间戳”和“展示给用户的格式化时间”。
+
+**解决方案**:
+1. 在 formatter 中新增 `formatExportedAtDisplay()`，生成 `YYYY-MM-DD HH:mm:ss` 的人类可读时间，保留原始 ISO 字符串在 `summary.exportedAtISO`。
+2. `summary.exportedAt` 仅用于 Excel 展示，`summary.exportedAtISO` 提供给控制器生成文件名/日志，避免解析格式问题。
+3. `exportController` 生成导出文件名时优先使用 `exportedAtISO`，兼容老数据回退到 `exportedAt`。
+
+```javascript
+const exportedAtISO = new Date().toISOString();
+const exportedAtDisplay = formatExportedAtDisplay(exportedAtISO);
+
+summary: {
+  // ...
+  exportedAt: exportedAtDisplay,
+  exportedAtISO
+};
+```
+
+**验证步骤**:
+1. 运行 formatter 脚本，检查 `summary.exportedAt`（`2025-11-19 16:05:30`）与 `summary.exportedAtISO`（`2025-11-19T08:05:30Z`）均存在。
+2. 重新导出 Excel → Summary 中显示 `YYYY-MM-DD HH:mm:ss`，下载文件名仍然包含正确的时间戳。
+
+**涉及文件**:
+- `server/services/export/formatters/internalFormatter.js`
+- `server/controllers/exportController.js`
+
+### 5.6 配置版本字段仍强制输出
+
+**故障现象**:  
+内部版 Summary、Excel 模板和导出日志依旧包含“配置版本/`config_version`”字段，但实际产品中模块功能没有版本概念，字段恒为空或 `unknown`，反而造成歧义。
+
+**根本原因**:  
+早期 Export Spec 沿用了配置中心的“版本”设定，formatter/renderer/logger/文档都强制生成该字段，即使数据库与 UI 并无对应属性。
+
+**解决方案**:
+1. 移除 formatter Summary 中的 `configVersion`，同步删除 Excel Summary 页和导出文件名/日志中的使用。
+2. 精简 `exportFileLogger` 入参与 `index.json` 结构，不再写入 `config_version`。
+3. 更新 Export Spec、PRD、Roadmap、Sprint Story/Context 等文档，明确仅需 `snapshot_id` 与 `exported_at` 作为元数据。
+
+**验证步骤**:
+1. 运行 formatter 脚本，确认 `Object.keys(result.summary)` 不再包含 `configVersion`。
+2. 手动导出 Excel，Summary 页不再出现“配置版本”一行，`logs/export/*/index.json` 也不再有 `config_version` 字段。
+
+**涉及文件**:
+- `server/services/export/formatters/internalFormatter.js`
+- `server/services/export/renderers/excelRenderer.js`
+- `server/services/exportFileLogger.js`
+- `server/controllers/exportController.js`
+- `docs/prd/export-spec.md`、`docs/PRD.md`、`docs/roadmap-features.md`
+- `docs/sprint-artifacts/stories/6-1-fr6-export*.{md,context.xml}`
+
+### 5.7 Rating Factor 说明字段为空
+
+**故障现象**:  
+内部版 Excel 的 “Rating Factor 说明” sheet 只有“风险总分”有值，“最大风险分值 / 放大系数 / Rating Factor” 全为空，导致风险放大逻辑不可追溯。
+
+**根本原因**:  
+legacy 数据结构没有 `risk_calculation` 字段；formatter 在兼容逻辑里直接返回 `{}`，renderer 读取不到放大系数等值，表格自然空白。
+
+**解决方案**:
+1. 在 `internalFormatter` legacy 分支复用 `computeRatingFactor(riskScore)`，拿到 `factor / ratio / maxScore`。
+2. 通过公式 `amplification = (ratingFactor - 1) / ratio` 反推放大系数（ratio 为 0 时直接用 `ratingFactor - 1`），把三者写入 `formatted.riskCalculation`。
+3. renderer 读取到值后，Rating Factor 说明 sheet 即可正常展示“最大风险分值 / 放大系数 / Rating Factor”三项。
+
+**验证步骤**:
+1. 执行 formatter 脚本加载 `logs/export/2025-11-19/151308_000017/project.json`，`riskCalculation` 输出 `{ max_risk_score: 780, amplification_factor: 0, rating_ratio: 0.6795 }`。
+2. 重新导出内部版 Excel，Rating Factor sheet 显示完整数据。
+
+**涉及文件**:
+- `server/services/export/formatters/internalFormatter.js`
+
+### 5.8 外部导出未包含系统对接模块成本
+
+**故障现象**:  
+对外版 Excel 的“模块报价明细”仅列出新功能开发模块，系统对接阶段的工作量模块全部显示成本 0，导致总成本分摊不包含系统对接部分。
+
+**根本原因**:  
+`externalFormatter` 在新结构路径下只读取 `role_costs` 聚合模块成本，legacy 兜底才会使用 `integration_workload`。当前线上数据仍走 legacy（只存 `development_workload/integration_workload`），所以系统对接模块未参与成本比例计算。此外 `exportedAt` 也仍是 ISO 字符串，不符合内部版的格式要求。
+
+**解决方案**:
+1. 新增 `aggregateModulesFromWorkloads()` 工具，将任意工作量列表（含角色天数、delivery_factor）按模块聚合为 `roleCost/workloadDays`。
+2. 在新结构路径下除了 `role_costs` 外，再根据 `integration_workload + roles` 聚合一次，并与开发模块合并，这样两个阶段都参与成本占比。
+3. Summary 中同步输出 `exportedAt ISO + display` 形式，保持与内部版一致。
+
+**验证步骤**:
+1. 读取 legacy 项目（如 `logs/export/2025-11-19/151308_000017/project.json`），执行 formatter，`modules` 列表中包含系统对接模块（虽然示例数据角色天数为 0，但结构已出现）。
+2. render 外部版 Excel，检查“项目概览”导出时间格式为 `YYYY-MM-DD HH:mm:ss`，模块表包含集成模块。
+3. 若系统对接模块填写了角色天数，导出的成本占比会正常分摊。
+
+**涉及文件**:
+- `server/services/export/formatters/externalFormatter.js`

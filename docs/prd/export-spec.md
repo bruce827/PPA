@@ -14,7 +14,7 @@
 ### 1.1 核心原则
 
 1. **数据一致性**：导出内容必须与最新一次 `POST /api/calculate` 返回的数据完全一致，避免前端重复计算或手工填充。
-2. **可追溯性**：每个导出文件携带元数据（`snapshot_id`、`config_version`、`exported_at`），支持外部对账与历史回溯。
+2. **可追溯性**：每个导出文件携带元数据（`snapshot_id`、`exported_at`），支持外部对账与历史回溯。
 3. **结构化驱动**：所有导出逻辑基于 `assessment_details_json` 字段，禁止直接读取分散的配置表或重新计算。
 4. **后端实现**：所有导出逻辑在后端完成，包含完整的异常捕获与日志记录，确保健壮性。
 5. **双版本支持**：支持内部版本（完整成本拆解）与对外版本（成本分摊到模块）两种导出模式。
@@ -31,7 +31,7 @@
 
 ```text
 触发请求 → 校验项目存在性 → 加载项目与 assessment_details_json 
-→ 数据准备（解析 JSON + 提取配置版本） 
+→ 数据准备（解析 JSON） 
 → 根据导出版本选择渲染模板（内部版 / 对外版）
 → Excel 渲染（exceljs） 
 → 流式输出（直接写入 HTTP Response）
@@ -83,7 +83,6 @@ Query 参数：
    | Rating Factor | {rating_factor} |
    | 评估完成时间 | {completed_at} |
    | 导出时间 | {exported_at} |
-   | 配置版本 | {config_version} |
 
 #### Sheet 2: 角色成本明细
 
@@ -214,7 +213,6 @@ modules.forEach(module => {
 {
   "snapshot_id": "项目 ID",
   "export_version": "internal | external",
-  "config_version": "配置版本号（从 assessment_details_json 提取）",
   "exported_at": "2025-11-17T10:30:00Z",
   "rating_factor": 1.25,
   "calculation_timestamp": "最后一次计算时间（从 assessment_details_json 提取）"
@@ -291,8 +289,7 @@ modules.forEach(module => {
      "duration_ms": 1234,
      "file_size_kb": 56,
      "timestamp": "2025-11-17T10:30:00.000Z",
-     "user_id": "user_123",
-     "config_version": "v1.2.0"
+     "user_id": "user_123"
    }
    ```
 
@@ -369,21 +366,20 @@ modules.forEach(module => {
      await fs.mkdir(dir, { recursive: true }).catch(() => {});
    }
 
-   async function save({
-     projectId,
-     projectName,
-     exportVersion,
-     status,
-     durationMs,
-     fileSizeKb,
-     configVersion,
-     userId,
-     request,
-     projectSnapshot,
-     formattedData,
-     errorDetails,
-     notes = [],
-   }) {
+  async function save({
+    projectId,
+    projectName,
+    exportVersion,
+    status,
+    durationMs,
+    fileSizeKb,
+    userId,
+    request,
+    projectSnapshot,
+    formattedData,
+    errorDetails,
+    notes = [],
+  }) {
      try {
        const enabled = process.env.EXPORT_LOG_ENABLED;
        if (enabled !== undefined && !/^true$/i.test(String(enabled))) {
@@ -399,17 +395,16 @@ modules.forEach(module => {
        await ensureDir(dir);
 
        // 1. 保存元数据（必选）
-       const index = {
-         project_id: projectId,
-         project_name: projectName,
-         export_version: exportVersion,
-         status,
-         duration_ms: durationMs,
-         file_size_kb: fileSizeKb,
-         timestamp: now.toISOString(),
-         user_id: userId,
-         config_version: configVersion,
-       };
+      const index = {
+        project_id: projectId,
+        project_name: projectName,
+        export_version: exportVersion,
+        status,
+        duration_ms: durationMs,
+        file_size_kb: fileSizeKb,
+        timestamp: now.toISOString(),
+        user_id: userId,
+      };
        await fs.writeFile(
          path.join(dir, 'index.json'),
          JSON.stringify(index, null, 2),
@@ -525,20 +520,19 @@ modules.forEach(module => {
        // 5. 记录日志（成功和失败都记录）
        const durationMs = Date.now() - startTime;
        try {
-         await exportFileLogger.save({
-           projectId: id,
-           projectName: projectSnapshot?.name || 'unknown',
-           exportVersion: version,
-           status,
-           durationMs,
-           fileSizeKb,
-           configVersion: projectSnapshot?.config_version || 'unknown',
-           userId: req.user?.id || 'anonymous',
-           request: {
-             route: req.route.path,
-             method: req.method,
-             params: req.params,
-             query: req.query,
+        await exportFileLogger.save({
+          projectId: id,
+          projectName: projectSnapshot?.name || 'unknown',
+          exportVersion: version,
+          status,
+          durationMs,
+          fileSizeKb,
+          userId: req.user?.id || 'anonymous',
+          request: {
+            route: req.route.path,
+            method: req.method,
+            params: req.params,
+            query: req.query,
              timestamp: new Date().toISOString(),
            },
            projectSnapshot: status === 'success' ? projectSnapshot : null,
@@ -575,7 +569,6 @@ modules.forEach(module => {
 ```json
 {
   "completed_at": "2025-11-17T10:30:00Z",
-  "config_version": "v1.2.0",
   "calculation_snapshot": {
     "final_total_cost": 120.5,
     "final_risk_score": 85,
@@ -612,7 +605,6 @@ modules.forEach(module => {
 **字段说明**：
 
 - `completed_at`：评估完成时间（ISO 8601）
-- `config_version`：配置版本号（由计算接口返回）
 - `calculation_snapshot`：最后一次计算的顶层结果
 - `role_costs`：必须包含 `module` 字段，用于对外版本的模块分组
 - `travel_costs`/`maintenance`/`risk_items`：详细拆解数据
@@ -677,8 +669,7 @@ exports.formatForExport = (project) => {
       workloadDays: details.calculation_snapshot.final_workload_days,
       ratingFactor: details.calculation_snapshot.rating_factor,
       completedAt: details.completed_at,
-      exportedAt: new Date().toISOString(),
-      configVersion: details.config_version
+      exportedAt: new Date().toISOString()
     },
     roleCosts: details.role_costs.map(rc => ({
       module: rc.module,
@@ -960,4 +951,3 @@ FR-6 导出能力的详细设计围绕**数据一致性**、**可追溯性**、*
 
 _Created by bruce on 2025-11-17_
 _Updated to v2.0 on 2025-11-17_
-

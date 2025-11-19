@@ -68,10 +68,12 @@ exports.exportExcel = async (req, res, next) => {
 
     formattedData = data;
 
-    const exportedAt =
-      (formattedData && formattedData.summary && formattedData.summary.exportedAt) ||
+    const summaryInfo = (formattedData && formattedData.summary) || {};
+    const exportedAtForFilename =
+      summaryInfo.exportedAtISO ||
+      summaryInfo.exportedAt ||
       new Date().toISOString();
-    const ts = formatTimestampForFilename(exportedAt);
+    const ts = formatTimestampForFilename(exportedAtForFilename);
     const safeName = encodeURIComponent(
       `${project.name}_${normalizedVersion}_${ts}.xlsx`
     );
@@ -141,7 +143,6 @@ exports.exportExcel = async (req, res, next) => {
         status,
         durationMs,
         fileSizeKb,
-        configVersion: projectSnapshot?.config_version || 'unknown',
         userId: (req.user && req.user.id) || 'anonymous',
         request: {
           route: req.route && req.route.path,

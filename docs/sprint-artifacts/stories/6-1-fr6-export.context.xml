@@ -30,7 +30,7 @@
 1. 内部版导出接口：`GET /api/projects/:id/export/excel` 默认返回内部版，响应 200，`Content-Type` 为 `application/vnd.openxmlformats-officedocument.spreadsheetml.sheet`，`Content-Disposition` 必须遵循 `{projectName}_{version}_{YYYYMMDD_HHmmss}.xlsx`。（Source: docs/PRD.md#FR-6；docs/prd/export-spec.md#fr-6-1-导出触发与管线流程）
 2. 内部版内容结构：Excel 含 `Summary/角色成本明细/差旅成本明细/维护成本/风险评估明细/Rating Factor 说明` 六个工作表，标题行背景 `#4472C4`、汇总行 `#F0F0F0`，金额列两位小数、工作量一位小数。（Source: docs/prd/export-spec.md#fr-6-2-excel-导出内容结构）
 3. 对外版成本分摊：`version=external` 输出 `项目概览` + `模块报价明细`，按 `role_costs` 聚合模块成本并保持误差 ≤0.05 万元，含总计行。（Source: docs/prd/export-spec.md#22-对外版本external-version）
-4. 元数据与流式输出：Workbook 属性写入 `creator/created/modified`，Summary 展示 `snapshot_id/config_version/exported_at/rating_factor`，全流程使用 exceljs 流式写入，不落地临时文件。（Source: docs/prd/export-spec.md#fr-6-3-导出元数据与追溯）
+4. 元数据与流式输出：Workbook 属性写入 `creator/created/modified`，Summary 展示 `snapshot_id/exported_at/rating_factor`，全流程使用 exceljs 流式写入，不落地临时文件。（Source: docs/prd/export-spec.md#fr-6-3-导出元数据与追溯）
 5. 接口健壮性：`version` 仅接受 `internal|external`，非法值返回 400 JSON `{ "error": "Invalid export version", "project_id": ":id" }` 并经过统一错误处理中间件。（Source: docs/PRD.md#FR-6）
 6. 异常捕获：JSON 解析失败、数据缺失、渲染失败、流写入失败均要捕获并返回结构化错误，同时写入日志。（Source: docs/prd/export-spec.md#fr-6-4-异常捕获与日志）
 7. 日志落盘：日志写入 `logs/export/{YYYY-MM-DD}/{HHmmss}_{paddedProjectId}/`，包含 `index/request/project/formatted/error/notes`，受 `EXPORT_LOG_ENABLED/EXPORT_LOG_DIR` 控制。（Source: docs/prd/export-spec.md#fr-6-4-异常捕获与日志）
