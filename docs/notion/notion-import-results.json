@@ -1,0 +1,4146 @@
+[
+  {
+    "feature": {
+      "name": "FR-2.1 分步式评估向导（风险→开发→集成→维护/差旅→汇总）",
+      "status": "已完成",
+      "priority": "高优先级",
+      "progress": "发布",
+      "version_id": "2afdd7c0-37a7-80a0-87e0-c6bb06b52e65",
+      "branch": "main",
+      "category": "项目评估流程"
+    },
+    "result": {
+      "success": true,
+      "result": {
+        "object": "page",
+        "id": "2afdd7c0-37a7-819e-93da-fced1d39378e",
+        "created_time": "2025-11-18T03:50:00.000Z",
+        "last_edited_time": "2025-11-18T03:50:00.000Z",
+        "created_by": {
+          "object": "user",
+          "id": "e1df4571-4713-4620-b510-d3b948376f72"
+        },
+        "last_edited_by": {
+          "object": "user",
+          "id": "e1df4571-4713-4620-b510-d3b948376f72"
+        },
+        "cover": null,
+        "icon": null,
+        "parent": {
+          "type": "database_id",
+          "database_id": "2afdd7c0-37a7-81d3-9597-d8569570ac5b"
+        },
+        "archived": false,
+        "in_trash": false,
+        "is_locked": false,
+        "properties": {
+          "进度": {
+            "id": "%3E%5BGz",
+            "type": "select",
+            "select": {
+              "id": "159e2534-98d0-4b98-b690-4a3acc4a1afd",
+              "name": "发布",
+              "color": "gray"
+            }
+          },
+          "版本": {
+            "id": "Edg%7D",
+            "type": "relation",
+            "relation": [
+              {
+                "id": "2afdd7c0-37a7-80a0-87e0-c6bb06b52e65"
+              }
+            ],
+            "has_more": false
+          },
+          "上次更新日期": {
+            "id": "IBpG",
+            "type": "date",
+            "date": {
+              "start": "2025-11-18",
+              "end": null,
+              "time_zone": null
+            }
+          },
+          "状态": {
+            "id": "Itw%3C",
+            "type": "status",
+            "status": {
+              "id": "a68ca6a0-09ec-4631-936f-2852cb91a097",
+              "name": "已完成",
+              "color": "gray"
+            }
+          },
+          "branch": {
+            "id": "Nm%3Ah",
+            "type": "rich_text",
+            "rich_text": [
+              {
+                "type": "text",
+                "text": {
+                  "content": "main",
+                  "link": null
+                },
+                "annotations": {
+                  "bold": false,
+                  "italic": false,
+                  "strikethrough": false,
+                  "underline": false,
+                  "code": false,
+                  "color": "default"
+                },
+                "plain_text": "main",
+                "href": null
+              }
+            ]
+          },
+          "优先级": {
+            "id": "i%5DmY",
+            "type": "select",
+            "select": {
+              "id": "1bcc00de-5ec1-470f-bcaf-921e139ad223",
+              "name": "高优先级",
+              "color": "gray"
+            }
+          },
+          "功能更新": {
+            "id": "title",
+            "type": "title",
+            "title": [
+              {
+                "type": "text",
+                "text": {
+                  "content": "FR-2.1 分步式评估向导（风险→开发→集成→维护/差旅→汇总）",
+                  "link": null
+                },
+                "annotations": {
+                  "bold": false,
+                  "italic": false,
+                  "strikethrough": false,
+                  "underline": false,
+                  "code": false,
+                  "color": "default"
+                },
+                "plain_text": "FR-2.1 分步式评估向导（风险→开发→集成→维护/差旅→汇总）",
+                "href": null
+              }
+            ]
+          }
+        },
+        "url": "https://www.notion.so/FR-2-1-2afdd7c037a7819e93dafced1d39378e",
+        "public_url": null,
+        "request_id": "681c5eb9-a435-4ef7-afef-6c44655fff41"
+      }
+    }
+  },
+  {
+    "feature": {
+      "name": "FR-2.2 实时计算响应（≤500ms）",
+      "status": "已完成",
+      "priority": "高优先级",
+      "progress": "发布",
+      "version_id": "2afdd7c0-37a7-80a0-87e0-c6bb06b52e65",
+      "branch": "main",
+      "category": "项目评估流程"
+    },
+    "result": {
+      "success": true,
+      "result": {
+        "object": "page",
+        "id": "2afdd7c0-37a7-81b5-b68e-ee8fcd57dd2e",
+        "created_time": "2025-11-18T03:50:00.000Z",
+        "last_edited_time": "2025-11-18T03:50:00.000Z",
+        "created_by": {
+          "object": "user",
+          "id": "e1df4571-4713-4620-b510-d3b948376f72"
+        },
+        "last_edited_by": {
+          "object": "user",
+          "id": "e1df4571-4713-4620-b510-d3b948376f72"
+        },
+        "cover": null,
+        "icon": null,
+        "parent": {
+          "type": "database_id",
+          "database_id": "2afdd7c0-37a7-81d3-9597-d8569570ac5b"
+        },
+        "archived": false,
+        "in_trash": false,
+        "is_locked": false,
+        "properties": {
+          "进度": {
+            "id": "%3E%5BGz",
+            "type": "select",
+            "select": {
+              "id": "159e2534-98d0-4b98-b690-4a3acc4a1afd",
+              "name": "发布",
+              "color": "gray"
+            }
+          },
+          "版本": {
+            "id": "Edg%7D",
+            "type": "relation",
+            "relation": [
+              {
+                "id": "2afdd7c0-37a7-80a0-87e0-c6bb06b52e65"
+              }
+            ],
+            "has_more": false
+          },
+          "上次更新日期": {
+            "id": "IBpG",
+            "type": "date",
+            "date": {
+              "start": "2025-11-18",
+              "end": null,
+              "time_zone": null
+            }
+          },
+          "状态": {
+            "id": "Itw%3C",
+            "type": "status",
+            "status": {
+              "id": "a68ca6a0-09ec-4631-936f-2852cb91a097",
+              "name": "已完成",
+              "color": "gray"
+            }
+          },
+          "branch": {
+            "id": "Nm%3Ah",
+            "type": "rich_text",
+            "rich_text": [
+              {
+                "type": "text",
+                "text": {
+                  "content": "main",
+                  "link": null
+                },
+                "annotations": {
+                  "bold": false,
+                  "italic": false,
+                  "strikethrough": false,
+                  "underline": false,
+                  "code": false,
+                  "color": "default"
+                },
+                "plain_text": "main",
+                "href": null
+              }
+            ]
+          },
+          "优先级": {
+            "id": "i%5DmY",
+            "type": "select",
+            "select": {
+              "id": "1bcc00de-5ec1-470f-bcaf-921e139ad223",
+              "name": "高优先级",
+              "color": "gray"
+            }
+          },
+          "功能更新": {
+            "id": "title",
+            "type": "title",
+            "title": [
+              {
+                "type": "text",
+                "text": {
+                  "content": "FR-2.2 实时计算响应（≤500ms）",
+                  "link": null
+                },
+                "annotations": {
+                  "bold": false,
+                  "italic": false,
+                  "strikethrough": false,
+                  "underline": false,
+                  "code": false,
+                  "color": "default"
+                },
+                "plain_text": "FR-2.2 实时计算响应（≤500ms）",
+                "href": null
+              }
+            ]
+          }
+        },
+        "url": "https://www.notion.so/FR-2-2-500ms-2afdd7c037a781b5b68eee8fcd57dd2e",
+        "public_url": null,
+        "request_id": "b87ed2d1-fee0-4481-8732-bcc081365dd0"
+      }
+    }
+  },
+  {
+    "feature": {
+      "name": "FR-2.3 模板复用支持",
+      "status": "已完成",
+      "priority": "中优先级",
+      "progress": "发布",
+      "version_id": "2afdd7c0-37a7-80a0-87e0-c6bb06b52e65",
+      "branch": "main",
+      "category": "项目评估流程"
+    },
+    "result": {
+      "success": true,
+      "result": {
+        "object": "page",
+        "id": "2afdd7c0-37a7-816a-9e44-fa0113907140",
+        "created_time": "2025-11-18T03:50:00.000Z",
+        "last_edited_time": "2025-11-18T03:50:00.000Z",
+        "created_by": {
+          "object": "user",
+          "id": "e1df4571-4713-4620-b510-d3b948376f72"
+        },
+        "last_edited_by": {
+          "object": "user",
+          "id": "e1df4571-4713-4620-b510-d3b948376f72"
+        },
+        "cover": null,
+        "icon": null,
+        "parent": {
+          "type": "database_id",
+          "database_id": "2afdd7c0-37a7-81d3-9597-d8569570ac5b"
+        },
+        "archived": false,
+        "in_trash": false,
+        "is_locked": false,
+        "properties": {
+          "进度": {
+            "id": "%3E%5BGz",
+            "type": "select",
+            "select": {
+              "id": "159e2534-98d0-4b98-b690-4a3acc4a1afd",
+              "name": "发布",
+              "color": "gray"
+            }
+          },
+          "版本": {
+            "id": "Edg%7D",
+            "type": "relation",
+            "relation": [
+              {
+                "id": "2afdd7c0-37a7-80a0-87e0-c6bb06b52e65"
+              }
+            ],
+            "has_more": false
+          },
+          "上次更新日期": {
+            "id": "IBpG",
+            "type": "date",
+            "date": {
+              "start": "2025-11-18",
+              "end": null,
+              "time_zone": null
+            }
+          },
+          "状态": {
+            "id": "Itw%3C",
+            "type": "status",
+            "status": {
+              "id": "a68ca6a0-09ec-4631-936f-2852cb91a097",
+              "name": "已完成",
+              "color": "gray"
+            }
+          },
+          "branch": {
+            "id": "Nm%3Ah",
+            "type": "rich_text",
+            "rich_text": [
+              {
+                "type": "text",
+                "text": {
+                  "content": "main",
+                  "link": null
+                },
+                "annotations": {
+                  "bold": false,
+                  "italic": false,
+                  "strikethrough": false,
+                  "underline": false,
+                  "code": false,
+                  "color": "default"
+                },
+                "plain_text": "main",
+                "href": null
+              }
+            ]
+          },
+          "优先级": {
+            "id": "i%5DmY",
+            "type": "select",
+            "select": {
+              "id": "92927b54-f447-423b-8435-b42b8649077a",
+              "name": "中优先级",
+              "color": "gray"
+            }
+          },
+          "功能更新": {
+            "id": "title",
+            "type": "title",
+            "title": [
+              {
+                "type": "text",
+                "text": {
+                  "content": "FR-2.3 模板复用支持",
+                  "link": null
+                },
+                "annotations": {
+                  "bold": false,
+                  "italic": false,
+                  "strikethrough": false,
+                  "underline": false,
+                  "code": false,
+                  "color": "default"
+                },
+                "plain_text": "FR-2.3 模板复用支持",
+                "href": null
+              }
+            ]
+          }
+        },
+        "url": "https://www.notion.so/FR-2-3-2afdd7c037a7816a9e44fa0113907140",
+        "public_url": null,
+        "request_id": "9ede9446-de92-4df8-85c5-ef2375203afe"
+      }
+    }
+  },
+  {
+    "feature": {
+      "name": "FR-2.5 评估详情完整记录（assessment_details_json）",
+      "status": "已完成",
+      "priority": "高优先级",
+      "progress": "发布",
+      "version_id": "2afdd7c0-37a7-80a0-87e0-c6bb06b52e65",
+      "branch": "main",
+      "category": "项目评估流程"
+    },
+    "result": {
+      "success": true,
+      "result": {
+        "object": "page",
+        "id": "2afdd7c0-37a7-8111-85a0-e7c3528e4558",
+        "created_time": "2025-11-18T03:50:00.000Z",
+        "last_edited_time": "2025-11-18T03:50:00.000Z",
+        "created_by": {
+          "object": "user",
+          "id": "e1df4571-4713-4620-b510-d3b948376f72"
+        },
+        "last_edited_by": {
+          "object": "user",
+          "id": "e1df4571-4713-4620-b510-d3b948376f72"
+        },
+        "cover": null,
+        "icon": null,
+        "parent": {
+          "type": "database_id",
+          "database_id": "2afdd7c0-37a7-81d3-9597-d8569570ac5b"
+        },
+        "archived": false,
+        "in_trash": false,
+        "is_locked": false,
+        "properties": {
+          "进度": {
+            "id": "%3E%5BGz",
+            "type": "select",
+            "select": {
+              "id": "159e2534-98d0-4b98-b690-4a3acc4a1afd",
+              "name": "发布",
+              "color": "gray"
+            }
+          },
+          "版本": {
+            "id": "Edg%7D",
+            "type": "relation",
+            "relation": [
+              {
+                "id": "2afdd7c0-37a7-80a0-87e0-c6bb06b52e65"
+              }
+            ],
+            "has_more": false
+          },
+          "上次更新日期": {
+            "id": "IBpG",
+            "type": "date",
+            "date": {
+              "start": "2025-11-18",
+              "end": null,
+              "time_zone": null
+            }
+          },
+          "状态": {
+            "id": "Itw%3C",
+            "type": "status",
+            "status": {
+              "id": "a68ca6a0-09ec-4631-936f-2852cb91a097",
+              "name": "已完成",
+              "color": "gray"
+            }
+          },
+          "branch": {
+            "id": "Nm%3Ah",
+            "type": "rich_text",
+            "rich_text": [
+              {
+                "type": "text",
+                "text": {
+                  "content": "main",
+                  "link": null
+                },
+                "annotations": {
+                  "bold": false,
+                  "italic": false,
+                  "strikethrough": false,
+                  "underline": false,
+                  "code": false,
+                  "color": "default"
+                },
+                "plain_text": "main",
+                "href": null
+              }
+            ]
+          },
+          "优先级": {
+            "id": "i%5DmY",
+            "type": "select",
+            "select": {
+              "id": "1bcc00de-5ec1-470f-bcaf-921e139ad223",
+              "name": "高优先级",
+              "color": "gray"
+            }
+          },
+          "功能更新": {
+            "id": "title",
+            "type": "title",
+            "title": [
+              {
+                "type": "text",
+                "text": {
+                  "content": "FR-2.5 评估详情完整记录（assessment_details_json）",
+                  "link": null
+                },
+                "annotations": {
+                  "bold": false,
+                  "italic": false,
+                  "strikethrough": false,
+                  "underline": false,
+                  "code": false,
+                  "color": "default"
+                },
+                "plain_text": "FR-2.5 评估详情完整记录（assessment_details_json）",
+                "href": null
+              }
+            ]
+          }
+        },
+        "url": "https://www.notion.so/FR-2-5-assessment_details_json-2afdd7c037a7811185a0e7c3528e4558",
+        "public_url": null,
+        "request_id": "07180555-674d-4b30-b135-5a510169d943"
+      }
+    }
+  },
+  {
+    "feature": {
+      "name": "FR-3.1 历史记录列表（分页、筛选、搜索）",
+      "status": "已完成",
+      "priority": "高优先级",
+      "progress": "发布",
+      "version_id": "2afdd7c0-37a7-80a0-87e0-c6bb06b52e65",
+      "branch": "main",
+      "category": "历史与模板管理"
+    },
+    "result": {
+      "success": true,
+      "result": {
+        "object": "page",
+        "id": "2afdd7c0-37a7-813e-9a09-ce3a8f234587",
+        "created_time": "2025-11-18T03:50:00.000Z",
+        "last_edited_time": "2025-11-18T03:50:00.000Z",
+        "created_by": {
+          "object": "user",
+          "id": "e1df4571-4713-4620-b510-d3b948376f72"
+        },
+        "last_edited_by": {
+          "object": "user",
+          "id": "e1df4571-4713-4620-b510-d3b948376f72"
+        },
+        "cover": null,
+        "icon": null,
+        "parent": {
+          "type": "database_id",
+          "database_id": "2afdd7c0-37a7-81d3-9597-d8569570ac5b"
+        },
+        "archived": false,
+        "in_trash": false,
+        "is_locked": false,
+        "properties": {
+          "进度": {
+            "id": "%3E%5BGz",
+            "type": "select",
+            "select": {
+              "id": "159e2534-98d0-4b98-b690-4a3acc4a1afd",
+              "name": "发布",
+              "color": "gray"
+            }
+          },
+          "版本": {
+            "id": "Edg%7D",
+            "type": "relation",
+            "relation": [
+              {
+                "id": "2afdd7c0-37a7-80a0-87e0-c6bb06b52e65"
+              }
+            ],
+            "has_more": false
+          },
+          "上次更新日期": {
+            "id": "IBpG",
+            "type": "date",
+            "date": {
+              "start": "2025-11-18",
+              "end": null,
+              "time_zone": null
+            }
+          },
+          "状态": {
+            "id": "Itw%3C",
+            "type": "status",
+            "status": {
+              "id": "a68ca6a0-09ec-4631-936f-2852cb91a097",
+              "name": "已完成",
+              "color": "gray"
+            }
+          },
+          "branch": {
+            "id": "Nm%3Ah",
+            "type": "rich_text",
+            "rich_text": [
+              {
+                "type": "text",
+                "text": {
+                  "content": "main",
+                  "link": null
+                },
+                "annotations": {
+                  "bold": false,
+                  "italic": false,
+                  "strikethrough": false,
+                  "underline": false,
+                  "code": false,
+                  "color": "default"
+                },
+                "plain_text": "main",
+                "href": null
+              }
+            ]
+          },
+          "优先级": {
+            "id": "i%5DmY",
+            "type": "select",
+            "select": {
+              "id": "1bcc00de-5ec1-470f-bcaf-921e139ad223",
+              "name": "高优先级",
+              "color": "gray"
+            }
+          },
+          "功能更新": {
+            "id": "title",
+            "type": "title",
+            "title": [
+              {
+                "type": "text",
+                "text": {
+                  "content": "FR-3.1 历史记录列表（分页、筛选、搜索）",
+                  "link": null
+                },
+                "annotations": {
+                  "bold": false,
+                  "italic": false,
+                  "strikethrough": false,
+                  "underline": false,
+                  "code": false,
+                  "color": "default"
+                },
+                "plain_text": "FR-3.1 历史记录列表（分页、筛选、搜索）",
+                "href": null
+              }
+            ]
+          }
+        },
+        "url": "https://www.notion.so/FR-3-1-2afdd7c037a7813e9a09ce3a8f234587",
+        "public_url": null,
+        "request_id": "2b924d94-5732-4050-8437-48df817824b0"
+      }
+    }
+  },
+  {
+    "feature": {
+      "name": "FR-3.2 项目详情查看与编辑",
+      "status": "已完成",
+      "priority": "中优先级",
+      "progress": "发布",
+      "version_id": "2afdd7c0-37a7-80a0-87e0-c6bb06b52e65",
+      "branch": "main",
+      "category": "历史与模板管理"
+    },
+    "result": {
+      "success": true,
+      "result": {
+        "object": "page",
+        "id": "2afdd7c0-37a7-81f0-848b-de250dacc540",
+        "created_time": "2025-11-18T03:50:00.000Z",
+        "last_edited_time": "2025-11-18T03:50:00.000Z",
+        "created_by": {
+          "object": "user",
+          "id": "e1df4571-4713-4620-b510-d3b948376f72"
+        },
+        "last_edited_by": {
+          "object": "user",
+          "id": "e1df4571-4713-4620-b510-d3b948376f72"
+        },
+        "cover": null,
+        "icon": null,
+        "parent": {
+          "type": "database_id",
+          "database_id": "2afdd7c0-37a7-81d3-9597-d8569570ac5b"
+        },
+        "archived": false,
+        "in_trash": false,
+        "is_locked": false,
+        "properties": {
+          "进度": {
+            "id": "%3E%5BGz",
+            "type": "select",
+            "select": {
+              "id": "159e2534-98d0-4b98-b690-4a3acc4a1afd",
+              "name": "发布",
+              "color": "gray"
+            }
+          },
+          "版本": {
+            "id": "Edg%7D",
+            "type": "relation",
+            "relation": [
+              {
+                "id": "2afdd7c0-37a7-80a0-87e0-c6bb06b52e65"
+              }
+            ],
+            "has_more": false
+          },
+          "上次更新日期": {
+            "id": "IBpG",
+            "type": "date",
+            "date": {
+              "start": "2025-11-18",
+              "end": null,
+              "time_zone": null
+            }
+          },
+          "状态": {
+            "id": "Itw%3C",
+            "type": "status",
+            "status": {
+              "id": "a68ca6a0-09ec-4631-936f-2852cb91a097",
+              "name": "已完成",
+              "color": "gray"
+            }
+          },
+          "branch": {
+            "id": "Nm%3Ah",
+            "type": "rich_text",
+            "rich_text": [
+              {
+                "type": "text",
+                "text": {
+                  "content": "main",
+                  "link": null
+                },
+                "annotations": {
+                  "bold": false,
+                  "italic": false,
+                  "strikethrough": false,
+                  "underline": false,
+                  "code": false,
+                  "color": "default"
+                },
+                "plain_text": "main",
+                "href": null
+              }
+            ]
+          },
+          "优先级": {
+            "id": "i%5DmY",
+            "type": "select",
+            "select": {
+              "id": "92927b54-f447-423b-8435-b42b8649077a",
+              "name": "中优先级",
+              "color": "gray"
+            }
+          },
+          "功能更新": {
+            "id": "title",
+            "type": "title",
+            "title": [
+              {
+                "type": "text",
+                "text": {
+                  "content": "FR-3.2 项目详情查看与编辑",
+                  "link": null
+                },
+                "annotations": {
+                  "bold": false,
+                  "italic": false,
+                  "strikethrough": false,
+                  "underline": false,
+                  "code": false,
+                  "color": "default"
+                },
+                "plain_text": "FR-3.2 项目详情查看与编辑",
+                "href": null
+              }
+            ]
+          }
+        },
+        "url": "https://www.notion.so/FR-3-2-2afdd7c037a781f0848bde250dacc540",
+        "public_url": null,
+        "request_id": "5c5e8bf7-79e8-480b-85c7-dafe77a2d4fb"
+      }
+    }
+  },
+  {
+    "feature": {
+      "name": "FR-3.3 模板 CRUD 管理",
+      "status": "已完成",
+      "priority": "中优先级",
+      "progress": "发布",
+      "version_id": "2afdd7c0-37a7-80a0-87e0-c6bb06b52e65",
+      "branch": "main",
+      "category": "历史与模板管理"
+    },
+    "result": {
+      "success": true,
+      "result": {
+        "object": "page",
+        "id": "2afdd7c0-37a7-81fc-b05c-f200ec3908dc",
+        "created_time": "2025-11-18T03:50:00.000Z",
+        "last_edited_time": "2025-11-18T03:50:00.000Z",
+        "created_by": {
+          "object": "user",
+          "id": "e1df4571-4713-4620-b510-d3b948376f72"
+        },
+        "last_edited_by": {
+          "object": "user",
+          "id": "e1df4571-4713-4620-b510-d3b948376f72"
+        },
+        "cover": null,
+        "icon": null,
+        "parent": {
+          "type": "database_id",
+          "database_id": "2afdd7c0-37a7-81d3-9597-d8569570ac5b"
+        },
+        "archived": false,
+        "in_trash": false,
+        "is_locked": false,
+        "properties": {
+          "进度": {
+            "id": "%3E%5BGz",
+            "type": "select",
+            "select": {
+              "id": "159e2534-98d0-4b98-b690-4a3acc4a1afd",
+              "name": "发布",
+              "color": "gray"
+            }
+          },
+          "版本": {
+            "id": "Edg%7D",
+            "type": "relation",
+            "relation": [
+              {
+                "id": "2afdd7c0-37a7-80a0-87e0-c6bb06b52e65"
+              }
+            ],
+            "has_more": false
+          },
+          "上次更新日期": {
+            "id": "IBpG",
+            "type": "date",
+            "date": {
+              "start": "2025-11-18",
+              "end": null,
+              "time_zone": null
+            }
+          },
+          "状态": {
+            "id": "Itw%3C",
+            "type": "status",
+            "status": {
+              "id": "a68ca6a0-09ec-4631-936f-2852cb91a097",
+              "name": "已完成",
+              "color": "gray"
+            }
+          },
+          "branch": {
+            "id": "Nm%3Ah",
+            "type": "rich_text",
+            "rich_text": [
+              {
+                "type": "text",
+                "text": {
+                  "content": "main",
+                  "link": null
+                },
+                "annotations": {
+                  "bold": false,
+                  "italic": false,
+                  "strikethrough": false,
+                  "underline": false,
+                  "code": false,
+                  "color": "default"
+                },
+                "plain_text": "main",
+                "href": null
+              }
+            ]
+          },
+          "优先级": {
+            "id": "i%5DmY",
+            "type": "select",
+            "select": {
+              "id": "92927b54-f447-423b-8435-b42b8649077a",
+              "name": "中优先级",
+              "color": "gray"
+            }
+          },
+          "功能更新": {
+            "id": "title",
+            "type": "title",
+            "title": [
+              {
+                "type": "text",
+                "text": {
+                  "content": "FR-3.3 模板 CRUD 管理",
+                  "link": null
+                },
+                "annotations": {
+                  "bold": false,
+                  "italic": false,
+                  "strikethrough": false,
+                  "underline": false,
+                  "code": false,
+                  "color": "default"
+                },
+                "plain_text": "FR-3.3 模板 CRUD 管理",
+                "href": null
+              }
+            ]
+          }
+        },
+        "url": "https://www.notion.so/FR-3-3-CRUD-2afdd7c037a781fcb05cf200ec3908dc",
+        "public_url": null,
+        "request_id": "bed71d1b-2cf5-412d-a6d2-227f3ce63ed6"
+      }
+    }
+  },
+  {
+    "feature": {
+      "name": "FR-3.4 删除二次确认",
+      "status": "已完成",
+      "priority": "高优先级",
+      "progress": "发布",
+      "version_id": "2afdd7c0-37a7-80a0-87e0-c6bb06b52e65",
+      "branch": "main",
+      "category": "历史与模板管理"
+    },
+    "result": {
+      "success": true,
+      "result": {
+        "object": "page",
+        "id": "2afdd7c0-37a7-811e-97f3-ddd9cea2f70c",
+        "created_time": "2025-11-18T03:50:00.000Z",
+        "last_edited_time": "2025-11-18T03:50:00.000Z",
+        "created_by": {
+          "object": "user",
+          "id": "e1df4571-4713-4620-b510-d3b948376f72"
+        },
+        "last_edited_by": {
+          "object": "user",
+          "id": "e1df4571-4713-4620-b510-d3b948376f72"
+        },
+        "cover": null,
+        "icon": null,
+        "parent": {
+          "type": "database_id",
+          "database_id": "2afdd7c0-37a7-81d3-9597-d8569570ac5b"
+        },
+        "archived": false,
+        "in_trash": false,
+        "is_locked": false,
+        "properties": {
+          "进度": {
+            "id": "%3E%5BGz",
+            "type": "select",
+            "select": {
+              "id": "159e2534-98d0-4b98-b690-4a3acc4a1afd",
+              "name": "发布",
+              "color": "gray"
+            }
+          },
+          "版本": {
+            "id": "Edg%7D",
+            "type": "relation",
+            "relation": [
+              {
+                "id": "2afdd7c0-37a7-80a0-87e0-c6bb06b52e65"
+              }
+            ],
+            "has_more": false
+          },
+          "上次更新日期": {
+            "id": "IBpG",
+            "type": "date",
+            "date": {
+              "start": "2025-11-18",
+              "end": null,
+              "time_zone": null
+            }
+          },
+          "状态": {
+            "id": "Itw%3C",
+            "type": "status",
+            "status": {
+              "id": "a68ca6a0-09ec-4631-936f-2852cb91a097",
+              "name": "已完成",
+              "color": "gray"
+            }
+          },
+          "branch": {
+            "id": "Nm%3Ah",
+            "type": "rich_text",
+            "rich_text": [
+              {
+                "type": "text",
+                "text": {
+                  "content": "main",
+                  "link": null
+                },
+                "annotations": {
+                  "bold": false,
+                  "italic": false,
+                  "strikethrough": false,
+                  "underline": false,
+                  "code": false,
+                  "color": "default"
+                },
+                "plain_text": "main",
+                "href": null
+              }
+            ]
+          },
+          "优先级": {
+            "id": "i%5DmY",
+            "type": "select",
+            "select": {
+              "id": "1bcc00de-5ec1-470f-bcaf-921e139ad223",
+              "name": "高优先级",
+              "color": "gray"
+            }
+          },
+          "功能更新": {
+            "id": "title",
+            "type": "title",
+            "title": [
+              {
+                "type": "text",
+                "text": {
+                  "content": "FR-3.4 删除二次确认",
+                  "link": null
+                },
+                "annotations": {
+                  "bold": false,
+                  "italic": false,
+                  "strikethrough": false,
+                  "underline": false,
+                  "code": false,
+                  "color": "default"
+                },
+                "plain_text": "FR-3.4 删除二次确认",
+                "href": null
+              }
+            ]
+          }
+        },
+        "url": "https://www.notion.so/FR-3-4-2afdd7c037a7811e97f3ddd9cea2f70c",
+        "public_url": null,
+        "request_id": "7f087093-42a9-412a-8e8f-3f378723dea5"
+      }
+    }
+  },
+  {
+    "feature": {
+      "name": "FR-4.1 角色配置管理",
+      "status": "已完成",
+      "priority": "高优先级",
+      "progress": "发布",
+      "version_id": "2afdd7c0-37a7-80a0-87e0-c6bb06b52e65",
+      "branch": "main",
+      "category": "配置中心"
+    },
+    "result": {
+      "success": true,
+      "result": {
+        "object": "page",
+        "id": "2afdd7c0-37a7-8160-9b0e-e71845e3839d",
+        "created_time": "2025-11-18T03:50:00.000Z",
+        "last_edited_time": "2025-11-18T03:50:00.000Z",
+        "created_by": {
+          "object": "user",
+          "id": "e1df4571-4713-4620-b510-d3b948376f72"
+        },
+        "last_edited_by": {
+          "object": "user",
+          "id": "e1df4571-4713-4620-b510-d3b948376f72"
+        },
+        "cover": null,
+        "icon": null,
+        "parent": {
+          "type": "database_id",
+          "database_id": "2afdd7c0-37a7-81d3-9597-d8569570ac5b"
+        },
+        "archived": false,
+        "in_trash": false,
+        "is_locked": false,
+        "properties": {
+          "进度": {
+            "id": "%3E%5BGz",
+            "type": "select",
+            "select": {
+              "id": "159e2534-98d0-4b98-b690-4a3acc4a1afd",
+              "name": "发布",
+              "color": "gray"
+            }
+          },
+          "版本": {
+            "id": "Edg%7D",
+            "type": "relation",
+            "relation": [
+              {
+                "id": "2afdd7c0-37a7-80a0-87e0-c6bb06b52e65"
+              }
+            ],
+            "has_more": false
+          },
+          "上次更新日期": {
+            "id": "IBpG",
+            "type": "date",
+            "date": {
+              "start": "2025-11-18",
+              "end": null,
+              "time_zone": null
+            }
+          },
+          "状态": {
+            "id": "Itw%3C",
+            "type": "status",
+            "status": {
+              "id": "a68ca6a0-09ec-4631-936f-2852cb91a097",
+              "name": "已完成",
+              "color": "gray"
+            }
+          },
+          "branch": {
+            "id": "Nm%3Ah",
+            "type": "rich_text",
+            "rich_text": [
+              {
+                "type": "text",
+                "text": {
+                  "content": "main",
+                  "link": null
+                },
+                "annotations": {
+                  "bold": false,
+                  "italic": false,
+                  "strikethrough": false,
+                  "underline": false,
+                  "code": false,
+                  "color": "default"
+                },
+                "plain_text": "main",
+                "href": null
+              }
+            ]
+          },
+          "优先级": {
+            "id": "i%5DmY",
+            "type": "select",
+            "select": {
+              "id": "1bcc00de-5ec1-470f-bcaf-921e139ad223",
+              "name": "高优先级",
+              "color": "gray"
+            }
+          },
+          "功能更新": {
+            "id": "title",
+            "type": "title",
+            "title": [
+              {
+                "type": "text",
+                "text": {
+                  "content": "FR-4.1 角色配置管理",
+                  "link": null
+                },
+                "annotations": {
+                  "bold": false,
+                  "italic": false,
+                  "strikethrough": false,
+                  "underline": false,
+                  "code": false,
+                  "color": "default"
+                },
+                "plain_text": "FR-4.1 角色配置管理",
+                "href": null
+              }
+            ]
+          }
+        },
+        "url": "https://www.notion.so/FR-4-1-2afdd7c037a781609b0ee71845e3839d",
+        "public_url": null,
+        "request_id": "4154ec55-68b9-4520-b70e-c0673b8bcd47"
+      }
+    }
+  },
+  {
+    "feature": {
+      "name": "FR-4.2 风险项配置管理",
+      "status": "已完成",
+      "priority": "高优先级",
+      "progress": "发布",
+      "version_id": "2afdd7c0-37a7-80a0-87e0-c6bb06b52e65",
+      "branch": "main",
+      "category": "配置中心"
+    },
+    "result": {
+      "success": true,
+      "result": {
+        "object": "page",
+        "id": "2afdd7c0-37a7-8155-bca8-d8c3ff825137",
+        "created_time": "2025-11-18T03:51:00.000Z",
+        "last_edited_time": "2025-11-18T03:51:00.000Z",
+        "created_by": {
+          "object": "user",
+          "id": "e1df4571-4713-4620-b510-d3b948376f72"
+        },
+        "last_edited_by": {
+          "object": "user",
+          "id": "e1df4571-4713-4620-b510-d3b948376f72"
+        },
+        "cover": null,
+        "icon": null,
+        "parent": {
+          "type": "database_id",
+          "database_id": "2afdd7c0-37a7-81d3-9597-d8569570ac5b"
+        },
+        "archived": false,
+        "in_trash": false,
+        "is_locked": false,
+        "properties": {
+          "进度": {
+            "id": "%3E%5BGz",
+            "type": "select",
+            "select": {
+              "id": "159e2534-98d0-4b98-b690-4a3acc4a1afd",
+              "name": "发布",
+              "color": "gray"
+            }
+          },
+          "版本": {
+            "id": "Edg%7D",
+            "type": "relation",
+            "relation": [
+              {
+                "id": "2afdd7c0-37a7-80a0-87e0-c6bb06b52e65"
+              }
+            ],
+            "has_more": false
+          },
+          "上次更新日期": {
+            "id": "IBpG",
+            "type": "date",
+            "date": {
+              "start": "2025-11-18",
+              "end": null,
+              "time_zone": null
+            }
+          },
+          "状态": {
+            "id": "Itw%3C",
+            "type": "status",
+            "status": {
+              "id": "a68ca6a0-09ec-4631-936f-2852cb91a097",
+              "name": "已完成",
+              "color": "gray"
+            }
+          },
+          "branch": {
+            "id": "Nm%3Ah",
+            "type": "rich_text",
+            "rich_text": [
+              {
+                "type": "text",
+                "text": {
+                  "content": "main",
+                  "link": null
+                },
+                "annotations": {
+                  "bold": false,
+                  "italic": false,
+                  "strikethrough": false,
+                  "underline": false,
+                  "code": false,
+                  "color": "default"
+                },
+                "plain_text": "main",
+                "href": null
+              }
+            ]
+          },
+          "优先级": {
+            "id": "i%5DmY",
+            "type": "select",
+            "select": {
+              "id": "1bcc00de-5ec1-470f-bcaf-921e139ad223",
+              "name": "高优先级",
+              "color": "gray"
+            }
+          },
+          "功能更新": {
+            "id": "title",
+            "type": "title",
+            "title": [
+              {
+                "type": "text",
+                "text": {
+                  "content": "FR-4.2 风险项配置管理",
+                  "link": null
+                },
+                "annotations": {
+                  "bold": false,
+                  "italic": false,
+                  "strikethrough": false,
+                  "underline": false,
+                  "code": false,
+                  "color": "default"
+                },
+                "plain_text": "FR-4.2 风险项配置管理",
+                "href": null
+              }
+            ]
+          }
+        },
+        "url": "https://www.notion.so/FR-4-2-2afdd7c037a78155bca8d8c3ff825137",
+        "public_url": null,
+        "request_id": "7b24ec8e-29d6-48e2-b416-988ce53cd261"
+      }
+    }
+  },
+  {
+    "feature": {
+      "name": "FR-4.3 差旅配置管理",
+      "status": "已完成",
+      "priority": "高优先级",
+      "progress": "发布",
+      "version_id": "2afdd7c0-37a7-80a0-87e0-c6bb06b52e65",
+      "branch": "main",
+      "category": "配置中心"
+    },
+    "result": {
+      "success": true,
+      "result": {
+        "object": "page",
+        "id": "2afdd7c0-37a7-81c1-8993-c3cedf54f518",
+        "created_time": "2025-11-18T03:51:00.000Z",
+        "last_edited_time": "2025-11-18T03:51:00.000Z",
+        "created_by": {
+          "object": "user",
+          "id": "e1df4571-4713-4620-b510-d3b948376f72"
+        },
+        "last_edited_by": {
+          "object": "user",
+          "id": "e1df4571-4713-4620-b510-d3b948376f72"
+        },
+        "cover": null,
+        "icon": null,
+        "parent": {
+          "type": "database_id",
+          "database_id": "2afdd7c0-37a7-81d3-9597-d8569570ac5b"
+        },
+        "archived": false,
+        "in_trash": false,
+        "is_locked": false,
+        "properties": {
+          "进度": {
+            "id": "%3E%5BGz",
+            "type": "select",
+            "select": {
+              "id": "159e2534-98d0-4b98-b690-4a3acc4a1afd",
+              "name": "发布",
+              "color": "gray"
+            }
+          },
+          "版本": {
+            "id": "Edg%7D",
+            "type": "relation",
+            "relation": [
+              {
+                "id": "2afdd7c0-37a7-80a0-87e0-c6bb06b52e65"
+              }
+            ],
+            "has_more": false
+          },
+          "上次更新日期": {
+            "id": "IBpG",
+            "type": "date",
+            "date": {
+              "start": "2025-11-18",
+              "end": null,
+              "time_zone": null
+            }
+          },
+          "状态": {
+            "id": "Itw%3C",
+            "type": "status",
+            "status": {
+              "id": "a68ca6a0-09ec-4631-936f-2852cb91a097",
+              "name": "已完成",
+              "color": "gray"
+            }
+          },
+          "branch": {
+            "id": "Nm%3Ah",
+            "type": "rich_text",
+            "rich_text": [
+              {
+                "type": "text",
+                "text": {
+                  "content": "main",
+                  "link": null
+                },
+                "annotations": {
+                  "bold": false,
+                  "italic": false,
+                  "strikethrough": false,
+                  "underline": false,
+                  "code": false,
+                  "color": "default"
+                },
+                "plain_text": "main",
+                "href": null
+              }
+            ]
+          },
+          "优先级": {
+            "id": "i%5DmY",
+            "type": "select",
+            "select": {
+              "id": "1bcc00de-5ec1-470f-bcaf-921e139ad223",
+              "name": "高优先级",
+              "color": "gray"
+            }
+          },
+          "功能更新": {
+            "id": "title",
+            "type": "title",
+            "title": [
+              {
+                "type": "text",
+                "text": {
+                  "content": "FR-4.3 差旅配置管理",
+                  "link": null
+                },
+                "annotations": {
+                  "bold": false,
+                  "italic": false,
+                  "strikethrough": false,
+                  "underline": false,
+                  "code": false,
+                  "color": "default"
+                },
+                "plain_text": "FR-4.3 差旅配置管理",
+                "href": null
+              }
+            ]
+          }
+        },
+        "url": "https://www.notion.so/FR-4-3-2afdd7c037a781c18993c3cedf54f518",
+        "public_url": null,
+        "request_id": "d3d4abfa-c9cb-4c5f-b1e0-5cbd6de29e9d"
+      }
+    }
+  },
+  {
+    "feature": {
+      "name": "FR-4.4 配置统一加载接口（/api/config/all）",
+      "status": "已完成",
+      "priority": "高优先级",
+      "progress": "发布",
+      "version_id": "2afdd7c0-37a7-80a0-87e0-c6bb06b52e65",
+      "branch": "main",
+      "category": "配置中心"
+    },
+    "result": {
+      "success": true,
+      "result": {
+        "object": "page",
+        "id": "2afdd7c0-37a7-8142-b72c-efe231caef7f",
+        "created_time": "2025-11-18T03:51:00.000Z",
+        "last_edited_time": "2025-11-18T03:51:00.000Z",
+        "created_by": {
+          "object": "user",
+          "id": "e1df4571-4713-4620-b510-d3b948376f72"
+        },
+        "last_edited_by": {
+          "object": "user",
+          "id": "e1df4571-4713-4620-b510-d3b948376f72"
+        },
+        "cover": null,
+        "icon": null,
+        "parent": {
+          "type": "database_id",
+          "database_id": "2afdd7c0-37a7-81d3-9597-d8569570ac5b"
+        },
+        "archived": false,
+        "in_trash": false,
+        "is_locked": false,
+        "properties": {
+          "进度": {
+            "id": "%3E%5BGz",
+            "type": "select",
+            "select": {
+              "id": "159e2534-98d0-4b98-b690-4a3acc4a1afd",
+              "name": "发布",
+              "color": "gray"
+            }
+          },
+          "版本": {
+            "id": "Edg%7D",
+            "type": "relation",
+            "relation": [
+              {
+                "id": "2afdd7c0-37a7-80a0-87e0-c6bb06b52e65"
+              }
+            ],
+            "has_more": false
+          },
+          "上次更新日期": {
+            "id": "IBpG",
+            "type": "date",
+            "date": {
+              "start": "2025-11-18",
+              "end": null,
+              "time_zone": null
+            }
+          },
+          "状态": {
+            "id": "Itw%3C",
+            "type": "status",
+            "status": {
+              "id": "a68ca6a0-09ec-4631-936f-2852cb91a097",
+              "name": "已完成",
+              "color": "gray"
+            }
+          },
+          "branch": {
+            "id": "Nm%3Ah",
+            "type": "rich_text",
+            "rich_text": [
+              {
+                "type": "text",
+                "text": {
+                  "content": "main",
+                  "link": null
+                },
+                "annotations": {
+                  "bold": false,
+                  "italic": false,
+                  "strikethrough": false,
+                  "underline": false,
+                  "code": false,
+                  "color": "default"
+                },
+                "plain_text": "main",
+                "href": null
+              }
+            ]
+          },
+          "优先级": {
+            "id": "i%5DmY",
+            "type": "select",
+            "select": {
+              "id": "1bcc00de-5ec1-470f-bcaf-921e139ad223",
+              "name": "高优先级",
+              "color": "gray"
+            }
+          },
+          "功能更新": {
+            "id": "title",
+            "type": "title",
+            "title": [
+              {
+                "type": "text",
+                "text": {
+                  "content": "FR-4.4 配置统一加载接口（/api/config/all）",
+                  "link": null
+                },
+                "annotations": {
+                  "bold": false,
+                  "italic": false,
+                  "strikethrough": false,
+                  "underline": false,
+                  "code": false,
+                  "color": "default"
+                },
+                "plain_text": "FR-4.4 配置统一加载接口（/api/config/all）",
+                "href": null
+              }
+            ]
+          }
+        },
+        "url": "https://www.notion.so/FR-4-4-api-config-all-2afdd7c037a78142b72cefe231caef7f",
+        "public_url": null,
+        "request_id": "b514e6b2-c020-46bb-9742-e66c5bf30d64"
+      }
+    }
+  },
+  {
+    "feature": {
+      "name": "FR-5.1 多模型供应商管理（豆包、OpenAI）",
+      "status": "已完成",
+      "priority": "中优先级",
+      "progress": "发布",
+      "version_id": "2afdd7c0-37a7-80a0-87e0-c6bb06b52e65",
+      "branch": "feat_agent",
+      "category": "AI 模型配置"
+    },
+    "result": {
+      "success": true,
+      "result": {
+        "object": "page",
+        "id": "2afdd7c0-37a7-81ef-930e-db74c86b3802",
+        "created_time": "2025-11-18T03:51:00.000Z",
+        "last_edited_time": "2025-11-18T03:51:00.000Z",
+        "created_by": {
+          "object": "user",
+          "id": "e1df4571-4713-4620-b510-d3b948376f72"
+        },
+        "last_edited_by": {
+          "object": "user",
+          "id": "e1df4571-4713-4620-b510-d3b948376f72"
+        },
+        "cover": null,
+        "icon": null,
+        "parent": {
+          "type": "database_id",
+          "database_id": "2afdd7c0-37a7-81d3-9597-d8569570ac5b"
+        },
+        "archived": false,
+        "in_trash": false,
+        "is_locked": false,
+        "properties": {
+          "进度": {
+            "id": "%3E%5BGz",
+            "type": "select",
+            "select": {
+              "id": "159e2534-98d0-4b98-b690-4a3acc4a1afd",
+              "name": "发布",
+              "color": "gray"
+            }
+          },
+          "版本": {
+            "id": "Edg%7D",
+            "type": "relation",
+            "relation": [
+              {
+                "id": "2afdd7c0-37a7-80a0-87e0-c6bb06b52e65"
+              }
+            ],
+            "has_more": false
+          },
+          "上次更新日期": {
+            "id": "IBpG",
+            "type": "date",
+            "date": {
+              "start": "2025-11-18",
+              "end": null,
+              "time_zone": null
+            }
+          },
+          "状态": {
+            "id": "Itw%3C",
+            "type": "status",
+            "status": {
+              "id": "a68ca6a0-09ec-4631-936f-2852cb91a097",
+              "name": "已完成",
+              "color": "gray"
+            }
+          },
+          "branch": {
+            "id": "Nm%3Ah",
+            "type": "rich_text",
+            "rich_text": [
+              {
+                "type": "text",
+                "text": {
+                  "content": "feat_agent",
+                  "link": null
+                },
+                "annotations": {
+                  "bold": false,
+                  "italic": false,
+                  "strikethrough": false,
+                  "underline": false,
+                  "code": false,
+                  "color": "default"
+                },
+                "plain_text": "feat_agent",
+                "href": null
+              }
+            ]
+          },
+          "优先级": {
+            "id": "i%5DmY",
+            "type": "select",
+            "select": {
+              "id": "92927b54-f447-423b-8435-b42b8649077a",
+              "name": "中优先级",
+              "color": "gray"
+            }
+          },
+          "功能更新": {
+            "id": "title",
+            "type": "title",
+            "title": [
+              {
+                "type": "text",
+                "text": {
+                  "content": "FR-5.1 多模型供应商管理（豆包、OpenAI）",
+                  "link": null
+                },
+                "annotations": {
+                  "bold": false,
+                  "italic": false,
+                  "strikethrough": false,
+                  "underline": false,
+                  "code": false,
+                  "color": "default"
+                },
+                "plain_text": "FR-5.1 多模型供应商管理（豆包、OpenAI）",
+                "href": null
+              }
+            ]
+          }
+        },
+        "url": "https://www.notion.so/FR-5-1-OpenAI-2afdd7c037a781ef930edb74c86b3802",
+        "public_url": null,
+        "request_id": "c2e6acc3-4bda-4697-8637-5e097c473a61"
+      }
+    }
+  },
+  {
+    "feature": {
+      "name": "FR-5.2 提示词管理与测试",
+      "status": "已完成",
+      "priority": "低优先级",
+      "progress": "发布",
+      "version_id": "2afdd7c0-37a7-80a0-87e0-c6bb06b52e65",
+      "branch": "feat_agent",
+      "category": "AI 模型配置"
+    },
+    "result": {
+      "success": true,
+      "result": {
+        "object": "page",
+        "id": "2afdd7c0-37a7-8185-b500-e7fbf571f6c7",
+        "created_time": "2025-11-18T03:51:00.000Z",
+        "last_edited_time": "2025-11-18T03:51:00.000Z",
+        "created_by": {
+          "object": "user",
+          "id": "e1df4571-4713-4620-b510-d3b948376f72"
+        },
+        "last_edited_by": {
+          "object": "user",
+          "id": "e1df4571-4713-4620-b510-d3b948376f72"
+        },
+        "cover": null,
+        "icon": null,
+        "parent": {
+          "type": "database_id",
+          "database_id": "2afdd7c0-37a7-81d3-9597-d8569570ac5b"
+        },
+        "archived": false,
+        "in_trash": false,
+        "is_locked": false,
+        "properties": {
+          "进度": {
+            "id": "%3E%5BGz",
+            "type": "select",
+            "select": {
+              "id": "159e2534-98d0-4b98-b690-4a3acc4a1afd",
+              "name": "发布",
+              "color": "gray"
+            }
+          },
+          "版本": {
+            "id": "Edg%7D",
+            "type": "relation",
+            "relation": [
+              {
+                "id": "2afdd7c0-37a7-80a0-87e0-c6bb06b52e65"
+              }
+            ],
+            "has_more": false
+          },
+          "上次更新日期": {
+            "id": "IBpG",
+            "type": "date",
+            "date": {
+              "start": "2025-11-18",
+              "end": null,
+              "time_zone": null
+            }
+          },
+          "状态": {
+            "id": "Itw%3C",
+            "type": "status",
+            "status": {
+              "id": "a68ca6a0-09ec-4631-936f-2852cb91a097",
+              "name": "已完成",
+              "color": "gray"
+            }
+          },
+          "branch": {
+            "id": "Nm%3Ah",
+            "type": "rich_text",
+            "rich_text": [
+              {
+                "type": "text",
+                "text": {
+                  "content": "feat_agent",
+                  "link": null
+                },
+                "annotations": {
+                  "bold": false,
+                  "italic": false,
+                  "strikethrough": false,
+                  "underline": false,
+                  "code": false,
+                  "color": "default"
+                },
+                "plain_text": "feat_agent",
+                "href": null
+              }
+            ]
+          },
+          "优先级": {
+            "id": "i%5DmY",
+            "type": "select",
+            "select": {
+              "id": "b36d87af-d519-4212-9b28-c945f2779c86",
+              "name": "低优先级",
+              "color": "gray"
+            }
+          },
+          "功能更新": {
+            "id": "title",
+            "type": "title",
+            "title": [
+              {
+                "type": "text",
+                "text": {
+                  "content": "FR-5.2 提示词管理与测试",
+                  "link": null
+                },
+                "annotations": {
+                  "bold": false,
+                  "italic": false,
+                  "strikethrough": false,
+                  "underline": false,
+                  "code": false,
+                  "color": "default"
+                },
+                "plain_text": "FR-5.2 提示词管理与测试",
+                "href": null
+              }
+            ]
+          }
+        },
+        "url": "https://www.notion.so/FR-5-2-2afdd7c037a78185b500e7fbf571f6c7",
+        "public_url": null,
+        "request_id": "fa2838a4-b6b2-431d-b86d-d150f6886fba"
+      }
+    }
+  },
+  {
+    "feature": {
+      "name": "FR-AI-1 AI 风险评估",
+      "status": "已完成",
+      "priority": "中优先级",
+      "progress": "发布",
+      "version_id": "2afdd7c0-37a7-80a0-87e0-c6bb06b52e65",
+      "branch": "feat_agent",
+      "category": "AI 能力"
+    },
+    "result": {
+      "success": true,
+      "result": {
+        "object": "page",
+        "id": "2afdd7c0-37a7-815b-888d-f422871d6219",
+        "created_time": "2025-11-18T03:51:00.000Z",
+        "last_edited_time": "2025-11-18T03:51:00.000Z",
+        "created_by": {
+          "object": "user",
+          "id": "e1df4571-4713-4620-b510-d3b948376f72"
+        },
+        "last_edited_by": {
+          "object": "user",
+          "id": "e1df4571-4713-4620-b510-d3b948376f72"
+        },
+        "cover": null,
+        "icon": null,
+        "parent": {
+          "type": "database_id",
+          "database_id": "2afdd7c0-37a7-81d3-9597-d8569570ac5b"
+        },
+        "archived": false,
+        "in_trash": false,
+        "is_locked": false,
+        "properties": {
+          "进度": {
+            "id": "%3E%5BGz",
+            "type": "select",
+            "select": {
+              "id": "159e2534-98d0-4b98-b690-4a3acc4a1afd",
+              "name": "发布",
+              "color": "gray"
+            }
+          },
+          "版本": {
+            "id": "Edg%7D",
+            "type": "relation",
+            "relation": [
+              {
+                "id": "2afdd7c0-37a7-80a0-87e0-c6bb06b52e65"
+              }
+            ],
+            "has_more": false
+          },
+          "上次更新日期": {
+            "id": "IBpG",
+            "type": "date",
+            "date": {
+              "start": "2025-11-18",
+              "end": null,
+              "time_zone": null
+            }
+          },
+          "状态": {
+            "id": "Itw%3C",
+            "type": "status",
+            "status": {
+              "id": "a68ca6a0-09ec-4631-936f-2852cb91a097",
+              "name": "已完成",
+              "color": "gray"
+            }
+          },
+          "branch": {
+            "id": "Nm%3Ah",
+            "type": "rich_text",
+            "rich_text": [
+              {
+                "type": "text",
+                "text": {
+                  "content": "feat_agent",
+                  "link": null
+                },
+                "annotations": {
+                  "bold": false,
+                  "italic": false,
+                  "strikethrough": false,
+                  "underline": false,
+                  "code": false,
+                  "color": "default"
+                },
+                "plain_text": "feat_agent",
+                "href": null
+              }
+            ]
+          },
+          "优先级": {
+            "id": "i%5DmY",
+            "type": "select",
+            "select": {
+              "id": "92927b54-f447-423b-8435-b42b8649077a",
+              "name": "中优先级",
+              "color": "gray"
+            }
+          },
+          "功能更新": {
+            "id": "title",
+            "type": "title",
+            "title": [
+              {
+                "type": "text",
+                "text": {
+                  "content": "FR-AI-1 AI 风险评估",
+                  "link": null
+                },
+                "annotations": {
+                  "bold": false,
+                  "italic": false,
+                  "strikethrough": false,
+                  "underline": false,
+                  "code": false,
+                  "color": "default"
+                },
+                "plain_text": "FR-AI-1 AI 风险评估",
+                "href": null
+              }
+            ]
+          }
+        },
+        "url": "https://www.notion.so/FR-AI-1-AI-2afdd7c037a7815b888df422871d6219",
+        "public_url": null,
+        "request_id": "6895ec9a-86da-476c-98f7-4d47c91f1468"
+      }
+    }
+  },
+  {
+    "feature": {
+      "name": "FR-AI-2 AI 模块分析",
+      "status": "已完成",
+      "priority": "中优先级",
+      "progress": "发布",
+      "version_id": "2afdd7c0-37a7-80a0-87e0-c6bb06b52e65",
+      "branch": "feat_agent",
+      "category": "AI 能力"
+    },
+    "result": {
+      "success": true,
+      "result": {
+        "object": "page",
+        "id": "2afdd7c0-37a7-8147-b731-dec6f82e7152",
+        "created_time": "2025-11-18T03:51:00.000Z",
+        "last_edited_time": "2025-11-18T03:51:00.000Z",
+        "created_by": {
+          "object": "user",
+          "id": "e1df4571-4713-4620-b510-d3b948376f72"
+        },
+        "last_edited_by": {
+          "object": "user",
+          "id": "e1df4571-4713-4620-b510-d3b948376f72"
+        },
+        "cover": null,
+        "icon": null,
+        "parent": {
+          "type": "database_id",
+          "database_id": "2afdd7c0-37a7-81d3-9597-d8569570ac5b"
+        },
+        "archived": false,
+        "in_trash": false,
+        "is_locked": false,
+        "properties": {
+          "进度": {
+            "id": "%3E%5BGz",
+            "type": "select",
+            "select": {
+              "id": "159e2534-98d0-4b98-b690-4a3acc4a1afd",
+              "name": "发布",
+              "color": "gray"
+            }
+          },
+          "版本": {
+            "id": "Edg%7D",
+            "type": "relation",
+            "relation": [
+              {
+                "id": "2afdd7c0-37a7-80a0-87e0-c6bb06b52e65"
+              }
+            ],
+            "has_more": false
+          },
+          "上次更新日期": {
+            "id": "IBpG",
+            "type": "date",
+            "date": {
+              "start": "2025-11-18",
+              "end": null,
+              "time_zone": null
+            }
+          },
+          "状态": {
+            "id": "Itw%3C",
+            "type": "status",
+            "status": {
+              "id": "a68ca6a0-09ec-4631-936f-2852cb91a097",
+              "name": "已完成",
+              "color": "gray"
+            }
+          },
+          "branch": {
+            "id": "Nm%3Ah",
+            "type": "rich_text",
+            "rich_text": [
+              {
+                "type": "text",
+                "text": {
+                  "content": "feat_agent",
+                  "link": null
+                },
+                "annotations": {
+                  "bold": false,
+                  "italic": false,
+                  "strikethrough": false,
+                  "underline": false,
+                  "code": false,
+                  "color": "default"
+                },
+                "plain_text": "feat_agent",
+                "href": null
+              }
+            ]
+          },
+          "优先级": {
+            "id": "i%5DmY",
+            "type": "select",
+            "select": {
+              "id": "92927b54-f447-423b-8435-b42b8649077a",
+              "name": "中优先级",
+              "color": "gray"
+            }
+          },
+          "功能更新": {
+            "id": "title",
+            "type": "title",
+            "title": [
+              {
+                "type": "text",
+                "text": {
+                  "content": "FR-AI-2 AI 模块分析",
+                  "link": null
+                },
+                "annotations": {
+                  "bold": false,
+                  "italic": false,
+                  "strikethrough": false,
+                  "underline": false,
+                  "code": false,
+                  "color": "default"
+                },
+                "plain_text": "FR-AI-2 AI 模块分析",
+                "href": null
+              }
+            ]
+          }
+        },
+        "url": "https://www.notion.so/FR-AI-2-AI-2afdd7c037a78147b731dec6f82e7152",
+        "public_url": null,
+        "request_id": "edcc77ed-f520-4adb-b445-23f1731db35b"
+      }
+    }
+  },
+  {
+    "feature": {
+      "name": "FR-AI-3 一键工作量评估",
+      "status": "已完成",
+      "priority": "中优先级",
+      "progress": "发布",
+      "version_id": "2afdd7c0-37a7-80a0-87e0-c6bb06b52e65",
+      "branch": "feat_agent",
+      "category": "AI 能力"
+    },
+    "result": {
+      "success": true,
+      "result": {
+        "object": "page",
+        "id": "2afdd7c0-37a7-816e-8d4f-f303c01e5ba8",
+        "created_time": "2025-11-18T03:51:00.000Z",
+        "last_edited_time": "2025-11-18T03:51:00.000Z",
+        "created_by": {
+          "object": "user",
+          "id": "e1df4571-4713-4620-b510-d3b948376f72"
+        },
+        "last_edited_by": {
+          "object": "user",
+          "id": "e1df4571-4713-4620-b510-d3b948376f72"
+        },
+        "cover": null,
+        "icon": null,
+        "parent": {
+          "type": "database_id",
+          "database_id": "2afdd7c0-37a7-81d3-9597-d8569570ac5b"
+        },
+        "archived": false,
+        "in_trash": false,
+        "is_locked": false,
+        "properties": {
+          "进度": {
+            "id": "%3E%5BGz",
+            "type": "select",
+            "select": {
+              "id": "159e2534-98d0-4b98-b690-4a3acc4a1afd",
+              "name": "发布",
+              "color": "gray"
+            }
+          },
+          "版本": {
+            "id": "Edg%7D",
+            "type": "relation",
+            "relation": [
+              {
+                "id": "2afdd7c0-37a7-80a0-87e0-c6bb06b52e65"
+              }
+            ],
+            "has_more": false
+          },
+          "上次更新日期": {
+            "id": "IBpG",
+            "type": "date",
+            "date": {
+              "start": "2025-11-18",
+              "end": null,
+              "time_zone": null
+            }
+          },
+          "状态": {
+            "id": "Itw%3C",
+            "type": "status",
+            "status": {
+              "id": "a68ca6a0-09ec-4631-936f-2852cb91a097",
+              "name": "已完成",
+              "color": "gray"
+            }
+          },
+          "branch": {
+            "id": "Nm%3Ah",
+            "type": "rich_text",
+            "rich_text": [
+              {
+                "type": "text",
+                "text": {
+                  "content": "feat_agent",
+                  "link": null
+                },
+                "annotations": {
+                  "bold": false,
+                  "italic": false,
+                  "strikethrough": false,
+                  "underline": false,
+                  "code": false,
+                  "color": "default"
+                },
+                "plain_text": "feat_agent",
+                "href": null
+              }
+            ]
+          },
+          "优先级": {
+            "id": "i%5DmY",
+            "type": "select",
+            "select": {
+              "id": "92927b54-f447-423b-8435-b42b8649077a",
+              "name": "中优先级",
+              "color": "gray"
+            }
+          },
+          "功能更新": {
+            "id": "title",
+            "type": "title",
+            "title": [
+              {
+                "type": "text",
+                "text": {
+                  "content": "FR-AI-3 一键工作量评估",
+                  "link": null
+                },
+                "annotations": {
+                  "bold": false,
+                  "italic": false,
+                  "strikethrough": false,
+                  "underline": false,
+                  "code": false,
+                  "color": "default"
+                },
+                "plain_text": "FR-AI-3 一键工作量评估",
+                "href": null
+              }
+            ]
+          }
+        },
+        "url": "https://www.notion.so/FR-AI-3-2afdd7c037a7816e8d4ff303c01e5ba8",
+        "public_url": null,
+        "request_id": "2641981a-d683-44ff-a47b-f81072131dc0"
+      }
+    }
+  },
+  {
+    "feature": {
+      "name": "FR-6.1 PDF/Excel 导出触发",
+      "status": "已完成",
+      "priority": "高优先级",
+      "progress": "发布",
+      "version_id": "2afdd7c0-37a7-80a0-87e0-c6bb06b52e65",
+      "branch": "feat_server_refactor",
+      "category": "导出能力"
+    },
+    "result": {
+      "success": true,
+      "result": {
+        "object": "page",
+        "id": "2afdd7c0-37a7-81e2-aefd-e0d4db52c947",
+        "created_time": "2025-11-18T03:51:00.000Z",
+        "last_edited_time": "2025-11-18T03:51:00.000Z",
+        "created_by": {
+          "object": "user",
+          "id": "e1df4571-4713-4620-b510-d3b948376f72"
+        },
+        "last_edited_by": {
+          "object": "user",
+          "id": "e1df4571-4713-4620-b510-d3b948376f72"
+        },
+        "cover": null,
+        "icon": null,
+        "parent": {
+          "type": "database_id",
+          "database_id": "2afdd7c0-37a7-81d3-9597-d8569570ac5b"
+        },
+        "archived": false,
+        "in_trash": false,
+        "is_locked": false,
+        "properties": {
+          "进度": {
+            "id": "%3E%5BGz",
+            "type": "select",
+            "select": {
+              "id": "159e2534-98d0-4b98-b690-4a3acc4a1afd",
+              "name": "发布",
+              "color": "gray"
+            }
+          },
+          "版本": {
+            "id": "Edg%7D",
+            "type": "relation",
+            "relation": [
+              {
+                "id": "2afdd7c0-37a7-80a0-87e0-c6bb06b52e65"
+              }
+            ],
+            "has_more": false
+          },
+          "上次更新日期": {
+            "id": "IBpG",
+            "type": "date",
+            "date": {
+              "start": "2025-11-18",
+              "end": null,
+              "time_zone": null
+            }
+          },
+          "状态": {
+            "id": "Itw%3C",
+            "type": "status",
+            "status": {
+              "id": "a68ca6a0-09ec-4631-936f-2852cb91a097",
+              "name": "已完成",
+              "color": "gray"
+            }
+          },
+          "branch": {
+            "id": "Nm%3Ah",
+            "type": "rich_text",
+            "rich_text": [
+              {
+                "type": "text",
+                "text": {
+                  "content": "feat_server_refactor",
+                  "link": null
+                },
+                "annotations": {
+                  "bold": false,
+                  "italic": false,
+                  "strikethrough": false,
+                  "underline": false,
+                  "code": false,
+                  "color": "default"
+                },
+                "plain_text": "feat_server_refactor",
+                "href": null
+              }
+            ]
+          },
+          "优先级": {
+            "id": "i%5DmY",
+            "type": "select",
+            "select": {
+              "id": "1bcc00de-5ec1-470f-bcaf-921e139ad223",
+              "name": "高优先级",
+              "color": "gray"
+            }
+          },
+          "功能更新": {
+            "id": "title",
+            "type": "title",
+            "title": [
+              {
+                "type": "text",
+                "text": {
+                  "content": "FR-6.1 PDF/Excel 导出触发",
+                  "link": null
+                },
+                "annotations": {
+                  "bold": false,
+                  "italic": false,
+                  "strikethrough": false,
+                  "underline": false,
+                  "code": false,
+                  "color": "default"
+                },
+                "plain_text": "FR-6.1 PDF/Excel 导出触发",
+                "href": null
+              }
+            ]
+          }
+        },
+        "url": "https://www.notion.so/FR-6-1-PDF-Excel-2afdd7c037a781e2aefde0d4db52c947",
+        "public_url": null,
+        "request_id": "58e68dbe-91a2-479b-836f-0dd376716e41"
+      }
+    }
+  },
+  {
+    "feature": {
+      "name": "FR-6.2 导出内容完整性（封面、指标、成本拆解）",
+      "status": "已完成",
+      "priority": "高优先级",
+      "progress": "发布",
+      "version_id": "2afdd7c0-37a7-80a0-87e0-c6bb06b52e65",
+      "branch": "feat_server_refactor",
+      "category": "导出能力"
+    },
+    "result": {
+      "success": true,
+      "result": {
+        "object": "page",
+        "id": "2afdd7c0-37a7-810e-b272-dc8ba8acf4b7",
+        "created_time": "2025-11-18T03:51:00.000Z",
+        "last_edited_time": "2025-11-18T03:51:00.000Z",
+        "created_by": {
+          "object": "user",
+          "id": "e1df4571-4713-4620-b510-d3b948376f72"
+        },
+        "last_edited_by": {
+          "object": "user",
+          "id": "e1df4571-4713-4620-b510-d3b948376f72"
+        },
+        "cover": null,
+        "icon": null,
+        "parent": {
+          "type": "database_id",
+          "database_id": "2afdd7c0-37a7-81d3-9597-d8569570ac5b"
+        },
+        "archived": false,
+        "in_trash": false,
+        "is_locked": false,
+        "properties": {
+          "进度": {
+            "id": "%3E%5BGz",
+            "type": "select",
+            "select": {
+              "id": "159e2534-98d0-4b98-b690-4a3acc4a1afd",
+              "name": "发布",
+              "color": "gray"
+            }
+          },
+          "版本": {
+            "id": "Edg%7D",
+            "type": "relation",
+            "relation": [
+              {
+                "id": "2afdd7c0-37a7-80a0-87e0-c6bb06b52e65"
+              }
+            ],
+            "has_more": false
+          },
+          "上次更新日期": {
+            "id": "IBpG",
+            "type": "date",
+            "date": {
+              "start": "2025-11-18",
+              "end": null,
+              "time_zone": null
+            }
+          },
+          "状态": {
+            "id": "Itw%3C",
+            "type": "status",
+            "status": {
+              "id": "a68ca6a0-09ec-4631-936f-2852cb91a097",
+              "name": "已完成",
+              "color": "gray"
+            }
+          },
+          "branch": {
+            "id": "Nm%3Ah",
+            "type": "rich_text",
+            "rich_text": [
+              {
+                "type": "text",
+                "text": {
+                  "content": "feat_server_refactor",
+                  "link": null
+                },
+                "annotations": {
+                  "bold": false,
+                  "italic": false,
+                  "strikethrough": false,
+                  "underline": false,
+                  "code": false,
+                  "color": "default"
+                },
+                "plain_text": "feat_server_refactor",
+                "href": null
+              }
+            ]
+          },
+          "优先级": {
+            "id": "i%5DmY",
+            "type": "select",
+            "select": {
+              "id": "1bcc00de-5ec1-470f-bcaf-921e139ad223",
+              "name": "高优先级",
+              "color": "gray"
+            }
+          },
+          "功能更新": {
+            "id": "title",
+            "type": "title",
+            "title": [
+              {
+                "type": "text",
+                "text": {
+                  "content": "FR-6.2 导出内容完整性（封面、指标、成本拆解）",
+                  "link": null
+                },
+                "annotations": {
+                  "bold": false,
+                  "italic": false,
+                  "strikethrough": false,
+                  "underline": false,
+                  "code": false,
+                  "color": "default"
+                },
+                "plain_text": "FR-6.2 导出内容完整性（封面、指标、成本拆解）",
+                "href": null
+              }
+            ]
+          }
+        },
+        "url": "https://www.notion.so/FR-6-2-2afdd7c037a7810eb272dc8ba8acf4b7",
+        "public_url": null,
+        "request_id": "578c99a9-b254-4d3f-a2be-76e3aab9a5e9"
+      }
+    }
+  },
+  {
+    "feature": {
+      "name": "FR-6.3 导出元数据管理",
+      "status": "已完成",
+      "priority": "高优先级",
+      "progress": "发布",
+      "version_id": "2afdd7c0-37a7-80a0-87e0-c6bb06b52e65",
+      "branch": "feat_server_refactor",
+      "category": "导出能力"
+    },
+    "result": {
+      "success": true,
+      "result": {
+        "object": "page",
+        "id": "2afdd7c0-37a7-8109-a2fe-dbb64d40e73b",
+        "created_time": "2025-11-18T03:51:00.000Z",
+        "last_edited_time": "2025-11-18T03:51:00.000Z",
+        "created_by": {
+          "object": "user",
+          "id": "e1df4571-4713-4620-b510-d3b948376f72"
+        },
+        "last_edited_by": {
+          "object": "user",
+          "id": "e1df4571-4713-4620-b510-d3b948376f72"
+        },
+        "cover": null,
+        "icon": null,
+        "parent": {
+          "type": "database_id",
+          "database_id": "2afdd7c0-37a7-81d3-9597-d8569570ac5b"
+        },
+        "archived": false,
+        "in_trash": false,
+        "is_locked": false,
+        "properties": {
+          "进度": {
+            "id": "%3E%5BGz",
+            "type": "select",
+            "select": {
+              "id": "159e2534-98d0-4b98-b690-4a3acc4a1afd",
+              "name": "发布",
+              "color": "gray"
+            }
+          },
+          "版本": {
+            "id": "Edg%7D",
+            "type": "relation",
+            "relation": [
+              {
+                "id": "2afdd7c0-37a7-80a0-87e0-c6bb06b52e65"
+              }
+            ],
+            "has_more": false
+          },
+          "上次更新日期": {
+            "id": "IBpG",
+            "type": "date",
+            "date": {
+              "start": "2025-11-18",
+              "end": null,
+              "time_zone": null
+            }
+          },
+          "状态": {
+            "id": "Itw%3C",
+            "type": "status",
+            "status": {
+              "id": "a68ca6a0-09ec-4631-936f-2852cb91a097",
+              "name": "已完成",
+              "color": "gray"
+            }
+          },
+          "branch": {
+            "id": "Nm%3Ah",
+            "type": "rich_text",
+            "rich_text": [
+              {
+                "type": "text",
+                "text": {
+                  "content": "feat_server_refactor",
+                  "link": null
+                },
+                "annotations": {
+                  "bold": false,
+                  "italic": false,
+                  "strikethrough": false,
+                  "underline": false,
+                  "code": false,
+                  "color": "default"
+                },
+                "plain_text": "feat_server_refactor",
+                "href": null
+              }
+            ]
+          },
+          "优先级": {
+            "id": "i%5DmY",
+            "type": "select",
+            "select": {
+              "id": "1bcc00de-5ec1-470f-bcaf-921e139ad223",
+              "name": "高优先级",
+              "color": "gray"
+            }
+          },
+          "功能更新": {
+            "id": "title",
+            "type": "title",
+            "title": [
+              {
+                "type": "text",
+                "text": {
+                  "content": "FR-6.3 导出元数据管理",
+                  "link": null
+                },
+                "annotations": {
+                  "bold": false,
+                  "italic": false,
+                  "strikethrough": false,
+                  "underline": false,
+                  "code": false,
+                  "color": "default"
+                },
+                "plain_text": "FR-6.3 导出元数据管理",
+                "href": null
+              }
+            ]
+          }
+        },
+        "url": "https://www.notion.so/FR-6-3-2afdd7c037a78109a2fedbb64d40e73b",
+        "public_url": null,
+        "request_id": "e95a62bf-5e71-41ca-9912-2afa6ae694f9"
+      }
+    }
+  },
+  {
+    "feature": {
+      "name": "FR-6.4 Excel 多工作表导出（Summary + Breakdown）",
+      "status": "已完成",
+      "priority": "中优先级",
+      "progress": "发布",
+      "version_id": "2afdd7c0-37a7-80a0-87e0-c6bb06b52e65",
+      "branch": "feat_server_refactor",
+      "category": "导出能力"
+    },
+    "result": {
+      "success": true,
+      "result": {
+        "object": "page",
+        "id": "2afdd7c0-37a7-8140-b5b9-f4f8938ba87d",
+        "created_time": "2025-11-18T03:51:00.000Z",
+        "last_edited_time": "2025-11-18T03:51:00.000Z",
+        "created_by": {
+          "object": "user",
+          "id": "e1df4571-4713-4620-b510-d3b948376f72"
+        },
+        "last_edited_by": {
+          "object": "user",
+          "id": "e1df4571-4713-4620-b510-d3b948376f72"
+        },
+        "cover": null,
+        "icon": null,
+        "parent": {
+          "type": "database_id",
+          "database_id": "2afdd7c0-37a7-81d3-9597-d8569570ac5b"
+        },
+        "archived": false,
+        "in_trash": false,
+        "is_locked": false,
+        "properties": {
+          "进度": {
+            "id": "%3E%5BGz",
+            "type": "select",
+            "select": {
+              "id": "159e2534-98d0-4b98-b690-4a3acc4a1afd",
+              "name": "发布",
+              "color": "gray"
+            }
+          },
+          "版本": {
+            "id": "Edg%7D",
+            "type": "relation",
+            "relation": [
+              {
+                "id": "2afdd7c0-37a7-80a0-87e0-c6bb06b52e65"
+              }
+            ],
+            "has_more": false
+          },
+          "上次更新日期": {
+            "id": "IBpG",
+            "type": "date",
+            "date": {
+              "start": "2025-11-18",
+              "end": null,
+              "time_zone": null
+            }
+          },
+          "状态": {
+            "id": "Itw%3C",
+            "type": "status",
+            "status": {
+              "id": "a68ca6a0-09ec-4631-936f-2852cb91a097",
+              "name": "已完成",
+              "color": "gray"
+            }
+          },
+          "branch": {
+            "id": "Nm%3Ah",
+            "type": "rich_text",
+            "rich_text": [
+              {
+                "type": "text",
+                "text": {
+                  "content": "feat_server_refactor",
+                  "link": null
+                },
+                "annotations": {
+                  "bold": false,
+                  "italic": false,
+                  "strikethrough": false,
+                  "underline": false,
+                  "code": false,
+                  "color": "default"
+                },
+                "plain_text": "feat_server_refactor",
+                "href": null
+              }
+            ]
+          },
+          "优先级": {
+            "id": "i%5DmY",
+            "type": "select",
+            "select": {
+              "id": "92927b54-f447-423b-8435-b42b8649077a",
+              "name": "中优先级",
+              "color": "gray"
+            }
+          },
+          "功能更新": {
+            "id": "title",
+            "type": "title",
+            "title": [
+              {
+                "type": "text",
+                "text": {
+                  "content": "FR-6.4 Excel 多工作表导出（Summary + Breakdown）",
+                  "link": null
+                },
+                "annotations": {
+                  "bold": false,
+                  "italic": false,
+                  "strikethrough": false,
+                  "underline": false,
+                  "code": false,
+                  "color": "default"
+                },
+                "plain_text": "FR-6.4 Excel 多工作表导出（Summary + Breakdown）",
+                "href": null
+              }
+            ]
+          }
+        },
+        "url": "https://www.notion.so/FR-6-4-Excel-Summary-Breakdown-2afdd7c037a78140b5b9f4f8938ba87d",
+        "public_url": null,
+        "request_id": "015bc41a-cb06-4cc5-a90c-c3f7508bb3de"
+      }
+    }
+  },
+  {
+    "feature": {
+      "name": "FR-7.1 三层架构重构（Controller → Service → Model）",
+      "status": "已完成",
+      "priority": "高优先级",
+      "progress": "发布",
+      "version_id": "2afdd7c0-37a7-80a0-87e0-c6bb06b52e65",
+      "branch": "fix_request",
+      "category": "系统基础"
+    },
+    "result": {
+      "success": true,
+      "result": {
+        "object": "page",
+        "id": "2afdd7c0-37a7-819a-9063-cd18448a714a",
+        "created_time": "2025-11-18T03:51:00.000Z",
+        "last_edited_time": "2025-11-18T03:51:00.000Z",
+        "created_by": {
+          "object": "user",
+          "id": "e1df4571-4713-4620-b510-d3b948376f72"
+        },
+        "last_edited_by": {
+          "object": "user",
+          "id": "e1df4571-4713-4620-b510-d3b948376f72"
+        },
+        "cover": null,
+        "icon": null,
+        "parent": {
+          "type": "database_id",
+          "database_id": "2afdd7c0-37a7-81d3-9597-d8569570ac5b"
+        },
+        "archived": false,
+        "in_trash": false,
+        "is_locked": false,
+        "properties": {
+          "进度": {
+            "id": "%3E%5BGz",
+            "type": "select",
+            "select": {
+              "id": "159e2534-98d0-4b98-b690-4a3acc4a1afd",
+              "name": "发布",
+              "color": "gray"
+            }
+          },
+          "版本": {
+            "id": "Edg%7D",
+            "type": "relation",
+            "relation": [
+              {
+                "id": "2afdd7c0-37a7-80a0-87e0-c6bb06b52e65"
+              }
+            ],
+            "has_more": false
+          },
+          "上次更新日期": {
+            "id": "IBpG",
+            "type": "date",
+            "date": {
+              "start": "2025-11-18",
+              "end": null,
+              "time_zone": null
+            }
+          },
+          "状态": {
+            "id": "Itw%3C",
+            "type": "status",
+            "status": {
+              "id": "a68ca6a0-09ec-4631-936f-2852cb91a097",
+              "name": "已完成",
+              "color": "gray"
+            }
+          },
+          "branch": {
+            "id": "Nm%3Ah",
+            "type": "rich_text",
+            "rich_text": [
+              {
+                "type": "text",
+                "text": {
+                  "content": "fix_request",
+                  "link": null
+                },
+                "annotations": {
+                  "bold": false,
+                  "italic": false,
+                  "strikethrough": false,
+                  "underline": false,
+                  "code": false,
+                  "color": "default"
+                },
+                "plain_text": "fix_request",
+                "href": null
+              }
+            ]
+          },
+          "优先级": {
+            "id": "i%5DmY",
+            "type": "select",
+            "select": {
+              "id": "1bcc00de-5ec1-470f-bcaf-921e139ad223",
+              "name": "高优先级",
+              "color": "gray"
+            }
+          },
+          "功能更新": {
+            "id": "title",
+            "type": "title",
+            "title": [
+              {
+                "type": "text",
+                "text": {
+                  "content": "FR-7.1 三层架构重构（Controller → Service → Model）",
+                  "link": null
+                },
+                "annotations": {
+                  "bold": false,
+                  "italic": false,
+                  "strikethrough": false,
+                  "underline": false,
+                  "code": false,
+                  "color": "default"
+                },
+                "plain_text": "FR-7.1 三层架构重构（Controller → Service → Model）",
+                "href": null
+              }
+            ]
+          }
+        },
+        "url": "https://www.notion.so/FR-7-1-Controller-Service-Model-2afdd7c037a7819a9063cd18448a714a",
+        "public_url": null,
+        "request_id": "523978bb-ab26-4553-84ba-85ccb6efab4e"
+      }
+    }
+  },
+  {
+    "feature": {
+      "name": "FR-7.2 统一错误处理（errorHandler.js）",
+      "status": "已完成",
+      "priority": "高优先级",
+      "progress": "发布",
+      "version_id": "2afdd7c0-37a7-80a0-87e0-c6bb06b52e65",
+      "branch": "fix_request",
+      "category": "系统基础"
+    },
+    "result": {
+      "success": true,
+      "result": {
+        "object": "page",
+        "id": "2afdd7c0-37a7-8111-9d5f-e946cc880ae3",
+        "created_time": "2025-11-18T03:51:00.000Z",
+        "last_edited_time": "2025-11-18T03:51:00.000Z",
+        "created_by": {
+          "object": "user",
+          "id": "e1df4571-4713-4620-b510-d3b948376f72"
+        },
+        "last_edited_by": {
+          "object": "user",
+          "id": "e1df4571-4713-4620-b510-d3b948376f72"
+        },
+        "cover": null,
+        "icon": null,
+        "parent": {
+          "type": "database_id",
+          "database_id": "2afdd7c0-37a7-81d3-9597-d8569570ac5b"
+        },
+        "archived": false,
+        "in_trash": false,
+        "is_locked": false,
+        "properties": {
+          "进度": {
+            "id": "%3E%5BGz",
+            "type": "select",
+            "select": {
+              "id": "159e2534-98d0-4b98-b690-4a3acc4a1afd",
+              "name": "发布",
+              "color": "gray"
+            }
+          },
+          "版本": {
+            "id": "Edg%7D",
+            "type": "relation",
+            "relation": [
+              {
+                "id": "2afdd7c0-37a7-80a0-87e0-c6bb06b52e65"
+              }
+            ],
+            "has_more": false
+          },
+          "上次更新日期": {
+            "id": "IBpG",
+            "type": "date",
+            "date": {
+              "start": "2025-11-18",
+              "end": null,
+              "time_zone": null
+            }
+          },
+          "状态": {
+            "id": "Itw%3C",
+            "type": "status",
+            "status": {
+              "id": "a68ca6a0-09ec-4631-936f-2852cb91a097",
+              "name": "已完成",
+              "color": "gray"
+            }
+          },
+          "branch": {
+            "id": "Nm%3Ah",
+            "type": "rich_text",
+            "rich_text": [
+              {
+                "type": "text",
+                "text": {
+                  "content": "fix_request",
+                  "link": null
+                },
+                "annotations": {
+                  "bold": false,
+                  "italic": false,
+                  "strikethrough": false,
+                  "underline": false,
+                  "code": false,
+                  "color": "default"
+                },
+                "plain_text": "fix_request",
+                "href": null
+              }
+            ]
+          },
+          "优先级": {
+            "id": "i%5DmY",
+            "type": "select",
+            "select": {
+              "id": "1bcc00de-5ec1-470f-bcaf-921e139ad223",
+              "name": "高优先级",
+              "color": "gray"
+            }
+          },
+          "功能更新": {
+            "id": "title",
+            "type": "title",
+            "title": [
+              {
+                "type": "text",
+                "text": {
+                  "content": "FR-7.2 统一错误处理（errorHandler.js）",
+                  "link": null
+                },
+                "annotations": {
+                  "bold": false,
+                  "italic": false,
+                  "strikethrough": false,
+                  "underline": false,
+                  "code": false,
+                  "color": "default"
+                },
+                "plain_text": "FR-7.2 统一错误处理（errorHandler.js）",
+                "href": null
+              }
+            ]
+          }
+        },
+        "url": "https://www.notion.so/FR-7-2-errorHandler-js-2afdd7c037a781119d5fe946cc880ae3",
+        "public_url": null,
+        "request_id": "4ec9f5cc-9362-42bb-80d7-84edc656b234"
+      }
+    }
+  },
+  {
+    "feature": {
+      "name": "FR-7.3 Dashboard 可视化（成本构成、评分因子、模板统计）",
+      "status": "已完成",
+      "priority": "高优先级",
+      "progress": "维护",
+      "version_id": "2afdd7c0-37a7-80a0-87e0-c6bb06b52e65",
+      "branch": "main",
+      "category": "系统基础"
+    },
+    "result": {
+      "success": true,
+      "result": {
+        "object": "page",
+        "id": "2afdd7c0-37a7-81ea-9d1c-d8e27b6a3a13",
+        "created_time": "2025-11-18T03:51:00.000Z",
+        "last_edited_time": "2025-11-18T03:51:00.000Z",
+        "created_by": {
+          "object": "user",
+          "id": "e1df4571-4713-4620-b510-d3b948376f72"
+        },
+        "last_edited_by": {
+          "object": "user",
+          "id": "e1df4571-4713-4620-b510-d3b948376f72"
+        },
+        "cover": null,
+        "icon": null,
+        "parent": {
+          "type": "database_id",
+          "database_id": "2afdd7c0-37a7-81d3-9597-d8569570ac5b"
+        },
+        "archived": false,
+        "in_trash": false,
+        "is_locked": false,
+        "properties": {
+          "进度": {
+            "id": "%3E%5BGz",
+            "type": "select",
+            "select": {
+              "id": "91521003-567d-4608-b52d-0515d81a48c8",
+              "name": "维护",
+              "color": "gray"
+            }
+          },
+          "版本": {
+            "id": "Edg%7D",
+            "type": "relation",
+            "relation": [
+              {
+                "id": "2afdd7c0-37a7-80a0-87e0-c6bb06b52e65"
+              }
+            ],
+            "has_more": false
+          },
+          "上次更新日期": {
+            "id": "IBpG",
+            "type": "date",
+            "date": {
+              "start": "2025-11-18",
+              "end": null,
+              "time_zone": null
+            }
+          },
+          "状态": {
+            "id": "Itw%3C",
+            "type": "status",
+            "status": {
+              "id": "a68ca6a0-09ec-4631-936f-2852cb91a097",
+              "name": "已完成",
+              "color": "gray"
+            }
+          },
+          "branch": {
+            "id": "Nm%3Ah",
+            "type": "rich_text",
+            "rich_text": [
+              {
+                "type": "text",
+                "text": {
+                  "content": "main",
+                  "link": null
+                },
+                "annotations": {
+                  "bold": false,
+                  "italic": false,
+                  "strikethrough": false,
+                  "underline": false,
+                  "code": false,
+                  "color": "default"
+                },
+                "plain_text": "main",
+                "href": null
+              }
+            ]
+          },
+          "优先级": {
+            "id": "i%5DmY",
+            "type": "select",
+            "select": {
+              "id": "1bcc00de-5ec1-470f-bcaf-921e139ad223",
+              "name": "高优先级",
+              "color": "gray"
+            }
+          },
+          "功能更新": {
+            "id": "title",
+            "type": "title",
+            "title": [
+              {
+                "type": "text",
+                "text": {
+                  "content": "FR-7.3 Dashboard 可视化（成本构成、评分因子、模板统计）",
+                  "link": null
+                },
+                "annotations": {
+                  "bold": false,
+                  "italic": false,
+                  "strikethrough": false,
+                  "underline": false,
+                  "code": false,
+                  "color": "default"
+                },
+                "plain_text": "FR-7.3 Dashboard 可视化（成本构成、评分因子、模板统计）",
+                "href": null
+              }
+            ]
+          }
+        },
+        "url": "https://www.notion.so/FR-7-3-Dashboard-2afdd7c037a781ea9d1cd8e27b6a3a13",
+        "public_url": null,
+        "request_id": "9b5541fc-b971-47a1-adaa-c03f752d64d8"
+      }
+    }
+  },
+  {
+    "feature": {
+      "name": "FR-2.4 草稿保存功能",
+      "status": "计划中",
+      "priority": "低优先级",
+      "progress": "计划",
+      "version_id": "2afdd7c0-37a7-80f3-9144-fcc445920c15",
+      "branch": "",
+      "category": "项目评估流程"
+    },
+    "result": {
+      "success": true,
+      "result": {
+        "object": "page",
+        "id": "2afdd7c0-37a7-81a3-bd5c-d58961bf7c06",
+        "created_time": "2025-11-18T03:51:00.000Z",
+        "last_edited_time": "2025-11-18T03:51:00.000Z",
+        "created_by": {
+          "object": "user",
+          "id": "e1df4571-4713-4620-b510-d3b948376f72"
+        },
+        "last_edited_by": {
+          "object": "user",
+          "id": "e1df4571-4713-4620-b510-d3b948376f72"
+        },
+        "cover": null,
+        "icon": null,
+        "parent": {
+          "type": "database_id",
+          "database_id": "2afdd7c0-37a7-81d3-9597-d8569570ac5b"
+        },
+        "archived": false,
+        "in_trash": false,
+        "is_locked": false,
+        "properties": {
+          "进度": {
+            "id": "%3E%5BGz",
+            "type": "select",
+            "select": {
+              "id": "c9ecb957-b483-4eb2-822d-0691e404144f",
+              "name": "计划",
+              "color": "gray"
+            }
+          },
+          "版本": {
+            "id": "Edg%7D",
+            "type": "relation",
+            "relation": [
+              {
+                "id": "2afdd7c0-37a7-80f3-9144-fcc445920c15"
+              }
+            ],
+            "has_more": false
+          },
+          "上次更新日期": {
+            "id": "IBpG",
+            "type": "date",
+            "date": {
+              "start": "2025-11-18",
+              "end": null,
+              "time_zone": null
+            }
+          },
+          "状态": {
+            "id": "Itw%3C",
+            "type": "status",
+            "status": {
+              "id": "adbe98e3-d1dd-406a-81d3-5f31dc6874e6",
+              "name": "计划中",
+              "color": "gray"
+            }
+          },
+          "branch": {
+            "id": "Nm%3Ah",
+            "type": "rich_text",
+            "rich_text": []
+          },
+          "优先级": {
+            "id": "i%5DmY",
+            "type": "select",
+            "select": {
+              "id": "b36d87af-d519-4212-9b28-c945f2779c86",
+              "name": "低优先级",
+              "color": "gray"
+            }
+          },
+          "功能更新": {
+            "id": "title",
+            "type": "title",
+            "title": [
+              {
+                "type": "text",
+                "text": {
+                  "content": "FR-2.4 草稿保存功能",
+                  "link": null
+                },
+                "annotations": {
+                  "bold": false,
+                  "italic": false,
+                  "strikethrough": false,
+                  "underline": false,
+                  "code": false,
+                  "color": "default"
+                },
+                "plain_text": "FR-2.4 草稿保存功能",
+                "href": null
+              }
+            ]
+          }
+        },
+        "url": "https://www.notion.so/FR-2-4-2afdd7c037a781a3bd5cd58961bf7c06",
+        "public_url": null,
+        "request_id": "000a0eb2-923b-4b8e-a307-53c263d33c48"
+      }
+    }
+  },
+  {
+    "feature": {
+      "name": "FR-6.5 异步导出模式（队列处理）",
+      "status": "计划中",
+      "priority": "中优先级",
+      "progress": "计划",
+      "version_id": "2afdd7c0-37a7-80f3-9144-fcc445920c15",
+      "branch": "",
+      "category": "导出能力"
+    },
+    "result": {
+      "success": true,
+      "result": {
+        "object": "page",
+        "id": "2afdd7c0-37a7-8165-a667-d87cd86d749e",
+        "created_time": "2025-11-18T03:51:00.000Z",
+        "last_edited_time": "2025-11-18T03:51:00.000Z",
+        "created_by": {
+          "object": "user",
+          "id": "e1df4571-4713-4620-b510-d3b948376f72"
+        },
+        "last_edited_by": {
+          "object": "user",
+          "id": "e1df4571-4713-4620-b510-d3b948376f72"
+        },
+        "cover": null,
+        "icon": null,
+        "parent": {
+          "type": "database_id",
+          "database_id": "2afdd7c0-37a7-81d3-9597-d8569570ac5b"
+        },
+        "archived": false,
+        "in_trash": false,
+        "is_locked": false,
+        "properties": {
+          "进度": {
+            "id": "%3E%5BGz",
+            "type": "select",
+            "select": {
+              "id": "c9ecb957-b483-4eb2-822d-0691e404144f",
+              "name": "计划",
+              "color": "gray"
+            }
+          },
+          "版本": {
+            "id": "Edg%7D",
+            "type": "relation",
+            "relation": [
+              {
+                "id": "2afdd7c0-37a7-80f3-9144-fcc445920c15"
+              }
+            ],
+            "has_more": false
+          },
+          "上次更新日期": {
+            "id": "IBpG",
+            "type": "date",
+            "date": {
+              "start": "2025-11-18",
+              "end": null,
+              "time_zone": null
+            }
+          },
+          "状态": {
+            "id": "Itw%3C",
+            "type": "status",
+            "status": {
+              "id": "adbe98e3-d1dd-406a-81d3-5f31dc6874e6",
+              "name": "计划中",
+              "color": "gray"
+            }
+          },
+          "branch": {
+            "id": "Nm%3Ah",
+            "type": "rich_text",
+            "rich_text": []
+          },
+          "优先级": {
+            "id": "i%5DmY",
+            "type": "select",
+            "select": {
+              "id": "92927b54-f447-423b-8435-b42b8649077a",
+              "name": "中优先级",
+              "color": "gray"
+            }
+          },
+          "功能更新": {
+            "id": "title",
+            "type": "title",
+            "title": [
+              {
+                "type": "text",
+                "text": {
+                  "content": "FR-6.5 异步导出模式（队列处理）",
+                  "link": null
+                },
+                "annotations": {
+                  "bold": false,
+                  "italic": false,
+                  "strikethrough": false,
+                  "underline": false,
+                  "code": false,
+                  "color": "default"
+                },
+                "plain_text": "FR-6.5 异步导出模式（队列处理）",
+                "href": null
+              }
+            ]
+          }
+        },
+        "url": "https://www.notion.so/FR-6-5-2afdd7c037a78165a667d87cd86d749e",
+        "public_url": null,
+        "request_id": "9240b454-86f3-4c73-b5d6-66d08ba4a2ee"
+      }
+    }
+  },
+  {
+    "feature": {
+      "name": "T-1 自动化测试覆盖（新建、保存、导出、AI 调用）",
+      "status": "计划中",
+      "priority": "高优先级",
+      "progress": "计划",
+      "version_id": "2afdd7c0-37a7-80f3-9144-fcc445920c15",
+      "branch": "",
+      "category": "稳定性与测试"
+    },
+    "result": {
+      "success": true,
+      "result": {
+        "object": "page",
+        "id": "2afdd7c0-37a7-81c9-a7e5-fdfdb5f80860",
+        "created_time": "2025-11-18T03:51:00.000Z",
+        "last_edited_time": "2025-11-18T03:51:00.000Z",
+        "created_by": {
+          "object": "user",
+          "id": "e1df4571-4713-4620-b510-d3b948376f72"
+        },
+        "last_edited_by": {
+          "object": "user",
+          "id": "e1df4571-4713-4620-b510-d3b948376f72"
+        },
+        "cover": null,
+        "icon": null,
+        "parent": {
+          "type": "database_id",
+          "database_id": "2afdd7c0-37a7-81d3-9597-d8569570ac5b"
+        },
+        "archived": false,
+        "in_trash": false,
+        "is_locked": false,
+        "properties": {
+          "进度": {
+            "id": "%3E%5BGz",
+            "type": "select",
+            "select": {
+              "id": "c9ecb957-b483-4eb2-822d-0691e404144f",
+              "name": "计划",
+              "color": "gray"
+            }
+          },
+          "版本": {
+            "id": "Edg%7D",
+            "type": "relation",
+            "relation": [
+              {
+                "id": "2afdd7c0-37a7-80f3-9144-fcc445920c15"
+              }
+            ],
+            "has_more": false
+          },
+          "上次更新日期": {
+            "id": "IBpG",
+            "type": "date",
+            "date": {
+              "start": "2025-11-18",
+              "end": null,
+              "time_zone": null
+            }
+          },
+          "状态": {
+            "id": "Itw%3C",
+            "type": "status",
+            "status": {
+              "id": "adbe98e3-d1dd-406a-81d3-5f31dc6874e6",
+              "name": "计划中",
+              "color": "gray"
+            }
+          },
+          "branch": {
+            "id": "Nm%3Ah",
+            "type": "rich_text",
+            "rich_text": []
+          },
+          "优先级": {
+            "id": "i%5DmY",
+            "type": "select",
+            "select": {
+              "id": "1bcc00de-5ec1-470f-bcaf-921e139ad223",
+              "name": "高优先级",
+              "color": "gray"
+            }
+          },
+          "功能更新": {
+            "id": "title",
+            "type": "title",
+            "title": [
+              {
+                "type": "text",
+                "text": {
+                  "content": "T-1 自动化测试覆盖（新建、保存、导出、AI 调用）",
+                  "link": null
+                },
+                "annotations": {
+                  "bold": false,
+                  "italic": false,
+                  "strikethrough": false,
+                  "underline": false,
+                  "code": false,
+                  "color": "default"
+                },
+                "plain_text": "T-1 自动化测试覆盖（新建、保存、导出、AI 调用）",
+                "href": null
+              }
+            ]
+          }
+        },
+        "url": "https://www.notion.so/T-1-AI-2afdd7c037a781c9a7e5fdfdb5f80860",
+        "public_url": null,
+        "request_id": "d9acb69b-aa86-46f4-9572-15b951daf24e"
+      }
+    }
+  },
+  {
+    "feature": {
+      "name": "T-2 API 与 UI 完整回归测试",
+      "status": "计划中",
+      "priority": "高优先级",
+      "progress": "计划",
+      "version_id": "2afdd7c0-37a7-80f3-9144-fcc445920c15",
+      "branch": "",
+      "category": "稳定性与测试"
+    },
+    "result": {
+      "success": true,
+      "result": {
+        "object": "page",
+        "id": "2afdd7c0-37a7-8158-8d54-d471ece9d3cc",
+        "created_time": "2025-11-18T03:51:00.000Z",
+        "last_edited_time": "2025-11-18T03:51:00.000Z",
+        "created_by": {
+          "object": "user",
+          "id": "e1df4571-4713-4620-b510-d3b948376f72"
+        },
+        "last_edited_by": {
+          "object": "user",
+          "id": "e1df4571-4713-4620-b510-d3b948376f72"
+        },
+        "cover": null,
+        "icon": null,
+        "parent": {
+          "type": "database_id",
+          "database_id": "2afdd7c0-37a7-81d3-9597-d8569570ac5b"
+        },
+        "archived": false,
+        "in_trash": false,
+        "is_locked": false,
+        "properties": {
+          "进度": {
+            "id": "%3E%5BGz",
+            "type": "select",
+            "select": {
+              "id": "c9ecb957-b483-4eb2-822d-0691e404144f",
+              "name": "计划",
+              "color": "gray"
+            }
+          },
+          "版本": {
+            "id": "Edg%7D",
+            "type": "relation",
+            "relation": [
+              {
+                "id": "2afdd7c0-37a7-80f3-9144-fcc445920c15"
+              }
+            ],
+            "has_more": false
+          },
+          "上次更新日期": {
+            "id": "IBpG",
+            "type": "date",
+            "date": {
+              "start": "2025-11-18",
+              "end": null,
+              "time_zone": null
+            }
+          },
+          "状态": {
+            "id": "Itw%3C",
+            "type": "status",
+            "status": {
+              "id": "adbe98e3-d1dd-406a-81d3-5f31dc6874e6",
+              "name": "计划中",
+              "color": "gray"
+            }
+          },
+          "branch": {
+            "id": "Nm%3Ah",
+            "type": "rich_text",
+            "rich_text": []
+          },
+          "优先级": {
+            "id": "i%5DmY",
+            "type": "select",
+            "select": {
+              "id": "1bcc00de-5ec1-470f-bcaf-921e139ad223",
+              "name": "高优先级",
+              "color": "gray"
+            }
+          },
+          "功能更新": {
+            "id": "title",
+            "type": "title",
+            "title": [
+              {
+                "type": "text",
+                "text": {
+                  "content": "T-2 API 与 UI 完整回归测试",
+                  "link": null
+                },
+                "annotations": {
+                  "bold": false,
+                  "italic": false,
+                  "strikethrough": false,
+                  "underline": false,
+                  "code": false,
+                  "color": "default"
+                },
+                "plain_text": "T-2 API 与 UI 完整回归测试",
+                "href": null
+              }
+            ]
+          }
+        },
+        "url": "https://www.notion.so/T-2-API-UI-2afdd7c037a781588d54d471ece9d3cc",
+        "public_url": null,
+        "request_id": "0f196982-5cd8-4174-97de-dfeffeb8757c"
+      }
+    }
+  },
+  {
+    "feature": {
+      "name": "P-1 性能基准测试（计算 API < 500ms）",
+      "status": "计划中",
+      "priority": "高优先级",
+      "progress": "计划",
+      "version_id": "2afdd7c0-37a7-80f3-9144-fcc445920c15",
+      "branch": "",
+      "category": "性能与体验"
+    },
+    "result": {
+      "success": true,
+      "result": {
+        "object": "page",
+        "id": "2afdd7c0-37a7-81dd-9119-f3f541db3c81",
+        "created_time": "2025-11-18T03:51:00.000Z",
+        "last_edited_time": "2025-11-18T03:51:00.000Z",
+        "created_by": {
+          "object": "user",
+          "id": "e1df4571-4713-4620-b510-d3b948376f72"
+        },
+        "last_edited_by": {
+          "object": "user",
+          "id": "e1df4571-4713-4620-b510-d3b948376f72"
+        },
+        "cover": null,
+        "icon": null,
+        "parent": {
+          "type": "database_id",
+          "database_id": "2afdd7c0-37a7-81d3-9597-d8569570ac5b"
+        },
+        "archived": false,
+        "in_trash": false,
+        "is_locked": false,
+        "properties": {
+          "进度": {
+            "id": "%3E%5BGz",
+            "type": "select",
+            "select": {
+              "id": "c9ecb957-b483-4eb2-822d-0691e404144f",
+              "name": "计划",
+              "color": "gray"
+            }
+          },
+          "版本": {
+            "id": "Edg%7D",
+            "type": "relation",
+            "relation": [
+              {
+                "id": "2afdd7c0-37a7-80f3-9144-fcc445920c15"
+              }
+            ],
+            "has_more": false
+          },
+          "上次更新日期": {
+            "id": "IBpG",
+            "type": "date",
+            "date": {
+              "start": "2025-11-18",
+              "end": null,
+              "time_zone": null
+            }
+          },
+          "状态": {
+            "id": "Itw%3C",
+            "type": "status",
+            "status": {
+              "id": "adbe98e3-d1dd-406a-81d3-5f31dc6874e6",
+              "name": "计划中",
+              "color": "gray"
+            }
+          },
+          "branch": {
+            "id": "Nm%3Ah",
+            "type": "rich_text",
+            "rich_text": []
+          },
+          "优先级": {
+            "id": "i%5DmY",
+            "type": "select",
+            "select": {
+              "id": "1bcc00de-5ec1-470f-bcaf-921e139ad223",
+              "name": "高优先级",
+              "color": "gray"
+            }
+          },
+          "功能更新": {
+            "id": "title",
+            "type": "title",
+            "title": [
+              {
+                "type": "text",
+                "text": {
+                  "content": "P-1 性能基准测试（计算 API < 500ms）",
+                  "link": null
+                },
+                "annotations": {
+                  "bold": false,
+                  "italic": false,
+                  "strikethrough": false,
+                  "underline": false,
+                  "code": false,
+                  "color": "default"
+                },
+                "plain_text": "P-1 性能基准测试（计算 API < 500ms）",
+                "href": null
+              }
+            ]
+          }
+        },
+        "url": "https://www.notion.so/P-1-API-500ms-2afdd7c037a781dd9119f3f541db3c81",
+        "public_url": null,
+        "request_id": "ad5fa2a0-ab25-4c1a-bb5b-9b90d21c6c21"
+      }
+    }
+  },
+  {
+    "feature": {
+      "name": "P-2 Dashboard 加载优化（分页与筛选）",
+      "status": "计划中",
+      "priority": "中优先级",
+      "progress": "计划",
+      "version_id": "2afdd7c0-37a7-80f3-9144-fcc445920c15",
+      "branch": "",
+      "category": "性能与体验"
+    },
+    "result": {
+      "success": true,
+      "result": {
+        "object": "page",
+        "id": "2afdd7c0-37a7-81c3-93e6-cda4f1ee836f",
+        "created_time": "2025-11-18T03:51:00.000Z",
+        "last_edited_time": "2025-11-18T03:51:00.000Z",
+        "created_by": {
+          "object": "user",
+          "id": "e1df4571-4713-4620-b510-d3b948376f72"
+        },
+        "last_edited_by": {
+          "object": "user",
+          "id": "e1df4571-4713-4620-b510-d3b948376f72"
+        },
+        "cover": null,
+        "icon": null,
+        "parent": {
+          "type": "database_id",
+          "database_id": "2afdd7c0-37a7-81d3-9597-d8569570ac5b"
+        },
+        "archived": false,
+        "in_trash": false,
+        "is_locked": false,
+        "properties": {
+          "进度": {
+            "id": "%3E%5BGz",
+            "type": "select",
+            "select": {
+              "id": "c9ecb957-b483-4eb2-822d-0691e404144f",
+              "name": "计划",
+              "color": "gray"
+            }
+          },
+          "版本": {
+            "id": "Edg%7D",
+            "type": "relation",
+            "relation": [
+              {
+                "id": "2afdd7c0-37a7-80f3-9144-fcc445920c15"
+              }
+            ],
+            "has_more": false
+          },
+          "上次更新日期": {
+            "id": "IBpG",
+            "type": "date",
+            "date": {
+              "start": "2025-11-18",
+              "end": null,
+              "time_zone": null
+            }
+          },
+          "状态": {
+            "id": "Itw%3C",
+            "type": "status",
+            "status": {
+              "id": "adbe98e3-d1dd-406a-81d3-5f31dc6874e6",
+              "name": "计划中",
+              "color": "gray"
+            }
+          },
+          "branch": {
+            "id": "Nm%3Ah",
+            "type": "rich_text",
+            "rich_text": []
+          },
+          "优先级": {
+            "id": "i%5DmY",
+            "type": "select",
+            "select": {
+              "id": "92927b54-f447-423b-8435-b42b8649077a",
+              "name": "中优先级",
+              "color": "gray"
+            }
+          },
+          "功能更新": {
+            "id": "title",
+            "type": "title",
+            "title": [
+              {
+                "type": "text",
+                "text": {
+                  "content": "P-2 Dashboard 加载优化（分页与筛选）",
+                  "link": null
+                },
+                "annotations": {
+                  "bold": false,
+                  "italic": false,
+                  "strikethrough": false,
+                  "underline": false,
+                  "code": false,
+                  "color": "default"
+                },
+                "plain_text": "P-2 Dashboard 加载优化（分页与筛选）",
+                "href": null
+              }
+            ]
+          }
+        },
+        "url": "https://www.notion.so/P-2-Dashboard-2afdd7c037a781c393e6cda4f1ee836f",
+        "public_url": null,
+        "request_id": "d736db6b-07a1-4eb6-a3ff-fd8a892c188e"
+      }
+    }
+  },
+  {
+    "feature": {
+      "name": "O-1 生产环境部署方案",
+      "status": "计划中",
+      "priority": "高优先级",
+      "progress": "计划",
+      "version_id": "2afdd7c0-37a7-80f3-9144-fcc445920c15",
+      "branch": "",
+      "category": "配置与运营"
+    },
+    "result": {
+      "success": true,
+      "result": {
+        "object": "page",
+        "id": "2afdd7c0-37a7-81b5-b607-db6320a6a91c",
+        "created_time": "2025-11-18T03:51:00.000Z",
+        "last_edited_time": "2025-11-18T03:51:00.000Z",
+        "created_by": {
+          "object": "user",
+          "id": "e1df4571-4713-4620-b510-d3b948376f72"
+        },
+        "last_edited_by": {
+          "object": "user",
+          "id": "e1df4571-4713-4620-b510-d3b948376f72"
+        },
+        "cover": null,
+        "icon": null,
+        "parent": {
+          "type": "database_id",
+          "database_id": "2afdd7c0-37a7-81d3-9597-d8569570ac5b"
+        },
+        "archived": false,
+        "in_trash": false,
+        "is_locked": false,
+        "properties": {
+          "进度": {
+            "id": "%3E%5BGz",
+            "type": "select",
+            "select": {
+              "id": "c9ecb957-b483-4eb2-822d-0691e404144f",
+              "name": "计划",
+              "color": "gray"
+            }
+          },
+          "版本": {
+            "id": "Edg%7D",
+            "type": "relation",
+            "relation": [
+              {
+                "id": "2afdd7c0-37a7-80f3-9144-fcc445920c15"
+              }
+            ],
+            "has_more": false
+          },
+          "上次更新日期": {
+            "id": "IBpG",
+            "type": "date",
+            "date": {
+              "start": "2025-11-18",
+              "end": null,
+              "time_zone": null
+            }
+          },
+          "状态": {
+            "id": "Itw%3C",
+            "type": "status",
+            "status": {
+              "id": "adbe98e3-d1dd-406a-81d3-5f31dc6874e6",
+              "name": "计划中",
+              "color": "gray"
+            }
+          },
+          "branch": {
+            "id": "Nm%3Ah",
+            "type": "rich_text",
+            "rich_text": []
+          },
+          "优先级": {
+            "id": "i%5DmY",
+            "type": "select",
+            "select": {
+              "id": "1bcc00de-5ec1-470f-bcaf-921e139ad223",
+              "name": "高优先级",
+              "color": "gray"
+            }
+          },
+          "功能更新": {
+            "id": "title",
+            "type": "title",
+            "title": [
+              {
+                "type": "text",
+                "text": {
+                  "content": "O-1 生产环境部署方案",
+                  "link": null
+                },
+                "annotations": {
+                  "bold": false,
+                  "italic": false,
+                  "strikethrough": false,
+                  "underline": false,
+                  "code": false,
+                  "color": "default"
+                },
+                "plain_text": "O-1 生产环境部署方案",
+                "href": null
+              }
+            ]
+          }
+        },
+        "url": "https://www.notion.so/O-1-2afdd7c037a781b5b607db6320a6a91c",
+        "public_url": null,
+        "request_id": "b8e76c53-d9d0-4c3a-ba0c-372b01c6e263"
+      }
+    }
+  },
+  {
+    "feature": {
+      "name": "O-2 基础运维监控（健康检查、日志轮转）",
+      "status": "计划中",
+      "priority": "中优先级",
+      "progress": "计划",
+      "version_id": "2afdd7c0-37a7-80f3-9144-fcc445920c15",
+      "branch": "",
+      "category": "配置与运营"
+    },
+    "result": {
+      "success": true,
+      "result": {
+        "object": "page",
+        "id": "2afdd7c0-37a7-817e-9a60-fdac76ecb77a",
+        "created_time": "2025-11-18T03:51:00.000Z",
+        "last_edited_time": "2025-11-18T03:51:00.000Z",
+        "created_by": {
+          "object": "user",
+          "id": "e1df4571-4713-4620-b510-d3b948376f72"
+        },
+        "last_edited_by": {
+          "object": "user",
+          "id": "e1df4571-4713-4620-b510-d3b948376f72"
+        },
+        "cover": null,
+        "icon": null,
+        "parent": {
+          "type": "database_id",
+          "database_id": "2afdd7c0-37a7-81d3-9597-d8569570ac5b"
+        },
+        "archived": false,
+        "in_trash": false,
+        "is_locked": false,
+        "properties": {
+          "进度": {
+            "id": "%3E%5BGz",
+            "type": "select",
+            "select": {
+              "id": "c9ecb957-b483-4eb2-822d-0691e404144f",
+              "name": "计划",
+              "color": "gray"
+            }
+          },
+          "版本": {
+            "id": "Edg%7D",
+            "type": "relation",
+            "relation": [
+              {
+                "id": "2afdd7c0-37a7-80f3-9144-fcc445920c15"
+              }
+            ],
+            "has_more": false
+          },
+          "上次更新日期": {
+            "id": "IBpG",
+            "type": "date",
+            "date": {
+              "start": "2025-11-18",
+              "end": null,
+              "time_zone": null
+            }
+          },
+          "状态": {
+            "id": "Itw%3C",
+            "type": "status",
+            "status": {
+              "id": "adbe98e3-d1dd-406a-81d3-5f31dc6874e6",
+              "name": "计划中",
+              "color": "gray"
+            }
+          },
+          "branch": {
+            "id": "Nm%3Ah",
+            "type": "rich_text",
+            "rich_text": []
+          },
+          "优先级": {
+            "id": "i%5DmY",
+            "type": "select",
+            "select": {
+              "id": "92927b54-f447-423b-8435-b42b8649077a",
+              "name": "中优先级",
+              "color": "gray"
+            }
+          },
+          "功能更新": {
+            "id": "title",
+            "type": "title",
+            "title": [
+              {
+                "type": "text",
+                "text": {
+                  "content": "O-2 基础运维监控（健康检查、日志轮转）",
+                  "link": null
+                },
+                "annotations": {
+                  "bold": false,
+                  "italic": false,
+                  "strikethrough": false,
+                  "underline": false,
+                  "code": false,
+                  "color": "default"
+                },
+                "plain_text": "O-2 基础运维监控（健康检查、日志轮转）",
+                "href": null
+              }
+            ]
+          }
+        },
+        "url": "https://www.notion.so/O-2-2afdd7c037a7817e9a60fdac76ecb77a",
+        "public_url": null,
+        "request_id": "dc468849-8982-4804-b93d-3cf3c0497e9d"
+      }
+    }
+  }
+]
