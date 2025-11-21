@@ -113,12 +113,13 @@ const handleFilterChange = (value) => {
 | 列名 | 宽度 | 可排序 | 说明 |
 |------|------|--------|------|
 | 项目名称 | 25% | 是 | 主标题，点击查看详情 |
-| 项目描述 | 30% | 否 | 截断显示，悬停查看完整 |
+| 项目描述 | 25% | 否 | 截断显示，悬停查看完整 |
+| 是否模板 | 8%  | 否 | 仅有一条记录可以为模板 |
 | 总成本 | 10% | 是 | 万元，2位小数 |
 | 风险分 | 8% | 是 | 显示分数和等级标识 |
 | 工作量 | 8% | 是 | 人天数 |
 | 创建时间 | 12% | 是 | YYYY-MM-DD格式 |
-| 操作 | 7% | 否 | 操作按钮组 |
+| 操作 | 4% | 否 | 操作按钮组 |
 
 #### 4.2.2 数据结构
 
@@ -130,7 +131,7 @@ interface ProjectRecord {
   final_total_cost: number;       // 万元
   final_risk_score: number;       // 0-200
   final_workload_days: number;    // 人天
-  is_template: boolean;
+  is_template: boolean;           // 是否为当前模板（全局仅一条 true）
   created_at: string;             // ISO 8601
   updated_at?: string;
   assessment_details_json: string; // JSON字符串
@@ -149,7 +150,7 @@ const columns: ProColumns<ProjectRecord>[] = [
     render: (text, record) => (
       <Space>
         <a onClick={() => viewDetails(record.id)}>{text}</a>
-        {record.is_template && <Tag color="blue">模板</Tag>}
+        {record.is_template && <Tag color="blue">当前模板</Tag>}
       </Space>
     ),
   },
@@ -163,6 +164,14 @@ const columns: ProColumns<ProjectRecord>[] = [
         {text || '-'}
       </Tooltip>
     ),
+  },
+  {
+    title: '是否模板',
+    dataIndex: 'is_template',
+    key: 'is_template',
+    width: 100,
+    align: 'center',
+    render: (value) => (value ? <Tag color="blue">当前模板</Tag> : '-'),
   },
   {
     title: '总成本（万元）',
@@ -345,7 +354,13 @@ useEffect(() => {
 - 点击操作栏的"删除"按钮
 - 详情页点击"删除项目"按钮
 
-**行为**:
+**业务约束**:
+- 若项目为当前模板（`is_template = 1`），则**不允许删除**：
+  - 列表操作列中不显示删除按钮，或展示为禁用状态并附带 Tooltip「当前模板不可删除，请先在新评估中设置新的模板」。
+  - 详情页同理，不提供“删除项目”操作。
+- 只有 `is_template = 0` 的普通项目才允许执行删除操作。
+
+**行为（仅对非模板项目）**:
 - 显示确认对话框（Popconfirm）
 - 二次确认防止误删
 - 删除后刷新列表
@@ -363,6 +378,7 @@ useEffect(() => {
 ```typescript
 const deleteProject = async (id: number) => {
   try {
+    // 伪代码：在调用前应已保证 record.is_template === false
     await fetch(`/api/projects/${id}`, { method: 'DELETE' });
     message.success('项目已删除');
     fetchProjects(); // 刷新列表
@@ -426,7 +442,7 @@ GET /api/projects
   page?: number;           // 页码，从1开始
   pageSize?: number;       // 每页数量
   search?: string;         // 搜索关键词
-  is_template?: 0 | 1;    // 是否模板
+  is_template?: 0 | 1;     // 是否模板（1 表示当前模板，最多仅一条记录）
   sortField?: string;      // 排序字段
   sortOrder?: 'ascend' | 'descend'; // 排序方向
 }

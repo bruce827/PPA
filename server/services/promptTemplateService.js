@@ -22,6 +22,15 @@ function parseVariablesJson(variablesJson) {
   }
 }
 
+function escapeRegExp(str = '') {
+  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function createPlaceholderRegex(varName, flags = 'g') {
+  const escaped = escapeRegExp(varName);
+  return new RegExp(`\\{\\{\\s*${escaped}\\s*\\}\\}`, flags);
+}
+
 async function createPromptTemplate(payload) {
   const { template_name, category, system_prompt, user_prompt_template } = payload || {};
 
@@ -101,7 +110,7 @@ async function previewTemplate(id, variableValues = {}) {
 
   // 检查提供的变量是否被使用
   provided_variables.forEach((varName) => {
-    const regex = new RegExp(`\\{${varName}\\}`, 'g');
+    const regex = createPlaceholderRegex(varName);
     if (!regex.test(userPrompt)) {
       unused_variables.push(varName);
     }
@@ -109,7 +118,7 @@ async function previewTemplate(id, variableValues = {}) {
 
   // 替换所有变量
   Object.keys(variableValues || {}).forEach((varName) => {
-    const regex = new RegExp(`\\{${varName}\\}`, 'g');
+    const regex = createPlaceholderRegex(varName, 'g');
     userPrompt = userPrompt.replace(regex, variableValues[varName]);
   });
 

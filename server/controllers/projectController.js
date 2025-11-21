@@ -46,7 +46,8 @@ exports.getAllProjects = async (req, res, next) => {
       throw error;
     }
 
-    const projects = await projectService.getAllProjects();
+    // 未传 is_template 时，返回所有项目（包含模板和正式项目）
+    const projects = await projectService.getAllProjectsIncludingTemplates();
     res.json({ data: projects });
   } catch (error) {
     next(error);

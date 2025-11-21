@@ -1313,3 +1313,152 @@ Spin 的 `tip` 仅在“嵌套（有子元素）”或“全屏”模式下生�
 - 模块梳理加载态与详情页加载态下，不再出现 Spin tip 警告；UI 展示保持一致。
 
 ---
+
+## 10. 工作量估算新增记录工时被手动覆盖
+
+**故障现象**: 在“新建评估 > 第二步工作量估算”中，用户点击“新增功能项/新增对接项”后，表格允许直接编辑“工时(人/天)”列。当交付系数被修改时，点击“保存”不会触发重新计算，导致工时数值与详情弹窗/AI 评估结果不一致。
+
+**根本原因**:
+
+1. `EditableProTable` 的 `workload` 列未禁用，行内编辑会覆盖详情弹窗计算出的值。
+2. 保存行后只是把表单数据写回列表，没有对交付系数变动进行二次计算。
+
+**修复方案**:
+
+1. 将 `workload` 列改为纯展示列并禁用编辑，同时在标题上加 Tooltip 说明“该字段会在详情页或 AI 评估后自动计算”。
+2. 在 `handleDevChange` / `handleIntegrationChange` 中合并原始记录和当前编辑值，只要是新增记录或交付系数发生变化，就复用 `calculateWorkload` 逻辑即时重算工时，再通过 `normalizeList` 保持数值格式。
+
+**关键提交文件**:
+- `frontend/ppa_frontend/src/pages/Assessment/components/WorkloadEstimation.tsx`
+
+**验证清单**:
+- [ ] 新增行时，“工时(人/天)”列禁用输入，只显示只读值。
+- [ ] 修改交付系数后点击“保存”，相应行的工时会自动刷新。
+- [ ] 详情弹窗和 AI 评估仍可继续覆盖工时，表格展示保持一致。
+
+---
+
+## 11. AI 模型面板“查看全部模块”无响应
+
+**故障现象**: 在“生成总览”步骤的“AI 模型使用情况”卡片中，工作量评估列表超过 5 条时会出现“查看全部 X 个模块”按钮，但点击后没有任何反馈，无法查看完整的 AI 评估模块。
+
+**根本原因**: 按钮只是一个样式化的 `Button`，既没有绑定 `onClick` 事件，也没有对应的弹窗或抽屉组件展示完整数据。
+
+**修复方案**:
+
+1. 在 `AIUsagePanel` 内部引入 `Modal` 并使用 `useState` 管理显隐。
+2. 将按钮点击事件绑定到 `setAllModulesVisible(true)`，并在弹窗中循环渲染全部 `workloadEvaluations`，附带模块类型/角色/时间信息，支持滚动浏览。
+3. 复用统一的 `renderEvaluationItem` 渲染函数，保证弹窗与预览列表的样式一致。
+
+**关键文件**:
+- `frontend/ppa_frontend/src/pages/Assessment/components/Overview.tsx`
+
+**验证清单**:
+- [ ] 当 AI 评估模块 > 5 条时显示“查看全部”按钮。
+- [ ] 点击按钮能够弹出“全部 AI 评估模块”对话框并展示所有记录。
+- [ ] 关闭对话框后再次打开仍能看到完整数据。
+
+---
+
+## 12. AI 模型使用情况未引用“当前模型”
+
+**故障现象**: “生成总览”步骤的“AI 模型使用情况”面板中，风险评估、模块梳理与工作量评估的模型标签始终显示为固定的 `GPT-4 / OpenAI`，与模型配置模块中设置的“当前使用模型”不一致，导致展示信息与真实配置脱节。
+
+**根本原因**: 面板依赖 `assessmentData` 中旧的 `model_info` 字段或直接写死标签，从未调用模型配置模块的 `getCurrentModel` 接口获取系统当前模型。
+
+**修复方案**:
+
+1. 在 `Overview` 组件中引入 `getCurrentModel`，页面加载时拉取当前模型并缓存。
+2. 所有 AI 使用信息（风险评估、模块梳理、工作量评估）统一使用当前模型名称/Provider，若后端返回为空则展示“未配置模型”。
+3. 工作量评估列表的 Tag 也改为动态展示，保证和模型配置模块一致。
+
+**关键文件**:
+- `frontend/ppa_frontend/src/pages/Assessment/components/Overview.tsx`
+
+**验证清单**:
+- [ ] 在模型配置模块切换“当前模型”后返回“生成总览”，面板标签同步更新。
+- [ ] 风险评估、模块梳理、工作量评估三个区域展示的模型信息一致。
+- [ ] “查看全部模块”弹窗中的数据不受影响。
+
+---
+
+## 13. 模板唯一性与历史项目模板删除限制
+
+**故障现象**:
+
+1. 在评估第 4 步勾选“另存为模板”多次保存后，`projects` 表中可能存在多条 `is_template = 1` 的记录，违背了“全局仅一个当前模板”的设计预期，导致：
+   - 前端“从模板一键填充”无法明确应该使用哪条记录。
+   - 历史项目列表中无法准确标识唯一的“当前模板”。
+2. 历史项目列表中模板项目与普通项目在删除上没有区分，理论上可以直接删除模板记录，容易造成误删。
+
+**根本原因**:
+
+- 后端在 `createProject` / `updateProject` 时只是按请求体直接写入 `is_template`，没有在数据库层面做互斥处理；  
+- 历史列表删除操作仅按 `id` 调用 `DELETE /api/projects/:id`，未检查 `is_template` 字段。
+
+**修复方案**:
+
+1. **后端模板唯一性保证**（服务层 + 模型层）  
+   - 在 `projectModel` 中新增 `clearAllTemplateFlags()` 方法：  
+     - SQL: `UPDATE projects SET is_template = 0 WHERE is_template = 1`。  
+   - 在 `projectService.createProject` / `projectService.updateProject` 中：  
+     - 若 `projectData.is_template` 为真，先调用 `clearAllTemplateFlags()`，再将当前项目写为 `is_template = 1`，保证任意时刻表中最多有一条模板。
+2. **历史项目列表包含模板，并显式标识**  
+   - 新增 `projectModel.getAllProjectsIncludingTemplates()`，返回所有项目（包含 `is_template` 字段）。  
+   - `projectController.getAllProjects` 在未带 `is_template` 查询参数时改为使用该方法，使历史列表能同时看到模板和非模板，并在前端增加“是否模板”列。
+3. **前端禁止删除当前模板**  
+   - `History` 页面操作列中：
+     - 若 `record.is_template` 为真，则不展示删除 Popconfirm，而是展示禁用的“删除”按钮并附带 Tooltip：「当前模板不可删除，请先在新评估中设置新的模板」。  
+     - 仅对 `is_template = 0` 的普通项目保留实际删除能力。
+
+**关键文件**:
+- 后端：
+  - `server/models/projectModel.js`
+  - `server/services/projectService.js`
+  - `server/controllers/projectController.js`
+- 前端：
+  - `frontend/ppa_frontend/src/services/projects/typings.d.ts`
+  - `frontend/ppa_frontend/src/pages/Assessment/History.tsx`
+
+**验证清单**:
+- [ ] 连续多次在第 4 步勾选“保存为模板”保存项目后，数据库中始终只有一条记录的 `is_template = 1`。  
+- [ ] 历史项目列表中“是否模板”列最多只显示一条“当前模板”。  
+- [ ] 当前模板行在历史列表中无法被删除，Tooltip 提示文案正确。  
+- [ ] 非模板项目仍然可以正常删除，并刷新列表。  
+- [ ] “从模板一键填充”功能始终使用当前模板数据，行为稳定。
+
+---
+
+## 14. 风险 AI 评估提示词模板未按分类过滤
+
+**故障现象**:  
+新建评估第一步的“一键 AI 评估”弹窗中，提示词模板下拉会列出所有激活的模板，包括工作量评估、成本估算、报表生成等非“风险分析”用途的模板。选择不合适的模板会导致提示词不匹配，评估结果乱、用户困惑。
+
+**根本原因**:  
+`GET /api/ai/prompts` 后端直接返回所有活跃模板（`aiPromptService.getAllPrompts()`），未按 `category` 做过滤；前端 `AIAssessmentModal` 也未做分类筛选。
+
+**修复方案**:
+
+1. 将 `/api/ai/prompts` 接口限定为“风险分析”用途：  
+   - 在 `aiController.getPrompts` 中改用 `aiPromptService.getPromptsByCategory('risk_analysis')`，只返回 `category = 'risk_analysis'` 及兼容别名下的模板。  
+   - 日志中记录 `category: 'risk_analysis'`，便于监控。  
+2. 保持模块梳理 & 工作量评估接口独立：  
+   - 模块梳理仍使用 `/api/ai/module-prompts`。  
+   - 工作量评估仍使用 `/api/ai/workload-prompts`。  
+   - 确保其它 AI 功能不依赖 `/api/ai/prompts`，避免被这次过滤影响。
+
+**关键文件**:
+- 后端：
+  - `server/controllers/aiController.js`
+  - `server/services/aiPromptService.js`（原有 `getPromptsByCategory` 复用）
+- 前端：
+  - `frontend/ppa_frontend/src/services/assessment/index.ts`
+  - `frontend/ppa_frontend/src/pages/Assessment/components/AIAssessmentModal.tsx`
+
+**验证清单**:
+- [ ] 在模型配置中创建多个不同分类的提示词模板，仅将部分设置为 `风险分析 (risk_analysis)`。  
+- [ ] 新建评估第一步打开“一键 AI 评估”，模板下拉只出现风险分析类模板。  
+- [ ] 模块梳理与工作量评估使用的模板列表不受影响。  
+- [ ] 选择风险分析模板进行评估时，返回的风险项评分结构符合预期。
+
+---

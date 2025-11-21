@@ -9,12 +9,14 @@ const { internalError } = require('../utils/errors');
 async function getPrompts(req, res, next) {
   const startedAt = Date.now();
   try {
-    const prompts = await aiPromptService.getAllPrompts();
+    // 仅获取“风险分析”类别的提示词模板，用于风险 AI 评估
+    const prompts = await aiPromptService.getPromptsByCategory('risk_analysis');
 
     const durationMs = Date.now() - startedAt;
 
     logger.info('提示词查询成功', {
       route: 'GET /api/ai/prompts',
+      category: 'risk_analysis',
       count: prompts.length,
       durationMs,
     });

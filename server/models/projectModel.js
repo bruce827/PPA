@@ -62,6 +62,21 @@ const getAllProjects = () => {
   });
 };
 
+// 获取所有项目（包含模板和正式项目）
+const getAllProjectsIncludingTemplates = () => {
+  return new Promise((resolve, reject) => {
+    const db = getDatabase();
+    db.all(
+      "SELECT id, name, description, is_template, final_total_cost, final_risk_score, final_workload_days, created_at FROM projects ORDER BY created_at DESC",
+      [],
+      (err, rows) => {
+        if (err) reject(err);
+        else resolve(rows);
+      }
+    );
+  });
+};
+
 const getAllTemplates = () => {
   return new Promise((resolve, reject) => {
     const db = getDatabase();
@@ -72,6 +87,21 @@ const getAllTemplates = () => {
         if (err) reject(err);
         else resolve(rows);
       }
+    );
+  });
+};
+
+// 清除所有项目的模板标记
+const clearAllTemplateFlags = () => {
+  return new Promise((resolve, reject) => {
+    const db = getDatabase();
+    db.run(
+      "UPDATE projects SET is_template = 0 WHERE is_template = 1",
+      [],
+      function (err) {
+        if (err) reject(err);
+        else resolve({ updated: this.changes });
+      },
     );
   });
 };
@@ -126,7 +156,9 @@ module.exports = {
   createProject,
   getProjectById,
   getAllProjects,
+  getAllProjectsIncludingTemplates,
   getAllTemplates,
+  clearAllTemplateFlags,
   updateProject,
   deleteProject
 };

@@ -7,6 +7,11 @@ const calculationService = require('./calculationService');
 const createProject = async (projectData) => {
   const { name, description, is_template, assessmentData } = projectData;
 
+  // 若当前保存为模板，先清除其他项目上的模板标记，确保全局唯一
+  if (is_template) {
+    await projectModel.clearAllTemplateFlags();
+  }
+
   // 执行完整计算
   const calculation = await calculationService.calculateProjectCost(assessmentData);
 
@@ -30,6 +35,11 @@ const createProject = async (projectData) => {
  */
 const updateProject = async (id, projectData) => {
   const { name, description, is_template, assessmentData } = projectData;
+
+  // 若当前更新为模板，先清除其他项目上的模板标记，确保全局唯一
+  if (is_template) {
+    await projectModel.clearAllTemplateFlags();
+  }
 
   // 执行完整计算
   const calculation = await calculationService.calculateProjectCost(assessmentData);
@@ -70,6 +80,13 @@ const getAllProjects = async () => {
 };
 
 /**
+ * 获取所有项目（包含模板和正式项目）
+ */
+const getAllProjectsIncludingTemplates = async () => {
+  return await projectModel.getAllProjectsIncludingTemplates();
+};
+
+/**
  * 获取所有模板
  */
 const getAllTemplates = async () => {
@@ -88,6 +105,7 @@ module.exports = {
   updateProject,
   getProjectById,
   getAllProjects,
+  getAllProjectsIncludingTemplates,
   getAllTemplates,
   deleteProject
 };
