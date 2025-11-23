@@ -104,7 +104,7 @@ async function record(agent, name, method, url, exec, noteFn) {
     maintenance_months: 2,
     maintenance_headcount: 1,
     maintenance_daily_cost: 1800,
-    risk_items: [{ cost: 3 }],
+    risk_cost_items: [{ cost: 3 }],
   };
 
   let roleId;

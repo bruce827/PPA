@@ -151,7 +151,7 @@ POST /api/calculate
     "maintenance_months": 1,
     "maintenance_headcount": 2,
     "maintenance_daily_cost": 1600,
-    "risk_items": [{"cost": 2.5}]
+    "risk_cost_items": [{"description": "投标保证金", "cost": 2.5}]
 }
 ```
 
@@ -207,7 +207,7 @@ POST /api/calculate
 
 导出实现细节：
 
-- 数据来源：`assessment_details_json`（包含 `calculation_snapshot/role_costs/travel_costs/maintenance/risk_items` 等）
+- 数据来源：`assessment_details_json`（包含 `calculation_snapshot/role_costs/travel_costs/maintenance/risk_cost_items` 等）
 - 内部版包含 6 个工作表：`Summary/角色成本明细/差旅成本明细/维护成本/风险评估明细/Rating Factor 说明`
 - 对外版包含 2 个工作表：`项目概览/模块报价明细`，将总成本按模块角色成本比例分摊
 - 元数据与日志：
@@ -252,7 +252,7 @@ POST /api/projects
 2. 工作量计算：各角色天数汇总 × `delivery_factor` → 工作量；成本 = 角色天数 × 单价（万元） × 各倍率（delivery/scope/tech） × rating_factor。
 3. 差旅成本：`travel_months * travel_headcount * SUM(active travel_cost_per_month)` （转换万元）。
 4. 维护成本：`maintenance_months * maintenance_headcount * WORK_DAYS_PER_MONTH * daily_cost`。
-5. 风险成本：直接累加 `risk_items.cost`（万元）。
+5. 风险成本：直接累加 `risk_cost_items.cost`（万元），不再乘评分因子。
 
 ### 错误处理
 

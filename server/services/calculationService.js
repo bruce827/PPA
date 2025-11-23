@@ -83,8 +83,8 @@ const calculateProjectCost = async (assessmentData) => {
   const maintenanceDailyCost = Number(assessmentData.maintenance_daily_cost || DEFAULTS.MAINTENANCE_DAILY_COST);
   const maintenanceCost = maintenanceWorkload * (maintenanceDailyCost / 10000);
 
-  // 3.3 风险成本
-  const riskCost = (assessmentData.risk_items || [])
+  // 3.3 风险成本（不受评分因子影响）
+  const riskCost = (assessmentData.risk_cost_items || [])
     .reduce((sum, item) => sum + Number(item.cost || 0), 0);
 
   // 4. 汇总
