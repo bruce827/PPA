@@ -19,6 +19,7 @@
 7. [@ant-design/charts 图表配置问题](#7-ant-designcharts-图表配置问题)
 8. [AntD v5 组件用法警告（Assessment）](#8-antd-v5-组件用法警告assessment)
 9. [ProFormList 误用 recordCreatorProps 警告](#9-proformlist-误用-recordcreatorprops-警告)
+10. [AI 风险评估结果为空时的提示优化](#10-ai-风险评估结果为空时的提示优化)
 
 ---
 
@@ -195,6 +196,92 @@ actionRef.current?.addEditRecord?.({
 
 **相关文件**:
 - `frontend/ppa_frontend/src/pages/Configuration/Config.tsx` - RoleManagement, TravelCostManagement 组件
+
+---
+
+## 10. AI 风险评估结果为空时的提示优化
+
+### 10.1 “开始 AI 评估”在模型返回空结果时直接报错
+
+**故障现象**:  
+
+- 在“新建项目评估”页面点击“开始 AI 评估”按钮（`/assessment/New.tsx` → `AIAssessmentModal`）时：
+  - 豆包、通义千问等模型通常会返回带有多条 `risk_scores` 的结果；
+  - 智谱 GLM、腾讯云混元等模型在项目文档信息不足时，会返回：
+    ```json
+    {
+      "risk_scores": [],
+      "overall_suggestion": "因未提供项目信息，暂无法进行有效风险评估。",
+      "missing_risks": []
+    }
+    ```
+  - 旧逻辑中，前端在检测到 `risk_scores` 为空时直接抛出错误：
+    ```ts
+    if (!effectiveResult?.risk_scores || effectiveResult.risk_scores.length === 0) {
+      throw new Error('AI响应格式不正确：缺少风险评分数据');
+    }
+    ```
+  - 用户看到的是红色错误提示“AI 响应格式不正确”，而不是更符合实际的“模型没有给出任何风险项”提示。
+
+**根本原因**:  
+
+- 前端将“模型确实返回了合法 JSON，但 `risk_scores` 为空”的情况，与“后端解析失败 / 返回格式错误”的情况混为一谈。
+- 对于 GLM、混元这类在信息不足时选择返回空列表而不是编造结果的模型，这种处理方式显得过于苛刻，导致用户误以为系统出错。
+
+**修复方案**:  
+
+- 文件：`frontend/ppa_frontend/src/pages/Assessment/components/AIAssessmentModal.tsx`
+- 在处理 `assessRiskWithAI` 返回值的逻辑中，对“空结果”进行软处理，而不是直接抛错：
+
+```ts
+const serviceData = result.data || {};
+const parsedResult: AssessmentResult | undefined = serviceData.parsed;
+
+let effectiveResult: AssessmentResult | null = null;
+if (parsedResult?.risk_scores?.length) {
+  effectiveResult = parsedResult;
+} else if (serviceData.raw_response) {
+  effectiveResult = parseAIResponse(serviceData.raw_response);
+} else if (
+  parsedResult &&
+  Array.isArray(parsedResult.risk_scores) &&
+  parsedResult.risk_scores.length === 0
+) {
+  // 后端已解析出合法结构，但 risk_scores 为空
+  effectiveResult = parsedResult;
+}
+
+if (!effectiveResult?.risk_scores || effectiveResult.risk_scores.length === 0) {
+  setAssessmentResult({
+    risk_scores: [],
+    missing_risks: effectiveResult?.missing_risks,
+    overall_suggestion:
+      effectiveResult?.overall_suggestion ||
+      '模型未返回任何风险评分，请检查文档内容或提示词配置。',
+    confidence: effectiveResult?.confidence,
+  });
+  setLatestModel(serviceData.model_used || selectedPrompt?.model_hint || null);
+  messageApi.warning('AI评估完成，但未返回任何风险评分。');
+  return;
+}
+
+setAssessmentResult(effectiveResult);
+setLatestModel(serviceData.model_used || selectedPrompt?.model_hint || null);
+messageApi.success('AI评估完成');
+```
+
+**效果**:  
+
+- 对于返回非空 `risk_scores` 的模型（豆包、通义千问等），行为保持不变。
+- 对于 GLM、混元等在信息不足时返回空列表的模型：
+  - 前端不再将其视为“格式错误”，不会抛异常终止流程；
+  - Modal 中仍可展示模型给出的 `overall_suggestion` 等文本；
+  - 通过 `message.warning` 给出黄底提示：
+    > “AI评估完成，但未返回任何风险评分。”
+  - 用户可以由此判断需要补充“项目文档”或调整提示词，而不是误以为系统故障。
+
+**相关文件**:
+- `frontend/ppa_frontend/src/pages/Assessment/components/AIAssessmentModal.tsx`
 
 ---
 

@@ -1,8 +1,7 @@
 const crypto = require('crypto');
 const aiPromptService = require('./aiPromptService');
 const aiModelModel = require('../models/aiModelModel');
-const openaiProvider = require('../providers/ai/openaiProvider');
-const doubaoProvider = require('../providers/ai/doubaoProvider');
+const { selectProvider } = require('../providers/ai/providerSelector');
 const aiAssessmentLogModel = require('../models/aiAssessmentLogModel');
 const aiFileLogger = require('./aiFileLogger');
 const logger = require('../utils/logger');
@@ -34,7 +33,7 @@ function previewText(text, max = 1200) {
 
 function sanitizeModelHint(modelHint) {
   if (modelHint && typeof modelHint === 'string') return modelHint;
-  return process.env.AI_PROVIDER_MODEL || 'gpt-4-turbo';
+  return '';
 }
 
 function extractContentFromProviderResponse(response) {
@@ -411,7 +410,8 @@ async function analyzeProjectModules(payload) {
     throw internalError('未配置当前可用的AI模型，请在模型应用管理中设置');
   }
 
-  const selectedProvider = (currentModel?.provider || 'openai').toLowerCase();
+  const providerLabel = currentModel?.provider || 'openai-compatible';
+  const { impl: providerImpl, key: providerKey } = selectProvider(providerLabel);
   const modelFromDb = currentModel?.model_name;
   const apiHostFromDb = currentModel?.api_host;
   const apiKeyFromDb = currentModel?.api_key;
@@ -435,10 +435,18 @@ async function analyzeProjectModules(payload) {
     api_key: apiKeyFromDb,
   };
 
+  if (!providerParams.model) {
+    throw validationError('当前模型未配置模型名称');
+  }
+  if (!providerParams.api_host || !providerParams.api_key) {
+    throw validationError('当前模型未配置完整的 API Host 或 API Key');
+  }
+
   try {
     logger.info('AI Module Provider 选择结果', {
-      selectedProvider,
-      apiHost: apiHostFromDb || process.env.AI_PROVIDER_BASE_URL,
+      providerLabel,
+      providerKey,
+      apiHost: apiHostFromDb,
       model: providerParams.model,
       providerTimeoutMs,
       serviceTimeoutMs,
@@ -447,11 +455,15 @@ async function analyzeProjectModules(payload) {
 
   let status = 'success';
   let errorMessage = '';
+  let providerRaw = null;
+  let providerContent = null;
+  let providerModelUsed = null;
 
   try {
-    const providerCall = selectedProvider.includes('doubao') || selectedProvider.includes('volc')
-      ? doubaoProvider.createRiskAssessment({ ...providerParams, timeoutMs: providerTimeoutMs })
-      : openaiProvider.createRiskAssessment({ ...providerParams, timeoutMs: providerTimeoutMs });
+    const providerCall = providerImpl.createRiskAssessment({
+      ...providerParams,
+      timeoutMs: providerTimeoutMs,
+    });
 
     const providerResult = await Promise.race([
       providerCall,
@@ -460,25 +472,28 @@ async function analyzeProjectModules(payload) {
       }),
     ]);
 
+    providerModelUsed = providerResult.model || providerParams.model;
     const rawSource = providerResult.data || providerResult;
+    providerRaw = rawSource;
     const rawContent = extractContentFromProviderResponse(rawSource);
+    providerContent = typeof rawContent === 'string' ? rawContent : JSON.stringify(rawContent);
     const parsed = parseProviderResult(rawSource);
 
     const durationMs = providerResult.durationMs || 0;
     await logAssessment({
       promptId,
-      modelUsed: providerResult.model || providerParams.model,
+      modelUsed: providerModelUsed,
       requestHash,
       durationMs,
       status,
     });
 
     // 记录响应回参（裁剪后的预览）
-    try {
-      const modules = Array.isArray(parsed?.modules) ? parsed.modules : [];
-      logger.info('AI 模块梳理响应', {
-        promptId,
-        model: providerResult.model || providerParams.model,
+      try {
+        const modules = Array.isArray(parsed?.modules) ? parsed.modules : [];
+        logger.info('AI 模块梳理响应', {
+          promptId,
+          model: providerModelUsed,
         durationMs,
         rawLength: ensureString(rawContent).length,
         rawPreview: previewText(rawContent, 1200),
@@ -494,8 +509,8 @@ async function analyzeProjectModules(payload) {
         route: '/api/ai/analyze-project-modules',
         requestHash,
         promptTemplateId: String(promptId),
-        modelProvider: selectedProvider,
-        modelName: providerResult.model || providerParams.model,
+        modelProvider: providerLabel,
+        modelName: providerModelUsed,
         status: 'success',
         durationMs,
         providerTimeoutMs,
@@ -507,10 +522,14 @@ async function analyzeProjectModules(payload) {
           description,
           final_prompt: promptText,
         },
-        responseRaw: typeof rawContent === 'string' ? rawContent : JSON.stringify(rawContent),
-        responseParsed: { project_analysis: parsed.project_analysis || '', modules: parsed.modules || [] },
+        responseRaw: JSON.stringify(providerRaw),
+        responseParsed: {
+          project_analysis: parsed.project_analysis || '',
+          modules: parsed.modules || [],
+          _raw_text: providerContent,
+        },
         notesLines: [
-          `[provider] ${selectedProvider} model=${providerResult.model || providerParams.model}`,
+          `[provider] ${providerLabel} model=${providerModelUsed}`,
           `[timing] durationMs=${durationMs} providerTimeoutMs=${providerTimeoutMs} serviceTimeoutMs=${serviceTimeoutMs}`,
           `[counts] modules=${Array.isArray(parsed.modules) ? parsed.modules.length : 0}`,
         ],
@@ -520,8 +539,8 @@ async function analyzeProjectModules(payload) {
     return {
       project_analysis: parsed.project_analysis || '',
       modules: parsed.modules || [],
-      raw_response: typeof rawContent === 'string' ? rawContent : JSON.stringify(rawContent),
-      model_used: providerResult.model || providerParams.model,
+      raw_response: providerContent || (providerRaw ? JSON.stringify(providerRaw) : ''),
+      model_used: providerModelUsed || providerParams.model,
       timestamp: new Date().toISOString(),
       duration_ms: durationMs,
     };
@@ -532,7 +551,7 @@ async function analyzeProjectModules(payload) {
     const durationMs = 0;
     await logAssessment({
       promptId,
-      modelUsed: sanitizeModelHint(currentModel?.model_name),
+      modelUsed: providerModelUsed || sanitizeModelHint(currentModel?.model_name),
       requestHash,
       durationMs,
       status,
@@ -546,8 +565,8 @@ async function analyzeProjectModules(payload) {
         route: '/api/ai/analyze-project-modules',
         requestHash,
         promptTemplateId: String(promptId),
-        modelProvider: selectedProvider,
-        modelName: providerParams.model,
+        modelProvider: providerLabel,
+        modelName: providerModelUsed || providerParams.model,
         status,
         durationMs: 0,
         providerTimeoutMs,
@@ -559,8 +578,8 @@ async function analyzeProjectModules(payload) {
           description,
           final_prompt: promptText,
         },
-        responseRaw: undefined,
-        responseParsed: undefined,
+        responseRaw: providerRaw ? JSON.stringify(providerRaw) : undefined,
+        responseParsed: providerContent ? { _raw_text: providerContent } : undefined,
         notesLines: [
           `[error] ${error.message}`,
         ],

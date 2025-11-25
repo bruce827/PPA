@@ -1,8 +1,7 @@
 const crypto = require('crypto');
 const aiPromptService = require('./aiPromptService');
 const aiModelModel = require('../models/aiModelModel');
-const openaiProvider = require('../providers/ai/openaiProvider');
-const doubaoProvider = require('../providers/ai/doubaoProvider');
+const { selectProvider } = require('../providers/ai/providerSelector');
 const aiAssessmentLogModel = require('../models/aiAssessmentLogModel');
 const aiFileLogger = require('./aiFileLogger');
 const logger = require('../utils/logger');
@@ -102,7 +101,7 @@ function sanitizeModelHint(modelHint) {
   if (modelHint && typeof modelHint === 'string') {
     return modelHint;
   }
-  return process.env.AI_PROVIDER_MODEL || 'gpt-4-turbo';
+  return '';
 }
 
 function extractContentFromProviderResponse(response) {
@@ -193,7 +192,13 @@ function ensureRiskScores(parsed) {
 
   const normalized = normalizeRiskItems(riskArray);
   if (!normalized || normalized.length === 0) {
-    throw unprocessableError('AI 响应缺少 risk_scores');
+    return {
+      risk_scores: [],
+      missing_risks: [],
+      overall_suggestion: ensureString(overallSuggestion, ''),
+      confidence: undefined,
+      _empty: true,
+    };
   }
 
   // 其他字段的宽松映射
@@ -316,7 +321,13 @@ function parseProviderResult(rawResponse) {
       }
 
       logger.warn('解析 AI 文本响应失败', { reason: '无法提取风险评分' });
-      throw unprocessableError('AI 响应不是有效 JSON');
+      return {
+        risk_scores: [],
+        missing_risks: [],
+        overall_suggestion: '',
+        confidence: undefined,
+        _empty: true,
+      };
     }
   }
 
@@ -339,7 +350,10 @@ async function assessRisk(payload) {
     current_scores: formatScores(currentScores),
   };
 
-  const promptContent = applyTemplate(promptDefinition.content, templateVariables);
+  const basePromptContent = applyTemplate(promptDefinition.content, templateVariables);
+  const promptContent = document
+    ? `${basePromptContent}\n\n项目文档：\n${ensureString(document)}`
+    : basePromptContent;
 
   const requestHash = crypto
     .createHash('sha256')
@@ -355,7 +369,8 @@ async function assessRisk(payload) {
     currentModel = null;
   }
 
-  const selectedProvider = (currentModel?.provider || 'openai').toLowerCase();
+  const providerLabel = currentModel?.provider || 'openai-compatible';
+  const { impl: providerImpl, key: providerKey } = selectProvider(providerLabel);
   const modelFromDb = currentModel?.model_name;
   const apiHostFromDb = currentModel?.api_host;
   const apiKeyFromDb = currentModel?.api_key;
@@ -375,11 +390,19 @@ async function assessRisk(payload) {
     api_key: apiKeyFromDb,
   };
 
+  if (!providerParams.model) {
+    throw validationError('当前模型未配置模型名称');
+  }
+  if (!providerParams.api_host || !providerParams.api_key) {
+    throw validationError('当前模型未配置完整的 API Host 或 API Key');
+  }
+
   // 记录选用的 Provider 与关键上下文（不记录密钥）
   try {
     logger.info('AI Provider 选择结果', {
-      selectedProvider,
-      apiHost: apiHostFromDb || process.env.AI_PROVIDER_BASE_URL,
+      providerLabel,
+      providerKey,
+      apiHost: apiHostFromDb,
       model: providerParams.model,
       providerTimeoutMs,
       serviceTimeoutMs,
@@ -391,11 +414,15 @@ async function assessRisk(payload) {
   const startedAt = Date.now();
   let status = 'success';
   let errorMessage = null;
+  let providerRaw = null;
+  let providerContent = null;
+  let providerModelUsed = null;
 
   try {
-    const providerCall = selectedProvider.includes('doubao') || selectedProvider.includes('volc')
-      ? doubaoProvider.createRiskAssessment({ ...providerParams, timeoutMs: providerTimeoutMs })
-      : openaiProvider.createRiskAssessment({ ...providerParams, timeoutMs: providerTimeoutMs });
+    const providerCall = providerImpl.createRiskAssessment({
+      ...providerParams,
+      timeoutMs: providerTimeoutMs,
+    });
 
     const providerResult = await Promise.race([
       providerCall,
@@ -403,20 +430,23 @@ async function assessRisk(payload) {
         setTimeout(() => reject(timeoutError('AI 调用超时')), serviceTimeoutMs);
       }),
     ]);
+    providerModelUsed = providerResult.model || providerParams.model;
     const rawSource = providerResult.data || providerResult;
+    providerRaw = rawSource;
     const rawContent = extractContentFromProviderResponse(rawSource);
+    providerContent = typeof rawContent === 'string' ? rawContent : JSON.stringify(rawContent);
     const parsed = parseProviderResult(rawSource);
 
     const durationMs = Date.now() - startedAt;
     logger.info('AI 风险评估成功', {
       promptId,
       requestHash,
-      model: providerResult.model || providerParams.model,
+      model: providerModelUsed,
       durationMs,
     });
     await logAssessment({
       promptId,
-      modelUsed: providerResult.model || providerParams.model,
+      modelUsed: providerModelUsed,
       requestHash,
       durationMs,
       status,
@@ -429,8 +459,8 @@ async function assessRisk(payload) {
         route: '/api/ai/assess-risk',
         requestHash,
         promptTemplateId: String(promptId),
-        modelProvider: selectedProvider,
-        modelName: providerResult.model || providerParams.model,
+        modelProvider: providerLabel,
+        modelName: providerModelUsed,
         status: 'success',
         durationMs,
         providerTimeoutMs,
@@ -443,10 +473,13 @@ async function assessRisk(payload) {
           final_prompt: promptContent,
           extras: { currentRiskItems, currentScores },
         },
-        responseRaw: typeof rawContent === 'string' ? rawContent : JSON.stringify(rawContent),
-        responseParsed: parsed,
+        responseRaw: JSON.stringify(providerRaw),
+        responseParsed: {
+          ...parsed,
+          _raw_text: providerContent,
+        },
         notesLines: [
-          `[provider] ${selectedProvider} model=${providerResult.model || providerParams.model}`,
+          `[provider] ${providerLabel} model=${providerModelUsed}`,
           `[timing] durationMs=${durationMs} providerTimeoutMs=${providerTimeoutMs} serviceTimeoutMs=${serviceTimeoutMs}`,
           `[counts] risk_scores=${Array.isArray(parsed.risk_scores) ? parsed.risk_scores.length : 0}`,
         ],
@@ -469,12 +502,12 @@ async function assessRisk(payload) {
       requestHash,
       status,
       error: error.message,
-    });
+      });
 
     const durationMs = Date.now() - startedAt;
     await logAssessment({
       promptId,
-      modelUsed: providerParams.model,
+      modelUsed: providerModelUsed || providerParams.model,
       requestHash,
       durationMs,
       status,
@@ -488,8 +521,8 @@ async function assessRisk(payload) {
         route: '/api/ai/assess-risk',
         requestHash,
         promptTemplateId: String(promptId),
-        modelProvider: selectedProvider,
-        modelName: providerParams.model,
+        modelProvider: providerLabel,
+        modelName: providerModelUsed || providerParams.model,
         status,
         durationMs,
         providerTimeoutMs,
@@ -502,8 +535,8 @@ async function assessRisk(payload) {
           final_prompt: promptContent,
           extras: { currentRiskItems, currentScores },
         },
-        responseRaw: undefined,
-        responseParsed: undefined,
+        responseRaw: providerRaw ? JSON.stringify(providerRaw) : undefined,
+        responseParsed: providerContent ? { _raw_text: providerContent } : undefined,
         notesLines: [
           `[error] ${error.message}`,
         ],
@@ -558,7 +591,8 @@ async function normalizeRiskNames(payload) {
     currentModel = null;
   }
 
-  const selectedProvider = (currentModel?.provider || 'openai').toLowerCase();
+  const providerLabel = currentModel?.provider || 'openai-compatible';
+  const { impl: providerImpl, key: providerKey } = selectProvider(providerLabel);
   const modelFromDb = currentModel?.model_name;
   const apiHostFromDb = currentModel?.api_host;
   const apiKeyFromDb = currentModel?.api_key;
@@ -581,20 +615,33 @@ async function normalizeRiskNames(payload) {
     api_key: apiKeyFromDb,
   };
 
+  if (!providerParams.model) {
+    throw validationError('当前模型未配置模型名称');
+  }
+  if (!providerParams.api_host || !providerParams.api_key) {
+    throw validationError('当前模型未配置完整的 API Host 或 API Key');
+  }
+
   try {
     logger.info('AI Normalize Provider 选择结果', {
-      selectedProvider,
-      apiHost: apiHostFromDb || process.env.AI_PROVIDER_BASE_URL,
+      providerLabel,
+      providerKey,
+      apiHost: apiHostFromDb,
       model: providerParams.model,
       providerTimeoutMs,
       serviceTimeoutMs,
     });
   } catch (e) {}
 
+  let providerRaw = null;
+  let providerContent = null;
+  let providerModelUsed = null;
+
   try {
-    const providerCall = selectedProvider.includes('doubao') || selectedProvider.includes('volc')
-      ? doubaoProvider.createRiskAssessment({ ...providerParams, timeoutMs: providerTimeoutMs })
-      : openaiProvider.createRiskAssessment({ ...providerParams, timeoutMs: providerTimeoutMs });
+    const providerCall = providerImpl.createRiskAssessment({
+      ...providerParams,
+      timeoutMs: providerTimeoutMs,
+    });
 
     const providerResult = await Promise.race([
       providerCall,
@@ -603,14 +650,19 @@ async function normalizeRiskNames(payload) {
       }),
     ]);
 
+    providerModelUsed = providerResult.model || providerParams.model;
     const rawSource = providerResult.data || providerResult;
+    providerRaw = rawSource;
     const rawContent = extractContentFromProviderResponse(rawSource);
-    const parsed = ensureRiskScores(typeof rawContent === 'string' ? JSON.parse(cleanJsonCandidate(rawContent)) : rawSource);
+    providerContent = typeof rawContent === 'string' ? rawContent : JSON.stringify(rawContent);
+    const parsed = ensureRiskScores(
+      typeof rawContent === 'string' ? JSON.parse(cleanJsonCandidate(rawContent)) : rawSource
+    );
 
     const durationMs = providerResult.durationMs || 0;
     await logAssessment({
       promptId: 'normalize',
-      modelUsed: providerResult.model || providerParams.model,
+      modelUsed: providerModelUsed,
       requestHash,
       durationMs,
       status: 'success',
@@ -623,8 +675,8 @@ async function normalizeRiskNames(payload) {
         route: '/api/ai/normalize-risk-names',
         requestHash,
         promptTemplateId: 'normalize',
-        modelProvider: selectedProvider,
-        modelName: providerResult.model || providerParams.model,
+        modelProvider: providerLabel,
+        modelName: providerModelUsed,
         status: 'success',
         durationMs,
         providerTimeoutMs,
@@ -635,10 +687,13 @@ async function normalizeRiskNames(payload) {
           variables: { allowed_item_names, risk_scores },
           final_prompt: promptContent,
         },
-        responseRaw: typeof rawContent === 'string' ? rawContent : JSON.stringify(rawContent),
-        responseParsed: parsed,
+        responseRaw: JSON.stringify(providerRaw),
+        responseParsed: {
+          ...parsed,
+          _raw_text: providerContent,
+        },
         notesLines: [
-          `[provider] ${selectedProvider} model=${providerResult.model || providerParams.model}`,
+          `[provider] ${providerLabel} model=${providerModelUsed}`,
           `[timing] durationMs=${durationMs} providerTimeoutMs=${providerTimeoutMs} serviceTimeoutMs=${serviceTimeoutMs}`,
           `[counts] normalized_risk_scores=${Array.isArray(parsed.risk_scores) ? parsed.risk_scores.length : 0}`,
         ],
@@ -655,7 +710,7 @@ async function normalizeRiskNames(payload) {
   } catch (error) {
     await logAssessment({
       promptId: 'normalize',
-      modelUsed: sanitizeModelHint(modelFromDb),
+      modelUsed: providerModelUsed || sanitizeModelHint(modelFromDb),
       requestHash,
       durationMs: 0,
       status: error.statusCode === 504 ? 'timeout' : 'fail',
@@ -668,8 +723,8 @@ async function normalizeRiskNames(payload) {
         route: '/api/ai/normalize-risk-names',
         requestHash,
         promptTemplateId: 'normalize',
-        modelProvider: selectedProvider,
-        modelName: providerParams.model,
+        modelProvider: providerLabel,
+        modelName: providerModelUsed || providerParams.model,
         status: error.statusCode === 504 ? 'timeout' : 'fail',
         durationMs: 0,
         providerTimeoutMs,
@@ -680,8 +735,8 @@ async function normalizeRiskNames(payload) {
           variables: { allowed_item_names, risk_scores },
           final_prompt: promptContent,
         },
-        responseRaw: undefined,
-        responseParsed: undefined,
+        responseRaw: providerRaw ? JSON.stringify(providerRaw) : undefined,
+        responseParsed: providerContent ? { _raw_text: providerContent } : undefined,
         notesLines: [
           `[error] ${error.message}`,
         ],

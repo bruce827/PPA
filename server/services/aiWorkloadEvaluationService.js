@@ -1,8 +1,7 @@
 const crypto = require('crypto');
 const aiPromptService = require('./aiPromptService');
 const aiModelModel = require('../models/aiModelModel');
-const openaiProvider = require('../providers/ai/openaiProvider');
-const doubaoProvider = require('../providers/ai/doubaoProvider');
+const { selectProvider } = require('../providers/ai/providerSelector');
 const aiAssessmentLogModel = require('../models/aiAssessmentLogModel');
 const aiFileLogger = require('./aiFileLogger');
 const configModel = require('../models/configModel');
@@ -34,7 +33,7 @@ function applyTemplate(content, variables) {
 
 function sanitizeModelHint(modelHint) {
   if (modelHint && typeof modelHint === 'string') return modelHint;
-  return process.env.AI_PROVIDER_MODEL || 'gpt-4-turbo';
+  return '';
 }
 
 function extractContentFromProviderResponse(response) {
@@ -233,12 +232,23 @@ async function evaluateWorkload(payload) {
     roles: Array.isArray(roles) && roles.length > 0 ? roles.join(', ') : roleNames.join(', '),
   };
 
-  const promptText = applyTemplate(promptDefinition.content, variableMap);
+  const templateContent = promptDefinition?.content || '';
+  const containsDescToken = /\{\{\s*(desc|description)\s*\}\}/i.test(templateContent);
+  let promptText = applyTemplate(templateContent, variableMap);
+  if (!containsDescToken && variableMap.description) {
+    promptText = [
+      promptText,
+      '',
+      '【模块功能描述】',
+      ensureString(variableMap.description),
+    ].join('\n');
+  }
 
   // 选择 Provider
   let currentModel = null;
   try { currentModel = await aiModelModel.getCurrentModel(); } catch (e) { currentModel = null; }
-  const selectedProvider = (currentModel?.provider || 'openai').toLowerCase();
+  const providerLabel = currentModel?.provider || 'openai-compatible';
+  const { impl: providerImpl, key: providerKey } = selectProvider(providerLabel);
   const modelFromDb = currentModel?.model_name;
   const apiHostFromDb = currentModel?.api_host;
   const apiKeyFromDb = currentModel?.api_key;
@@ -261,10 +271,18 @@ async function evaluateWorkload(payload) {
     api_key: apiKeyFromDb,
   };
 
+  if (!providerParams.model) {
+    throw validationError('当前模型未配置模型名称');
+  }
+  if (!providerParams.api_host || !providerParams.api_key) {
+    throw validationError('当前模型未配置完整的 API Host 或 API Key');
+  }
+
   try {
     logger.info('AI Workload Provider 选择结果', {
-      selectedProvider,
-      apiHost: apiHostFromDb || process.env.AI_PROVIDER_BASE_URL,
+      providerLabel,
+      providerKey,
+      apiHost: apiHostFromDb,
       model: providerParams.model,
       providerTimeoutMs,
       serviceTimeoutMs,
@@ -273,25 +291,32 @@ async function evaluateWorkload(payload) {
 
   let status = 'success';
   let errorMessage = '';
+  let providerRaw = null;
+  let providerContent = null;
+  let providerModelUsed = null;
 
   try {
-    const providerCall = selectedProvider.includes('doubao') || selectedProvider.includes('volc')
-      ? doubaoProvider.createRiskAssessment({ ...providerParams, timeoutMs: providerTimeoutMs })
-      : openaiProvider.createRiskAssessment({ ...providerParams, timeoutMs: providerTimeoutMs });
+    const providerCall = providerImpl.createRiskAssessment({
+      ...providerParams,
+      timeoutMs: providerTimeoutMs,
+    });
 
     const providerResult = await Promise.race([
       providerCall,
       new Promise((_, reject) => setTimeout(() => reject(timeoutError('AI 调用超时')), serviceTimeoutMs)),
     ]);
 
+    providerModelUsed = providerResult.model || providerParams.model;
     const rawSource = providerResult.data || providerResult;
+    providerRaw = rawSource;
     const rawContent = extractContentFromProviderResponse(rawSource);
+    providerContent = typeof rawContent === 'string' ? rawContent : JSON.stringify(rawContent);
     const parsed = parseProviderResult(rawSource, configRoles);
 
     const durationMs = providerResult.durationMs || 0;
     await logAssessment({
       promptId,
-      modelUsed: providerResult.model || providerParams.model,
+      modelUsed: providerModelUsed,
       requestHash,
       durationMs,
       status,
@@ -304,8 +329,8 @@ async function evaluateWorkload(payload) {
         route: '/api/ai/evaluate-workload',
         requestHash,
         promptTemplateId: String(promptId),
-        modelProvider: selectedProvider,
-        modelName: providerResult.model || providerParams.model,
+        modelProvider: providerLabel,
+        modelName: providerModelUsed,
         status: 'success',
         durationMs,
         providerTimeoutMs,
@@ -320,10 +345,13 @@ async function evaluateWorkload(payload) {
           description,
           final_prompt: promptText,
         },
-        responseRaw: typeof rawContent === 'string' ? rawContent : JSON.stringify(rawContent),
-        responseParsed: parsed,
+        responseRaw: JSON.stringify(providerRaw),
+        responseParsed: {
+          ...parsed,
+          _raw_text: providerContent,
+        },
         notesLines: [
-          `[provider] ${selectedProvider} model=${providerResult.model || providerParams.model}`,
+          `[provider] ${providerLabel} model=${providerModelUsed}`,
           `[timing] durationMs=${durationMs} providerTimeoutMs=${providerTimeoutMs} serviceTimeoutMs=${serviceTimeoutMs}`,
           `[counts] roles=${configRoles.length}`,
         ],
@@ -332,8 +360,8 @@ async function evaluateWorkload(payload) {
 
     return {
       parsed,
-      raw_response: typeof rawContent === 'string' ? rawContent : JSON.stringify(rawContent),
-      model_used: providerResult.model || providerParams.model,
+      raw_response: providerContent || (providerRaw ? JSON.stringify(providerRaw) : ''),
+      model_used: providerModelUsed || providerParams.model,
       timestamp: new Date().toISOString(),
       duration_ms: durationMs,
     };
@@ -344,7 +372,7 @@ async function evaluateWorkload(payload) {
     const durationMs = 0;
     await logAssessment({
       promptId,
-      modelUsed: sanitizeModelHint(modelFromDb),
+      modelUsed: providerModelUsed || sanitizeModelHint(modelFromDb),
       requestHash,
       durationMs,
       status,
@@ -358,8 +386,8 @@ async function evaluateWorkload(payload) {
         route: '/api/ai/evaluate-workload',
         requestHash,
         promptTemplateId: String(promptId),
-        modelProvider: selectedProvider,
-        modelName: providerParams.model,
+        modelProvider: providerLabel,
+        modelName: providerModelUsed || providerParams.model,
         status,
         durationMs: 0,
         providerTimeoutMs,
@@ -374,8 +402,8 @@ async function evaluateWorkload(payload) {
           description,
           final_prompt: promptText,
         },
-        responseRaw: undefined,
-        responseParsed: undefined,
+        responseRaw: providerRaw ? JSON.stringify(providerRaw) : undefined,
+        responseParsed: providerContent ? { _raw_text: providerContent } : undefined,
         notesLines: [
           `[error] ${error.message}`,
         ],
@@ -390,4 +418,3 @@ async function evaluateWorkload(payload) {
 module.exports = {
   evaluateWorkload,
 };
-

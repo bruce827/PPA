@@ -417,6 +417,241 @@ curl -X POST http://localhost:3001/api/calculate \
 
 ---
 
+## 10. AI Provider 选择与 Gemini（Google）支持问题
+
+### 10.1 新增 Provider 后仍走旧 OpenAI 调用路径
+
+**故障现象**  
+
+- 在“模型应用管理”中新增 AI 模型配置（`provider=Google`），并设置为当前模型后：
+  - “新建项目评估”中的 **风险评估**、**模块梳理**、**工作量评估** 仍按 OpenAI 的调用格式请求；
+  - “测试连接”时，对接 Gemini 的配置返回 `400` 错误；
+  - 日志显示使用的是通用 `AI Provider`（OpenAI 风格），而不是专门的 Gemini 调用。
+
+**根本原因**  
+
+1. **Service 层写死使用 OpenAI Provider**
+   - `aiRiskAssessmentService.assessRisk()` / `normalizeRiskNames()`  
+   - `aiModuleAnalysisService.analyzeProjectModules()`  
+   - `aiWorkloadEvaluationService.evaluateWorkload()`  
+   - `aiTestService.testConnection()`  
+   以上函数内部均直接调用 `openaiProvider.createRiskAssessment(...)`，仅把 `provider` 作为日志标签，不参与实际 Provider 选择。
+
+2. **Gemini 接口与 OpenAI ChatCompletions 不兼容**
+   - OpenAI 兼容调用期望的是：
+     - URL：`https://api.openai.com/v1/chat/completions`
+     - Header：`Authorization: Bearer <api_key>`
+     - Body：`{ model, messages, response_format: { type: 'json_object' }, ... }`
+   - Gemini REST 调用则是：
+     - URL：`https://generativelanguage.googleapis.com/v1/models/{model}:generateContent?key=API_KEY`
+     - Body：`{ contents: [{ role: 'user', parts: [{ text }] }] }`
+   - 将 OpenAI 风格的 payload 直接 POST 到 Gemini 时，Google 返回 `400`，提示字段不兼容或路径错误。
+
+**修复方案**  
+
+1. **新增 Gemini 专用 Provider**
+   - 新文件：`server/providers/ai/geminiProvider.js`
+   - 关键行为：
+     - 使用 `https://generativelanguage.googleapis.com` 作为 `api_host` 基础地址；
+     - 拼接路径：`/v1/models/${model}:generateContent?key=${api_key}`；
+     - 构造请求体：
+       ```json
+       {
+         "contents": [
+           {
+             "role": "user",
+             "parts": [
+               { "text": "<system+prompt 拼接文本>" }
+             ]
+           }
+         ]
+       }
+       ```
+     - 将 Gemini 返回的结构转换为“OpenAI 伪兼容格式”：
+       - 提取 `candidates[0].content.parts[].text` 拼接为 `choices[0].message.content`；
+       - 封装 `usageMetadata` 到 `usage` 字段；
+       - 这样现有的解析逻辑（风险评分、模块梳理、工作量评估）无须修改即可复用。
+
+2. **统一 Provider 选择逻辑**
+   - 新文件：`server/providers/ai/providerSelector.js`
+   - 规则：
+     ```js
+     if (name.includes('google') || name.includes('gemini')) {
+       return { key: 'gemini', impl: geminiProvider };
+     }
+     // 其它一律使用 OpenAI 兼容实现（包括豆包等）
+     return { key: 'openai-compatible', impl: openaiProvider };
+     ```
+   - 说明：
+     - **目前只有 Google/Gemini 是特殊 Provider**；
+     - 豆包（`doubao` / `豆包`）暂时继续走 OpenAI 兼容路径（代码中已移除原先的 `doubaoProvider` 特殊分支），后续如需专用实现，可在此处再增加分支。
+
+3. **接入所有 AI Service**
+   - `server/services/aiWorkloadEvaluationService.js`
+     - 引入 `selectProvider`，根据当前模型的 `provider` 动态选择实现；
+     - 将原来的 `openaiProvider.createRiskAssessment(...)` 替换为 `providerImpl.createRiskAssessment(...)`；
+     - 日志增加 `providerKey` 字段，用于快速确认实际走的是哪类 Provider（`openai-compatible` / `gemini`）。
+   - `server/services/aiTestService.js`
+     - 测试连接时使用 `config.provider` 选择 Provider；
+     - 支持在“表单内临时测试配置”时，直接用表单中的 `provider` 决定走 OpenAI 还是 Gemini；
+     - 日志写入时记录 `providerKey(providerLabel)`，便于排查。
+   - `server/services/aiRiskAssessmentService.js`
+     - 风险评分与名称归一两个流程统一使用 `selectProvider`；
+     - 替换所有 `openaiProvider.createRiskAssessment(...)` 为 `providerImpl.createRiskAssessment(...)`；
+     - 修正日志中使用未定义变量 `selectedProvider` 的问题，统一使用 `providerLabel` / `providerKey`。
+   - `server/services/aiModuleAnalysisService.js`
+     - 模块梳理调用同样接入 `selectProvider`，使用 `providerImpl` 执行请求；
+     - 日志中输出 `providerKey`，便于区分是否走到了 Gemini。
+
+4. **前端表单提示优化**
+   - `frontend/ppa_frontend/src/pages/ModelConfig/Application/components/ModelForm.tsx`
+     - 将 `API Host` placeholder 从单一的 OpenAI 示例改为同时包含 Gemini 示例：  
+       `例如：https://api.openai.com/v1/chat/completions 或 https://generativelanguage.googleapis.com`
+     - 避免用户在配置 Google/Gemini 时误填为 OpenAI ChatCompletions URL。
+
+**配置指引（当前约定）**
+
+- 若使用 OpenAI 或其它 OpenAI 兼容服务：
+  - `provider`: `OpenAI` / 其它任意字符串（非 `Google` / `Gemini`）
+  - `api_host`: 完整 ChatCompletions URL（如 `https://api.openai.com/v1/chat/completions`）
+  - `model_name`: 对方支持的模型名（如 `gpt-4.1-mini`）
+  - `api_key`: 对应服务的 API Key
+
+- 若使用 Google Gemini：
+  - `provider`: **`Google`**（下拉已新增选项）
+  - `api_host`: `https://generativelanguage.googleapis.com`
+  - `model_name`: 如 `gemini-2.5-flash` / `gemini-2.5-pro` 等（可以通过 `ListModels` 接口确认）
+  - `api_key`: Google AI Studio / Gemini 的 API Key
+
+**影响范围**
+
+- 所有 AI 相关接口在选择当前模型后统一走 Provider 选择逻辑：
+  - 风险评估：`POST /api/ai/assess-risk`
+  - 风险名称归一：`POST /api/ai/normalize-risk-names`
+  - 模块梳理：`POST /api/ai/analyze-project-modules`
+  - 工作量评估：`POST /api/ai/evaluate-workload`
+  - 模型连接测试：`POST /api/config/ai-models/test` / `/test-temp`
+- 对现有 OpenAI 兼容配置无行为变化（依旧使用原来的 OpenAI Provider 实现）。
+
+**今后扩展建议**
+
+- 若后续引入新的非 OpenAI 兼容 Provider（如 Azure 特定协议、Anthropic 等）：
+  - 在 `server/providers/ai/` 下新增对应 Provider 实现；
+  - 在 `providerSelector.selectProvider` 中按 `provider` 值增加分支；
+  - 保持 Service 层仅依赖 `selectProvider`，避免再次出现“新增 Provider 但没接上”的问题。
+
+---
+
+## 11. AI 风险评估未注入项目文档导致部分模型返回空
+
+### 11.1 混元 / GLM 模型风险评估返回空结果
+
+**故障现象**  
+
+- 在“新建项目评估”中点击“开始 AI 评估”（`POST /api/ai/assess-risk`）时：
+  - 使用豆包、通义千问等模型时，能够返回包含多条 `risk_scores` 的结果；
+  - 切换到智谱 GLM（如 `glm-4.5-flash`）或腾讯混元（如 `hunyuan-turbos-latest`）时，模型返回：
+    ```json
+    {
+      "risk_scores": [],
+      "overall_suggestion": "因未提供项目信息，暂无法进行有效风险评估。",
+      "missing_risks": []
+    }
+    ```
+  - 之前版本会把这种情况当作“AI 响应不是有效 JSON”抛出 422，或在前端提示“AI 响应格式不正确：缺少风险评分数据”。
+
+**根本原因**  
+
+1. **项目文档未被注入到提示词中**
+   - 前端通过 `document` 字段提交“项目文档”内容（例如“写一个测试项目”或一长段 PRD 文本）；
+   - Service 层构造 prompt 时仅执行：
+     ```js
+     const promptContent = applyTemplate(promptDefinition.content, templateVariables);
+     ```
+   - `templateVariables` 中虽然包含 `document`，但实际模板 `promptDefinition.content` 中并未使用 `{{document}}` 占位符；
+   - 结果：**真正发给模型的 prompt 完全不包含项目文档**，只有一些通用风险分析指引和当前风险项列表；
+   - 豆包、通义千问在信息不足时会“大胆猜测”给出评分，而 GLM / 混元更保守，会明确提示“未提供项目信息，无法评估”，并返回 `risk_scores: []`。
+
+2. **解析层将“空结果”视为错误**
+   - `ensureRiskScores` 在解析后如果 `normalized.length === 0`，直接抛：
+     ```js
+     throw unprocessableError('AI 响应缺少 risk_scores');
+     ```
+   - 这一行为对所有模型统一，但对于像混元这种返回“没有可评估风险”的模型来说太严格。
+
+**修复方案**
+
+1. **风险评估统一注入项目文档**
+   - 文件：`server/services/aiRiskAssessmentService.js`
+   - 在 `assessRisk` 中，改造 prompt 拼接逻辑：
+     ```js
+     const promptDefinition = await aiPromptService.getPromptById(promptId);
+     const mergedVariables = buildVariableMap(promptDefinition, variables);
+
+     const templateVariables = {
+       ...mergedVariables,
+       document,
+       current_risk_items: formatRiskItems(currentRiskItems),
+       current_scores: formatScores(currentScores),
+     };
+
+     const basePromptContent = applyTemplate(promptDefinition.content, templateVariables);
+     const promptContent = document
+       ? `${basePromptContent}\n\n项目文档：\n${ensureString(document)}`
+       : basePromptContent;
+     ```
+   - 说明：
+     - 即使模板中没有写 `{{document}}`，后端也会在最终 prompt 末尾追加一段 `项目文档：\n<document>`；
+     - 这样所有 Provider（豆包、千问、GLM、混元、Gemini 等）都能看到完整的项目上下文，而不依赖模板是否使用了该变量。
+
+2. **解析层对空结果做“软处理”**
+   - 文件：`server/services/aiRiskAssessmentService.js`
+   - `ensureRiskScores`：
+     - 原逻辑：当无法从 JSON 中提取到任何风险项时，抛 `UnprocessableEntityError('AI 响应缺少 risk_scores')`；
+     - 现逻辑：
+       ```js
+       const normalized = normalizeRiskItems(riskArray);
+       if (!normalized || normalized.length === 0) {
+         return {
+           risk_scores: [],
+           missing_risks: [],
+           overall_suggestion: ensureString(overallSuggestion, ''),
+           confidence: undefined,
+           _empty: true,
+         };
+       }
+       ```
+   - `parseProviderResult`：
+     - 当从纯文本中也完全提取不到风险评分时，不再抛错，而是返回同样结构 `{ risk_scores: [], ... , _empty: true }`。
+
+3. **Controller / 前端配合**
+   - 后端：
+     - `assessRisk` 不再因为 `risk_scores` 为空而抛 422；
+     - 保持 200 返回，并在 `parsed._empty` 中标记“模型未给出任何风险项”；
+     - 日志中（`response.parsed.json`）保留 `_raw_text`，便于分析各模型原始输出。
+   - 前端（详见 `FRONTEND-BUGFIX-CONSOLIDATED.md`）：
+     - 在“AI 风险评估”弹窗中，如果 `risk_scores` 为空：
+       - 显示 warning 提示：“AI评估完成，但未返回任何风险评分。”；
+       - 仍展示模型给出的 `overall_suggestion`，不再把整个调用当作错误。
+
+**影响范围**
+
+- 接口：`POST /api/ai/assess-risk`。
+- 模型行为：
+  - 豆包 / 通义千问：现在也能真正基于 `document` 内容做评估，而不是仅靠模板指引；
+  - GLM / 混元：在提供足够详细的 `document` 时，将返回有效的 `risk_scores`；在信息确实不足时，会返回空列表，但调用被视为“成功 + 空结果”。
+- 日志：
+  - `server/logs/ai/risk/.../request.json` 中可以看到 `document` 已被拼入 `final_prompt`；
+  - `response.parsed.json` 中带有 `_empty` 与 `_raw_text` 便于针对不同模型调优提示词。
+
+**经验总结**
+
+- 对于需要“根据项目文档做判断”的 AI 能力，**必须保证文档内容实际进入 prompt**，不能只在 `variables` 对象里挂着。
+- 对于模型返回“无结果”的情况，应与“返回格式错误”区分对待：
+  - 无结果 → 业务层处理（提示用户信息不足或风险为 0），HTTP 200；
+  - 格式错误 / JSON 无法解析 → 422 或 500，提示需要调整提示词或 Provider 配置。
+
+
 **维护说明**: 本文档应随项目架构演进持续更新。当引入新的技术栈或重构架构时，应及时删除过时内容，添加新的最佳实践。
 
 ---
