@@ -104,16 +104,17 @@ Environment: development
 
 ## 📑 API 总览
 
-分类节点均挂载于 `/api` 前缀下。
+所有接口均挂载于 `/api` 前缀下，默认返回 JSON；错误由全局中间件统一处理（`ValidationError` → 400）。
 
 ### 健康检查
 
 | 方法 | 路径 | 描述 |
 | ---- | ---- | ---- |
-| GET | /api/health | 服务健康状态 |
-| GET | / | 根路径（返回健康信息） |
+| GET | /api/health | 返回服务健康状态及数据库连接检查结果 |
 
 ### 配置（Config）
+
+**角色 / 风险项 / 差旅**
 
 | 方法 | 路径 | 描述 |
 | ---- | ---- | ---- |
@@ -122,60 +123,88 @@ Environment: development
 | PUT | /api/config/roles/:id | 更新角色 |
 | DELETE | /api/config/roles/:id | 删除角色 |
 | GET | /api/config/risk-items | 获取风险评估项 |
-| POST | /api/config/risk-items | 创建风险评估项（含选项 JSON） |
+| POST | /api/config/risk-items | 创建风险评估项（支持 `options_json` 字符串） |
 | PUT | /api/config/risk-items/:id | 更新风险评估项 |
 | DELETE | /api/config/risk-items/:id | 删除风险评估项 |
 | GET | /api/config/travel-costs | 获取差旅成本配置 |
 | POST | /api/config/travel-costs | 创建差旅成本条目 |
 | PUT | /api/config/travel-costs/:id | 更新差旅成本条目 |
 | DELETE | /api/config/travel-costs/:id | 删除差旅成本条目 |
-| GET | /api/config/all | 聚合获取全部配置（roles/risk_items/travel_costs） |
 
-### 实时计算（Calculation）
+**聚合**
 
 | 方法 | 路径 | 描述 |
 | ---- | ---- | ---- |
-| POST | /api/calculate | 根据提交的评估表单数据实时计算成本与工作量 |
+| GET | /api/config/all | 一次性获取 roles / risk_items / travel_costs |
+
+**AI 模型配置**
+
+| 方法 | 路径 | 描述 |
+| ---- | ---- | ---- |
+| GET | /api/config/ai-models | 获取模型配置列表（当前优先，按创建时间倒序） |
+| GET | /api/config/ai-models/current | 获取当前启用模型 |
+| GET | /api/config/ai-models/:id | 获取模型详情 |
+| POST | /api/config/ai-models | 新增模型配置（需提供 provider/api_host/api_key/model_name 等必填字段） |
+| PUT | /api/config/ai-models/:id | 更新模型配置 |
+| DELETE | /api/config/ai-models/:id | 删除模型（当前启用的模型不能删除） |
+| POST | /api/config/ai-models/:id/set-current | 将指定模型设为当前使用 |
+| POST | /api/config/ai-models/:id/test | 使用数据库中的配置进行连通性测试，并记录状态 |
+| POST | /api/config/ai-models/test-temp | 使用请求体中的临时配置测试，不落库 |
+
+**提示词模板**
+
+| 方法 | 路径 | 描述 |
+| ---- | ---- | ---- |
+| GET | /api/config/prompts | 获取提示词模板列表（支持 `current/pageSize/category/is_system/is_active/search` 过滤） |
+| GET | /api/config/prompts/:id | 获取单个模板详情 |
+| POST | /api/config/prompts | 创建模板 |
+| PUT | /api/config/prompts/:id | 更新模板 |
+| DELETE | /api/config/prompts/:id | 删除模板（系统模板禁止删除） |
+| POST | /api/config/prompts/:id/copy | 复制模板（名称追加“(副本)”） |
+| POST | /api/config/prompts/:id/preview | 传入 `variable_values` 预览渲染后的提示词 |
+
+### 实时计算（Calculation）
+
+- `POST /api/calculate`：根据评估数据实时计算成本与工作量。请求体与项目保存时的 `assessmentData` 结构一致（角色单价单位为“元”），返回值包装在 `data` 字段中。
 
 请求示例（简化）：
 
 ```json
-POST /api/calculate
 {
-    "risk_scores": {"架构": 15, "流程": 10},
-    "roles": [{"role_name": "前端", "unit_price": 1800}],
-    "development_workload": [{"delivery_factor": 1, "前端": 20}],
-    "integration_workload": [{"delivery_factor": 1.1, "前端": 8}],
-    "travel_months": 2,
-    "travel_headcount": 3,
-    "maintenance_months": 1,
-    "maintenance_headcount": 2,
-    "maintenance_daily_cost": 1600,
-    "risk_items": [{"cost": 2.5}]
+  "risk_scores": {"架构": 15, "流程": 10},
+  "roles": [{"role_name": "前端", "unit_price": 1800}],
+  "development_workload": [{"delivery_factor": 1, "前端": 20}],
+  "integration_workload": [{"delivery_factor": 1.1, "前端": 8}],
+  "travel_months": 2,
+  "travel_headcount": 3,
+  "maintenance_months": 1,
+  "maintenance_headcount": 2,
+  "maintenance_daily_cost": 1600,
+  "risk_items": [{"cost": 2.5}]
 }
 ```
 
-响应示例（字段单位：金额单位“万元”，单价输入为“元”）：
+响应示例（金额单位为“万元”）：
 
 ```json
 {
-    "data": {
-        "software_dev_cost": 12.35,
-        "system_integration_cost": 3.27,
-        "travel_cost": 6.48,
-        "maintenance_cost": 0.69,
-        "risk_cost": 2.5,
-        "total_cost_exact": 25.29,
-        "total_cost": 25,
-        "software_dev_workload_days": 20,
-        "system_integration_workload_days": 8,
-        "maintenance_workload_days": 43,
-        "total_workload_days": 71,
-        "risk_score": 25,
-        "rating_factor": 1.08,
-        "rating_ratio": 0.25,
-        "risk_max_score": 100
-    }
+  "data": {
+    "software_dev_cost": 12.35,
+    "system_integration_cost": 3.27,
+    "travel_cost": 6.48,
+    "maintenance_cost": 0.69,
+    "risk_cost": 2.5,
+    "total_cost_exact": 25.29,
+    "total_cost": 25,
+    "software_dev_workload_days": 20,
+    "system_integration_workload_days": 8,
+    "maintenance_workload_days": 43,
+    "total_workload_days": 71,
+    "risk_score": 25,
+    "rating_factor": 1.08,
+    "rating_ratio": 0.25,
+    "risk_max_score": 100
+  }
 }
 ```
 
@@ -183,58 +212,72 @@ POST /api/calculate
 
 | 方法 | 路径 | 描述 |
 | ---- | ---- | ---- |
-| GET | /api/projects | 获取项目列表（非模板） |
-| GET | /api/projects?is_template=true | 使用查询参数获取模板列表（等价于 /api/templates） |
-| GET | /api/projects/:id | 获取单个项目 |
-| POST | /api/projects | 创建项目（含评估详情 JSON） |
-| PUT | /api/projects/:id | 更新项目 |
-| DELETE | /api/projects/:id | 删除项目 |
-| GET | /api/templates | 获取所有模板（路由与 projects 共用） |
+| GET | /api/projects | 获取项目与模板列表（未传 `is_template` 时返回全部） |
+| GET | /api/projects?is_template=true | 仅获取模板列表（`is_template=false` 仅返回正式项目，非法值返回 400） |
+| GET | /api/templates | 模板列表别名路由，等价于上方 `is_template=true` |
+| GET | /api/projects/:id | 获取单个项目/模板详情 |
+| POST | /api/projects | 创建项目或模板（服务端会重新计算成本并持久化） |
+| PUT | /api/projects/:id | 更新项目或模板（会重新计算并覆盖） |
+| DELETE | /api/projects/:id | 删除项目或模板 |
 | GET | /api/projects/:id/export/pdf | 导出 PDF 报告 |
-| GET | /api/projects/:id/export/excel | 导出 Excel 报告（支持 internal/external 双版本） |
+| GET | /api/projects/:id/export/excel | 导出 Excel，`version=internal | external`（默认 internal） |
 
-#### 导出 Excel（FR-6）
-
-- 接口：`GET /api/projects/:id/export/excel`
-- 查询参数：
-  - `version`: 导出版本，`internal`（内部版，默认）或 `external`（对外版）
-- 成功响应：`200` + Excel 文件流
-  - `Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet`
-  - `Content-Disposition: attachment; filename={项目名称}_{version}_{YYYYMMDD_HHmmss}.xlsx`
-- 失败响应示例：
-  - 项目不存在：`404 { "error": "Project not found", "project_id": ":id" }`
-  - 非法版本：`400 { "error": "Invalid export version", "project_id": ":id" }`
-
-导出实现细节：
-
-- 数据来源：`assessment_details_json`（包含 `calculation_snapshot/role_costs/travel_costs/maintenance/risk_items` 等）
-- 内部版包含 6 个工作表：`Summary/角色成本明细/差旅成本明细/维护成本/风险评估明细/Rating Factor 说明`
-- 对外版包含 2 个工作表：`项目概览/模块报价明细`，将总成本按模块角色成本比例分摊
-- 元数据与日志：
-  - 工作簿属性写入 `creator/created/modified`
-  - 导出日志写入 `server/logs/export/{YYYY-MM-DD}/{HHmmss}_{projectId}/`（可通过 `EXPORT_LOG_ENABLED/EXPORT_LOG_DIR` 控制）
-  - 日志结构与字段说明详见 `docs/prd/export-spec.md`
-
-创建项目示例：
+请求体说明（创建/更新）：
 
 ```json
-POST /api/projects
 {
-    "name": "Demo评估A",
-    "description": "用于报价初步评估",
-    "is_template": 0,
-    "final_total_cost": 25.29,
-    "final_risk_score": 25,
-    "final_workload_days": 71,
-    "assessment_details_json": "{\"roles\":[],\"risk_scores\":{}}"
+  "name": "Demo评估A",
+  "description": "用于报价初步评估",
+  "is_template": 0,
+  "assessmentData": { "...实时评估入参，与 /api/calculate 相同结构..." }
 }
 ```
 
-响应：
+- 当 `is_template` 为真时，会先清除其他记录的模板标记，保持唯一模板。
+- 成功返回 `{"id": number}` 或更新/删除的变更计数；成本、风险分等最终值由后端计算后写入数据库。
 
-```json
-{"id": 12}
-```
+导出 Excel（FR-6）：
+
+- `GET /api/projects/:id/export/excel?version=internal|external`，成功返回文件流（`Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet`，`Content-Disposition: attachment; filename={项目名称}_{version}_{YYYYMMDD_HHmmss}.xlsx`）。
+- 失败示例：不存在 → 404 `{ "error": "Project not found", "project_id": ":id" }`；非法版本 → 400 `{ "error": "Invalid export version", ... }`。
+- 数据源：`assessment_details_json`（包含 `calculation_snapshot/role_costs/travel_costs/maintenance/risk_items` 等）；内部版 6 个工作表，外部版 2 个工作表；导出日志落地 `server/logs/export/{YYYY-MM-DD}/{HHmmss}_{projectId}/`。
+
+### Dashboard 分析
+
+| 方法 | 路径 | 描述 / 返回结构 |
+| ---- | ---- | ---- |
+| GET | /api/dashboard/summary | `{ totalProjects, averageCost }` |
+| GET | /api/dashboard/risk-distribution | 风险分布数组 `{ final_risk_score, count }` |
+| GET | /api/dashboard/cost-composition | 汇总成本 `{ softwareDevelopment, systemIntegration, operations, travel, risk }`，从 `assessment_details_json` 解析 |
+| GET | /api/dashboard/role-cost-distribution | 各角色成本映射 `{ [roleName]: costInYuan }`，按配置的单价与工作量累加 |
+| GET | /api/dashboard/cost-trend | 成本趋势列表 `{ month: 'YYYY-MM', totalCost }` |
+| GET | /api/dashboard/risk-cost-correlation | 风险-成本散点数据 `{ final_risk_score, final_total_cost }[]` |
+
+### AI 能力
+
+所有 AI 相关接口依赖已启用的当前模型（由 `/api/config/ai-models` 设置），响应统一包装为 `{ success: boolean, data: ... }`。
+
+**提示词查询**
+
+| 方法 | 路径 | 描述 |
+| ---- | ---- | ---- |
+| GET | /api/ai/prompts | 获取风险分析类提示词（category=`risk_analysis`） |
+| GET | /api/ai/module-prompts | 获取模块梳理提示词（category=`module_analysis`） |
+| GET | /api/ai/workload-prompts | 获取工作量评估提示词（category=`workload_evaluation` 或等价别名） |
+
+**风险评估 / 名称归一**
+
+| 方法 | 路径 | 请求体要点 |
+| ---- | ---- | ---- |
+| POST | /api/ai/assess-risk | `{ promptId, document, variables? }`，`document` 最长 5000 字符，返回建议打分列表 |
+| POST | /api/ai/normalize-risk-names | `{ allowed_item_names: string[], risk_scores: [{ item_name, suggested_score, reason? }] }`，基于当前模型将名称对齐到允许列表 |
+
+**模块梳理 / 工作量评估**
+
+| 方法 | 路径 | 请求体要点 |
+| ---- | ---- | ---- |
+| POST | /api/ai/analyze-project-modules | `{ promptId, description, variables? }`，返回三级模块拆分、复杂度与信心度 |
+| POST | /api/ai/evaluate-workload | `{ promptId, module1, module2, module3, description, variables?, roles? }`，返回各角色工作量、交付系数等 |
 
 ### 评分因子逻辑（Rating Factor）
 
@@ -289,4 +332,4 @@ curl http://localhost:3001/api/config/all
 
 ## 📝 版本信息
 
-最后更新日期：2025-10-22
+最后更新日期：2025-11-25
