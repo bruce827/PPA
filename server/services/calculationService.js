@@ -45,6 +45,48 @@ const calculateWorkloadCost = (workloadItems, roles, ratingFactor) => {
   return { totalWorkload, totalCost };
 };
 
+// 收集风险成本（兼容多种历史字段）
+const collectRiskCostItems = (details = {}) => {
+  const candidates = [];
+
+  if (Array.isArray(details.risk_cost_items)) {
+    candidates.push(details.risk_cost_items);
+  }
+  if (Array.isArray(details.other_costs?.risk_items)) {
+    candidates.push(details.other_costs.risk_items);
+  }
+  if (Array.isArray(details.risk_items)) {
+    candidates.push(details.risk_items);
+  }
+
+  const items = [];
+
+  candidates.forEach(list => {
+    list.forEach(entry => {
+      if (!entry || typeof entry !== 'object') return;
+      const rawCost =
+        entry.cost ??
+        entry.estimated_cost ??
+        entry.value ??
+        entry.amount;
+      const costWan = Number(rawCost);
+      if (!Number.isFinite(costWan) || costWan <= 0) return;
+
+      items.push({
+        description:
+          entry.description ||
+          entry.content ||
+          entry.title ||
+          entry.name ||
+          '',
+        costWan
+      });
+    });
+  });
+
+  return items;
+};
+
 /**
  * 实时计算项目成本
  * @param {Object} assessmentData - 评估数据
@@ -84,8 +126,8 @@ const calculateProjectCost = async (assessmentData) => {
   const maintenanceCost = maintenanceWorkload * (maintenanceDailyCost / 10000);
 
   // 3.3 风险成本
-  const riskCost = (assessmentData.risk_items || [])
-    .reduce((sum, item) => sum + Number(item.cost || 0), 0);
+  const riskCost = collectRiskCostItems(assessmentData)
+    .reduce((sum, item) => sum + Number(item.costWan || 0), 0);
 
   // 4. 汇总
   const totalExactCost = dev.totalCost + integration.totalCost + travelCost + maintenanceCost + riskCost;

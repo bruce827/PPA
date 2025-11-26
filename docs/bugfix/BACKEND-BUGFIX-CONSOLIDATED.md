@@ -1,6 +1,6 @@
 # 后端 Bug 修复记录（整合版）
 
-> **最后更新**: 2025-11-06  
+> **最后更新**: 2025-11-26  
 > **适用范围**: PPA 项目后端 (server/)  
 > **架构版本**: 当前三层架构（Controller-Service-Model）
 
@@ -835,6 +835,29 @@ curl http://localhost:3001/api/dashboard/role-cost-distribution
 2. **数据结构验证**: 添加 JSON Schema 验证
 3. **单元测试**: 为 service 层添加测试，使用真实的数据样本
 4. **类型定义**: 考虑使用 TypeScript 或 JSDoc 定义数据类型
+
+---
+
+### 5.2 风险成本未计入报价（/api/calculate & 项目保存）
+
+**故障现象**:  
+前端“生成总览”步骤点击“计算最新报价”时风险成本恒为 0，保存项目后总价也缺少风险成本。
+
+**发生时间**: 2025-11-26（新建评估 4/4）
+
+**根本原因**:  
+`calculationService.calculateProjectCost` 只对 `assessmentData.risk_items` 做了 `cost` 求和，而前端表单与导出逻辑使用 `risk_cost_items`（兼容 `other_costs.risk_items`）。风险成本数组被忽略，导致报价缺项。
+
+**修复方案**:  
+在 `server/services/calculationService.js` 新增 `collectRiskCostItems`，按照以下优先级收集并过滤有效费用后求和（单位万元）：`risk_cost_items` → `other_costs.risk_items` → `risk_items`。费用字段兜底 `cost / estimated_cost / value / amount`，描述兜底 `description / content / title / name`。
+
+**验证**:
+- 单测：`server/tests/calculationService.test.js` 覆盖混合来源的风险成本汇总，并验证 `risk_cost`、`total_cost` 随之增加且仍计算评分因子。
+- 手工：前端第四步点击“计算最新报价”，风险成本与表单输入一致且计入总价。
+
+**经验 / 预防**:
+- 计算逻辑应与导出/保存复用同一字段收集器，避免前后端字段漂移。
+- 新增或调整表单字段后，务必同步更新 Service 汇总逻辑与对应测试。
 
 ---
 
