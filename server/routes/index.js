@@ -7,6 +7,7 @@ const calculationRoutes = require('./calculation');
 const projectRoutes = require('./projects');
 const dashboardRoutes = require('./dashboard');
 const aiRoutes = require('./ai');
+const web3dRoutes = require('./web3d');
 
 // 挂载各模块路由
 router.use('/api', healthRoutes);
@@ -16,5 +17,6 @@ router.use('/api/projects', projectRoutes);
 router.use('/api/templates', projectRoutes); // 模板也使用 projects 路由
 router.use('/api/dashboard', dashboardRoutes);
 router.use('/api/ai', aiRoutes);
+router.use('/api/web3d', web3dRoutes);
 
 module.exports = router;

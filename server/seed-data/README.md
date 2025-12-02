@@ -75,6 +75,20 @@ node seed-travel-costs.js
 - 如果不希望清空现有数据，请修改脚本中的 `clearExistingData()` 调用
 - 费用可以根据实际情况在脚本中调整
 
+### 4. seed-web3d.js - Web3D 风险项与工作量模板初始化
+
+初始化 Web3D 评估所需的风险项（step/order/权重/备选项）与工作量模板（类别/单位工时）。
+
+**运行方式：**
+```bash
+cd server/seed-data
+node seed-web3d.js
+```
+
+**注意事项：**
+- 需要先运行迁移脚本 `004_web3d_assessment.js` 以创建表结构
+- 脚本会清空 `web3d_risk_items` 与 `web3d_workload_templates` 后再写入默认数据
+
 ## 数据库初始化流程
 
 1. 首先运行数据库初始化脚本：
