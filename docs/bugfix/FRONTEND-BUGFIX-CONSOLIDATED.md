@@ -20,6 +20,10 @@
 8. [AntD v5 组件用法警告（Assessment）](#8-antd-v5-组件用法警告assessment)
 9. [ProFormList 误用 recordCreatorProps 警告](#9-proformlist-误用-recordcreatorprops-警告)
 10. [AI 风险评估结果为空时的提示优化](#10-ai-风险评估结果为空时的提示优化)
+11. [重新评估功能实现](#11-重新评估功能实现)
+12. [actionRef 无限循环问题修复](#12-actionref-无限循环问题修复)
+13. [工作量评估提示词弹窗两项修复](#13-工作量评估提示词弹窗两项修复)
+14. [模型配置“设为当前”开关异常修复](#14-模型配置设为当前开关异常修复)
 
 ---
 
@@ -711,10 +715,15 @@ useEffect(() => {
 
 ---
 
-### 6.3 ProTable actionRef 无限循环修复（Sprint 13）
+## 12. actionRef 无限循环问题修复
 
-**问题描述**:  
-在 AI 模型配置列表页面中，页面加载后立即崩溃，浏览器控制台抛出错误：
+### 问题描述
+
+**报错时间**: 2025-10-23  
+**影响功能**: AI 模型配置列表页面  
+**严重程度**: 高（页面无法正常渲染）
+
+#### 错误信息
 
 ```
 Error: Maximum update depth exceeded. This can happen when a component 
@@ -722,32 +731,40 @@ repeatedly calls setState inside componentWillUpdate or componentDidUpdate.
 React limits the number of nested updates to prevent infinite loops.
 ```
 
-**根本原因**:  
-在 ProTable 组件中使用 `useState` 来保存 `actionRef`，并通过回调函数设置状态，导致无限循环：
+#### 错误位置
+
+文件: `frontend/ppa_frontend/src/pages/ModelConfig/Application/index.tsx`  
+行号: 106
 
 ```tsx
-// ❌ 错误：触发无限循环
+actionRef={(ref) => setActionRef(ref)}
+```
+
+### 问题原因
+
+在 ProTable 组件中使用 `useState` 来保存 `actionRef`，并通过回调函数设置状态：
+
+```tsx
 const [actionRef, setActionRef] = useState<any>();
 
 <ProTable
-  actionRef={(ref) => setActionRef(ref)}  // 每次渲染都调用 setState
+  actionRef={(ref) => setActionRef(ref)}
   // ...
 />
 ```
 
-**触发机制**:
+**触发原因**:
 1. 每次渲染时，`actionRef` 回调函数都会执行
 2. 回调函数调用 `setActionRef(ref)` 触发状态更新
 3. 状态更新导致组件重新渲染
 4. 重新渲染又触发回调函数执行
-5. 形成无限循环 ♻️
+5. 形成无限循环
 
-**解决方案**:
+### 解决方案
 
-使用 `useRef` 替代 `useState` 来保存 ProTable 的 `actionRef`：
+#### 修改前
 
 ```tsx
-// ✅ 修改前
 import { useState } from 'react';
 
 const AIModelApplication: React.FC = () => {
@@ -755,18 +772,21 @@ const AIModelApplication: React.FC = () => {
 
   const handleDelete = async (id: number) => {
     // ...
-    actionRef?.reload();  // ❌ 错误调用方式
+    actionRef?.reload();
   };
 
   return (
     <ProTable
-      actionRef={(ref) => setActionRef(ref)}  // ❌ 触发无限循环
+      actionRef={(ref) => setActionRef(ref)}
       // ...
     />
   );
 };
+```
 
-// ✅ 修改后
+#### 修改后
+
+```tsx
 import { useRef } from 'react';
 import type { ActionType } from '@ant-design/pro-components';
 
@@ -775,28 +795,56 @@ const AIModelApplication: React.FC = () => {
 
   const handleDelete = async (id: number) => {
     // ...
-    actionRef.current?.reload();  // ✅ 正确调用方式
+    actionRef.current?.reload();
   };
 
   return (
     <ProTable
-      actionRef={actionRef}  // ✅ 直接传递 ref 对象
+      actionRef={actionRef}
       // ...
     />
   );
 };
 ```
 
-**关键改动总结**:
+#### 关键改动
 
-| 步骤 | 改动内容 | 说明 |
-|------|---------|------|
-| 1 | 导入 `useRef` 和 `ActionType` | 使用正确的 Hook 和类型 |
-| 2 | 使用 `useRef` 替代 `useState` | 避免触发重新渲染 |
-| 3 | 直接传递 ref 对象 | 不使用回调函数 |
-| 4 | 使用 `.current` 访问 | 通过 `.current` 访问 ref 值 |
+1. **导入 `useRef` 和 `ActionType`**
+   ```tsx
+   import { useRef, useState } from 'react';
+   import type { ActionType } from '@ant-design/pro-components';
+   ```
 
-**技术原理**:
+2. **使用 `useRef` 替代 `useState`**
+   ```tsx
+   // 错误方式
+   const [actionRef, setActionRef] = useState<any>();
+   
+   // 正确方式
+   const actionRef = useRef<ActionType>();
+   ```
+
+3. **直接传递 ref 对象**
+   ```tsx
+   // 错误方式
+   actionRef={(ref) => setActionRef(ref)}
+   
+   // 正确方式
+   actionRef={actionRef}
+   ```
+
+4. **使用 `.current` 访问 ref**
+   ```tsx
+   // 错误方式
+   actionRef?.reload();
+   
+   // 正确方式
+   actionRef.current?.reload();
+   ```
+
+### 技术原理
+
+#### useState vs useRef
 
 | 特性 | useState | useRef |
 |------|----------|--------|
@@ -804,748 +852,66 @@ const AIModelApplication: React.FC = () => {
 | 持久化存储 | ✅ 是 | ✅ 是 |
 | 适用场景 | 影响 UI 的状态 | DOM 引用、组件实例引用 |
 
-**ProTable actionRef 正确用法**:
+#### ProTable actionRef 的正确用法
 
 ProTable 的 `actionRef` 设计用于接收一个 React ref 对象，而不是回调函数。
 
+**官方推荐方式**:
 ```tsx
-// ✅ 官方推荐方式
 const actionRef = useRef<ActionType>();
 
 <ProTable actionRef={actionRef} />
+```
 
-// 调用方法
+**调用方法**:
+```tsx
 actionRef.current?.reload();        // 刷新表格
 actionRef.current?.reloadAndRest(); // 刷新并重置
-actionRef.current?.reset();         // 重置表格
-```
-
-**识别此类问题的特征**:
-- 错误信息包含 "Maximum update depth exceeded"
-- 组件在加载后立即崩溃
-- 开发工具显示组件不断重新渲染
-- 使用了 `actionRef={(ref) => setXxx(ref)}` 模式
-
-**检查清单**:
-- [ ] 所有 ProTable/ProList 等 Pro 组件的 actionRef 使用 `useRef`
-- [ ] 避免在渲染回调中调用 `setState`
-- [ ] Form 组件的 form 实例使用 `Form.useForm()`
-- [ ] 不在 `render` 函数中调用 setState
-
-**相关文件**:
-- `frontend/ppa_frontend/src/pages/ModelConfig/Application/index.tsx` - 修复主文件
-
-**参考资料**:
-- [React Hooks - useRef](https://react.dev/reference/react/useRef)
-- [ProTable 官方文档 - actionRef](https://procomponents.ant.design/components/table#actionref)
-- [React 常见错误 - Maximum update depth exceeded](https://react.dev/reference/react/Component#componentdidupdate)
-
----
-
-### 6.4 AI 模块分析服务复用（Sprint 14）
-
-**问题描述**:  `ProjectModuleAnalyzer` 组件早期直接在组件内调用 `fetch('/api/ai/...')` 访问后端接口，绕过了 `@/services/assessment` 的统一封装。
-
-**风险影响**:
-
-- ❌ 失去全局请求拦截器、超时处理与鉴权注入
-- ❌ 接口类型定义分散，service 层的变更无法同步
-- ❌ 与 `AIAssessmentModal` 等其它 AI 流程重复实现，维护成本增加
-
-**修复措施**:
-
-```typescript
-// ✅ 统一通过 assessment service 请求
-const result = await analyzeProjectModules({
-  description: trimmedDescription,
-  projectType,
-  projectScale,
-  prompt: selectedPrompt,
-  promptId: selectedPrompt?.id,
-  variables: sanitizedVariables,
-  template: 'project_module_analysis',
-});
-```
-
-- 在 `frontend/ppa_frontend/src/services/assessment/index.ts` 中新增 `getModuleAnalysisPrompts`、`analyzeProjectModules` 以及对应的类型定义
-- `ProjectModuleAnalyzer.tsx` 替换为使用上述 service，并对提示词变量进行字符串化处理
-- 统一错误提示文案，成功时基于返回模块数量提示用户
-
-**检查清单**:
-
-- [ ] 所有 AI 组件请求均通过 `@/services/assessment`
-- [ ] 新增 API 在 service 层导出并具备类型定义
-- [ ] 组件内不再出现裸 `fetch('/api/...')`
-- [ ] 错误 message 提示与其它 AI 功能保持一致
-
-**相关文件**:
-
-- `frontend/ppa_frontend/src/services/assessment/index.ts`
-- `frontend/ppa_frontend/src/pages/Assessment/components/ProjectModuleAnalyzer.tsx`
-
----
-
-## 7. 通用前端最佳实践
-
-### 7.1 Ant Design Pro 表单处理
-```typescript
-// ✅ 推荐：获取表单实例进行主动控制
-const [form] = Form.useForm();
-
-// 导入数据时主动更新
-const handleImport = async (data) => {
-  const normalizedData = normalizeFormData(data);
-  form.setFieldsValue(normalizedData);  // 主动设置值
-};
-
-// ✅ 推荐：使用 ProForm 的 onValuesChange
-<ProForm
-  form={form}
-  onValuesChange={(changed, all) => {
-    // 实时响应表单变化
-    updateState(all);
-  }}
-/>
-```
-
-### 7.2 ProTable 使用规范
-```typescript
-// ✅ 推荐：request 函数总是返回标准格式
-request={async (params) => {
-  try {
-    const result = await fetchData(params);
-    return {
-      data: Array.isArray(result) ? result : result.data || [],
-      success: true,
-      total: Array.isArray(result) ? result.length : result.total,
-    };
-  } catch (error) {
-    return {
-      data: [],
-      success: false,
-      total: 0,
-    };
-  }
-}}
-
-// ✅ 推荐：在 toolBarRender 中创建新行时提供唯一 key
-onClick={() => {
-  actionRef.current?.addEditRecord?.({
-    id: Date.now(),  // 或 uuidv4()
-    // ... 其他初始值
-  });
-}}
-```
-
-### 7.3 数据流设计
-```typescript
-// ✅ 推荐：单向数据流
-Parent Component (状态管理)
-  │
-  ├─ State: data, loading, error
-  ├─ Functions: handleUpdate, handleDelete
-  │
-  └─ Child Components (展示和交互)
-       │
-       ├─ Props: data, onUpdate, onDelete
-       └─ 只通过回调函数通知父组件
-```
-
-### 7.4 错误处理与用户反馈
-```typescript
-// ✅ 推荐：统一的错误处理模式
-try {
-  setLoading(true);
-  const result = await apiCall();
-  message.success('操作成功');
-  // 更新状态
-} catch (error) {
-  console.error('Error:', error);
-  message.error(error.message || '操作失败，请重试');
-} finally {
-  setLoading(false);
-}
+actionRef.current?.reset();          // 重置表格
 ```
 
 ---
 
-## 8. 快速排查指南
+## 13. 工作量评估提示词弹窗两项修复
 
-### 前端问题排查流程
+### 背景
+- 在实现“工作量评估 · 提示词模板”弹窗后，控制台出现两个告警：
+  1) `[antd: Modal] destroyOnClose is deprecated. Please use destroyOnHidden instead.`
+  2) `Instance created by useForm is not connected to any Form element.`
 
-**步骤 1: 清理环境**
-```bash
-# 删除依赖缓存
-rm -rf node_modules yarn.lock
+### 修复点
+- **修复 1：Modal 废弃属性替换**
+  - 现象：使用了 `destroyOnClose` 触发 AntD 废弃警告。
+  - 处理：改用 `destroyOnHidden`。
+  - 位置：`frontend/ppa_frontend/src/pages/Assessment/components/WorkloadPromptSelectorModal.tsx`
 
-# 重新安装
-yarn install
+- **修复 2：useForm 未关联表单警告**
+  - 现象：在表单挂载前从 `form.getFieldValue` 读取值用于“预览”，触发未关联告警。
+  - 处理：
+    - 使用本地状态 `currentVars` 存储变量值；
+    - 在 `<Form onValuesChange>` 回调中同步 `currentVars`；
+    - 预览生成改为依赖 `currentVars`，不再直接读取 `form` 实例。
+  - 位置：`frontend/ppa_frontend/src/pages/Assessment/components/WorkloadPromptSelectorModal.tsx`
 
-# 清空浏览器缓存（或 Ctrl+Shift+Delete）
-# 重启开发服务器
-yarn start
-```
+### 验收
+- 页面不再出现上述两类告警；交互不变，预览随变量变更即时更新。
 
-**步骤 2: 检查编译错误**
-```bash
-# 查看编译输出
-yarn build
-
-# 排查常见错误
-- Import 语句重复？
-- 括号是否匹配？
-- 是否有语法错误（红色波浪线）？
-```
-
-**步骤 3: 浏览器控制台检查**
-```javascript
-// Console 标签页查看
-- JavaScript 错误（红色）
-- 警告（黄色）
-- 网络错误
-
-// Network 标签页查看
-- API 请求是否成功？
-- 返回的数据格式是否正确？
-```
-
-**步骤 4: 验证数据绑定**
-```typescript
-// React DevTools 检查
-- Props 是否正确传递？
-- 状态是否正确更新？
-- 组件是否重渲染？
-```
-
-### 常见问题对应表
-
-| 问题现象 | 可能原因 | 解决方案 | 对应章节 |
-|--------|--------|--------|---------|
-| 白屏 + Invalid hook call | React 实例冲突 | 清理重装依赖 | [§1.1](#11-invalid-hook-call-错误多重-react-实例) |
-| ProTable 无数据 | 返回格式不匹配 | 转换为标准格式 | [§2.1](#21-数据更新后表格不渲染返回格式不匹配) |
-| ProTable 新建崩溃 | 临时 key 为 undefined | 使用时间戳/UUID | [§2.2](#22-protable-新建记录报错临时-key-不唯一) |
-| 编译错误（Unexpected token） | 代码语法错误 | 一次性覆盖整个文件 | [§3.1](#31-编译时语法错误import-重复return-暴露函数缺失) |
-| 表单数据不填充 | 未主动更新表单 | 调用 form.setFieldsValue | [§4.1](#41-从模板导入功能数据不填充sprint-5) |
-| 控制台警告太多 | UMI 配置限制 | 接受现状或升级依赖 | [§5.1](#51-无法屏蔽-finddomnode-弃用警告sprint-1) |
+### 影响范围
+- 仅影响“工作量评估 · 提示词模板”弹窗组件；其他 Modal 若仍使用 `destroyOnClose`，可按此方式统一替换。
 
 ---
 
-## 9. 相关文档
-
-- **项目架构**: `WARP.md` - 完整架构说明
-- **前端详细文档**: `frontend/ppa_frontend/README.md` - 开发指南
-- **后端 Bug 记录**: `docs/bugfix/BACKEND-BUGFIX-CONSOLIDATED.md` - 后端问题参考
-- **UMI Max 文档**: https://umijs.org/
-- **Ant Design Pro 文档**: https://pro.ant.design/
-
----
-
-## 10. 变更历史
-
-| 日期 | 变更内容 | 相关 Sprint |
-|------|--------|-----------|
-| 2025-11-06 | 整合 Sprint 12-13，更新文档结构 | Sprint 12-13 |
-| 2025-11-01 | 整合文档，删除过时内容 | - |
-| 2025-10-23 | 修复 ProTable actionRef 无限循环问题 | Sprint 13 |
-| 2025-10-22 | 实现重新评估功能（替换编辑功能） | Sprint 12 |
-| 2025-10-22 | 添加从模板导入功能 | Sprint 11 |
-| 2025-10-21 | 完成组件化重构 | Sprint 8 |
-| 2025-10-27 | ProTable 数据渲染修复 | - |
-| Sprint 6 | 编译错误修复 | Sprint 6 |
-| Sprint 5 | 模板导入功能设计 | Sprint 5 |
-| Sprint 3 | 编译错误排查 | Sprint 3 |
-| Sprint 2 | ProTable 新建功能修复 | Sprint 2 |
-| Sprint 1 | findDOMNode 警告已知问题 | Sprint 1 |
-
----
-
-**维护说明**: 本文档应随项目演进持续更新。当出现新的问题或重构时，应及时补充新的最佳实践，删除过时内容。
-
-**文档版本**: 2.2（整合版）  
-**最后审核**: 2025-11-06
-
----
-
-## 7. @ant-design/charts 图表配置问题
-
-### 7.1 图表 Label 配置兼容性错误（Dashboard 实现）
-
-**故障现象**:  
-使用 @ant-design/charts (v2.6.5) 时，浏览器控制台抛出多个错误：
-
-```javascript
-ExpressionError: Undefined variable: value
-ExpressionError: Unexpected character: }
-Error: Unknown Component: shape.inner
-```
-
-**发生时间**: 2025-11-06（Story 2: Dashboard 前端UI/UX实现）
-
-**根本原因**:  
-@ant-design/charts 的 label 配置与原生 G2Plot 存在兼容性差异：
-
-1. **不支持字符串模板格式**: `label: { content: '{value}' }` 或 `'{name} {percentage}'`
-2. **不支持特定 type 值**: `label: { type: 'inner' }` 会触发 "Unknown Component" 错误
-3. **formatter 参数可能为 undefined**: 需要添加空值检查
-
-**错误代码示例**:
-
-```typescript
-// ❌ 错误：使用字符串模板（不被支持）
-const pieConfig = {
-  label: {
-    content: '{value}',  // 导致 "Undefined variable" 错误
-  }
-};
-
-// ❌ 错误：使用 type: 'inner'（不被支持）
-const pieConfig = {
-  label: {
-    type: 'inner',  // 导致 "Unknown Component: shape.inner" 错误
-    content: '{name}\n{percentage}'
-  }
-};
-
-// ❌ 错误：formatter 没有空值检查
-const columnConfig = {
-  label: {
-    formatter: (datum: any) => `¥${datum.cost.toLocaleString()}`
-    // 当 datum.cost 为 undefined 时报错
-  }
-};
-```
-
-**解决方案**:
-
-```typescript
-// ✅ 方案 1: 使用 formatter 函数 + 空值检查
-const pieConfig = {
-  data: chartData,
-  angleField: 'value',
-  colorField: 'type',
-  label: {
-    formatter: (datum: any) => {
-      const type = datum?.type ?? '';
-      const value = datum?.value ?? 0;
-      return `${type}: ${value}`;
-    },
-  },
-};
-
-// ✅ 方案 2: 完全禁用 label（最保险）
-const pieConfig = {
-  data: chartData,
-  angleField: 'value',
-  colorField: 'type',
-  label: false,  // 禁用标签，通过图例识别数据
-  legend: {
-    position: 'bottom' as const,
-  },
-};
-
-// ✅ 方案 3: 简化配置，避免复杂的 label 选项
-const columnConfig = {
-  data: roleCostData,
-  xField: 'role',
-  yField: 'cost',
-  label: false,  // 暂时禁用，避免兼容性问题
-  yAxis: {
-    label: {
-      formatter: (v: string) => `¥${Number(v || 0).toLocaleString()}`,
-    },
-  },
-};
-```
-
-**最佳实践检查清单**:
-
-- [ ] 使用 formatter 函数而非字符串模板
-- [ ] formatter 中添加空值检查（使用 `?.` 和 `??`）
-- [ ] 避免使用 `type: 'inner'`, `type: 'outer'` 等配置
-- [ ] 避免使用 `offset`, `style` 等高级 label 配置
-- [ ] 优先考虑禁用 label，通过图例展示数据
-- [ ] 测试各种数据状态（空数据、部分字段缺失等）
-
-**影响范围**:
-- 所有使用 @ant-design/charts 的图表组件
-- Pie、Donut、Column、Line、Scatter 等图表类型
-
-**相关文件**:
-- `frontend/ppa_frontend/src/pages/Dashboard.tsx` - Dashboard 图表配置
-- `frontend/ppa_frontend/package.json` - @ant-design/charts 版本
-
-**参考资料**:
-- [@ant-design/charts 官方文档](https://charts.ant.design/)
-- [G2Plot API 文档](https://g2plot.antv.antgroup.com/)
-
----
-
-### 7.2 Spin 组件 tip 属性警告
-
-**故障现象**:  
-浏览器控制台显示警告：
-
-```
-Warning: [antd: Spin] `tip` only work in nest or fullscreen pattern.
-```
-
-**发生时间**: 2025-11-06（Dashboard 实现）
-
-**根本原因**:  
-Ant Design 的 Spin 组件的 `tip` 属性只能在嵌套模式（有子元素）或全屏模式下使用。单独使用 `<Spin tip="..." />` 会触发警告。
-
-**错误代码**:
-
-```typescript
-// ❌ 错误：单独使用 tip 属性
-<Spin size="large" tip="加载数据中..." />
-```
-
-**解决方案**:
-
-```typescript
-// ✅ 方案 1: 使用嵌套模式
-<Spin size="large">
-  <div style={{ padding: '50px' }}>加载数据中...</div>
-</Spin>
-
-// ✅ 方案 2: 使用嵌套模式包裹实际内容
-<Spin spinning={loading} tip="加载中...">
-  <div>
-    {/* 实际内容 */}
-  </div>
-</Spin>
-```
-
-**最佳实践**:
-- 始终在 Spin 组件中包含子元素
-- 或者移除 `tip` 属性，仅使用 loading 动画
-
-**相关文件**:
-- `frontend/ppa_frontend/src/pages/Dashboard.tsx`
-
----
-
-### 7.3 图表数据格式化最佳实践
-
-**背景**:  
-在实现 Dashboard 时发现，正确的数据格式化对图表显示至关重要。
-
-**常见问题**:
-
-1. **坐标轴标签格式化**: 数值显示不友好
-2. **Tooltip 格式化**: 悬浮提示信息不完整
-3. **数据单位处理**: 货币、百分比等单位显示
-
-**最佳实践示例**:
-
-```typescript
-// ✅ Y轴标签格式化（货币）
-const config = {
-  yAxis: {
-    label: {
-      formatter: (v: string) => `¥${Number(v || 0).toLocaleString()}`,
-    },
-  },
-};
-
-// ✅ Tooltip 格式化
-const config = {
-  tooltip: {
-    formatter: (datum: any) => {
-      const cost = datum?.totalCost ?? 0;
-      return {
-        name: '总成本',
-        value: `¥${cost.toLocaleString()}`,
-      };
-    },
-  },
-};
-
-// ✅ 数据转换（风险等级分类）
-const riskChartData = riskDistribution.map(item => ({
-  type: item.final_risk_score < 50 ? '低风险' 
-      : item.final_risk_score < 100 ? '中风险' 
-      : '高风险',
-  value: item.count,
-}));
-
-// ✅ 安全的数据映射（防止空对象）
-const roleCostData = Object.entries(roleCostDistribution || {}).map(([role, cost]) => ({
-  role,
-  cost: cost || 0,
-}));
-```
-
-**重要提示**:
-1. 始终对 API 返回数据进行验证和默认值处理
-2. 使用 TypeScript 类型定义确保数据结构正确
-3. 添加空数据状态处理（Empty 组件）
-4. 在 useEffect 中添加错误处理
-
-**相关文件**:
-- `frontend/ppa_frontend/src/pages/Dashboard.tsx`
-- `frontend/ppa_frontend/src/services/dashboard/typings.d.ts`
-
----
-
-## 8. AntD v5 组件用法警告（Assessment）
-
-### 8.1 message 静态函数上下文警告（Assessment 页面）
-
-**故障现象**:  
-浏览器控制台持续输出：
-
-```
-Warning: [antd: message] Static function can not consume context like dynamic theme. Please use 'App' component instead.
-```
-
-**发生时间**: 2025-11-14（执行“第一步/第二步”流程时）
-
-**根本原因**:  
-Ant Design v5 中，`message.success/error/warning/info` 等静态调用无法消费动态主题/上下文（如 App/ConfigProvider 的 context），在复杂的运行时主题或嵌套场景下会触发上述警告。
-
-**解决方案**:  
-改为使用作用域消息 API：
-
-```tsx
-const [messageApi, contextHolder] = message.useMessage();
-// 在组件 JSX 顶层渲染 {contextHolder}
-messageApi.success('操作成功');
-```
-
-并将组件内所有 `message.*` 静态调用替换为 `messageApi.*`。
-
-**受影响文件**:
-- `frontend/ppa_frontend/src/pages/Assessment/components/ProjectModuleAnalyzer.tsx`
-- `frontend/ppa_frontend/src/pages/Assessment/components/AIAssessmentModal.tsx`
-- `frontend/ppa_frontend/src/pages/Assessment/Detail.tsx`
-
-**验证**:
-- 进入“新建评估 → AI模块梳理”，点击“开始AI模块分析”，无上述 message 警告。
-- 打开“风险评分 → AI评估弹窗”，进行评估与应用结果流程，无上述 message 警告。
-
----
-
-## 9. ProFormList 误用 recordCreatorProps 警告
-
-**故障现象**:  
-控制台出现 React 警告：
-
-```
-Warning: React does not recognize the `recordCreatorProps` prop on a DOM element. If you intentionally want it to appear in the DOM as a custom attribute, spell it as lowercase `recordcreatorprops` instead. If you accidentally passed it from a parent component, remove it from the DOM element.
-```
-
-**根本原因**:  
-`recordCreatorProps` 是 `EditableProTable` 的属性，不是 `ProFormList` 的属性。将其误传给 `ProFormList` 会被继续传递到原生 DOM 节点，从而触发 React 未识别属性的警告。
-
-**错误用法（已移除）**:
-
-```tsx
-<ProFormList
-  name="risk_items"
-  label="风险成本"
-  creatorButtonProps={{ creatorButtonText: '新增风险项' }}
-  recordCreatorProps={{              // ❌ 非法属性（仅适用于 EditableProTable）
-    newRecordType: 'dataSource',
-    record: () => ({ id: Date.now(), content: '', cost: 0 }),
-  }}
->
-```
-
-**正确做法**:
-- 若需新增按钮文案，使用 `creatorButtonProps`（已使用）。
-- 若需默认值，使用 `initialValue` 提供初始数组项，或在外层 `form.setFieldsValue` 设置。
-- 仅在 `EditableProTable` 上使用 `recordCreatorProps`。
-
-**修复变更**:
-- 从 `ProFormList` 上移除 `recordCreatorProps`：
-  - `frontend/ppa_frontend/src/pages/Config.tsx`
-  - `frontend/ppa_frontend/src/pages/Assessment/components/OtherCostsForm.tsx`
-- 保留 `EditableProTable` 的合法 `recordCreatorProps`：
-  - `frontend/ppa_frontend/src/pages/Assessment/components/WorkloadEstimation.tsx`
-
-**验证**:
-- 在“配置 → 新建/编辑风险评估项”与“其他成本 → 风险成本”中新增条目，不再出现该 React 警告；表单功能正常。
-
----
-
-### 8.2 Spin tip 使用方式（Assessment 页面补充）
-
-**故障现象**:  
-控制台出现：
-
-```
-Warning: [antd: Spin] `tip` only work in nest or fullscreen pattern.
-```
-
-**根本原因**:  
-Spin 的 `tip` 仅在“嵌套（有子元素）”或“全屏”模式下生效，孤立使用 `<Spin tip="..." />` 会告警。
-
-**修复方式（在 Assessment 页面落地）**:
-
-```tsx
-// 嵌套一个最小子元素，或拆出说明文本
-<Spin size="large" tip="AI正在分析项目需求，生成模块结构中...">
-  <div style={{ minHeight: 24 }} />
-  {/* 或者移除 tip，将文字放到下方 */}
-</Spin>
-```
-
-**受影响文件**:
-- `frontend/ppa_frontend/src/pages/Assessment/components/ProjectModuleAnalyzer.tsx`
-- `frontend/ppa_frontend/src/pages/Assessment/Detail.tsx`
-
-**验证**:
-- 模块梳理加载态与详情页加载态下，不再出现 Spin tip 警告；UI 展示保持一致。
-
----
-
-## 10. 工作量估算新增记录工时被手动覆盖
-
-**故障现象**: 在“新建评估 > 第二步工作量估算”中，用户点击“新增功能项/新增对接项”后，表格允许直接编辑“工时(人/天)”列。当交付系数被修改时，点击“保存”不会触发重新计算，导致工时数值与详情弹窗/AI 评估结果不一致。
-
-**根本原因**:
-
-1. `EditableProTable` 的 `workload` 列未禁用，行内编辑会覆盖详情弹窗计算出的值。
-2. 保存行后只是把表单数据写回列表，没有对交付系数变动进行二次计算。
-
-**修复方案**:
-
-1. 将 `workload` 列改为纯展示列并禁用编辑，同时在标题上加 Tooltip 说明“该字段会在详情页或 AI 评估后自动计算”。
-2. 在 `handleDevChange` / `handleIntegrationChange` 中合并原始记录和当前编辑值，只要是新增记录或交付系数发生变化，就复用 `calculateWorkload` 逻辑即时重算工时，再通过 `normalizeList` 保持数值格式。
-
-**关键提交文件**:
-- `frontend/ppa_frontend/src/pages/Assessment/components/WorkloadEstimation.tsx`
-
-**验证清单**:
-- [ ] 新增行时，“工时(人/天)”列禁用输入，只显示只读值。
-- [ ] 修改交付系数后点击“保存”，相应行的工时会自动刷新。
-- [ ] 详情弹窗和 AI 评估仍可继续覆盖工时，表格展示保持一致。
-
----
-
-## 11. AI 模型面板“查看全部模块”无响应
-
-**故障现象**: 在“生成总览”步骤的“AI 模型使用情况”卡片中，工作量评估列表超过 5 条时会出现“查看全部 X 个模块”按钮，但点击后没有任何反馈，无法查看完整的 AI 评估模块。
-
-**根本原因**: 按钮只是一个样式化的 `Button`，既没有绑定 `onClick` 事件，也没有对应的弹窗或抽屉组件展示完整数据。
-
-**修复方案**:
-
-1. 在 `AIUsagePanel` 内部引入 `Modal` 并使用 `useState` 管理显隐。
-2. 将按钮点击事件绑定到 `setAllModulesVisible(true)`，并在弹窗中循环渲染全部 `workloadEvaluations`，附带模块类型/角色/时间信息，支持滚动浏览。
-3. 复用统一的 `renderEvaluationItem` 渲染函数，保证弹窗与预览列表的样式一致。
-
-**关键文件**:
-- `frontend/ppa_frontend/src/pages/Assessment/components/Overview.tsx`
-
-**验证清单**:
-- [ ] 当 AI 评估模块 > 5 条时显示“查看全部”按钮。
-- [ ] 点击按钮能够弹出“全部 AI 评估模块”对话框并展示所有记录。
-- [ ] 关闭对话框后再次打开仍能看到完整数据。
-
----
-
-## 12. AI 模型使用情况未引用“当前模型”
-
-**故障现象**: “生成总览”步骤的“AI 模型使用情况”面板中，风险评估、模块梳理与工作量评估的模型标签始终显示为固定的 `GPT-4 / OpenAI`，与模型配置模块中设置的“当前使用模型”不一致，导致展示信息与真实配置脱节。
-
-**根本原因**: 面板依赖 `assessmentData` 中旧的 `model_info` 字段或直接写死标签，从未调用模型配置模块的 `getCurrentModel` 接口获取系统当前模型。
-
-**修复方案**:
-
-1. 在 `Overview` 组件中引入 `getCurrentModel`，页面加载时拉取当前模型并缓存。
-2. 所有 AI 使用信息（风险评估、模块梳理、工作量评估）统一使用当前模型名称/Provider，若后端返回为空则展示“未配置模型”。
-3. 工作量评估列表的 Tag 也改为动态展示，保证和模型配置模块一致。
-
-**关键文件**:
-- `frontend/ppa_frontend/src/pages/Assessment/components/Overview.tsx`
-
-**验证清单**:
-- [ ] 在模型配置模块切换“当前模型”后返回“生成总览”，面板标签同步更新。
-- [ ] 风险评估、模块梳理、工作量评估三个区域展示的模型信息一致。
-- [ ] “查看全部模块”弹窗中的数据不受影响。
-
----
-
-## 13. 模板唯一性与历史项目模板删除限制
-
-**故障现象**:
-
-1. 在评估第 4 步勾选“另存为模板”多次保存后，`projects` 表中可能存在多条 `is_template = 1` 的记录，违背了“全局仅一个当前模板”的设计预期，导致：
-   - 前端“从模板一键填充”无法明确应该使用哪条记录。
-   - 历史项目列表中无法准确标识唯一的“当前模板”。
-2. 历史项目列表中模板项目与普通项目在删除上没有区分，理论上可以直接删除模板记录，容易造成误删。
-
-**根本原因**:
-
-- 后端在 `createProject` / `updateProject` 时只是按请求体直接写入 `is_template`，没有在数据库层面做互斥处理；  
-- 历史列表删除操作仅按 `id` 调用 `DELETE /api/projects/:id`，未检查 `is_template` 字段。
-
-**修复方案**:
-
-1. **后端模板唯一性保证**（服务层 + 模型层）  
-   - 在 `projectModel` 中新增 `clearAllTemplateFlags()` 方法：  
-     - SQL: `UPDATE projects SET is_template = 0 WHERE is_template = 1`。  
-   - 在 `projectService.createProject` / `projectService.updateProject` 中：  
-     - 若 `projectData.is_template` 为真，先调用 `clearAllTemplateFlags()`，再将当前项目写为 `is_template = 1`，保证任意时刻表中最多有一条模板。
-2. **历史项目列表包含模板，并显式标识**  
-   - 新增 `projectModel.getAllProjectsIncludingTemplates()`，返回所有项目（包含 `is_template` 字段）。  
-   - `projectController.getAllProjects` 在未带 `is_template` 查询参数时改为使用该方法，使历史列表能同时看到模板和非模板，并在前端增加“是否模板”列。
-3. **前端禁止删除当前模板**  
-   - `History` 页面操作列中：
-     - 若 `record.is_template` 为真，则不展示删除 Popconfirm，而是展示禁用的“删除”按钮并附带 Tooltip：「当前模板不可删除，请先在新评估中设置新的模板」。  
-     - 仅对 `is_template = 0` 的普通项目保留实际删除能力。
-
-**关键文件**:
-- 后端：
-  - `server/models/projectModel.js`
-  - `server/services/projectService.js`
-  - `server/controllers/projectController.js`
-- 前端：
-  - `frontend/ppa_frontend/src/services/projects/typings.d.ts`
-  - `frontend/ppa_frontend/src/pages/Assessment/History.tsx`
-
-**验证清单**:
-- [ ] 连续多次在第 4 步勾选“保存为模板”保存项目后，数据库中始终只有一条记录的 `is_template = 1`。  
-- [ ] 历史项目列表中“是否模板”列最多只显示一条“当前模板”。  
-- [ ] 当前模板行在历史列表中无法被删除，Tooltip 提示文案正确。  
-- [ ] 非模板项目仍然可以正常删除，并刷新列表。  
-- [ ] “从模板一键填充”功能始终使用当前模板数据，行为稳定。
-
----
-
-## 14. 风险 AI 评估提示词模板未按分类过滤
-
-**故障现象**:  
-新建评估第一步的“一键 AI 评估”弹窗中，提示词模板下拉会列出所有激活的模板，包括工作量评估、成本估算、报表生成等非“风险分析”用途的模板。选择不合适的模板会导致提示词不匹配，评估结果乱、用户困惑。
-
-**根本原因**:  
-`GET /api/ai/prompts` 后端直接返回所有活跃模板（`aiPromptService.getAllPrompts()`），未按 `category` 做过滤；前端 `AIAssessmentModal` 也未做分类筛选。
-
-**修复方案**:
-
-1. 将 `/api/ai/prompts` 接口限定为“风险分析”用途：  
-   - 在 `aiController.getPrompts` 中改用 `aiPromptService.getPromptsByCategory('risk_analysis')`，只返回 `category = 'risk_analysis'` 及兼容别名下的模板。  
-   - 日志中记录 `category: 'risk_analysis'`，便于监控。  
-2. 保持模块梳理 & 工作量评估接口独立：  
-   - 模块梳理仍使用 `/api/ai/module-prompts`。  
-   - 工作量评估仍使用 `/api/ai/workload-prompts`。  
-   - 确保其它 AI 功能不依赖 `/api/ai/prompts`，避免被这次过滤影响。
-
-**关键文件**:
-- 后端：
-  - `server/controllers/aiController.js`
-  - `server/services/aiPromptService.js`（原有 `getPromptsByCategory` 复用）
-- 前端：
-  - `frontend/ppa_frontend/src/services/assessment/index.ts`
-  - `frontend/ppa_frontend/src/pages/Assessment/components/AIAssessmentModal.tsx`
-
-**验证清单**:
-- [ ] 在模型配置中创建多个不同分类的提示词模板，仅将部分设置为 `风险分析 (risk_analysis)`。  
-- [ ] 新建评估第一步打开“一键 AI 评估”，模板下拉只出现风险分析类模板。  
-- [ ] 模块梳理与工作量评估使用的模板列表不受影响。  
-- [ ] 选择风险分析模板进行评估时，返回的风险项评分结构符合预期。
-
----
+## 14. 模型配置“设为当前”开关异常修复
+
+### 问题
+在模型配置表单中，“设为当前使用”开关始终可用，导致当已有当前模型时仍可在新建/编辑其他模型时开启，违背“仅允许一个当前模型”的约束。
+
+### 修复方案
+- 前端在加载模型列表时记录当前模型 ID，并传递给表单。
+- 表单根据当前模型 ID 判断：
+  - 若已有当前模型且本次操作的新建/编辑目标不是当前模型，则禁用“设为当前使用”开关并提示需先取消当前模型。
+  - 若不存在当前模型，则允许开启开关。
+
+### 相关改动
+- `frontend/ppa_frontend/src/pages/ModelConfig/Application/index.tsx`：请求列表后存储当前模型 ID，并传入表单。
+- `frontend/ppa_frontend/src/pages/ModelConfig/Application/components/ModelForm.tsx`：基于当前模型 ID 控制开关禁用状态与提示。
