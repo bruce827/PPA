@@ -1,0 +1,15 @@
+<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- 背景：圆角正方形 -->
+  <rect x="0" y="0" width="100" height="100" rx="20" fill="#2563EB" />
+  
+  <!-- 图标主体：项目文档 -->
+  <path d="M30 25 H70 C72.76 25 75 27.24 75 30 V75 C75 77.76 72.76 80 70 80 H30 C27.24 80 25 77.76 25 75 V30 C25 27.24 27.24 25 30 25 Z" fill="white" opacity="0.9"/>
+  
+  <!-- 文档上的线条（象征内容） -->
+  <rect x="35" y="38" width="30" height="6" rx="3" fill="#2563EB" opacity="0.3"/>
+  <rect x="35" y="50" width="20" height="6" rx="3" fill="#2563EB" opacity="0.3"/>
+  
+  <!-- 覆盖元素：金币/成本评估 -->
+  <circle cx="68" cy="68" r="18" fill="#10B981" stroke="white" stroke-width="4"/>
+  <text x="68" y="75" font-family="Arial, sans-serif" font-weight="bold" font-size="20" text-anchor="middle" fill="white">¥</text>
+</svg>

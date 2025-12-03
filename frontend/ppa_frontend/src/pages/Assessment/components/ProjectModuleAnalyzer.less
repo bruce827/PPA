@@ -1,0 +1,122 @@
+.project-module-analyzer {
+  padding: 24px;
+}
+
+.smart-input-section {
+  background: #f8f9ff;
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 24px;
+}
+
+.input-header {
+  margin-bottom: 16px;
+
+  h3 {
+    color: #1890ff;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+  }
+}
+
+.input-tips {
+  color: #666;
+  font-size: 14px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+}
+
+.analyze-action {
+  text-align: center;
+  margin-top: 16px;
+}
+
+.analysis-loading {
+  margin-bottom: 24px;
+}
+
+.analysis-result {
+  .result-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+
+    h3 {
+      color: #1890ff;
+      margin: 0;
+    }
+  }
+
+  .project-summary {
+    h4 {
+      color: #666;
+      margin-bottom: 12px;
+    }
+  }
+
+  .stats-section {
+    h4 {
+      color: #666;
+      margin-bottom: 16px;
+    }
+  }
+
+  .modules-preview {
+    h4 {
+      color: #666;
+      margin-bottom: 16px;
+    }
+
+    .ant-tree {
+      background: #fafafa;
+      border: 1px solid #d9d9d9;
+      border-radius: 8px;
+
+      .ant-tree-node-content-wrapper {
+        border-radius: 6px;
+
+        &:hover {
+          background-color: #e6f7ff;
+        }
+      }
+
+      .ant-tree-title {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+      }
+    }
+  }
+}
+
+// 响应式设计
+@media (max-width: 768px) {
+  .project-module-analyzer {
+    padding: 16px;
+  }
+
+  .smart-input-section {
+    padding: 16px;
+    margin-bottom: 16px;
+  }
+
+  .analysis-result {
+    .result-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 16px;
+
+      .result-actions {
+        width: 100%;
+
+        .ant-btn {
+          width: 100%;
+        }
+      }
+    }
+  }
+}

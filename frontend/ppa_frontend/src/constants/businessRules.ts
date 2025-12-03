@@ -1,0 +1,5 @@
+export const MAX_DOCUMENT_LENGTH = 5000;
+
+export const BUSINESS_RULES = {
+  MAX_DOCUMENT_LENGTH,
+};

@@ -1,0 +1,314 @@
+// AI评估样式文件
+
+.ai-assessment-section {
+  border: 1px solid #d9d9d9;
+  border-radius: 8px;
+  background-color: #fafafa;
+  padding: 16px;
+  margin-bottom: 16px;
+  transition: all 0.3s ease;
+}
+
+.ai-assessment-section:hover {
+  border-color: #1890ff;
+  background-color: #f0f9ff;
+}
+
+.ai-assessment-tips {
+  color: #666;
+  font-size: 14px;
+  line-height: 1.5;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+}
+
+.ai-assessment-tips .anticon {
+  color: #faad14;
+  margin-right: 8px;
+}
+
+.ai-assessment-modal {
+  .ant-modal-title {
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    font-weight: 600;
+
+    .anticon {
+      color: #1890ff;
+      margin-right: 8px;
+    }
+  }
+}
+
+.document-input-section {
+  margin-bottom: 24px;
+
+  .document-input-label {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+    font-size: 16px;
+    font-weight: 500;
+
+    .anticon {
+      color: #52c41a;
+      margin-right: 8px;
+    }
+  }
+}
+
+.prompt-config-section {
+  margin-bottom: 24px;
+
+  .prompt-config-label {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+    font-size: 16px;
+    font-weight: 500;
+
+    .anticon {
+      color: #722ed1;
+      margin-right: 8px;
+    }
+  }
+
+  .model-info-input {
+    .ant-input-disabled {
+      background-color: #fafafa;
+      color: #999;
+    }
+  }
+}
+
+.prompt-variables-section {
+  margin-top: 16px;
+  padding: 12px;
+  background-color: #f9f9f9;
+  border-radius: 6px;
+  border: 1px solid #e8e8e8;
+
+  .prompt-variables-title {
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 12px;
+    color: #333;
+  }
+}
+
+.risk-scores-suggestion {
+  .ant-card-head-title {
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+  }
+
+  .anticon {
+    color: #52c41a;
+    margin-right: 8px;
+  }
+
+  .risk-score-table {
+    .ant-table-tbody > tr:hover > td {
+      background-color: #f0f9ff;
+    }
+  }
+
+  .high-risk {
+    color: #ff4d4f;
+    font-weight: 500;
+  }
+
+  .medium-risk {
+    color: #faad14;
+    font-weight: 500;
+  }
+
+  .low-risk {
+    color: #52c41a;
+    font-weight: 500;
+  }
+}
+
+.missing-risks-suggestion {
+  margin-bottom: 16px;
+
+  .ant-alert {
+    border-radius: 6px;
+    border: 1px solid #faad14;
+
+    .ant-alert-message {
+      font-weight: 500;
+      color: #faad14;
+    }
+
+    .ant-alert-description {
+      .missing-risk-item {
+        margin-bottom: 8px;
+        padding: 4px 0;
+
+        .risk-name {
+          font-weight: 500;
+          color: #faad14;
+        }
+
+        .risk-description {
+          color: #999;
+        }
+      }
+    }
+  }
+}
+
+.overall-suggestion {
+  .ant-card-head-title {
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+  }
+
+  .anticon {
+    color: #1890ff;
+    margin-right: 8px;
+  }
+
+  .confidence-info {
+    margin-top: 8px;
+    font-size: 12px;
+    color: #999;
+  }
+}
+
+.assessment-result-section {
+  .result-loading {
+    text-align: center;
+    padding: 40px 0;
+
+    .ant-spin-text {
+      margin-top: 16px;
+      color: #666;
+    }
+  }
+
+  .result-placeholder {
+    .ant-alert {
+      border-radius: 6px;
+      border: 1px solid #d9d9d9;
+
+      .ant-alert-message {
+        font-weight: 500;
+        color: #666;
+      }
+
+      .ant-alert-description {
+        color: #999;
+      }
+    }
+  }
+}
+
+// 响应式设计
+@media (max-width: 768px) {
+  .ai-assessment-modal {
+    .ant-modal {
+      max-width: calc(100vw - 32px);
+      margin: 0 16px;
+    }
+
+    .ai-assessment-section {
+      padding: 12px;
+    }
+
+    .risk-scores-suggestion .ant-table-wrapper {
+      .ant-table {
+        font-size: 12px;
+      }
+    }
+  }
+
+  .ai-assessment-tips {
+    font-size: 13px;
+  }
+
+  .document-input-section .document-input-label,
+  .prompt-config-section .prompt-config-label {
+    font-size: 14px;
+  }
+}
+
+// 动画效果
+.ai-assessment-section {
+  animation: fadeInUp 0.3s ease;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.result-section-enter {
+  animation: slideInDown 0.4s ease;
+}
+
+@keyframes slideInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// 按钮样式增强
+.ai-assessment-button {
+  height: 40px;
+  padding: 0 24px;
+  font-size: 16px;
+  font-weight: 500;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(24, 144, 255, 0.2);
+
+  &:hover {
+    box-shadow: 0 4px 8px rgba(24, 144, 255, 0.3);
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  .anticon {
+    margin-right: 8px;
+  }
+}
+
+.assessment-start-button {
+  background: linear-gradient(135deg, #1890ff 0%, #40a9ff 100%);
+
+  &:hover {
+    background: linear-gradient(135deg, #40a9ff 0%, #69c0ff 100%);
+  }
+}
+
+.assessment-apply-button {
+  background: linear-gradient(135deg, #52c41a 0%, #73d13d 100%);
+
+  &:hover {
+    background: linear-gradient(135deg, #73d13d 0%, #95de64 100%);
+  }
+}
