@@ -8,6 +8,7 @@ const CREATE_TABLES_SQL = `
       name TEXT NOT NULL,
       description TEXT,
       is_template BOOLEAN NOT NULL DEFAULT 0,
+      project_type TEXT DEFAULT 'standard',
       final_total_cost REAL,
       final_risk_score INTEGER,
       final_workload_days REAL,
@@ -15,6 +16,9 @@ const CREATE_TABLES_SQL = `
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
   );
+
+  CREATE INDEX IF NOT EXISTS idx_projects_type ON projects(project_type);
+  CREATE INDEX IF NOT EXISTS idx_projects_type_created_at ON projects(project_type, created_at);
 
   CREATE TABLE IF NOT EXISTS config_roles (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -88,6 +92,35 @@ const CREATE_TABLES_SQL = `
   );
 
   CREATE INDEX IF NOT EXISTS idx_ai_assessment_logs_prompt ON ai_assessment_logs(prompt_id);
+
+  CREATE TABLE IF NOT EXISTS web3d_risk_items (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    step_order INTEGER NOT NULL,
+    step_name TEXT NOT NULL,
+    item_name TEXT NOT NULL UNIQUE,
+    description TEXT,
+    weight REAL DEFAULT 1.0,
+    options_json TEXT,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+  );
+
+  CREATE INDEX IF NOT EXISTS idx_web3d_risk_items_step_order ON web3d_risk_items(step_order);
+  CREATE INDEX IF NOT EXISTS idx_web3d_risk_items_step_name ON web3d_risk_items(step_name);
+
+  CREATE TABLE IF NOT EXISTS web3d_workload_templates (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    category TEXT NOT NULL,
+    item_name TEXT NOT NULL,
+    description TEXT,
+    base_days REAL NOT NULL,
+    unit TEXT,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+  );
+
+  CREATE UNIQUE INDEX IF NOT EXISTS idx_web3d_workload_templates_unique ON web3d_workload_templates(category, item_name);
+  CREATE INDEX IF NOT EXISTS idx_web3d_workload_templates_category ON web3d_workload_templates(category);
 `;
 
 // 连接数据库并执行
@@ -114,4 +147,3 @@ db.close((err) => {
   }
   console.log('Closed the database connection.');
 });
-

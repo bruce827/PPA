@@ -6,6 +6,8 @@ const PDFDocument = require('pdfkit');
 const internalFormatter = require('./export/formatters/internalFormatter');
 const externalFormatter = require('./export/formatters/externalFormatter');
 const excelRenderer = require('./export/renderers/excelRenderer');
+const { formatWeb3dExport } = require('./export/formatters/web3dFormatter');
+const { renderWeb3d } = require('./export/renderers/web3dRenderer');
 const configModel = require('../models/configModel');
 const { HttpError } = require('../utils/errors');
 const { validateExportData } = require('./export/exportValidator');
@@ -138,6 +140,16 @@ const generatePDF = (project, res) => {
 const generateExcel = async (project, version) => {
   if (!project) {
     throw new HttpError(404, 'Project not found', 'NotFoundError');
+  }
+
+  if (project.project_type === 'web3d') {
+    const formatted = await formatWeb3dExport(project);
+    const workbook = renderWeb3d(formatted);
+    return {
+      workbook,
+      formattedData: formatted,
+      version: 'web3d'
+    };
   }
 
   const normalizedVersion = (version || 'internal').toLowerCase();
