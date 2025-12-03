@@ -160,6 +160,7 @@ const formatWeb3dExport = async (project) => {
         data_processing_days: calc.workload.data_processing_days,
         core_dev_days: calc.workload.core_dev_days,
         business_logic_days: calc.workload.business_logic_days,
+        performance_days: calc.workload.performance_days,
         total_base_days: calc.workload.total_base_days,
         total_days: calc.workload.total_days
       }

@@ -87,8 +87,12 @@
 
 ## 进展同步（2025-12-02）
 - DB 已完成迁移与种子：`project_type` 字段、新建 `web3d_risk_items`/`web3d_workload_templates`，并灌入默认 16 条风险项、10 条工作量模板。
-- 后端 API 已落地：Web3D config CRUD、项目 calculate/create/update/get/list/delete、导出 XLSX（内置 Web3D formatter/renderer）。
+- 后端 API 已落地：Web3D config CRUD、项目 calculate/create/update/get/list/delete、导出 XLSX（内置 Web3D formatter/renderer）；工作量计算已支持新增类别 `performance`，总人天/导出同步包含 `performance_days`。
+- 前端 Step1-5 对齐 PRD：Step1 新增观看距离滑块（0.5~8m，默认 0.5~1）、目标终端必填（同一行展示 GPU/终端）、模型来源选项补充“设计院可以给出BIM数据，但是需要贴图”及单行备注；Step4 类别下拉中文且含“性能与兼容性”，角色多选均价、交付系数参与小计；Step5 操作按钮收敛到右侧卡片，工作量明细列精简/对齐。
 - 冒烟通过：参见 `WEB3D_SMOKE_TEST_REPORT.md`，闭环（创建 → 导出 → 删除）已验证，导出文件 `web3d-export-demo.xlsx` 可用。
-- 待办（前端）：路由接入、表单/Overview 适配 Web3D 结构；配置页 CRUD；导出触发与文件下载；按 PRD 原型调整 Step1-5，移除 Step1 日单价输入，Step4 按工作项选择角色并引用“角色与单价管理”。（已完成：Step1-5 分步、角色多选均价、交付系数、小计；Web3D 配置 Tab 暴露在参数配置页）
+- 待办：补充/运行自动化测试（Supertest/Jest 与前端冒烟）；前端构建 CI 尚未执行（本地仅手测）。
 - 后续优化：交付系数的获取方式（从模板/历史项目学习，按项目类型/角色推荐并提示来源）。
 - 配置页：已在参数配置 Tabs 中增加“Web3D 风险配置”，可直接维护 Web3D 风险项与工作量模板（/config/web3d-risk 仍可直达）。
+- 报价/导出：基础成本=角色均价×人天×交付系数汇总，风险系数来自 Step1-3（clamp 1~3），总成本=基础成本×风险系数；导出支持 Web3D 专用格式（含角色均价/风险/工作量）。
+- 后期优化：基于评估数据与模型配置，支持 AI 生成项目范围说明书（SOW）草稿，供导出/下载。
+- 后期优化：历史项目详情的“评估数据”块暂时隐藏，需重新设计结构化展示或下载入口。

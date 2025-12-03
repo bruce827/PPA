@@ -1,6 +1,6 @@
 const db = require('../utils/db');
 
-const WORKLOAD_CATEGORIES = ['data_processing', 'core_dev', 'business_logic'];
+const WORKLOAD_CATEGORIES = ['data_processing', 'core_dev', 'business_logic', 'performance'];
 
 // ============ 风险项 ============ //
 

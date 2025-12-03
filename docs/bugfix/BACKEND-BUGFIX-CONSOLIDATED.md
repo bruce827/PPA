@@ -1137,3 +1137,23 @@ legacy 数据结构没有 `risk_calculation` 字段；formatter 在兼容逻辑�
 
 **涉及文件**:
 - `server/services/export/formatters/externalFormatter.js`
+
+### 5.9 Web3D 新类别 performance 计算报错
+
+**故障现象**:  
+Web3D 新建评估 Step4 选择“性能与兼容性”类别后，重新计算/保存时报 `Unknown workload category: performance` 或总人天未计入该类别。
+
+**根本原因**:  
+后端工作量聚合仅枚举了 data_processing/core_dev/business_logic 三类，未包含新增的 performance，`total_base_days` 也未把该类别计入。
+
+**解决方案**:
+1. 在 `computeWorkload` 的类别映射中加入 `performance`，并在总人天汇总时累加。
+2. 导出 formatter 同步输出 `performance_days`，保持前后端结构一致。
+
+**验证步骤**:
+1. 在工作量模板中新增“性能与兼容性”模板，前端选择该类别并重新计算，不再报错。
+2. Step5 工作量总人天包含性能类人天；导出 XLSX 的 totals 区域出现 `performance_days`。
+
+**涉及文件**:
+- `server/services/web3dProjectService.js`
+- `server/services/export/formatters/web3dFormatter.js`

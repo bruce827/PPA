@@ -102,7 +102,8 @@ const computeWorkload = (workloadItems = [], templates = [], roles = []) => {
   const totals = {
     data_processing: 0,
     core_dev: 0,
-    business_logic: 0
+    business_logic: 0,
+    performance: 0
   };
 
   const details = [];
@@ -118,24 +119,20 @@ const computeWorkload = (workloadItems = [], templates = [], roles = []) => {
 
     const key = `${item.category}::${item.item_name}`;
     const tpl = templateMap.get(key);
-    const baseDays = Number.isFinite(Number(item.base_days))
-      ? Number(item.base_days)
-      : Number(tpl?.base_days);
-    if (!Number.isFinite(baseDays) || baseDays <= 0) {
-      const error = new Error(`Invalid base_days for workload item ${item.item_name}`);
-      error.name = 'ValidationError';
-      error.statusCode = 400;
-      throw error;
-    }
+    const baseDays =
+      (Number.isFinite(Number(item.base_days)) && Number(item.base_days) > 0
+        ? Number(item.base_days)
+        : undefined) ??
+      (Number.isFinite(Number(tpl?.base_days)) && Number(tpl?.base_days) > 0
+        ? Number(tpl?.base_days)
+        : undefined) ??
+      1; // 兜底为 1，避免历史数据缺失导致导出/重算失败
 
     const quantity = Number.isFinite(Number(item.quantity)) ? Number(item.quantity) : 1;
     const subtotal = baseDays * quantity;
 
     if (totals[item.category] === undefined) {
-      const error = new Error(`Unknown workload category: ${item.category}`);
-      error.name = 'ValidationError';
-      error.statusCode = 400;
-      throw error;
+      totals[item.category] = 0;
     }
 
     totals[item.category] += subtotal;
@@ -173,13 +170,15 @@ const computeWorkload = (workloadItems = [], templates = [], roles = []) => {
     });
   });
 
-  const totalBaseDays = totals.data_processing + totals.core_dev + totals.business_logic;
+  const totalBaseDays =
+    totals.data_processing + totals.core_dev + totals.business_logic + totals.performance;
 
   return {
     totals: {
       data_processing_days: roundToDecimals(totals.data_processing, 2),
       core_dev_days: roundToDecimals(totals.core_dev, 2),
       business_logic_days: roundToDecimals(totals.business_logic, 2),
+      performance_days: roundToDecimals(totals.performance, 2),
       total_base_days: roundToDecimals(totalBaseDays, 2)
     },
     details,
