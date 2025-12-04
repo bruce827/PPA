@@ -1,4 +1,5 @@
 // 运行时配置
+import { VersionModal } from '@/components/VersionModal';
 import { App } from 'antd';
 import React from 'react';
 import logo from './assets/logo.svg';
@@ -26,18 +27,28 @@ export const layout = () => {
       </div>
     ),
     menuFooterRender: () => (
-      <div style={{ textAlign: 'center', padding: '16px 0' }}>
-        <img
-          src={version}
-          alt="version icon"
-          style={{
-            width: '14px',
-            height: '14px',
-            marginRight: '8px',
-            marginBottom: '4px',
-          }}
-        />
-        <span>{app_version}</span>
+      <div
+        style={{
+          width: '100%',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: '16px 0',
+          cursor: 'pointer',
+        }}
+      >
+        <VersionModal>
+          <img
+            src={version}
+            alt="version icon"
+            style={{
+              width: '14px',
+              height: '14px',
+              marginRight: '8px',
+            }}
+          />
+          <span>{app_version}</span>
+        </VersionModal>
       </div>
     ),
 

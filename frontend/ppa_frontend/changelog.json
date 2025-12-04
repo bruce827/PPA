@@ -1,0 +1,18 @@
+[
+  {
+    "version": "V1.1.0-alpha",
+    "date": "2024-05-20",
+    "changes": [
+      { "type": "feat", "content": "新增3D项目的评估" },
+      { "type": "bugfix", "content": "修复前端交互bug" },
+      { "type": "opt", "content": "优化版本流程" }
+    ]
+  },
+  {
+    "version": "V1.0.0-alpha",
+    "date": "2024-05-01",
+    "changes": [
+      { "type": "feat", "content": "系统初始化" }
+    ]
+  }
+]

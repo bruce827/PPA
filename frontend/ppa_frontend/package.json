@@ -1,7 +1,7 @@
 {
   "private": true,
   "author": "jim <bruce870827@gmail.com>",
-  "version":"V1.0.0-alpha",
+  "version":"V1.1.0-alpha",
   "scripts": {
     "build": "max build",
     "dev": "max dev",
