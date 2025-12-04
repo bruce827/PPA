@@ -195,36 +195,37 @@ const OtherCostsForm: React.FC<OtherCostsFormProps> = ({
             description: '',
             cost: 0,
           }}
+          itemRender={({ listDom, action }, { index }) => (
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'flex-start',
+                gap: 8,
+                width: '100%',
+              }}
+            >
+              <div style={{ flex: 1 }}>{listDom}</div>
+              <div style={{ marginTop: 30, display: 'flex', gap: 8 }}>
+                <Button onClick={() => openPicker(index)}>引用项目</Button>
+                {action}
+              </div>
+            </div>
+          )}
         >
-          {(fields, { remove }) => {
-            // 确保 fields 是数组，防止数据异常导致页面崩溃
-            const fieldList = Array.isArray(fields) ? fields : [];
-            return (
-              <>
-                {fieldList.map((field, index) => (
-                  <ProForm.Group key={field.key} grid rowProps={{ gutter: 16 }}>
-                  <ProFormText
-                    name={[field.name, 'description']}
-                    label="风险内容"
-                    rules={[{ required: true }]}
-                    colProps={{ xs: 24, sm: 12, md: 12 }}
-                  />
-                  <ProFormDigit
-                    name={[field.name, 'cost']}
-                    label="预估费用 (万元)"
-                    rules={[{ required: true, message: '请输入费用' }]}
-                    colProps={{ xs: 24, sm: 6, md: 6 }}
-                  />
-                  <div
-                    style={{ display: 'flex', alignItems: 'center', gap: 8 }}
-                  >
-                    <Button onClick={() => openPicker(index)}>引用项目</Button>
-                  </div>
-                </ProForm.Group>
-              ))}
-            </>
-            );
-          }}
+          <ProForm.Group grid rowProps={{ gutter: 16 }}>
+            <ProFormText
+              name="description"
+              label="风险内容"
+              rules={[{ required: true }]}
+              colProps={{ xs: 24, sm: 12, md: 12 }}
+            />
+            <ProFormDigit
+              name="cost"
+              label="预估费用 (万元)"
+              rules={[{ required: true, message: '请输入费用' }]}
+              colProps={{ xs: 24, sm: 6, md: 6 }}
+            />
+          </ProForm.Group>
         </ProFormList>
       </ProForm>
       <div style={{ marginTop: 24, textAlign: 'right' }}>
