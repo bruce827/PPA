@@ -147,3 +147,6 @@ server/logs/
 /.crush
 /.clinerules
 /frontend/ppa_frontend/src/.umi
+/.agent
+/.codex
+/bmad
