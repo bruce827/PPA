@@ -20,7 +20,7 @@ type RiskSummary = {
 const RISK = {
   // Keep in sync with backend/server/utils/constants.js::RISK
   defaultMaxScore: 100,
-  baseThresholdRatio: 0.8,
+  baseThresholdRatio: 0.7,
   midThresholdRatio: 1,
   peakThresholdRatio: 1.2,
   midFactor: 1.2,

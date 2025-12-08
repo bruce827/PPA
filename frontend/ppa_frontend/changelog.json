@@ -1,5 +1,13 @@
 [
   {
+    "version": "V1.1.1-alpha",
+    "date": "2025-12-08",
+    "changes": [
+      { "type": "feat", "content": "增加行业分析文档并更新核心模块" },
+      { "type": "opt", "content": "增加计算报价请求大小限制" }
+    ]
+  },
+  {
     "version": "V1.1.0-alpha",
     "date": "2024-05-20",
     "changes": [

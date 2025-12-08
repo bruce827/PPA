@@ -678,8 +678,8 @@ const NewAssessmentPage = () => {
         <Divider />
         <Paragraph strong>分段规则</Paragraph>
         <ul style={{ paddingLeft: 20 }}>
-          <li>风险占比 ≤ 80% → 系数 1.00（基准价）</li>
-          <li>80% &lt; 风险占比 ≤ 100% → 系数在 1.00~1.20 之间线性上浮</li>
+          <li>风险占比 ≤ 70% → 系数 1.00（基准价）</li>
+          <li>70% &lt; 风险占比 ≤ 100% → 系数在 1.00~1.20 之间线性上浮</li>
           <li>100% &lt; 风险占比 ≤ 120% → 系数在 1.20~1.50 之间线性上浮</li>
           <li>风险占比 &gt; 120% → 系数封顶 1.50</li>
         </ul>

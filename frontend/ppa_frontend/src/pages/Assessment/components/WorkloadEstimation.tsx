@@ -717,17 +717,15 @@ const WorkloadEstimation: React.FC<WorkloadEstimationProps> = ({
             >
               一键评估
             </Button>,
-            type === 'integration' && (
-              <Button
-                key="copy"
-                type="link"
-                size="small"
-                disabled={globalDisabled}
-                onClick={() => duplicateRow(type, record)}
-              >
-                复制
-              </Button>
-            ),
+            <Button
+              key="copy"
+              type="link"
+              size="small"
+              disabled={globalDisabled}
+              onClick={() => duplicateRow(type, record)}
+            >
+              复制
+            </Button>,
             <Button
               key="delete"
               type="link"
