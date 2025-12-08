@@ -5,7 +5,7 @@ const db = require('./utils/db'); // Import db utility
 const errorHandler = require('./middleware/errorHandler'); // Global error handler
 const logger = require('./utils/logger');
 
-app.use(express.json({ limit: '20kb' }));
+app.use(express.json({ limit: '1mb' }));
 app.use(allRoutes);
 
 // Global error handling middleware (must be last)
