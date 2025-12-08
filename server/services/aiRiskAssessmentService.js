@@ -382,12 +382,18 @@ async function assessRisk(payload) {
   // 服务层超时稍长于 provider，避免服务提前返回
   const serviceTimeoutMs = providerTimeoutMs + 2000;
 
+  const configuredMaxTokens = parseInt(currentModel?.max_tokens, 10);
+  const providerMaxTokens = Number.isFinite(configuredMaxTokens) && configuredMaxTokens > 0
+    ? configuredMaxTokens
+    : undefined;
+
   const providerParams = {
     prompt: promptContent,
     model: sanitizeModelHint(modelFromDb || promptDefinition.model_hint),
     requestHash,
     api_host: apiHostFromDb,
     api_key: apiKeyFromDb,
+    maxTokens: providerMaxTokens,
   };
 
   if (!providerParams.model) {
@@ -602,6 +608,11 @@ async function normalizeRiskNames(payload) {
     : DEFAULT_TIMEOUT_MS;
   const serviceTimeoutMs = providerTimeoutMs + 2000;
 
+  const configuredMaxTokens = parseInt(currentModel?.max_tokens, 10);
+  const providerMaxTokens = Number.isFinite(configuredMaxTokens) && configuredMaxTokens > 0
+    ? configuredMaxTokens
+    : undefined;
+
   const requestHash = crypto
     .createHash('sha256')
     .update(`normalize:${modelFromDb || 'model'}:${Date.now()}`)
@@ -613,6 +624,7 @@ async function normalizeRiskNames(payload) {
     requestHash,
     api_host: apiHostFromDb,
     api_key: apiKeyFromDb,
+    maxTokens: providerMaxTokens,
   };
 
   if (!providerParams.model) {

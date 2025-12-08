@@ -11,16 +11,18 @@ const { validationError } = require('../utils/errors');
 const TEST_PROMPT = '你是什么模型？';
 
 function ensureTestPayload(config = {}) {
-  const { api_host, api_key, model_name, timeout = 30 } = config;
+  const { api_host, api_key, model_name, timeout = 30, max_tokens } = config;
   if (!api_host || !api_key || !model_name) {
     throw validationError('缺少必填字段：api_host, api_key, model_name');
   }
   const timeoutSec = Number(timeout);
+  const maxTokensNum = Number(max_tokens);
   return {
     api_host,
     api_key,
     model: model_name,
     timeoutMs: Number.isFinite(timeoutSec) ? Math.max(5000, timeoutSec * 1000) : undefined,
+    maxTokens: Number.isFinite(maxTokensNum) && maxTokensNum > 0 ? maxTokensNum : undefined,
   };
 }
 
@@ -41,6 +43,7 @@ async function testConnection(config) {
       api_key: payload.api_key,
       requestHash,
       timeoutMs: payload.timeoutMs,
+      maxTokens: payload.maxTokens,
     });
 
     const rawSource = providerResult.data || providerResult;

@@ -340,7 +340,7 @@ const AIUsagePanel: React.FC<AIUsagePanelProps> = ({ aiUsageInfo, currentModelIn
             知道了
           </Button>,
         ]}
-        destroyOnClose
+        destroyOnHidden
       >
         <div style={{ maxHeight: 480, overflowY: 'auto' }}>
           {aiUsageInfo.workloadEvaluations.map((evaluation, index) =>

@@ -50,7 +50,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 12
+        "register": 11
       },
       "enableBy": "register",
       "type": "preset",
@@ -63,7 +63,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 3
+        "register": 2
       },
       "enableBy": "register",
       "type": "preset",
@@ -80,7 +80,7 @@
             0
           ]
         },
-        "register": 3
+        "register": 2
       },
       "enableBy": "register",
       "type": "plugin",
@@ -94,10 +94,10 @@
       "time": {
         "hooks": {
           "onStart": [
-            1
+            2
           ]
         },
-        "register": 2
+        "register": 3
       },
       "enableBy": "register",
       "type": "plugin",
@@ -113,18 +113,10 @@
           "modifyRoutes": [
             0,
             0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
             0
           ]
         },
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -138,22 +130,14 @@
       "time": {
         "hooks": {
           "onDevCompileDone": [
-            113,
-            34,
-            34,
-            42,
-            29,
-            33,
-            35,
-            70,
+            190,
+            36,
             32,
-            25,
-            25,
-            68,
-            26
+            34,
+            36
           ]
         },
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -167,23 +151,15 @@
       "time": {
         "hooks": {
           "modifyAppData": [
-            27
+            24
           ],
           "onGenerateFiles": [
             2,
-            10,
-            17,
-            29,
-            38,
-            32,
-            27,
-            36,
-            29,
-            27,
-            25
+            13,
+            15
           ]
         },
-        "register": 14
+        "register": 13
       },
       "enableBy": "register",
       "type": "plugin",
@@ -199,18 +175,10 @@
           "addEntryCode": [
             0,
             0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
             0
           ]
         },
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -230,13 +198,6 @@
             0
           ],
           "onPrepareBuildSuccess": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
             0,
             0,
             0,
@@ -289,10 +250,46 @@
             0,
             0,
             0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
             0
           ]
         },
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -309,7 +306,7 @@
             0
           ]
         },
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -322,7 +319,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1222,7 +1219,7 @@
       "time": {
         "hooks": {
           "addBeforeMiddlewares": [
-            6
+            7
           ]
         },
         "register": 0
@@ -1238,7 +1235,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 51
+        "register": 50
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1251,7 +1248,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 24
+        "register": 25
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1264,7 +1261,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 14
+        "register": 13
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1284,18 +1281,6 @@
             0
           ],
           "modifyHTMLFavicon": [
-            0,
-            0,
-            0,
-            1,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
             0,
             0,
             0,
@@ -1327,25 +1312,9 @@
           "onGenerateFiles": [
             1,
             0,
-            0,
-            1,
-            0,
-            0,
-            1,
-            0,
-            1,
-            1,
-            0
+            1
           ],
           "addRuntimePlugin": [
-            0,
-            0,
-            0,
-            0,
-            1,
-            0,
-            0,
-            1,
             0,
             0,
             0
@@ -1364,7 +1333,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1381,10 +1350,10 @@
             1
           ],
           "addBeforeMiddlewares": [
-            2
+            3
           ]
         },
-        "register": 22
+        "register": 21
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/preset-umi/dist/features/mock/mock.js",
@@ -1424,33 +1393,9 @@
           "onGenerateFiles": [
             0,
             0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
             0
           ],
           "addEntryImports": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
             0,
             0,
             0,
@@ -1472,7 +1417,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1489,35 +1434,11 @@
             1
           ],
           "onGenerateFiles": [
-            52,
+            54,
             20,
-            22,
-            26,
-            23,
-            16,
-            36,
-            18,
-            26,
-            26,
-            21
+            24
           ],
           "addPolyfillImports": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
             0,
             0,
             0,
@@ -1544,26 +1465,10 @@
             0,
             0,
             0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
             0
           ]
         },
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1577,15 +1482,7 @@
       "time": {
         "hooks": {
           "onGenerateFiles": [
-            90,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
+            94,
             0,
             0
           ]
@@ -1632,14 +1529,6 @@
           "onGenerateFiles": [
             0,
             0,
-            0,
-            0,
-            0,
-            1,
-            0,
-            0,
-            0,
-            0,
             0
           ],
           "addBeforeMiddlewares": [
@@ -1661,27 +1550,11 @@
         "hooks": {
           "onGenerateFiles": [
             8,
-            5,
-            11,
-            5,
-            9,
-            4,
-            9,
+            6,
+            8,
             4,
             10,
-            4,
-            7,
-            4,
-            8,
-            3,
-            8,
-            5,
-            8,
-            3,
-            9,
-            3,
-            10,
-            3
+            6
           ]
         },
         "register": 2
@@ -1722,7 +1595,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 2
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1736,20 +1609,12 @@
       "time": {
         "hooks": {
           "onGenerateFiles": [
-            255,
-            10,
-            6,
-            7,
-            8,
-            8,
-            7,
-            6,
-            8,
-            9,
-            8
+            253,
+            11,
+            11
           ]
         },
-        "register": 2
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1763,7 +1628,7 @@
       "time": {
         "hooks": {
           "addBeforeBabelPresets": [
-            1
+            0
           ]
         },
         "register": 1
@@ -1779,7 +1644,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 2
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1792,7 +1657,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1805,7 +1670,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 4
+        "register": 5
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/preset-umi/dist/features/apiRoute/apiRoute.js",
@@ -1817,7 +1682,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 15
+        "register": 14
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1832,19 +1697,11 @@
         "hooks": {
           "onGenerateFiles": [
             1,
-            1,
-            0,
-            1,
-            1,
-            1,
-            0,
-            0,
-            1,
             0,
             1
           ]
         },
-        "register": 0
+        "register": 1
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/preset-umi/dist/features/test/test.js",
@@ -1856,7 +1713,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1869,7 +1726,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1882,7 +1739,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1895,7 +1752,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/preset-umi/dist/features/webpack/webpack.js",
@@ -1973,7 +1830,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 16
+        "register": 17
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/preset-umi/dist/features/routePreloadOnLoad/routePreloadOnLoad.js",
@@ -1999,7 +1856,7 @@
       "time": {
         "hooks": {
           "modifyUniBundler": [
-            322
+            368
           ]
         },
         "register": 1
@@ -2028,7 +1885,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 21
+        "register": 23
       },
       "enableBy": "register",
       "type": "plugin",
@@ -2042,10 +1899,10 @@
       "time": {
         "hooks": {
           "modifyAppData": [
-            9
+            7
           ]
         },
-        "register": 26
+        "register": 24
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/preset-umi/dist/commands/dev/dev.js",
@@ -2057,7 +1914,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -2083,7 +1940,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 2
       },
       "enableBy": "register",
       "type": "plugin",
@@ -2096,7 +1953,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -2109,7 +1966,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 3
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -2122,7 +1979,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 2
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -2135,7 +1992,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -2333,26 +2190,10 @@
           "addRuntimePlugin": [
             0,
             0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            1
+            0
           ],
           "onGenerateFiles": [
             1,
-            0,
-            0,
-            0,
-            0,
-            0,
-            1,
-            1,
-            0,
             1,
             0
           ],
@@ -2388,7 +2229,7 @@
       "time": {
         "hooks": {
           "modifyConfig": [
-            4
+            3
           ],
           "modifyAppData": [
             0
@@ -2399,33 +2240,9 @@
             0,
             0,
             0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
             0
           ],
           "addRuntimePlugin": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
             0,
             0,
             0
@@ -2433,27 +2250,11 @@
           "addRuntimePluginKey": [
             0,
             0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
             0
           ],
           "onGenerateFiles": [
             2,
             1,
-            1,
-            1,
-            1,
-            1,
-            0,
-            1,
-            1,
-            0,
             1
           ],
           "addExtraBabelPlugins": [
@@ -2475,7 +2276,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 4
+        "register": 3
       },
       "enableBy": "config",
       "type": "plugin",
@@ -2491,25 +2292,9 @@
           "addRuntimePlugin": [
             0,
             0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
             0
           ],
           "addRuntimePluginKey": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
             0,
             0,
             0
@@ -2517,25 +2302,9 @@
           "onGenerateFiles": [
             1,
             0,
-            0,
-            1,
-            0,
-            1,
-            0,
-            0,
-            0,
-            1,
             0
           ],
           "addExtraModels": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
             0,
             0,
             0
@@ -2562,28 +2331,12 @@
           "addLayouts": [
             0,
             1,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            1
-          ],
-          "modifyAppData": [
             0
           ],
+          "modifyAppData": [
+            1
+          ],
           "addRuntimePlugin": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
             0,
             0,
             0
@@ -2591,26 +2344,10 @@
           "addRuntimePluginKey": [
             0,
             0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
             0
           ],
           "onGenerateFiles": [
-            5,
-            3,
-            3,
-            2,
-            3,
-            3,
-            3,
-            2,
-            2,
+            6,
             2,
             2
           ]
@@ -2657,28 +2394,12 @@
           "addRuntimePlugin": [
             0,
             0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
             0
           ],
           "onGenerateFiles": [
-            21,
-            15,
-            16,
-            18,
-            18,
             19,
-            18,
-            17,
-            17,
-            18,
-            18
+            14,
+            14
           ],
           "addTmpGenerateWatcherPaths": [
             0
@@ -2697,7 +2418,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "config",
       "type": "plugin",
@@ -2713,18 +2434,10 @@
           "addRuntimePluginKey": [
             0,
             0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
             0
           ]
         },
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -2749,7 +2462,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/plugins/dist/qiankun/slave.js",
@@ -2761,7 +2474,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "config",
       "type": "plugin",
@@ -2777,31 +2490,15 @@
           "addRuntimePluginKey": [
             0,
             0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
             0
           ],
           "onGenerateFiles": [
             3,
             1,
-            0,
-            1,
-            0,
-            1,
-            1,
-            1,
-            1,
-            0,
-            0
+            1
           ]
         },
-        "register": 1
+        "register": 0
       },
       "enableBy": "config",
       "type": "plugin",
@@ -2827,7 +2524,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "config",
       "type": "plugin",
@@ -2857,7 +2554,7 @@
             0
           ]
         },
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -2888,7 +2585,6 @@
       "time": {
         "hooks": {
           "onCheckPkgJSON": [
-            0,
             0
           ]
         },
@@ -2905,7 +2601,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -3037,7 +2733,7 @@
     },
     "mfsu": false,
     "define": {
-      "app_version": "V1.0.0-alpha"
+      "app_version": "V1.1.0-alpha"
     }
   },
   "mainConfigFile": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/.umirc.ts",
@@ -3183,7 +2879,7 @@
       }
     },
     "define": {
-      "app_version": "V1.0.0-alpha"
+      "app_version": "V1.1.0-alpha"
     },
     "targets": {
       "chrome": 80
@@ -4226,7 +3922,7 @@
       "parentId": "ant-design-pro-layout",
       "id": "12",
       "absPath": "/config/web3d-risk",
-      "__content": "import {\n  createWeb3dRiskItem,\n  createWeb3dWorkloadTemplate,\n  deleteWeb3dRiskItem,\n  deleteWeb3dWorkloadTemplate,\n  getWeb3dRiskItems,\n  getWeb3dWorkloadTemplates,\n  updateWeb3dRiskItem,\n  updateWeb3dWorkloadTemplate,\n} from '@/services/web3d';\nimport {\n  App,\n  Button,\n  Card,\n  Form,\n  Input,\n  InputNumber,\n  Modal,\n  Space,\n  Table,\n  Tag,\n  Tooltip,\n  Select,\n  Divider,\n} from 'antd';\nimport React, { useEffect, useState } from 'react';\n\nconst extractErrorMsg = (err: any, fallback = '操作失败') =>\n  err?.response?.data?.message || err?.data?.message || err?.message || fallback;\n\ntype RiskModalState =\n  | { mode: 'create'; record?: null }\n  | { mode: 'edit'; record: API_WEB3D.RiskItem }\n  | null;\n\ntype WorkloadModalState =\n  | { mode: 'create'; record?: null }\n  | { mode: 'edit'; record: API_WEB3D.WorkloadTemplate }\n  | null;\n\nconst categoryOptions = [\n  { label: '数据处理', value: 'data_processing' },\n  { label: '核心开发', value: 'core_dev' },\n  { label: '业务逻辑', value: 'business_logic' },\n  { label: '性能与兼容性', value: 'performance' },\n];\n\nconst stepOptions = [\n  { label: 'Step 1: 项目背景与技术选型', value: 'Step 1: 项目背景与技术选型' },\n  { label: 'Step 2: 数据资产现状', value: 'Step 2: 数据资产现状' },\n  { label: 'Step 3: 开发需求评估', value: 'Step 3: 开发需求评估' },\n];\n\nconst stepNameToOrder = (name?: string) => {\n  if (!name) return undefined;\n  if (name.startsWith('Step 1')) return 1;\n  if (name.startsWith('Step 2')) return 2;\n  if (name.startsWith('Step 3')) return 3;\n  return undefined;\n};\n\nconst Web3DRiskConfig: React.FC = () => {\n  const { message } = App.useApp();\n  const [riskItems, setRiskItems] = useState<API_WEB3D.RiskItem[]>([]);\n  const [workloadTemplates, setWorkloadTemplates] = useState<\n    API_WEB3D.WorkloadTemplate[]\n  >([]);\n  const [loading, setLoading] = useState(false);\n  const [riskModal, setRiskModal] = useState<RiskModalState>(null);\n  const [workModal, setWorkModal] = useState<WorkloadModalState>(null);\n  const [riskForm] = Form.useForm();\n  const [workForm] = Form.useForm();\n\n  const load = async () => {\n    setLoading(true);\n    try {\n      const [riskRes, workRes] = await Promise.all([\n        getWeb3dRiskItems(),\n        getWeb3dWorkloadTemplates(),\n      ]);\n      setRiskItems(riskRes?.data || []);\n      setWorkloadTemplates(workRes?.data || []);\n    } catch (err: any) {\n      message.error(err?.message || '加载配置失败');\n    } finally {\n      setLoading(false);\n    }\n  };\n\n  useEffect(() => {\n    load();\n    // eslint-disable-next-line react-hooks/exhaustive-deps\n  }, []);\n\n  const openRiskModal = (payload: RiskModalState) => {\n    setRiskModal(payload);\n    if (payload?.record) {\n      let options = [];\n      try {\n        const parsed = JSON.parse(payload.record.options_json || '[]');\n        if (Array.isArray(parsed)) options = parsed;\n      } catch (_e) {\n        options = [];\n      }\n      riskForm.setFieldsValue({\n        ...payload.record,\n        step_order: payload.record.step_order ?? stepNameToOrder(payload.record.step_name),\n        options,\n      });\n    } else {\n      riskForm.resetFields();\n      riskForm.setFieldValue('step_order', 1);\n      riskForm.setFieldValue('options', [{ label: '', value: 1 }]);\n    }\n  };\n\n  const submitRisk = async () => {\n    const values = await riskForm.validateFields();\n    const options = Array.isArray(values.options) ? values.options : [];\n    try {\n      if (riskModal?.mode === 'edit' && riskModal.record) {\n        await updateWeb3dRiskItem(riskModal.record.id, {\n          ...values,\n          options_json: JSON.stringify(options),\n        });\n      } else {\n        await createWeb3dRiskItem({\n          ...values,\n          options_json: JSON.stringify(options),\n        });\n      }\n      message.success('保存成功');\n      setRiskModal(null);\n      load();\n    } catch (err: any) {\n      message.error(extractErrorMsg(err, '保存失败'));\n    }\n  };\n\n  const submitWork = async () => {\n    const values = await workForm.validateFields();\n    try {\n      if (workModal?.mode === 'edit' && workModal.record) {\n        await updateWeb3dWorkloadTemplate(workModal.record.id, values);\n      } else {\n        await createWeb3dWorkloadTemplate(values);\n      }\n      message.success('保存成功');\n      setWorkModal(null);\n      workForm.resetFields();\n      load();\n    } catch (err: any) {\n      message.error(extractErrorMsg(err, '保存失败'));\n    }\n  };\n\n  const openWorkModal = (payload: WorkloadModalState) => {\n    setWorkModal(payload);\n    if (payload?.record) {\n      workForm.setFieldsValue(payload.record);\n    } else {\n      workForm.resetFields();\n    }\n  };\n\n  const deleteRisk = async (id: number) => {\n    try {\n      await deleteWeb3dRiskItem(id);\n      message.success('已删除');\n      load();\n    } catch (err: any) {\n      message.error(extractErrorMsg(err, '删除失败'));\n    }\n  };\n\n  const deleteWork = async (id: number) => {\n    try {\n      await deleteWeb3dWorkloadTemplate(id);\n      message.success('已删除');\n      load();\n    } catch (err: any) {\n      message.error(extractErrorMsg(err, '删除失败'));\n    }\n  };\n\n  return (\n    <Space direction=\"vertical\" style={{ width: '100%' }} size=\"large\">\n      <Card\n        title=\"风险项配置\"\n        extra={\n          <Button type=\"primary\" onClick={() => openRiskModal({ mode: 'create' })}>\n            新增风险项\n          </Button>\n        }\n        loading={loading}\n      >\n          <Table\n            rowKey=\"id\"\n            dataSource={riskItems}\n            pagination={{ pageSize: 10 }}\n            columns={[\n              { title: '步骤', dataIndex: 'step_order', width: 90 },\n              { title: '步骤名称', dataIndex: 'step_name', ellipsis: false, width: 220 },\n              { title: '风险项', dataIndex: 'item_name', width: 240 },\n              { title: '权重', dataIndex: 'weight', width: 90, align: 'center' },\n              {\n                title: '选项',\n              dataIndex: 'options_json',\n              render: (json) => {\n                try {\n                  const opts = JSON.parse(json);\n                  if (!Array.isArray(opts)) return '-';\n                  return (\n                    <Space wrap>\n                      {opts.map((o: any) => (\n                        <Tag key={o?.label}>{`${o?.label ?? ''} (${o?.value ?? ''})`}</Tag>\n                      ))}\n                    </Space>\n                  );\n                } catch {\n                  return '-';\n                }\n              },\n            },\n            {\n              title: '操作',\n              width: 160,\n              render: (_, record) => (\n                <Space>\n                  <Button type=\"link\" onClick={() => openRiskModal({ mode: 'edit', record })}>\n                    编辑\n                  </Button>\n                  <Button danger type=\"link\" onClick={() => deleteRisk(record.id)}>\n                    删除\n                  </Button>\n                </Space>\n              ),\n            },\n          ]}\n        />\n      </Card>\n\n      <Card\n        title=\"工作量模板\"\n        extra={\n          <Button type=\"primary\" onClick={() => openWorkModal({ mode: 'create' })}>\n            新增模板\n          </Button>\n        }\n        loading={loading}\n      >\n        <Table\n          rowKey=\"id\"\n          dataSource={workloadTemplates}\n          pagination={{ pageSize: 10 }}\n            columns={[\n              {\n                title: '类别',\n                dataIndex: 'category',\n                render: (v) => categoryOptions.find((c) => c.value === v)?.label || v,\n              },\n              { title: '工作项', dataIndex: 'item_name' },\n              { title: '基准工时(天)', dataIndex: 'base_days', width: 140 },\n              // 单位暂隐藏，不参与计算\n              { title: '描述', dataIndex: 'description' },\n            {\n              title: '操作',\n              width: 160,\n              render: (_, record) => (\n                <Space>\n                  <Button type=\"link\" onClick={() => openWorkModal({ mode: 'edit', record })}>\n                    编辑\n                  </Button>\n                  <Button danger type=\"link\" onClick={() => deleteWork(record.id)}>\n                    删除\n                  </Button>\n                </Space>\n              ),\n            },\n          ]}\n        />\n      </Card>\n\n      <Modal\n        title={riskModal?.mode === 'edit' ? '编辑风险项' : '新增风险项'}\n        open={!!riskModal}\n        onOk={submitRisk}\n        onCancel={() => setRiskModal(null)}\n        destroyOnClose\n      >\n        <Form form={riskForm} layout=\"vertical\">\n          <Form.Item\n            name=\"step_name\"\n            label=\"步骤名称\"\n            rules={[{ required: true, message: '请选择步骤名称' }]}\n          >\n            <Select\n              options={stepOptions}\n              placeholder=\"请选择步骤\"\n              showSearch\n              optionFilterProp=\"label\"\n              onChange={(v) => {\n                riskForm.setFieldValue('step_name', v);\n                riskForm.setFieldValue('step_order', stepNameToOrder(v));\n              }}\n            />\n          </Form.Item>\n          <Form.Item name=\"step_order\" hidden>\n            <InputNumber />\n          </Form.Item>\n          <Form.Item\n            name=\"item_name\"\n            label=\"风险项名称\"\n            rules={[{ required: true, message: '请输入风险项名称' }]}\n          >\n            <Input />\n          </Form.Item>\n          <Form.Item name=\"description\" label=\"描述\">\n            <Input.TextArea rows={2} />\n          </Form.Item>\n          <Form.Item\n            name=\"weight\"\n            label=\"权重\"\n            rules={[{ required: true, message: '请输入权重' }]}\n          >\n            <InputNumber min={0.1} step={0.1} style={{ width: '100%' }} />\n          </Form.Item>\n          <Divider style={{ margin: '12px 0' }} />\n          <Form.List name=\"options\" rules={[{ required: true, message: '请至少添加一个选项' }]}>\n            {(fields, { add, remove }) => (\n              <Space direction=\"vertical\" style={{ width: '100%' }} size=\"small\">\n                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>\n                  <Space align=\"center\">\n                    <span style={{ fontWeight: 500 }}>选项列表</span>\n                    <Tooltip title=\"每行包含显示文案与对应分值，提交时自动转换为 JSON\">\n                      <Tag color=\"blue\">示例：Three.js / 1</Tag>\n                    </Tooltip>\n                  </Space>\n                  <Button type=\"link\" onClick={() => add({ label: '', value: 1 })}>\n                    新增选项\n                  </Button>\n                </div>\n                {fields.map((field) => (\n                  <div\n                    key={field.key}\n                    style={{\n                      display: 'flex',\n                      alignItems: 'flex-start',\n                      gap: 12,\n                      width: '100%',\n                    }}\n                  >\n                    <Form.Item\n                      {...field}\n                      name={[field.name, 'label']}\n                      style={{ flex: 1, marginBottom: 0 }}\n                      rules={[{ required: true, message: '请输入显示文案' }]}\n                    >\n                      <Input placeholder=\"显示文案，如 Three.js\" />\n                    </Form.Item>\n                    <Form.Item\n                      {...field}\n                      name={[field.name, 'value']}\n                      style={{ width: 100, marginBottom: 0 }}\n                      rules={[{ required: true, message: '请输入分值' }]}\n                    >\n                      <InputNumber placeholder=\"分值\" min={0} step={0.1} style={{ width: '100%' }} />\n                    </Form.Item>\n                    <Button type=\"link\" danger onClick={() => remove(field.name)}>\n                      删除\n                    </Button>\n                  </div>\n                ))}\n              </Space>\n            )}\n          </Form.List>\n        </Form>\n      </Modal>\n\n      <Modal\n        title={workModal?.mode === 'edit' ? '编辑模板' : '新增模板'}\n        open={!!workModal}\n        onOk={submitWork}\n        onCancel={() => setWorkModal(null)}\n        destroyOnClose\n      >\n        <Form form={workForm} layout=\"vertical\">\n          <Form.Item\n            name=\"category\"\n            label=\"类别\"\n            rules={[{ required: true, message: '请选择类别' }]}\n          >\n            <Select options={categoryOptions} placeholder=\"请选择类别\" />\n          </Form.Item>\n          <Form.Item\n            name=\"item_name\"\n            label=\"工作项名称\"\n            rules={[{ required: true, message: '请输入工作项名称' }]}\n          >\n            <Input />\n          </Form.Item>\n          <Form.Item name=\"description\" label=\"描述\">\n            <Input.TextArea rows={2} />\n          </Form.Item>\n          <Form.Item\n            name=\"base_days\"\n            label=\"基准工时(天)\"\n            rules={[{ required: true, message: '请输入基准工时' }]}\n          >\n            <InputNumber min={0.1} step={0.1} style={{ width: '100%' }} />\n          </Form.Item>\n        </Form>\n      </Modal>\n    </Space>\n  );\n};\n\nexport default Web3DRiskConfig;\n",
+      "__content": "import {\n  createWeb3dRiskItem,\n  createWeb3dWorkloadTemplate,\n  deleteWeb3dRiskItem,\n  deleteWeb3dWorkloadTemplate,\n  getWeb3dRiskItems,\n  getWeb3dWorkloadTemplates,\n  updateWeb3dRiskItem,\n  updateWeb3dWorkloadTemplate,\n} from '@/services/web3d';\nimport {\n  App,\n  Button,\n  Card,\n  Form,\n  Input,\n  InputNumber,\n  Modal,\n  Space,\n  Table,\n  Tag,\n  Tooltip,\n  Select,\n  Divider,\n} from 'antd';\nimport React, { useEffect, useState } from 'react';\n\nconst extractErrorMsg = (err: any, fallback = '操作失败') =>\n  err?.response?.data?.message || err?.data?.message || err?.message || fallback;\n\ntype RiskModalState =\n  | { mode: 'create'; record?: null }\n  | { mode: 'edit'; record: API_WEB3D.RiskItem }\n  | null;\n\ntype WorkloadModalState =\n  | { mode: 'create'; record?: null }\n  | { mode: 'edit'; record: API_WEB3D.WorkloadTemplate }\n  | null;\n\nconst categoryOptions = [\n  { label: '数据处理', value: 'data_processing' },\n  { label: '核心开发', value: 'core_dev' },\n  { label: '业务逻辑', value: 'business_logic' },\n  { label: '性能与兼容性', value: 'performance' },\n];\n\nconst stepOptions = [\n  { label: 'Step 1: 项目背景与技术选型', value: 'Step 1: 项目背景与技术选型' },\n  { label: 'Step 2: 数据资产现状', value: 'Step 2: 数据资产现状' },\n  { label: 'Step 3: 开发需求评估', value: 'Step 3: 开发需求评估' },\n];\n\nconst stepNameToOrder = (name?: string) => {\n  if (!name) return undefined;\n  if (name.startsWith('Step 1')) return 1;\n  if (name.startsWith('Step 2')) return 2;\n  if (name.startsWith('Step 3')) return 3;\n  return undefined;\n};\n\nconst Web3DRiskConfig: React.FC = () => {\n  const { message } = App.useApp();\n  const [riskItems, setRiskItems] = useState<API_WEB3D.RiskItem[]>([]);\n  const [workloadTemplates, setWorkloadTemplates] = useState<\n    API_WEB3D.WorkloadTemplate[]\n  >([]);\n  const [loading, setLoading] = useState(false);\n  const [riskModal, setRiskModal] = useState<RiskModalState>(null);\n  const [workModal, setWorkModal] = useState<WorkloadModalState>(null);\n  const [riskForm] = Form.useForm();\n  const [workForm] = Form.useForm();\n\n  const load = async () => {\n    setLoading(true);\n    try {\n      const [riskRes, workRes] = await Promise.all([\n        getWeb3dRiskItems(),\n        getWeb3dWorkloadTemplates(),\n      ]);\n      setRiskItems(riskRes?.data || []);\n      setWorkloadTemplates(workRes?.data || []);\n    } catch (err: any) {\n      message.error(err?.message || '加载配置失败');\n    } finally {\n      setLoading(false);\n    }\n  };\n\n  useEffect(() => {\n    load();\n    // eslint-disable-next-line react-hooks/exhaustive-deps\n  }, []);\n\n  const openRiskModal = (payload: RiskModalState) => {\n    setRiskModal(payload);\n    if (payload?.record) {\n      let options = [];\n      try {\n        const parsed = JSON.parse(payload.record.options_json || '[]');\n        if (Array.isArray(parsed)) options = parsed;\n      } catch (_e) {\n        options = [];\n      }\n      riskForm.setFieldsValue({\n        ...payload.record,\n        step_order: payload.record.step_order ?? stepNameToOrder(payload.record.step_name),\n        options,\n      });\n    } else {\n      riskForm.resetFields();\n      riskForm.setFieldValue('step_order', 1);\n      riskForm.setFieldValue('options', [{ label: '', value: 1 }]);\n    }\n  };\n\n  const submitRisk = async () => {\n    const values = await riskForm.validateFields();\n    const options = Array.isArray(values.options) ? values.options : [];\n    try {\n      if (riskModal?.mode === 'edit' && riskModal.record) {\n        await updateWeb3dRiskItem(riskModal.record.id, {\n          ...values,\n          options_json: JSON.stringify(options),\n        });\n      } else {\n        await createWeb3dRiskItem({\n          ...values,\n          options_json: JSON.stringify(options),\n        });\n      }\n      message.success('保存成功');\n      setRiskModal(null);\n      load();\n    } catch (err: any) {\n      message.error(extractErrorMsg(err, '保存失败'));\n    }\n  };\n\n  const submitWork = async () => {\n    const values = await workForm.validateFields();\n    try {\n      if (workModal?.mode === 'edit' && workModal.record) {\n        await updateWeb3dWorkloadTemplate(workModal.record.id, values);\n      } else {\n        await createWeb3dWorkloadTemplate(values);\n      }\n      message.success('保存成功');\n      setWorkModal(null);\n      workForm.resetFields();\n      load();\n    } catch (err: any) {\n      message.error(extractErrorMsg(err, '保存失败'));\n    }\n  };\n\n  const openWorkModal = (payload: WorkloadModalState) => {\n    setWorkModal(payload);\n    if (payload?.record) {\n      workForm.setFieldsValue(payload.record);\n    } else {\n      workForm.resetFields();\n    }\n  };\n\n  const deleteRisk = async (id: number) => {\n    try {\n      await deleteWeb3dRiskItem(id);\n      message.success('已删除');\n      load();\n    } catch (err: any) {\n      message.error(extractErrorMsg(err, '删除失败'));\n    }\n  };\n\n  const deleteWork = async (id: number) => {\n    try {\n      await deleteWeb3dWorkloadTemplate(id);\n      message.success('已删除');\n      load();\n    } catch (err: any) {\n      message.error(extractErrorMsg(err, '删除失败'));\n    }\n  };\n\n  return (\n    <Space direction=\"vertical\" style={{ width: '100%' }} size=\"large\">\n      <Card\n        title=\"风险项配置\"\n        extra={\n          <Button type=\"primary\" onClick={() => openRiskModal({ mode: 'create' })}>\n            新增风险项\n          </Button>\n        }\n        loading={loading}\n      >\n          <Table\n            rowKey=\"id\"\n            dataSource={riskItems}\n            pagination={{ pageSize: 10 }}\n            columns={[\n              { title: '步骤', dataIndex: 'step_order', width: 90 },\n              { title: '步骤名称', dataIndex: 'step_name', ellipsis: false, width: 220 },\n              { title: '风险项', dataIndex: 'item_name', width: 240 },\n              { title: '权重', dataIndex: 'weight', width: 90, align: 'center' },\n              {\n                title: '选项',\n              dataIndex: 'options_json',\n              render: (json) => {\n                try {\n                  const opts = JSON.parse(json);\n                  if (!Array.isArray(opts)) return '-';\n                  return (\n                    <Space wrap>\n                      {opts.map((o: any) => (\n                        <Tag key={o?.label}>{`${o?.label ?? ''} (${o?.value ?? ''})`}</Tag>\n                      ))}\n                    </Space>\n                  );\n                } catch {\n                  return '-';\n                }\n              },\n            },\n            {\n              title: '操作',\n              width: 160,\n              render: (_, record) => (\n                <Space>\n                  <Button type=\"link\" onClick={() => openRiskModal({ mode: 'edit', record })}>\n                    编辑\n                  </Button>\n                  <Button danger type=\"link\" onClick={() => deleteRisk(record.id)}>\n                    删除\n                  </Button>\n                </Space>\n              ),\n            },\n          ]}\n        />\n      </Card>\n\n      <Card\n        title=\"工作量模板\"\n        extra={\n          <Button type=\"primary\" onClick={() => openWorkModal({ mode: 'create' })}>\n            新增模板\n          </Button>\n        }\n        loading={loading}\n      >\n        <Table\n          rowKey=\"id\"\n          dataSource={workloadTemplates}\n          pagination={{ pageSize: 10 }}\n            columns={[\n              {\n                title: '类别',\n                dataIndex: 'category',\n                render: (v) => categoryOptions.find((c) => c.value === v)?.label || v,\n              },\n              { title: '工作项', dataIndex: 'item_name' },\n              { title: '基准工时(天)', dataIndex: 'base_days', width: 140 },\n              // 单位暂隐藏，不参与计算\n              { title: '描述', dataIndex: 'description' },\n            {\n              title: '操作',\n              width: 160,\n              render: (_, record) => (\n                <Space>\n                  <Button type=\"link\" onClick={() => openWorkModal({ mode: 'edit', record })}>\n                    编辑\n                  </Button>\n                  <Button danger type=\"link\" onClick={() => deleteWork(record.id)}>\n                    删除\n                  </Button>\n                </Space>\n              ),\n            },\n          ]}\n        />\n      </Card>\n\n      <Modal\n        title={riskModal?.mode === 'edit' ? '编辑风险项' : '新增风险项'}\n        open={!!riskModal}\n        onOk={submitRisk}\n        onCancel={() => setRiskModal(null)}\n        destroyOnHidden\n      >\n        <Form form={riskForm} layout=\"vertical\">\n          <Form.Item\n            name=\"step_name\"\n            label=\"步骤名称\"\n            rules={[{ required: true, message: '请选择步骤名称' }]}\n          >\n            <Select\n              options={stepOptions}\n              placeholder=\"请选择步骤\"\n              showSearch\n              optionFilterProp=\"label\"\n              onChange={(v) => {\n                riskForm.setFieldValue('step_name', v);\n                riskForm.setFieldValue('step_order', stepNameToOrder(v));\n              }}\n            />\n          </Form.Item>\n          <Form.Item name=\"step_order\" hidden>\n            <InputNumber />\n          </Form.Item>\n          <Form.Item\n            name=\"item_name\"\n            label=\"风险项名称\"\n            rules={[{ required: true, message: '请输入风险项名称' }]}\n          >\n            <Input />\n          </Form.Item>\n          <Form.Item name=\"description\" label=\"描述\">\n            <Input.TextArea rows={2} />\n          </Form.Item>\n          <Form.Item\n            name=\"weight\"\n            label=\"权重\"\n            rules={[{ required: true, message: '请输入权重' }]}\n          >\n            <InputNumber min={0.1} step={0.1} style={{ width: '100%' }} />\n          </Form.Item>\n          <Divider style={{ margin: '12px 0' }} />\n          <Form.List name=\"options\" rules={[{ required: true, message: '请至少添加一个选项' }]}>\n            {(fields, { add, remove }) => (\n              <Space direction=\"vertical\" style={{ width: '100%' }} size=\"small\">\n                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>\n                  <Space align=\"center\">\n                    <span style={{ fontWeight: 500 }}>选项列表</span>\n                    <Tooltip title=\"每行包含显示文案与对应分值，提交时自动转换为 JSON\">\n                      <Tag color=\"blue\">示例：Three.js / 1</Tag>\n                    </Tooltip>\n                  </Space>\n                  <Button type=\"link\" onClick={() => add({ label: '', value: 1 })}>\n                    新增选项\n                  </Button>\n                </div>\n                {fields.map((field) => (\n                  <div\n                    key={field.key}\n                    style={{\n                      display: 'flex',\n                      alignItems: 'flex-start',\n                      gap: 12,\n                      width: '100%',\n                    }}\n                  >\n                    <Form.Item\n                      {...field}\n                      name={[field.name, 'label']}\n                      style={{ flex: 1, marginBottom: 0 }}\n                      rules={[{ required: true, message: '请输入显示文案' }]}\n                    >\n                      <Input placeholder=\"显示文案，如 Three.js\" />\n                    </Form.Item>\n                    <Form.Item\n                      {...field}\n                      name={[field.name, 'value']}\n                      style={{ width: 100, marginBottom: 0 }}\n                      rules={[{ required: true, message: '请输入分值' }]}\n                    >\n                      <InputNumber placeholder=\"分值\" min={0} step={0.1} style={{ width: '100%' }} />\n                    </Form.Item>\n                    <Button type=\"link\" danger onClick={() => remove(field.name)}>\n                      删除\n                    </Button>\n                  </div>\n                ))}\n              </Space>\n            )}\n          </Form.List>\n        </Form>\n      </Modal>\n\n      <Modal\n        title={workModal?.mode === 'edit' ? '编辑模板' : '新增模板'}\n        open={!!workModal}\n        onOk={submitWork}\n        onCancel={() => setWorkModal(null)}\n        destroyOnHidden\n      >\n        <Form form={workForm} layout=\"vertical\">\n          <Form.Item\n            name=\"category\"\n            label=\"类别\"\n            rules={[{ required: true, message: '请选择类别' }]}\n          >\n            <Select options={categoryOptions} placeholder=\"请选择类别\" />\n          </Form.Item>\n          <Form.Item\n            name=\"item_name\"\n            label=\"工作项名称\"\n            rules={[{ required: true, message: '请输入工作项名称' }]}\n          >\n            <Input />\n          </Form.Item>\n          <Form.Item name=\"description\" label=\"描述\">\n            <Input.TextArea rows={2} />\n          </Form.Item>\n          <Form.Item\n            name=\"base_days\"\n            label=\"基准工时(天)\"\n            rules={[{ required: true, message: '请输入基准工时' }]}\n          >\n            <InputNumber min={0.1} step={0.1} style={{ width: '100%' }} />\n          </Form.Item>\n        </Form>\n      </Modal>\n    </Space>\n  );\n};\n\nexport default Web3DRiskConfig;\n",
       "__isJSFile": true,
       "__absFile": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/src/pages/Config/Web3DRisk.tsx"
     },
@@ -6199,7 +5895,7 @@
             "format": "esm"
           },
           "src/pages/Assessment/components/Overview.tsx": {
-            "bytes": 24843,
+            "bytes": 24844,
             "imports": [
               {
                 "path": "src/services/assessment/index.ts",
@@ -6446,7 +6142,7 @@
             "format": "esm"
           },
           "src/pages/Assessment/components/WorkloadEstimation.tsx": {
-            "bytes": 36333,
+            "bytes": 37248,
             "imports": [
               {
                 "path": "src/constants/index.ts",
@@ -6655,7 +6351,7 @@
             "format": "esm"
           },
           "src/pages/Config/Web3DRisk.tsx": {
-            "bytes": 13535,
+            "bytes": 13537,
             "imports": [
               {
                 "path": "src/services/web3d/index.ts",
@@ -7103,7 +6799,7 @@
             "format": "esm"
           },
           "src/pages/ModelConfig/Prompts/Form.tsx": {
-            "bytes": 18233,
+            "bytes": 18251,
             "imports": [
               {
                 "path": "src/services/config/index.ts",
@@ -9485,7 +9181,7 @@
                 "bytesInOutput": 1009
               },
               "src/pages/Assessment/components/Overview.tsx": {
-                "bytesInOutput": 28437
+                "bytesInOutput": 28438
               },
               "src/pages/Assessment/components/AIAssessmentModal.tsx": {
                 "bytesInOutput": 24288
@@ -9506,7 +9202,7 @@
                 "bytesInOutput": 10344
               },
               "src/pages/Assessment/components/WorkloadEstimation.tsx": {
-                "bytesInOutput": 40536
+                "bytesInOutput": 41471
               },
               "src/pages/Assessment/New.tsx": {
                 "bytesInOutput": 30020
@@ -9518,7 +9214,7 @@
                 "bytesInOutput": 14230
               },
               "src/pages/Config/Web3DRisk.tsx": {
-                "bytesInOutput": 16974
+                "bytesInOutput": 16976
               },
               "src/pages/Config.tsx": {
                 "bytesInOutput": 23794
@@ -9563,7 +9259,7 @@
                 "bytesInOutput": 4111
               },
               "src/pages/ModelConfig/Prompts/Form.tsx": {
-                "bytesInOutput": 21379
+                "bytesInOutput": 21406
               },
               "src/.umi/plugin-layout/Logo.tsx": {
                 "bytesInOutput": 5514
@@ -9587,7 +9283,7 @@
                 "bytesInOutput": 2010
               }
             },
-            "bytes": 490055
+            "bytes": 491020
           }
         }
       }

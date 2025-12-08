@@ -15,7 +15,7 @@ function delay(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-function buildPayload(prompt) {
+function buildPayload(prompt, maxTokens) {
   const systemPrompt =
     process.env.AI_PROVIDER_SYSTEM_PROMPT ||
     'You are a senior project risk analyst. Return JSON results only.';
@@ -30,6 +30,13 @@ function buildPayload(prompt) {
       },
     ],
   };
+
+  const numericMaxTokens = Number(maxTokens);
+  if (Number.isFinite(numericMaxTokens) && numericMaxTokens > 0) {
+    body.generationConfig = {
+      maxOutputTokens: numericMaxTokens,
+    };
+  }
 
   return JSON.stringify(body);
 }
@@ -90,7 +97,7 @@ function normalizeToOpenAIShape(data, model) {
   };
 }
 
-function requestOnce({ prompt, model, requestHash, api_host, api_key, timeoutMs }) {
+function requestOnce({ prompt, model, requestHash, api_host, api_key, timeoutMs, maxTokens }) {
   if (!api_key) {
     return Promise.reject(internalError('Gemini API Key 未配置'));
   }
@@ -107,7 +114,7 @@ function requestOnce({ prompt, model, requestHash, api_host, api_key, timeoutMs 
     return Promise.reject(internalError('Gemini API Host 配置不正确'));
   }
 
-  const payload = buildPayload(prompt, model);
+  const payload = buildPayload(prompt, maxTokens);
 
   const options = {
     hostname: url.hostname,
@@ -248,4 +255,3 @@ async function createRiskAssessment(params) {
 module.exports = {
   createRiskAssessment,
 };
-

@@ -162,6 +162,31 @@ const WorkloadEstimation: React.FC<WorkloadEstimationProps> = ({
     onWorkloadChange(devWorkload, normalized);
   };
 
+  const duplicateRow = (
+    type: 'dev' | 'integration',
+    record: API.WorkloadRecord,
+  ) => {
+    const sourceList = type === 'dev' ? devWorkload : integrationWorkload;
+    const index = sourceList.findIndex((item) => item.id === record.id);
+    if (index === -1) {
+      return;
+    }
+
+    const clonedRow = normalizeRow({
+      ...record,
+      id: createRowId(),
+    });
+
+    const nextList = [...sourceList];
+    nextList.splice(index + 1, 0, clonedRow);
+
+    if (type === 'dev') {
+      handleDevChange(nextList);
+    } else {
+      handleIntegrationChange(nextList);
+    }
+  };
+
   const removeRow = (type: 'dev' | 'integration', id: string) => {
     if (type === 'dev') {
       handleDevChange(devWorkload.filter((row) => row.id !== id));
@@ -692,6 +717,17 @@ const WorkloadEstimation: React.FC<WorkloadEstimationProps> = ({
             >
               一键评估
             </Button>,
+            type === 'integration' && (
+              <Button
+                key="copy"
+                type="link"
+                size="small"
+                disabled={globalDisabled}
+                onClick={() => duplicateRow(type, record)}
+              >
+                复制
+              </Button>
+            ),
             <Button
               key="delete"
               type="link"

@@ -38,8 +38,8 @@ async function main() {
       process.exit(2);
     }
 
-    const { provider, api_host, api_key, model_name } = model;
-    console.log('[配置]', { provider, api_host, model_name, api_key_set: !!api_key });
+    const { provider, api_host, api_key, model_name, max_tokens } = model;
+    console.log('[配置]', { provider, api_host, model_name, api_key_set: !!api_key, max_tokens });
 
     if (!/doubao|volc/i.test(String(provider || ''))) {
       console.warn('警告：当前 provider 非 doubao/volc，将仍使用 Doubao Provider 进行尝试...');
@@ -62,6 +62,7 @@ async function main() {
       api_key,
       requestHash,
       timeoutMs: 15000,
+      maxTokens: Number.isFinite(Number(max_tokens)) && Number(max_tokens) > 0 ? Number(max_tokens) : undefined,
     });
 
     const raw = result?.data || {};
@@ -82,4 +83,3 @@ async function main() {
 }
 
 main();
-

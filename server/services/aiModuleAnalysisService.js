@@ -422,6 +422,11 @@ async function analyzeProjectModules(payload) {
   // 额外服务缓冲：在模型超时基础上再增加 10s，避免边界抖动
   const serviceTimeoutMs = providerTimeoutMs + 10000;
 
+  const configuredMaxTokens = parseInt(currentModel?.max_tokens, 10);
+  const providerMaxTokens = Number.isFinite(configuredMaxTokens) && configuredMaxTokens > 0
+    ? configuredMaxTokens
+    : undefined;
+
   const requestHash = crypto
     .createHash('sha256')
     .update(`modules:${modelFromDb || 'model'}:${Date.now()}`)
@@ -433,6 +438,7 @@ async function analyzeProjectModules(payload) {
     requestHash,
     api_host: apiHostFromDb,
     api_key: apiKeyFromDb,
+    maxTokens: providerMaxTokens,
   };
 
   if (!providerParams.model) {

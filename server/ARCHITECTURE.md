@@ -32,7 +32,7 @@
 **关键代码**：
 
 ```javascript
-app.use(express.json({ limit: '20kb' }));
+app.use(express.json({ limit: '1mb' }));
 app.use(allRoutes);           // 挂载所有路由
 app.use(errorHandler);        // 全局错误处理（必须最后挂载）
 ```
@@ -245,7 +245,7 @@ const errorHandler = (err, req, res, next) => {
 - **响应时间监控**：所有API端点响应时间必须 < 500ms
 - **连接池管理**：SQLite数据库连接的初始化和关闭
 - **超时控制**：AI调用超时保护机制
-- **内存限制**：JSON请求体大小限制（20kb）
+- **内存限制**：JSON请求体大小限制（1mb）
 - **优雅退出**：SIGINT信号处理，确保资源释放
 
 ## 六、AI集成架构特点

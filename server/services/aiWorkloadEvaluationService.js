@@ -258,6 +258,11 @@ async function evaluateWorkload(payload) {
     : DEFAULT_TIMEOUT_MS;
   const serviceTimeoutMs = providerTimeoutMs + 2000;
 
+  const configuredMaxTokens = parseInt(currentModel?.max_tokens, 10);
+  const providerMaxTokens = Number.isFinite(configuredMaxTokens) && configuredMaxTokens > 0
+    ? configuredMaxTokens
+    : undefined;
+
   const requestHash = crypto
     .createHash('sha256')
     .update(`${promptId}:${module1}:${module2}:${module3}:${description}`)
@@ -269,6 +274,7 @@ async function evaluateWorkload(payload) {
     requestHash,
     api_host: apiHostFromDb,
     api_key: apiKeyFromDb,
+    maxTokens: providerMaxTokens,
   };
 
   if (!providerParams.model) {

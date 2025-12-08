@@ -461,7 +461,7 @@ const PromptTemplateForm: React.FC = () => {
             {detectedUndefinedVars.length > 0 && (
               <Alert
                 message={
-                  <Space>
+                  <Space wrap size="small">
                     <span>
                       检测到 {detectedUndefinedVars.length} 个未定义变量:
                     </span>

@@ -16,7 +16,12 @@ function delay(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-function buildPayload(prompt, model) {
+function buildPayload(prompt, model, maxTokens) {
+  const fallbackMaxTokens = Number(process.env.AI_PROVIDER_MAX_TOKENS || '800');
+  const resolvedMaxTokens = Number.isFinite(Number(maxTokens))
+    ? Number(maxTokens)
+    : fallbackMaxTokens;
+
   const body = {
     model,
     messages: [
@@ -29,14 +34,14 @@ function buildPayload(prompt, model) {
       { role: 'user', content: prompt },
     ],
     temperature: Number(process.env.AI_PROVIDER_TEMPERATURE || '0.2'),
-    max_tokens: Number(process.env.AI_PROVIDER_MAX_TOKENS || '800'),
+    max_tokens: resolvedMaxTokens,
     response_format: { type: 'json_object' },
   };
 
   return JSON.stringify(body);
 }
 
-function requestOnce({ prompt, model, requestHash, api_host, api_key, timeoutMs }) {
+function requestOnce({ prompt, model, requestHash, api_host, api_key, timeoutMs, maxTokens }) {
   if (!api_key) {
     return Promise.reject(internalError('AI Provider API Key 未配置'));
   }
@@ -52,7 +57,7 @@ function requestOnce({ prompt, model, requestHash, api_host, api_key, timeoutMs 
     return Promise.reject(internalError('AI Provider API Host 配置不正确'));
   }
 
-  const payload = buildPayload(prompt, model);
+  const payload = buildPayload(prompt, model, maxTokens);
 
   const options = {
     hostname: url.hostname,

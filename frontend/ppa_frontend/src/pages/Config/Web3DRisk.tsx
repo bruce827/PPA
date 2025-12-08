@@ -286,7 +286,7 @@ const Web3DRiskConfig: React.FC = () => {
         open={!!riskModal}
         onOk={submitRisk}
         onCancel={() => setRiskModal(null)}
-        destroyOnClose
+        destroyOnHidden
       >
         <Form form={riskForm} layout="vertical">
           <Form.Item
@@ -382,7 +382,7 @@ const Web3DRiskConfig: React.FC = () => {
         open={!!workModal}
         onOk={submitWork}
         onCancel={() => setWorkModal(null)}
-        destroyOnClose
+        destroyOnHidden
       >
         <Form form={workForm} layout="vertical">
           <Form.Item
