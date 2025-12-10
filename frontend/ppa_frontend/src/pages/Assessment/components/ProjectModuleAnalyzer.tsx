@@ -478,7 +478,7 @@ const ProjectModuleAnalyzer: React.FC<ProjectModuleAnalyzerProps> = ({
                             <Input.TextArea
                               rows={8}
                               showCount
-                              maxLength={3000}
+                              maxLength={5000}
                               style={{ fontFamily: 'monospace' }}
                               value={promptVariables[variable.name] || ''}
                               onChange={(e) =>
@@ -487,7 +487,7 @@ const ProjectModuleAnalyzer: React.FC<ProjectModuleAnalyzerProps> = ({
                                   [variable.name]: e.target.value,
                                 }))
                               }
-                              placeholder={variable.placeholder || '请输入项目描述（建议≤3000字）'}
+                              placeholder={variable.placeholder || '请输入项目描述（建议≤5000字）'}
                             />
                           </div>
                           {/* {variable.description && (

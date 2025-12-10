@@ -344,6 +344,122 @@ const NewWeb3D: React.FC = () => {
     },
   ];
 
+  const workloadColumns = [
+    {
+      title: '类别',
+      dataIndex: 'category',
+      render: (val: string, record: WorkloadRow) => (
+        <Select
+          value={val}
+          style={{ minWidth: 160 }}
+          onChange={(v) => updateRow(record.key, { category: v })}
+          options={Array.from(workloadOptionsByCategory.keys()).map((c) => ({
+            label: categoryLabel[c] || c,
+            value: c,
+          }))}
+        />
+      ),
+    },
+    {
+      title: '工作项',
+      dataIndex: 'item_name',
+      render: (val: string, record: WorkloadRow) => {
+        const opts = workloadOptionsByCategory.get(record.category) || [];
+        return (
+          <Select
+            value={val}
+            style={{ minWidth: 220 }}
+            onChange={(v) => updateRow(record.key, { item_name: v })}
+            options={opts.map((tpl) => ({
+              label: tpl.item_name,
+              value: tpl.item_name,
+            }))}
+          />
+        );
+      },
+    },
+    {
+      title: '角色（多选取均价）',
+      dataIndex: 'role_name',
+      render: (_: string, record: WorkloadRow) => (
+        <Select
+          mode="multiple"
+          value={record.role_names && record.role_names.length ? record.role_names : []}
+          style={{ minWidth: 220 }}
+          onChange={(values) => {
+            const selected = (values as string[]) || [];
+            const avg =
+              selected.reduce((sum, roleName) => {
+                const role = roles.find((r) => r.role_name === roleName);
+                return sum + (role?.unit_price || 0);
+              }, 0) / (selected.length || 1);
+            updateRow(record.key, {
+              role_name: selected[0] || '',
+              role_names: selected,
+              unit_price_yuan: avg || undefined,
+            });
+          }}
+          options={roles.map((r) => ({
+            label: `${r.role_name}（¥${r.unit_price}）`,
+            value: r.role_name,
+          }))}
+        />
+      ),
+    },
+    {
+      title: '均价(元/天)',
+      dataIndex: 'unit_price_yuan',
+      render: (_: number, record: WorkloadRow) => record.unit_price_yuan ?? '-',
+    },
+    {
+      title: '人天',
+      dataIndex: 'base_days',
+      render: (val: number | undefined, record: WorkloadRow) => (
+        <InputNumber
+          min={0.1}
+          step={0.1}
+          value={val}
+          onChange={(num) => updateRow(record.key, { base_days: Number(num || 1) })}
+        />
+      ),
+    },
+    {
+      title: '交付系数',
+      dataIndex: 'delivery_factor',
+      render: (val: number | undefined, record: WorkloadRow) => (
+        <InputNumber
+          min={0.1}
+          step={0.1}
+          value={val || 1}
+          onChange={(num) =>
+            updateRow(record.key, {
+              delivery_factor: Number(num || 1),
+              quantity: Number(num || 1),
+            })
+          }
+        />
+      ),
+    },
+    {
+      title: '小计(万元)',
+      render: (_: unknown, record: WorkloadRow) =>
+        (
+          ((record.base_days || 0) *
+            (record.delivery_factor || record.quantity || 1) *
+            ((record.unit_price_yuan || 0) / 10000)) ||
+          0
+        ).toFixed(2),
+    },
+    {
+      title: '操作',
+      render: (_: unknown, record: WorkloadRow) => (
+        <Button danger type="link" onClick={() => removeRow(record.key)}>
+          删除
+        </Button>
+      ),
+    },
+  ];
+
   return (
     <PageContainer
       loading={loading}
@@ -553,140 +669,32 @@ const NewWeb3D: React.FC = () => {
         <Card
           title="Step4 工作量估算"
           extra={
-            <Space>
-              <Button icon={<PlusOutlined />} onClick={addWorkloadRow}>
-                添加行
-              </Button>
-              <Tooltip title="按模板选项与数量计算 A/B/C 分类工作量">
-                <InfoCircleOutlined />
-              </Tooltip>
-            </Space>
+            <Tooltip title="按模板选项与数量计算 A/B/C 分类工作量">
+              <InfoCircleOutlined />
+            </Tooltip>
           }
         >
           <Table
             pagination={false}
             rowKey="key"
             dataSource={workloadRows}
-            columns={[
-              {
-                title: '类别',
-                dataIndex: 'category',
-                render: (val, record) => (
-                  <Select
-                    value={val}
-                    style={{ minWidth: 160 }}
-                    onChange={(v) => updateRow(record.key, { category: v })}
-                    options={Array.from(workloadOptionsByCategory.keys()).map((c) => ({
-                      label: categoryLabel[c] || c,
-                      value: c,
-                    }))}
-                  />
-                ),
-              },
-              {
-                title: '工作项',
-                dataIndex: 'item_name',
-                render: (val, record) => {
-                  const opts =
-                    workloadOptionsByCategory.get(record.category) || [];
-                  return (
-                    <Select
-                      value={val}
-                      style={{ minWidth: 220 }}
-                      onChange={(v) =>
-                        updateRow(record.key, { item_name: v })
-                      }
-                      options={opts.map((tpl) => ({
-                        label: tpl.item_name,
-                        value: tpl.item_name,
-                      }))}
-                    />
-                  );
-                },
-              },
-              {
-                title: '角色（多选取均价）',
-                dataIndex: 'role_name',
-                render: (val, record) => (
-                  <Select
-                    mode="multiple"
-                    value={record.role_names && record.role_names.length ? record.role_names : []}
-                    style={{ minWidth: 220 }}
-                    onChange={(values) => {
-                      const selected = (values as string[]) || [];
-                      const avg =
-                        selected.reduce((sum, roleName) => {
-                          const role = roles.find((r) => r.role_name === roleName);
-                          return sum + (role?.unit_price || 0);
-                        }, 0) / (selected.length || 1);
-                      updateRow(record.key, {
-                        role_name: selected[0] || '',
-                        role_names: selected,
-                        unit_price_yuan: avg || undefined,
-                      });
-                    }}
-                    options={roles.map((r) => ({
-                      label: `${r.role_name}（¥${r.unit_price}）`,
-                      value: r.role_name,
-                    }))}
-                  />
-                ),
-              },
-              {
-                title: '均价(元/天)',
-                dataIndex: 'unit_price_yuan',
-                render: (_, record) => record.unit_price_yuan ?? '-',
-              },
-              {
-                title: '人天',
-                dataIndex: 'base_days',
-                render: (val, record) => (
-                  <InputNumber
-                    min={0.1}
-                    step={0.1}
-                    value={val}
-                    onChange={(num) =>
-                      updateRow(record.key, { base_days: Number(num || 1) })
-                    }
-                  />
-                ),
-              },
-              {
-                title: '交付系数',
-                dataIndex: 'delivery_factor',
-                render: (val, record) => (
-                  <InputNumber
-                    min={0.1}
-                    step={0.1}
-                    value={val || 1}
-                    onChange={(num) =>
-                      updateRow(record.key, {
-                        delivery_factor: Number(num || 1),
-                        quantity: Number(num || 1),
-                      })
-                    }
-                  />
-                ),
-              },
-              {
-                title: '小计(万元)',
-                render: (_, record) =>
-                  (
-                    ((record.base_days || 0) *
-                      (record.delivery_factor || record.quantity || 1) *
-                      ((record.unit_price_yuan || 0) / 10000)) ||
-                    0
-                  ).toFixed(2),
-              },
-              {
-                title: '操作',
-                render: (_, record) => (
-                  <Button danger type="link" onClick={() => removeRow(record.key)}>
-                    删除
-                  </Button>
-                ),
-              },
-            ]}
+            columns={workloadColumns}
+            summary={() => (
+              <Table.Summary>
+                <Table.Summary.Row>
+                  <Table.Summary.Cell index={0} colSpan={workloadColumns.length}>
+                    <Space>
+                      <Button type="dashed" icon={<PlusOutlined />} onClick={addWorkloadRow}>
+                        新增一行
+                      </Button>
+                      <Typography.Text type="secondary">
+                        滚动到表尾后可连续新增，无需回到顶部
+                      </Typography.Text>
+                    </Space>
+                  </Table.Summary.Cell>
+                </Table.Summary.Row>
+              </Table.Summary>
+            )}
           />
         </Card>
       )}
