@@ -44,6 +44,8 @@ type AssessmentData = API.AssessmentData;
 // ====================================================================
 const EMPTY_ASSESSMENT: API.AssessmentData = {
   risk_scores: {},
+  ai_unmatched_risks: [],
+  custom_risk_items: [{ description: '', score: 10 }],
   development_workload: [],
   integration_workload: [],
   travel_months: 0,
@@ -106,6 +108,12 @@ const NewAssessmentPage = () => {
                 ...EMPTY_ASSESSMENT,
                 ...parsedData,
                 risk_scores: parsedData?.risk_scores ?? {},
+                ai_unmatched_risks: Array.isArray(parsedData?.ai_unmatched_risks)
+                  ? parsedData.ai_unmatched_risks
+                  : [],
+                custom_risk_items: Array.isArray(parsedData?.custom_risk_items)
+                  ? parsedData.custom_risk_items
+                  : [],
                 development_workload: Array.isArray(
                   parsedData?.development_workload,
                 )
@@ -166,6 +174,9 @@ const NewAssessmentPage = () => {
     try {
       // 将AI评估结果转换为与配置项一致的键名与可选值
       const newRiskScores: Record<string, number> = {};
+      const unmatched: { description: string; score: number }[] = [];
+      const clamp = (v: number, min: number, max: number) =>
+        Math.max(min, Math.min(max, v));
 
       // 建立配置项名称映射（原样与小写映射，便于宽松匹配）
       const riskItemMap = new Map<string, API.RiskItemConfig>();
@@ -266,6 +277,10 @@ const NewAssessmentPage = () => {
 
         const cfg = matchRiskItem(nameRaw);
         if (!cfg) {
+          unmatched.push({
+            description: nameRaw,
+            score: clamp(suggested, 0, 100),
+          });
           skipped += 1;
           return;
         }
@@ -275,6 +290,17 @@ const NewAssessmentPage = () => {
         applied += 1;
       });
 
+      // 把“可能缺失的风险项”也加入未匹配列表（默认分数 0，供用户调整）
+      const missingRisks = Array.isArray(assessmentResult?.missing_risks)
+        ? assessmentResult.missing_risks
+        : [];
+      missingRisks.forEach((item: any) => {
+        const name = String(item?.item_name || '').trim();
+        const desc = String(item?.description || name).trim();
+        if (!desc) return;
+        unmatched.push({ description: desc, score: 0 });
+      });
+
       // 更新评估数据
       const updatedAssessmentData = {
         ...assessmentData,
@@ -282,6 +308,25 @@ const NewAssessmentPage = () => {
           ...assessmentData.risk_scores,
           ...newRiskScores,
         },
+        ai_unmatched_risks: (() => {
+          const existing = Array.isArray(assessmentData.ai_unmatched_risks)
+            ? assessmentData.ai_unmatched_risks
+            : [];
+          const merged = [...existing];
+          unmatched.forEach((item) => {
+            const key = (item.description || '').trim();
+            if (!key) return;
+            const idx = merged.findIndex(
+              (m) => (m?.description || '').trim() === key,
+            );
+            if (idx >= 0) {
+              merged[idx] = { ...merged[idx], score: item.score, description: key };
+            } else {
+              merged.push({ description: key, score: item.score });
+            }
+          });
+          return merged;
+        })(),
       };
 
       setAssessmentData(updatedAssessmentData);
@@ -292,6 +337,7 @@ const NewAssessmentPage = () => {
           ...form.getFieldValue('risk_scores'),
           ...newRiskScores,
         },
+        ai_unmatched_risks: updatedAssessmentData.ai_unmatched_risks,
       });
 
       if (applied === 0) {
@@ -336,6 +382,12 @@ const NewAssessmentPage = () => {
           ...EMPTY_ASSESSMENT,
           ...parsedData,
           risk_scores: parsedData?.risk_scores ?? {},
+          ai_unmatched_risks: Array.isArray(parsedData?.ai_unmatched_risks)
+            ? parsedData.ai_unmatched_risks
+            : [],
+          custom_risk_items: Array.isArray(parsedData?.custom_risk_items)
+            ? parsedData.custom_risk_items
+            : [],
           development_workload: Array.isArray(parsedData?.development_workload)
             ? parsedData.development_workload
             : [],
@@ -349,9 +401,9 @@ const NewAssessmentPage = () => {
           maintenance_daily_cost: Number(
             parsedData?.maintenance_daily_cost ?? 1600,
           ),
-                risk_cost_items: Array.isArray(parsedData?.risk_cost_items)
-                  ? parsedData.risk_cost_items
-                  : [],
+          risk_cost_items: Array.isArray(parsedData?.risk_cost_items)
+            ? parsedData.risk_cost_items
+            : [],
         };
 
         setAssessmentData(normalizedData);
@@ -374,6 +426,8 @@ const NewAssessmentPage = () => {
       summarizeRisk({
         riskScores: scores,
         riskItems,
+        aiUnmatchedRisks: assessmentData.ai_unmatched_risks || [],
+        customRiskItems: assessmentData.custom_risk_items || [],
       });
 
     const allFilled =
@@ -394,7 +448,12 @@ const NewAssessmentPage = () => {
       maxScore,
       level,
     };
-  }, [assessmentData.risk_scores, configData?.risk_items]);
+  }, [
+    assessmentData.risk_scores,
+    assessmentData.ai_unmatched_risks,
+    assessmentData.custom_risk_items,
+    configData?.risk_items,
+  ]);
 
   // 根据风险等级获取对应的颜色
   const getRiskLevelColor = (level: string): string => {

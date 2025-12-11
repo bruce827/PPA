@@ -49,7 +49,16 @@ const AssessmentDetailPage = () => {
         if (projectRes.data?.assessment_details_json) {
           try {
             const parsed = JSON.parse(projectRes.data.assessment_details_json);
-            setAssessmentData(parsed);
+            const normalized = {
+              ...parsed,
+              ai_unmatched_risks: Array.isArray(parsed?.ai_unmatched_risks)
+                ? parsed.ai_unmatched_risks
+                : [],
+              custom_risk_items: Array.isArray(parsed?.custom_risk_items)
+                ? parsed.custom_risk_items
+                : [],
+            };
+            setAssessmentData(normalized);
           } catch (error) {
             messageApi.error('评估数据解析失败');
           }

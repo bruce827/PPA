@@ -40,9 +40,16 @@ declare namespace API {
     [roleName: string]: string | number | undefined;
   };
 
+  type ExtraRiskItem = {
+    description: string;
+    score: number;
+  };
+
   /** 评估数据 */
   type AssessmentData = {
     risk_scores: Record<string, number | string | undefined>;
+    ai_unmatched_risks?: ExtraRiskItem[];
+    custom_risk_items?: ExtraRiskItem[];
     development_workload: WorkloadRecord[];
     integration_workload: WorkloadRecord[];
     travel_months: number;

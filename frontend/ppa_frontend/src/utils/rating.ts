@@ -4,10 +4,13 @@ type RiskOption = {
 };
 
 type RiskItemConfig = API.RiskItemConfig;
+type ExtraRiskItem = API.ExtraRiskItem;
 
 type RiskSummaryInput = {
   riskScores: Record<string, number | string | undefined>;
   riskItems: RiskItemConfig[];
+  aiUnmatchedRisks?: ExtraRiskItem[];
+  customRiskItems?: ExtraRiskItem[];
 };
 
 type RiskSummary = {
@@ -99,8 +102,10 @@ function getRiskMaxScore(riskItems: RiskItemConfig[]): number {
 export function summarizeRisk({
   riskScores,
   riskItems,
+  aiUnmatchedRisks = [],
+  customRiskItems = [],
 }: RiskSummaryInput): RiskSummary {
-  const totalScore = Object.entries(riskScores).reduce((acc, [key, value]) => {
+  const totalFromConfig = Object.entries(riskScores).reduce((acc, [key, value]) => {
     if (value === undefined || value === null || value === '') {
       return acc;
     }
@@ -108,6 +113,19 @@ export function summarizeRisk({
     const numericScore = Number(value);
     return Number.isFinite(numericScore) ? acc + numericScore : acc;
   }, 0);
+
+  const sumExtra = (list: ExtraRiskItem[], min: number, max: number) =>
+    (Array.isArray(list) ? list : []).reduce((acc, item) => {
+      const num = Number(item?.score);
+      if (!Number.isFinite(num)) return acc;
+      if (num < min || num > max) return acc;
+      return acc + num;
+    }, 0);
+
+  const totalScore =
+    totalFromConfig +
+    sumExtra(aiUnmatchedRisks, 0, 100) +
+    sumExtra(customRiskItems, 10, 100);
 
   const rawMaxScore = getRiskMaxScore(riskItems);
   const maxScore = rawMaxScore > 0 ? rawMaxScore : RISK.defaultMaxScore;

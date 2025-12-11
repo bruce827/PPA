@@ -1,6 +1,7 @@
 const configModel = require('../models/configModel');
 const { DEFAULTS } = require('../utils/constants');
 const { computeRatingFactor } = require('../utils/rating');
+const { HttpError } = require('../utils/errors');
 
 /**
  * 计算工作量和费用
@@ -87,15 +88,78 @@ const collectRiskCostItems = (details = {}) => {
   return items;
 };
 
+// 校验并汇总风险评分（对象形式，源自配置项）
+const sumConfigRiskScores = (riskScores) => {
+  if (riskScores == null) return 0;
+  if (typeof riskScores !== 'object' || Array.isArray(riskScores)) {
+    throw new HttpError(400, '风险评分数据格式不正确', 'ValidationError');
+  }
+
+  return Object.entries(riskScores).reduce((sum, [key, value]) => {
+    const numeric = Number(value);
+    if (!Number.isFinite(numeric)) {
+      throw new HttpError(
+        400,
+        `风险评分项「${key}」的分值不是有效数字`,
+        'ValidationError'
+      );
+    }
+    return sum + numeric;
+  }, 0);
+};
+
+// 校验并汇总数组形式的风险项（AI 未匹配 / 自定义）
+const sumArrayRiskScores = (list, { min, max, sourceName }) => {
+  if (!list) return 0;
+  if (!Array.isArray(list)) {
+    throw new HttpError(400, `${sourceName} 数据格式不正确`, 'ValidationError');
+  }
+
+  return list.reduce((sum, item, index) => {
+    if (!item || typeof item !== 'object') {
+      throw new HttpError(400, `${sourceName} 第 ${index + 1} 项格式不正确`, 'ValidationError');
+    }
+
+    const desc = (item.description || '').trim();
+    if (!desc) {
+      throw new HttpError(400, `${sourceName} 第 ${index + 1} 项描述不能为空`, 'ValidationError');
+    }
+
+    const numeric = Number(item.score);
+    if (!Number.isFinite(numeric)) {
+      throw new HttpError(400, `${sourceName} 第 ${index + 1} 项评分必须为数字`, 'ValidationError');
+    }
+    if (numeric < min || numeric > max) {
+      throw new HttpError(
+        400,
+        `${sourceName} 第 ${index + 1} 项评分需在 ${min}-${max} 之间`,
+        'ValidationError'
+      );
+    }
+
+    return sum + numeric;
+  }, 0);
+};
+
 /**
  * 实时计算项目成本
  * @param {Object} assessmentData - 评估数据
  * @returns {Object} 计算结果
  */
 const calculateProjectCost = async (assessmentData) => {
-  // 1. 计算评分因子
-  const riskScore = Object.values(assessmentData.risk_scores || {})
-    .reduce((sum, score) => sum + Number(score), 0);
+  // 1. 计算风险总分（分子）
+  const configRiskScore = sumConfigRiskScores(assessmentData.risk_scores);
+  const aiUnmatchedRiskScore = sumArrayRiskScores(
+    assessmentData.ai_unmatched_risks,
+    { min: 0, max: 100, sourceName: 'AI 未匹配风险项' }
+  );
+  const customRiskScore = sumArrayRiskScores(
+    assessmentData.custom_risk_items,
+    { min: 10, max: 100, sourceName: '自定义风险项' }
+  );
+  const riskScore = configRiskScore + aiUnmatchedRiskScore + customRiskScore;
+
+  // 1.1 计算评分因子
   const { factor: ratingFactor, ratio: ratingRatio, maxScore: ratingMaxScore } = await computeRatingFactor(riskScore);
 
   // 2. 计算各项工作量和费用

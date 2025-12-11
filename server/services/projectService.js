@@ -1,5 +1,30 @@
 const projectModel = require('../models/projectModel');
 const calculationService = require('./calculationService');
+const { HttpError } = require('../utils/errors');
+
+const normalizeAssessmentData = (assessmentData) => {
+  if (!assessmentData || typeof assessmentData !== 'object') {
+    throw new HttpError(400, 'assessmentData 必须是对象', 'ValidationError');
+  }
+
+  const normalized = { ...assessmentData };
+
+  // AI 未匹配风险项：必须为数组，默认空数组
+  if (normalized.ai_unmatched_risks === undefined) {
+    normalized.ai_unmatched_risks = [];
+  } else if (!Array.isArray(normalized.ai_unmatched_risks)) {
+    throw new HttpError(400, 'AI 未匹配风险项必须为数组', 'ValidationError');
+  }
+
+  // 自定义风险项：必须为数组，默认空数组
+  if (normalized.custom_risk_items === undefined) {
+    normalized.custom_risk_items = [];
+  } else if (!Array.isArray(normalized.custom_risk_items)) {
+    throw new HttpError(400, '自定义风险项必须为数组', 'ValidationError');
+  }
+
+  return normalized;
+};
 
 /**
  * 创建项目（包含完整计算）
@@ -12,8 +37,10 @@ const createProject = async (projectData) => {
     await projectModel.clearAllTemplateFlags();
   }
 
+  const normalizedAssessment = normalizeAssessmentData(assessmentData);
+
   // 执行完整计算
-  const calculation = await calculationService.calculateProjectCost(assessmentData);
+  const calculation = await calculationService.calculateProjectCost(normalizedAssessment);
 
   // 准备数据库数据
   const dbData = {
@@ -23,7 +50,7 @@ const createProject = async (projectData) => {
     final_total_cost: calculation.total_cost,
     final_risk_score: calculation.risk_score,
     final_workload_days: calculation.total_workload_days,
-    assessment_details_json: JSON.stringify(assessmentData)
+    assessment_details_json: JSON.stringify(normalizedAssessment)
   };
 
   // 保存到数据库
@@ -41,8 +68,10 @@ const updateProject = async (id, projectData) => {
     await projectModel.clearAllTemplateFlags();
   }
 
+  const normalizedAssessment = normalizeAssessmentData(assessmentData);
+
   // 执行完整计算
-  const calculation = await calculationService.calculateProjectCost(assessmentData);
+  const calculation = await calculationService.calculateProjectCost(normalizedAssessment);
 
   // 准备数据库数据
   const dbData = {
@@ -52,7 +81,7 @@ const updateProject = async (id, projectData) => {
     final_total_cost: calculation.total_cost,
     final_risk_score: calculation.risk_score,
     final_workload_days: calculation.total_workload_days,
-    assessment_details_json: JSON.stringify(assessmentData)
+    assessment_details_json: JSON.stringify(normalizedAssessment)
   };
 
   // 更新数据库

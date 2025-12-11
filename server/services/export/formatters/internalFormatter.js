@@ -258,6 +258,16 @@ function buildLegacyRiskItems(details) {
   }));
 }
 
+function buildArrayRiskItems(list, sourceLabel) {
+  if (!Array.isArray(list) || !list.length) return [];
+  return list.map((item, index) => ({
+    category: '',
+    item: item?.description || `未命名${index + 1}`,
+    choice: sourceLabel,
+    score: Number(item?.score || 0)
+  }));
+}
+
 /**
  * 描述：根据项目记录生成内部版导出所需的标准化数据结构，
  *       同时兼容新旧两种 assessment_details_json 结构。
@@ -282,6 +292,14 @@ exports.formatForExport = async (project) => {
     const rawRiskItems = Array.isArray(details.risk_items)
       ? details.risk_items
       : [];
+    const aiUnmatchedItems = buildArrayRiskItems(
+      details.ai_unmatched_risks,
+      'AI未匹配'
+    );
+    const customRiskItems = buildArrayRiskItems(
+      details.custom_risk_items,
+      '自定义'
+    );
     const maintenance = details.maintenance || {};
     const riskCalculation = details.risk_calculation || {};
 
@@ -334,23 +352,38 @@ exports.formatForExport = async (project) => {
         totalWan:
           maintenance.total != null ? maintenance.total / 10000 : 0
       },
-      riskItems: rawRiskItems.map((ri) => {
-        const itemName = ri.item || '';
-        let category = ri.category || '';
+      riskItems: [
+        ...rawRiskItems.map((ri) => {
+          const itemName = ri.item || '';
+          let category = ri.category || '';
 
-        // 如果 category 为空，尝试从 itemName 中提取中文前缀作为“评估类别”
-        // 例如："项目阶段 (project_phase)" -> "项目阶段"
-        if (!category && typeof itemName === 'string' && itemName.includes('(')) {
-          category = itemName.split('(')[0].trim();
-        }
+          // 如果 category 为空，尝试从 itemName 中提取中文前缀作为“评估类别”
+          // 例如："项目阶段 (project_phase)" -> "项目阶段"
+          if (!category && typeof itemName === 'string' && itemName.includes('(')) {
+            category = itemName.split('(')[0].trim();
+          }
 
-        return {
-          category,
-          item: itemName,
-          choice: ri.choice,
-          score: ri.score
-        };
-      }),
+          // 新增：非配置项一律归类为“其它”
+          if (!category) {
+            category = '其它';
+          }
+
+          return {
+            category,
+            item: itemName,
+            choice: ri.choice,
+            score: ri.score
+          };
+        }),
+        ...aiUnmatchedItems.map((item) => ({
+          ...item,
+          category: '其它'
+        })),
+        ...customRiskItems.map((item) => ({
+          ...item,
+          category: '其它'
+        }))
+      ],
       riskCosts: Array.isArray(details.risk_cost_items)
         ? details.risk_cost_items
             .map((item) => ({
@@ -436,6 +469,14 @@ exports.formatForExport = async (project) => {
   const travelCostsLegacy = buildLegacyTravelCosts(details);
   const maintenanceLegacy = buildLegacyMaintenance(details);
   const riskItemsLegacy = buildLegacyRiskItems(details);
+  const aiUnmatchedLegacy = buildArrayRiskItems(
+    details.ai_unmatched_risks,
+    'AI未匹配'
+  ).map((item) => ({ ...item, category: '其它' }));
+  const customRiskLegacy = buildArrayRiskItems(
+    details.custom_risk_items,
+    '自定义'
+  ).map((item) => ({ ...item, category: '其它' }));
   const riskCostsLegacy = buildLegacyRiskCosts(details);
 
   return {
@@ -443,7 +484,11 @@ exports.formatForExport = async (project) => {
     roleCosts: roleCostsLegacy,
     travelCosts: travelCostsLegacy,
     maintenance: maintenanceLegacy,
-    riskItems: riskItemsLegacy,
+    riskItems: [
+      ...riskItemsLegacy.map((ri) => ({ ...ri, category: ri.category || '其它' })),
+      ...aiUnmatchedLegacy,
+      ...customRiskLegacy
+    ],
     riskCosts: riskCostsLegacy,
     riskCalculation: legacyRiskCalculation
   };

@@ -3,7 +3,18 @@ import { getAllProjects, getProjectDetail } from '@/services/assessment';
 import { InfoCircleOutlined, RobotOutlined } from '@ant-design/icons';
 import { ProForm, ProFormSelect } from '@ant-design/pro-components';
 import type { FormInstance } from 'antd';
-import { App, Button, Card, Form, Space } from 'antd';
+import {
+  App,
+  Button,
+  Card,
+  Col,
+  Divider,
+  Form,
+  Input,
+  InputNumber,
+  Row,
+  Space,
+} from 'antd';
 import React from 'react';
 import AIAssessmentModal from './AIAssessmentModal';
 
@@ -154,6 +165,65 @@ const RiskScoringForm: React.FC<RiskScoringFormProps> = ({
     return matches.join('');
   }, []);
 
+  const renderExtraRiskList = (
+    name: string,
+    title: string,
+    extra: React.ReactNode,
+    scoreRange: { min: number; max: number },
+    placeholder: string
+  ) => (
+    <Card size="small" style={{ marginTop: 16, height: '100%' }}>
+      <div style={{ display: 'flex', alignItems: 'center', marginBottom: 8 }}>
+        <span style={{ fontWeight: 500 }}>{title}</span>
+        <div style={{ marginLeft: 8, color: '#666', fontSize: 12 }}>{extra}</div>
+      </div>
+      <Form.List name={name}>
+        {(fields, { add, remove }) => (
+          <>
+            {fields.map(field => (
+              <Space
+                key={field.key}
+                align="baseline"
+                style={{ display: 'flex', marginBottom: 8, width: '100%' }}
+              >
+                <Form.Item
+                  name={[field.name, 'description']}
+                  rules={[{ required: true, message: '请输入风险描述' }]}
+                  style={{ flex: 1.2, minWidth: 240 }}
+                >
+                  <Input placeholder={placeholder} />
+                </Form.Item>
+                <Form.Item
+                  name={[field.name, 'score']}
+                  rules={[
+                    { required: true, message: '请输入评分' },
+                    {
+                      type: 'number',
+                      min: scoreRange.min,
+                      max: scoreRange.max,
+                      message: `评分需在 ${scoreRange.min}-${scoreRange.max} 之间`,
+                    },
+                  ]}
+                >
+                  <InputNumber
+                    placeholder="评分"
+                    min={scoreRange.min}
+                    max={scoreRange.max}
+                    style={{ width: 96, minWidth: 80 }}
+                  />
+                </Form.Item>
+                <Button onClick={() => remove(field.name)}>删除</Button>
+              </Space>
+            ))}
+            <Button type="dashed" onClick={() => add()} block>
+              新增
+            </Button>
+          </>
+        )}
+      </Form.List>
+    </Card>
+  );
+
   return (
     <>
       <ProForm
@@ -196,42 +266,104 @@ const RiskScoringForm: React.FC<RiskScoringFormProps> = ({
             rules={[{ required: true, message: '此项为必选项' }]}
           />
         ))}
+        <Divider />
+
+        <Row gutter={16} style={{ marginTop: 8, width: '100%', marginBottom: 16 }}>
+          <Col xs={24} md={12}>
+            {/* 自定义风险项 */}
+            {renderExtraRiskList(
+              'custom_risk_items',
+              '自定义风险项',
+              '评分范围 10~100，支持新增/删除',
+              { min: 10, max: 100 },
+              '请输入风险描述'
+            )}
+          </Col>
+          <Col xs={24} md={12}>
+            {/* AI智能风险评估区域 & 未匹配风险项列表 */}
+            <Card
+              size="small"
+              style={{
+                marginTop: 16,
+                border: '1px solid #d9d9d9',
+                backgroundColor: '#fafafa',
+                height: '100%',
+              }}
+            >
+              <div
+                style={{ display: 'flex', alignItems: 'center', marginBottom: 16 }}
+              >
+                <RobotOutlined
+                  style={{ fontSize: 18, color: '#1890ff', marginRight: 8 }}
+                />
+                <span style={{ fontSize: 16, fontWeight: 500 }}>AI智能风险评估</span>
+              </div>
+
+              <div style={{ marginBottom: 16 }}>
+                <InfoCircleOutlined style={{ color: '#faad14', marginRight: 8 }} />
+                <span style={{ color: '#666' }}>
+                  使用当前配置的模型进行智能评估，应用评估结果会覆盖当前风险评分数据。
+                </span>
+              </div>
+
+              <Button
+                type="primary"
+                icon={<RobotOutlined />}
+                size="large"
+                onClick={() => setAiAssessmentVisible(true)}
+                className="ai-assessment-button"
+                style={{ width: '100%' }}
+              >
+                一键AI评估
+              </Button>
+
+              <Divider />
+              <div style={{ marginBottom: 8, fontWeight: 500 }}>AI 未匹配风险项</div>
+              <Form.List name="ai_unmatched_risks">
+                {(fields, { add: _add, remove }) => (
+                  <>
+                    {fields.map((field) => (
+                      <Space
+                        key={field.key}
+                        align="baseline"
+                        style={{ display: 'flex', marginBottom: 8, width: '100%' }}
+                      >
+                        <Form.Item
+                          name={[field.name, 'description']}
+                          rules={[{ required: true, message: '请输入风险描述' }]}
+                          style={{ flex: 1 }}
+                        >
+                          <Input placeholder="AI 未匹配的风险描述" />
+                        </Form.Item>
+                        <Form.Item
+                          name={[field.name, 'score']}
+                          rules={[
+                            { required: true, message: '请输入评分' },
+                            {
+                              type: 'number',
+                              min: 0,
+                              max: 100,
+                              message: '评分需在 0-100 之间',
+                            },
+                          ]}
+                        >
+                      <InputNumber
+                        min={0}
+                        max={100}
+                        placeholder="评分"
+                        style={{ width: 96, minWidth: 80 }}
+                      />
+                    </Form.Item>
+                        <Button onClick={() => remove(field.name)}>删除</Button>
+                      </Space>
+                    ))}
+                  </>
+                )}
+              </Form.List>
+            </Card>
+          </Col>
+        </Row>
       </ProForm>
-
-      {/* AI智能风险评估区域 */}
-      <Card
-        style={{
-          marginTop: 24,
-          border: '1px solid #d9d9d9',
-          backgroundColor: '#fafafa',
-        }}
-      >
-        <div
-          style={{ display: 'flex', alignItems: 'center', marginBottom: 16 }}
-        >
-          <RobotOutlined
-            style={{ fontSize: 18, color: '#1890ff', marginRight: 8 }}
-          />
-          <span style={{ fontSize: 16, fontWeight: 500 }}>AI智能风险评估</span>
-        </div>
-
-        <div style={{ marginBottom: 16 }}>
-          <InfoCircleOutlined style={{ color: '#faad14', marginRight: 8 }} />
-          <span style={{ color: '#666' }}>
-            使用当前配置的模型进行智能评估，应用评估结果会覆盖当前风险评分数据。
-          </span>
-        </div>
-
-        <Button
-          type="primary"
-          icon={<RobotOutlined />}
-          size="large"
-          onClick={() => setAiAssessmentVisible(true)}
-          className="ai-assessment-button"
-        >
-          一键AI评估
-        </Button>
-      </Card>
 
       {/* AI评估弹窗 */}
       <AIAssessmentModal

@@ -18,6 +18,26 @@ exports.createProject = async (req, res, next) => {
 exports.getProjectById = async (req, res, next) => {
   try {
     const project = await projectService.getProjectById(req.params.id);
+
+    // 兜底补齐新增字段（ai_unmatched_risks / custom_risk_items），保持 assessment_details_json 为字符串返回
+    if (project?.assessment_details_json) {
+      try {
+        const parsed = JSON.parse(project.assessment_details_json);
+        const normalized = {
+          ...parsed,
+          ai_unmatched_risks: Array.isArray(parsed.ai_unmatched_risks)
+            ? parsed.ai_unmatched_risks
+            : [],
+          custom_risk_items: Array.isArray(parsed.custom_risk_items)
+            ? parsed.custom_risk_items
+            : []
+        };
+        project.assessment_details_json = JSON.stringify(normalized);
+      } catch (_e) {
+        // 保持原样，避免因旧数据格式问题直接报错
+      }
+    }
+
     res.json({ data: project });
   } catch (error) {
     next(error);
