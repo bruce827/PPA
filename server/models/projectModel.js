@@ -7,27 +7,27 @@ const { getDatabase } = require('../config/database');
 const createProject = (projectData) => {
   return new Promise((resolve, reject) => {
     const db = getDatabase();
-    const { 
-      name, 
-      description, 
-      is_template, 
-      final_total_cost, 
-      final_risk_score, 
-      final_workload_days, 
-      assessment_details_json 
+    const {
+      name,
+      description,
+      is_template,
+      final_total_cost,
+      final_risk_score,
+      final_workload_days,
+      assessment_details_json
     } = projectData;
-    
-    const sql = `INSERT INTO projects 
-      (name, description, is_template, final_total_cost, final_risk_score, final_workload_days, assessment_details_json) 
-      VALUES (?, ?, ?, ?, ?, ?, ?)`;
-    
+
+    const sql = `INSERT INTO projects
+      (name, description, is_template, project_type, final_total_cost, final_risk_score, final_workload_days, assessment_details_json)
+      VALUES (?, ?, ?, 'standard', ?, ?, ?, ?)`;
+
     const params = [
-      name, 
-      description, 
-      is_template || 0, 
-      final_total_cost, 
-      final_risk_score, 
-      final_workload_days, 
+      name,
+      description,
+      is_template || 0,
+      final_total_cost,
+      final_risk_score,
+      final_workload_days,
       assessment_details_json
     ];
 
@@ -41,10 +41,14 @@ const createProject = (projectData) => {
 const getProjectById = (id) => {
   return new Promise((resolve, reject) => {
     const db = getDatabase();
-    db.get("SELECT * FROM projects WHERE id = ?", [id], (err, row) => {
-      if (err) reject(err);
-      else resolve(row);
-    });
+    db.get(
+      "SELECT * FROM projects WHERE id = ? AND (project_type IS NULL OR project_type = 'standard')",
+      [id],
+      (err, row) => {
+        if (err) reject(err);
+        else resolve(row);
+      }
+    );
   });
 };
 
@@ -52,7 +56,7 @@ const getAllProjects = () => {
   return new Promise((resolve, reject) => {
     const db = getDatabase();
     db.all(
-      "SELECT id, name, final_total_cost, final_risk_score, created_at FROM projects WHERE is_template = 0 ORDER BY created_at DESC",
+      "SELECT id, name, final_total_cost, final_risk_score, created_at FROM projects WHERE is_template = 0 AND (project_type IS NULL OR project_type = 'standard') ORDER BY created_at DESC",
       [],
       (err, rows) => {
         if (err) reject(err);
@@ -67,7 +71,7 @@ const getAllProjectsIncludingTemplates = () => {
   return new Promise((resolve, reject) => {
     const db = getDatabase();
     db.all(
-      "SELECT id, name, description, is_template, final_total_cost, final_risk_score, final_workload_days, created_at FROM projects ORDER BY created_at DESC",
+      "SELECT id, name, description, is_template, final_total_cost, final_risk_score, final_workload_days, created_at FROM projects WHERE (project_type IS NULL OR project_type = 'standard') ORDER BY created_at DESC",
       [],
       (err, rows) => {
         if (err) reject(err);
@@ -81,7 +85,7 @@ const getAllTemplates = () => {
   return new Promise((resolve, reject) => {
     const db = getDatabase();
     db.all(
-      "SELECT id, name, description FROM projects WHERE is_template = 1 ORDER BY created_at DESC",
+      "SELECT id, name, description FROM projects WHERE is_template = 1 AND (project_type IS NULL OR project_type = 'standard') ORDER BY created_at DESC",
       [],
       (err, rows) => {
         if (err) reject(err);
@@ -96,7 +100,7 @@ const clearAllTemplateFlags = () => {
   return new Promise((resolve, reject) => {
     const db = getDatabase();
     db.run(
-      "UPDATE projects SET is_template = 0 WHERE is_template = 1",
+      "UPDATE projects SET is_template = 0 WHERE is_template = 1 AND (project_type IS NULL OR project_type = 'standard')",
       [],
       function (err) {
         if (err) reject(err);
@@ -109,29 +113,29 @@ const clearAllTemplateFlags = () => {
 const updateProject = (id, projectData) => {
   return new Promise((resolve, reject) => {
     const db = getDatabase();
-    const { 
-      name, 
-      description, 
-      is_template, 
-      final_total_cost, 
-      final_risk_score, 
-      final_workload_days, 
-      assessment_details_json 
+    const {
+      name,
+      description,
+      is_template,
+      final_total_cost,
+      final_risk_score,
+      final_workload_days,
+      assessment_details_json
     } = projectData;
 
     const sql = `UPDATE projects 
-      SET name = ?, description = ?, is_template = ?, final_total_cost = ?, 
+      SET name = ?, description = ?, is_template = ?, project_type = 'standard', final_total_cost = ?, 
           final_risk_score = ?, final_workload_days = ?, assessment_details_json = ? 
-      WHERE id = ?`;
+      WHERE id = ? AND (project_type IS NULL OR project_type = 'standard')`;
     
     const params = [
-      name, 
-      description, 
-      is_template || 0, 
-      final_total_cost, 
-      final_risk_score, 
-      final_workload_days, 
-      assessment_details_json, 
+      name,
+      description,
+      is_template || 0,
+      final_total_cost,
+      final_risk_score,
+      final_workload_days,
+      assessment_details_json,
       id
     ];
 
@@ -145,10 +149,14 @@ const updateProject = (id, projectData) => {
 const deleteProject = (id) => {
   return new Promise((resolve, reject) => {
     const db = getDatabase();
-    db.run(`DELETE FROM projects WHERE id = ?`, [id], function(err) {
-      if (err) reject(err);
-      else resolve({ deleted: this.changes });
-    });
+    db.run(
+      `DELETE FROM projects WHERE id = ? AND (project_type IS NULL OR project_type = 'standard')`,
+      [id],
+      function(err) {
+        if (err) reject(err);
+        else resolve({ deleted: this.changes });
+      }
+    );
   });
 };
 

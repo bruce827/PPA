@@ -33,6 +33,15 @@ type RiskScoringFormProps = {
   onAIAssessmentComplete: (result: any) => void;
 };
 
+/**
+ * 风评分表单
+ * @param form - antd form实例
+ * @param initialValues - 初始值
+ * @param configData - 配置数据
+ * @param onValuesChange - 表单值变化回调
+ * @param onNext - 下一步回调
+ * @param onAIAssessmentComplete - AI评估完成回调
+ */
 const RiskScoringForm: React.FC<RiskScoringFormProps> = ({
   form,
   initialValues,
@@ -64,6 +73,13 @@ const RiskScoringForm: React.FC<RiskScoringFormProps> = ({
     },
     [onValuesChange],
   );
+  
+/**
+ * 从模板填充风险评分
+ * 1. 获取当前模板项目
+ * 2. 加载模板详情并解析评估数据
+ * 3. 仅填充当前配置中存在的风险项
+ */
   const handleFillFromTemplate = async () => {
     try {
       setFillingFromTemplate(true);
@@ -158,6 +174,7 @@ const RiskScoringForm: React.FC<RiskScoringFormProps> = ({
     }
   };
 
+
   const formatChineseLabel = React.useCallback((text: string) => {
     if (!text) return text;
     const matches = text.match(/[\u4e00-\u9fa5]+/g);
@@ -165,6 +182,16 @@ const RiskScoringForm: React.FC<RiskScoringFormProps> = ({
     return matches.join('');
   }, []);
 
+
+  /**
+ * 自定义风险项评分列表
+ *
+ * @param {string} name - 表单名称
+ * @param {string} title - 标题
+ * @param {React.ReactNode} extra - 额外信息
+ * @param {{ min: number, max: number }} scoreRange - 评分范围
+ * @param {string} placeholder - 输入框 placeholder
+ */
   const renderExtraRiskList = (
     name: string,
     title: string,
@@ -184,12 +211,12 @@ const RiskScoringForm: React.FC<RiskScoringFormProps> = ({
               <Space
                 key={field.key}
                 align="baseline"
-                style={{ display: 'flex', marginBottom: 8, width: '100%' }}
+                style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8, width: '100%' }}
               >
                 <Form.Item
                   name={[field.name, 'description']}
                   rules={[{ required: true, message: '请输入风险描述' }]}
-                  style={{ flex: 1.2, minWidth: 240 }}
+                  style={{ flex: 1, minWidth: 480 }}
                 >
                   <Input placeholder={placeholder} />
                 </Form.Item>
@@ -209,7 +236,7 @@ const RiskScoringForm: React.FC<RiskScoringFormProps> = ({
                     placeholder="评分"
                     min={scoreRange.min}
                     max={scoreRange.max}
-                    style={{ width: 96, minWidth: 80 }}
+                    style={{ width: 60 }}
                   />
                 </Form.Item>
                 <Button onClick={() => remove(field.name)}>删除</Button>
@@ -299,10 +326,16 @@ const RiskScoringForm: React.FC<RiskScoringFormProps> = ({
                 <span style={{ fontSize: 16, fontWeight: 500 }}>AI智能风险评估</span>
               </div>
 
-              <div style={{ marginBottom: 16 }}>
+              <div>
                 <InfoCircleOutlined style={{ color: '#faad14', marginRight: 8 }} />
                 <span style={{ color: '#666' }}>
                   使用当前配置的模型进行智能评估，应用评估结果会覆盖当前风险评分数据。
+                </span>
+              </div>
+                <div style={{ marginBottom: 16 }}>
+                <InfoCircleOutlined style={{ color: '#faad14', marginRight: 8 }} />
+                <span style={{ color: '#666' }}>
+                  注意：AI模型评估仅会识别软件建设通用风险，如果您对行业或项目背景非常熟悉，完全可以不使用。
                 </span>
               </div>
 
@@ -331,7 +364,7 @@ const RiskScoringForm: React.FC<RiskScoringFormProps> = ({
                         <Form.Item
                           name={[field.name, 'description']}
                           rules={[{ required: true, message: '请输入风险描述' }]}
-                          style={{ flex: 1 }}
+                          style={{ flex: 1, minWidth: 480 }}
                         >
                           <Input placeholder="AI 未匹配的风险描述" />
                         </Form.Item>
