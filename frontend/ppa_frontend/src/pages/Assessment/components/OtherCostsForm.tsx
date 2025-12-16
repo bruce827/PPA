@@ -199,33 +199,48 @@ const OtherCostsForm: React.FC<OtherCostsFormProps> = ({
             <div
               style={{
                 display: 'flex',
-                alignItems: 'flex-start',
+                alignItems: 'flex-end',
                 gap: 8,
                 width: '100%',
+                flexWrap: 'wrap',
               }}
             >
-              <div style={{ flex: 1 }}>{listDom}</div>
-              <div style={{ marginTop: 30, display: 'flex', gap: 8 }}>
+              <div style={{ flex: 1, minWidth: 320 }}>{listDom}</div>
+              <div style={{ display: 'flex', gap: 8 }}>
                 <Button onClick={() => openPicker(index)}>引用项目</Button>
                 {action}
               </div>
             </div>
           )}
         >
-          <ProForm.Group grid rowProps={{ gutter: 16 }}>
-            <ProFormText
-              name="description"
-              label="风险内容"
-              rules={[{ required: true }]}
-              colProps={{ xs: 24, sm: 12, md: 12 }}
-            />
-            <ProFormDigit
-              name="cost"
-              label="预估费用 (万元)"
-              rules={[{ required: true, message: '请输入费用' }]}
-              colProps={{ xs: 24, sm: 6, md: 6 }}
-            />
-          </ProForm.Group>
+          {(meta) => (
+            <ProForm.Group
+              key={meta.key}
+              style={{
+                display: 'flex',
+                gap: 12,
+                flexWrap: 'wrap',
+                width: '100%',
+                marginBottom: 0,
+              }}
+            >
+              <ProFormText
+                name="description"
+                label="风险内容"
+                rules={[{ required: true }]}
+                formItemProps={{
+                  style: { flex: 1, minWidth: 800, marginBottom: 0 },
+                }}
+              />
+              <ProFormDigit
+                name="cost"
+                label="预估费用 (万元)"
+                rules={[{ required: true, message: '请输入费用' }]}
+                fieldProps={{ min: 0, style: { width: 120 } }}
+                formItemProps={{ style: { marginBottom: 0 } }}
+              />
+            </ProForm.Group>
+          )}
         </ProFormList>
       </ProForm>
       <div style={{ marginTop: 24, textAlign: 'right' }}>

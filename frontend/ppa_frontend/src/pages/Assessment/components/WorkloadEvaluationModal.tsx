@@ -136,34 +136,23 @@ const WorkloadEvaluationModal: React.FC<WorkloadEvaluationModalProps> = ({
         <Space direction="vertical" size="middle" style={{ width: '100%' }}>
           {/* 模块信息卡片 */}
           <Card title="📦 模块信息" size="small">
-            <Descriptions column={2} bordered>
-              <Descriptions.Item
-                label="一级模块"
-                span={1}
-                labelStyle={{ width: 96, fontWeight: 600 }}
-              >
-                {record.module1}
+            <Descriptions column={3} bordered size="small">
+              <Descriptions.Item label="一级模块" labelStyle={{ width: 96, fontWeight: 600 }}>
+                {record.module1 || '-'}
               </Descriptions.Item>
-              <Descriptions.Item
-                label="二级模块"
-                span={1}
-                labelStyle={{ width: 96, fontWeight: 600 }}
-              >
-                {record.module2}
+              <Descriptions.Item label="二级模块" labelStyle={{ width: 96, fontWeight: 600 }}>
+                {record.module2 || '-'}
               </Descriptions.Item>
-              <Descriptions.Item
-                label="三级模块"
-                span={1}
-                labelStyle={{ width: 96, fontWeight: 600 }}
-              >
-                {record.module3}
+              <Descriptions.Item label="三级模块" labelStyle={{ width: 96, fontWeight: 600 }}>
+                {record.module3 || '-'}
               </Descriptions.Item>
               <Descriptions.Item
                 label="功能描述"
-                span={1}
+                span={3}
                 labelStyle={{ width: 96, fontWeight: 600 }}
+                contentStyle={{ whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}
               >
-                {record.description}
+                {record.description || '-'}
               </Descriptions.Item>
             </Descriptions>
           </Card>
