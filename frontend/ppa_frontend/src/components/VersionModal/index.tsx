@@ -50,7 +50,7 @@ export const VersionModal: React.FC<VersionModalProps> = ({ children }) => {
       <Timeline
         items={(changelog as VersionLog[]).map((item) => ({
           children: (
-            <div style={{ marginBottom: 20 }}>
+            <div style={{ marginBottom: 20,marginTop:16 }}>
               <div style={{ fontWeight: 'bold', marginBottom: 8 }}>
                 {item.version} <span style={{ color: '#999', fontWeight: 'normal', fontSize: '12px', marginLeft: 8 }}>{item.date}</span>
               </div>
