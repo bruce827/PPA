@@ -11,6 +11,10 @@ import { useRef } from 'react';
 const HistoryPage = () => {
   const { message } = App.useApp();
   const actionRef = useRef();
+  const isTemplateValue = (value: any) => {
+    const normalized = String(value).toLowerCase();
+    return ['1', 'true', 'yes'].includes(normalized);
+  };
   const columns = [
     {
       title: '项目名称',
@@ -19,6 +23,23 @@ const HistoryPage = () => {
       render: (text, record) => (
         <Link to={`/assessment/detail/${record.id}`}>{text}</Link>
       ),
+      fieldProps: {
+        placeholder: '支持模糊搜索',
+      },
+    },
+    {
+      valueType: 'select',
+      valueEnum: {
+        1: { text: '是' },
+        0: { text: '否' },
+      },
+      title: '是否选择',
+      dataIndex: 'is_template_filter',
+      key: 'is_template_filter',
+      hideInTable: true,
+      search: {
+        transform: (value) => ({ is_template: value }),
+      },
     },
     {
       title: '是否模板',
@@ -26,8 +47,9 @@ const HistoryPage = () => {
       key: 'is_template',
       width: 100,
       align: 'center',
+      hideInSearch: true,
       render: (value) =>
-        value === 1 || value === true ? (
+        isTemplateValue(value) ? (
           <Tag color="blue">当前模板</Tag>
         ) : (
           '-'
@@ -41,6 +63,23 @@ const HistoryPage = () => {
       valueType: 'money',
       sorter: true,
       align: 'right',
+      hideInSearch: true,
+    },
+    {
+      title: '报价总计 (万元)',
+      dataIndex: 'final_total_cost_range',
+      key: 'final_total_cost_range',
+      valueType: 'digitRange',
+      hideInTable: true,
+      search: {
+        transform: (value) => {
+          const [min, max] = Array.isArray(value) ? value : [];
+          const next: Record<string, any> = {};
+          if (typeof min !== 'undefined') next.final_total_cost_min = min;
+          if (typeof max !== 'undefined') next.final_total_cost_max = max;
+          return next;
+        },
+      },
     },
     {
       title: '风险总分',
@@ -58,6 +97,26 @@ const HistoryPage = () => {
       sorter: true,
       align: 'center',
       width: 200,
+      hideInSearch: true,
+    },
+    {
+      title: '创建时间',
+      dataIndex: 'created_at_range',
+      key: 'created_at_range',
+      valueType: 'dateRange',
+      hideInTable: true,
+      fieldProps: {
+        format: 'YYYY-MM-DD',
+      },
+      search: {
+        transform: (value) => {
+          const [start, end] = Array.isArray(value) ? value : [];
+          const next: Record<string, any> = {};
+          if (typeof start !== 'undefined') next.created_at_start = start;
+          if (typeof end !== 'undefined') next.created_at_end = end;
+          return next;
+        },
+      },
     },
     {
       title: '操作',
@@ -105,7 +164,7 @@ const HistoryPage = () => {
         >
           <Button type="link">导出</Button>
         </Dropdown>,
-        (record.is_template === 1 || record.is_template === true) ? (
+        isTemplateValue(record.is_template) ? (
           <Tooltip
             key="delete-disabled"
             title="当前模板不可删除，请先在新评估中设置新的模板"
@@ -137,8 +196,30 @@ const HistoryPage = () => {
         columns={columns}
         actionRef={actionRef}
         cardBordered
-        request={async (params) => {
-          const res = await getProjectList();
+        request={async (params, sorter) => {
+          const [sortBy, sortOrderRaw] =
+            Object.entries(sorter || {}).find(([, order]) => !!order) || [];
+          const sortOrder =
+            sortOrderRaw === 'ascend'
+              ? 'asc'
+              : sortOrderRaw === 'descend'
+                ? 'desc'
+                : undefined;
+
+          const queryParams = { ...params } as Record<string, any>;
+          delete queryParams.current;
+          delete queryParams.pageSize;
+
+          const res = await getProjectList({
+            params:
+              sortBy && sortOrder
+                ? {
+                    ...queryParams,
+                    sort_by: sortBy,
+                    sort_order: sortOrder,
+                  }
+                : queryParams,
+          });
           return {
             data: res.data,
             success: true,

@@ -104,22 +104,22 @@ const getProjectById = async (id) => {
 /**
  * 获取所有项目
  */
-const getAllProjects = async () => {
-  return await projectModel.getAllProjects();
+const getAllProjects = async (options = {}) => {
+  return await projectModel.getAllProjects(options);
 };
 
 /**
  * 获取所有项目（包含模板和正式项目）
  */
-const getAllProjectsIncludingTemplates = async () => {
-  return await projectModel.getAllProjectsIncludingTemplates();
+const getAllProjectsIncludingTemplates = async (options = {}) => {
+  return await projectModel.getAllProjectsIncludingTemplates(options);
 };
 
 /**
  * 获取所有模板
  */
-const getAllTemplates = async () => {
-  return await projectModel.getAllTemplates();
+const getAllTemplates = async (options = {}) => {
+  return await projectModel.getAllTemplates(options);
 };
 
 /**
