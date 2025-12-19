@@ -12,7 +12,7 @@ const {
   internalError,
 } = require('../utils/errors');
 
-const MAX_DESCRIPTION_LENGTH = 3000;
+const MAX_DESCRIPTION_LENGTH = 5000;
 // 默认 90s（可通过环境变量覆盖）
 const DEFAULT_TIMEOUT_MS = parseInt(process.env.AI_ASSESS_TIMEOUT_MS || '90000', 10);
 
