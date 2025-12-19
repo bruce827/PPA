@@ -314,7 +314,11 @@ const AIAssessmentModal: React.FC<AIAssessmentModalProps> = ({
       try {
         const res = await normalizeRiskNames(payload);
         if (res?.success && res?.data?.parsed?.risk_scores?.length) {
-          effective = res.data.parsed as AiAssessmentResult;
+          // 保留原始的 missing_risks，只更新 risk_scores
+          effective = {
+            ...res.data.parsed,
+            missing_risks: assessmentResult.missing_risks,
+          } as AiAssessmentResult;
         }
       } catch (e) {
         // 归一失败，回退原结果
