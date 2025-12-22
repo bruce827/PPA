@@ -273,6 +273,7 @@ const RiskScoringForm: React.FC<RiskScoringFormProps> = ({
                 <Button
                   onClick={handleFillFromTemplate}
                   loading={fillingFromTemplate}
+                  style={{ display: 'none' }}
                 >
                   从模板一键填充
                 </Button>

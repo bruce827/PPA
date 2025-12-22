@@ -1,7 +1,8 @@
 import { NEUTRAL_TEXT_COLOR, RISK_LEVEL_COLORS } from '@/constants';
 import { getAllProjects, getConfigAll, getProjectDetail } from '@/services/assessment';
 import { deduceRiskLevel, summarizeRisk, parseRiskOptions } from '@/utils/rating';
-import { ImportOutlined, InfoCircleOutlined } from '@ant-design/icons';
+import { useAssessmentCache } from '@/hooks/useAssessmentCache';
+import { ImportOutlined, InfoCircleOutlined, SaveOutlined, FolderOpenOutlined } from '@ant-design/icons';
 import { PageContainer } from '@ant-design/pro-components';
 import { useSearchParams } from '@umijs/max';
 import {
@@ -23,11 +24,12 @@ import {
   Tooltip,
   Typography,
 } from 'antd';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState, useCallback } from 'react';
 import OtherCostsForm from './components/OtherCostsForm';
 import Overview from './components/Overview';
 import RiskScoringForm from './components/RiskScoringForm';
 import WorkloadEstimation from './components/WorkloadEstimation';
+import { LoadDraftModal } from './components/LoadDraftModal';
 
 // ====================================================================
 // 类型定义
@@ -68,6 +70,9 @@ const NewAssessmentPage = () => {
   const [searchParams] = useSearchParams();
   const templateId = searchParams.get('template_id'); // 用于重新评估（从详情页跳转）
 
+  // 初始化缓存管理器
+  const cache = useAssessmentCache();
+
   const [current, setCurrent] = useState(0);
   const [loading, setLoading] = useState(true);
   const [configData, setConfigData] = useState<ConfigData | null>(null);
@@ -78,6 +83,7 @@ const NewAssessmentPage = () => {
   const [templateModalOpen, setTemplateModalOpen] = useState(false);
   const [templateList, setTemplateList] = useState<API.ProjectInfo[]>([]);
   const [loadingTemplates, setLoadingTemplates] = useState(false);
+  const [draftModalOpen, setDraftModalOpen] = useState(false);
 
   useEffect(() => {
     const loadInitialData = async () => {
@@ -166,8 +172,33 @@ const NewAssessmentPage = () => {
   }, [templateId, form]);
 
   const handleValuesChange = (changedPart: Partial<AssessmentData>) => {
-    setAssessmentData((prev) => ({ ...prev, ...changedPart }));
+    setAssessmentData((prev) => {
+      const next = { ...prev, ...changedPart };
+      return next;
+    });
   };
+
+  // 表单数据变更时自动保存（debounce）
+  useEffect(() => {
+    if (!loading) {
+      // 转换为缓存数据格式
+      const cacheData: AssessmentCacheData = {
+        risk_scores: assessmentData.risk_scores,
+        ai_unmatched_risks: assessmentData.ai_unmatched_risks,
+        custom_risk_items: assessmentData.custom_risk_items,
+        development_workload: assessmentData.development_workload,
+        integration_workload: assessmentData.integration_workload,
+        travel_months: assessmentData.travel_months,
+        travel_headcount: assessmentData.travel_headcount,
+        maintenance_months: assessmentData.maintenance_months,
+        maintenance_headcount: assessmentData.maintenance_headcount,
+        maintenance_daily_cost: assessmentData.maintenance_daily_cost,
+        risk_cost_items: assessmentData.risk_cost_items,
+        formValues: form.getFieldsValue(true),
+      };
+      cache.saveDebounced(cacheData, current);
+    }
+  }, [assessmentData, current, loading, form, cache]);
 
   // 处理AI评估结果应用
   const handleAIAssessmentComplete = (assessmentResult: any) => {
@@ -692,15 +723,50 @@ const NewAssessmentPage = () => {
             xl={4}
             style={{ textAlign: 'right' }}
           >
-            <Button
-              type="primary"
-              icon={<ImportOutlined />}
-              onClick={handleOpenTemplateModal}
-              size="large"
-              block
-            >
-              从模板导入
-            </Button>
+            <Space direction="vertical" style={{ width: '100%' }}>
+              <Button
+                type="primary"
+                icon={<SaveOutlined />}
+                onClick={async () => {
+                  const cacheData = {
+                    risk_scores: assessmentData.risk_scores,
+                    ai_unmatched_risks: assessmentData.ai_unmatched_risks,
+                    custom_risk_items: assessmentData.custom_risk_items,
+                    development_workload: assessmentData.development_workload,
+                    integration_workload: assessmentData.integration_workload,
+                    travel_months: assessmentData.travel_months,
+                    travel_headcount: assessmentData.travel_headcount,
+                    maintenance_months: assessmentData.maintenance_months,
+                    maintenance_headcount: assessmentData.maintenance_headcount,
+                    maintenance_daily_cost: assessmentData.maintenance_daily_cost,
+                    risk_cost_items: assessmentData.risk_cost_items,
+                    formValues: form.getFieldsValue(true),
+                  };
+                  await cache.saveImmediate(cacheData, current, true);
+                  message.success('草稿已保存');
+                }}
+                size="large"
+                block
+              >
+                保存草稿
+              </Button>
+              <Button
+                icon={<FolderOpenOutlined />}
+                onClick={() => setDraftModalOpen(true)}
+                size="large"
+                block
+              >
+                加载草稿
+              </Button>
+              <Button
+                icon={<ImportOutlined />}
+                onClick={handleOpenTemplateModal}
+                size="large"
+                block
+              >
+                从模板导入
+              </Button>
+            </Space>
           </Col>
         </Row>
       </Card>
@@ -839,6 +905,23 @@ const NewAssessmentPage = () => {
           ]}
         />
       </Modal>
+
+      {/* 加载草稿弹窗 */}
+      <LoadDraftModal
+        visible={draftModalOpen}
+        onClose={() => setDraftModalOpen(false)}
+        onLoadDraft={async (sessionId) => {
+          const record = await cache.loadSession(sessionId);
+          if (record) {
+            setAssessmentData(record.data);
+            setCurrent(record.currentStep);
+            form.setFieldsValue(record.data.formValues);
+            message.success(`草稿已加载（${new Date(record.metadata.updatedAt).toLocaleString('zh-CN')}）`);
+          } else {
+            message.error('加载草稿失败');
+          }
+        }}
+      />
       </Form>
     </PageContainer>
   );

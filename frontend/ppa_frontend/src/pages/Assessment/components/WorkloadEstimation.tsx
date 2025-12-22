@@ -798,6 +798,7 @@ const WorkloadEstimation: React.FC<WorkloadEstimationProps> = ({
                       onClick={handleFillFromTemplate}
                       disabled={evaluationLoading}
                       loading={fillFromTemplateLoading}
+                      style={{ display: 'none' }}
                     >
                       从模板一键填充
                     </Button>
@@ -851,6 +852,7 @@ const WorkloadEstimation: React.FC<WorkloadEstimationProps> = ({
                       onClick={handleFillFromTemplate}
                       disabled={evaluationLoading}
                       loading={fillFromTemplateLoading}
+                      style={{ display: 'none' }}
                     >
                       从模板一键填充
                     </Button>

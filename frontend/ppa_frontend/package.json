@@ -1,7 +1,7 @@
 {
   "private": true,
   "author": "jim <bruce870827@gmail.com>",
-  "version":"V1.1.2-alpha",
+  "version": "V1.1.2-alpha",
   "scripts": {
     "build": "max build",
     "dev": "max dev",
@@ -16,7 +16,8 @@
     "@ant-design/icons": "^5.0.1",
     "@ant-design/pro-components": "^2.8.10",
     "@umijs/max": "^4.5.2",
-    "antd": "^5.28.0"
+    "antd": "^5.28.0",
+    "dexie": "^4.2.1"
   },
   "devDependencies": {
     "@types/react": "^18.0.33",

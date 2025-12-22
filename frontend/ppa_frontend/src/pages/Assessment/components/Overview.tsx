@@ -1,6 +1,8 @@
 import { calculateProjectCost, createProject } from '@/services/assessment';
 import { getCurrentModel } from '@/services/aiModel';
-import { InfoCircleOutlined, RobotOutlined, ClockCircleOutlined } from '@ant-design/icons';
+import { compareData, getFieldLabel, formatValue } from '@/hooks/useAssessmentCache';
+import { useAssessmentCache } from '@/hooks/useAssessmentCache';
+import { InfoCircleOutlined, RobotOutlined, ClockCircleOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
 import {
   ProForm,
   ProFormCheckbox,
@@ -363,6 +365,7 @@ const Overview: React.FC<OverviewProps> = ({
   onPrev,
 }) => {
   const { message } = App.useApp();
+  const { getLatest } = useAssessmentCache();
   const [calculationResult, setCalculationResult] =
     useState<API.CalculationResult | null>(null);
   const [submitting, setSubmitting] = useState(false);
@@ -620,6 +623,99 @@ const Overview: React.FC<OverviewProps> = ({
             onFinish={async (values) => {
               try {
                 setSubmitting(true);
+
+                // 数据一致性校验：对比当前数据与最后一次缓存
+                const latestRecord = await getLatest();
+                if (latestRecord) {
+                  const diff = compareData(
+                    {
+                      risk_scores: assessmentData.risk_scores,
+                      ai_unmatched_risks: assessmentData.ai_unmatched_risks,
+                      custom_risk_items: assessmentData.custom_risk_items,
+                      development_workload: assessmentData.development_workload,
+                      integration_workload: assessmentData.integration_workload,
+                      travel_months: assessmentData.travel_months,
+                      travel_headcount: assessmentData.travel_headcount,
+                      maintenance_months: assessmentData.maintenance_months,
+                      maintenance_headcount: assessmentData.maintenance_headcount,
+                      maintenance_daily_cost: assessmentData.maintenance_daily_cost,
+                      risk_cost_items: assessmentData.risk_cost_items,
+                      formValues: {},
+                    },
+                    latestRecord.data
+                  );
+
+                  if (diff.hasDifferences) {
+                    return new Promise((resolve) => {
+                      Modal.confirm({
+                        title: '检测到未保存的变更',
+                        icon: <ExclamationCircleOutlined />,
+                        width: 600,
+                        content: (
+                          <div>
+                            <p>当前页面数据与最后一次自动保存的草稿存在差异：</p>
+                            <ul style={{ maxHeight: 300, overflow: 'auto' }}>
+                              {diff.details.map((item, idx) => (
+                                <li key={idx}>
+                                  <strong>{getFieldLabel(item.field)}</strong>
+                                  {item.type === 'added'
+                                    ? '：新增了数据'
+                                    : item.type === 'changed'
+                                      ? `：从 ${formatValue(item.cachedValue)} 变更为 ${formatValue(item.currentValue)}`
+                                      : '：删除了数据'}
+                                </li>
+                              ))}
+                            </ul>
+                            <p style={{ marginTop: 16, color: '#faad14' }}>
+                              建议：先点击"重新保存草稿"更新缓存，或选择"强制保存"使用当前数据
+                            </p>
+                          </div>
+                        ),
+                        okText: '重新保存草稿',
+                        cancelText: '强制保存',
+                        onOk: async () => {
+                          // 重新保存草稿
+                          message.success('正在重新保存草稿...');
+                          setSubmitting(false);
+                          resolve(false); // 阻断保存
+                          return Promise.reject(); // 阻止Modal自动关闭
+                        },
+                        onCancel: async () => {
+                          // 继续执行保存
+                          try {
+                            const payload: API.CreateProjectParams = {
+                              name: values.projectName,
+                              description: values.projectDescription,
+                              is_template: values.is_template || false,
+                              assessmentData: {
+                                ...assessmentData,
+                                roles: configData.roles,
+                              },
+                            };
+
+                            const result = await createProject(payload);
+                            console.log('项目保存成功，ID:', result.id);
+                            message.success('项目保存成功');
+
+                            setTimeout(() => {
+                              history.push('/assessment/history');
+                            }, 500);
+
+                            resolve(true);
+                          } catch (error: any) {
+                            console.error('保存项目失败:', error);
+                            message.error(error.message || '保存项目失败，请稍后重试');
+                            resolve(false);
+                          } finally {
+                            setSubmitting(false);
+                          }
+                        },
+                      });
+                    });
+                  }
+                }
+
+                // 没有差异，直接保存
                 const payload: API.CreateProjectParams = {
                   name: values.projectName,
                   description: values.projectDescription,

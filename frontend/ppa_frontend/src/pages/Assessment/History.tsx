@@ -33,7 +33,7 @@ const HistoryPage = () => {
         1: { text: '是' },
         0: { text: '否' },
       },
-      title: '是否选择',
+      title: '是否模板',
       dataIndex: 'is_template_filter',
       key: 'is_template_filter',
       hideInTable: true,
