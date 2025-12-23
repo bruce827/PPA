@@ -1,12 +1,22 @@
 [
-    {
+  {
+    "version": "V1.1.4-beta",
+    "date": "2025-12-24",
+    "changes": [{ "type": "opt", "content": "基础配置数据测试通过" }]
+  },
+  {
+    "version": "V1.1.3-alpha",
+    "date": "2025-12-23",
+    "changes": [{ "type": "feat", "content": "增加新项目评估前端缓存功能" }]
+  },
+  {
     "version": "V1.1.2-alpha",
     "date": "2025-12-08",
     "changes": [
       { "type": "feat", "content": "增加行业分析文档并更新核心模块" },
       { "type": "feat", "content": "增加项目自定义风险评估" },
       { "type": "opt", "content": "增加计算报价请求大小限制" },
-      { "type": "opt", "content": "优化AI评估展现形式" },    
+      { "type": "opt", "content": "优化AI评估展现形式" },
       { "type": "opt", "content": "优化WEB3D模型工作量估算交互" }
     ]
   },
@@ -22,8 +32,6 @@
   {
     "version": "V1.0.0-alpha",
     "date": "2024-05-01",
-    "changes": [
-      { "type": "feat", "content": "系统初始化" }
-    ]
+    "changes": [{ "type": "feat", "content": "系统初始化" }]
   }
 ]

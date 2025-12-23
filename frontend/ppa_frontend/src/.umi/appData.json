@@ -3,7 +3,7 @@
   "pkg": {
     "private": true,
     "author": "jim <bruce870827@gmail.com>",
-    "version": "V1.1.2-alpha",
+    "version": "V1.1.3-alpha",
     "scripts": {
       "build": "max build",
       "dev": "max dev",
@@ -51,7 +51,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 5
+        "register": 9
       },
       "enableBy": "register",
       "type": "preset",
@@ -64,7 +64,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 2
       },
       "enableBy": "register",
       "type": "preset",
@@ -81,7 +81,7 @@
             0
           ]
         },
-        "register": 2
+        "register": 3
       },
       "enableBy": "register",
       "type": "plugin",
@@ -95,10 +95,10 @@
       "time": {
         "hooks": {
           "onStart": [
-            1
+            2
           ]
         },
-        "register": 2
+        "register": 3
       },
       "enableBy": "register",
       "type": "plugin",
@@ -112,10 +112,6 @@
       "time": {
         "hooks": {
           "modifyRoutes": [
-            0,
-            0,
-            0,
-            0,
             0
           ]
         },
@@ -133,14 +129,11 @@
       "time": {
         "hooks": {
           "onDevCompileDone": [
-            184,
+            161,
+            42,
             35,
-            35,
-            29,
-            30,
-            34,
-            33,
-            34
+            26,
+            50
           ]
         },
         "register": 1
@@ -157,14 +150,10 @@
       "time": {
         "hooks": {
           "modifyAppData": [
-            23
+            27
           ],
           "onGenerateFiles": [
-            2,
-            9,
-            16,
-            16,
-            30
+            2
           ]
         },
         "register": 13
@@ -181,10 +170,6 @@
       "time": {
         "hooks": {
           "addEntryCode": [
-            0,
-            0,
-            0,
-            0,
             0
           ]
         },
@@ -211,11 +196,6 @@
             0,
             0,
             0,
-            0,
-            0,
-            0,
-            0,
-            0,
             0
           ],
           "onCheckCode": [
@@ -238,13 +218,7 @@
             0,
             0,
             0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
+            1,
             0,
             0,
             0,
@@ -275,7 +249,7 @@
       "time": {
         "hooks": {
           "onCheck": [
-            1
+            0
           ]
         },
         "register": 1
@@ -308,7 +282,7 @@
             0
           ]
         },
-        "register": 5
+        "register": 6
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1160,7 +1134,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1191,10 +1165,10 @@
       "time": {
         "hooks": {
           "addBeforeMiddlewares": [
-            7
+            6
           ]
         },
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1207,7 +1181,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 53
+        "register": 48
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1220,7 +1194,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 24
+        "register": 22
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1259,15 +1233,10 @@
             0,
             0,
             0,
-            0,
-            0,
-            0,
-            1,
-            0,
             0
           ]
         },
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1281,21 +1250,13 @@
       "time": {
         "hooks": {
           "onGenerateFiles": [
-            1,
-            1,
-            1,
-            0,
             1
           ],
           "addRuntimePlugin": [
-            0,
-            0,
-            0,
-            0,
             0
           ]
         },
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1328,7 +1289,7 @@
             3
           ]
         },
-        "register": 22
+        "register": 21
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/preset-umi/dist/features/mock/mock.js",
@@ -1366,21 +1327,9 @@
       "time": {
         "hooks": {
           "onGenerateFiles": [
-            0,
-            0,
-            0,
-            0,
             0
           ],
           "addEntryImports": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
             0,
             0
           ]
@@ -1415,21 +1364,9 @@
             1
           ],
           "onGenerateFiles": [
-            54,
-            16,
-            18,
-            27,
-            36
+            60
           ],
           "addPolyfillImports": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
             0,
             0
           ]
@@ -1448,14 +1385,6 @@
         "hooks": {
           "addPolyfillImports": [
             0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
             0
           ]
         },
@@ -1473,11 +1402,7 @@
       "time": {
         "hooks": {
           "onGenerateFiles": [
-            88,
-            0,
-            0,
-            0,
-            0
+            95
           ]
         },
         "register": 1
@@ -1506,7 +1431,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1520,10 +1445,6 @@
       "time": {
         "hooks": {
           "onGenerateFiles": [
-            0,
-            0,
-            0,
-            0,
             0
           ],
           "addBeforeMiddlewares": [
@@ -1544,15 +1465,7 @@
       "time": {
         "hooks": {
           "onGenerateFiles": [
-            9,
-            4,
             10,
-            4,
-            8,
-            3,
-            9,
-            4,
-            12,
             4
           ]
         },
@@ -1582,7 +1495,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/preset-umi/dist/features/routeProps/routeProps.js",
@@ -1608,14 +1521,10 @@
       "time": {
         "hooks": {
           "onGenerateFiles": [
-            253,
-            11,
-            7,
-            11,
-            12
+            269
           ]
         },
-        "register": 1
+        "register": 2
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1632,7 +1541,7 @@
             0
           ]
         },
-        "register": 2
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1658,7 +1567,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1671,7 +1580,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 3
+        "register": 2
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/preset-umi/dist/features/apiRoute/apiRoute.js",
@@ -1697,10 +1606,6 @@
       "time": {
         "hooks": {
           "onGenerateFiles": [
-            2,
-            1,
-            1,
-            0,
             1
           ]
         },
@@ -1742,7 +1647,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1771,7 +1676,7 @@
             0
           ]
         },
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1784,7 +1689,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 3
+        "register": 1
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/preset-umi/dist/features/ui/ui.js",
@@ -1796,7 +1701,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1809,7 +1714,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/preset-umi/dist/features/utoopack/utoopack.js",
@@ -1821,7 +1726,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 2
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/preset-umi/dist/features/hmrGuardian/hmrGuardian.js",
@@ -1833,7 +1738,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 17
+        "register": 16
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/preset-umi/dist/features/routePreloadOnLoad/routePreloadOnLoad.js",
@@ -1859,10 +1764,10 @@
       "time": {
         "hooks": {
           "modifyUniBundler": [
-            336
+            320
           ]
         },
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1875,7 +1780,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 3
+        "register": 2
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1888,7 +1793,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 21
+        "register": 22
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1902,10 +1807,10 @@
       "time": {
         "hooks": {
           "modifyAppData": [
-            8
+            9
           ]
         },
-        "register": 19
+        "register": 23
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/preset-umi/dist/commands/dev/dev.js",
@@ -1917,7 +1822,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1930,7 +1835,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1956,7 +1861,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1969,7 +1874,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -2099,7 +2004,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -2112,7 +2017,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -2138,7 +2043,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -2177,7 +2082,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 2
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -2191,24 +2096,16 @@
       "time": {
         "hooks": {
           "addRuntimePlugin": [
-            0,
-            0,
-            0,
-            0,
             0
           ],
           "onGenerateFiles": [
-            1,
-            0,
-            0,
-            0,
-            0
+            2
           ],
           "addTmpGenerateWatcherPaths": [
             0
           ]
         },
-        "register": 0
+        "register": 1
       },
       "enableBy": "config",
       "type": "plugin",
@@ -2243,35 +2140,15 @@
           ],
           "addEntryImportsAhead": [
             0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
             0
           ],
           "addRuntimePlugin": [
-            0,
-            0,
-            0,
-            0,
             0
           ],
           "addRuntimePluginKey": [
-            0,
-            0,
-            0,
-            0,
             0
           ],
           "onGenerateFiles": [
-            1,
-            1,
-            1,
-            1,
             1
           ],
           "addExtraBabelPlugins": [
@@ -2307,31 +2184,15 @@
       "time": {
         "hooks": {
           "addRuntimePlugin": [
-            0,
-            0,
-            0,
-            0,
             0
           ],
           "addRuntimePluginKey": [
-            0,
-            0,
-            0,
-            0,
             0
           ],
           "onGenerateFiles": [
-            1,
-            0,
-            0,
-            0,
-            0
+            1
           ],
           "addExtraModels": [
-            0,
-            0,
-            0,
-            0,
             0
           ]
         },
@@ -2354,38 +2215,22 @@
             0
           ],
           "addLayouts": [
-            0,
-            0,
-            0,
-            0,
             0
           ],
           "modifyAppData": [
             0
           ],
           "addRuntimePlugin": [
-            0,
-            0,
-            0,
-            0,
             0
           ],
           "addRuntimePluginKey": [
-            0,
-            0,
-            0,
-            0,
             0
           ],
           "onGenerateFiles": [
-            5,
-            3,
-            2,
-            3,
-            3
+            5
           ]
         },
-        "register": 2
+        "register": 1
       },
       "enableBy": "config",
       "type": "plugin",
@@ -2398,7 +2243,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 2
       },
       "enableBy": "config",
       "type": "plugin",
@@ -2411,7 +2256,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 3
+        "register": 1
       },
       "enableBy": "config",
       "type": "plugin",
@@ -2425,24 +2270,16 @@
       "time": {
         "hooks": {
           "addRuntimePlugin": [
-            0,
-            0,
-            0,
-            0,
             0
           ],
           "onGenerateFiles": [
-            18,
-            15,
-            16,
-            17,
-            17
+            19
           ],
           "addTmpGenerateWatcherPaths": [
             0
           ]
         },
-        "register": 1
+        "register": 3
       },
       "enableBy": "config",
       "type": "plugin",
@@ -2469,10 +2306,6 @@
       "time": {
         "hooks": {
           "addRuntimePluginKey": [
-            0,
-            0,
-            0,
-            0,
             0
           ]
         },
@@ -2489,7 +2322,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/plugins/dist/qiankun/master.js",
@@ -2501,7 +2334,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/plugins/dist/qiankun/slave.js",
@@ -2527,18 +2360,10 @@
       "time": {
         "hooks": {
           "addRuntimePluginKey": [
-            0,
-            0,
-            0,
-            0,
             0
           ],
           "onGenerateFiles": [
-            2,
-            1,
-            1,
-            0,
-            1
+            3
           ]
         },
         "register": 0
@@ -2567,7 +2392,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "config",
       "type": "plugin",
@@ -2580,7 +2405,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "config",
       "type": "plugin",
@@ -2597,7 +2422,7 @@
             0
           ]
         },
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -2628,10 +2453,11 @@
       "time": {
         "hooks": {
           "onCheckPkgJSON": [
+            0,
             0
           ]
         },
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -2644,7 +2470,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -3887,7 +3713,7 @@
       "parentId": "3",
       "id": "5",
       "absPath": "/assessment/history",
-      "__content": "import {\n  deleteProject,\n  getProjectList,\n  exportProjectToExcel,\n} from '@/services/projects';\nimport { PageContainer, ProTable } from '@ant-design/pro-components';\nimport { Link } from '@umijs/max';\nimport { Button, Dropdown, Popconfirm, Tag, Tooltip, App } from 'antd';\nimport { useRef } from 'react';\n\nconst HistoryPage = () => {\n  const { message } = App.useApp();\n  const actionRef = useRef();\n  const isTemplateValue = (value: any) => {\n    const normalized = String(value).toLowerCase();\n    return ['1', 'true', 'yes'].includes(normalized);\n  };\n  const columns = [\n    {\n      title: '项目名称',\n      dataIndex: 'name',\n      key: 'name',\n      render: (text, record) => (\n        <Link to={`/assessment/detail/${record.id}`}>{text}</Link>\n      ),\n      fieldProps: {\n        placeholder: '支持模糊搜索',\n      },\n    },\n    {\n      valueType: 'select',\n      valueEnum: {\n        1: { text: '是' },\n        0: { text: '否' },\n      },\n      title: '模板',\n      dataIndex: 'is_template_filter',\n      key: 'is_template_filter',\n      hideInTable: true,\n      search: {\n        transform: (value) => ({ is_template: value }),\n      },\n    },\n    {\n      title: '是否模板',\n      dataIndex: 'is_template',\n      key: 'is_template',\n      width: 100,\n      align: 'center',\n      hideInSearch: true,\n      render: (value) =>\n        isTemplateValue(value) ? (\n          <Tag color=\"blue\">当前模板</Tag>\n        ) : (\n          '-'\n        ),\n    },\n    {\n      title: '报价总计 (万元)',\n      dataIndex: 'final_total_cost',\n      key: 'final_total_cost',\n      width: 140,\n      valueType: 'money',\n      sorter: true,\n      align: 'right',\n      hideInSearch: true,\n    },\n    {\n      title: '报价总计 (万元)',\n      dataIndex: 'final_total_cost_range',\n      key: 'final_total_cost_range',\n      valueType: 'digitRange',\n      hideInTable: true,\n      search: {\n        transform: (value) => {\n          const [min, max] = Array.isArray(value) ? value : [];\n          const next: Record<string, any> = {};\n          if (typeof min !== 'undefined') next.final_total_cost_min = min;\n          if (typeof max !== 'undefined') next.final_total_cost_max = max;\n          return next;\n        },\n      },\n    },\n    {\n      title: '风险总分',\n      dataIndex: 'final_risk_score',\n      key: 'final_risk_score',\n      sorter: true,\n      align: 'right',\n      width: 140,\n    },\n    {\n      title: '创建时间',\n      dataIndex: 'created_at',\n      key: 'created_at',\n      valueType: 'dateTime',\n      sorter: true,\n      align: 'center',\n      width: 200,\n      hideInSearch: true,\n    },\n    {\n      title: '创建时间',\n      dataIndex: 'created_at_range',\n      key: 'created_at_range',\n      valueType: 'dateRange',\n      hideInTable: true,\n      fieldProps: {\n        format: 'YYYY-MM-DD',\n      },\n      search: {\n        transform: (value) => {\n          const [start, end] = Array.isArray(value) ? value : [];\n          const next: Record<string, any> = {};\n          if (typeof start !== 'undefined') next.created_at_start = start;\n          if (typeof end !== 'undefined') next.created_at_end = end;\n          return next;\n        },\n      },\n    },\n    {\n      title: '操作',\n      valueType: 'option',\n      key: 'option',\n      align: 'center',\n      width: 260,\n      render: (text, record, _, action) => [\n        <Link key=\"view\" to={`/assessment/detail/${record.id}`}>\n          查看\n        </Link>,\n        <Link key=\"reassess\" to={`/assessment/new?template_id=${record.id}`}>\n          重新评估\n        </Link>,\n        <Dropdown\n          key=\"export\"\n          menu={{\n            items: [\n              {\n                key: 'internal',\n                label: (\n                  <a\n                    href={exportProjectToExcel(record.id)}\n                    target=\"_blank\"\n                    rel=\"noreferrer\"\n                  >\n                    导出Excel（内部）\n                  </a>\n                ),\n              },\n              {\n                key: 'external',\n                label: (\n                  <a\n                    href={`${exportProjectToExcel(record.id)}?version=external`}\n                    target=\"_blank\"\n                    rel=\"noreferrer\"\n                  >\n                    导出Excel（对外）\n                  </a>\n                ),\n              },\n            ],\n          }}\n        >\n          <Button type=\"link\">导出</Button>\n        </Dropdown>,\n        isTemplateValue(record.is_template) ? (\n          <Tooltip\n            key=\"delete-disabled\"\n            title=\"当前模板不可删除，请先在新评估中设置新的模板\"\n          >\n            <Button type=\"link\" disabled>\n              删除\n            </Button>\n          </Tooltip>\n        ) : (\n          <Popconfirm\n            key=\"delete\"\n            title=\"确认删除此项目？\"\n            onConfirm={async () => {\n              await deleteProject(record.id);\n              message.success('项目已删除');\n              actionRef.current?.reload();\n            }}\n          >\n            <a>删除</a>\n          </Popconfirm>\n        ),\n      ],\n    },\n  ];\n\n  return (\n    <PageContainer>\n      <ProTable\n        columns={columns}\n        actionRef={actionRef}\n        cardBordered\n        request={async (params, sorter) => {\n          const [sortBy, sortOrderRaw] =\n            Object.entries(sorter || {}).find(([, order]) => !!order) || [];\n          const sortOrder =\n            sortOrderRaw === 'ascend'\n              ? 'asc'\n              : sortOrderRaw === 'descend'\n                ? 'desc'\n                : undefined;\n\n          const queryParams = { ...params } as Record<string, any>;\n          delete queryParams.current;\n          delete queryParams.pageSize;\n\n          const res = await getProjectList({\n            params:\n              sortBy && sortOrder\n                ? {\n                    ...queryParams,\n                    sort_by: sortBy,\n                    sort_order: sortOrder,\n                  }\n                : queryParams,\n          });\n          return {\n            data: res.data,\n            success: true,\n          };\n        }}\n        rowKey=\"id\"\n        search={{\n          labelWidth: 'auto',\n        }}\n        pagination={{\n          pageSize: 10,\n        }}\n        dateFormatter=\"string\"\n        headerTitle=\"历史项目列表\"\n      />\n    </PageContainer>\n  );\n};\n\nexport default HistoryPage;\n",
+      "__content": "import {\n  deleteProject,\n  getProjectList,\n  exportProjectToExcel,\n} from '@/services/projects';\nimport { PageContainer, ProTable } from '@ant-design/pro-components';\nimport { Link } from '@umijs/max';\nimport { Button, Dropdown, Popconfirm, Tag, Tooltip, App } from 'antd';\nimport { useRef } from 'react';\n\nconst HistoryPage = () => {\n  const { message } = App.useApp();\n  const actionRef = useRef();\n  const isTemplateValue = (value: any) => {\n    const normalized = String(value).toLowerCase();\n    return ['1', 'true', 'yes'].includes(normalized);\n  };\n  const columns = [\n    {\n      title: '项目名称',\n      dataIndex: 'name',\n      key: 'name',\n      render: (text, record) => (\n        <Link to={`/assessment/detail/${record.id}`}>{text}</Link>\n      ),\n      fieldProps: {\n        placeholder: '支持模糊搜索',\n      },\n    },\n    {\n      valueType: 'select',\n      valueEnum: {\n        1: { text: '是' },\n        0: { text: '否' },\n      },\n      title: '是否模板',\n      dataIndex: 'is_template_filter',\n      key: 'is_template_filter',\n      hideInTable: true,\n      search: {\n        transform: (value) => ({ is_template: value }),\n      },\n    },\n    {\n      title: '是否模板',\n      dataIndex: 'is_template',\n      key: 'is_template',\n      width: 100,\n      align: 'center',\n      hideInSearch: true,\n      render: (value) =>\n        isTemplateValue(value) ? (\n          <Tag color=\"blue\">当前模板</Tag>\n        ) : (\n          '-'\n        ),\n    },\n    {\n      title: '报价总计 (万元)',\n      dataIndex: 'final_total_cost',\n      key: 'final_total_cost',\n      width: 140,\n      valueType: 'money',\n      sorter: true,\n      align: 'right',\n      hideInSearch: true,\n    },\n    {\n      title: '报价总计 (万元)',\n      dataIndex: 'final_total_cost_range',\n      key: 'final_total_cost_range',\n      valueType: 'digitRange',\n      hideInTable: true,\n      search: {\n        transform: (value) => {\n          const [min, max] = Array.isArray(value) ? value : [];\n          const next: Record<string, any> = {};\n          if (typeof min !== 'undefined') next.final_total_cost_min = min;\n          if (typeof max !== 'undefined') next.final_total_cost_max = max;\n          return next;\n        },\n      },\n    },\n    {\n      title: '风险总分',\n      dataIndex: 'final_risk_score',\n      key: 'final_risk_score',\n      sorter: true,\n      align: 'right',\n      width: 140,\n    },\n    {\n      title: '创建时间',\n      dataIndex: 'created_at',\n      key: 'created_at',\n      valueType: 'dateTime',\n      sorter: true,\n      align: 'center',\n      width: 200,\n      hideInSearch: true,\n    },\n    {\n      title: '创建时间',\n      dataIndex: 'created_at_range',\n      key: 'created_at_range',\n      valueType: 'dateRange',\n      hideInTable: true,\n      fieldProps: {\n        format: 'YYYY-MM-DD',\n      },\n      search: {\n        transform: (value) => {\n          const [start, end] = Array.isArray(value) ? value : [];\n          const next: Record<string, any> = {};\n          if (typeof start !== 'undefined') next.created_at_start = start;\n          if (typeof end !== 'undefined') next.created_at_end = end;\n          return next;\n        },\n      },\n    },\n    {\n      title: '操作',\n      valueType: 'option',\n      key: 'option',\n      align: 'center',\n      width: 260,\n      render: (text, record, _, action) => [\n        <Link key=\"view\" to={`/assessment/detail/${record.id}`}>\n          查看\n        </Link>,\n        <Link key=\"reassess\" to={`/assessment/new?template_id=${record.id}`}>\n          重新评估\n        </Link>,\n        <Dropdown\n          key=\"export\"\n          menu={{\n            items: [\n              {\n                key: 'internal',\n                label: (\n                  <a\n                    href={exportProjectToExcel(record.id)}\n                    target=\"_blank\"\n                    rel=\"noreferrer\"\n                  >\n                    导出Excel（内部）\n                  </a>\n                ),\n              },\n              {\n                key: 'external',\n                label: (\n                  <a\n                    href={`${exportProjectToExcel(record.id)}?version=external`}\n                    target=\"_blank\"\n                    rel=\"noreferrer\"\n                  >\n                    导出Excel（对外）\n                  </a>\n                ),\n              },\n            ],\n          }}\n        >\n          <Button type=\"link\">导出</Button>\n        </Dropdown>,\n        isTemplateValue(record.is_template) ? (\n          <Tooltip\n            key=\"delete-disabled\"\n            title=\"当前模板不可删除，请先在新评估中设置新的模板\"\n          >\n            <Button type=\"link\" disabled>\n              删除\n            </Button>\n          </Tooltip>\n        ) : (\n          <Popconfirm\n            key=\"delete\"\n            title=\"确认删除此项目？\"\n            onConfirm={async () => {\n              await deleteProject(record.id);\n              message.success('项目已删除');\n              actionRef.current?.reload();\n            }}\n          >\n            <a>删除</a>\n          </Popconfirm>\n        ),\n      ],\n    },\n  ];\n\n  return (\n    <PageContainer>\n      <ProTable\n        columns={columns}\n        actionRef={actionRef}\n        cardBordered\n        request={async (params, sorter) => {\n          const [sortBy, sortOrderRaw] =\n            Object.entries(sorter || {}).find(([, order]) => !!order) || [];\n          const sortOrder =\n            sortOrderRaw === 'ascend'\n              ? 'asc'\n              : sortOrderRaw === 'descend'\n                ? 'desc'\n                : undefined;\n\n          const queryParams = { ...params } as Record<string, any>;\n          delete queryParams.current;\n          delete queryParams.pageSize;\n\n          const res = await getProjectList({\n            params:\n              sortBy && sortOrder\n                ? {\n                    ...queryParams,\n                    sort_by: sortBy,\n                    sort_order: sortOrder,\n                  }\n                : queryParams,\n          });\n          return {\n            data: res.data,\n            success: true,\n          };\n        }}\n        rowKey=\"id\"\n        search={{\n          labelWidth: 'auto',\n        }}\n        pagination={{\n          pageSize: 10,\n        }}\n        dateFormatter=\"string\"\n        headerTitle=\"历史项目列表\"\n      />\n    </PageContainer>\n  );\n};\n\nexport default HistoryPage;\n",
       "__isJSFile": true,
       "__absFile": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/src/pages/Assessment/History.tsx"
     },
@@ -6278,7 +6104,7 @@
             "format": "esm"
           },
           "src/pages/Assessment/components/LoadDraftModal.tsx": {
-            "bytes": 7903,
+            "bytes": 8498,
             "imports": [
               {
                 "path": "react",
@@ -9362,7 +9188,7 @@
                 "bytesInOutput": 41549
               },
               "src/pages/Assessment/components/LoadDraftModal.tsx": {
-                "bytesInOutput": 8879
+                "bytesInOutput": 9534
               },
               "src/pages/Assessment/New.tsx": {
                 "bytesInOutput": 36407
@@ -9443,7 +9269,7 @@
                 "bytesInOutput": 2010
               }
             },
-            "bytes": 536355
+            "bytes": 537010
           }
         }
       }

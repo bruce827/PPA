@@ -86,6 +86,21 @@ export const LoadDraftModal: React.FC<LoadDraftModalProps> = ({
   const [drafts, setDrafts] = useState<AssessmentCacheRecord[]>([]);
   const [showAutoSave, setShowAutoSave] = useState(false);
 
+  const pickLatestPerSession = (records: AssessmentCacheRecord[]) => {
+    const latestMap = new Map<string, AssessmentCacheRecord>();
+    records.forEach((record) => {
+      const sessionId = record.sessionId;
+      if (!sessionId) {
+        return;
+      }
+      const existing = latestMap.get(sessionId);
+      if (!existing || record.metadata.updatedAt > existing.metadata.updatedAt) {
+        latestMap.set(sessionId, record);
+      }
+    });
+    return Array.from(latestMap.values());
+  };
+
   // 加载草稿列表
   const loadDrafts = async () => {
     setLoading(true);
@@ -94,8 +109,11 @@ export const LoadDraftModal: React.FC<LoadDraftModalProps> = ({
       const allRecords = await cache.getAll();
 
       // 过滤和排序
-      const sortedDrafts = allRecords
-        .filter(record => showAutoSave || record.metadata.isManualSave)  // 根据开关过滤
+      const filtered = allRecords.filter(
+        (record) => showAutoSave || record.metadata.isManualSave,
+      );
+      const latestPerSession = pickLatestPerSession(filtered);
+      const sortedDrafts = latestPerSession
         .sort((a, b) => b.metadata.updatedAt - a.metadata.updatedAt)  // 按时间倒序
         .slice(0, 50);  // 最多显示50条
 
@@ -267,7 +285,7 @@ export const LoadDraftModal: React.FC<LoadDraftModalProps> = ({
           loading={loading}
           dataSource={drafts}
           columns={columns}
-          rowKey="id"
+          rowKey="sessionId"
           pagination={{
             pageSize: 10,
             showTotal: (total) => `共 ${total} 条记录`,
