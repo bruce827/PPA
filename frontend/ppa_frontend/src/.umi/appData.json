@@ -3,7 +3,7 @@
   "pkg": {
     "private": true,
     "author": "jim <bruce870827@gmail.com>",
-    "version": "V1.1.3-alpha",
+    "version": "V1.1.4-beta",
     "scripts": {
       "build": "max build",
       "dev": "max dev",
@@ -51,7 +51,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 9
+        "register": 8
       },
       "enableBy": "register",
       "type": "preset",
@@ -95,7 +95,7 @@
       "time": {
         "hooks": {
           "onStart": [
-            2
+            1
           ]
         },
         "register": 3
@@ -112,6 +112,47 @@
       "time": {
         "hooks": {
           "modifyRoutes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
             0
           ]
         },
@@ -129,11 +170,52 @@
       "time": {
         "hooks": {
           "onDevCompileDone": [
-            161,
-            42,
+            126,
+            37,
+            33,
             35,
+            34,
+            37,
+            110,
+            36,
+            28,
+            38,
+            32,
+            32,
+            75,
+            31,
+            60,
+            33,
+            35,
+            27,
+            28,
+            33,
+            34,
+            33,
+            38,
+            112,
+            32,
+            74,
+            27,
+            82,
             26,
-            50
+            28,
+            31,
+            29,
+            24,
+            37,
+            56,
+            25,
+            71,
+            31,
+            30,
+            25,
+            40,
+            36,
+            22,
+            35,
+            29,
+            23
           ]
         },
         "register": 1
@@ -150,13 +232,54 @@
       "time": {
         "hooks": {
           "modifyAppData": [
-            27
+            22
           ],
           "onGenerateFiles": [
-            2
+            2,
+            14,
+            16,
+            26,
+            21,
+            25,
+            11,
+            13,
+            43,
+            30,
+            20,
+            24,
+            178,
+            18,
+            27,
+            37,
+            26,
+            26,
+            25,
+            27,
+            29,
+            35,
+            37,
+            37,
+            23,
+            30,
+            25,
+            28,
+            32,
+            27,
+            20,
+            27,
+            24,
+            24,
+            26,
+            28,
+            32,
+            31,
+            31,
+            31,
+            29,
+            33
           ]
         },
-        "register": 13
+        "register": 14
       },
       "enableBy": "register",
       "type": "plugin",
@@ -170,10 +293,51 @@
       "time": {
         "hooks": {
           "addEntryCode": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
             0
           ]
         },
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -196,9 +360,16 @@
             0,
             0,
             0,
-            0
-          ],
-          "onCheckCode": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
             0,
             0,
             0,
@@ -231,11 +402,99 @@
             0,
             0,
             0,
+            1
+          ],
+          "onCheckCode": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
             0,
             0
           ]
         },
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -252,7 +511,7 @@
             0
           ]
         },
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -265,7 +524,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "config",
       "type": "plugin",
@@ -282,7 +541,7 @@
             0
           ]
         },
-        "register": 6
+        "register": 5
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1134,7 +1393,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1165,10 +1424,10 @@
       "time": {
         "hooks": {
           "addBeforeMiddlewares": [
-            6
+            7
           ]
         },
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1181,7 +1440,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 48
+        "register": 52
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1194,7 +1453,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 22
+        "register": 28
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1233,6 +1492,49 @@
             0,
             0,
             0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
             0
           ]
         },
@@ -1250,9 +1552,91 @@
       "time": {
         "hooks": {
           "onGenerateFiles": [
+            1,
+            0,
+            0,
+            1,
+            0,
+            1,
+            0,
+            0,
+            0,
+            1,
+            1,
+            1,
+            3,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            1,
+            1,
+            1,
+            0,
+            1,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
             1
           ],
           "addRuntimePlugin": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
             0
           ]
         },
@@ -1289,7 +1673,7 @@
             3
           ]
         },
-        "register": 21
+        "register": 23
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/preset-umi/dist/features/mock/mock.js",
@@ -1327,9 +1711,132 @@
       "time": {
         "hooks": {
           "onGenerateFiles": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
             0
           ],
           "addEntryImports": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
             0,
             0
           ]
@@ -1364,9 +1871,132 @@
             1
           ],
           "onGenerateFiles": [
-            60
+            52,
+            22,
+            19,
+            19,
+            21,
+            11,
+            16,
+            16,
+            25,
+            27,
+            24,
+            40,
+            129,
+            24,
+            16,
+            15,
+            26,
+            23,
+            14,
+            14,
+            13,
+            13,
+            18,
+            23,
+            12,
+            11,
+            26,
+            19,
+            29,
+            15,
+            20,
+            20,
+            17,
+            44,
+            14,
+            8,
+            19,
+            37,
+            24,
+            22,
+            18,
+            26
           ],
           "addPolyfillImports": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
             0,
             0
           ]
@@ -1385,6 +2015,88 @@
         "hooks": {
           "addPolyfillImports": [
             0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
             0
           ]
         },
@@ -1402,7 +2114,48 @@
       "time": {
         "hooks": {
           "onGenerateFiles": [
-            95
+            154,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
           ]
         },
         "register": 1
@@ -1431,7 +2184,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1445,6 +2198,47 @@
       "time": {
         "hooks": {
           "onGenerateFiles": [
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
             0
           ],
           "addBeforeMiddlewares": [
@@ -1465,8 +2259,90 @@
       "time": {
         "hooks": {
           "onGenerateFiles": [
+            7,
+            5,
             10,
-            4
+            4,
+            8,
+            4,
+            10,
+            5,
+            18,
+            8,
+            9,
+            5,
+            7,
+            3,
+            8,
+            7,
+            29,
+            12,
+            11,
+            5,
+            10,
+            5,
+            12,
+            3,
+            13,
+            12,
+            10,
+            4,
+            8,
+            4,
+            11,
+            5,
+            9,
+            2,
+            9,
+            5,
+            12,
+            4,
+            7,
+            4,
+            7,
+            4,
+            7,
+            4,
+            8,
+            3,
+            8,
+            3,
+            4,
+            3,
+            7,
+            3,
+            7,
+            2,
+            12,
+            4,
+            9,
+            3,
+            7,
+            4,
+            6,
+            4,
+            7,
+            7,
+            5,
+            4,
+            16,
+            3,
+            7,
+            3,
+            6,
+            4,
+            11,
+            4,
+            11,
+            4,
+            10,
+            3,
+            11,
+            4,
+            8,
+            4,
+            9,
+            3
           ]
         },
         "register": 2
@@ -1521,7 +2397,48 @@
       "time": {
         "hooks": {
           "onGenerateFiles": [
-            269
+            254,
+            11,
+            9,
+            11,
+            15,
+            11,
+            10,
+            6,
+            18,
+            13,
+            15,
+            9,
+            14,
+            11,
+            8,
+            8,
+            8,
+            10,
+            9,
+            6,
+            6,
+            15,
+            9,
+            12,
+            7,
+            10,
+            8,
+            9,
+            7,
+            5,
+            8,
+            8,
+            9,
+            8,
+            13,
+            8,
+            7,
+            11,
+            11,
+            8,
+            6,
+            7
           ]
         },
         "register": 2
@@ -1554,7 +2471,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 2
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1567,7 +2484,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1580,7 +2497,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 2
+        "register": 4
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/preset-umi/dist/features/apiRoute/apiRoute.js",
@@ -1606,7 +2523,48 @@
       "time": {
         "hooks": {
           "onGenerateFiles": [
-            1
+            5,
+            1,
+            1,
+            0,
+            1,
+            0,
+            1,
+            0,
+            4,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            1,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            1,
+            1,
+            0,
+            0,
+            0,
+            1,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
           ]
         },
         "register": 0
@@ -1634,7 +2592,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1660,7 +2618,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/preset-umi/dist/features/webpack/webpack.js",
@@ -1676,7 +2634,7 @@
             0
           ]
         },
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1689,7 +2647,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 2
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/preset-umi/dist/features/ui/ui.js",
@@ -1726,7 +2684,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 2
+        "register": 1
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/preset-umi/dist/features/hmrGuardian/hmrGuardian.js",
@@ -1738,7 +2696,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 16
+        "register": 17
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/preset-umi/dist/features/routePreloadOnLoad/routePreloadOnLoad.js",
@@ -1764,7 +2722,7 @@
       "time": {
         "hooks": {
           "modifyUniBundler": [
-            320
+            340
           ]
         },
         "register": 1
@@ -1807,10 +2765,10 @@
       "time": {
         "hooks": {
           "modifyAppData": [
-            9
+            10
           ]
         },
-        "register": 23
+        "register": 24
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/preset-umi/dist/commands/dev/dev.js",
@@ -1822,7 +2780,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1835,7 +2793,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1861,7 +2819,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1874,7 +2832,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1913,7 +2871,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1926,7 +2884,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1965,7 +2923,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -2043,7 +3001,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -2056,7 +3014,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 14
+        "register": 13
       },
       "enableBy": "register",
       "type": "plugin",
@@ -2082,7 +3040,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 2
       },
       "enableBy": "register",
       "type": "plugin",
@@ -2096,10 +3054,92 @@
       "time": {
         "hooks": {
           "addRuntimePlugin": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
             0
           ],
           "onGenerateFiles": [
-            2
+            1,
+            0,
+            0,
+            1,
+            3,
+            1,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            1,
+            1,
+            1,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            1,
+            0,
+            1,
+            0,
+            1,
+            0,
+            1,
+            0,
+            0,
+            0
           ],
           "addTmpGenerateWatcherPaths": [
             0
@@ -2120,7 +3160,7 @@
       },
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/plugins/dist/analytics.js",
@@ -2140,22 +3180,227 @@
           ],
           "addEntryImportsAhead": [
             0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
             0
           ],
           "addRuntimePlugin": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
             0
           ],
           "addRuntimePluginKey": [
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
             0
           ],
           "onGenerateFiles": [
+            2,
+            1,
+            1,
+            1,
+            2,
+            1,
+            1,
+            1,
+            18,
+            1,
+            2,
+            1,
+            3,
+            2,
+            1,
+            1,
+            1,
+            1,
+            0,
+            1,
+            1,
+            1,
+            1,
+            0,
+            0,
+            1,
+            0,
+            2,
+            0,
+            1,
+            0,
+            2,
+            0,
+            1,
+            0,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
             1
           ],
           "addExtraBabelPlugins": [
             0
           ],
           "chainWebpack": [
-            0
+            1
           ]
         },
         "register": 3
@@ -2170,7 +3415,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 3
+        "register": 4
       },
       "enableBy": "config",
       "type": "plugin",
@@ -2184,19 +3429,183 @@
       "time": {
         "hooks": {
           "addRuntimePlugin": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
             0
           ],
           "addRuntimePluginKey": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
             0
           ],
           "onGenerateFiles": [
-            1
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            1,
+            1,
+            0,
+            0,
+            1,
+            1,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            1,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0
           ],
           "addExtraModels": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
             0
           ]
         },
-        "register": 1
+        "register": 0
       },
       "enableBy": "config",
       "type": "plugin",
@@ -2215,22 +3624,186 @@
             0
           ],
           "addLayouts": [
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
             0
           ],
           "modifyAppData": [
             0
           ],
           "addRuntimePlugin": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
             0
           ],
           "addRuntimePluginKey": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
             0
           ],
           "onGenerateFiles": [
-            5
+            7,
+            2,
+            3,
+            4,
+            3,
+            3,
+            3,
+            3,
+            20,
+            3,
+            5,
+            4,
+            9,
+            6,
+            3,
+            3,
+            2,
+            3,
+            2,
+            3,
+            2,
+            2,
+            4,
+            3,
+            2,
+            1,
+            2,
+            4,
+            3,
+            4,
+            1,
+            3,
+            1,
+            9,
+            2,
+            3,
+            4,
+            4,
+            4,
+            4,
+            4,
+            3
           ]
         },
-        "register": 1
+        "register": 2
       },
       "enableBy": "config",
       "type": "plugin",
@@ -2270,9 +3843,91 @@
       "time": {
         "hooks": {
           "addRuntimePlugin": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
             0
           ],
           "onGenerateFiles": [
+            21,
+            17,
+            16,
+            16,
+            33,
+            21,
+            15,
+            18,
+            29,
+            18,
+            24,
+            23,
+            43,
+            28,
+            20,
+            28,
+            20,
+            18,
+            20,
+            20,
+            22,
+            19,
+            17,
+            21,
+            16,
+            17,
+            34,
+            18,
+            19,
+            20,
+            21,
+            19,
+            19,
+            16,
+            19,
+            17,
+            18,
+            19,
+            18,
+            20,
+            18,
             19
           ],
           "addTmpGenerateWatcherPaths": [
@@ -2292,7 +3947,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "config",
       "type": "plugin",
@@ -2306,6 +3961,47 @@
       "time": {
         "hooks": {
           "addRuntimePluginKey": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
             0
           ]
         },
@@ -2360,10 +4056,92 @@
       "time": {
         "hooks": {
           "addRuntimePluginKey": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
             0
           ],
           "onGenerateFiles": [
-            3
+            2,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            4,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            3,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            2,
+            1,
+            0,
+            0,
+            1,
+            1,
+            1,
+            2,
+            0,
+            1,
+            0,
+            1,
+            1,
+            0,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
           ]
         },
         "register": 0
@@ -2453,7 +4231,6 @@
       "time": {
         "hooks": {
           "onCheckPkgJSON": [
-            0,
             0
           ]
         },
@@ -2602,7 +4379,7 @@
     },
     "mfsu": false,
     "define": {
-      "app_version": "V1.1.2-alpha"
+      "app_version": "V1.1.4-beta"
     }
   },
   "mainConfigFile": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/.umirc.ts",
@@ -2748,7 +4525,7 @@
       }
     },
     "define": {
-      "app_version": "V1.1.2-alpha"
+      "app_version": "V1.1.4-beta"
     },
     "targets": {
       "chrome": 80
@@ -3679,13 +5456,13 @@
       "name": "数据看板",
       "path": "/dashboard",
       "icon": "DashboardOutlined",
-      "file": "@/pages/Dashboard.tsx",
+      "file": "@/pages/Dashboard/index.tsx",
       "parentId": "ant-design-pro-layout",
       "id": "2",
       "absPath": "/dashboard",
-      "__content": "import {\n  getCostComposition,\n  getCostTrend,\n  getDashboardSummary,\n  getRiskCostCorrelation,\n  getRiskDistribution,\n  getRoleCostDistribution,\n} from '@/services/dashboard';\nimport { Column, Line, Pie, Scatter } from '@ant-design/charts';\nimport { PageContainer } from '@ant-design/pro-components';\nimport { Alert, Card, Col, Empty, Row, Spin, Statistic } from 'antd';\nimport { useEffect, useState } from 'react';\n\nconst DashboardPage = () => {\n  // 数据状态\n  const [summary, setSummary] = useState<API.DashboardSummary | null>(null);\n  const [riskDistribution, setRiskDistribution] = useState<\n    API.RiskDistributionItem[]\n  >([]);\n  const [costComposition, setCostComposition] =\n    useState<API.CostComposition | null>(null);\n  const [roleCostDistribution, setRoleCostDistribution] =\n    useState<API.RoleCostDistribution>({});\n  const [costTrend, setCostTrend] = useState<API.CostTrendItem[]>([]);\n  const [riskCostCorrelation, setRiskCostCorrelation] = useState<\n    API.RiskCostCorrelationItem[]\n  >([]);\n\n  // 加载和错误状态\n  const [loading, setLoading] = useState(true);\n  const [error, setError] = useState<string | null>(null);\n\n  // 加载所有数据\n  useEffect(() => {\n    const loadDashboardData = async () => {\n      try {\n        setLoading(true);\n        setError(null);\n\n        const [\n          summaryRes,\n          riskDistRes,\n          costCompRes,\n          roleCostRes,\n          costTrendRes,\n          riskCostRes,\n        ] = await Promise.all([\n          getDashboardSummary(),\n          getRiskDistribution(),\n          getCostComposition(),\n          getRoleCostDistribution(),\n          getCostTrend(),\n          getRiskCostCorrelation(),\n        ]);\n\n        setSummary(summaryRes);\n        setRiskDistribution(riskDistRes);\n        setCostComposition(costCompRes);\n        setRoleCostDistribution(roleCostRes);\n        setCostTrend(costTrendRes);\n        setRiskCostCorrelation(riskCostRes);\n      } catch (err: any) {\n        console.error('Failed to load dashboard data:', err);\n        setError(err?.message || '数据加载失败，请稍后重试');\n      } finally {\n        setLoading(false);\n      }\n    };\n\n    loadDashboardData();\n  }, []);\n\n  // 加载状态\n  if (loading) {\n    return (\n      <PageContainer>\n        <div style={{ textAlign: 'center', padding: '50px 0' }}>\n          <Spin size=\"large\">\n            <div style={{ padding: '50px' }}>加载数据中...</div>\n          </Spin>\n        </div>\n      </PageContainer>\n    );\n  }\n\n  // 错误状态\n  if (error) {\n    return (\n      <PageContainer>\n        <Alert\n          message=\"数据加载失败\"\n          description={error}\n          type=\"error\"\n          showIcon\n        />\n      </PageContainer>\n    );\n  }\n\n  // 准备图表数据\n  const riskChartData = riskDistribution.map((item) => ({\n    type:\n      item.final_risk_score < 50\n        ? '低风险'\n        : item.final_risk_score < 100\n        ? '中风险'\n        : '高风险',\n    value: item.count,\n  }));\n\n  const costCompositionData = costComposition\n    ? [\n        { type: '软件研发', value: costComposition.softwareDevelopment },\n        { type: '系统对接', value: costComposition.systemIntegration },\n        { type: '运维', value: costComposition.operations },\n        { type: '差旅', value: costComposition.travel },\n        { type: '风险', value: costComposition.risk },\n      ]\n    : [];\n\n  const roleCostData = Object.entries(roleCostDistribution).map(\n    ([role, cost]) => ({\n      role,\n      cost,\n    }),\n  );\n\n  // 图表配置\n  const riskPieConfig = {\n    data: riskChartData,\n    angleField: 'value',\n    colorField: 'type',\n    radius: 0.8,\n    label: false, // 暂时禁用标签避免错误\n    interactions: [{ type: 'element-active' }],\n    legend: {\n      position: 'bottom' as const,\n    },\n  };\n\n  const costCompositionConfig = {\n    data: costCompositionData,\n    angleField: 'value',\n    colorField: 'type',\n    radius: 0.8,\n    innerRadius: 0.6,\n    label: false, // 暂时禁用标签避免错误\n    statistic: {\n      title: false,\n      content: {\n        style: {\n          fontSize: '20px',\n        },\n        formatter: () => '成本构成',\n      },\n    },\n    interactions: [{ type: 'element-active' }],\n    legend: {\n      position: 'bottom' as const,\n    },\n  };\n\n  const roleCostConfig = {\n    data: roleCostData,\n    xField: 'role',\n    yField: 'cost',\n    label: false, // 暂时禁用标签避免错误\n    xAxis: {\n      label: {\n        autoHide: true,\n        autoRotate: false,\n      },\n    },\n    yAxis: {\n      label: {\n        formatter: (v: string) => `¥${Number(v || 0).toLocaleString()}`,\n      },\n    },\n    meta: {\n      role: { alias: '角色' },\n      cost: { alias: '成本(元)' },\n    },\n  };\n\n  const costTrendConfig = {\n    data: costTrend,\n    xField: 'month',\n    yField: 'totalCost',\n    smooth: true,\n    point: {\n      size: 5,\n      shape: 'circle',\n    },\n    label: false, // 暂时禁用标签避免错误\n    yAxis: {\n      label: {\n        formatter: (v: string) => `¥${Number(v || 0).toLocaleString()}`,\n      },\n    },\n    tooltip: {\n      formatter: (datum: any) => {\n        const cost = datum?.totalCost ?? 0;\n        return {\n          name: '总成本',\n          value: `¥${cost.toLocaleString()}`,\n        };\n      },\n    },\n  };\n\n  const riskCostScatterConfig = {\n    data: riskCostCorrelation,\n    xField: 'final_risk_score',\n    yField: 'final_total_cost',\n    size: 5,\n    pointStyle: {\n      fill: '#1890ff',\n      fillOpacity: 0.6,\n    },\n    xAxis: {\n      nice: true,\n      title: { text: '风险评分' },\n    },\n    yAxis: {\n      nice: true,\n      title: { text: '项目成本' },\n    },\n  };\n\n  return (\n    <PageContainer>\n      {/* 统计卡片 */}\n      <Row gutter={[16, 16]}>\n        <Col xs={24} sm={12} md={8}>\n          <Card>\n            <Statistic\n              title=\"评估项目总数\"\n              value={summary?.totalProjects || 0}\n              suffix=\"个\"\n            />\n          </Card>\n        </Col>\n        <Col xs={24} sm={12} md={8}>\n          <Card>\n            <Statistic\n              title=\"项目平均成本\"\n              value={summary?.averageCost || 0}\n              precision={2}\n              suffix=\"元\"\n            />\n          </Card>\n        </Col>\n      </Row>\n\n      {/* 图表区域 */}\n      <Row gutter={[16, 16]} style={{ marginTop: 16 }}>\n        {/* 风险等级分布 */}\n        <Col xs={24} md={12}>\n          <Card title=\"项目风险等级分布\">\n            {riskChartData.length > 0 ? (\n              <Pie {...riskPieConfig} />\n            ) : (\n              <Empty description=\"暂无数据\" />\n            )}\n          </Card>\n        </Col>\n\n        {/* 成本构成分析 */}\n        <Col xs={24} md={12}>\n          <Card title=\"成本构成分析\">\n            {costCompositionData.length > 0 ? (\n              <Pie {...costCompositionConfig} />\n            ) : (\n              <Empty description=\"暂无数据\" />\n            )}\n          </Card>\n        </Col>\n\n        {/* 角色成本占比 */}\n        <Col xs={24} md={12}>\n          <Card title=\"角色成本占比\">\n            {roleCostData.length > 0 ? (\n              <Column {...roleCostConfig} />\n            ) : (\n              <Empty description=\"暂无数据\" />\n            )}\n          </Card>\n        </Col>\n\n        {/* 项目成本趋势 */}\n        <Col xs={24} md={12}>\n          <Card title=\"项目成本趋势\">\n            {costTrend.length > 0 ? (\n              <Line {...costTrendConfig} />\n            ) : (\n              <Empty description=\"暂无数据\" />\n            )}\n          </Card>\n        </Col>\n\n        {/* 风险因子与成本关联 */}\n        <Col xs={24}>\n          <Card title=\"风险因子与成本关联分析\">\n            {riskCostCorrelation.length > 0 ? (\n              <Scatter {...riskCostScatterConfig} />\n            ) : (\n              <Empty description=\"暂无数据\" />\n            )}\n          </Card>\n        </Col>\n      </Row>\n    </PageContainer>\n  );\n};\n\nexport default DashboardPage;\n",
+      "__content": "import { PageContainer, GridContent } from '@ant-design/pro-components';\nimport { Row, Col } from 'antd';\nimport { Suspense } from 'react';\nimport IntroduceRow from './components/IntroduceRow';\nimport TrendAnalysis from './components/TrendAnalysis';\nimport ProjectDNA from './components/ProjectDNA';\nimport CostDistribution from './components/CostDistribution';\nimport KeywordAnalysis from './components/KeywordAnalysis';\nimport RankingList from './components/RankingList';\nimport { getTopRoles, getTopRisks } from '@/services/dashboard';\n\nconst ROW_GUTTER = 16;\nconst ROW_STYLE = { marginTop: ROW_GUTTER };\n\nconst Dashboard = () => {\n  return (\n    <PageContainer\n      header={{ title: '数据看板', subTitle: '项目评估数据分析与可视化' }}\n    >\n      <GridContent>\n        <>\n          {/* 业务概览 */}\n          <Suspense fallback={null}>\n            <IntroduceRow />\n          </Suspense>\n\n          {/* 月度趋势 + 热点词云 */}\n          <Row gutter={ROW_GUTTER} style={ROW_STYLE}>\n            <Col xl={14} lg={14} md={24} sm={24} xs={24}>\n              <TrendAnalysis />\n            </Col>\n            <Col xl={10} lg={10} md={24} sm={24} xs={24}>\n              <KeywordAnalysis />\n            </Col>\n          </Row>\n\n          {/* 成本分布 + 项目特征指标 */}\n          <Row gutter={ROW_GUTTER} style={ROW_STYLE}>\n            <Col xl={12} lg={12} md={24} sm={24} xs={24}>\n              <CostDistribution />\n            </Col>\n            <Col xl={12} lg={12} md={24} sm={24} xs={24}>\n              <ProjectDNA />\n            </Col>\n          </Row>\n\n          {/* 核心角色 + 高频风险 */}\n          <Row gutter={ROW_GUTTER} style={ROW_STYLE}>\n            <Col xl={12} lg={12} md={24} sm={24} xs={24}>\n              <RankingList \n                title=\"核心投入角色 (Top 5)\"\n                request={getTopRoles}\n                valueField=\"workload_days\"\n                categoryField=\"role_name\"\n                aliasValue=\"人天\"\n                aliasCategory=\"角色\"\n              />\n            </Col>\n            <Col xl={12} lg={12} md={24} sm={24} xs={24}>\n              <RankingList \n                title=\"高频风险项 (Top 10)\"\n                request={getTopRisks}\n                valueField=\"count\"\n                categoryField=\"risk_name\"\n                aliasValue=\"频次\"\n                aliasCategory=\"风险\"\n                limit={10}\n                colorScheme=\"gradient\"\n                baseColor=\"#f5222d\"\n              />\n            </Col>\n          </Row>\n        </>\n      </GridContent>\n    </PageContainer>\n  );\n};\n\nexport default Dashboard;\n",
       "__isJSFile": true,
-      "__absFile": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/src/pages/Dashboard.tsx"
+      "__absFile": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/src/pages/Dashboard/index.tsx"
     },
     "3": {
       "name": "项目评估",
@@ -5632,7 +7409,7 @@
             "format": "esm"
           },
           "src/services/dashboard/index.ts": {
-            "bytes": 2106,
+            "bytes": 3913,
             "imports": [
               {
                 "path": "src/.umi/exports.ts",
@@ -5642,19 +7419,200 @@
             ],
             "format": "esm"
           },
-          "src/pages/Dashboard.tsx": {
-            "bytes": 8085,
+          "src/pages/Dashboard/components/IntroduceRow.tsx": {
+            "bytes": 2933,
             "imports": [
+              {
+                "path": "@ant-design/pro-components",
+                "kind": "import-statement",
+                "external": true
+              },
+              {
+                "path": "src/.umi/exports.ts",
+                "kind": "import-statement",
+                "original": "@umijs/max"
+              },
               {
                 "path": "src/services/dashboard/index.ts",
                 "kind": "import-statement",
                 "original": "@/services/dashboard"
               },
               {
+                "path": "rc-resize-observer",
+                "kind": "import-statement",
+                "external": true
+              },
+              {
+                "path": "react",
+                "kind": "import-statement",
+                "external": true
+              },
+              {
+                "path": "@ant-design/icons",
+                "kind": "import-statement",
+                "external": true
+              },
+              {
+                "path": "react/jsx-runtime",
+                "kind": "import-statement",
+                "external": true
+              }
+            ],
+            "format": "esm"
+          },
+          "src/pages/Dashboard/components/TrendAnalysis.tsx": {
+            "bytes": 1512,
+            "imports": [
+              {
                 "path": "@ant-design/charts",
                 "kind": "import-statement",
                 "external": true
               },
+              {
+                "path": "antd",
+                "kind": "import-statement",
+                "external": true
+              },
+              {
+                "path": "src/.umi/exports.ts",
+                "kind": "import-statement",
+                "original": "@umijs/max"
+              },
+              {
+                "path": "src/services/dashboard/index.ts",
+                "kind": "import-statement",
+                "original": "@/services/dashboard"
+              },
+              {
+                "path": "react/jsx-runtime",
+                "kind": "import-statement",
+                "external": true
+              }
+            ],
+            "format": "esm"
+          },
+          "src/pages/Dashboard/components/ProjectDNA.tsx": {
+            "bytes": 3039,
+            "imports": [
+              {
+                "path": "antd",
+                "kind": "import-statement",
+                "external": true
+              },
+              {
+                "path": "src/.umi/exports.ts",
+                "kind": "import-statement",
+                "original": "@umijs/max"
+              },
+              {
+                "path": "src/services/dashboard/index.ts",
+                "kind": "import-statement",
+                "original": "@/services/dashboard"
+              },
+              {
+                "path": "@ant-design/icons",
+                "kind": "import-statement",
+                "external": true
+              },
+              {
+                "path": "react/jsx-runtime",
+                "kind": "import-statement",
+                "external": true
+              }
+            ],
+            "format": "esm"
+          },
+          "src/pages/Dashboard/components/CostDistribution.tsx": {
+            "bytes": 1459,
+            "imports": [
+              {
+                "path": "@ant-design/charts",
+                "kind": "import-statement",
+                "external": true
+              },
+              {
+                "path": "antd",
+                "kind": "import-statement",
+                "external": true
+              },
+              {
+                "path": "src/.umi/exports.ts",
+                "kind": "import-statement",
+                "original": "@umijs/max"
+              },
+              {
+                "path": "src/services/dashboard/index.ts",
+                "kind": "import-statement",
+                "original": "@/services/dashboard"
+              },
+              {
+                "path": "react/jsx-runtime",
+                "kind": "import-statement",
+                "external": true
+              }
+            ],
+            "format": "esm"
+          },
+          "src/pages/Dashboard/components/KeywordAnalysis.tsx": {
+            "bytes": 1220,
+            "imports": [
+              {
+                "path": "@ant-design/charts",
+                "kind": "import-statement",
+                "external": true
+              },
+              {
+                "path": "antd",
+                "kind": "import-statement",
+                "external": true
+              },
+              {
+                "path": "src/.umi/exports.ts",
+                "kind": "import-statement",
+                "original": "@umijs/max"
+              },
+              {
+                "path": "src/services/dashboard/index.ts",
+                "kind": "import-statement",
+                "original": "@/services/dashboard"
+              },
+              {
+                "path": "react/jsx-runtime",
+                "kind": "import-statement",
+                "external": true
+              }
+            ],
+            "format": "esm"
+          },
+          "src/pages/Dashboard/components/RankingList.tsx": {
+            "bytes": 2397,
+            "imports": [
+              {
+                "path": "@ant-design/charts",
+                "kind": "import-statement",
+                "external": true
+              },
+              {
+                "path": "antd",
+                "kind": "import-statement",
+                "external": true
+              },
+              {
+                "path": "src/.umi/exports.ts",
+                "kind": "import-statement",
+                "original": "@umijs/max"
+              },
+              {
+                "path": "react/jsx-runtime",
+                "kind": "import-statement",
+                "external": true
+              }
+            ],
+            "format": "esm"
+          },
+          "src/pages/Dashboard/index.tsx": {
+            "bytes": 2633,
+            "imports": [
               {
                 "path": "@ant-design/pro-components",
                 "kind": "import-statement",
@@ -5669,6 +7627,41 @@
                 "path": "react",
                 "kind": "import-statement",
                 "external": true
+              },
+              {
+                "path": "src/pages/Dashboard/components/IntroduceRow.tsx",
+                "kind": "import-statement",
+                "original": "./components/IntroduceRow"
+              },
+              {
+                "path": "src/pages/Dashboard/components/TrendAnalysis.tsx",
+                "kind": "import-statement",
+                "original": "./components/TrendAnalysis"
+              },
+              {
+                "path": "src/pages/Dashboard/components/ProjectDNA.tsx",
+                "kind": "import-statement",
+                "original": "./components/ProjectDNA"
+              },
+              {
+                "path": "src/pages/Dashboard/components/CostDistribution.tsx",
+                "kind": "import-statement",
+                "original": "./components/CostDistribution"
+              },
+              {
+                "path": "src/pages/Dashboard/components/KeywordAnalysis.tsx",
+                "kind": "import-statement",
+                "original": "./components/KeywordAnalysis"
+              },
+              {
+                "path": "src/pages/Dashboard/components/RankingList.tsx",
+                "kind": "import-statement",
+                "original": "./components/RankingList"
+              },
+              {
+                "path": "src/services/dashboard/index.ts",
+                "kind": "import-statement",
+                "original": "@/services/dashboard"
               },
               {
                 "path": "react/jsx-runtime",
@@ -6104,7 +8097,7 @@
             "format": "esm"
           },
           "src/pages/Assessment/components/LoadDraftModal.tsx": {
-            "bytes": 8498,
+            "bytes": 9196,
             "imports": [
               {
                 "path": "react",
@@ -6946,7 +8939,7 @@
             "format": "esm"
           },
           "src/.umi/core/route.tsx": {
-            "bytes": 3805,
+            "bytes": 3818,
             "imports": [
               {
                 "path": "react",
@@ -6959,9 +8952,9 @@
                 "original": "./EmptyRoute"
               },
               {
-                "path": "src/pages/Dashboard.tsx",
+                "path": "src/pages/Dashboard/index.tsx",
                 "kind": "dynamic-import",
-                "original": "@/pages/Dashboard.tsx"
+                "original": "@/pages/Dashboard/index.tsx"
               },
               {
                 "path": "src/.umi/core/EmptyRoute.tsx",
@@ -7312,7 +9305,102 @@
                 "external": true
               },
               {
+                "path": "@ant-design/pro-components",
+                "kind": "import-statement",
+                "external": true
+              },
+              {
+                "path": "rc-resize-observer",
+                "kind": "import-statement",
+                "external": true
+              },
+              {
+                "path": "react",
+                "kind": "import-statement",
+                "external": true
+              },
+              {
+                "path": "@ant-design/icons",
+                "kind": "import-statement",
+                "external": true
+              },
+              {
+                "path": "react/jsx-runtime",
+                "kind": "import-statement",
+                "external": true
+              },
+              {
                 "path": "@ant-design/charts",
+                "kind": "import-statement",
+                "external": true
+              },
+              {
+                "path": "antd",
+                "kind": "import-statement",
+                "external": true
+              },
+              {
+                "path": "react/jsx-runtime",
+                "kind": "import-statement",
+                "external": true
+              },
+              {
+                "path": "antd",
+                "kind": "import-statement",
+                "external": true
+              },
+              {
+                "path": "@ant-design/icons",
+                "kind": "import-statement",
+                "external": true
+              },
+              {
+                "path": "react/jsx-runtime",
+                "kind": "import-statement",
+                "external": true
+              },
+              {
+                "path": "@ant-design/charts",
+                "kind": "import-statement",
+                "external": true
+              },
+              {
+                "path": "antd",
+                "kind": "import-statement",
+                "external": true
+              },
+              {
+                "path": "react/jsx-runtime",
+                "kind": "import-statement",
+                "external": true
+              },
+              {
+                "path": "@ant-design/charts",
+                "kind": "import-statement",
+                "external": true
+              },
+              {
+                "path": "antd",
+                "kind": "import-statement",
+                "external": true
+              },
+              {
+                "path": "react/jsx-runtime",
+                "kind": "import-statement",
+                "external": true
+              },
+              {
+                "path": "@ant-design/charts",
+                "kind": "import-statement",
+                "external": true
+              },
+              {
+                "path": "antd",
+                "kind": "import-statement",
+                "external": true
+              },
+              {
+                "path": "react/jsx-runtime",
                 "kind": "import-statement",
                 "external": true
               },
@@ -9134,10 +11222,28 @@
                 "bytesInOutput": 383
               },
               "src/services/dashboard/index.ts": {
-                "bytesInOutput": 1053
+                "bytesInOutput": 1028
               },
-              "src/pages/Dashboard.tsx": {
-                "bytesInOutput": 9013
+              "src/pages/Dashboard/components/IntroduceRow.tsx": {
+                "bytesInOutput": 4304
+              },
+              "src/pages/Dashboard/components/TrendAnalysis.tsx": {
+                "bytesInOutput": 1908
+              },
+              "src/pages/Dashboard/components/ProjectDNA.tsx": {
+                "bytesInOutput": 4298
+              },
+              "src/pages/Dashboard/components/CostDistribution.tsx": {
+                "bytesInOutput": 1892
+              },
+              "src/pages/Dashboard/components/KeywordAnalysis.tsx": {
+                "bytesInOutput": 1561
+              },
+              "src/pages/Dashboard/components/RankingList.tsx": {
+                "bytesInOutput": 2555
+              },
+              "src/pages/Dashboard/index.tsx": {
+                "bytesInOutput": 3320
               },
               "src/services/assessment/index.ts": {
                 "bytesInOutput": 2343
@@ -9164,19 +11270,19 @@
                 "bytesInOutput": 1009
               },
               "src/pages/Assessment/components/Overview.tsx": {
-                "bytesInOutput": 33376
+                "bytesInOutput": 33404
               },
               "src/pages/Assessment/components/AIAssessmentModal.tsx": {
-                "bytesInOutput": 24388
+                "bytesInOutput": 24378
               },
               "src/pages/Assessment/components/RiskScoringForm.tsx": {
-                "bytesInOutput": 16040
+                "bytesInOutput": 16054
               },
               "src/pages/Assessment/components/ProjectModuleAnalyzer.tsx": {
-                "bytesInOutput": 25789
+                "bytesInOutput": 25818
               },
               "src/pages/Assessment/components/WorkloadEvaluationModal.tsx": {
-                "bytesInOutput": 8417
+                "bytesInOutput": 8422
               },
               "src/services/config/index.ts": {
                 "bytesInOutput": 2246
@@ -9188,25 +11294,25 @@
                 "bytesInOutput": 41549
               },
               "src/pages/Assessment/components/LoadDraftModal.tsx": {
-                "bytesInOutput": 9534
+                "bytesInOutput": 9882
               },
               "src/pages/Assessment/New.tsx": {
-                "bytesInOutput": 36407
+                "bytesInOutput": 36410
               },
               "src/pages/Assessment/History.tsx": {
                 "bytesInOutput": 7939
               },
               "src/pages/Assessment/Detail.tsx": {
-                "bytesInOutput": 14543
+                "bytesInOutput": 14552
               },
               "src/pages/Config/Web3DRisk.tsx": {
-                "bytesInOutput": 16989
+                "bytesInOutput": 16992
               },
               "src/pages/Config.tsx": {
-                "bytesInOutput": 23794
+                "bytesInOutput": 23797
               },
               "src/pages/Web3D/New.tsx": {
-                "bytesInOutput": 33441
+                "bytesInOutput": 33454
               },
               "src/pages/Web3D/History.tsx": {
                 "bytesInOutput": 4759
@@ -9215,7 +11321,7 @@
                 "bytesInOutput": 3788
               },
               "src/pages/ModelConfig/Application/components/ModelForm.tsx": {
-                "bytesInOutput": 11953
+                "bytesInOutput": 11978
               },
               "src/pages/ModelConfig/Application/index.tsx": {
                 "bytesInOutput": 10089
@@ -9269,7 +11375,7 @@
                 "bytesInOutput": 2010
               }
             },
-            "bytes": 537010
+            "bytes": 548603
           }
         }
       }
@@ -15646,48 +17752,9 @@
           "type": "ImportDeclaration"
         }
       ],
-      "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/src/pages/Dashboard.tsx": [
+      "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/src/pages/Dashboard/components/CostDistribution.tsx": [
         {
-          "end": 177,
-          "importKind": "value",
-          "source": "@/services/dashboard",
-          "specifiers": [
-            {
-              "imported": "getCostComposition",
-              "local": "getCostComposition",
-              "type": "ImportSpecifier"
-            },
-            {
-              "imported": "getCostTrend",
-              "local": "getCostTrend",
-              "type": "ImportSpecifier"
-            },
-            {
-              "imported": "getDashboardSummary",
-              "local": "getDashboardSummary",
-              "type": "ImportSpecifier"
-            },
-            {
-              "imported": "getRiskCostCorrelation",
-              "local": "getRiskCostCorrelation",
-              "type": "ImportSpecifier"
-            },
-            {
-              "imported": "getRiskDistribution",
-              "local": "getRiskDistribution",
-              "type": "ImportSpecifier"
-            },
-            {
-              "imported": "getRoleCostDistribution",
-              "local": "getRoleCostDistribution",
-              "type": "ImportSpecifier"
-            }
-          ],
-          "start": 1,
-          "type": "ImportDeclaration"
-        },
-        {
-          "end": 242,
+          "end": 45,
           "importKind": "value",
           "source": "@ant-design/charts",
           "specifiers": [
@@ -15695,63 +17762,241 @@
               "imported": "Column",
               "local": "Column",
               "type": "ImportSpecifier"
-            },
-            {
-              "imported": "Line",
-              "local": "Line",
-              "type": "ImportSpecifier"
-            },
-            {
-              "imported": "Pie",
-              "local": "Pie",
-              "type": "ImportSpecifier"
-            },
-            {
-              "imported": "Scatter",
-              "local": "Scatter",
-              "type": "ImportSpecifier"
             }
           ],
-          "start": 178,
+          "start": 1,
           "type": "ImportDeclaration"
         },
         {
-          "end": 302,
-          "importKind": "value",
-          "source": "@ant-design/pro-components",
-          "specifiers": [
-            {
-              "imported": "PageContainer",
-              "local": "PageContainer",
-              "type": "ImportSpecifier"
-            }
-          ],
-          "start": 243,
-          "type": "ImportDeclaration"
-        },
-        {
-          "end": 372,
+          "end": 81,
           "importKind": "value",
           "source": "antd",
           "specifiers": [
-            {
-              "imported": "Alert",
-              "local": "Alert",
-              "type": "ImportSpecifier"
-            },
             {
               "imported": "Card",
               "local": "Card",
               "type": "ImportSpecifier"
             },
             {
-              "imported": "Col",
-              "local": "Col",
+              "imported": "Empty",
+              "local": "Empty",
+              "type": "ImportSpecifier"
+            }
+          ],
+          "start": 46,
+          "type": "ImportDeclaration"
+        },
+        {
+          "end": 122,
+          "importKind": "value",
+          "source": "@umijs/max",
+          "specifiers": [
+            {
+              "imported": "useRequest",
+              "local": "useRequest",
+              "type": "ImportSpecifier"
+            }
+          ],
+          "start": 82,
+          "type": "ImportDeclaration"
+        },
+        {
+          "end": 175,
+          "importKind": "value",
+          "source": "@/services/dashboard",
+          "specifiers": [
+            {
+              "imported": "getCostRange",
+              "local": "getCostRange",
+              "type": "ImportSpecifier"
+            }
+          ],
+          "start": 123,
+          "type": "ImportDeclaration"
+        }
+      ],
+      "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/src/pages/Dashboard/components/IntroduceRow.tsx": [
+        {
+          "end": 69,
+          "importKind": "value",
+          "source": "@ant-design/pro-components",
+          "specifiers": [
+            {
+              "imported": "ProCard",
+              "local": "ProCard",
+              "type": "ImportSpecifier"
+            },
+            {
+              "imported": "StatisticCard",
+              "local": "StatisticCard",
+              "type": "ImportSpecifier"
+            }
+          ],
+          "start": 1,
+          "type": "ImportDeclaration"
+        },
+        {
+          "end": 110,
+          "importKind": "value",
+          "source": "@umijs/max",
+          "specifiers": [
+            {
+              "imported": "useRequest",
+              "local": "useRequest",
+              "type": "ImportSpecifier"
+            }
+          ],
+          "start": 70,
+          "type": "ImportDeclaration"
+        },
+        {
+          "end": 162,
+          "importKind": "value",
+          "source": "@/services/dashboard",
+          "specifiers": [
+            {
+              "imported": "getOverview",
+              "local": "getOverview",
+              "type": "ImportSpecifier"
+            }
+          ],
+          "start": 111,
+          "type": "ImportDeclaration"
+        },
+        {
+          "end": 213,
+          "importKind": "value",
+          "source": "rc-resize-observer",
+          "specifiers": [
+            {
+              "local": "RcResizeObserver",
+              "type": "ImportDefaultSpecifier"
+            }
+          ],
+          "start": 163,
+          "type": "ImportDeclaration"
+        },
+        {
+          "end": 247,
+          "importKind": "value",
+          "source": "react",
+          "specifiers": [
+            {
+              "imported": "useState",
+              "local": "useState",
+              "type": "ImportSpecifier"
+            }
+          ],
+          "start": 214,
+          "type": "ImportDeclaration"
+        },
+        {
+          "end": 381,
+          "importKind": "value",
+          "source": "@ant-design/icons",
+          "specifiers": [
+            {
+              "imported": "CalendarOutlined",
+              "local": "CalendarOutlined",
+              "type": "ImportSpecifier"
+            },
+            {
+              "imported": "AppstoreOutlined",
+              "local": "AppstoreOutlined",
+              "type": "ImportSpecifier"
+            },
+            {
+              "imported": "CodeOutlined",
+              "local": "CodeOutlined",
+              "type": "ImportSpecifier"
+            },
+            {
+              "imported": "DatabaseOutlined",
+              "local": "DatabaseOutlined",
+              "type": "ImportSpecifier"
+            },
+            {
+              "imported": "RobotOutlined",
+              "local": "RobotOutlined",
+              "type": "ImportSpecifier"
+            }
+          ],
+          "start": 248,
+          "type": "ImportDeclaration"
+        }
+      ],
+      "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/src/pages/Dashboard/components/KeywordAnalysis.tsx": [
+        {
+          "end": 48,
+          "importKind": "value",
+          "source": "@ant-design/charts",
+          "specifiers": [
+            {
+              "imported": "WordCloud",
+              "local": "WordCloud",
+              "type": "ImportSpecifier"
+            }
+          ],
+          "start": 1,
+          "type": "ImportDeclaration"
+        },
+        {
+          "end": 84,
+          "importKind": "value",
+          "source": "antd",
+          "specifiers": [
+            {
+              "imported": "Card",
+              "local": "Card",
               "type": "ImportSpecifier"
             },
             {
               "imported": "Empty",
               "local": "Empty",
+              "type": "ImportSpecifier"
+            }
+          ],
+          "start": 49,
+          "type": "ImportDeclaration"
+        },
+        {
+          "end": 125,
+          "importKind": "value",
+          "source": "@umijs/max",
+          "specifiers": [
+            {
+              "imported": "useRequest",
+              "local": "useRequest",
+              "type": "ImportSpecifier"
+            }
+          ],
+          "start": 85,
+          "type": "ImportDeclaration"
+        },
+        {
+          "end": 177,
+          "importKind": "value",
+          "source": "@/services/dashboard",
+          "specifiers": [
+            {
+              "imported": "getKeywords",
+              "local": "getKeywords",
+              "type": "ImportSpecifier"
+            }
+          ],
+          "start": 126,
+          "type": "ImportDeclaration"
+        }
+      ],
+      "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/src/pages/Dashboard/components/ProjectDNA.tsx": [
+        {
+          "end": 67,
+          "importKind": "value",
+          "source": "antd",
+          "specifiers": [
+            {
+              "imported": "Card",
+              "local": "Card",
               "type": "ImportSpecifier"
             },
             {
@@ -15760,36 +18005,352 @@
               "type": "ImportSpecifier"
             },
             {
-              "imported": "Spin",
-              "local": "Spin",
+              "imported": "Col",
+              "local": "Col",
               "type": "ImportSpecifier"
             },
             {
               "imported": "Statistic",
               "local": "Statistic",
               "type": "ImportSpecifier"
+            },
+            {
+              "imported": "Progress",
+              "local": "Progress",
+              "type": "ImportSpecifier"
+            },
+            {
+              "imported": "Empty",
+              "local": "Empty",
+              "type": "ImportSpecifier"
             }
           ],
-          "start": 303,
+          "start": 1,
           "type": "ImportDeclaration"
         },
         {
-          "end": 417,
+          "end": 108,
+          "importKind": "value",
+          "source": "@umijs/max",
+          "specifiers": [
+            {
+              "imported": "useRequest",
+              "local": "useRequest",
+              "type": "ImportSpecifier"
+            }
+          ],
+          "start": 68,
+          "type": "ImportDeclaration"
+        },
+        {
+          "end": 155,
+          "importKind": "value",
+          "source": "@/services/dashboard",
+          "specifiers": [
+            {
+              "imported": "getDNA",
+              "local": "getDNA",
+              "type": "ImportSpecifier"
+            }
+          ],
+          "start": 109,
+          "type": "ImportDeclaration"
+        },
+        {
+          "end": 292,
+          "importKind": "value",
+          "source": "@ant-design/icons",
+          "specifiers": [
+            {
+              "imported": "DollarOutlined",
+              "local": "DollarOutlined",
+              "type": "ImportSpecifier"
+            },
+            {
+              "imported": "ThunderboltOutlined",
+              "local": "ThunderboltOutlined",
+              "type": "ImportSpecifier"
+            },
+            {
+              "imported": "ClockCircleOutlined",
+              "local": "ClockCircleOutlined",
+              "type": "ImportSpecifier"
+            },
+            {
+              "imported": "ToolOutlined",
+              "local": "ToolOutlined",
+              "type": "ImportSpecifier"
+            },
+            {
+              "imported": "RocketOutlined",
+              "local": "RocketOutlined",
+              "type": "ImportSpecifier"
+            }
+          ],
+          "start": 156,
+          "type": "ImportDeclaration"
+        }
+      ],
+      "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/src/pages/Dashboard/components/RankingList.tsx": [
+        {
+          "end": 42,
+          "importKind": "value",
+          "source": "@ant-design/charts",
+          "specifiers": [
+            {
+              "imported": "Bar",
+              "local": "Bar",
+              "type": "ImportSpecifier"
+            }
+          ],
+          "start": 1,
+          "type": "ImportDeclaration"
+        },
+        {
+          "end": 78,
+          "importKind": "value",
+          "source": "antd",
+          "specifiers": [
+            {
+              "imported": "Card",
+              "local": "Card",
+              "type": "ImportSpecifier"
+            },
+            {
+              "imported": "Empty",
+              "local": "Empty",
+              "type": "ImportSpecifier"
+            }
+          ],
+          "start": 43,
+          "type": "ImportDeclaration"
+        },
+        {
+          "end": 119,
+          "importKind": "value",
+          "source": "@umijs/max",
+          "specifiers": [
+            {
+              "imported": "useRequest",
+              "local": "useRequest",
+              "type": "ImportSpecifier"
+            }
+          ],
+          "start": 79,
+          "type": "ImportDeclaration"
+        }
+      ],
+      "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/src/pages/Dashboard/components/TrendAnalysis.tsx": [
+        {
+          "end": 45,
+          "importKind": "value",
+          "source": "@ant-design/charts",
+          "specifiers": [
+            {
+              "imported": "Column",
+              "local": "Column",
+              "type": "ImportSpecifier"
+            }
+          ],
+          "start": 1,
+          "type": "ImportDeclaration"
+        },
+        {
+          "end": 81,
+          "importKind": "value",
+          "source": "antd",
+          "specifiers": [
+            {
+              "imported": "Card",
+              "local": "Card",
+              "type": "ImportSpecifier"
+            },
+            {
+              "imported": "Empty",
+              "local": "Empty",
+              "type": "ImportSpecifier"
+            }
+          ],
+          "start": 46,
+          "type": "ImportDeclaration"
+        },
+        {
+          "end": 122,
+          "importKind": "value",
+          "source": "@umijs/max",
+          "specifiers": [
+            {
+              "imported": "useRequest",
+              "local": "useRequest",
+              "type": "ImportSpecifier"
+            }
+          ],
+          "start": 82,
+          "type": "ImportDeclaration"
+        },
+        {
+          "end": 171,
+          "importKind": "value",
+          "source": "@/services/dashboard",
+          "specifiers": [
+            {
+              "imported": "getTrend",
+              "local": "getTrend",
+              "type": "ImportSpecifier"
+            }
+          ],
+          "start": 123,
+          "type": "ImportDeclaration"
+        }
+      ],
+      "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/src/pages/Dashboard/index.tsx": [
+        {
+          "end": 73,
+          "importKind": "value",
+          "source": "@ant-design/pro-components",
+          "specifiers": [
+            {
+              "imported": "PageContainer",
+              "local": "PageContainer",
+              "type": "ImportSpecifier"
+            },
+            {
+              "imported": "GridContent",
+              "local": "GridContent",
+              "type": "ImportSpecifier"
+            }
+          ],
+          "start": 1,
+          "type": "ImportDeclaration"
+        },
+        {
+          "end": 106,
+          "importKind": "value",
+          "source": "antd",
+          "specifiers": [
+            {
+              "imported": "Row",
+              "local": "Row",
+              "type": "ImportSpecifier"
+            },
+            {
+              "imported": "Col",
+              "local": "Col",
+              "type": "ImportSpecifier"
+            }
+          ],
+          "start": 74,
+          "type": "ImportDeclaration"
+        },
+        {
+          "end": 140,
           "importKind": "value",
           "source": "react",
           "specifiers": [
             {
-              "imported": "useEffect",
-              "local": "useEffect",
-              "type": "ImportSpecifier"
-            },
-            {
-              "imported": "useState",
-              "local": "useState",
+              "imported": "Suspense",
+              "local": "Suspense",
               "type": "ImportSpecifier"
             }
           ],
-          "start": 373,
+          "start": 107,
+          "type": "ImportDeclaration"
+        },
+        {
+          "end": 194,
+          "importKind": "value",
+          "source": "./components/IntroduceRow",
+          "specifiers": [
+            {
+              "local": "IntroduceRow",
+              "type": "ImportDefaultSpecifier"
+            }
+          ],
+          "start": 141,
+          "type": "ImportDeclaration"
+        },
+        {
+          "end": 250,
+          "importKind": "value",
+          "source": "./components/TrendAnalysis",
+          "specifiers": [
+            {
+              "local": "TrendAnalysis",
+              "type": "ImportDefaultSpecifier"
+            }
+          ],
+          "start": 195,
+          "type": "ImportDeclaration"
+        },
+        {
+          "end": 300,
+          "importKind": "value",
+          "source": "./components/ProjectDNA",
+          "specifiers": [
+            {
+              "local": "ProjectDNA",
+              "type": "ImportDefaultSpecifier"
+            }
+          ],
+          "start": 251,
+          "type": "ImportDeclaration"
+        },
+        {
+          "end": 362,
+          "importKind": "value",
+          "source": "./components/CostDistribution",
+          "specifiers": [
+            {
+              "local": "CostDistribution",
+              "type": "ImportDefaultSpecifier"
+            }
+          ],
+          "start": 301,
+          "type": "ImportDeclaration"
+        },
+        {
+          "end": 422,
+          "importKind": "value",
+          "source": "./components/KeywordAnalysis",
+          "specifiers": [
+            {
+              "local": "KeywordAnalysis",
+              "type": "ImportDefaultSpecifier"
+            }
+          ],
+          "start": 363,
+          "type": "ImportDeclaration"
+        },
+        {
+          "end": 474,
+          "importKind": "value",
+          "source": "./components/RankingList",
+          "specifiers": [
+            {
+              "local": "RankingList",
+              "type": "ImportDefaultSpecifier"
+            }
+          ],
+          "start": 423,
+          "type": "ImportDeclaration"
+        },
+        {
+          "end": 539,
+          "importKind": "value",
+          "source": "@/services/dashboard",
+          "specifiers": [
+            {
+              "imported": "getTopRoles",
+              "local": "getTopRoles",
+              "type": "ImportSpecifier"
+            },
+            {
+              "imported": "getTopRisks",
+              "local": "getTopRisks",
+              "type": "ImportSpecifier"
+            }
+          ],
+          "start": 475,
           "type": "ImportDeclaration"
         }
       ],

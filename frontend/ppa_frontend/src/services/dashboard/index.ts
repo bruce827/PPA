@@ -71,3 +71,61 @@ export async function getDashboardData(options?: { [key: string]: any }) {
     ...(options || {}),
   });
 }
+
+// --- New Dashboard Refactor APIs ---
+
+/** 获取仪表盘概览数据 GET /api/dashboard/overview */
+export async function getOverview(options?: { [key: string]: any }) {
+  return request<API.DashboardOverview>('/api/dashboard/overview', {
+    method: 'GET',
+    ...(options || {}),
+  });
+}
+
+/** 获取月度趋势数据 GET /api/dashboard/trend */
+export async function getTrend(options?: { [key: string]: any }) {
+  return request<API.DashboardTrendItem[]>('/api/dashboard/trend', {
+    method: 'GET',
+    ...(options || {}),
+  });
+}
+
+/** 获取成本区间分布 GET /api/dashboard/cost-range */
+export async function getCostRange(options?: { [key: string]: any }) {
+  return request<API.DashboardCostRangeItem[]>('/api/dashboard/cost-range', {
+    method: 'GET',
+    ...(options || {}),
+  });
+}
+
+/** 获取关键词云数据 GET /api/dashboard/keywords */
+export async function getKeywords(options?: { [key: string]: any }) {
+  return request<API.DashboardKeywordItem[]>('/api/dashboard/keywords', {
+    method: 'GET',
+    ...(options || {}),
+  });
+}
+
+/** 获取项目基因(DNA)数据 GET /api/dashboard/dna */
+export async function getDNA(options?: { [key: string]: any }) {
+  return request<API.DashboardDNA>('/api/dashboard/dna', {
+    method: 'GET',
+    ...(options || {}),
+  });
+}
+
+/** 获取核心投入角色 GET /api/dashboard/top-roles */
+export async function getTopRoles(options?: { [key: string]: any }) {
+  return request<API.DashboardTopRoleItem[]>('/api/dashboard/top-roles', {
+    method: 'GET',
+    ...(options || {}),
+  });
+}
+
+/** 获取高频风险项 GET /api/dashboard/top-risks */
+export async function getTopRisks(options?: { [key: string]: any }) {
+  return request<API.DashboardTopRiskItem[]>('/api/dashboard/top-risks', {
+    method: 'GET',
+    ...(options || {}),
+  });
+}

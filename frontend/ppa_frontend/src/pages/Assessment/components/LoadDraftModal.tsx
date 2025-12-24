@@ -84,7 +84,7 @@ export const LoadDraftModal: React.FC<LoadDraftModalProps> = ({
   const cache = useAssessmentCache();
   const [loading, setLoading] = useState(false);
   const [drafts, setDrafts] = useState<AssessmentCacheRecord[]>([]);
-  const [showAutoSave, setShowAutoSave] = useState(false);
+  const [showAutoSave, setShowAutoSave] = useState(true);
 
   const pickLatestPerSession = (records: AssessmentCacheRecord[]) => {
     const latestMap = new Map<string, AssessmentCacheRecord>();
@@ -108,14 +108,27 @@ export const LoadDraftModal: React.FC<LoadDraftModalProps> = ({
       // 获取所有记录（手动 + 自动）
       const allRecords = await cache.getAll();
 
-      // 过滤和排序
-      const filtered = allRecords.filter(
-        (record) => showAutoSave || record.metadata.isManualSave,
-      );
-      const latestPerSession = pickLatestPerSession(filtered);
-      const sortedDrafts = latestPerSession
-        .sort((a, b) => b.metadata.updatedAt - a.metadata.updatedAt)  // 按时间倒序
-        .slice(0, 50);  // 最多显示50条
+      // 分离手动保存和自动保存的记录
+      const manualRecords = allRecords.filter((record) => record.metadata.isManualSave);
+      const autoRecords = allRecords.filter((record) => !record.metadata.isManualSave);
+
+      // 手动保存：每个session取最新一条，按时间倒序
+      const latestManual = pickLatestPerSession(manualRecords)
+        .sort((a, b) => b.metadata.updatedAt - a.metadata.updatedAt);
+
+      // 自动保存：每个session取最新一条，按时间倒序
+      const latestAuto = pickLatestPerSession(autoRecords)
+        .sort((a, b) => b.metadata.updatedAt - a.metadata.updatedAt);
+
+      // 合并：手动保存优先显示在前面，后面是自动保存
+      let sortedDrafts: AssessmentCacheRecord[];
+      if (showAutoSave) {
+        // 显示全部：手动保存在前 + 自动保存在后
+        sortedDrafts = [...latestManual, ...latestAuto].slice(0, 50);
+      } else {
+        // 只显示手动保存
+        sortedDrafts = latestManual.slice(0, 50);
+      }
 
       setDrafts(sortedDrafts);
     } catch (error) {
@@ -125,12 +138,12 @@ export const LoadDraftModal: React.FC<LoadDraftModalProps> = ({
     }
   };
 
-  // 当弹窗打开时加载列表
+  // 当弹窗打开时加载列表，或showAutoSave变化时重新加载
   useEffect(() => {
     if (visible) {
       loadDrafts();
     }
-  }, [visible]);
+  }, [visible, showAutoSave]);
 
   // 处理加载草稿 - 直接加载，不二次确认（避免浏览器拦截）
   const handleLoad = (record: AssessmentCacheRecord) => {
