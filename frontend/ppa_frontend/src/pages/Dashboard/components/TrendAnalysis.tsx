@@ -40,6 +40,10 @@ const TrendAnalysis = () => {
       color: {
         range: ['#1890ff', '#722ed1'],
       },
+      y: {
+        domainMin: 0,
+        nice: true,
+      },
     },
     label: {
       text: (d: any) => (d.project_count > 0 ? d.project_count : ''),
