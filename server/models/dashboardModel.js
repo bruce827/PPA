@@ -28,7 +28,7 @@ async function getRiskDistribution() {
 async function getRecentProjectCount(days = 30) {
   const safeDays = Number.isFinite(Number(days)) ? Math.max(0, Math.floor(Number(days))) : 30;
   return db.get(
-    `SELECT COUNT(*) AS count FROM projects WHERE ${STANDARD_WHERE} AND datetime(created_at) >= datetime('now', ?)`,
+    `SELECT COUNT(*) AS count FROM projects WHERE is_template = 0 AND datetime(updated_at) >= datetime('now', ?)`,
     [`-${safeDays} days`]
   );
 }

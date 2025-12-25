@@ -37,9 +37,9 @@ const IntroduceRow = () => {
       >
         <StatisticCard
           statistic={{
-            title: '近30天评估',
-            value: data?.recent_30d || 0,
-            suffix: '个',
+            title: '项目总数/近30天',
+            value: `${data?.saas_count + data?.web3d_count}/${data?.recent_30d || 0}`,
+            suffix: '',
             icon: <CalendarOutlined style={{ fontSize: 32, color: '#1890ff' }} />,
           }}
           style={{ background: 'linear-gradient(135deg, #e6f7ff 0%, #bae7ff 100%)' }}
@@ -64,7 +64,7 @@ const IntroduceRow = () => {
         />
         <StatisticCard
           statistic={{
-            title: '知识资产',
+            title: '风险项资产',
             value: totalAssets,
             suffix: '项',
             icon: <DatabaseOutlined style={{ fontSize: 32, color: '#fa8c16' }} />,
@@ -73,7 +73,7 @@ const IntroduceRow = () => {
         />
         <StatisticCard
           statistic={{
-            title: 'AI模型',
+            title: 'AI模型对接',
             value: data?.ai_models?.total || 0,
             suffix: '个',
             icon: <RobotOutlined style={{ fontSize: 32, color: '#13c2c2' }} />,
