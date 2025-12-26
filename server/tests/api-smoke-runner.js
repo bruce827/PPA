@@ -625,50 +625,58 @@ async function record(agent, name, method, url, exec, noteFn) {
 
     await record(
       agent,
-      'Dashboard Summary',
+      'Dashboard Overview',
       'GET',
-      '/api/dashboard/summary',
-      ag => ag.get('/api/dashboard/summary')
+      '/api/dashboard/overview',
+      ag => ag.get('/api/dashboard/overview')
     );
 
     await record(
       agent,
-      'Dashboard Risk Distribution',
+      'Dashboard Trend',
       'GET',
-      '/api/dashboard/risk-distribution',
-      ag => ag.get('/api/dashboard/risk-distribution')
+      '/api/dashboard/trend',
+      ag => ag.get('/api/dashboard/trend')
     );
 
     await record(
       agent,
-      'Dashboard Cost Composition',
+      'Dashboard Cost Range',
       'GET',
-      '/api/dashboard/cost-composition',
-      ag => ag.get('/api/dashboard/cost-composition')
+      '/api/dashboard/cost-range',
+      ag => ag.get('/api/dashboard/cost-range')
     );
 
     await record(
       agent,
-      'Dashboard Role Cost Distribution',
+      'Dashboard Keywords',
       'GET',
-      '/api/dashboard/role-cost-distribution',
-      ag => ag.get('/api/dashboard/role-cost-distribution')
+      '/api/dashboard/keywords',
+      ag => ag.get('/api/dashboard/keywords')
     );
 
     await record(
       agent,
-      'Dashboard Cost Trend',
+      'Dashboard DNA',
       'GET',
-      '/api/dashboard/cost-trend',
-      ag => ag.get('/api/dashboard/cost-trend')
+      '/api/dashboard/dna',
+      ag => ag.get('/api/dashboard/dna')
     );
 
     await record(
       agent,
-      'Dashboard Risk-Cost Correlation',
+      'Dashboard Top Roles',
       'GET',
-      '/api/dashboard/risk-cost-correlation',
-      ag => ag.get('/api/dashboard/risk-cost-correlation')
+      '/api/dashboard/top-roles',
+      ag => ag.get('/api/dashboard/top-roles')
+    );
+
+    await record(
+      agent,
+      'Dashboard Top Risks',
+      'GET',
+      '/api/dashboard/top-risks',
+      ag => ag.get('/api/dashboard/top-risks')
     );
 
     await record(

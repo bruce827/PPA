@@ -6,22 +6,6 @@ const STANDARD_WHERE = "is_template = 0 AND (project_type IS NULL OR project_typ
 const WEB3D_WHERE = "is_template = 0 AND project_type = 'web3d'";
 
 // ------------------------------
-// Legacy Dashboard (旧接口) - 后续可按 PRD Step 1.6 清理
-// ------------------------------
-async function getProjectCountAndAverage() {
-  const totalRow = await db.get('SELECT COUNT(*) as count FROM projects');
-  const avgRow = await db.get('SELECT AVG(final_total_cost) as avgCost FROM projects');
-  return {
-    count: totalRow?.count || 0,
-    avgCost: avgRow ? avgRow.avgCost : null,
-  };
-}
-
-async function getRiskDistribution() {
-  return db.all('SELECT final_risk_score, COUNT(*) as count FROM projects GROUP BY final_risk_score');
-}
-
-// ------------------------------
 // [Dashboard Refactor] New Dashboard (新接口)
 // ------------------------------
 // [Dashboard Refactor] 最近 N 天项目数（固定用于 recent_30d = 30）
@@ -137,8 +121,6 @@ async function getRiskCostCorrelation() {
 }
 
 module.exports = {
-  getProjectCountAndAverage,
-  getRiskDistribution,
   getRecentProjectCount,
   getProjectCountStandard,
   getProjectCountWeb3d,

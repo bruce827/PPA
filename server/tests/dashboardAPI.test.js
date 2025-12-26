@@ -238,142 +238,6 @@ describe('Dashboard API - Integration Tests', () => {
     }
   });
 
-  describe('GET /api/dashboard/summary', () => {
-    it('should return project summary with total count and average cost', async () => {
-      const startTime = Date.now();
-      const response = await request(app).get('/api/dashboard/summary');
-      const duration = Date.now() - startTime;
-
-      expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty('totalProjects');
-      expect(response.body).toHaveProperty('averageCost');
-      expect(response.body.totalProjects).toBe(3);
-      expect(parseFloat(response.body.averageCost)).toBeCloseTo(110000, 0); // (100000 + 150000 + 80000) / 3
-      expect(duration).toBeLessThan(500); // AC7: Response time < 500ms
-    });
-  });
-
-  describe('GET /api/dashboard/risk-distribution', () => {
-    it('should return risk distribution data grouped by score', async () => {
-      const startTime = Date.now();
-      const response = await request(app).get('/api/dashboard/risk-distribution');
-      const duration = Date.now() - startTime;
-
-      expect(response.status).toBe(200);
-      expect(Array.isArray(response.body)).toBe(true);
-      expect(response.body.length).toBeGreaterThan(0);
-      
-      // Verify data structure
-      response.body.forEach(item => {
-        expect(item).toHaveProperty('final_risk_score');
-        expect(item).toHaveProperty('count');
-      });
-      
-      // Check that we have entries for risk scores 10, 15, 30
-      const riskScores = response.body.map(item => item.final_risk_score);
-      expect(riskScores).toContain(10);
-      expect(riskScores).toContain(15);
-      expect(riskScores).toContain(30);
-      
-      expect(duration).toBeLessThan(500); // AC7: Response time < 500ms
-    });
-  });
-
-  describe('GET /api/dashboard/cost-composition', () => {
-    it('should return aggregated cost composition data', async () => {
-      const startTime = Date.now();
-      const response = await request(app).get('/api/dashboard/cost-composition');
-      const duration = Date.now() - startTime;
-
-      expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty('softwareDevelopment');
-      expect(response.body).toHaveProperty('systemIntegration');
-      expect(response.body).toHaveProperty('operations');
-      expect(response.body).toHaveProperty('travel');
-      expect(response.body).toHaveProperty('risk');
-
-      // Verify aggregated values
-      expect(response.body.softwareDevelopment).toBe(170000); // 50000 + 80000 + 40000
-      expect(response.body.systemIntegration).toBe(65000); // 20000 + 30000 + 15000
-      expect(response.body.operations).toBe(47000); // 15000 + 20000 + 12000
-      expect(response.body.travel).toBe(33000); // 10000 + 15000 + 8000
-      expect(response.body.risk).toBe(15000); // 5000 + 5000 + 5000
-      
-      expect(duration).toBeLessThan(500); // AC7: Response time < 500ms
-    });
-  });
-
-  describe('GET /api/dashboard/role-cost-distribution', () => {
-    it('should return role cost distribution data', async () => {
-      const startTime = Date.now();
-      const response = await request(app).get('/api/dashboard/role-cost-distribution');
-      const duration = Date.now() - startTime;
-
-      expect(response.status).toBe(200);
-      expect(typeof response.body).toBe('object');
-      
-      // Verify role costs are calculated correctly
-      expect(response.body).toHaveProperty('项目经理');
-      expect(response.body).toHaveProperty('高级开发');
-      expect(response.body).toHaveProperty('测试工程师');
-
-      // Project Alpha: 项目经理=5*2000=10000, 高级开发=(10+6)*1500=24000, 测试工程师=8*1200=9600
-      // Project Beta: 项目经理=8*2000=16000, 高级开发=15*1500=22500, 测试工程师=12*1200=14400
-      // Project Gamma: 高级开发=12*1500=18000, 测试工程师=6*1200=7200
-      expect(response.body['项目经理']).toBe(26000); // 10000 + 16000
-      expect(response.body['高级开发']).toBe(64500); // 24000 + 22500 + 18000
-      expect(response.body['测试工程师']).toBe(31200); // 9600 + 14400 + 7200
-      
-      expect(duration).toBeLessThan(500); // AC7: Response time < 500ms
-    });
-  });
-
-  describe('GET /api/dashboard/cost-trend', () => {
-    it('should return cost trend data grouped by month', async () => {
-      const startTime = Date.now();
-      const response = await request(app).get('/api/dashboard/cost-trend');
-      const duration = Date.now() - startTime;
-
-      expect(response.status).toBe(200);
-      expect(Array.isArray(response.body)).toBe(true);
-      expect(response.body.length).toBeGreaterThan(0);
-      
-      // Verify data structure and ordering
-      response.body.forEach(item => {
-        expect(item).toHaveProperty('month');
-        expect(item).toHaveProperty('totalCost');
-      });
-
-      // Verify total cost sum matches inserted projects
-      const total = response.body.reduce((sum, item) => sum + Number(item.totalCost || 0), 0);
-      expect(total).toBe(330000);
-      
-      expect(duration).toBeLessThan(500); // AC7: Response time < 500ms
-    });
-  });
-
-  describe('GET /api/dashboard/risk-cost-correlation', () => {
-    it('should return risk-cost correlation data', async () => {
-      const startTime = Date.now();
-      const response = await request(app).get('/api/dashboard/risk-cost-correlation');
-      const duration = Date.now() - startTime;
-
-      expect(response.status).toBe(200);
-      expect(Array.isArray(response.body)).toBe(true);
-      expect(response.body.length).toBe(3);
-      
-      // Verify data structure
-      response.body.forEach(item => {
-        expect(item).toHaveProperty('final_risk_score');
-        expect(item).toHaveProperty('final_total_cost');
-        expect(item.final_risk_score).not.toBeNull();
-        expect(item.final_total_cost).not.toBeNull();
-      });
-      
-      expect(duration).toBeLessThan(500); // AC7: Response time < 500ms
-    });
-  });
-
   // ------------------------------
   // [Dashboard Refactor] New Dashboard (新接口) - Smoke Tests
   // ------------------------------
@@ -463,7 +327,7 @@ describe('Dashboard API - Integration Tests', () => {
       // Close the database to simulate failure
       await db.close();
 
-      const response = await request(app).get('/api/dashboard/summary');
+      const response = await request(app).get('/api/dashboard/overview');
 
       expect(response.status).toBe(500);
       expect(response.body).toHaveProperty('message');
@@ -477,12 +341,6 @@ describe('Dashboard API - Integration Tests', () => {
   describe('Response Time Performance (AC7)', () => {
     it('all endpoints should respond within 1000ms', async () => {
       const endpoints = [
-        '/api/dashboard/summary',
-        '/api/dashboard/risk-distribution',
-        '/api/dashboard/cost-composition',
-        '/api/dashboard/role-cost-distribution',
-        '/api/dashboard/cost-trend',
-        '/api/dashboard/risk-cost-correlation',
         '/api/dashboard/overview',
         '/api/dashboard/trend',
         '/api/dashboard/cost-range',

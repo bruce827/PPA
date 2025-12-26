@@ -20,26 +20,4 @@ router.get('/top-roles', dashboardController.getTopRoles);
 // GET /api/dashboard/top-risks - 获取 Top 风险
 router.get('/top-risks', dashboardController.getTopRisks);
 
-// ------------------------------
-// Legacy Dashboard (旧接口) - 后续可按 PRD Step 1.6 清理
-// ------------------------------
-// Deprecated: 旧接口已被新 Dashboard 接口替代，待前端完成切换后按 PRD Step 1.6 Phase C 删除
-// GET /api/dashboard/summary
-router.get('/summary', dashboardController.getSummary);
-
-// GET /api/dashboard/risk-distribution
-router.get('/risk-distribution', dashboardController.getRiskDistribution);
-
-// GET /api/dashboard/cost-composition
-router.get('/cost-composition', dashboardController.getCostComposition);
-
-// GET /api/dashboard/role-cost-distribution
-router.get('/role-cost-distribution', dashboardController.getRoleCostDistribution);
-
-// GET /api/dashboard/cost-trend
-router.get('/cost-trend', dashboardController.getCostTrend);
-
-// GET /api/dashboard/risk-cost-correlation
-router.get('/risk-cost-correlation', dashboardController.getRiskCostCorrelation);
-
 module.exports = router;
