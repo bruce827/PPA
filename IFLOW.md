@@ -241,9 +241,13 @@ CREATE TABLE config_travel_costs (
 - `GET /api/config/all` - 全部配置聚合
 
 #### 数据看板
-- `GET /api/dashboard/summary` - 数据看板汇总
-- `GET /api/dashboard/cost-breakdown` - 成本构成
-- `GET /api/dashboard/risk-distribution` - 风险分布
+- `GET /api/dashboard/overview` - 数据看板概览
+- `GET /api/dashboard/trend` - 月度趋势
+- `GET /api/dashboard/cost-range` - 成本区间
+- `GET /api/dashboard/keywords` - 词云分析
+- `GET /api/dashboard/dna` - 项目DNA
+- `GET /api/dashboard/top-roles` - 角色排名
+- `GET /api/dashboard/top-risks` - 风险排名
 
 ---
 

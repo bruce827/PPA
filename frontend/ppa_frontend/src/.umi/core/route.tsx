@@ -9,7 +9,7 @@ export async function getRoutes() {
     routes,
     routeComponents: {
 '1': React.lazy(() => import('./EmptyRoute')),
-'2': React.lazy(() => import(/* webpackChunkName: "p__Dashboard" */'@/pages/Dashboard.tsx')),
+'2': React.lazy(() => import(/* webpackChunkName: "p__Dashboard__index" */'@/pages/Dashboard/index.tsx')),
 '3': React.lazy(() => import('./EmptyRoute')),
 '4': React.lazy(() => import(/* webpackChunkName: "p__Assessment__New" */'@/pages/Assessment/New.tsx')),
 '5': React.lazy(() => import(/* webpackChunkName: "p__Assessment__History" */'@/pages/Assessment/History.tsx')),

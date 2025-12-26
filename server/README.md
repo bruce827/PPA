@@ -246,12 +246,13 @@ Environment: development
 
 | 方法 | 路径 | 描述 / 返回结构 |
 | ---- | ---- | ---- |
-| GET | /api/dashboard/summary | `{ totalProjects, averageCost }` |
-| GET | /api/dashboard/risk-distribution | 风险分布数组 `{ final_risk_score, count }` |
-| GET | /api/dashboard/cost-composition | 汇总成本 `{ softwareDevelopment, systemIntegration, operations, travel, risk }`，从 `assessment_details_json` 解析 |
-| GET | /api/dashboard/role-cost-distribution | 各角色成本映射 `{ [roleName]: costInYuan }`，按配置的单价与工作量累加 |
-| GET | /api/dashboard/cost-trend | 成本趋势列表 `{ month: 'YYYY-MM', totalCost }` |
-| GET | /api/dashboard/risk-cost-correlation | 风险-成本散点数据 `{ final_risk_score, final_total_cost }[]` |
+| GET | /api/dashboard/overview | 概览数据 `{ recent_30d, saas_count, web3d_count, knowledge_assets, ai_models }` |
+| GET | /api/dashboard/trend | 12个月趋势数组 `[{ month, project_type, project_count, avg_total_cost_wan, avg_risk_score }]` |
+| GET | /api/dashboard/cost-range | 成本分桶统计 `[{ range, count }]`（<50, 50-100, 100-300, >300） |
+| GET | /api/dashboard/keywords | 词云数据 `[{ word, weight }]`，前50个关键词 |
+| GET | /api/dashboard/dna | 雷达图数据 `{ avg_total_cost_wan, avg_risk_score, avg_workload_days, avg_tech_factor, avg_delivery_factor }` |
+| GET | /api/dashboard/top-roles | Top5角色 `[{ role_name, workload_days }]` |
+| GET | /api/dashboard/top-risks | Top10风险 `[{ risk_name, count }]` |
 
 ### AI 能力
 

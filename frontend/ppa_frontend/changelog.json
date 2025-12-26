@@ -2,7 +2,10 @@
   {
     "version": "V1.1.4-beta",
     "date": "2025-12-24",
-    "changes": [{ "type": "opt", "content": "基础配置数据测试通过" }]
+    "changes": [
+      { "type": "opt", "content": "基础配置数据测试通过" },
+      { "type": "feat", "content": "重构Dashboard数据展示功能" }
+    ]
   },
   {
     "version": "V1.1.3-alpha",

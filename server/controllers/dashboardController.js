@@ -1,61 +1,75 @@
 const dashboardService = require('../services/dashboardService');
 
-exports.getSummary = async (req, res) => {
+// ------------------------------
+// [Dashboard Refactor] New Dashboard (新接口)
+// ------------------------------
+
+// [Dashboard Refactor] GET /api/dashboard/overview
+exports.getOverview = async (req, res, next) => {
   try {
-    const summary = await dashboardService.getSummary();
-    res.json(summary);
+    const data = await dashboardService.getOverview();
+    res.json({ data });
   } catch (error) {
-    console.error('Error in getSummary:', error);
-    res.status(500).json({ message: 'Failed to retrieve summary data', error: error.message });
+    next(error);
   }
 };
 
-exports.getRiskDistribution = async (req, res) => {
+// [Dashboard Refactor] GET /api/dashboard/trend
+exports.getTrend = async (req, res, next) => {
   try {
-    const riskDistribution = await dashboardService.getRiskDistribution();
-    res.json(riskDistribution);
+    const data = await dashboardService.getTrend();
+    res.json({ data });
   } catch (error) {
-    console.error('Error in getRiskDistribution:', error);
-    res.status(500).json({ message: 'Failed to retrieve risk distribution data', error: error.message });
+    next(error);
   }
 };
 
-exports.getCostComposition = async (req, res) => {
+// [Dashboard Refactor] GET /api/dashboard/cost-range
+exports.getCostRange = async (req, res, next) => {
   try {
-    const costComposition = await dashboardService.getCostComposition();
-    res.json(costComposition);
+    const data = await dashboardService.getCostRange();
+    res.json({ data });
   } catch (error) {
-    console.error('Error in getCostComposition:', error);
-    res.status(500).json({ message: 'Failed to retrieve cost composition data', error: error.message });
+    next(error);
   }
 };
 
-exports.getRoleCostDistribution = async (req, res) => {
+// [Dashboard Refactor] GET /api/dashboard/keywords
+exports.getKeywords = async (req, res, next) => {
   try {
-    const roleCostDistribution = await dashboardService.getRoleCostDistribution();
-    res.json(roleCostDistribution);
+    const data = await dashboardService.getKeywords();
+    res.json({ data });
   } catch (error) {
-    console.error('Error in getRoleCostDistribution:', error);
-    res.status(500).json({ message: 'Failed to retrieve role cost distribution data', error: error.message });
+    next(error);
   }
 };
 
-exports.getCostTrend = async (req, res) => {
+// [Dashboard Refactor] GET /api/dashboard/dna
+exports.getDNA = async (req, res, next) => {
   try {
-    const costTrend = await dashboardService.getCostTrend();
-    res.json(costTrend);
+    const data = await dashboardService.getDNA();
+    res.json({ data });
   } catch (error) {
-    console.error('Error in getCostTrend:', error);
-    res.status(500).json({ message: 'Failed to retrieve cost trend data', error: error.message });
+    next(error);
   }
 };
 
-exports.getRiskCostCorrelation = async (req, res) => {
+// [Dashboard Refactor] GET /api/dashboard/top-roles
+exports.getTopRoles = async (req, res, next) => {
   try {
-    const riskCostCorrelation = await dashboardService.getRiskCostCorrelation();
-    res.json(riskCostCorrelation);
+    const data = await dashboardService.getTopRoles();
+    res.json({ data });
   } catch (error) {
-    console.error('Error in getRiskCostCorrelation:', error);
-    res.status(500).json({ message: 'Failed to retrieve risk cost correlation data', error: error.message });
+    next(error);
+  }
+};
+
+// [Dashboard Refactor] GET /api/dashboard/top-risks
+exports.getTopRisks = async (req, res, next) => {
+  try {
+    const data = await dashboardService.getTopRisks();
+    res.json({ data });
+  } catch (error) {
+    next(error);
   }
 };

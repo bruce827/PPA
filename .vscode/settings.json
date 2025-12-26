@@ -1,6 +1,8 @@
 {
     "cSpell.ignoreWords": [
         "Popconfirm",
-        "sider"
+        "keepwords",
+        "sider",
+        "stopwords"
     ]
 }
