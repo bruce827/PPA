@@ -192,7 +192,17 @@ function parseProviderResult(rawResponse, configRoles) {
   return ensureParsedStructure(candidate, configRoles);
 }
 
-async function logAssessment({ promptId, modelUsed, requestHash, durationMs, status, errorMessage }) {
+async function logAssessment({
+  promptId,
+  modelUsed,
+  requestHash,
+  durationMs,
+  status,
+  errorMessage,
+  step,
+  route,
+  projectId,
+}) {
   try {
     await aiAssessmentLogModel.insertLog({
       promptId,
@@ -201,6 +211,9 @@ async function logAssessment({ promptId, modelUsed, requestHash, durationMs, sta
       durationMs,
       status,
       errorMessage,
+      step,
+      route,
+      projectId,
     });
   } catch (error) {
     logger.warn('写入 ai_assessment_logs 失败(工作量评估)', { error: error.message });
@@ -326,11 +339,13 @@ async function evaluateWorkload(payload) {
       requestHash,
       durationMs,
       status,
+      step: 'workload',
+      route: '/api/ai/evaluate-workload',
     });
 
     // 文件日志（成功）
     try {
-      await aiFileLogger.save({
+      const logDir = await aiFileLogger.save({
         step: 'workload',
         route: '/api/ai/evaluate-workload',
         requestHash,
@@ -362,6 +377,15 @@ async function evaluateWorkload(payload) {
           `[counts] roles=${configRoles.length}`,
         ],
       });
+
+      try {
+        await aiAssessmentLogModel.updateLogDir({
+          requestHash,
+          step: 'workload',
+          route: '/api/ai/evaluate-workload',
+          logDir,
+        });
+      } catch (e) {}
     } catch (e) {}
 
     return {
@@ -383,11 +407,13 @@ async function evaluateWorkload(payload) {
       durationMs,
       status,
       errorMessage,
+      step: 'workload',
+      route: '/api/ai/evaluate-workload',
     });
 
     // 文件日志（失败）
     try {
-      await aiFileLogger.save({
+      const logDir = await aiFileLogger.save({
         step: 'workload',
         route: '/api/ai/evaluate-workload',
         requestHash,
@@ -414,6 +440,15 @@ async function evaluateWorkload(payload) {
           `[error] ${error.message}`,
         ],
       });
+
+      try {
+        await aiAssessmentLogModel.updateLogDir({
+          requestHash,
+          step: 'workload',
+          route: '/api/ai/evaluate-workload',
+          logDir,
+        });
+      } catch (e) {}
     } catch (e) {}
 
     if (error.statusCode) throw error;

@@ -19,6 +19,13 @@ async function startServer() {
     if (process.env.NODE_ENV !== 'test') {
       server = app.listen(3001, () => {
         logger.info('Server is running on port 3001');
+        try {
+          const monitoringWsService = require('./services/monitoringWsService');
+          monitoringWsService.init(server);
+          logger.info('Monitoring WS is enabled on /api/monitoring/ws');
+        } catch (e) {
+          logger.warn('Failed to init monitoring ws', { error: e && e.message });
+        }
       });
     }
   } catch (error) {
@@ -27,7 +34,9 @@ async function startServer() {
   }
 }
 
-startServer();
+if (process.env.NODE_ENV !== 'test') {
+  startServer();
+}
 
 // 优雅退出
 process.on('SIGINT', async () => {

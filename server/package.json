@@ -15,7 +15,8 @@
     "express-validator": "^7.3.0",
     "pdfkit": "^0.17.2",
     "sinon": "^21.0.0",
-    "sqlite3": "^5.1.7"
+    "sqlite3": "^5.1.7",
+    "ws": "^8.18.0"
   },
   "devDependencies": {
     "jest": "^30.2.0",

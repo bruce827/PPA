@@ -2,10 +2,15 @@ const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
 
 let db; // Declare db globally but don't initialize immediately
+let connectionId = 0;
 
 const DB_PATH = path.resolve(__dirname, '../ppa.db'); // Adjust path as needed
 
-exports.init = (databasePath = DB_PATH) => {
+exports.init = async (databasePath = DB_PATH) => {
+  if (db) {
+    await exports.close();
+  }
+
   return new Promise((resolve, reject) => {
     db = new sqlite3.Database(databasePath, (err) => {
       if (err) {
@@ -13,11 +18,14 @@ exports.init = (databasePath = DB_PATH) => {
         reject(err);
       } else {
         console.log('Connected to the SQLite database.');
+        connectionId += 1;
         resolve();
       }
     });
   });
 };
+
+exports.getConnectionId = () => connectionId;
 
 // Promisify db operations for async/await
 exports.get = (sql, params = []) => {

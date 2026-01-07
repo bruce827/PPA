@@ -91,7 +91,13 @@ const CREATE_TABLES_SQL = `
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
   );
 
+  -- AI 日志监控性能相关索引（幂等，可重复执行）
   CREATE INDEX IF NOT EXISTS idx_ai_assessment_logs_prompt ON ai_assessment_logs(prompt_id);
+  CREATE INDEX IF NOT EXISTS idx_ai_assessment_logs_request_hash ON ai_assessment_logs(request_hash);
+  CREATE INDEX IF NOT EXISTS idx_ai_assessment_logs_created_at ON ai_assessment_logs(created_at);
+  CREATE INDEX IF NOT EXISTS idx_ai_assessment_logs_status_created_at ON ai_assessment_logs(status, created_at);
+  CREATE INDEX IF NOT EXISTS idx_ai_assessment_logs_model_created_at ON ai_assessment_logs(model_used, created_at);
+  CREATE INDEX IF NOT EXISTS idx_ai_assessment_logs_prompt_created_at ON ai_assessment_logs(prompt_id, created_at);
 
   CREATE TABLE IF NOT EXISTS web3d_risk_items (
     id INTEGER PRIMARY KEY AUTOINCREMENT,

@@ -7,6 +7,7 @@
 PPA (Project Portfolio Assessment) is a web-based system that replaces traditional Excel-based project cost and risk assessment processes. It provides a systematic, online workflow for software project evaluation with AI-powered assistance.
 
 **Core Capabilities:**
+
 - Step-by-step assessment wizard for risk, workload, and cost evaluation
 - Real-time calculation engine with rating factor algorithms
 - Template-based project creation for efficiency
@@ -17,6 +18,7 @@ PPA (Project Portfolio Assessment) is a web-based system that replaces tradition
 ## Technology Stack
 
 ### Frontend (`frontend/ppa_frontend/`)
+
 - **Framework**: UmiJS Max (v4.5.2) with React 18 & TypeScript
 - **UI Library**: Ant Design v5 + ProComponents
 - **Data Visualization**: @ant-design/charts (G2-based)
@@ -25,6 +27,7 @@ PPA (Project Portfolio Assessment) is a web-based system that replaces tradition
 - **Code Quality**: Prettier + ESLint + Husky + lint-staged
 
 ### Backend (`server/`)
+
 - **Runtime**: Node.js
 - **Framework**: Express.js v5
 - **Database**: SQLite3 (file-based)
@@ -33,7 +36,7 @@ PPA (Project Portfolio Assessment) is a web-based system that replaces tradition
 
 ## Project Structure
 
-```
+``` text
 PPA/
 ├── frontend/ppa_frontend/          # Frontend application
 │   ├── .umirc.ts                   # UmiJS configuration
@@ -107,7 +110,8 @@ npm install
 node init-db.js
 
 # Seed initial data
-node seed-data/seed-all.js
+cd seed-data
+node seed-all.js
 
 # Start API server (http://localhost:3001)
 node index.js
@@ -317,6 +321,7 @@ EXPORT_LOG_DIR=/custom/path  # Custom export log directory
 ## Deployment Process
 
 ### Development Deployment
+
 1. Clone repository
 2. Install frontend dependencies: `cd frontend/ppa_frontend && yarn`
 3. Install backend dependencies: `cd server && npm install`
@@ -326,6 +331,7 @@ EXPORT_LOG_DIR=/custom/path  # Custom export log directory
 7. Start frontend: `yarn dev` (port 8000)
 
 ### Production Build
+
 ```bash
 # Frontend
 cd frontend/ppa_frontend
@@ -339,6 +345,7 @@ node index.js  # Set PORT environment variable if needed
 ### Environment Variables
 
 **Backend**:
+
 - `PORT` - Server port (default: 3001)
 - `NODE_ENV` - Environment: development|production (default: development)
 - `EXPORT_LOG_ENABLED` - Enable export logging (default: true)
@@ -347,16 +354,19 @@ node index.js  # Set PORT environment variable if needed
 - `AI_LOG_DIR` - Custom AI log directory
 
 **Frontend**:
+
 - `REACT_APP_API_URL` - Can override `/api` proxy target in `.env` file
 
 ## Performance Requirements
 
 **Hard Requirements**:
+
 - All API responses must be < 500ms (enforced in tests)
 - Frontend build time should be reasonable for development
 - Calculation engine should handle 100+ role/workload items without degradation
 
 **Optimization Tips**:
+
 - AI logging is async and doesn't block responses
 - Use SQLite indexes for frequently queried fields (e.g., `project_type`, `created_at`)
 - Frontend enables code splitting via UmiJS route splitting
@@ -364,6 +374,7 @@ node index.js  # Set PORT environment variable if needed
 ## Known Limitations & Future Enhancements
 
 **Current Limitations**:
+
 - No authentication/authorization
 - No pagination on project lists (may cause performance issues with >100 projects)
 - Single SQLite file limits concurrent multi-user access
@@ -371,6 +382,7 @@ node index.js  # Set PORT environment variable if needed
 - No CI/CD pipeline
 
 **Planned Enhancements** (from docs):
+
 - Add authentication and role-based access
 - Implement pagination and filtering
 - Parameterized queries for security

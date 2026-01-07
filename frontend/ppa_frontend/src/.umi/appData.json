@@ -38,7 +38,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "preset",
@@ -51,7 +51,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 5
+        "register": 12
       },
       "enableBy": "register",
       "type": "preset",
@@ -64,7 +64,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 2
+        "register": 3
       },
       "enableBy": "register",
       "type": "preset",
@@ -81,7 +81,7 @@
             0
           ]
         },
-        "register": 2
+        "register": 3
       },
       "enableBy": "register",
       "type": "plugin",
@@ -95,10 +95,10 @@
       "time": {
         "hooks": {
           "onStart": [
-            1
+            2
           ]
         },
-        "register": 1
+        "register": 2
       },
       "enableBy": "register",
       "type": "plugin",
@@ -115,7 +115,7 @@
             0
           ]
         },
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -128,7 +128,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -142,10 +142,10 @@
       "time": {
         "hooks": {
           "modifyAppData": [
-            24
+            27
           ]
         },
-        "register": 14
+        "register": 16
       },
       "enableBy": "register",
       "type": "plugin",
@@ -178,7 +178,7 @@
             0
           ]
         },
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -225,7 +225,7 @@
             0
           ]
         },
-        "register": 5
+        "register": 7
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1077,7 +1077,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1094,7 +1094,7 @@
             0
           ]
         },
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1120,7 +1120,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 49
+        "register": 54
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1133,7 +1133,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 21
+        "register": 28
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1163,7 +1163,7 @@
             0
           ]
         },
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1206,7 +1206,7 @@
             1
           ]
         },
-        "register": 22
+        "register": 24
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/preset-umi/dist/features/mock/mock.js",
@@ -1218,7 +1218,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1231,7 +1231,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/preset-umi/dist/features/okam/okam.js",
@@ -1324,7 +1324,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1337,7 +1337,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1350,7 +1350,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 2
+        "register": 3
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1363,7 +1363,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1376,7 +1376,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/preset-umi/dist/features/routeProps/routeProps.js",
@@ -1401,7 +1401,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 2
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1414,7 +1414,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 2
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1427,7 +1427,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 2
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1465,7 +1465,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 13
+        "register": 15
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1570,7 +1570,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1583,7 +1583,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/preset-umi/dist/features/utoopack/utoopack.js",
@@ -1595,7 +1595,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 2
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/preset-umi/dist/features/hmrGuardian/hmrGuardian.js",
@@ -1619,7 +1619,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 2
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1632,7 +1632,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1645,7 +1645,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 2
+        "register": 3
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1658,7 +1658,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 21
+        "register": 24
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1672,10 +1672,10 @@
       "time": {
         "hooks": {
           "modifyAppData": [
-            8
+            9
           ]
         },
-        "register": 20
+        "register": 30
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/preset-umi/dist/commands/dev/dev.js",
@@ -1726,7 +1726,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1739,7 +1739,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1765,7 +1765,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1830,7 +1830,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1843,7 +1843,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1856,7 +1856,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1895,7 +1895,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1934,7 +1934,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1947,7 +1947,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 2
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1975,7 +1975,7 @@
       },
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/plugins/dist/analytics.js",
@@ -1988,13 +1988,13 @@
       "time": {
         "hooks": {
           "modifyConfig": [
-            3
+            4
           ],
           "modifyAppData": [
             0
           ]
         },
-        "register": 3
+        "register": 4
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/plugins/dist/antd.js",
@@ -2006,7 +2006,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 3
+        "register": 4
       },
       "enableBy": "config",
       "type": "plugin",
@@ -2044,7 +2044,7 @@
             0
           ]
         },
-        "register": 2
+        "register": 3
       },
       "enableBy": "config",
       "type": "plugin",
@@ -2057,7 +2057,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 2
       },
       "enableBy": "config",
       "type": "plugin",
@@ -2070,7 +2070,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 4
+        "register": 1
       },
       "enableBy": "config",
       "type": "plugin",
@@ -2083,7 +2083,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 4
       },
       "enableBy": "config",
       "type": "plugin",
@@ -2146,7 +2146,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "config",
       "type": "plugin",
@@ -2159,7 +2159,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "config",
       "type": "plugin",
@@ -2172,7 +2172,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "config",
       "type": "plugin",
@@ -2215,7 +2215,7 @@
             0
           ]
         },
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -2232,7 +2232,7 @@
             0
           ]
         },
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -2262,7 +2262,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -2383,13 +2383,31 @@
             "hideInMenu": true
           }
         ]
+      },
+      {
+        "name": "系统监控",
+        "path": "/monitoring",
+        "routes": [
+          {
+            "name": "AI日志监控",
+            "path": "ai-logs",
+            "component": "./Monitoring/AiLogs"
+          },
+          {
+            "name": "日志详情",
+            "path": "ai-logs/:requestHash",
+            "component": "./Monitoring/AiLogDetail",
+            "hideInMenu": true
+          }
+        ]
       }
     ],
     "npmClient": "yarn",
     "proxy": {
       "/api": {
         "target": "http://localhost:3001",
-        "changeOrigin": true
+        "changeOrigin": true,
+        "ws": true
       }
     },
     "mfsu": false,
@@ -2530,13 +2548,31 @@
             "hideInMenu": true
           }
         ]
+      },
+      {
+        "name": "系统监控",
+        "path": "/monitoring",
+        "routes": [
+          {
+            "name": "AI日志监控",
+            "path": "ai-logs",
+            "component": "./Monitoring/AiLogs"
+          },
+          {
+            "name": "日志详情",
+            "path": "ai-logs/:requestHash",
+            "component": "./Monitoring/AiLogDetail",
+            "hideInMenu": true
+          }
+        ]
       }
     ],
     "npmClient": "yarn",
     "proxy": {
       "/api": {
         "target": "http://localhost:3001",
-        "changeOrigin": true
+        "changeOrigin": true,
+        "ws": true
       }
     },
     "define": {
@@ -3640,6 +3676,36 @@
       "__content": "import { getRiskItemList, getRoleList } from '@/services/config';\nimport { translateRoleToSlug } from './utils/roleNaming';\nimport { categoryToSlug, extractItemEnSlug, stripParen, toSafeVar } from './utils/riskNaming';\nimport type { PromptTemplate, PromptVariable } from '@/services/promptTemplate';\nimport {\n  createPromptTemplate,\n  getPromptTemplateById,\n  updatePromptTemplate,\n} from '@/services/promptTemplate';\nimport { EyeOutlined } from '@ant-design/icons';\nimport { PageContainer } from '@ant-design/pro-layout';\nimport { history, useParams } from '@umijs/max';\nimport {\n  Alert,\n  Button,\n  Card,\n  Form,\n  Input,\n  message,\n  Select,\n  Space,\n  Switch,\n  Tag,\n} from 'antd';\nimport React, { useEffect, useRef, useState } from 'react';\nimport PreviewModal from './components/PreviewModal';\nimport VariableEditor from './components/VariableEditor';\nimport VariableInsertButton from './components/VariableInsertButton';\nimport VariableList from './components/VariableList';\n\nconst { TextArea } = Input;\n\nconst PromptTemplateForm: React.FC = () => {\n  const [form] = Form.useForm();\n  const { id } = useParams<{ id: string }>();\n  const categoryValue = Form.useWatch('category', form);\n  const isEdit = !!id;\n  const [template, setTemplate] = useState<PromptTemplate | null>(null);\n  const [variables, setVariables] = useState<PromptVariable[]>([]);\n  const [variableEditorVisible, setVariableEditorVisible] = useState(false);\n  const [editingVariable, setEditingVariable] = useState<PromptVariable | null>(\n    null,\n  );\n  const [editingIndex, setEditingIndex] = useState<number>(-1);\n  const [previewVisible, setPreviewVisible] = useState(false);\n  const [detectedUndefinedVars, setDetectedUndefinedVars] = useState<string[]>(\n    [],\n  );\n  const userPromptRef = useRef<any>(null);\n  // 记录各分类自动灌入的变量名，用于分类切换时清理\n  const [autoInjectedByCategory, setAutoInjectedByCategory] = useState<\n    Record<string, string[]>\n  >({});\n  const prevCategoryRef = useRef<string | undefined>(undefined);\n\n  useEffect(() => {\n    if (isEdit) {\n      getPromptTemplateById(Number(id)).then((res) => {\n        setTemplate(res);\n        form.setFieldsValue(res);\n\n        // 解析变量\n        if (res.variables_json) {\n          try {\n            const parsed = JSON.parse(res.variables_json);\n            setVariables(Array.isArray(parsed) ? parsed : []);\n          } catch (error) {\n            console.error('Failed to parse variables:', error);\n          }\n        }\n      });\n    }\n  }, [id, isEdit, form]);\n\n  // 智能检测未定义的变量\n  const detectUndefinedVariables = (template: string) => {\n    const regex = /\\{\\{\\s*(\\w+)\\s*\\}\\}/g;\n    const matches = template.matchAll(regex);\n    const detected = new Set<string>();\n\n    for (const match of matches) {\n      const varName = match[1];\n      if (!variables.find((v) => v.name === varName)) {\n        detected.add(varName);\n      }\n    }\n\n    setDetectedUndefinedVars(Array.from(detected));\n  };\n\n  // 用户提示词模板变化时检测变量\n  const handleUserPromptChange = (\n    e: React.ChangeEvent<HTMLTextAreaElement>,\n  ) => {\n    const value = e.target.value;\n    form.setFieldValue('user_prompt_template', value);\n    detectUndefinedVariables(value);\n  };\n\n  // 添加/编辑变量\n  const handleAddVariable = () => {\n    setEditingVariable(null);\n    setEditingIndex(-1);\n    setVariableEditorVisible(true);\n  };\n\n  const handleEditVariable = (variable: PromptVariable, index: number) => {\n    setEditingVariable(variable);\n    setEditingIndex(index);\n    setVariableEditorVisible(true);\n  };\n\n  const handleVariableSave = (values: PromptVariable) => {\n    let newVariables = [...variables];\n\n    if (editingIndex >= 0) {\n      // 编辑\n      newVariables[editingIndex] = values;\n    } else {\n      // 新增 - 检查重复\n      if (newVariables.find((v) => v.name === values.name)) {\n        message.error('变量名已存在');\n        return;\n      }\n      newVariables.push(values);\n    }\n\n    setVariables(newVariables);\n    setVariableEditorVisible(false);\n    message.success(editingIndex >= 0 ? '变量已更新' : '变量已添加');\n\n    // 重新检测\n    const userPrompt = form.getFieldValue('user_prompt_template');\n    if (userPrompt) {\n      detectUndefinedVariables(userPrompt);\n    }\n  };\n\n  const handleVariableDelete = (index: number) => {\n    const newVariables = variables.filter((_, i) => i !== index);\n    setVariables(newVariables);\n    message.success('变量已删除');\n  };\n\n  // 快速添加检测到的未定义变量\n  const handleQuickAddUndefined = () => {\n    if (detectedUndefinedVars.length === 0) return;\n\n    const varName = detectedUndefinedVars[0];\n    setEditingVariable({\n      name: varName,\n      description: '',\n      example: '',\n      required: false,\n    });\n    setEditingIndex(-1);\n    setVariableEditorVisible(true);\n  };\n\n  // 插入变量到用户提示词\n  const handleInsertVariable = (variableName: string) => {\n    const textarea = userPromptRef.current?.resizableTextArea?.textArea;\n    if (!textarea) return;\n\n    const start = textarea.selectionStart;\n    const end = textarea.selectionEnd;\n    const currentValue = form.getFieldValue('user_prompt_template') || '';\n\n    const newValue =\n      currentValue.substring(0, start) +\n      `{{${variableName}}}` +\n      currentValue.substring(end);\n\n    form.setFieldValue('user_prompt_template', newValue);\n    detectUndefinedVariables(newValue);\n\n    // 设置光标位置\n    setTimeout(() => {\n      const newPosition = start + variableName.length + 2;\n      textarea.setSelectionRange(newPosition, newPosition);\n      textarea.focus();\n    }, 0);\n  };\n\n  // 从风险评估项自动灌入变量（评估类别 + 评估项）\n  const syncRiskVariables = async () => {\n    try {\n      const res: any = await getRiskItemList();\n      const list: any[] = Array.isArray(res?.data) ? res.data : [];\n      if (!list.length) {\n        message.warning(\n          '风险评估项为空，请先到“参数配置 > 风险评估项管理”配置评估项',\n        );\n        return;\n      }\n\n      // 现有变量名集合（以现有为主，存在则跳过自动灌入）\n      const existingNames = new Set((variables || []).map((v) => v.name));\n      const baseCount = new Map<string, number>();\n      const injected: PromptVariable[] = [];\n      const injectedNames: string[] = [];\n\n      list.forEach((it: any, idx: number) => {\n        const catSlug = categoryToSlug(it.category, idx + 1);\n        const enItem = extractItemEnSlug(it.item_name) || '';\n        const itemSlug =\n          toSafeVar(enItem) ||\n          toSafeVar(stripParen(it.item_name)) ||\n          `item_${idx + 1}`;\n        let base = toSafeVar(`${catSlug}_${itemSlug}`) || `var_${idx + 1}`;\n\n        // 自动变量内部去重：相同 base 追加 _2, _3...\n        const count = baseCount.get(base) || 0;\n        baseCount.set(base, count + 1);\n        const name = count === 0 ? base : toSafeVar(`${base}_${count + 1}`);\n\n        // 若与现有（用户手工）变量重名，则跳过（以用户变量为主）\n        if (existingNames.has(name)) {\n          return;\n        }\n\n        injected.push({\n          name,\n          description: `${it.category}-${stripParen(it.item_name)}`,\n          example: '',\n          required: false,\n        });\n        injectedNames.push(name);\n        existingNames.add(name);\n      });\n\n      if (!injected.length) {\n        message.info('未发现可新增的风险变量（可能已存在当前变量中）');\n        setAutoInjectedByCategory((prev) => ({ ...prev, risk_analysis: [] }));\n        return;\n      }\n\n      setVariables((prev) => [...prev, ...injected]);\n      setAutoInjectedByCategory((prev) => ({\n        ...prev,\n        risk_analysis: Array.from(\n          new Set([...(prev?.risk_analysis || []), ...injectedNames]),\n        ),\n      }));\n      message.success(`已导入 ${injected.length} 个变量`);\n    } catch (e) {\n      message.error('获取风险评估项失败');\n    }\n  };\n\n  // 从角色配置自动灌入变量（成本估算）\n  const syncCostVariables = async () => {\n    try {\n      const res: any = await getRoleList();\n      const roles: any[] = Array.isArray(res?.data) ? res.data : [];\n      if (!roles.length) {\n        message.warning(\n          '角色配置为空，请先到“参数配置 > 角色与单价管理”配置角色',\n        );\n        return;\n      }\n\n      const existingNames = new Set((variables || []).map((v) => v.name));\n      const baseCount = new Map<string, number>();\n      const injected: PromptVariable[] = [];\n      const injectedNames: string[] = [];\n\n      roles.forEach((role, idx) => {\n        const rawName: string = String(role.role_name || '').trim();\n        // 基于翻译/拼音转写生成英文slug，尽量避免占位名\n        let base = translateRoleToSlug(rawName);\n        if (!base) base = `member_${idx + 1}`;\n\n        // 自动变量内部去重\n        const count = baseCount.get(base) || 0;\n        baseCount.set(base, count + 1);\n        const name = count === 0 ? base : toSafeVar(`${base}_${count + 1}`);\n\n        if (existingNames.has(name)) {\n          return;\n        }\n\n        injected.push({\n          name,\n          description: rawName || `角色${idx + 1}`,\n          help: `对应角色：${rawName}${role.unit_price ? `，单价：${role.unit_price} 元/天` : ''}`,\n          example: '1.0',\n          required: false,\n        });\n        injectedNames.push(name);\n        existingNames.add(name);\n      });\n\n      if (!injected.length) {\n        message.info('未发现可新增的角色变量（可能已存在当前变量中）');\n        setAutoInjectedByCategory((prev) => ({ ...prev, cost_estimation: [] }));\n        return;\n      }\n\n      setVariables((prev) => [...prev, ...injected]);\n      setAutoInjectedByCategory((prev) => ({\n        ...prev,\n        cost_estimation: Array.from(\n          new Set([...(prev?.cost_estimation || []), ...injectedNames]),\n        ),\n      }));\n      message.success(`已导入 ${injected.length} 个角色变量`);\n    } catch (e) {\n      message.error('获取角色配置失败');\n    }\n  };\n\n  const onFinish = async (values: any) => {\n    try {\n      const data = {\n        ...values,\n        variables_json: JSON.stringify(variables),\n      };\n\n      if (isEdit) {\n        await updatePromptTemplate(Number(id), data);\n        message.success('更新成功');\n      } else {\n        await createPromptTemplate(data);\n        message.success('创建成功');\n      }\n      history.push('/model-config/prompts', { refresh: true });\n    } catch (error) {\n      message.error('操作失败');\n    }\n  };\n\n  const isSystemTemplate = template?.is_system || false;\n\n  return (\n    <PageContainer>\n      <Card>\n        <Form\n          form={form}\n          layout=\"vertical\"\n          onFinish={onFinish}\n          onValuesChange={async (changedValues, allValues) => {\n            if ('category' in changedValues) {\n              const newCat = changedValues.category;\n              const prevCat = prevCategoryRef.current;\n              prevCategoryRef.current = newCat;\n\n              // 从某分类切换出去：移除该分类自动灌入变量\n              if (prevCat && prevCat !== newCat) {\n                const names = autoInjectedByCategory[prevCat] || [];\n                if (names.length > 0) {\n                  setVariables((prev) => prev.filter((v) => !names.includes(v.name)));\n                  setAutoInjectedByCategory((prev) => ({ ...prev, [prevCat]: [] }));\n                }\n              }\n\n              // 切换到 风险分析：自动同步变量\n              if (newCat === 'risk_analysis') {\n                await syncRiskVariables();\n              }\n\n              // 切换到 成本估算：自动同步角色变量\n              if (newCat === 'cost_estimation') {\n                await syncCostVariables();\n              }\n            }\n          }}\n          initialValues={{\n            category: 'custom',\n            is_active: true,\n          }}\n        >\n          <Form.Item\n            name=\"template_name\"\n            label=\"模板名称\"\n            rules={[\n              { required: true, message: '请输入模板名称' },\n              { max: 100, message: '最多100个字符' },\n            ]}\n          >\n            <Input placeholder=\"请输入模板名称\" disabled={isSystemTemplate} />\n          </Form.Item>\n\n          <Form.Item\n            name=\"category\"\n            label=\"分类\"\n            rules={[{ required: true, message: '请选择分类' }]}\n          >\n            <Select placeholder=\"请选择分类\" disabled={isSystemTemplate}>\n              <Select.Option value=\"risk_analysis\">风险分析</Select.Option>\n              <Select.Option value=\"cost_estimation\">成本估算</Select.Option>\n              <Select.Option value=\"module_analysis\">模块梳理</Select.Option>\n              <Select.Option value=\"report_generation\">报告生成</Select.Option>\n              <Select.Option value=\"custom\">自定义</Select.Option>\n            </Select>\n          </Form.Item>\n\n          <Form.Item\n            name=\"description\"\n            label=\"描述\"\n            rules={[{ max: 500, message: '最多500个字符' }]}\n          >\n            <TextArea\n              rows={3}\n              placeholder=\"请输入描述\"\n              disabled={isSystemTemplate}\n            />\n          </Form.Item>\n\n          <Form.Item\n            name=\"is_active\"\n            label=\"是否激活\"\n            valuePropName=\"checked\"\n            help=\"禁用后，该模板将无法在评估中使用。\"\n          >\n            <Switch disabled={isSystemTemplate} />\n          </Form.Item>\n\n          <Form.Item\n            name=\"system_prompt\"\n            label=\"系统提示词\"\n            rules={[{ required: true, message: '请输入系统提示词' }]}\n            help=\"定义 AI 的角色、专业领域和任务目标\"\n          >\n            <TextArea\n              rows={6}\n              placeholder=\"请输入系统提示词\"\n              disabled={isSystemTemplate}\n              showCount\n            />\n          </Form.Item>\n\n          <Form.Item\n            label={\n              <Space>\n                <span>用户提示词模板</span>\n                <VariableInsertButton\n                  variables={variables}\n                  onInsert={handleInsertVariable}\n                  disabled={isSystemTemplate}\n                />\n              </Space>\n            }\n          >\n            <Form.Item\n              name=\"user_prompt_template\"\n              rules={[{ required: true, message: '请输入用户提示词模板' }]}\n              noStyle\n            >\n              <TextArea\n                ref={userPromptRef}\n                rows={8}\n                placeholder=\"使用 {{变量名}} 格式插入变量\"\n                disabled={isSystemTemplate}\n                onChange={handleUserPromptChange}\n                showCount\n              />\n            </Form.Item>\n\n            {/* 未定义变量警告 */}\n            {detectedUndefinedVars.length > 0 && (\n              <Alert\n                message={\n                  <Space wrap size=\"small\">\n                    <span>\n                      检测到 {detectedUndefinedVars.length} 个未定义变量:\n                    </span>\n                    {detectedUndefinedVars.map((v) => (\n                      <Tag key={v} color=\"warning\">\n                        {v}\n                      </Tag>\n                    ))}\n                    <Button\n                      type=\"link\"\n                      size=\"small\"\n                      onClick={handleQuickAddUndefined}\n                      disabled={isSystemTemplate}\n                    >\n                      快速添加\n                    </Button>\n                  </Space>\n                }\n                type=\"warning\"\n                style={{ marginTop: 8 }}\n                closable\n              />\n            )}\n          </Form.Item>\n\n          {/* 变量管理区域 */}\n          <Form.Item\n            label={\n              <Space>\n                <span>变量定义</span>\n                {categoryValue === 'risk_analysis' && !isSystemTemplate && (\n                  <Button size=\"small\" onClick={syncRiskVariables}>\n                    从评估类别导入\n                  </Button>\n                )}\n                {categoryValue === 'cost_estimation' && !isSystemTemplate && (\n                  <Button size=\"small\" onClick={syncCostVariables}>\n                    从角色配置导入\n                  </Button>\n                )}\n              </Space>\n            }\n          >\n            <VariableList\n              variables={variables}\n              onAdd={handleAddVariable}\n              onEdit={handleEditVariable}\n              onDelete={handleVariableDelete}\n              disabled={isSystemTemplate}\n            />\n          </Form.Item>\n\n          <Form.Item>\n            <Space>\n              <Button onClick={() => history.push('/model-config/prompts')}>\n                取消\n              </Button>\n              <Button\n                type=\"default\"\n                icon={<EyeOutlined />}\n                onClick={() => setPreviewVisible(true)}\n                disabled={variables.length === 0}\n              >\n                预览\n              </Button>\n              <Button\n                type=\"primary\"\n                htmlType=\"submit\"\n                disabled={isSystemTemplate}\n              >\n                保存\n              </Button>\n            </Space>\n          </Form.Item>\n        </Form>\n      </Card>\n\n      {/* 变量编辑对话框 */}\n      <VariableEditor\n        visible={variableEditorVisible}\n        variable={editingVariable}\n        onOk={handleVariableSave}\n        onCancel={() => setVariableEditorVisible(false)}\n      />\n\n      {/* 预览对话框 */}\n      {isEdit && (\n        <PreviewModal\n          visible={previewVisible}\n          templateId={Number(id)}\n          variables={variables}\n          onCancel={() => setPreviewVisible(false)}\n        />\n      )}\n    </PageContainer>\n  );\n};\n\nexport default PromptTemplateForm;\n",
       "__isJSFile": true,
       "__absFile": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/src/pages/ModelConfig/Prompts/Form.tsx"
+    },
+    "18": {
+      "name": "系统监控",
+      "path": "/monitoring",
+      "parentId": "ant-design-pro-layout",
+      "id": "18",
+      "absPath": "/monitoring"
+    },
+    "19": {
+      "name": "AI日志监控",
+      "path": "ai-logs",
+      "file": "@/pages/Monitoring/AiLogs.tsx",
+      "parentId": "18",
+      "id": "19",
+      "absPath": "/monitoring/ai-logs",
+      "__content": "import { getMonitoringLogs, getMonitoringStats } from '@/services/monitoring';\nimport {\n  ActionType,\n  PageContainer,\n  ProColumns,\n  ProFormInstance,\n  ProTable,\n} from '@ant-design/pro-components';\nimport { Link } from '@umijs/max';\nimport { App, Button, Card, Col, Row, Space, Statistic, Tag, Typography } from 'antd';\nimport { useEffect, useMemo, useRef, useState } from 'react';\n\nconst AiLogs = () => {\n  const { message } = App.useApp();\n\n  const actionRef = useRef<ActionType>();\n  const formRef = useRef<ProFormInstance>();\n  const debounceTimerRef = useRef<NodeJS.Timeout | null>(null);\n  const desiredStatsKeyRef = useRef<string>('');\n  const lastSuccessStatsKeyRef = useRef<string>('');\n  const currentQueryRef = useRef<Record<string, any>>({});\n  const currentPageRef = useRef<number>(1);\n  const lastSubscribedKeyRef = useRef<string>('');\n  const wsRef = useRef<WebSocket | null>(null);\n  const wsReconnectTimerRef = useRef<NodeJS.Timeout | null>(null);\n  const wsRetryRef = useRef<number>(0);\n  const wsStoppedRef = useRef<boolean>(false);\n  const wsSeenHashesRef = useRef<string[]>([]);\n\n  const [stats, setStats] = useState<API.MonitoringStatsData | null>(null);\n  const [statsLoading, setStatsLoading] = useState(false);\n\n  const [wsStatus, setWsStatus] = useState<'connecting' | 'connected' | 'disconnected' | 'disabled'>(\n    'connecting',\n  );\n  const [wsInjectedRows, setWsInjectedRows] = useState<API.MonitoringLogItem[]>([]);\n  const [highlightMap, setHighlightMap] = useState<Record<string, number>>({});\n\n  const stepEnum = useMemo(\n    () => ({\n      risk: { text: 'risk' },\n      'risk-normalize': { text: 'risk-normalize' },\n      modules: { text: 'modules' },\n      workload: { text: 'workload' },\n      'model-test': { text: 'model-test' },\n    }),\n    [],\n  );\n\n  const statusEnum = useMemo(\n    () => ({\n      success: { text: 'success' },\n      fail: { text: 'fail' },\n      timeout: { text: 'timeout' },\n    }),\n    [],\n  );\n\n  const formatDuration = (value: any) => {\n    const ms = Number(value);\n    if (!Number.isFinite(ms)) return '-';\n    if (ms < 1000) return `${Math.round(ms)} ms`;\n    return `${(ms / 1000).toFixed(2)} s`;\n  };\n\n  const formatHash = (hash?: string | null) => {\n    const v = String(hash || '');\n    if (!v) return '-';\n    if (v.length <= 18) return v;\n    return `${v.slice(0, 10)}...${v.slice(-6)}`;\n  };\n\n  const buildStableKey = (obj: Record<string, any>) => {\n    const keys = Object.keys(obj || {}).sort();\n    const picked: Record<string, any> = {};\n    keys.forEach((k) => {\n      picked[k] = obj[k];\n    });\n    return JSON.stringify(picked);\n  };\n\n  const highlightRow = (hash: string) => {\n    if (!hash) return;\n    const expiresAt = Date.now() + 3000;\n    setHighlightMap((prev) => ({ ...prev, [hash]: expiresAt }));\n    setTimeout(() => {\n      setHighlightMap((prev) => {\n        if (!prev[hash]) return prev;\n        const next = { ...prev };\n        delete next[hash];\n        return next;\n      });\n    }, 3100);\n  };\n\n  const getSubscribeSteps = () => {\n    const q = currentQueryRef.current || {};\n    const steps = Array.isArray(q.steps) ? q.steps.map((s: any) => String(s)).filter(Boolean) : [];\n    if (steps.length > 0) return steps;\n    return Object.keys(stepEnum);\n  };\n\n  const sendSubscribe = () => {\n    const ws = wsRef.current;\n    if (!ws || ws.readyState !== WebSocket.OPEN) return;\n    const steps = getSubscribeSteps();\n    const key = JSON.stringify([...steps].sort());\n    if (key === lastSubscribedKeyRef.current) return;\n    lastSubscribedKeyRef.current = key;\n    try {\n      ws.send(JSON.stringify({ type: 'subscribe', steps }));\n    } catch (e) {}\n  };\n\n  const markSeen = (hash: string) => {\n    if (!hash) return false;\n    const arr = wsSeenHashesRef.current;\n    if (arr.includes(hash)) return true;\n    arr.unshift(hash);\n    if (arr.length > 500) arr.length = 500;\n    return false;\n  };\n\n  const columns: ProColumns<API.MonitoringLogItem>[] = [\n    {\n      title: '时间',\n      dataIndex: 'created_at',\n      valueType: 'dateTime',\n      width: 170,\n      hideInSearch: true,\n    },\n    {\n      title: '时间',\n      dataIndex: 'created_at_range',\n      valueType: 'dateRange',\n      hideInTable: true,\n      fieldProps: {\n        format: 'YYYY-MM-DD',\n      },\n      search: {\n        transform: (value) => {\n          const [start, end] = Array.isArray(value) ? value : [];\n          const next: Record<string, any> = {};\n          if (typeof start !== 'undefined') next.startDate = start;\n          if (typeof end !== 'undefined') next.endDate = end;\n          return next;\n        },\n      },\n    },\n    {\n      title: '状态',\n      dataIndex: 'status',\n      width: 90,\n      hideInSearch: true,\n      render: (_, record) => {\n        const v = record.status;\n        const color = v === 'success' ? 'green' : v === 'timeout' ? 'orange' : 'red';\n        return <Tag color={color}>{String(v)}</Tag>;\n      },\n    },\n    {\n      title: '状态',\n      dataIndex: 'statuses',\n      valueType: 'select',\n      valueEnum: statusEnum,\n      hideInTable: true,\n      fieldProps: {\n        mode: 'multiple',\n        allowClear: true,\n      },\n    },\n    {\n      title: '耗时',\n      dataIndex: 'duration_ms',\n      width: 110,\n      align: 'right',\n      hideInSearch: true,\n      render: (_, record) => {\n        const ms = Number(record.duration_ms);\n        const isHigh = Number.isFinite(ms) && ms >= 10000;\n        return (\n          <Typography.Text style={isHigh ? { color: '#cf1322' } : undefined}>\n            {formatDuration(record.duration_ms)}\n          </Typography.Text>\n        );\n      },\n    },\n    {\n      title: 'Step',\n      dataIndex: 'step',\n      width: 120,\n      hideInSearch: true,\n      render: (_, record) => (record.step ? String(record.step) : '-'),\n    },\n    {\n      title: 'Step',\n      dataIndex: 'steps',\n      valueType: 'select',\n      valueEnum: stepEnum,\n      hideInTable: true,\n      fieldProps: {\n        mode: 'multiple',\n        allowClear: true,\n      },\n    },\n    {\n      title: '模型',\n      dataIndex: 'model_used',\n      width: 180,\n      ellipsis: true,\n      hideInSearch: true,\n      responsive: ['md'],\n      render: (_, record) => (record.model_used ? String(record.model_used) : '-'),\n    },\n    {\n      title: '模型',\n      dataIndex: 'models',\n      valueType: 'select',\n      hideInTable: true,\n      fieldProps: {\n        mode: 'tags',\n        tokenSeparators: [','],\n        allowClear: true,\n        placeholder: '输入模型名，回车确认，可多个',\n      },\n    },\n    {\n      title: 'PromptId',\n      dataIndex: 'prompt_id',\n      width: 100,\n      hideInSearch: true,\n      render: (_, record) => (record.prompt_id ? String(record.prompt_id) : '-'),\n    },\n    {\n      title: 'PromptId',\n      dataIndex: 'promptId',\n      hideInTable: true,\n    },\n    {\n      title: 'Route',\n      dataIndex: 'route',\n      width: 180,\n      ellipsis: true,\n      hideInSearch: true,\n      responsive: ['lg'],\n      render: (_, record) => (record.route ? String(record.route) : '-'),\n    },\n    {\n      title: 'Hash',\n      dataIndex: 'request_hash',\n      width: 160,\n      ellipsis: true,\n      hideInSearch: true,\n      render: (_, record) => (\n        <Typography.Text\n          ellipsis\n          copyable={{ text: String(record.request_hash || '') }}\n          style={{ maxWidth: 150 }}\n        >\n          {formatHash(record.request_hash)}\n        </Typography.Text>\n      ),\n    },\n    {\n      title: 'Hash',\n      dataIndex: 'searchHash',\n      hideInTable: true,\n      fieldProps: {\n        placeholder: '支持部分匹配',\n      },\n    },\n    {\n      title: '错误',\n      dataIndex: 'error_message',\n      ellipsis: true,\n      hideInSearch: true,\n      render: (_, record) => (record.error_message ? String(record.error_message) : '-'),\n    },\n    {\n      title: '操作',\n      valueType: 'option',\n      width: 80,\n      render: (_, record) => [\n        <Link key=\"detail\" to={`/monitoring/ai-logs/${record.request_hash}`}>\n          详情\n        </Link>,\n      ],\n    },\n  ];\n\n  useEffect(() => {\n    return () => {\n      if (debounceTimerRef.current) {\n        clearTimeout(debounceTimerRef.current);\n        debounceTimerRef.current = null;\n      }\n    };\n  }, []);\n\n  useEffect(() => {\n    wsStoppedRef.current = false;\n\n    const connect = () => {\n      if (wsStoppedRef.current) return;\n      if (wsRef.current && (wsRef.current.readyState === WebSocket.OPEN || wsRef.current.readyState === WebSocket.CONNECTING)) {\n        return;\n      }\n\n      setWsStatus('connecting');\n      const proto = window.location.protocol === 'https:' ? 'wss' : 'ws';\n      const url = `${proto}://${window.location.host}/api/monitoring/ws`;\n\n      let ws: WebSocket;\n      try {\n        ws = new WebSocket(url);\n      } catch (e) {\n        setWsStatus('disabled');\n        return;\n      }\n\n      wsRef.current = ws;\n\n      ws.onopen = () => {\n        wsRetryRef.current = 0;\n        setWsStatus('connected');\n        sendSubscribe();\n      };\n\n      ws.onmessage = (evt) => {\n        try {\n          const msg = JSON.parse(String(evt.data || ''));\n          if (msg?.type !== 'ai_log_created') return;\n          const row = msg?.data as API.MonitoringLogItem;\n          const hash = String(row?.request_hash || '');\n          if (!hash) return;\n          if (markSeen(hash)) return;\n\n          setWsInjectedRows((prev) => {\n            const next = [row, ...(prev || [])].filter((x) => x && x.request_hash);\n            const seen = new Set<string>();\n            const deduped: API.MonitoringLogItem[] = [];\n            for (const r of next) {\n              const h = String(r.request_hash);\n              if (seen.has(h)) continue;\n              seen.add(h);\n              deduped.push(r);\n              if (deduped.length >= 50) break;\n            }\n            return deduped;\n          });\n          highlightRow(hash);\n\n          if (currentPageRef.current === 1) {\n            actionRef.current?.reload?.();\n          }\n        } catch (e) {}\n      };\n\n      ws.onclose = () => {\n        wsRef.current = null;\n        if (wsStoppedRef.current) return;\n        setWsStatus('disconnected');\n\n        const retry = wsRetryRef.current + 1;\n        wsRetryRef.current = retry;\n\n        if (retry >= 10) {\n          setWsStatus('disabled');\n          message.warning('WS 连接失败次数过多，已降级为手动刷新');\n          return;\n        }\n\n        const delay = Math.min(30000, 500 * Math.pow(2, retry));\n        if (wsReconnectTimerRef.current) {\n          clearTimeout(wsReconnectTimerRef.current);\n        }\n        wsReconnectTimerRef.current = setTimeout(() => {\n          connect();\n        }, delay);\n      };\n\n      ws.onerror = () => {\n        try {\n          ws.close();\n        } catch (e) {}\n      };\n    };\n\n    connect();\n    return () => {\n      wsStoppedRef.current = true;\n      if (wsReconnectTimerRef.current) {\n        clearTimeout(wsReconnectTimerRef.current);\n        wsReconnectTimerRef.current = null;\n      }\n      if (wsRef.current) {\n        try {\n          wsRef.current.close();\n        } catch (e) {}\n        wsRef.current = null;\n      }\n    };\n  }, []);\n\n  return (\n    <PageContainer header={{ title: 'AI日志监控' }}>\n      <Space direction=\"vertical\" size={16} style={{ width: '100%' }}>\n        <Row gutter={16}>\n          <Col xs={24} sm={12} md={6}>\n            <Card loading={statsLoading}>\n              <Statistic title=\"调用次数\" value={stats?.totalCalls ?? 0} />\n            </Card>\n          </Col>\n          <Col xs={24} sm={12} md={6}>\n            <Card loading={statsLoading}>\n              <Statistic\n                title=\"成功率\"\n                value={Number(stats?.successRate ?? 0)}\n                precision={2}\n                suffix=\"%\"\n              />\n            </Card>\n          </Col>\n          <Col xs={24} sm={12} md={6}>\n            <Card loading={statsLoading}>\n              <Statistic\n                title=\"平均耗时\"\n                value={formatDuration(stats?.avgDuration ?? 0)}\n              />\n            </Card>\n          </Col>\n          <Col xs={24} sm={12} md={6}>\n            <Card loading={statsLoading}>\n              <Statistic\n                title=\"错误（timeout/parse/network/other）\"\n                value={`${stats?.errorDistribution?.timeout ?? 0}/${stats?.errorDistribution?.parse ?? 0}/${stats?.errorDistribution?.network ?? 0}/${stats?.errorDistribution?.other ?? 0}`}\n              />\n            </Card>\n          </Col>\n        </Row>\n\n        <ProTable<API.MonitoringLogItem>\n          actionRef={actionRef}\n          formRef={formRef}\n          cardBordered\n          rowKey=\"id\"\n          columns={columns}\n          tableLayout=\"fixed\"\n          headerTitle=\"日志列表\"\n          dateFormatter=\"string\"\n          onRow={(record) => {\n            const exp = highlightMap[String(record.request_hash || '')];\n            if (exp && exp > Date.now()) {\n              return { style: { background: '#fffbe6' } };\n            }\n            return {};\n          }}\n          search={{\n            labelWidth: 'auto',\n            optionRender: () => [],\n          }}\n          toolBarRender={() => [\n            <Tag\n              key=\"ws\"\n              color={\n                wsStatus === 'connected'\n                  ? 'green'\n                  : wsStatus === 'connecting'\n                    ? 'blue'\n                    : wsStatus === 'disconnected'\n                      ? 'orange'\n                      : 'default'\n              }\n            >\n              WS: {wsStatus}\n            </Tag>,\n            currentPageRef.current !== 1 && wsInjectedRows.length > 0 ? (\n              <Button\n                key=\"new\"\n                onClick={() => {\n                  actionRef.current?.reloadAndRest?.();\n                }}\n              >\n                查看新日志（{wsInjectedRows.length}）\n              </Button>\n            ) : null,\n            <Button\n              key=\"reset\"\n              onClick={() => {\n                if (debounceTimerRef.current) {\n                  clearTimeout(debounceTimerRef.current);\n                  debounceTimerRef.current = null;\n                }\n                desiredStatsKeyRef.current = '';\n                lastSuccessStatsKeyRef.current = '';\n                setStats(null);\n                setWsInjectedRows([]);\n                setHighlightMap({});\n                formRef.current?.resetFields();\n                actionRef.current?.reloadAndRest?.();\n                sendSubscribe();\n              }}\n            >\n              重置\n            </Button>,\n            <Button\n              key=\"refresh\"\n              type=\"primary\"\n              onClick={() => {\n                lastSuccessStatsKeyRef.current = '';\n                actionRef.current?.reload();\n                sendSubscribe();\n              }}\n            >\n              刷新\n            </Button>,\n          ]}\n          postData={(rows) => {\n            if (!Array.isArray(rows)) return rows as any;\n            if (currentPageRef.current !== 1) return rows;\n            if (!wsInjectedRows || wsInjectedRows.length === 0) return rows;\n            const merged = [...wsInjectedRows, ...rows];\n            const seen = new Set<string>();\n            const out: API.MonitoringLogItem[] = [];\n            for (const r of merged) {\n              const h = String(r?.request_hash || '');\n              if (!h) continue;\n              if (seen.has(h)) continue;\n              seen.add(h);\n              out.push(r);\n              if (out.length >= rows.length) break;\n            }\n            return out;\n          }}\n          form={{\n            onValuesChange: () => {\n              if (debounceTimerRef.current) {\n                clearTimeout(debounceTimerRef.current);\n              }\n              debounceTimerRef.current = setTimeout(() => {\n                actionRef.current?.reloadAndRest?.();\n              }, 500);\n            },\n          }}\n          request={async (params) => {\n            const page = Number(params.current || 1);\n            const pageSize = Number(params.pageSize || 20);\n\n            const queryParams = { ...params } as Record<string, any>;\n            delete queryParams.current;\n            delete queryParams.pageSize;\n\n            currentQueryRef.current = queryParams;\n            currentPageRef.current = page;\n            sendSubscribe();\n\n            const statsKey = buildStableKey(queryParams);\n            desiredStatsKeyRef.current = statsKey;\n            const shouldFetchStats =\n              !stats ||\n              statsKey !== lastSuccessStatsKeyRef.current ||\n              lastSuccessStatsKeyRef.current === '';\n\n            if (shouldFetchStats) {\n              setStatsLoading(true);\n            }\n\n            try {\n              const logsPromise = getMonitoringLogs({ page, pageSize, ...queryParams });\n              const statsPromise = shouldFetchStats\n                ? getMonitoringStats(queryParams)\n                : Promise.resolve(null as any);\n\n              const [logsRes, statsRes] = await Promise.all([logsPromise, statsPromise]);\n\n              if (shouldFetchStats && statsRes) {\n                if (desiredStatsKeyRef.current === statsKey) {\n                  if (statsRes?.success) {\n                    setStats(statsRes.data);\n                    lastSuccessStatsKeyRef.current = statsKey;\n                  } else {\n                    setStats(null);\n                    message.error(statsRes?.error || '加载统计失败');\n                  }\n                }\n              }\n\n              if (!logsRes?.success) {\n                message.error(logsRes?.error || '加载日志列表失败');\n                return {\n                  data: [],\n                  success: false,\n                  total: 0,\n                };\n              }\n\n              if (page === 1 && wsInjectedRows.length > 0) {\n                const hashes = new Set<string>(\n                  (logsRes.data.list || []).map((x) => String(x?.request_hash || '')).filter(Boolean),\n                );\n                setWsInjectedRows((prev) => (prev || []).filter((r) => !hashes.has(String(r.request_hash || ''))));\n              }\n\n              return {\n                data: logsRes.data.list,\n                success: true,\n                total: logsRes.data.total,\n              };\n            } catch (_e) {\n              message.error('加载日志列表失败');\n              return {\n                data: [],\n                success: false,\n                total: 0,\n              };\n            } finally {\n              if (shouldFetchStats && desiredStatsKeyRef.current === statsKey) {\n                setStatsLoading(false);\n              }\n            }\n          }}\n          locale={{\n            emptyText: '暂无数据',\n          }}\n          pagination={{\n            pageSize: 20,\n          }}\n        />\n      </Space>\n    </PageContainer>\n  );\n};\n\nexport default AiLogs;\n",
+      "__isJSFile": true,
+      "__absFile": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/src/pages/Monitoring/AiLogs.tsx"
+    },
+    "20": {
+      "name": "日志详情",
+      "path": "ai-logs/:requestHash",
+      "hideInMenu": true,
+      "file": "@/pages/Monitoring/AiLogDetail.tsx",
+      "parentId": "18",
+      "id": "20",
+      "absPath": "/monitoring/ai-logs/:requestHash",
+      "__content": "import { getMonitoringLogDetail } from '@/services/monitoring';\nimport { PageContainer } from '@ant-design/pro-components';\nimport { Link, useParams } from '@umijs/max';\nimport {\n  Alert,\n  App,\n  Button,\n  Card,\n  Descriptions,\n  Empty,\n  Input,\n  Space,\n  Spin,\n  Tabs,\n  Tag,\n  Typography,\n} from 'antd';\nimport { useEffect, useMemo, useState } from 'react';\n\nconst escapeHtml = (raw: string) => {\n  return raw.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');\n};\n\nconst highlightJson = (raw: string) => {\n  const escaped = escapeHtml(raw);\n  const re =\n    /(\\x22(?:\\\\u[a-zA-Z0-9]{4}|\\\\[^u]|[^\\\\\\x22])*\\x22\\s*:)|(\\x22(?:\\\\u[a-zA-Z0-9]{4}|\\\\[^u]|[^\\\\\\x22])*\\x22)|\\b(true|false|null)\\b|-?\\d+(?:\\.\\d*)?(?:[eE][+\\-]?\\d+)?/g;\n  return escaped.replace(re, (m) => {\n    let color = '#096dd9';\n    if (/^\\s*\\x22/.test(m)) {\n      color = /:\\s*$/.test(m) ? '#0050b3' : '#237804';\n    } else if (/true|false/.test(m)) {\n      color = '#722ed1';\n    } else if (/null/.test(m)) {\n      color = '#8c8c8c';\n    } else {\n      color = '#d46b08';\n    }\n    return `<span style='color:${color}'>${m}</span>`;\n  });\n};\n\nconst ExpandablePre = ({\n  text,\n  highlight,\n}: {\n  text: string;\n  highlight?: 'json';\n}) => {\n  const [expanded, setExpanded] = useState(false);\n  const tooLong = text.length > 1000;\n  const shown = !tooLong || expanded ? text : `${text.slice(0, 1000)}...`;\n  return (\n    <Space direction=\"vertical\" size={8} style={{ width: '100%' }}>\n      <Typography.Paragraph copyable={{ text }} style={{ marginBottom: 0 }}>\n        {highlight === 'json' ? (\n          <pre\n            style={{\n              margin: 0,\n              padding: 12,\n              background: '#fafafa',\n              border: '1px solid #f0f0f0',\n              borderRadius: 6,\n              whiteSpace: 'pre-wrap',\n              wordBreak: 'break-word',\n              fontFamily:\n                \"ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace\",\n            }}\n            dangerouslySetInnerHTML={{ __html: highlightJson(shown) }}\n          />\n        ) : (\n          <pre\n            style={{\n              margin: 0,\n              padding: 12,\n              background: '#fafafa',\n              border: '1px solid #f0f0f0',\n              borderRadius: 6,\n              whiteSpace: 'pre-wrap',\n              wordBreak: 'break-word',\n            }}\n          >\n            {shown}\n          </pre>\n        )}\n      </Typography.Paragraph>\n      {tooLong && (\n        <Button type=\"link\" style={{ padding: 0 }} onClick={() => setExpanded((v) => !v)}>\n          {expanded ? '收起' : '展开'}\n        </Button>\n      )}\n    </Space>\n  );\n};\n\nconst HighlightedText = ({ text, keyword }: { text: string; keyword: string }) => {\n  const k = keyword.trim();\n  if (!k) {\n    return <>{text}</>;\n  }\n  const lower = text.toLowerCase();\n  const lk = k.toLowerCase();\n  const parts: Array<{ t: string; hit: boolean }> = [];\n  let i = 0;\n  while (true) {\n    const idx = lower.indexOf(lk, i);\n    if (idx < 0) {\n      parts.push({ t: text.slice(i), hit: false });\n      break;\n    }\n    parts.push({ t: text.slice(i, idx), hit: false });\n    parts.push({ t: text.slice(idx, idx + k.length), hit: true });\n    i = idx + k.length;\n  }\n  return (\n    <>\n      {parts\n        .filter((p) => p.t)\n        .map((p, idx) =>\n          p.hit ? (\n            <mark key={idx} style={{ background: '#ffe58f', padding: 0 }}>\n              {p.t}\n            </mark>\n          ) : (\n            <span key={idx}>{p.t}</span>\n          ),\n        )}\n    </>\n  );\n};\n\nconst AiLogDetail = () => {\n  const { message } = App.useApp();\n  const params = useParams<{ requestHash: string }>();\n  const requestHash = String(params.requestHash || '').trim();\n\n  const [loading, setLoading] = useState(false);\n  const [data, setData] = useState<API.MonitoringLogDetailData | null>(null);\n  const [rawSearch, setRawSearch] = useState('');\n\n  const formatDuration = (value: any) => {\n    const ms = Number(value);\n    if (!Number.isFinite(ms)) return '-';\n    if (ms < 1000) return `${Math.round(ms)} ms`;\n    return `${(ms / 1000).toFixed(2)} s`;\n  };\n\n  const statusTag = (status?: string | null) => {\n    const v = String(status || '');\n    if (!v) return <Tag>-</Tag>;\n    const color = v === 'success' ? 'green' : v === 'timeout' ? 'orange' : 'red';\n    return <Tag color={color}>{v}</Tag>;\n  };\n\n  const buildErrorAdvice = (meta: API.MonitoringLogDetailMeta | null) => {\n    const status = String(meta?.status || '').toLowerCase();\n    const err = String(meta?.errorMessage || '').toLowerCase();\n\n    if (!status || status === 'success') return null;\n\n    if (status === 'timeout') {\n      return {\n        title: '调用超时',\n        tips: ['检查模型服务是否可用/响应慢', '适当增大 timeout', '减少输入文本长度或拆分请求'],\n      };\n    }\n\n    if (err.includes('json') || err.includes('parse') || err.includes('解析')) {\n      return {\n        title: '响应解析失败',\n        tips: ['检查提示词是否要求严格 JSON 输出', '尝试在提示词中增加 JSON schema/示例', '查看“原始响应”确认模型实际输出'],\n      };\n    }\n\n    if (err.includes('econn') || err.includes('enotfound') || err.includes('etimedout') || err.includes('network') || err.includes('连接')) {\n      return {\n        title: '网络/连接异常',\n        tips: ['检查 API Host/网络连通性', '确认代理或防火墙设置', '重试或切换模型提供商'],\n      };\n    }\n\n    return {\n      title: '调用失败',\n      tips: ['查看错误信息与“原始响应”', '确认提示词与输入参数是否合理', '必要时重试'],\n    };\n  };\n\n  useEffect(() => {\n    if (!requestHash) return;\n    setLoading(true);\n    getMonitoringLogDetail(requestHash)\n      .then((res) => {\n        if (!res?.success) {\n          message.error(res?.error || '加载详情失败');\n          setData(null);\n          return;\n        }\n        setData(res.data);\n      })\n      .catch(() => {\n        message.error('加载详情失败');\n        setData(null);\n      })\n      .finally(() => setLoading(false));\n  }, [message, requestHash]);\n\n  const meta = data?.meta || null;\n  const indexAny: any = data?.index || null;\n\n  const statusDisplay = (meta?.status || indexAny?.status) ?? null;\n  const durationMsDisplay =\n    (typeof meta?.durationMs === 'number' ? meta.durationMs : undefined) ??\n    (Number.isFinite(Number(indexAny?.duration_ms)) ? Number(indexAny?.duration_ms) : null);\n  const stepDisplay = (meta?.step || indexAny?.step) ?? null;\n  const routeDisplay = (meta?.route || indexAny?.route) ?? null;\n  const createdAtDisplay = (meta?.createdAt || indexAny?.timestamp) ?? null;\n\n  const modelDisplay = (() => {\n    if (meta?.modelUsed) return String(meta.modelUsed);\n    const provider = indexAny?.model_provider ? String(indexAny.model_provider) : '';\n    const name = indexAny?.model_name ? String(indexAny.model_name) : '';\n    const joined = [provider, name].filter(Boolean).join('/');\n    return joined || null;\n  })();\n\n  const promptIdDisplay = (() => {\n    if (meta?.promptId) return String(meta.promptId);\n    if (indexAny?.prompt_template_id) return String(indexAny.prompt_template_id);\n    if (indexAny?.prompt_id) return String(indexAny.prompt_id);\n    return null;\n  })();\n\n  const timeoutMsDisplay = (() => {\n    const candidates = [\n      indexAny?.service_timeout_ms,\n      indexAny?.provider_timeout_ms,\n      indexAny?.timeout_ms,\n    ];\n    const v = candidates.map((x) => Number(x)).find((x) => Number.isFinite(x));\n    return typeof v === 'number' ? String(Math.round(v)) : null;\n  })();\n\n  const errorMessageDisplay = useMemo(() => {\n    if (meta?.errorMessage) return String(meta.errorMessage);\n    if (typeof data?.notes !== 'string') return null;\n    const firstLine = data.notes.split('\\n').find((s) => String(s || '').trim());\n    return firstLine ? String(firstLine) : null;\n  }, [data?.notes, meta?.errorMessage]);\n\n  const errorAdvice = useMemo(() => {\n    const merged: any = {\n      ...(meta || {}),\n      status: statusDisplay,\n      errorMessage: meta?.errorMessage || errorMessageDisplay,\n    };\n    return buildErrorAdvice(merged);\n  }, [errorMessageDisplay, meta, meta?.errorMessage, statusDisplay]);\n\n  const stringifyPretty = (value: any) => {\n    if (value === null || typeof value === 'undefined') return null;\n    try {\n      return JSON.stringify(value, null, 2);\n    } catch (_e) {\n      return String(value);\n    }\n  };\n\n  return (\n    <PageContainer\n      header={{ title: '日志详情', subTitle: params.requestHash || '' }}\n    >\n      <Space direction=\"vertical\" size={16} style={{ width: '100%' }}>\n        {!requestHash && (\n          <Alert type=\"error\" showIcon message=\"requestHash 为空\" />\n        )}\n\n        <Card>\n          {loading ? (\n            <div style={{ padding: 24, textAlign: 'center' }}>\n              <Spin />\n            </div>\n          ) : (\n            <Descriptions column={2} size=\"small\" bordered>\n              <Descriptions.Item label=\"时间\">\n                {createdAtDisplay ? String(createdAtDisplay) : '-'}\n              </Descriptions.Item>\n              <Descriptions.Item label=\"状态\">\n                {statusTag(statusDisplay)}\n              </Descriptions.Item>\n              <Descriptions.Item label=\"耗时\">\n                {formatDuration(durationMsDisplay)}\n              </Descriptions.Item>\n              <Descriptions.Item label=\"Timeout(ms)\">\n                {timeoutMsDisplay ? String(timeoutMsDisplay) : '-'}\n              </Descriptions.Item>\n              <Descriptions.Item label=\"Step\">\n                {stepDisplay ? String(stepDisplay) : '-'}\n              </Descriptions.Item>\n              <Descriptions.Item label=\"Route\">\n                {routeDisplay ? String(routeDisplay) : '-'}\n              </Descriptions.Item>\n              <Descriptions.Item label=\"模型\">\n                {modelDisplay ? String(modelDisplay) : '-'}\n              </Descriptions.Item>\n              <Descriptions.Item label=\"Prompt\">\n                {promptIdDisplay ? (\n                  <Link to={`/model-config/prompts/${promptIdDisplay}/edit`}>\n                    {String(promptIdDisplay)}\n                  </Link>\n                ) : (\n                  '-'\n                )}\n              </Descriptions.Item>\n              <Descriptions.Item label=\"Hash\">\n                <Typography.Text\n                  code\n                  copyable={{ text: requestHash }}\n                >\n                  {requestHash}\n                </Typography.Text>\n              </Descriptions.Item>\n              <Descriptions.Item label=\"日志路径\" span={2}>\n                {meta?.logDir ? (\n                  <Typography.Text copyable={{ text: String(meta.logDir) }}>\n                    {String(meta.logDir)}\n                  </Typography.Text>\n                ) : (\n                  '-'\n                )}\n              </Descriptions.Item>\n            </Descriptions>\n          )}\n        </Card>\n\n        {errorAdvice && (\n          <Alert\n            type=\"warning\"\n            showIcon\n            message={errorAdvice.title}\n            description={\n              <Space direction=\"vertical\" size={8} style={{ width: '100%' }}>\n                {errorMessageDisplay && (\n                  <Typography.Text>\n                    {String(errorMessageDisplay)}\n                  </Typography.Text>\n                )}\n                <div>\n                  {errorAdvice.tips.map((t) => (\n                    <div key={t}>{t}</div>\n                  ))}\n                </div>\n              </Space>\n            }\n          />\n        )}\n\n        <Card>\n          <Tabs\n            items={[\n              {\n                key: 'index',\n                label: 'Index',\n                children: data?.index ? (\n                  <ExpandablePre text={stringifyPretty(data.index) || ''} highlight=\"json\" />\n                ) : (\n                  <Empty description=\"暂无内容\" />\n                ),\n              },\n              {\n                key: 'request',\n                label: 'Request',\n                children: data?.request ? (\n                  <ExpandablePre text={stringifyPretty(data.request) || ''} highlight=\"json\" />\n                ) : (\n                  <Empty description=\"暂无内容\" />\n                ),\n              },\n              {\n                key: 'parsed',\n                label: 'Response Parsed',\n                children: data?.responseParsed ? (\n                  <ExpandablePre\n                    text={stringifyPretty(data.responseParsed) || ''}\n                    highlight=\"json\"\n                  />\n                ) : (\n                  <Empty description=\"暂无内容\" />\n                ),\n              },\n              {\n                key: 'raw',\n                label: 'Response Raw',\n                children: (\n                  <Space direction=\"vertical\" size={12} style={{ width: '100%' }}>\n                    <Input\n                      value={rawSearch}\n                      onChange={(e) => setRawSearch(e.target.value)}\n                      placeholder=\"搜索原始响应\"\n                      allowClear\n                    />\n                    {data?.responseRaw ? (\n                      <Typography.Paragraph\n                        copyable={{ text: String(data.responseRaw) }}\n                        style={{ marginBottom: 0 }}\n                      >\n                        <pre\n                          style={{\n                            margin: 0,\n                            padding: 12,\n                            background: '#fafafa',\n                            border: '1px solid #f0f0f0',\n                            borderRadius: 6,\n                            whiteSpace: 'pre-wrap',\n                            wordBreak: 'break-word',\n                          }}\n                        >\n                          <HighlightedText\n                            text={String(data.responseRaw)}\n                            keyword={rawSearch}\n                          />\n                        </pre>\n                      </Typography.Paragraph>\n                    ) : (\n                      <Empty description=\"暂无内容\" />\n                    )}\n                  </Space>\n                ),\n              },\n              {\n                key: 'notes',\n                label: 'Notes',\n                children: data?.notes ? (\n                  <ExpandablePre text={String(data.notes)} />\n                ) : (\n                  <Empty description=\"暂无内容\" />\n                ),\n              },\n            ]}\n          />\n        </Card>\n      </Space>\n    </PageContainer>\n  );\n};\n\nexport default AiLogDetail;\n",
+      "__isJSFile": true,
+      "__absFile": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/src/pages/Monitoring/AiLogDetail.tsx"
     },
     "ant-design-pro-layout": {
       "id": "ant-design-pro-layout",

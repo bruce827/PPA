@@ -28,6 +28,7 @@ describe('Dashboard API - Integration Tests', () => {
         final_workload_days REAL,
         assessment_details_json TEXT,
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
         is_template INTEGER DEFAULT 0
       )
     `);
@@ -216,7 +217,7 @@ describe('Dashboard API - Integration Tests', () => {
 
     for (const project of testProjects) {
       await db.run(
-        'INSERT INTO projects (name, description, project_type, final_total_cost, final_risk_score, final_workload_days, assessment_details_json, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+        'INSERT INTO projects (name, description, project_type, final_total_cost, final_risk_score, final_workload_days, assessment_details_json, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
         [
           project.name,
           project.description,
@@ -225,6 +226,7 @@ describe('Dashboard API - Integration Tests', () => {
           project.final_risk_score,
           project.final_workload_days,
           project.assessment_details_json,
+          project.created_at,
           project.created_at,
         ]
       );

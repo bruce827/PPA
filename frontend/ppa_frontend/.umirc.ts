@@ -95,12 +95,30 @@ export default defineConfig({
         },
       ],
     },
+    {
+      name: '系统监控',
+      path: '/monitoring',
+      routes: [
+        {
+          name: 'AI日志监控',
+          path: 'ai-logs',
+          component: './Monitoring/AiLogs',
+        },
+        {
+          name: '日志详情',
+          path: 'ai-logs/:requestHash',
+          component: './Monitoring/AiLogDetail',
+          hideInMenu: true,
+        },
+      ],
+    },
   ],
   npmClient: 'yarn',
   proxy: {
     '/api': {
       target: 'http://localhost:3001',
       changeOrigin: true,
+      ws: true,
     },
   },
   // 禁用严格模式和 MFSU 以避免 findDOMNode 警告

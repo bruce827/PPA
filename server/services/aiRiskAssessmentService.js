@@ -249,7 +249,17 @@ function ensureRiskScores(parsed) {
   };
 }
 
-async function logAssessment({ promptId, modelUsed, requestHash, durationMs, status, errorMessage }) {
+async function logAssessment({
+  promptId,
+  modelUsed,
+  requestHash,
+  durationMs,
+  status,
+  errorMessage,
+  step,
+  route,
+  projectId,
+}) {
   try {
     await aiAssessmentLogModel.insertLog({
       promptId,
@@ -258,6 +268,9 @@ async function logAssessment({ promptId, modelUsed, requestHash, durationMs, sta
       durationMs,
       status,
       errorMessage,
+      step,
+      route,
+      projectId,
     });
   } catch (error) {
     logger.warn('写入 ai_assessment_logs 失败', { error: error.message });
@@ -456,11 +469,13 @@ async function assessRisk(payload) {
       requestHash,
       durationMs,
       status,
+      step: 'risk',
+      route: '/api/ai/assess-risk',
     });
 
     // 文件日志（成功）
     try {
-      await aiFileLogger.save({
+      const logDir = await aiFileLogger.save({
         step: 'risk',
         route: '/api/ai/assess-risk',
         requestHash,
@@ -490,6 +505,15 @@ async function assessRisk(payload) {
           `[counts] risk_scores=${Array.isArray(parsed.risk_scores) ? parsed.risk_scores.length : 0}`,
         ],
       });
+
+      try {
+        await aiAssessmentLogModel.updateLogDir({
+          requestHash,
+          step: 'risk',
+          route: '/api/ai/assess-risk',
+          logDir,
+        });
+      } catch (e) {}
     } catch (e) {}
 
     return {
@@ -518,11 +542,13 @@ async function assessRisk(payload) {
       durationMs,
       status,
       errorMessage,
+      step: 'risk',
+      route: '/api/ai/assess-risk',
     });
 
     // 文件日志（失败）
     try {
-      await aiFileLogger.save({
+      const logDir = await aiFileLogger.save({
         step: 'risk',
         route: '/api/ai/assess-risk',
         requestHash,
@@ -547,6 +573,15 @@ async function assessRisk(payload) {
           `[error] ${error.message}`,
         ],
       });
+
+      try {
+        await aiAssessmentLogModel.updateLogDir({
+          requestHash,
+          step: 'risk',
+          route: '/api/ai/assess-risk',
+          logDir,
+        });
+      } catch (e) {}
     } catch (e) {}
 
     if (error.statusCode) {
@@ -678,11 +713,13 @@ async function normalizeRiskNames(payload) {
       requestHash,
       durationMs,
       status: 'success',
+      step: 'risk-normalize',
+      route: '/api/ai/normalize-risk-names',
     });
 
     // 文件日志（成功）
     try {
-      await aiFileLogger.save({
+      const logDir = await aiFileLogger.save({
         step: 'risk-normalize',
         route: '/api/ai/normalize-risk-names',
         requestHash,
@@ -710,6 +747,15 @@ async function normalizeRiskNames(payload) {
           `[counts] normalized_risk_scores=${Array.isArray(parsed.risk_scores) ? parsed.risk_scores.length : 0}`,
         ],
       });
+
+      try {
+        await aiAssessmentLogModel.updateLogDir({
+          requestHash,
+          step: 'risk-normalize',
+          route: '/api/ai/normalize-risk-names',
+          logDir,
+        });
+      } catch (e) {}
     } catch (e) {}
 
     return {
@@ -727,10 +773,12 @@ async function normalizeRiskNames(payload) {
       durationMs: 0,
       status: error.statusCode === 504 ? 'timeout' : 'fail',
       errorMessage: error.message,
+      step: 'risk-normalize',
+      route: '/api/ai/normalize-risk-names',
     });
     // 文件日志（失败）
     try {
-      await aiFileLogger.save({
+      const logDir = await aiFileLogger.save({
         step: 'risk-normalize',
         route: '/api/ai/normalize-risk-names',
         requestHash,
@@ -753,6 +801,15 @@ async function normalizeRiskNames(payload) {
           `[error] ${error.message}`,
         ],
       });
+
+      try {
+        await aiAssessmentLogModel.updateLogDir({
+          requestHash,
+          step: 'risk-normalize',
+          route: '/api/ai/normalize-risk-names',
+          logDir,
+        });
+      } catch (e) {}
     } catch (e) {}
     if (error.statusCode) throw error;
     throw internalError(error.message || 'AI 名称归一失败');
