@@ -32,14 +32,14 @@ export default defineConfig({
           component: './Assessment/New',
         },
         {
-          name: '业绩库（CSV）',
-          path: 'contracts',
-          component: './Assessment/Contracts',
-        },
-        {
           name: '历史项目',
           path: 'history',
           component: './Assessment/History',
+        },
+        {
+          name: '业绩库(CSV)',
+          path: 'contracts',
+          component: './Assessment/Contracts',
         },
         {
           name: '项目详情',
@@ -48,12 +48,6 @@ export default defineConfig({
           hideInMenu: true,
         },
       ],
-    },
-    {
-      name: '参数配置',
-      path: '/config',
-      component: './Config',
-      icon: 'SettingOutlined',
     },
     {
       name: 'Web3D项目评估',
@@ -70,6 +64,12 @@ export default defineConfig({
       path: '/config/web3d-risk',
       component: './Config/Web3DRisk',
       hideInMenu: true,
+    },
+    {
+      name: '参数配置',
+      path: '/config',
+      component: './Config',
+      icon: 'SettingOutlined',
     },
     {
       name: '模型配置',

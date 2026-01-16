@@ -1,5 +1,13 @@
 [
   {
+    "version": "V1.3.0-beta",
+    "date": "2026-1-16",
+    "changes": [
+      { "type": "feat", "content": "增加业绩库" },
+      { "type": "feat", "content": "增加业绩推荐" }
+    ]
+  },
+  {
     "version": "V1.2.0-beta",
     "date": "2026-1-07",
     "changes": [
