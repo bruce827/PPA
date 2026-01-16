@@ -64,7 +64,14 @@ exports.run = (sql, params = []) => {
         console.error('Error running run query:', err.message);
         reject(err);
       } else {
-        resolve({ id: this.lastID });
+        const lastID = typeof this.lastID === 'number' ? this.lastID : null;
+        const changes = typeof this.changes === 'number' ? this.changes : 0;
+        resolve({
+          // 兼容旧代码：INSERT 返回 lastID；UPDATE/DELETE 返回 changes
+          id: lastID != null ? lastID : changes,
+          lastID,
+          changes,
+        });
       }
     });
   });

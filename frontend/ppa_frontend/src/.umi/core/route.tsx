@@ -4,7 +4,7 @@
 import React from 'react';
 
 export async function getRoutes() {
-  const routes = {"1":{"path":"/","redirect":"/dashboard","parentId":"ant-design-pro-layout","id":"1"},"2":{"name":"数据看板","path":"/dashboard","icon":"DashboardOutlined","parentId":"ant-design-pro-layout","id":"2"},"3":{"name":"项目评估","path":"/assessment","icon":"FormOutlined","parentId":"ant-design-pro-layout","id":"3"},"4":{"name":"新建评估","path":"new","parentId":"3","id":"4"},"5":{"name":"历史项目","path":"history","parentId":"3","id":"5"},"6":{"name":"项目详情","path":"detail/:id","hideInMenu":true,"parentId":"3","id":"6"},"7":{"name":"参数配置","path":"/config","icon":"SettingOutlined","parentId":"ant-design-pro-layout","id":"7"},"8":{"name":"Web3D项目评估","path":"/web3d","icon":"BoxPlotOutlined","parentId":"ant-design-pro-layout","id":"8"},"9":{"name":"新建评估","path":"new","parentId":"8","id":"9"},"10":{"name":"历史项目","path":"history","parentId":"8","id":"10"},"11":{"name":"项目详情","path":"detail/:id","hideInMenu":true,"parentId":"8","id":"11"},"12":{"name":"Web3D风险配置","path":"/config/web3d-risk","hideInMenu":true,"parentId":"ant-design-pro-layout","id":"12"},"13":{"name":"模型配置","path":"/model-config","icon":"RobotOutlined","parentId":"ant-design-pro-layout","id":"13"},"14":{"name":"模型应用管理","path":"application","parentId":"13","id":"14"},"15":{"name":"提示词模板管理","path":"prompts","parentId":"13","id":"15"},"16":{"name":"新建提示词模板","path":"prompts/create","hideInMenu":true,"parentId":"13","id":"16"},"17":{"name":"编辑提示词模板","path":"prompts/:id/edit","hideInMenu":true,"parentId":"13","id":"17"},"18":{"name":"系统监控","path":"/monitoring","parentId":"ant-design-pro-layout","id":"18"},"19":{"name":"AI日志监控","path":"ai-logs","parentId":"18","id":"19"},"20":{"name":"日志详情","path":"ai-logs/:requestHash","hideInMenu":true,"parentId":"18","id":"20"},"ant-design-pro-layout":{"id":"ant-design-pro-layout","path":"/","isLayout":true}} as const;
+  const routes = {"1":{"path":"/","redirect":"/dashboard","parentId":"ant-design-pro-layout","id":"1"},"2":{"name":"数据看板","path":"/dashboard","icon":"DashboardOutlined","parentId":"ant-design-pro-layout","id":"2"},"3":{"name":"项目评估","path":"/assessment","icon":"FormOutlined","parentId":"ant-design-pro-layout","id":"3"},"4":{"name":"新建评估","path":"new","parentId":"3","id":"4"},"5":{"name":"业绩库（CSV）","path":"contracts","parentId":"3","id":"5"},"6":{"name":"历史项目","path":"history","parentId":"3","id":"6"},"7":{"name":"项目详情","path":"detail/:id","hideInMenu":true,"parentId":"3","id":"7"},"8":{"name":"参数配置","path":"/config","icon":"SettingOutlined","parentId":"ant-design-pro-layout","id":"8"},"9":{"name":"Web3D项目评估","path":"/web3d","icon":"BoxPlotOutlined","parentId":"ant-design-pro-layout","id":"9"},"10":{"name":"新建评估","path":"new","parentId":"9","id":"10"},"11":{"name":"历史项目","path":"history","parentId":"9","id":"11"},"12":{"name":"项目详情","path":"detail/:id","hideInMenu":true,"parentId":"9","id":"12"},"13":{"name":"Web3D风险配置","path":"/config/web3d-risk","hideInMenu":true,"parentId":"ant-design-pro-layout","id":"13"},"14":{"name":"模型配置","path":"/model-config","icon":"RobotOutlined","parentId":"ant-design-pro-layout","id":"14"},"15":{"name":"模型应用管理","path":"application","parentId":"14","id":"15"},"16":{"name":"提示词模板管理","path":"prompts","parentId":"14","id":"16"},"17":{"name":"新建提示词模板","path":"prompts/create","hideInMenu":true,"parentId":"14","id":"17"},"18":{"name":"编辑提示词模板","path":"prompts/:id/edit","hideInMenu":true,"parentId":"14","id":"18"},"19":{"name":"系统监控","path":"/monitoring","parentId":"ant-design-pro-layout","id":"19"},"20":{"name":"AI日志监控","path":"ai-logs","parentId":"19","id":"20"},"21":{"name":"日志详情","path":"ai-logs/:requestHash","hideInMenu":true,"parentId":"19","id":"21"},"ant-design-pro-layout":{"id":"ant-design-pro-layout","path":"/","isLayout":true}} as const;
   return {
     routes,
     routeComponents: {
@@ -12,22 +12,23 @@ export async function getRoutes() {
 '2': React.lazy(() => import(/* webpackChunkName: "p__Dashboard__index" */'@/pages/Dashboard/index.tsx')),
 '3': React.lazy(() => import('./EmptyRoute')),
 '4': React.lazy(() => import(/* webpackChunkName: "p__Assessment__New" */'@/pages/Assessment/New.tsx')),
-'5': React.lazy(() => import(/* webpackChunkName: "p__Assessment__History" */'@/pages/Assessment/History.tsx')),
-'6': React.lazy(() => import(/* webpackChunkName: "p__Assessment__Detail" */'@/pages/Assessment/Detail.tsx')),
-'7': React.lazy(() => import(/* webpackChunkName: "p__Config" */'@/pages/Config.tsx')),
-'8': React.lazy(() => import('./EmptyRoute')),
-'9': React.lazy(() => import(/* webpackChunkName: "p__Web3D__New" */'@/pages/Web3D/New.tsx')),
-'10': React.lazy(() => import(/* webpackChunkName: "p__Web3D__History" */'@/pages/Web3D/History.tsx')),
-'11': React.lazy(() => import(/* webpackChunkName: "p__Web3D__Detail" */'@/pages/Web3D/Detail.tsx')),
-'12': React.lazy(() => import(/* webpackChunkName: "p__Config__Web3DRisk" */'@/pages/Config/Web3DRisk.tsx')),
-'13': React.lazy(() => import('./EmptyRoute')),
-'14': React.lazy(() => import(/* webpackChunkName: "p__ModelConfig__Application__index" */'@/pages/ModelConfig/Application/index.tsx')),
-'15': React.lazy(() => import(/* webpackChunkName: "p__ModelConfig__Prompts__index" */'@/pages/ModelConfig/Prompts/index.tsx')),
-'16': React.lazy(() => import(/* webpackChunkName: "p__ModelConfig__Prompts__Form" */'@/pages/ModelConfig/Prompts/Form.tsx')),
+'5': React.lazy(() => import(/* webpackChunkName: "p__Assessment__Contracts" */'@/pages/Assessment/Contracts.tsx')),
+'6': React.lazy(() => import(/* webpackChunkName: "p__Assessment__History" */'@/pages/Assessment/History.tsx')),
+'7': React.lazy(() => import(/* webpackChunkName: "p__Assessment__Detail" */'@/pages/Assessment/Detail.tsx')),
+'8': React.lazy(() => import(/* webpackChunkName: "p__Config" */'@/pages/Config.tsx')),
+'9': React.lazy(() => import('./EmptyRoute')),
+'10': React.lazy(() => import(/* webpackChunkName: "p__Web3D__New" */'@/pages/Web3D/New.tsx')),
+'11': React.lazy(() => import(/* webpackChunkName: "p__Web3D__History" */'@/pages/Web3D/History.tsx')),
+'12': React.lazy(() => import(/* webpackChunkName: "p__Web3D__Detail" */'@/pages/Web3D/Detail.tsx')),
+'13': React.lazy(() => import(/* webpackChunkName: "p__Config__Web3DRisk" */'@/pages/Config/Web3DRisk.tsx')),
+'14': React.lazy(() => import('./EmptyRoute')),
+'15': React.lazy(() => import(/* webpackChunkName: "p__ModelConfig__Application__index" */'@/pages/ModelConfig/Application/index.tsx')),
+'16': React.lazy(() => import(/* webpackChunkName: "p__ModelConfig__Prompts__index" */'@/pages/ModelConfig/Prompts/index.tsx')),
 '17': React.lazy(() => import(/* webpackChunkName: "p__ModelConfig__Prompts__Form" */'@/pages/ModelConfig/Prompts/Form.tsx')),
-'18': React.lazy(() => import('./EmptyRoute')),
-'19': React.lazy(() => import(/* webpackChunkName: "p__Monitoring__AiLogs" */'@/pages/Monitoring/AiLogs.tsx')),
-'20': React.lazy(() => import(/* webpackChunkName: "p__Monitoring__AiLogDetail" */'@/pages/Monitoring/AiLogDetail.tsx')),
+'18': React.lazy(() => import(/* webpackChunkName: "p__ModelConfig__Prompts__Form" */'@/pages/ModelConfig/Prompts/Form.tsx')),
+'19': React.lazy(() => import('./EmptyRoute')),
+'20': React.lazy(() => import(/* webpackChunkName: "p__Monitoring__AiLogs" */'@/pages/Monitoring/AiLogs.tsx')),
+'21': React.lazy(() => import(/* webpackChunkName: "p__Monitoring__AiLogDetail" */'@/pages/Monitoring/AiLogDetail.tsx')),
 'ant-design-pro-layout': React.lazy(() => import(/* webpackChunkName: "umi__plugin-layout__Layout" */'/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/src/.umi/plugin-layout/Layout.tsx')),
 },
   };

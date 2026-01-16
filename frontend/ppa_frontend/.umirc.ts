@@ -32,6 +32,11 @@ export default defineConfig({
           component: './Assessment/New',
         },
         {
+          name: '业绩库（CSV）',
+          path: 'contracts',
+          component: './Assessment/Contracts',
+        },
+        {
           name: '历史项目',
           path: 'history',
           component: './Assessment/History',

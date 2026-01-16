@@ -9,6 +9,7 @@ const dashboardRoutes = require('./dashboard');
 const aiRoutes = require('./ai');
 const web3dRoutes = require('./web3d');
 const monitoringRoutes = require('./monitoring');
+const contractsRoutes = require('./contracts');
 
 // 挂载各模块路由
 router.use('/api', healthRoutes);
@@ -20,5 +21,6 @@ router.use('/api/dashboard', dashboardRoutes);
 router.use('/api/ai', aiRoutes);
 router.use('/api/web3d', web3dRoutes);
 router.use('/api/monitoring', monitoringRoutes);
+router.use('/api/contracts', contractsRoutes);
 
 module.exports = router;

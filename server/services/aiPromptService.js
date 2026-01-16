@@ -87,6 +87,9 @@ async function getPromptsByCategory(category) {
   if (category === 'workload_evaluation') {
     categories = ['workload_evaluation', 'cost_estimation', '成本估算', '工作量评估'];
   }
+  if (category === 'project_tagging') {
+    categories = ['project_tagging', 'project_tags', '项目标签', '标签生成'];
+  }
 
   // 仅拉取分类下的活跃模板（支持多分类 IN 查询）
   const templatesResult = await promptTemplateModel.getAll({

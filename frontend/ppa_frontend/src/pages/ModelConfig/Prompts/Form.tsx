@@ -390,6 +390,7 @@ const PromptTemplateForm: React.FC = () => {
               <Select.Option value="risk_analysis">风险分析</Select.Option>
               <Select.Option value="cost_estimation">成本估算</Select.Option>
               <Select.Option value="module_analysis">模块梳理</Select.Option>
+              <Select.Option value="project_tagging">标签生成</Select.Option>
               <Select.Option value="report_generation">报告生成</Select.Option>
               <Select.Option value="custom">自定义</Select.Option>
             </Select>

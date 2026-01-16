@@ -13,6 +13,7 @@ const CREATE_TABLES_SQL = `
       final_risk_score INTEGER,
       final_workload_days REAL,
       assessment_details_json TEXT,
+      tags_json TEXT,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
   );

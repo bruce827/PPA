@@ -16,7 +16,10 @@ export interface PromptTemplate {
   category:
     | 'risk_analysis'
     | 'cost_estimation'
+    | 'module_analysis'
+    | 'project_tagging'
     | 'report_generation'
+    | '标签生成'
     | 'custom';
   description?: string;
   system_prompt: string;

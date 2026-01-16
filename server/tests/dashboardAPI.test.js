@@ -252,6 +252,7 @@ describe('Dashboard API - Integration Tests', () => {
       expect(response.body.data).toHaveProperty('recent_30d');
       expect(response.body.data).toHaveProperty('saas_count');
       expect(response.body.data).toHaveProperty('web3d_count');
+      expect(response.body.data).toHaveProperty('contracts_count');
       expect(response.body.data).toHaveProperty('knowledge_assets');
       expect(response.body.data).toHaveProperty('ai_models');
     });

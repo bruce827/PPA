@@ -1,6 +1,7 @@
 const dashboardModel = require('../models/dashboardModel');
 const configModel = require('../models/configModel');
 const logger = require('../utils/logger');
+const contractsService = require('./contractsService');
 const fs = require('fs');
 const path = require('path');
 
@@ -380,10 +381,21 @@ exports.getOverview = async () => {
     });
   }
 
+  let contractsCount = 0;
+  try {
+    contractsCount = await contractsService.getContractsTotalRowCount();
+  } catch (error) {
+    logger.warn('Failed to count contracts rows for dashboard overview', {
+      error: error?.message,
+    });
+    contractsCount = 0;
+  }
+
   return {
     recent_30d: recentRow?.count || 0,
     saas_count: standardRow?.count || 0,
     web3d_count: web3dRow?.count || 0,
+    contracts_count: contractsCount || 0,
     knowledge_assets: {
       risk_count: configCounts?.risk_count || 0,
       role_count: configCounts?.role_count || 0,

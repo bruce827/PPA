@@ -2,6 +2,31 @@ const projectModel = require('../models/projectModel');
 const calculationService = require('./calculationService');
 const { HttpError } = require('../utils/errors');
 
+const normalizeTags = (raw) => {
+  if (!Array.isArray(raw)) {
+    throw new HttpError(400, 'tags 必须是数组', 'ValidationError');
+  }
+
+  const normalized = raw
+    .map((t) => String(t == null ? '' : t).trim())
+    .filter(Boolean);
+
+  const unique = Array.from(new Set(normalized));
+  const sliced = unique.slice(0, 30).map((t) => (t.length > 30 ? t.slice(0, 30) : t));
+  return sliced;
+};
+
+const safeParseJsonObject = (raw) => {
+  if (!raw || typeof raw !== 'string') return {};
+  try {
+    const parsed = JSON.parse(raw);
+    if (parsed && typeof parsed === 'object' && !Array.isArray(parsed)) return parsed;
+    return {};
+  } catch (_e) {
+    return {};
+  }
+};
+
 const normalizeAssessmentData = (assessmentData) => {
   if (!assessmentData || typeof assessmentData !== 'object') {
     throw new HttpError(400, 'assessmentData 必须是对象', 'ValidationError');
@@ -30,7 +55,7 @@ const normalizeAssessmentData = (assessmentData) => {
  * 创建项目（包含完整计算）
  */
 const createProject = async (projectData) => {
-  const { name, description, is_template, assessmentData } = projectData;
+  const { name, description, is_template, assessmentData, tags } = projectData;
 
   // 若当前保存为模板，先清除其他项目上的模板标记，确保全局唯一
   if (is_template) {
@@ -38,6 +63,11 @@ const createProject = async (projectData) => {
   }
 
   const normalizedAssessment = normalizeAssessmentData(assessmentData);
+
+  if (typeof tags !== 'undefined') {
+    const normalizedTags = normalizeTags(tags);
+    normalizedAssessment.tags = normalizedTags;
+  }
 
   // 执行完整计算
   const calculation = await calculationService.calculateProjectCost(normalizedAssessment);
@@ -50,7 +80,11 @@ const createProject = async (projectData) => {
     final_total_cost: calculation.total_cost,
     final_risk_score: calculation.risk_score,
     final_workload_days: calculation.total_workload_days,
-    assessment_details_json: JSON.stringify(normalizedAssessment)
+    assessment_details_json: JSON.stringify(normalizedAssessment),
+    tags_json:
+      typeof tags === 'undefined'
+        ? undefined
+        : JSON.stringify(normalizedAssessment.tags || normalizeTags(tags)),
   };
 
   // 保存到数据库
@@ -61,14 +95,43 @@ const createProject = async (projectData) => {
  * 更新项目（包含完整计算）
  */
 const updateProject = async (id, projectData) => {
-  const { name, description, is_template, assessmentData } = projectData;
+  const { name, description, is_template, assessmentData, tags } = projectData;
 
   // 若当前更新为模板，先清除其他项目上的模板标记，确保全局唯一
   if (is_template) {
     await projectModel.clearAllTemplateFlags();
   }
 
+  // 轻量更新：仅更新 tags（不触发重新计算），用于历史详情页标签编辑
+  if (typeof assessmentData === 'undefined' && typeof tags !== 'undefined') {
+    const project = await projectModel.getProjectById(id);
+    if (!project) {
+      const error = new Error('Project not found');
+      error.statusCode = 404;
+      throw error;
+    }
+
+    const normalizedTags = normalizeTags(tags);
+    const details = safeParseJsonObject(project.assessment_details_json);
+    details.tags = normalizedTags;
+
+    const updateFields = {
+      tags_json: JSON.stringify(normalizedTags),
+      assessment_details_json: JSON.stringify(details),
+    };
+    if (typeof is_template !== 'undefined') {
+      updateFields.is_template = is_template || 0;
+    }
+
+    return await projectModel.updateProjectFields(id, updateFields);
+  }
+
   const normalizedAssessment = normalizeAssessmentData(assessmentData);
+
+  if (typeof tags !== 'undefined') {
+    const normalizedTags = normalizeTags(tags);
+    normalizedAssessment.tags = normalizedTags;
+  }
 
   // 执行完整计算
   const calculation = await calculationService.calculateProjectCost(normalizedAssessment);
@@ -81,7 +144,11 @@ const updateProject = async (id, projectData) => {
     final_total_cost: calculation.total_cost,
     final_risk_score: calculation.risk_score,
     final_workload_days: calculation.total_workload_days,
-    assessment_details_json: JSON.stringify(normalizedAssessment)
+    assessment_details_json: JSON.stringify(normalizedAssessment),
+    tags_json:
+      typeof tags === 'undefined'
+        ? undefined
+        : JSON.stringify(normalizeTags(tags)),
   };
 
   // 更新数据库

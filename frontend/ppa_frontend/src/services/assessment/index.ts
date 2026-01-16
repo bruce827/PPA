@@ -130,6 +130,17 @@ export interface AiAssessRiskPayload {
   currentScores?: Record<string, number>;
 }
 
+export interface AiGenerateProjectTagsPayload {
+  promptId: string;
+  projectId?: number;
+  projectSnapshot: any;
+  variables?: Record<string, string>;
+}
+
+export interface AiGenerateProjectTagsResponseData {
+  tags: string[];
+}
+
 interface AiServiceResponse<T> {
   success: boolean;
   data?: T;
@@ -196,6 +207,30 @@ export async function getAiPrompts(options?: { [key: string]: any }) {
     method: 'GET',
     ...(options || {}),
   });
+}
+
+export async function getProjectTagPrompts(options?: { [key: string]: any }) {
+  return request<AiServiceResponse<AiPrompt[]>>('/api/ai/project-tag-prompts', {
+    method: 'GET',
+    ...(options || {}),
+  });
+}
+
+export async function generateProjectTagsWithAI(
+  data: AiGenerateProjectTagsPayload,
+  options?: { [key: string]: any },
+) {
+  return request<AiServiceResponse<AiGenerateProjectTagsResponseData>>(
+    '/api/ai/generate-project-tags',
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      data,
+      ...(options || {}),
+    },
+  );
 }
 
 /** 提交风险评估请求 POST /api/ai/assess-risk */

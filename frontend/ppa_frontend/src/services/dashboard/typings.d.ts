@@ -50,6 +50,7 @@ declare namespace API {
     recent_30d: number;
     saas_count: number;
     web3d_count: number;
+    contracts_count: number;
     knowledge_assets: {
       risk_count: number;
       role_count: number;

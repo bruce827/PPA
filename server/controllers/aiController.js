@@ -3,6 +3,7 @@ const aiPromptService = require('../services/aiPromptService');
 const aiRiskAssessmentService = require('../services/aiRiskAssessmentService');
 const aiModuleAnalysisService = require('../services/aiModuleAnalysisService');
 const aiWorkloadEvaluationService = require('../services/aiWorkloadEvaluationService');
+const aiProjectTaggingService = require('../services/aiProjectTaggingService');
 const logger = require('../utils/logger');
 const { internalError } = require('../utils/errors');
 
@@ -71,6 +72,65 @@ async function getWorkloadPrompts(req, res, next) {
       error: error.message,
     });
     next(error.statusCode ? error : internalError('获取工作量评估提示词失败'));
+  }
+}
+
+async function getProjectTagPrompts(req, res, next) {
+  const startedAt = Date.now();
+  try {
+    const prompts = await aiPromptService.getPromptsByCategory('project_tagging');
+    const durationMs = Date.now() - startedAt;
+    logger.info('项目标签提示词查询成功', {
+      route: 'GET /api/ai/project-tag-prompts',
+      category: 'project_tagging',
+      count: prompts.length,
+      durationMs,
+    });
+
+    res.json({ success: true, data: prompts });
+  } catch (error) {
+    logger.error('获取 项目标签 提示词失败', {
+      route: 'GET /api/ai/project-tag-prompts',
+      error: error.message,
+    });
+
+    next(error.statusCode ? error : internalError('获取项目标签提示词失败'));
+  }
+}
+
+async function generateProjectTags(req, res, next) {
+  const startedAt = Date.now();
+  const { promptId, projectId } = req.body || {};
+  try {
+    const result = await aiProjectTaggingService.generateProjectTags(req.body || {});
+    const durationMs = Date.now() - startedAt;
+
+    logger.info('AI 项目标签生成成功', {
+      route: 'POST /api/ai/generate-project-tags',
+      promptId,
+      projectId,
+      durationMs,
+      tagsCount: Array.isArray(result?.tags) ? result.tags.length : 0,
+      model: result?.model_used,
+    });
+
+    res.json({ success: true, data: { tags: result?.tags || [] } });
+  } catch (error) {
+    const durationMs = Date.now() - startedAt;
+    logger.error('AI 项目标签生成失败', {
+      route: 'POST /api/ai/generate-project-tags',
+      promptId,
+      projectId,
+      durationMs,
+      error: error.message,
+      statusCode: error.statusCode || 500,
+    });
+
+    if (error.statusCode) {
+      next(error);
+    } else {
+      next(internalError('AI 项目标签生成失败'));
+    }
   }
 }
 
@@ -230,8 +290,10 @@ module.exports = {
   getPrompts,
   getModulePrompts,
   getWorkloadPrompts,
+  getProjectTagPrompts,
   assessRisk,
   normalizeRiskNames,
   analyzeProjectModules,
   evaluateWorkload,
+  generateProjectTags,
 };
