@@ -4,7 +4,7 @@ When this command is used, execute the following task:
 
 ## Workflow Task
 
-<task id="bmad/core/tasks/workflow.xml" name="Execute Workflow">
+<task id="_bmad/core/tasks/workflow.xml" name="Execute Workflow">
   <objective>Execute given workflow by loading its configuration, following instructions, and producing output</objective>
 
   <llm critical="true">
@@ -80,14 +80,14 @@ When this command is used, execute the following task:
           <action>Display generated content</action>
           <ask> [a] Advanced Elicitation, [c] Continue, [p] Party-Mode, [y] YOLO the rest of this document only. WAIT for response. <if
               response="a">
-              <action>Start the advanced elicitation workflow {project-root}/bmad/core/tasks/advanced-elicitation.xml</action>
+              <action>Start the advanced elicitation workflow {project-root}/_bmad/core/workflows/advanced-elicitation/workflow.xml</action>
             </if>
             <if
               response="c">
               <action>Continue to next step</action>
             </if>
             <if response="p">
-              <action>Start the party-mode workflow {project-root}/bmad/core/workflows/party-mode/workflow.yaml</action>
+              <action>Start the party-mode workflow {project-root}/_bmad/core/workflows/party-mode/workflow.yaml</action>
             </if>
             <if
               response="y">
@@ -231,7 +231,7 @@ When this command is used, execute the following task:
     <critical-rules>
       • This is the complete workflow execution engine
       • You MUST Follow instructions exactly as written
-      • The workflow execution engine is governed by: {project-root}/bmad/core/tasks/workflow.xml
+      • The workflow execution engine is governed by: {project-root}/_bmad/core/tasks/workflow.xml
       • You MUST have already loaded and processed: {installed_path}/workflow.yaml
       • This workflow uses INTENT-DRIVEN PLANNING - adapt organically to product type and context
       • YOU ARE FACILITATING A CONVERSATION With a user to produce a final document step by step. The whole process is meant to be

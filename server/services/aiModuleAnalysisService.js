@@ -331,7 +331,17 @@ function scrapeModulesLooseJson(text) {
   }
 }
 
-async function logAssessment({ promptId, modelUsed, requestHash, durationMs, status, errorMessage }) {
+async function logAssessment({
+  promptId,
+  modelUsed,
+  requestHash,
+  durationMs,
+  status,
+  errorMessage,
+  step,
+  route,
+  projectId,
+}) {
   try {
     await aiAssessmentLogModel.insertLog({
       promptId,
@@ -340,6 +350,9 @@ async function logAssessment({ promptId, modelUsed, requestHash, durationMs, sta
       durationMs,
       status,
       errorMessage,
+      step,
+      route,
+      projectId,
     });
   } catch (error) {
     logger.warn('写入 ai_assessment_logs 失败(模块梳理)', { error: error.message });
@@ -492,6 +505,8 @@ async function analyzeProjectModules(payload) {
       requestHash,
       durationMs,
       status,
+      step: 'modules',
+      route: '/api/ai/analyze-project-modules',
     });
 
     // 记录响应回参（裁剪后的预览）
@@ -510,7 +525,7 @@ async function analyzeProjectModules(payload) {
 
     // 文件日志保存（成功）
     try {
-      await aiFileLogger.save({
+      const logDir = await aiFileLogger.save({
         step: 'modules',
         route: '/api/ai/analyze-project-modules',
         requestHash,
@@ -540,6 +555,15 @@ async function analyzeProjectModules(payload) {
           `[counts] modules=${Array.isArray(parsed.modules) ? parsed.modules.length : 0}`,
         ],
       });
+
+      try {
+        await aiAssessmentLogModel.updateLogDir({
+          requestHash,
+          step: 'modules',
+          route: '/api/ai/analyze-project-modules',
+          logDir,
+        });
+      } catch (e) {}
     } catch (e) {}
 
     return {
@@ -562,11 +586,13 @@ async function analyzeProjectModules(payload) {
       durationMs,
       status,
       errorMessage,
+      step: 'modules',
+      route: '/api/ai/analyze-project-modules',
     });
 
     // 文件日志保存（失败/超时）
     try {
-      await aiFileLogger.save({
+      const logDir = await aiFileLogger.save({
         step: 'modules',
         route: '/api/ai/analyze-project-modules',
         requestHash,
@@ -590,6 +616,15 @@ async function analyzeProjectModules(payload) {
           `[error] ${error.message}`,
         ],
       });
+
+      try {
+        await aiAssessmentLogModel.updateLogDir({
+          requestHash,
+          step: 'modules',
+          route: '/api/ai/analyze-project-modules',
+          logDir,
+        });
+      } catch (e) {}
     } catch (e) {}
 
     if (error.statusCode) throw error;

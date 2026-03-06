@@ -6,6 +6,7 @@
 const crypto = require('crypto');
 const { selectProvider } = require('../providers/ai/providerSelector');
 const aiFileLogger = require('./aiFileLogger');
+const aiAssessmentLogModel = require('../models/aiAssessmentLogModel');
 const { validationError } = require('../utils/errors');
 
 const TEST_PROMPT = '你是什么模型？';
@@ -57,14 +58,26 @@ async function testConnection(config) {
     const success = Boolean(content) || providerResult.statusCode < 300;
     const duration = providerResult.durationMs || Date.now() - startedAt;
 
-    await aiFileLogger.save({
+    try {
+      await aiAssessmentLogModel.insertLog({
+        promptId: 'test',
+        modelUsed: providerResult.model || payload.model,
+        requestHash,
+        durationMs: duration,
+        status: success ? 'success' : 'fail',
+        step: 'model-test',
+        route: '/api/config/ai-models/test',
+      });
+    } catch (e) {}
+
+    const logDir = await aiFileLogger.save({
       step: 'model-test',
       route: '/api/config/ai-models/test',
       requestHash,
       promptTemplateId: 'test',
       modelProvider: providerLabel,
       modelName: providerResult.model || payload.model,
-      status: success ? 'success' : 'failed',
+      status: success ? 'success' : 'fail',
       durationMs: duration,
       providerTimeoutMs: payload.timeoutMs,
       serviceTimeoutMs: payload.timeoutMs ? payload.timeoutMs + 2000 : undefined,
@@ -80,6 +93,15 @@ async function testConnection(config) {
         `[timing] durationMs=${duration} providerTimeoutMs=${payload.timeoutMs}`,
       ],
     });
+
+    try {
+      await aiAssessmentLogModel.updateLogDir({
+        requestHash,
+        step: 'model-test',
+        route: '/api/config/ai-models/test',
+        logDir,
+      });
+    } catch (e) {}
 
     if (success) {
       const answerText =
@@ -109,15 +131,29 @@ async function testConnection(config) {
     };
   } catch (error) {
     const duration = Date.now() - startedAt;
+
     try {
-      await aiFileLogger.save({
+      await aiAssessmentLogModel.insertLog({
+        promptId: 'test',
+        modelUsed: payload.model,
+        requestHash,
+        durationMs: duration,
+        status: error.statusCode === 504 ? 'timeout' : 'fail',
+        errorMessage: error.message,
+        step: 'model-test',
+        route: '/api/config/ai-models/test',
+      });
+    } catch (e) {}
+
+    try {
+      const logDir = await aiFileLogger.save({
         step: 'model-test',
         route: '/api/config/ai-models/test',
         requestHash,
         promptTemplateId: 'test',
         modelProvider: providerLabel,
         modelName: payload.model,
-        status: 'failed',
+        status: error.statusCode === 504 ? 'timeout' : 'fail',
         durationMs: duration,
         providerTimeoutMs: payload.timeoutMs,
         serviceTimeoutMs: payload.timeoutMs ? payload.timeoutMs + 2000 : undefined,
@@ -130,6 +166,15 @@ async function testConnection(config) {
         responseParsed: providerRaw ? { _raw_text: JSON.stringify(providerRaw) } : undefined,
         notesLines: [`[error] ${error.message}`],
       });
+
+      try {
+        await aiAssessmentLogModel.updateLogDir({
+          requestHash,
+          step: 'model-test',
+          route: '/api/config/ai-models/test',
+          logDir,
+        });
+      } catch (e) {}
     } catch (e) {}
 
     return {

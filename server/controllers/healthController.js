@@ -1,23 +1,25 @@
-const { getDatabase } = require('../config/database');
+const db = require('../utils/db');
 
 /**
  * 健康检查
  */
 exports.checkHealth = (req, res, next) => {
-  const db = getDatabase();
-  db.get('SELECT 1', (err, row) => {
-    if (err) {
-      res.status(500).json({ 
-        status: 'error', 
-        message: 'Database connection failed' 
+  db.get('SELECT 1')
+    .then(() => {
+      res.json({
+        status: 'ok',
+        message: 'Backend is healthy and connected to database'
       });
-    } else {
-      res.json({ 
-        status: 'ok', 
-        message: 'Backend is healthy and connected to database' 
+    })
+    .catch((err) => {
+      res.status(500).json({
+        status: 'error',
+        message: 'Database connection failed'
       });
-    }
-  });
+      if (next) {
+        next(err);
+      }
+    });
 };
 
 /**

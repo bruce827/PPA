@@ -153,3 +153,4 @@ server/logs/
 /frontend/ppa_frontend/src/.umi
 frontend/ppa_frontend/src/.umi/appData.json
 frontend/ppa_frontend/src/.umi/appData.json
+/.augment

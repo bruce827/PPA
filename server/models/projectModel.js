@@ -1,4 +1,4 @@
-const { getDatabase } = require('../config/database');
+const db = require('../utils/db');
 
 /**
  * 项目相关的数据库操作
@@ -106,189 +106,174 @@ const buildFilterClauses = (options = {}) => {
   return { clauses, params };
 };
 
-const createProject = (projectData) => {
-  return new Promise((resolve, reject) => {
-    const db = getDatabase();
-    const {
-      name,
-      description,
-      is_template,
-      final_total_cost,
-      final_risk_score,
-      final_workload_days,
-      assessment_details_json
-    } = projectData;
+let ensuredConnectionId = null;
 
-    const sql = `INSERT INTO projects
-      (name, description, is_template, project_type, final_total_cost, final_risk_score, final_workload_days, assessment_details_json)
-      VALUES (?, ?, ?, 'standard', ?, ?, ?, ?)`;
+const ensureSchema = async () => {
+  const currentConnectionId = db.getConnectionId();
+  if (ensuredConnectionId === currentConnectionId) return;
 
-    const params = [
-      name,
-      description,
-      is_template || 0,
-      final_total_cost,
-      final_risk_score,
-      final_workload_days,
-      assessment_details_json
-    ];
+  const columns = await db.all('PRAGMA table_info(projects);');
+  const hasTagsJson = Array.isArray(columns) && columns.some((col) => col.name === 'tags_json');
+  if (!hasTagsJson) {
+    await db.run('ALTER TABLE projects ADD COLUMN tags_json TEXT;');
+  }
 
-    db.run(sql, params, function(err) {
-      if (err) reject(err);
-      else resolve({ id: this.lastID });
-    });
-  });
+  ensuredConnectionId = currentConnectionId;
 };
 
-const getProjectById = (id) => {
-  return new Promise((resolve, reject) => {
-    const db = getDatabase();
-    db.get(
-      "SELECT * FROM projects WHERE id = ? AND (project_type IS NULL OR project_type = 'standard')",
-      [id],
-      (err, row) => {
-        if (err) reject(err);
-        else resolve(row);
-      }
-    );
-  });
+const createProject = async (projectData) => {
+  await ensureSchema();
+  const {
+    name,
+    description,
+    is_template,
+    final_total_cost,
+    final_risk_score,
+    final_workload_days,
+    assessment_details_json,
+    tags_json,
+  } = projectData;
+
+  const sql = `INSERT INTO projects
+    (name, description, is_template, project_type, final_total_cost, final_risk_score, final_workload_days, assessment_details_json, tags_json)
+    VALUES (?, ?, ?, 'standard', ?, ?, ?, ?, ?)`;
+
+  const params = [
+    name,
+    description,
+    is_template || 0,
+    final_total_cost,
+    final_risk_score,
+    final_workload_days,
+    assessment_details_json,
+    typeof tags_json === 'undefined' ? null : tags_json,
+  ];
+
+  const result = await db.run(sql, params);
+  return { id: result.id };
 };
 
-const getAllProjects = (options = {}) => {
-  return new Promise((resolve, reject) => {
-    const db = getDatabase();
-    const orderBy = buildOrderByClause(options);
-    const { clauses, params } = buildFilterClauses(options);
-    const whereParts = [
-      'is_template = 0',
-      "(project_type IS NULL OR project_type = 'standard')",
-      ...clauses,
-    ];
-    db.all(
-      `SELECT id, name, final_total_cost, final_risk_score, created_at
-       FROM projects
-       WHERE ${whereParts.join(' AND ')}
-       ORDER BY ${orderBy}`,
-      params,
-      (err, rows) => {
-        if (err) reject(err);
-        else resolve(rows);
-      }
-    );
-  });
+const getProjectById = async (id) => {
+  await ensureSchema();
+  return await db.get(
+    "SELECT * FROM projects WHERE id = ? AND (project_type IS NULL OR project_type = 'standard')",
+    [id]
+  );
+};
+
+const getAllProjects = async (options = {}) => {
+  await ensureSchema();
+  const orderBy = buildOrderByClause(options);
+  const { clauses, params } = buildFilterClauses(options);
+  const whereParts = [
+    'is_template = 0',
+    "(project_type IS NULL OR project_type = 'standard')",
+    ...clauses,
+  ];
+  return await db.all(
+    `SELECT id, name, final_total_cost, final_risk_score, created_at
+     FROM projects
+     WHERE ${whereParts.join(' AND ')}
+     ORDER BY ${orderBy}`,
+    params
+  );
 };
 
 // 获取所有项目（包含模板和正式项目）
-const getAllProjectsIncludingTemplates = (options = {}) => {
-  return new Promise((resolve, reject) => {
-    const db = getDatabase();
-    const orderBy = buildOrderByClause(options);
-    const { clauses, params } = buildFilterClauses(options);
-    const whereParts = [
-      "(project_type IS NULL OR project_type = 'standard')",
-      ...clauses,
-    ];
-    db.all(
-      `SELECT id, name, description, is_template, final_total_cost, final_risk_score, final_workload_days, created_at
-       FROM projects
-       WHERE ${whereParts.join(' AND ')}
-       ORDER BY ${orderBy}`,
-      params,
-      (err, rows) => {
-        if (err) reject(err);
-        else resolve(rows);
-      }
-    );
-  });
+const getAllProjectsIncludingTemplates = async (options = {}) => {
+  await ensureSchema();
+  const orderBy = buildOrderByClause(options);
+  const { clauses, params } = buildFilterClauses(options);
+  const whereParts = [
+    "(project_type IS NULL OR project_type = 'standard')",
+    ...clauses,
+  ];
+  return await db.all(
+    `SELECT id, name, description, is_template, final_total_cost, final_risk_score, final_workload_days, created_at
+     FROM projects
+     WHERE ${whereParts.join(' AND ')}
+     ORDER BY ${orderBy}`,
+    params
+  );
 };
 
-const getAllTemplates = (options = {}) => {
-  return new Promise((resolve, reject) => {
-    const db = getDatabase();
-    const orderBy = buildOrderByClause(options);
-    const { clauses, params } = buildFilterClauses(options);
-    const whereParts = [
-      'is_template = 1',
-      "(project_type IS NULL OR project_type = 'standard')",
-      ...clauses,
-    ];
-    db.all(
-      `SELECT id, name, description, is_template, final_total_cost, final_risk_score, final_workload_days, created_at
-       FROM projects
-       WHERE ${whereParts.join(' AND ')}
-       ORDER BY ${orderBy}`,
-      params,
-      (err, rows) => {
-        if (err) reject(err);
-        else resolve(rows);
-      }
-    );
-  });
+const getAllTemplates = async (options = {}) => {
+  await ensureSchema();
+  const orderBy = buildOrderByClause(options);
+  const { clauses, params } = buildFilterClauses(options);
+  const whereParts = [
+    'is_template = 1',
+    "(project_type IS NULL OR project_type = 'standard')",
+    ...clauses,
+  ];
+  return await db.all(
+    `SELECT id, name, description, is_template, final_total_cost, final_risk_score, final_workload_days, created_at
+     FROM projects
+     WHERE ${whereParts.join(' AND ')}
+     ORDER BY ${orderBy}`,
+    params
+  );
 };
 
 // 清除所有项目的模板标记
-const clearAllTemplateFlags = () => {
-  return new Promise((resolve, reject) => {
-    const db = getDatabase();
-    db.run(
-      "UPDATE projects SET is_template = 0 WHERE is_template = 1 AND (project_type IS NULL OR project_type = 'standard')",
-      [],
-      function (err) {
-        if (err) reject(err);
-        else resolve({ updated: this.changes });
-      },
-    );
-  });
+const clearAllTemplateFlags = async () => {
+  await ensureSchema();
+  const result = await db.run(
+    "UPDATE projects SET is_template = 0, updated_at = CURRENT_TIMESTAMP WHERE is_template = 1 AND (project_type IS NULL OR project_type = 'standard')"
+  );
+  return { updated: result.id };
 };
 
-const updateProject = (id, projectData) => {
-  return new Promise((resolve, reject) => {
-    const db = getDatabase();
-    const {
-      name,
-      description,
-      is_template,
-      final_total_cost,
-      final_risk_score,
-      final_workload_days,
-      assessment_details_json
-    } = projectData;
+const updateProjectFields = async (id, fields) => {
+  await ensureSchema();
 
-    const sql = `UPDATE projects 
-      SET name = ?, description = ?, is_template = ?, project_type = 'standard', final_total_cost = ?, 
-          final_risk_score = ?, final_workload_days = ?, assessment_details_json = ? 
-      WHERE id = ? AND (project_type IS NULL OR project_type = 'standard')`;
-    
-    const params = [
-      name,
-      description,
-      is_template || 0,
-      final_total_cost,
-      final_risk_score,
-      final_workload_days,
-      assessment_details_json,
-      id
-    ];
+  const allowed = [
+    'name',
+    'description',
+    'is_template',
+    'final_total_cost',
+    'final_risk_score',
+    'final_workload_days',
+    'assessment_details_json',
+    'tags_json',
+  ];
 
-    db.run(sql, params, function(err) {
-      if (err) reject(err);
-      else resolve({ updated: this.changes });
-    });
+  const setParts = [];
+  const params = [];
+
+  allowed.forEach((key) => {
+    if (typeof fields[key] === 'undefined') return;
+    setParts.push(`${key} = ?`);
+    params.push(fields[key]);
   });
+
+  if (!setParts.length) {
+    return { updated: 0 };
+  }
+
+  setParts.push("project_type = 'standard'");
+  setParts.push('updated_at = CURRENT_TIMESTAMP');
+
+  const sql = `UPDATE projects
+    SET ${setParts.join(', ')}
+    WHERE id = ? AND (project_type IS NULL OR project_type = 'standard')`;
+  params.push(id);
+
+  const result = await db.run(sql, params);
+  return { updated: result.id };
 };
 
-const deleteProject = (id) => {
-  return new Promise((resolve, reject) => {
-    const db = getDatabase();
-    db.run(
-      `DELETE FROM projects WHERE id = ? AND (project_type IS NULL OR project_type = 'standard')`,
-      [id],
-      function(err) {
-        if (err) reject(err);
-        else resolve({ deleted: this.changes });
-      }
-    );
-  });
+const updateProject = async (id, projectData) => {
+  return await updateProjectFields(id, projectData);
+};
+
+const deleteProject = async (id) => {
+  await ensureSchema();
+  const result = await db.run(
+    `DELETE FROM projects WHERE id = ? AND (project_type IS NULL OR project_type = 'standard')`,
+    [id]
+  );
+  return { deleted: result.id };
 };
 
 module.exports = {
@@ -298,6 +283,7 @@ module.exports = {
   getAllProjectsIncludingTemplates,
   getAllTemplates,
   clearAllTemplateFlags,
+  updateProjectFields,
   updateProject,
   deleteProject
 };

@@ -1,6 +1,13 @@
 import { NEUTRAL_TEXT_COLOR, RISK_LEVEL_COLORS } from '@/constants';
-import { getConfigAll, getProjectDetail } from '@/services/assessment';
-import { exportProjectToExcel } from '@/services/projects';
+import {
+  generateProjectTagsWithAI,
+  getConfigAll,
+  getProjectDetail,
+  getProjectTagPrompts,
+  type AiPrompt,
+} from '@/services/assessment';
+import { recommendContracts } from '@/services/contracts';
+import { exportProjectToExcel, updateProject } from '@/services/projects';
 import { PageContainer } from '@ant-design/pro-components';
 import { history, useParams } from '@umijs/max';
 import {
@@ -9,18 +16,208 @@ import {
   Col,
   Descriptions,
   Empty,
+  Form,
+  Input,
   message,
+  Modal,
   Row,
+  Select,
+  Space,
   Spin,
   Statistic,
   Table,
   Tabs,
   Tag,
+  Typography,
 } from 'antd';
 import { useEffect, useState } from 'react';
 
-type ProjectDetail = API.ProjectInfo;
+type ProjectDetail = API.ProjectInfo & { tags_json?: string };
+
+const getRecommendKey = (item: any, idx: number) => {
+  const file = item?.file || 'file';
+  const rowIndex = item?.row_index;
+  return `${file}-${rowIndex == null ? idx : rowIndex}`;
+};
+
+const extractRowValueByKeyPatterns = (
+  row: Record<string, any>,
+  patterns: RegExp[],
+) => {
+  const entries = Object.entries(row || {});
+  for (const pattern of patterns) {
+    for (const [k, v] of entries) {
+      if (!pattern.test(String(k))) continue;
+      const s = String(v ?? '').trim();
+      if (s) return s;
+    }
+  }
+  for (const [_k, v] of entries) {
+    const s = String(v ?? '').trim();
+    if (s) return s;
+  }
+  return '';
+};
+
+const guessRecommendProjectName = (row: Record<string, any>) => {
+  return (
+    extractRowValueByKeyPatterns(row, [
+      /项目\s*名称/i,
+      /工程\s*名称/i,
+      /合同\s*名称/i,
+      /标段\s*名称/i,
+      /项目\s*名/i,
+      /^名称$/i,
+      /名称/i,
+    ]) || '—'
+  );
+};
+
+const guessRecommendAmount = (row: Record<string, any>) => {
+  return (
+    extractRowValueByKeyPatterns(row, [
+      /项目\s*金额/i,
+      /合同\s*金额/i,
+      /中标\s*金额/i,
+      /价税合计/i,
+      /总\s*金额/i,
+      /总\s*价/i,
+      /金额/i,
+    ]) || '—'
+  );
+};
 type AssessmentData = API.AssessmentData;
+
+type TagPrompt = AiPrompt;
+
+const normalizeTags = (raw: any) => {
+  const arr = Array.isArray(raw) ? raw : [];
+  const normalized = arr
+    .map((t) => String(t == null ? '' : t).trim())
+    .filter(Boolean);
+  const unique = Array.from(new Set(normalized));
+  return unique.slice(0, 30).map((t) => (t.length > 30 ? t.slice(0, 30) : t));
+};
+
+const safeParseTagsJson = (raw?: string) => {
+  if (!raw || typeof raw !== 'string') return [];
+  try {
+    const parsed = JSON.parse(raw);
+    return Array.isArray(parsed) ? parsed : [];
+  } catch (_e) {
+    return [];
+  }
+};
+
+const safeParseAssessmentDetails = (raw?: string) => {
+  if (!raw || typeof raw !== 'string') return null;
+  try {
+    return JSON.parse(raw);
+  } catch (_e) {
+    return null;
+  }
+};
+
+const normalizeSnapshotText = (value: any) => {
+  const s = String(value == null ? '' : value);
+  return s.replace(/\s+/g, ' ').trim();
+};
+
+const truncateSnapshotText = (value: any, maxLen: number) => {
+  const s = normalizeSnapshotText(value);
+  if (!maxLen || maxLen <= 0) return '';
+  return s.length > maxLen ? s.slice(0, maxLen) : s;
+};
+
+const pickTopRiskScores = (riskScores: any, topN: number) => {
+  if (!riskScores || typeof riskScores !== 'object') return {};
+  const entries = Object.entries(riskScores)
+    .map(([k, v]) => {
+      const num = typeof v === 'number' ? v : Number(v);
+      return [k, Number.isFinite(num) ? num : 0] as const;
+    })
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, Math.max(0, topN));
+  return entries.reduce((acc: any, [k, v]) => {
+    acc[k] = v;
+    return acc;
+  }, {});
+};
+
+const extractModulesFromAssessment = (assessment: any) => {
+  const dev = Array.isArray(assessment?.development_workload)
+    ? assessment.development_workload
+    : [];
+  const integ = Array.isArray(assessment?.integration_workload)
+    ? assessment.integration_workload
+    : [];
+  const all = [...dev, ...integ];
+  const seen = new Set<string>();
+  const out: Array<{ module1: string; module2: string; module3: string }> = [];
+  for (const r of all) {
+    const module1 = truncateSnapshotText(r?.module1, 60);
+    const module2 = truncateSnapshotText(r?.module2, 80);
+    const module3 = truncateSnapshotText(r?.module3, 80);
+    if (!module1 && !module2 && !module3) continue;
+    const key = `${module1}||${module2}||${module3}`;
+    if (seen.has(key)) continue;
+    seen.add(key);
+    out.push({ module1, module2, module3 });
+  }
+  return out;
+};
+
+const buildProjectTaggingSnapshot = (
+  project: any,
+  assessment: any,
+  tags: string[],
+) => {
+  const modules = extractModulesFromAssessment(assessment);
+
+  const snapshot: any = {
+    project: {
+      id: project?.id,
+      name: truncateSnapshotText(project?.name, 120),
+      description: truncateSnapshotText(project?.description, 2000),
+      final_total_cost: project?.final_total_cost,
+      final_risk_score: project?.final_risk_score,
+      final_workload_days: project?.final_workload_days,
+    },
+    risk_scores: assessment?.risk_scores || {},
+    modules,
+    tags,
+  };
+
+  const ensureWithinLimit = () => {
+    const text = JSON.stringify(snapshot);
+    return text.length <= 8000;
+  };
+
+  if (ensureWithinLimit()) return snapshot;
+
+  snapshot.project.description = truncateSnapshotText(project?.description, 500);
+  if (ensureWithinLimit()) return snapshot;
+
+  snapshot.project.description = truncateSnapshotText(project?.description, 200);
+  if (ensureWithinLimit()) return snapshot;
+
+  delete snapshot.project.description;
+  if (ensureWithinLimit()) return snapshot;
+
+  snapshot.modules = Array.isArray(snapshot.modules) ? snapshot.modules.slice(0, 100) : [];
+  if (ensureWithinLimit()) return snapshot;
+
+  snapshot.risk_scores = pickTopRiskScores(snapshot.risk_scores, 25);
+  if (ensureWithinLimit()) return snapshot;
+
+  snapshot.modules = Array.isArray(snapshot.modules) ? snapshot.modules.slice(0, 60) : [];
+  if (ensureWithinLimit()) return snapshot;
+
+  snapshot.risk_scores = pickTopRiskScores(snapshot.risk_scores, 15);
+  if (ensureWithinLimit()) return snapshot;
+
+  return snapshot;
+};
 
 const AssessmentDetailPage = () => {
   const [messageApi, contextHolder] = message.useMessage();
@@ -28,11 +225,61 @@ const AssessmentDetailPage = () => {
   const [assessmentData, setAssessmentData] = useState<AssessmentData | null>(
     null,
   );
+  const [savedTags, setSavedTags] = useState<string[]>([]);
+  const [editingTags, setEditingTags] = useState<string[]>([]);
+  const [savingTags, setSavingTags] = useState(false);
+
+  const [tagModalOpen, setTagModalOpen] = useState(false);
+  const [tagPrompts, setTagPrompts] = useState<TagPrompt[]>([]);
+  const [tagPromptsLoading, setTagPromptsLoading] = useState(false);
+  const [tagGenerating, setTagGenerating] = useState(false);
+  const [tagForm] = Form.useForm();
+
+  const [recommendLoading, setRecommendLoading] = useState(false);
+  const [recommendItems, setRecommendItems] = useState<any[]>([]);
+  const [collapsedRecommend, setCollapsedRecommend] = useState<Record<string, boolean>>({});
+
   const [configData, setConfigData] = useState<{
     roles: API.RoleConfig[];
   } | null>(null);
   const [loading, setLoading] = useState(true);
   const params = useParams();
+
+  const loadRecommendations = async (tags: string[]) => {
+    const nextTags = normalizeTags(tags);
+    if (!nextTags.length) {
+      setRecommendItems([]);
+      return;
+    }
+    try {
+      setRecommendLoading(true);
+      const res = await recommendContracts({ tags: nextTags, topN: 10, maxRowsPerFile: 5000 });
+      const data = res?.data;
+      const items = Array.isArray(data?.items) ? data.items : [];
+      setRecommendItems(items);
+    } catch (e: any) {
+      setRecommendItems([]);
+      messageApi.error(e?.message || '获取相关业绩推荐失败');
+    } finally {
+      setRecommendLoading(false);
+    }
+  };
+
+  const loadTagPrompts = async () => {
+    setTagPromptsLoading(true);
+    try {
+      const res = await getProjectTagPrompts();
+      if (!res?.success) {
+        throw new Error(res?.error || '加载提示词失败');
+      }
+      setTagPrompts(Array.isArray(res.data) ? res.data : []);
+    } catch (e: any) {
+      setTagPrompts([]);
+      messageApi.error(e?.message || '加载提示词失败');
+    } finally {
+      setTagPromptsLoading(false);
+    }
+  };
 
   useEffect(() => {
     const loadData = async () => {
@@ -43,7 +290,15 @@ const AssessmentDetailPage = () => {
 
         // 加载项目详情
         const projectRes = await getProjectDetail(params.id);
-        setProject(projectRes.data);
+        const projectData: any = projectRes.data;
+        setProject(projectData);
+
+        const parsedDetails = safeParseAssessmentDetails(projectData?.assessment_details_json);
+        const tagsFromAssessment = Array.isArray(parsedDetails?.tags) ? parsedDetails.tags : [];
+        const tagsFromColumn = safeParseTagsJson(projectData?.tags_json);
+        const initialTags = normalizeTags(tagsFromColumn.length ? tagsFromColumn : tagsFromAssessment);
+        setSavedTags(initialTags);
+        setEditingTags(initialTags);
 
         // 解析评估数据
         if (projectRes.data?.assessment_details_json) {
@@ -67,6 +322,8 @@ const AssessmentDetailPage = () => {
         // 加载配置数据（用于显示角色名称）
         const configRes = await getConfigAll();
         setConfigData({ roles: configRes.data.roles || [] });
+
+        await loadRecommendations(initialTags);
       } catch (error: any) {
         messageApi.error('加载项目详情失败');
         console.error(error);
@@ -77,6 +334,26 @@ const AssessmentDetailPage = () => {
 
     loadData();
   }, [params.id]);
+
+  useEffect(() => {
+    if (tagModalOpen) {
+      loadTagPrompts();
+      tagForm.setFieldsValue({ promptId: undefined, variables: {} });
+    }
+  }, [tagModalOpen]);
+
+  const confirmOverwriteTags = () => {
+    return new Promise<boolean>((resolve) => {
+      Modal.confirm({
+        title: '确认覆盖当前标签？',
+        content: '将使用 AI 生成结果覆盖当前编辑中的标签（你仍可以在保存前继续编辑）。',
+        okText: '继续生成',
+        cancelText: '取消',
+        onOk: () => resolve(true),
+        onCancel: () => resolve(false),
+      });
+    });
+  };
 
   if (loading) {
     return (
@@ -272,6 +549,58 @@ const AssessmentDetailPage = () => {
             </Row>
           </Card>
 
+          <Card title="项目标签" style={{ marginBottom: 16 }}>
+            <Space direction="vertical" style={{ width: '100%' }}>
+              <Select
+                mode="tags"
+                value={editingTags}
+                onChange={(vals) => setEditingTags(normalizeTags(vals))}
+                style={{ width: '100%' }}
+                placeholder="请输入标签（回车确认）"
+                tokenSeparators={[',', '，', ';', '；']}
+              />
+              <Space>
+                <Button
+                  onClick={() => setTagModalOpen(true)}
+                  disabled={!project?.id}
+                >
+                  AI 生成标签
+                </Button>
+                <Button
+                  type="primary"
+                  loading={savingTags}
+                  disabled={!project?.id}
+                  onClick={async () => {
+                    if (!project?.id) return;
+                    try {
+                      setSavingTags(true);
+                      const next = normalizeTags(editingTags);
+                      await updateProject(project.id, { tags: next });
+                      setSavedTags(next);
+                      setEditingTags(next);
+                      messageApi.success('标签已保存');
+                      await loadRecommendations(next);
+                    } catch (e: any) {
+                      messageApi.error(e?.message || '保存标签失败');
+                    } finally {
+                      setSavingTags(false);
+                    }
+                  }}
+                >
+                  保存标签并刷新推荐
+                </Button>
+                <Button
+                  onClick={() => {
+                    setEditingTags(savedTags);
+                  }}
+                  disabled={savingTags}
+                >
+                  放弃修改
+                </Button>
+              </Space>
+            </Space>
+          </Card>
+
           <Card title="项目详情">
             <Descriptions bordered column={2}>
               <Descriptions.Item label="项目名称" span={2}>
@@ -381,6 +710,118 @@ const AssessmentDetailPage = () => {
         </>
       ),
     },
+    {
+      key: '6',
+      label: '相关业绩推荐',
+      children: (
+        <Card>
+          <Space direction="vertical" style={{ width: '100%' }}>
+            <Space>
+              <Button
+                loading={recommendLoading}
+                onClick={() => loadRecommendations(savedTags)}
+              >
+                刷新推荐
+              </Button>
+              <Typography.Text type="secondary">
+                推荐基于已保存的标签（score=命中标签数）
+              </Typography.Text>
+            </Space>
+
+            {recommendLoading ? (
+              <div style={{ textAlign: 'center', width: '100%', padding: 24 }}>
+                <Spin />
+              </div>
+            ) : recommendItems.length === 0 ? (
+              <Empty description="暂无推荐结果" />
+            ) : (
+              recommendItems.map((item, idx) => {
+                const row = item?.row || {};
+                const recKey = getRecommendKey(item, idx);
+                const collapsed = collapsedRecommend[recKey] !== false;
+                const entries = collapsed ? [] : Object.entries(row);
+                const projectName = guessRecommendProjectName(row);
+                const amount = guessRecommendAmount(row);
+                return (
+                  <Card
+                    key={recKey}
+                    size="small"
+                    style={{ width: '100%' }}
+                    title={
+                      collapsed ? (
+                        <Typography.Text strong>{projectName || '—'}</Typography.Text>
+                      ) : (
+                        <Space>
+                          <Typography.Text strong>
+                            {item?.file || 'CSV'}
+                          </Typography.Text>
+                          <Tag color="blue">score {item?.score || 0}</Tag>
+                        </Space>
+                      )
+                    }
+                    extra={
+                      <Button
+                        type="link"
+                        size="small"
+                        onClick={() => {
+                          setCollapsedRecommend((prev) => ({
+                            ...prev,
+                            [recKey]: !collapsed,
+                          }));
+                        }}
+                      >
+                        {collapsed ? '展开' : '收起'}
+                      </Button>
+                    }
+                  >
+                    <Space direction="vertical" style={{ width: '100%' }}>
+                      {collapsed ? (
+                        <Descriptions bordered size="small" column={2}>
+                          <Descriptions.Item label="数据来源">
+                            {item?.file || '—'}
+                          </Descriptions.Item>
+                          <Descriptions.Item label="项目金额">
+                            {amount || '—'}
+                          </Descriptions.Item>
+                        </Descriptions>
+                      ) : (
+                        <>
+                          <div>
+                            {(Array.isArray(item?.matched_tags)
+                              ? item.matched_tags
+                              : []).map((t: string) => (
+                              <Tag key={t} color="geekblue">
+                                {t}
+                              </Tag>
+                            ))}
+                          </div>
+
+                          <Descriptions bordered size="small" column={2}>
+                            {entries.map(([k, v]) => (
+                              <Descriptions.Item key={k} label={k}>
+                                <Typography.Text
+                                  ellipsis={{ tooltip: true }}
+                                  style={{
+                                    maxWidth: 360,
+                                    display: 'inline-block',
+                                  }}
+                                >
+                                  {String(v ?? '') || '—'}
+                                </Typography.Text>
+                              </Descriptions.Item>
+                            ))}
+                          </Descriptions>
+                        </>
+                      )}
+                    </Space>
+                  </Card>
+                );
+              })
+            )}
+          </Space>
+        </Card>
+      ),
+    },
   ];
 
   const handleExport = (version: 'internal' | 'external') => {
@@ -430,6 +871,129 @@ const AssessmentDetailPage = () => {
     >
       {contextHolder}
       <Tabs items={tabItems} />
+
+      <Modal
+        title="AI 生成项目标签"
+        open={tagModalOpen}
+        onCancel={() => {
+          if (tagGenerating) return;
+          setTagModalOpen(false);
+        }}
+        destroyOnHidden
+        footer={null}
+      >
+        <Form form={tagForm} layout="vertical">
+          <Form.Item
+            label="选择提示词模板"
+            name="promptId"
+            rules={[{ required: true, message: '请选择提示词模板' }]}
+          >
+            <Select
+              placeholder={tagPromptsLoading ? '正在加载提示词...' : '请选择提示词模板'}
+              loading={tagPromptsLoading}
+              options={tagPrompts.map((p) => ({ value: p.id, label: p.name }))}
+              allowClear
+              onChange={(pid) => {
+                if (!pid) {
+                  tagForm.setFieldsValue({ promptId: undefined, variables: {} });
+                  return;
+                }
+                const selected = tagPrompts.find((p) => p.id === pid);
+                const vars = Array.isArray(selected?.variables) ? selected?.variables : [];
+                const defaults = vars.reduce((acc: any, v: any) => {
+                  acc[v.name] = v.default_value || '';
+                  return acc;
+                }, {});
+                tagForm.setFieldsValue({ promptId: pid, variables: defaults });
+              }}
+            />
+          </Form.Item>
+
+          <Form.Item noStyle shouldUpdate={(prev, cur) => prev?.promptId !== cur?.promptId}>
+            {({ getFieldValue }) => {
+              const promptId = getFieldValue('promptId');
+              const selected = tagPrompts.find((p) => p.id === promptId);
+              const vars = Array.isArray(selected?.variables) ? selected?.variables : [];
+              if (!vars.length) return null;
+              return (
+                <Card size="small" style={{ marginBottom: 16 }}>
+                  <Space direction="vertical" style={{ width: '100%' }}>
+                    {vars.map((v) => (
+                      <Form.Item
+                        key={v.name}
+                        label={v.display_name || v.name}
+                        name={['variables', v.name]}
+                      >
+                        <Input placeholder={v.default_value || '请输入变量值'} />
+                      </Form.Item>
+                    ))}
+                  </Space>
+                </Card>
+              );
+            }}
+          </Form.Item>
+
+          <Space>
+            <Button
+              type="primary"
+              loading={tagGenerating}
+              onClick={async () => {
+                if (!project?.id) return;
+                try {
+                  await tagForm.validateFields();
+                  const promptId = tagForm.getFieldValue('promptId');
+                  const variables = tagForm.getFieldValue('variables') || {};
+
+                  if (editingTags.length > 0) {
+                    const ok = await confirmOverwriteTags();
+                    if (!ok) return;
+                  }
+
+                  setTagGenerating(true);
+
+                  const snapshot = buildProjectTaggingSnapshot(
+                    project,
+                    assessmentData,
+                    editingTags,
+                  );
+
+                  if (JSON.stringify(snapshot).length > 8000) {
+                    throw new Error('projectSnapshot 字数超出限制 (最大 8000)');
+                  }
+
+                  const res = await generateProjectTagsWithAI({
+                    promptId,
+                    projectId: project.id,
+                    projectSnapshot: snapshot,
+                    variables,
+                  });
+                  if (!res?.success) {
+                    throw new Error(res?.error || 'AI 生成失败');
+                  }
+                  const nextTags = normalizeTags(res?.data?.tags || []);
+                  setEditingTags(nextTags);
+                  messageApi.success('AI 标签已生成，可继续编辑后保存');
+                  setTagModalOpen(false);
+                } catch (e: any) {
+                  messageApi.error(e?.message || 'AI 生成失败');
+                } finally {
+                  setTagGenerating(false);
+                }
+              }}
+            >
+              生成并应用到标签
+            </Button>
+            <Button
+              onClick={() => {
+                if (tagGenerating) return;
+                setTagModalOpen(false);
+              }}
+            >
+              取消
+            </Button>
+          </Space>
+        </Form>
+      </Modal>
     </PageContainer>
   );
 };

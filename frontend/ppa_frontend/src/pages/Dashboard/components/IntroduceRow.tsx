@@ -8,6 +8,7 @@ import {
   AppstoreOutlined, 
   CodeOutlined, 
   DatabaseOutlined,
+  FileTextOutlined,
   RobotOutlined 
 } from '@ant-design/icons';
 
@@ -70,6 +71,15 @@ const IntroduceRow = () => {
             icon: <DatabaseOutlined style={{ fontSize: 32, color: '#fa8c16' }} />,
           }}
           style={{ background: 'linear-gradient(135deg, #fff7e6 0%, #ffe7ba 100%)' }}
+        />
+        <StatisticCard
+          statistic={{
+            title: '业绩数量',
+            value: data?.contracts_count || 0,
+            suffix: '条',
+            icon: <FileTextOutlined style={{ fontSize: 32, color: '#eb2f96' }} />,
+          }}
+          style={{ background: 'linear-gradient(135deg, #fff0f6 0%, #ffadd2 100%)' }}
         />
         <StatisticCard
           statistic={{

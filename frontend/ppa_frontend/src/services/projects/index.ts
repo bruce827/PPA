@@ -32,6 +32,21 @@ export async function deleteProject(
   });
 }
 
+export async function updateProject(
+  id: string | number,
+  data: any,
+  options?: { [key: string]: any },
+) {
+  return request<any>(`/api/projects/${id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data,
+    ...(options || {}),
+  });
+}
+
 /** 导出项目为 PDF GET /api/projects/${id}/export/pdf */
 export function exportProjectToPDF(id: string | number) {
   return `/api/projects/${id}/export/pdf`;

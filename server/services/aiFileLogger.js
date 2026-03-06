@@ -1,4 +1,3 @@
-const fs = require('fs');
 const fsp = require('fs/promises');
 const path = require('path');
 
@@ -63,7 +62,7 @@ async function save({
   try {
     const enabled = process.env.AI_LOG_ENABLED;
     if (enabled !== undefined && !/^true$/i.test(String(enabled))) {
-      return;
+      return null;
     }
 
     const base = getBaseDir();
@@ -116,12 +115,16 @@ async function save({
       // eslint-disable-next-line no-console
       console.info(`[AI File Logger] saved to: ${dir}`);
     } catch {}
+
+    return dir;
   } catch (e) {
     // 仅告警，避免影响主流程
     try {
       // eslint-disable-next-line no-console
       console.warn('[AI File Logger] write failed:', e.message);
     } catch {}
+
+    return null;
   }
 }
 

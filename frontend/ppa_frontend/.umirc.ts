@@ -37,18 +37,17 @@ export default defineConfig({
           component: './Assessment/History',
         },
         {
+          name: '业绩库(CSV)',
+          path: 'contracts',
+          component: './Assessment/Contracts',
+        },
+        {
           name: '项目详情',
           path: 'detail/:id',
           component: './Assessment/Detail',
           hideInMenu: true,
         },
       ],
-    },
-    {
-      name: '参数配置',
-      path: '/config',
-      component: './Config',
-      icon: 'SettingOutlined',
     },
     {
       name: 'Web3D项目评估',
@@ -65,6 +64,12 @@ export default defineConfig({
       path: '/config/web3d-risk',
       component: './Config/Web3DRisk',
       hideInMenu: true,
+    },
+    {
+      name: '参数配置',
+      path: '/config',
+      component: './Config',
+      icon: 'SettingOutlined',
     },
     {
       name: '模型配置',
@@ -95,12 +100,31 @@ export default defineConfig({
         },
       ],
     },
+    {
+      name: '系统监控',
+      path: '/monitoring',
+      icon: 'MonitorOutlined',
+      routes: [
+        {
+          name: 'AI日志监控',
+          path: 'ai-logs',
+          component: './Monitoring/AiLogs',
+        },
+        {
+          name: '日志详情',
+          path: 'ai-logs/:requestHash',
+          component: './Monitoring/AiLogDetail',
+          hideInMenu: true,
+        },
+      ],
+    },
   ],
   npmClient: 'yarn',
   proxy: {
     '/api': {
       target: 'http://localhost:3001',
       changeOrigin: true,
+      ws: true,
     },
   },
   // 禁用严格模式和 MFSU 以避免 findDOMNode 警告

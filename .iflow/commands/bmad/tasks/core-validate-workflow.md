@@ -4,7 +4,7 @@ When this command is used, execute the following task:
 
 ## Validate Workflow Task
 
-<task id="bmad/core/tasks/validate-workflow.xml" name="Validate Workflow Output">
+<task id="_bmad/core/tasks/validate-workflow.xml" name="Validate Workflow Output">
   <objective>Run a checklist against a document with thorough analysis and produce a validation report</objective>
 
   <inputs>

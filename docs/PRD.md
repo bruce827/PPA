@@ -23,6 +23,12 @@ PPA（Project Portfolio Assessment）聚焦于帮助软件交付与技术服务�
 
 ---
 
+## PRD 索引（细分 PRD）
+
+- [AI 项目标签 & 相关业绩推荐 & 业绩库（CSV）PRD](./prd/ai-project-tags-and-contract-recommendation-prd.md)
+
+---
+
 ## Project Classification
 
 **Technical Type:** SaaS B2B Web 应用（Umi Max + Ant Design 前端、Express + SQLite 后端）  
