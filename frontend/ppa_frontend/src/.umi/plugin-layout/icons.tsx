@@ -6,4 +6,5 @@ import FormOutlined from '/Users/maylis/Desktop/github上的项目/项目评估�
 import BoxPlotOutlined from '/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/plugins/node_modules/@ant-design/icons/es/icons/BoxPlotOutlined';
 import SettingOutlined from '/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/plugins/node_modules/@ant-design/icons/es/icons/SettingOutlined';
 import RobotOutlined from '/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/plugins/node_modules/@ant-design/icons/es/icons/RobotOutlined';
-export default { DashboardOutlined, FormOutlined, BoxPlotOutlined, SettingOutlined, RobotOutlined };
+import MonitorOutlined from '/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/plugins/node_modules/@ant-design/icons/es/icons/MonitorOutlined';
+export default { DashboardOutlined, FormOutlined, BoxPlotOutlined, SettingOutlined, RobotOutlined, MonitorOutlined };

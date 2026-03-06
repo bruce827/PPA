@@ -4,5 +4,6 @@
         "keepwords",
         "sider",
         "stopwords"
-    ]
+    ],
+    "liveServer.settings.port": 5501
 }

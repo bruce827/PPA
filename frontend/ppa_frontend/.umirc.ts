@@ -103,6 +103,7 @@ export default defineConfig({
     {
       name: '系统监控',
       path: '/monitoring',
+      icon: 'MonitorOutlined',
       routes: [
         {
           name: 'AI日志监控',

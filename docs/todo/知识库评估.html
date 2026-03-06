@@ -1,0 +1,1333 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI知识库项目成本评估完整流程手册</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --success: #27ae60;
+            --warning: #f39c12;
+            --bg: #f8f9fa;
+            --card: #ffffff;
+            --text: #2c3e50;
+            --text-secondary: #5a6c7d;
+            --border: #e1e8ed;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* 头部样式 */
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 60px 40px;
+            border-radius: 16px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+        
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 16px;
+            font-weight: 700;
+        }
+        
+        header .subtitle {
+            font-size: 1.2em;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+        
+        /* 卡片样式 */
+        .card {
+            background: var(--card);
+            border-radius: 12px;
+            padding: 32px;
+            margin-bottom: 32px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            border: 1px solid var(--border);
+        }
+        
+        .card h2 {
+            font-size: 1.5em;
+            color: var(--primary);
+            margin-bottom: 24px;
+            padding-bottom: 12px;
+            border-bottom: 3px solid var(--secondary);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .card h2::before {
+            content: "";
+            display: inline-block;
+            width: 6px;
+            height: 28px;
+            background: var(--secondary);
+            border-radius: 3px;
+        }
+        
+        .card h3 {
+            font-size: 1.2em;
+            color: var(--text);
+            margin: 24px 0 16px 0;
+            padding-left: 12px;
+            border-left: 4px solid var(--secondary);
+        }
+        
+        /* 代码块样式 */
+        .code-block {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 16px 0;
+            overflow-x: auto;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.5;
+        }
+        
+        .code-block .comment {
+            color: #6a9955;
+        }
+        
+        .code-block .keyword {
+            color: #569cd6;
+        }
+        
+        .code-block .string {
+            color: #ce9178;
+        }
+        
+        .code-block .function {
+            color: #dcdcaa;
+        }
+        
+        /* 表格样式 */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.95em;
+        }
+        
+        th {
+            background: var(--primary);
+            color: white;
+            padding: 14px 16px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        td {
+            padding: 14px 16px;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        tr:nth-child(even) {
+            background: #fafbfc;
+        }
+        
+        /* 流程图容器 */
+        .flowchart-container {
+            background: #fafbfc;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .flowchart-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .flowchart-title {
+            font-size: 1.1em;
+            color: var(--text);
+            margin-top: 16px;
+            font-weight: 600;
+        }
+        
+        /* 步骤条 */
+        .steps {
+            display: flex;
+            justify-content: space-between;
+            margin: 30px 0;
+            position: relative;
+        }
+        
+        .steps::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 10%;
+            right: 10%;
+            height: 4px;
+            background: var(--border);
+            z-index: 0;
+        }
+        
+        .step {
+            flex: 1;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .step-number {
+            width: 44px;
+            height: 44px;
+            background: var(--secondary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 12px;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+        
+        .step-title {
+            font-weight: 600;
+            color: var(--text);
+            font-size: 0.95em;
+        }
+        
+        .step-desc {
+            font-size: 0.85em;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+        
+        /* 标签 */
+        .tag {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 500;
+            margin: 2px;
+        }
+        
+        .tag-high {
+            background: #fee;
+            color: #c33;
+        }
+        
+        .tag-medium {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .tag-low {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        /* 提示框 */
+        .tip-box {
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            border-left: 5px solid var(--secondary);
+            padding: 20px;
+            border-radius: 0 8px 8px 0;
+            margin: 20px 0;
+        }
+        
+        .warning-box {
+            background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+            border-left: 5px solid var(--warning);
+            padding: 20px;
+            border-radius: 0 8px 8px 0;
+            margin: 20px 0;
+        }
+        
+        .danger-box {
+            background: linear-gradient(135deg, #fee 0%, #ffcdd2 100%);
+            border-left: 5px solid var(--accent);
+            padding: 20px;
+            border-radius: 0 8px 8px 0;
+            margin: 20px 0;
+        }
+        
+        /* 列表 */
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .feature-list li {
+            padding: 10px 0 10px 28px;
+            position: relative;
+            border-bottom: 1px dashed var(--border);
+        }
+        
+        .feature-list li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--success);
+            font-weight: bold;
+        }
+        
+        /* 网格布局 */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 24px;
+        }
+        
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+        
+        /* 概述卡片 */
+        .overview-card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
+            padding: 24px;
+            border-radius: 12px;
+            text-align: center;
+            border-left: 5px solid var(--secondary);
+        }
+        
+        .overview-card .number {
+            font-size: 2em;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 12px 0;
+        }
+        
+        .overview-card .label {
+            color: var(--text-secondary);
+            font-size: 0.9em;
+        }
+        
+        /* 页脚 */
+        footer {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-secondary);
+            font-size: 0.9em;
+            border-top: 2px solid var(--border);
+            margin-top: 40px;
+        }
+        
+        /* 打印优化 */
+        @media print {
+            body {
+                background: white;
+            }
+            .card {
+                break-inside: avoid;
+                box-shadow: none;
+                border: 1px solid #ddd;
+            }
+            .code-block {
+                background: #f4f4f4;
+                color: #333;
+                white-space: pre-wrap;
+                word-wrap: break-word;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>AI知识库项目成本评估完整流程</h1>
+            <p class="subtitle">基于瑞云恒通项目案例 | 标准化评估体系与实施指南</p>
+            <div style="margin-top: 24px; font-size: 0.95em; opacity: 0.9;">
+                <span style="margin-right: 30px;">📅 版本：v1.0</span>
+                <span style="margin-right: 30px;">📊 适用：AI知识库、智能审核、RAG系统</span>
+                <span>🎯 目标：预算偏差控制在±15%</span>
+            </div>
+        </header>
+
+        <!-- 快速导航 -->
+        <div class="card">
+            <h2>📑 文档导航</h2>
+            <div class="grid-3">
+                <div class="overview-card">
+                    <div class="label">第一部分</div>
+                    <div style="font-size: 1.1em; font-weight: 600; margin: 8px 0;">评估流程框架</div>
+                    <div class="label">六阶段评估法</div>
+                </div>
+                <div class="overview-card">
+                    <div class="label">第二部分</div>
+                    <div style="font-size: 1.1em; font-weight: 600; margin: 8px 0;">评分维度与量表</div>
+                    <div class="label">五维度评分制</div>
+                </div>
+                <div class="overview-card">
+                    <div class="label">第三部分</div>
+                    <div style="font-size: 1.1em; font-weight: 600; margin: 8px 0;">可视化图表代码</div>
+                    <div class="label">Python实现</div>
+                </div>
+                <div class="overview-card">
+                    <div class="label">第四部分</div>
+                    <div style="font-size: 1.1em; font-weight: 600; margin: 8px 0;">等保合规评估</div>
+                    <div class="label">安全等级影响</div>
+                </div>
+                <div class="overview-card">
+                    <div class="label">第五部分</div>
+                    <div style="font-size: 1.1em; font-weight: 600; margin: 8px 0;">成本速算表</div>
+                    <div class="label">快速估算工具</div>
+                </div>
+                <div class="overview-card">
+                    <div class="label">第六部分</div>
+                    <div style="font-size: 1.1em; font-weight: 600; margin: 8px 0;">实施检查清单</div>
+                    <div class="label">可复用Checklist</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 第一部分：评估流程框架 -->
+        <div class="card">
+            <h2>第一部分：六阶段评估流程框架</h2>
+            
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-title">项目理解</div>
+                    <div class="step-desc">业务场景分析</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-title">数据盘点</div>
+                    <div class="step-desc">资产质量评估</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-title">技术评估</div>
+                    <div class="step-desc">可行性分析</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-title">实施评估</div>
+                    <div class="step-desc">复杂度分析</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">5</div>
+                    <div class="step-title">成本估算</div>
+                    <div class="step-desc">资源与预算</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">6</div>
+                    <div class="step-title">风险评估</div>
+                    <div class="step-desc">价值与风险</div>
+                </div>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>阶段</th>
+                        <th>核心任务</th>
+                        <th>关键产出</th>
+                        <th>权重</th>
+                        <th>工期</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>第一阶段</strong><br>项目理解与范围界定</td>
+                        <td>业务场景梳理、用户画像、系统集成环境调研</td>
+                        <td>《业务需求说明书》<br>《系统集成架构图》</td>
+                        <td><span class="tag tag-medium">15%</span></td>
+                        <td>3-5天</td>
+                    </tr>
+                    <tr>
+                        <td><strong>第二阶段</strong><br>数据资产盘点</td>
+                        <td>数据规模统计、质量评估、标注需求分析</td>
+                        <td>《数据资产清单》<br>《数据治理方案》</td>
+                        <td><span class="tag tag-high">20%</span></td>
+                        <td>5-7天</td>
+                    </tr>
+                    <tr>
+                        <td><strong>第三阶段</strong><br>技术可行性评估</td>
+                        <td>AI技术选型、架构设计、POC验证</td>
+                        <td>《技术方案设计》<br>《POC测试报告》</td>
+                        <td><span class="tag tag-high">20%</span></td>
+                        <td>7-10天</td>
+                    </tr>
+                    <tr>
+                        <td><strong>第四阶段</strong><br>实施复杂度评估</td>
+                        <td>功能模块拆分、分期策略、定制化程度</td>
+                        <td>《实施路线图》<br>《分期交付计划》</td>
+                        <td><span class="tag tag-medium">15%</span></td>
+                        <td>3-5天</td>
+                    </tr>
+                    <tr>
+                        <td><strong>第五阶段</strong><br>成本与资源估算</td>
+                        <td>人力成本、技术资源、隐性成本识别</td>
+                        <td>《成本估算明细表》<br>《资源计划》</td>
+                        <td><span class="tag tag-high">20%</span></td>
+                        <td>5-7天</td>
+                    </tr>
+                    <tr>
+                        <td><strong>第六阶段</strong><br>风险与价值评估</td>
+                        <td>风险矩阵、业务价值、ROI分析</td>
+                        <td>《风险评估报告》<br>《投资回报分析》</td>
+                        <td><span class="tag tag-low">10%</span></td>
+                        <td>3-5天</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="tip-box">
+                <strong>💡 瑞云项目案例映射：</strong><br>
+                总评估周期约25-30天，其中数据盘点（第二阶段）耗时最长，因需清洗历史投资项目文档；技术评估（第三阶段）进行了为期1周的POC验证，确认大模型+RAG+知识图谱的混合架构可行性。
+            </div>
+        </div>
+
+        <!-- 第二部分：五维度评分量表 -->
+        <div class="card">
+            <h2>第二部分：五维度评分量表（1-5分制）</h2>
+            
+            <h3>2.1 业务复杂度评估</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>评分</th>
+                        <th>业务场景数量</th>
+                        <th>规则变化频率</th>
+                        <th>决策链长度</th>
+                        <th>瑞云案例</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="tag tag-low">1分-简单</span></td>
+                        <td>单一业务场景</td>
+                        <td>静态规则，年更</td>
+                        <td>1-2步决策</td>
+                        <td>不适用</td>
+                    </tr>
+                    <tr>
+                        <td><span class="tag tag-low">2分-较简单</span></td>
+                        <td>2-3个场景</td>
+                        <td>规则变化少，季更</td>
+                        <td>3-4步决策</td>
+                        <td>不适用</td>
+                    </tr>
+                    <tr>
+                        <td><span class="tag tag-medium">3分-中等</span></td>
+                        <td>3-5个场景</td>
+                        <td>定期调整，月更</td>
+                        <td>5-6步决策</td>
+                        <td>部分适用</td>
+                    </tr>
+                    <tr>
+                        <td><span class="tag tag-high">4分-较复杂</span></td>
+                        <td>5-8个场景</td>
+                        <td>动态变化，周更</td>
+                        <td>7-9步决策</td>
+                        <td>设备管理模块</td>
+                    </tr>
+                    <tr style="background: #fff3cd;">
+                        <td><span class="tag tag-high">5分-极复杂</span></td>
+                        <td>8+场景</td>
+                        <td>高度动态，随时调整</td>
+                        <td>10步+，多层级</td>
+                        <td><strong>✓ 投资审核模块</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>2.2 数据质量评估</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>评分</th>
+                        <th>结构化程度</th>
+                        <th>标注状态</th>
+                        <th>质量评分</th>
+                        <th>瑞云案例</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background: #fff3cd;">
+                        <td><span class="tag tag-medium">3分-中等</span></td>
+                        <td>半结构化为主</td>
+                        <td>需清洗和标注</td>
+                        <td>70-80分</td>
+                        <td><strong>✓ 历史项目文档</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>2.3 技术难度评估</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>评分</th>
+                        <th>技术方案</th>
+                        <th>准确率要求</th>
+                        <th>响应时间</th>
+                        <th>瑞云案例</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background: #fff3cd;">
+                        <td><span class="tag tag-high">4分-较难</span></td>
+                        <td>领域微调+RAG+知识图谱</td>
+                        <td>95-98%</td>
+                        <td>秒级</td>
+                        <td><strong>✓ 需可解释AI</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>2.4 集成复杂度评估</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>评分</th>
+                        <th>集成系统数量</th>
+                        <th>接口协议</th>
+                        <th>等保要求</th>
+                        <th>瑞云案例</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background: #fff3cd;">
+                        <td><span class="tag tag-high">4分-较复杂</span></td>
+                        <td>5-8个系统</td>
+                        <td>多协议混合</td>
+                        <td>等保三级</td>
+                        <td><strong>✓ ERP+设备管理系统</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>2.5 定制化程度评估</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>评分</th>
+                        <th>定制类型</th>
+                        <th>规则引擎</th>
+                        <th>可视化</th>
+                        <th>瑞云案例</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background: #fff3cd;">
+                        <td><span class="tag tag-high">4分-深度</span></td>
+                        <td>重度业务定制</td>
+                        <td>低代码规则引擎</td>
+                        <td>复杂可视化看板</td>
+                        <td><strong>✓ 投资规则配置化</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="warning-box">
+                <strong>⚠️ 瑞云项目综合评分：</strong><br>
+                业务复杂度(5) + 数据质量(3) + 技术难度(4) + 集成复杂度(4) + 定制化程度(4) = <strong>平均分4.0/5.0（高复杂度）</strong><br>
+                对应预算区间：400-550万（大型项目）
+            </div>
+        </div>
+
+        <!-- 第三部分：可视化图表代码 -->
+        <div class="card">
+            <h2>第三部分：可视化图表Python实现代码</h2>
+
+            <h3>3.1 成本构成分析图（饼图+柱状图组合）</h3>
+            <div class="flowchart-container">
+                <p style="color: #666; padding: 40px;">[成本构成分析图]</p>
+                <p style="font-size: 0.9em; color: #999;">包含：成本构成饼图、模块分布柱状图、人力成本条形图</p>
+            </div>
+            
+            <div class="code-block">
+<span class="comment"># 成本构成分析图 - Python代码</span>
+<span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt
+<span class="keyword">import</span> numpy <span class="keyword">as</span> np
+
+<span class="comment"># 数据准备</span>
+cost_categories = [<span class="string">'人力成本'</span>, <span class="string">'技术资源'</span>, <span class="string">'其他成本'</span>]
+cost_values = [291.9, 182.8, 58.8]  <span class="comment"># 单位：万元</span>
+colors = [<span class="string">'#FF6B6B'</span>, <span class="string">'#4ECDC4'</span>, <span class="string">'#45B7D1'</span>]
+
+<span class="comment"># 创建1行3列的子图</span>
+fig, axes = plt.subplots(1, 3, figsize=(18, 6))
+
+<span class="comment"># 图1：成本构成饼图</span>
+ax1 = axes[0]
+wedges, texts, autotexts = ax1.pie(
+    cost_values, labels=cost_categories, autopct=<span class="string">'%1.1f%%'</span>,
+    colors=colors, startangle=90, explode=(0.02, 0.02, 0.02)
+)
+<span class="keyword">for</span> autotext <span class="keyword">in</span> autotexts:
+    autotext.set_color(<span class="string">'white'</span>)
+    autotext.set_fontweight(<span class="string">'bold'</span>)
+ax1.set_title(<span class="string">'项目成本构成占比'</span>, fontsize=14, fontweight=<span class="string">'bold'</span>)
+
+<span class="comment"># 图2：各模块成本分布</span>
+modules = [<span class="string">'投资质效项目'</span>, <span class="string">'风险定级'</span>, <span class="string">'设备分析'</span>, <span class="string">'规则运营'</span>]
+module_costs = [293.4, 106.7, 106.7, 26.7]
+ax2 = axes[1]
+bars = ax2.bar(modules, module_costs, color=colors[:4], edgecolor=<span class="string">'black'</span>)
+ax2.set_ylabel(<span class="string">'成本（万元）'</span>)
+ax2.set_title(<span class="string">'各业务模块成本分布'</span>, fontsize=14, fontweight=<span class="string">'bold'</span>)
+<span class="keyword">for</span> bar, cost <span class="keyword">in</span> zip(bars, module_costs):
+    height = bar.get_height()
+    ax2.text(bar.get_x() + bar.get_width()/2., height,
+             <span class="string">f'{cost}万'</span>, ha=<span class="string">'center'</span>, va=<span class="string">'bottom'</span>, fontweight=<span class="string">'bold'</span>)
+
+<span class="comment"># 图3：人力成本详细分布</span>
+roles = [<span class="string">'AI算法'</span>, <span class="string">'后端开发'</span>, <span class="string">'知识图谱'</span>, <span class="string">'前端'</span>, <span class="string">'数据'</span>, <span class="string">'测试'</span>, <span class="string">'产品'</span>, <span class="string">'项目'</span>]
+role_costs = [63, 66, 35.8, 36, 25.2, 18, 16.1, 20]
+ax3 = axes[2]
+ax3.barh(roles, role_costs, color=plt.cm.RdYlBu(np.linspace(0.2, 0.8, len(roles))))
+ax3.set_xlabel(<span class="string">'成本（万元）'</span>)
+ax3.set_title(<span class="string">'人力成本详细分布'</span>, fontsize=14, fontweight=<span class="string">'bold'</span>)
+
+plt.tight_layout()
+plt.savefig(<span class="string">'cost_analysis.png'</span>, dpi=150, bbox_inches=<span class="string">'tight'</span>)
+plt.show()
+            </div>
+
+            <h3>3.2 评估流程框架图</h3>
+            <div class="flowchart-container">
+                <p style="color: #666; padding: 40px;">[六阶段评估流程框架图]</p>
+            </div>
+            
+            <div class="code-block">
+<span class="comment"># 六阶段评估流程框架图 - Python代码</span>
+<span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt
+<span class="keyword">import</span> matplotlib.patches <span class="keyword">as</span> mpatches
+<span class="keyword">from</span> matplotlib.patches <span class="keyword">import</span> FancyBboxPatch, FancyArrowPatch
+
+fig, ax = plt.subplots(figsize=(16, 12))
+ax.set_xlim(0, 16)
+ax.set_ylim(0, 12)
+ax.axis(<span class="string">'off'</span>)
+
+colors = {
+    <span class="string">'phase1'</span>: <span class="string">'#FF6B6B'</span>, <span class="string">'phase2'</span>: <span class="string">'#4ECDC4'</span>, 
+    <span class="string">'phase3'</span>: <span class="string">'#45B7D1'</span>, <span class="string">'phase4'</span>: <span class="string">'#96CEB4'</span>,
+    <span class="string">'phase5'</span>: <span class="string">'#FFEAA7'</span>, <span class="string">'phase6'</span>: <span class="string">'#DDA0DD'</span>
+}
+
+<span class="comment"># 定义六个阶段</span>
+phases = [
+    {<span class="string">'name'</span>: <span class="string">'第一阶段\\n项目理解\\n与范围界定'</span>, <span class="string">'x'</span>: 2, <span class="string">'y'</span>: 9.5, <span class="string">'color'</span>: colors[<span class="string">'phase1'</span>], 
+     <span class="string">'items'</span>: [<span class="string">'业务领域'</span>, <span class="string">'用户画像'</span>, <span class="string">'系统集成'</span>], <span class="string">'weight'</span>: <span class="string">'15%'</span>},
+    {<span class="string">'name'</span>: <span class="string">'第二阶段\\n数据资产\\n盘点'</span>, <span class="string">'x'</span>: 6, <span class="string">'y'</span>: 9.5, <span class="string">'color'</span>: colors[<span class="string">'phase2'</span>],
+     <span class="string">'items'</span>: [<span class="string">'数据规模'</span>, <span class="string">'知识形态'</span>, <span class="string">'数据治理'</span>], <span class="string">'weight'</span>: <span class="string">'20%'</span>},
+    {<span class="string">'name'</span>: <span class="string">'第三阶段\\n技术可行性\\n评估'</span>, <span class="string">'x'</span>: 10, <span class="string">'y'</span>: 9.5, <span class="string">'color'</span>: colors[<span class="string">'phase3'</span>],
+     <span class="string">'items'</span>: [<span class="string">'AI技术适配'</span>, <span class="string">'架构复杂度'</span>, <span class="string">'技术风险'</span>], <span class="string">'weight'</span>: <span class="string">'20%'</span>},
+    {<span class="string">'name'</span>: <span class="string">'第四阶段\\n实施复杂度\\n评估'</span>, <span class="string">'x'</span>: 2, <span class="string">'y'</span>: 5, <span class="string">'color'</span>: colors[<span class="string">'phase4'</span>],
+     <span class="string">'items'</span>: [<span class="string">'功能模块'</span>, <span class="string">'定制化'</span>, <span class="string">'变更管理'</span>], <span class="string">'weight'</span>: <span class="string">'15%'</span>},
+    {<span class="string">'name'</span>: <span class="string">'第五阶段\\n成本资源\\n估算'</span>, <span class="string">'x'</span>: 6, <span class="string">'y'</span>: 5, <span class="string">'color'</span>: colors[<span class="string">'phase5'</span>],
+     <span class="string">'items'</span>: [<span class="string">'人力成本'</span>, <span class="string">'技术资源'</span>, <span class="string">'隐性成本'</span>], <span class="string">'weight'</span>: <span class="string">'20%'</span>},
+    {<span class="string">'name'</span>: <span class="string">'第六阶段\\n风险价值\\n评估'</span>, <span class="string">'x'</span>: 10, <span class="string">'y'</span>: 5, <span class="string">'color'</span>: colors[<span class="string">'phase6'</span>],
+     <span class="string">'items'</span>: [<span class="string">'风险矩阵'</span>, <span class="string">'业务价值'</span>, <span class="string">'投资回报'</span>], <span class="string">'weight'</span>: <span class="string">'10%'</span>}
+]
+
+<span class="comment"># 绘制阶段框和连接线</span>
+<span class="keyword">for</span> phase <span class="keyword">in</span> phases:
+    <span class="comment"># 绘制主框</span>
+    box = FancyBboxPatch((phase[<span class="string">'x'</span>]-1.3, phase[<span class="string">'y'</span>]-1.2), 2.6, 2.4,
+                         boxstyle=<span class="string">"round,pad=0.1"</span>, 
+                         facecolor=phase[<span class="string">'color'</span>], edgecolor=<span class="string">'black'</span>, 
+                         linewidth=2, alpha=0.8)
+    ax.add_patch(box)
+    ax.text(phase[<span class="string">'x'</span>], phase[<span class="string">'y'</span>]+0.6, phase[<span class="string">'name'</span>], 
+            ha=<span class="string">'center'</span>, va=<span class="string">'center'</span>, fontsize=11, 
+            fontweight=<span class="string">'bold'</span>, color=<span class="string">'white'</span>, linespacing=1.3)
+    
+<span class="comment"># 添加标题</span>
+ax.text(8, 11.3, <span class="string">'AI知识库项目六阶段评估流程'</span>, 
+        ha=<span class="string">'center'</span>, va=<span class="string">'center'</span>, fontsize=18, fontweight=<span class="string">'bold'</span>)
+
+plt.savefig(<span class="string">'assessment_framework.png'</span>, dpi=150, bbox_inches=<span class="string">'tight'</span>)
+            </div>
+
+            <h3>3.3 项目评估决策流程图</h3>
+            <div class="flowchart-container">
+                <p style="color: #666; padding: 40px;">[项目评估决策流程图]</p>
+            </div>
+            
+            <div class="code-block">
+<span class="comment"># 项目评估决策流程图 - Python代码</span>
+<span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt
+<span class="keyword">import</span> matplotlib.patches <span class="keyword">as</span> mpatches
+<span class="keyword">from</span> matplotlib.patches <span class="keyword">import</span> FancyBboxPatch, FancyArrowPatch
+
+fig, ax = plt.subplots(figsize=(18, 14))
+ax.set_xlim(0, 18)
+ax.set_ylim(0, 14)
+ax.axis(<span class="string">'off'</span>)
+
+colors = {
+    <span class="string">'start'</span>: <span class="string">'#27ae60'</span>, <span class="string">'process'</span>: <span class="string">'#3498db'</span>,
+    <span class="string">'decision'</span>: <span class="string">'#f39c12'</span>, <span class="string">'end'</span>: <span class="string">'#e74c3c'</span>
+}
+
+<span class="comment"># 绘制流程节点（简化示意）</span>
+<span class="keyword">def</span> <span class="function">draw_box</span>(x, y, width, height, text, color):
+    box = FancyBboxPatch((x-width/2, y-height/2), width, height,
+                         boxstyle=<span class="string">"round,pad=0.1"</span>,
+                         facecolor=color, edgecolor=<span class="string">'black'</span>, linewidth=2)
+    ax.add_patch(box)
+    ax.text(x, y, text, ha=<span class="string">'center'</span>, va=<span class="string">'center'</span>, 
+            fontsize=10, fontweight=<span class="string">'bold'</span>, color=<span class="string">'white'</span>)
+
+<span class="comment"># 决策节点（菱形）</span>
+<span class="keyword">def</span> <span class="function">draw_diamond</span>(x, y, size, text, color):
+    diamond = plt.Polygon([(x, y+size), (x+size*1.2, y), (x, y-size), (x-size*1.2, y)],
+                          facecolor=color, edgecolor=<span class="string">'black'</span>, linewidth=2)
+    ax.add_patch(diamond)
+    ax.text(x, y, text, ha=<span class="string">'center'</span>, va=<span class="string">'center'</span>, 
+            fontsize=9, color=<span class="string">'white'</span>, fontweight=<span class="string">'bold'</span>)
+
+<span class="comment"># 绘制主要流程</span>
+draw_box(2, 11.5, 2.5, 0.8, <span class="string">'接收项目\\n需求文档'</span>, colors[<span class="string">'start'</span>])
+draw_box(5.5, 11.5, 2.5, 0.8, <span class="string">'第一阶段\\n业务理解'</span>, colors[<span class="string">'process'</span>])
+draw_diamond(9.5, 11.5, 0.6, <span class="string">'业务场景\\n清晰?'</span>, colors[<span class="string">'decision'</span>])
+draw_box(13, 11.5, 2.5, 0.8, <span class="string">'第二阶段\\n数据盘点'</span>, colors[<span class="string">'process'</span>])
+<span class="comment"># ... 更多节点和箭头连接</span>
+
+ax.text(9, 13.5, <span class="string">'AI知识库项目评估决策流程'</span>, 
+        ha=<span class="string">'center'</span>, fontsize=20, fontweight=<span class="string">'bold'</span>)
+plt.savefig(<span class="string">'decision_flow.png'</span>, dpi=150, bbox_inches=<span class="string">'tight'</span>)
+            </div>
+
+            <h3>3.4 等保等级对比雷达图</h3>
+            <div class="flowchart-container">
+                <p style="color: #666; padding: 40px;">[等保三级vs四级雷达图]</p>
+            </div>
+            
+            <div class="code-block">
+<span class="comment"># 等保等级对比雷达图 - Python代码</span>
+<span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt
+<span class="keyword">import</span> numpy <span class="keyword">as</span> np
+
+categories = [<span class="string">'物理安全'</span>, <span class="string">'网络安全'</span>, <span class="string">'主机安全'</span>, 
+              <span class="string">'应用安全'</span>, <span class="string">'数据安全'</span>, <span class="string">'管理安全'</span>]
+level3_scores = [3, 3, 3, 3, 3, 3]
+level4_scores = [5, 5, 5, 5, 5, 5]
+
+angles = np.linspace(0, 2 * np.pi, len(categories), endpoint=False).tolist()
+angles += angles[:1]
+level3_scores += level3_scores[:1]
+level4_scores += level4_scores[:1]
+
+fig, ax = plt.subplots(figsize=(10, 10), subplot_kw=dict(projection=<span class="string">'polar'</span>))
+ax.plot(angles, level3_scores, <span class="string">'o-'</span>, linewidth=2, label=<span class="string">'等保三级'</span>, color=<span class="string">'#3498db'</span>)
+ax.fill(angles, level3_scores, alpha=0.25, color=<span class="string">'#3498db'</span>)
+ax.plot(angles, level4_scores, <span class="string">'o-'</span>, linewidth=2, label=<span class="string">'等保四级'</span>, color=<span class="string">'#e74c3c'</span>)
+ax.fill(angles, level4_scores, alpha=0.25, color=<span class="string">'#e74c3c'</span>)
+
+ax.set_xticks(angles[:-1])
+ax.set_xticklabels(categories)
+ax.set_ylim(0, 5)
+ax.legend()
+ax.set_title(<span class="string">'等保三级 vs 四级 技术要求对比'</span>, fontsize=16, fontweight=<span class="string">'bold'</span>, pad=20)
+plt.savefig(<span class="string">'dengbao_radar.png'</span>, dpi=150, bbox_inches=<span class="string">'tight'</span>)
+            </div>
+
+            <h3>3.5 预算对比分析图</h3>
+            <div class="flowchart-container">
+                <p style="color: #666; padding: 40px;">[预算方案对比柱状图]</p>
+            </div>
+            
+            <div class="code-block">
+<span class="comment"># 预算对比分析图 - Python代码</span>
+<span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt
+<span class="keyword">import</span> numpy <span class="keyword">as</span> np
+
+fig, ax = plt.subplots(figsize=(12, 6))
+
+categories = [<span class="string">'基础预算'</span>, <span class="string">'优化后预算'</span>, <span class="string">'建议合同金额'</span>]
+values = [533.5, 417.2, 438.5]
+colors_bar = [<span class="string">'#FF6B6B'</span>, <span class="string">'#4ECDC4'</span>, <span class="string">'#45B7D1'</span>]
+
+bars = ax.bar(categories, values, color=colors_bar, edgecolor=<span class="string">'black'</span>, linewidth=1.5, width=0.6)
+
+<span class="keyword">for</span> bar, val <span class="keyword">in</span> zip(bars, values):
+    height = bar.get_height()
+    ax.text(bar.get_x() + bar.get_width()/2., height + 10,
+            <span class="string">f'{val:.1f}万元'</span>, ha=<span class="string">'center'</span>, va=<span class="string">'bottom'</span>, 
+            fontsize=14, fontweight=<span class="string">'bold'</span>)
+
+ax.axhline(y=240, color=<span class="string">'gray'</span>, linestyle=<span class="string">'--'</span>, alpha=0.5)
+ax.text(2.3, 240, <span class="string">'第一期预算线'</span>, fontsize=10, color=<span class="string">'gray'</span>)
+ax.axhline(y=400, color=<span class="string">'gray'</span>, linestyle=<span class="string">'--'</span>, alpha=0.5)
+ax.text(2.3, 400, <span class="string">'优化后预算线'</span>, fontsize=10, color=<span class="string">'gray'</span>)
+
+ax.set_ylabel(<span class="string">'预算金额 (万元)'</span>, fontsize=12)
+ax.set_title(<span class="string">'瑞云恒通知识库项目 - 预算对比分析'</span>, fontsize=16, fontweight=<span class="string">'bold'</span>)
+ax.set_ylim(0, max(values) * 1.2)
+
+plt.savefig(<span class="string">'budget_comparison.png'</span>, dpi=150, bbox_inches=<span class="string">'tight'</span>)
+            </div>
+        </div>
+
+        <!-- 第四部分：等保合规评估 -->
+        <div class="card">
+            <h2>第四部分：等保合规评估体系</h2>
+
+            <h3>4.1 等保等级速查表</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>等级</th>
+                        <th>名称</th>
+                        <th>适用对象</th>
+                        <th>测评频率</th>
+                        <th>成本加成</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>一级</td>
+                        <td>自主保护级</td>
+                        <td>个体工商户简单系统</td>
+                        <td>无需测评</td>
+                        <td>0%</td>
+                    </tr>
+                    <tr>
+                        <td>二级</td>
+                        <td>指导保护级</td>
+                        <td>普通企业OA、内部管理系统</td>
+                        <td>每2年1次</td>
+                        <td>+5%</td>
+                    </tr>
+                    <tr style="background: #fff3cd;">
+                        <td><strong>三级</strong></td>
+                        <td><strong>监督保护级</strong></td>
+                        <td><strong>电网/金融核心业务系统</strong></td>
+                        <td><strong>每年1次</strong></td>
+                        <td><strong>+15-20%</strong></td>
+                    </tr>
+                    <tr>
+                        <td>四级</td>
+                        <td>强制保护级</td>
+                        <td>电网调度控制、银行核心交易</td>
+                        <td>每半年1次</td>
+                        <td>+40-60%</td>
+                    </tr>
+                    <tr>
+                        <td>五级</td>
+                        <td>专控保护级</td>
+                        <td>国防、国家安全系统</td>
+                        <td>专门管控</td>
+                        <td>+100%+</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>4.2 等保三级技术要求清单</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>安全层面</th>
+                        <th>技术要求</th>
+                        <th>瑞云实施成本</th>
+                        <th>优化建议</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>物理安全</td>
+                        <td>机房门禁、监控、环境控制</td>
+                        <td>复用现有</td>
+                        <td>利用电网机房</td>
+                    </tr>
+                    <tr>
+                        <td>网络安全</td>
+                        <td>入侵检测、堡垒机、流量审计</td>
+                        <td>15万</td>
+                        <td>云原生安全产品</td>
+                    </tr>
+                    <tr>
+                        <td>主机安全</td>
+                        <td>漏洞管理、恶意代码防护</td>
+                        <td>含在云资源</td>
+                        <td>选择合规云厂商</td>
+                    </tr>
+                    <tr>
+                        <td>应用安全</td>
+                        <td>代码审计、会话管理、输入验证</td>
+                        <td>10万</td>
+                        <td>自动化扫描工具</td>
+                    </tr>
+                    <tr>
+                        <td>数据安全</td>
+                        <td>TLS1.3传输加密、存储加密</td>
+                        <td>8万</td>
+                        <td>字段级加密</td>
+                    </tr>
+                    <tr>
+                        <td>安全管理</td>
+                        <td>制度完善、培训、应急响应</td>
+                        <td>5万</td>
+                        <td>复用电网制度</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="danger-box">
+                <strong>🚨 等保四级红线（瑞云项目需避免）：</strong><br>
+                如涉及以下情况，必须按等保四级建设，成本增加150万+：<br>
+                1. 与电网调度控制系统数据互通<br>
+                2. 涉及电力一次设备实时控制<br>
+                3. 存储或处理国家秘密信息<br><br>
+                <strong>✅ 瑞云项目为投资决策辅助系统，不涉及调度控制，可按三级建设！</strong>
+            </div>
+        </div>
+
+        <!-- 第五部分：成本速算表 -->
+        <div class="card">
+            <h2>第五部分：成本估算速算工具</h2>
+
+            <h3>5.1 项目规模定位表</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>项目规模</th>
+                        <th>工期</th>
+                        <th>团队规模</th>
+                        <th>基准预算</th>
+                        <th>技术资源占比</th>
+                        <th>瑞云映射</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>小型项目</td>
+                        <td>3-6月</td>
+                        <td>3-5人</td>
+                        <td>50-100万</td>
+                        <td>20-25%</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>中型项目</td>
+                        <td>6-12月</td>
+                        <td>8-15人</td>
+                        <td>200-500万</td>
+                        <td>25-35%</td>
+                        <td>-</td>
+                    </tr>
+                    <tr style="background: #d4edda;">
+                        <td><strong>大型项目</strong></td>
+                        <td><strong>12-18月</strong></td>
+                        <td><strong>15-25人</strong></td>
+                        <td><strong>500-1000万</strong></td>
+                        <td><strong>30-40%</strong></td>
+                        <td><strong>✓ 瑞云项目</strong></td>
+                    </tr>
+                    <tr>
+                        <td>超大型项目</td>
+                        <td>18月+</td>
+                        <td>25-40人</td>
+                        <td>1000万+</td>
+                        <td>35-45%</td>
+                        <td>-</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>5.2 人力成本速算公式</h3>
+            <div class="code-block" style="background: #f8f9fa; color: #333;">
+<strong>人力成本计算公式：</strong>
+
+人力成本 = Σ(角色人天 × 人天单价 × 投入比例)
+
+人天单价参考：
+  • 普通开发工程师：1,500-2,000元/人天
+  • AI算法工程师：2,500-3,500元/人天  
+  • 知识图谱工程师：2,000-2,800元/人天
+  • 产品经理/项目经理：1,800-2,500元/人天
+
+投入比例：
+  • 全职投入：100%
+  • 重度参与：80%
+  • 中度参与：50%
+  • 轻度参与：30%
+
+示例（瑞云项目）：
+  AI算法专家(2人) = 2 × 35,000元/月 × 90% × 10月 = 63万
+            </div>
+
+            <h3>5.3 技术资源成本速算</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>资源类型</th>
+                        <th>配置参考</th>
+                        <th>月费用</th>
+                        <th>瑞云项目用量</th>
+                        <th>小计</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>GPU训练服务器</td>
+                        <td>8卡A100</td>
+                        <td>3-5万/月</td>
+                        <td>10个月</td>
+                        <td>30-50万</td>
+                    </tr>
+                    <tr>
+                        <td>应用服务器</td>
+                        <td>16核64G</td>
+                        <td>0.5-1万/月</td>
+                        <td>22个月</td>
+                        <td>11-22万</td>
+                    </tr>
+                    <tr>
+                        <td>大模型API</td>
+                        <td>GPT-4/Claude</td>
+                        <td>1-2万/月</td>
+                        <td>22个月</td>
+                        <td>22-44万</td>
+                    </tr>
+                    <tr>
+                        <td>向量数据库</td>
+                        <td>Milvus企业版</td>
+                        <td>0.5-1万/月</td>
+                        <td>22个月</td>
+                        <td>11-22万</td>
+                    </tr>
+                    <tr>
+                        <td>存储与备份</td>
+                        <td>10TB+异地备份</td>
+                        <td>0.3-0.5万/月</td>
+                        <td>34个月</td>
+                        <td>10-17万</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>5.4 成本优化策略</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>优化策略</th>
+                        <th>节省金额</th>
+                        <th>实施难度</th>
+                        <th>瑞云应用</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>采用混合云架构</td>
+                        <td>27.4万</td>
+                        <td>中</td>
+                        <td>核心数据本地，计算上云</td>
+                    </tr>
+                    <tr>
+                        <td>使用开源大模型</td>
+                        <td>13.2万</td>
+                        <td>高</td>
+                        <td>ChatGLM替代部分API</td>
+                    </tr>
+                    <tr>
+                        <td>分阶段优化团队</td>
+                        <td>29.2万</td>
+                        <td>低</td>
+                        <td>M4后减算法人员</td>
+                    </tr>
+                    <tr>
+                        <td>复用现有基础设施</td>
+                        <td>23.2万</td>
+                        <td>中</td>
+                        <td>复用电网安全设备</td>
+                    </tr>
+                    <tr>
+                        <td>敏捷迭代开发</td>
+                        <td>23.4万</td>
+                        <td>低</td>
+                        <td>减少冗余文档</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="tip-box">
+                <strong>💡 瑞云项目成本优化后：</strong><br>
+                基础预算533.5万 → 优化后417.2万 → 建议合同438.5万（含半额风险准备金）<br>
+                节省幅度：21.8%，优化方案可行且风险可控。
+            </div>
+        </div>
+
+        <!-- 第六部分：实施检查清单 -->
+        <div class="card">
+            <h2>第六部分：实施检查清单（Checklist）</h2>
+
+            <h3>6.1 评估阶段检查清单</h3>
+            <div class="grid-2">
+                <div>
+                    <h4>第一阶段：项目启动准备</h4>
+                    <ul class="feature-list">
+                        <li>项目需求说明书（含业务场景）</li>
+                        <li>现有系统架构图和技术栈清单</li>
+                        <li>数据资产清单（数据库、文档、接口）</li>
+                        <li>用户角色和权限需求</li>
+                        <li>安全合规要求（等保/分保）</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>第二阶段：数据资产评估</h4>
+                    <ul class="feature-list">
+                        <li>历史数据总量估算</li>
+                        <li>数据增长速率（日/月增量）</li>
+                        <li>数据完整性检查（缺失率）</li>
+                        <li>数据准确性抽样验证</li>
+                        <li>标注需求和工作量估算</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="grid-2">
+                <div>
+                    <h4>第三阶段：技术方案评估</h4>
+                    <ul class="feature-list">
+                        <li>大模型选择（通用/垂直/自研）</li>
+                        <li>知识表示方案（向量/图谱/混合）</li>
+                        <li>POC验证（准确率基线测试）</li>
+                        <li>性能指标确认（响应/并发）</li>
+                        <li>技术风险识别和应对</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>第四阶段：实施计划制定</h4>
+                    <ul class="feature-list">
+                        <li>MVP范围确定（最小可行产品）</li>
+                        <li>功能优先级排序（MoSCoW）</li>
+                        <li>分期交付计划（3-4期）</li>
+                        <li>每期里程碑和验收标准</li>
+                        <li>客户配合资源确认</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>6.2 风险识别检查清单</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>风险类别</th>
+                        <th>风险描述</th>
+                        <th>影响程度</th>
+                        <th>应对措施</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>技术风险</td>
+                        <td>大模型准确率不达预期</td>
+                        <td><span class="tag tag-high">高</span></td>
+                        <td>POC验证+规则引擎兜底+人工复核</td>
+                    </tr>
+                    <tr>
+                        <td>需求风险</td>
+                        <td>业务规则复杂且变化频繁</td>
+                        <td><span class="tag tag-high">高</span></td>
+                        <td>配置化机制+派驻运营人员</td>
+                    </tr>
+                    <tr>
+                        <td>数据风险</td>
+                        <td>历史数据质量不足</td>
+                        <td><span class="tag tag-high">高</span></td>
+                        <td>数据增强+外部标准库+人工标注</td>
+                    </tr>
+                    <tr>
+                        <td>集成风险</td>
+                        <td>与现有系统集成复杂</td>
+                        <td><span class="tag tag-medium">中</span></td>
+                        <td>前期接口调研+预留适配层</td>
+                    </tr>
+                    <tr>
+                        <td>资源风险</td>
+                        <td>高端AI人才招聘困难</td>
+                        <td><span class="tag tag-medium">中</span></td>
+                        <td>提前锁定+高校合作+外包</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>6.3 合同条款检查清单</h3>
+            <ul class="feature-list">
+                <li><strong>范围边界明确：</strong>详细列出包含和不包含的功能模块</li>
+                <li><strong>验收标准量化：</strong>准确率>95%、响应时间<3秒等可测量指标</li>
+                <li><strong>付款里程碑：</strong>建议3:3:3:1（启动:一期:二期:终验）</li>
+                <li><strong>变更管理流程：</strong>需求变更计价标准（人天单价×工作量）</li>
+                <li><strong>知识产权约定：</strong>代码归客户，技术框架可复用</li>
+                <li><strong>保密协议：</strong>数据安全条款、保密期限、违约责任</li>
+                <li><strong>质保金预留：</strong>建议预留10%，验收后1年支付</li>
+                <li><strong>等保合规责任：</strong>明确测评费用由谁承担</li>
+            </ul>
+        </div>
+
+        <!-- 总结 -->
+        <div class="card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+            <h2 style="color: white; border-bottom-color: rgba(255,255,255,0.3);">总结：标准评估流程速记</h2>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 24px; margin-top: 20px;">
+                <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 8px;">
+                    <h4 style="margin-bottom: 12px;">📊 评估口诀</h4>
+                    <p style="font-size: 0.95em; line-height: 1.6;">"六阶段、五维度、四决策"<br>
+                    六阶段评估 → 五维度评分 → 四决策点把关</p>
+                </div>
+                <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 8px;">
+                    <h4 style="margin-bottom: 12px;">💰 成本速算</h4>
+                    <p style="font-size: 0.95em; line-height: 1.6;">人力(55%) + 技术(35%) + 其他(10%)<br>
+                    + 等保三级(+15%) + 风险金(8%)</p>
+                </div>
+                <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 8px;">
+                    <h4 style="margin-bottom: 12px;">⚠️ 避坑要点</h4>
+                    <p style="font-size: 0.95em; line-height: 1.6;">不碰调度系统(省150万)<br>
+                    数据先抽样(防质量陷阱)<br>
+                    AI辅助而非替代</p>
+                </div>
+                <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 8px;">
+                    <h4 style="margin-bottom: 12px;">🎯 精准度</h4>
+                    <p style="font-size: 0.95em; line-height: 1.6;">预算偏差：±15%<br>
+                    工期偏差：±2周<br>
+                    基于瑞云项目校准</p>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p><strong>AI知识库项目成本评估完整流程手册</strong></p>
+            <p>基于瑞云恒通项目案例 | 版本 v1.0 | 2026年2月</p>
+            <p style="margin-top: 12px; font-size: 0.85em;">
+                本手册包含完整的评估流程、评分量表、Python可视化代码和检查清单，<br>
+                可直接用于同类AI知识库、智能审核、RAG系统项目的成本评估。
+            </p>
+        </footer>
+    </div>
+</body>
+</html>
