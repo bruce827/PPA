@@ -51,7 +51,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 7
+        "register": 8
       },
       "enableBy": "register",
       "type": "preset",
@@ -81,7 +81,7 @@
             0
           ]
         },
-        "register": 3
+        "register": 2
       },
       "enableBy": "register",
       "type": "plugin",
@@ -95,7 +95,7 @@
       "time": {
         "hooks": {
           "onStart": [
-            2
+            1
           ]
         },
         "register": 2
@@ -112,6 +112,8 @@
       "time": {
         "hooks": {
           "modifyRoutes": [
+            0,
+            0,
             0,
             0
           ]
@@ -130,9 +132,10 @@
       "time": {
         "hooks": {
           "onDevCompileDone": [
-            136,
-            38,
-            29
+            242,
+            33,
+            33,
+            73
           ]
         },
         "register": 0
@@ -149,14 +152,16 @@
       "time": {
         "hooks": {
           "modifyAppData": [
-            27
+            26
           ],
           "onGenerateFiles": [
-            3,
-            22
+            2,
+            19,
+            15,
+            14
           ]
         },
-        "register": 16
+        "register": 15
       },
       "enableBy": "register",
       "type": "plugin",
@@ -170,6 +175,8 @@
       "time": {
         "hooks": {
           "addEntryCode": [
+            0,
+            0,
             0,
             0
           ]
@@ -188,12 +195,17 @@
       "time": {
         "hooks": {
           "onCheckConfig": [
-            0
-          ],
-          "onCheck": [
+            0,
+            0,
+            0,
+            0,
             1
           ],
+          "onCheck": [
+            0
+          ],
           "onPrepareBuildSuccess": [
+            0,
             0,
             0,
             0,
@@ -234,10 +246,71 @@
             0,
             0,
             0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
             0
           ]
         },
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -254,7 +327,7 @@
             0
           ]
         },
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -281,10 +354,14 @@
       "time": {
         "hooks": {
           "modifyConfig": [
+            0,
+            0,
+            1,
+            0,
             0
           ]
         },
-        "register": 7
+        "register": 5
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1150,10 +1227,10 @@
       "time": {
         "hooks": {
           "onStart": [
-            0
+            1
           ]
         },
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1170,7 +1247,7 @@
             7
           ]
         },
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1196,7 +1273,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 27
+        "register": 24
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1209,7 +1286,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 16
+        "register": 13
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1229,7 +1306,16 @@
             0
           ],
           "modifyHTMLFavicon": [
-            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
             0,
             0,
             0,
@@ -1252,15 +1338,19 @@
       "time": {
         "hooks": {
           "onGenerateFiles": [
+            1,
+            0,
             0,
             0
           ],
           "addRuntimePlugin": [
             0,
+            0,
+            0,
             0
           ]
         },
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1287,13 +1377,13 @@
       "time": {
         "hooks": {
           "onStart": [
-            1
+            0
           ],
           "addBeforeMiddlewares": [
-            3
+            2
           ]
         },
-        "register": 23
+        "register": 22
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/preset-umi/dist/features/mock/mock.js",
@@ -1305,7 +1395,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1318,7 +1408,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/preset-umi/dist/features/okam/okam.js",
@@ -1332,9 +1422,15 @@
         "hooks": {
           "onGenerateFiles": [
             0,
+            0,
+            0,
             0
           ],
           "addEntryImports": [
+            0,
+            0,
+            0,
+            0,
             0,
             0,
             0,
@@ -1354,7 +1450,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1368,13 +1464,23 @@
       "time": {
         "hooks": {
           "modifyConfig": [
-            1
+            0,
+            0,
+            0,
+            0,
+            0
           ],
           "onGenerateFiles": [
-            54,
-            20
+            52,
+            28,
+            27,
+            10
           ],
           "addPolyfillImports": [
+            0,
+            0,
+            0,
+            0,
             0,
             0,
             0,
@@ -1397,10 +1503,14 @@
             0,
             0,
             0,
+            0,
+            0,
+            0,
+            0,
             0
           ]
         },
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1414,11 +1524,13 @@
       "time": {
         "hooks": {
           "onGenerateFiles": [
-            99,
+            102,
+            0,
+            0,
             0
           ]
         },
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1431,7 +1543,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1444,7 +1556,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1459,13 +1571,15 @@
         "hooks": {
           "onGenerateFiles": [
             0,
+            0,
+            0,
             0
           ],
           "addBeforeMiddlewares": [
             0
           ]
         },
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1480,12 +1594,16 @@
         "hooks": {
           "onGenerateFiles": [
             8,
-            5,
-            11,
+            4,
+            15,
+            4,
+            16,
+            4,
+            15,
             4
           ]
         },
-        "register": 3
+        "register": 2
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1537,8 +1655,10 @@
       "time": {
         "hooks": {
           "onGenerateFiles": [
-            277,
-            10
+            251,
+            14,
+            10,
+            16
           ]
         },
         "register": 2
@@ -1597,7 +1717,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 3
+        "register": 2
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/preset-umi/dist/features/apiRoute/apiRoute.js",
@@ -1624,10 +1744,12 @@
         "hooks": {
           "onGenerateFiles": [
             1,
+            0,
+            1,
             1
           ]
         },
-        "register": 0
+        "register": 1
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/preset-umi/dist/features/test/test.js",
@@ -1639,7 +1761,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1652,7 +1774,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1665,7 +1787,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1678,7 +1800,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/preset-umi/dist/features/webpack/webpack.js",
@@ -1782,7 +1904,7 @@
       "time": {
         "hooks": {
           "modifyUniBundler": [
-            357
+            320
           ]
         },
         "register": 1
@@ -1811,7 +1933,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 22
+        "register": 23
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1825,10 +1947,10 @@
       "time": {
         "hooks": {
           "modifyAppData": [
-            9
+            8
           ]
         },
-        "register": 24
+        "register": 21
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/preset-umi/dist/commands/dev/dev.js",
@@ -1840,7 +1962,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1853,7 +1975,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1879,7 +2001,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1892,7 +2014,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1918,7 +2040,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1931,7 +2053,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1944,7 +2066,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1970,7 +2092,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1996,7 +2118,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -2022,7 +2144,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -2074,7 +2196,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 15
+        "register": 14
       },
       "enableBy": "register",
       "type": "plugin",
@@ -2087,7 +2209,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -2100,7 +2222,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 2
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -2115,9 +2237,13 @@
         "hooks": {
           "addRuntimePlugin": [
             0,
+            0,
+            0,
             0
           ],
           "onGenerateFiles": [
+            1,
+            1,
             1,
             0
           ],
@@ -2140,7 +2266,7 @@
       },
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/plugins/dist/analytics.js",
@@ -2153,6 +2279,10 @@
       "time": {
         "hooks": {
           "modifyConfig": [
+            3,
+            1,
+            0,
+            1,
             3
           ],
           "modifyAppData": [
@@ -2162,18 +2292,28 @@
             0,
             0,
             0,
+            0,
+            0,
+            0,
+            0,
             0
           ],
           "addRuntimePlugin": [
+            0,
+            0,
             0,
             0
           ],
           "addRuntimePluginKey": [
             0,
+            0,
+            0,
             0
           ],
           "onGenerateFiles": [
             2,
+            0,
+            1,
             1
           ],
           "addExtraBabelPlugins": [
@@ -2195,7 +2335,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 4
+        "register": 3
       },
       "enableBy": "config",
       "type": "plugin",
@@ -2210,22 +2350,30 @@
         "hooks": {
           "addRuntimePlugin": [
             0,
+            0,
+            0,
             0
           ],
           "addRuntimePluginKey": [
+            1,
+            1,
             0,
             0
           ],
           "onGenerateFiles": [
+            0,
+            1,
             1,
             1
           ],
           "addExtraModels": [
             0,
+            0,
+            0,
             0
           ]
         },
-        "register": 0
+        "register": 1
       },
       "enableBy": "config",
       "type": "plugin",
@@ -2241,26 +2389,38 @@
       "time": {
         "hooks": {
           "modifyConfig": [
+            0,
+            0,
+            0,
+            0,
             0
           ],
           "addLayouts": [
             0,
-            1
+            0,
+            0,
+            0
           ],
           "modifyAppData": [
             0
           ],
           "addRuntimePlugin": [
             0,
+            0,
+            0,
             0
           ],
           "addRuntimePluginKey": [
             0,
+            0,
+            0,
             0
           ],
           "onGenerateFiles": [
-            6,
-            3
+            5,
+            2,
+            4,
+            4
           ]
         },
         "register": 2
@@ -2276,7 +2436,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 2
+        "register": 1
       },
       "enableBy": "config",
       "type": "plugin",
@@ -2289,7 +2449,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 3
+        "register": 1
       },
       "enableBy": "config",
       "type": "plugin",
@@ -2304,17 +2464,21 @@
         "hooks": {
           "addRuntimePlugin": [
             0,
+            0,
+            0,
             0
           ],
           "onGenerateFiles": [
-            21,
-            18
+            22,
+            19,
+            24,
+            24
           ],
           "addTmpGenerateWatcherPaths": [
             0
           ]
         },
-        "register": 1
+        "register": 4
       },
       "enableBy": "config",
       "type": "plugin",
@@ -2327,7 +2491,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "config",
       "type": "plugin",
@@ -2342,10 +2506,12 @@
         "hooks": {
           "addRuntimePluginKey": [
             0,
+            0,
+            0,
             0
           ]
         },
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -2370,7 +2536,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/plugins/dist/qiankun/slave.js",
@@ -2382,7 +2548,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "config",
       "type": "plugin",
@@ -2397,14 +2563,18 @@
         "hooks": {
           "addRuntimePluginKey": [
             0,
+            0,
+            0,
             0
           ],
           "onGenerateFiles": [
-            3,
+            2,
+            0,
+            1,
             1
           ]
         },
-        "register": 1
+        "register": 0
       },
       "enableBy": "config",
       "type": "plugin",
@@ -2457,6 +2627,10 @@
       "time": {
         "hooks": {
           "modifyConfig": [
+            0,
+            0,
+            0,
+            0,
             0
           ]
         },
@@ -2507,7 +2681,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -2546,6 +2720,7 @@
         "name": "项目评估",
         "path": "/assessment",
         "icon": "FormOutlined",
+        "hideInMenu": true,
         "routes": [
           {
             "name": "新建评估",
@@ -2729,6 +2904,7 @@
         "name": "项目评估",
         "path": "/assessment",
         "icon": "FormOutlined",
+        "hideInMenu": true,
         "routes": [
           {
             "name": "新建评估",
@@ -3800,6 +3976,7 @@
       "name": "项目评估",
       "path": "/assessment",
       "icon": "FormOutlined",
+      "hideInMenu": true,
       "parentId": "ant-design-pro-layout",
       "id": "3",
       "absPath": "/assessment"
@@ -3853,6 +4030,7 @@
       "name": "Web3D项目评估",
       "path": "/web3d",
       "icon": "BoxPlotOutlined",
+      "hideInMenu": true,
       "parentId": "ant-design-pro-layout",
       "id": "8",
       "absPath": "/web3d"
@@ -3907,6 +4085,7 @@
       "name": "参数配置",
       "path": "/config",
       "icon": "SettingOutlined",
+      "hideInMenu": true,
       "file": "@/pages/Config.tsx",
       "parentId": "ant-design-pro-layout",
       "id": "13",
@@ -3984,7 +4163,7 @@
       "parentId": "19",
       "id": "20",
       "absPath": "/opportunity/bidding-sites",
-      "__content": "import {\n  createBiddingSite,\n  deleteBiddingSite,\n  getBiddingSites,\n  updateBiddingSite,\n  validateBiddingSite,\n} from '@/services/opportunity';\nimport {\n  ModalForm,\n  PageContainer,\n  ProFormSelect,\n  ProFormSwitch,\n  ProFormText,\n  ProFormTextArea,\n  ProTable,\n} from '@ant-design/pro-components';\nimport {\n  Badge,\n  Button,\n  Form,\n  message,\n  Modal,\n  Popconfirm,\n  Space,\n  Tag,\n  Tooltip,\n} from 'antd';\nimport type { ActionType, ProColumns } from '@ant-design/pro-components';\nimport React, { useMemo, useRef, useState } from 'react';\n\nconst sourceLevelOptions = [\n  { label: '国家级', value: '国家级' },\n  { label: '地方省市', value: '地方省市' },\n  { label: '行业垂直', value: '行业垂直' },\n  { label: '第三方综合', value: '第三方综合' },\n];\n\nconst platformTypeOptions = [\n  '官方核心',\n  '公共资源交易',\n  '政府采购',\n  '行业核心',\n  '电力 / 能源',\n  '建筑 / 基建',\n  '其他行业',\n  '聚合平台',\n].map((item) => ({ label: item, value: item }));\n\nconst validationStatusMap: Record<\n  API_OPPORTUNITY.ValidationStatus,\n  { text: string; color: string }\n> = {\n  never_validated: { text: '未校验', color: 'default' },\n  validated_ok: { text: '校验通过', color: 'success' },\n  validated_warning: { text: '存在警告', color: 'warning' },\n  validated_failed: { text: '校验失败', color: 'error' },\n  heuristic_only: { text: '仅启发式', color: 'processing' },\n};\n\nconst validationStatusOptions = Object.entries(validationStatusMap).map(\n  ([value, config]) => ({\n    label: config.text,\n    value,\n  }),\n);\n\nconst BiddingSitesPage: React.FC = () => {\n  const actionRef = useRef<ActionType>();\n  const [form] = Form.useForm<API_OPPORTUNITY.BiddingSitePayload>();\n  const [editingRecord, setEditingRecord] = useState<API_OPPORTUNITY.BiddingSite | null>(null);\n  const [formVisible, setFormVisible] = useState(false);\n  const [detailVisible, setDetailVisible] = useState(false);\n  const [detailRecord, setDetailRecord] = useState<API_OPPORTUNITY.BiddingSite | null>(null);\n  const [validatingId, setValidatingId] = useState<number | null>(null);\n\n  const validationOptions = useMemo(() => validationStatusOptions, []);\n\n  const openCreateModal = () => {\n    setEditingRecord(null);\n    form.resetFields();\n    form.setFieldsValue({\n      is_official: true,\n      enabled: true,\n    });\n    setFormVisible(true);\n  };\n\n  const openEditModal = (record: API_OPPORTUNITY.BiddingSite) => {\n    setEditingRecord(record);\n    form.setFieldsValue({\n      name: record.name,\n      alias_name: record.alias_name || '',\n      url: record.url,\n      source_level: record.source_level || undefined,\n      province: record.province || '',\n      city: record.city || '',\n      platform_type: record.platform_type || undefined,\n      is_official: record.is_official,\n      enabled: record.enabled,\n      notes: record.notes || '',\n    });\n    setFormVisible(true);\n  };\n\n  const showValidationDetail = (record: API_OPPORTUNITY.BiddingSite) => {\n    setDetailRecord(record);\n    setDetailVisible(true);\n  };\n\n  const handleSubmit = async (values: API_OPPORTUNITY.BiddingSitePayload) => {\n    try {\n      if (editingRecord) {\n        await updateBiddingSite(editingRecord.id, values);\n        message.success('更新成功');\n      } else {\n        await createBiddingSite(values);\n        message.success('创建成功');\n      }\n      setFormVisible(false);\n      actionRef.current?.reload();\n      return true;\n    } catch (error: any) {\n      message.error(error?.message || '保存失败');\n      return false;\n    }\n  };\n\n  const handleValidate = async (record: API_OPPORTUNITY.BiddingSite) => {\n    try {\n      setValidatingId(record.id);\n      const response = await validateBiddingSite(record.id);\n      message.success('校验完成');\n      if (response?.data?.site) {\n        setDetailRecord(response.data.site);\n        setDetailVisible(true);\n      }\n      actionRef.current?.reload();\n    } catch (error: any) {\n      message.error(error?.message || '校验失败');\n    } finally {\n      setValidatingId(null);\n    }\n  };\n\n  const columns: ProColumns<API_OPPORTUNITY.BiddingSite>[] = [\n    {\n      title: '网站名称',\n      dataIndex: 'name',\n      width: 240,\n      ellipsis: true,\n      copyable: true,\n      render: (_, record) => (\n        <Space direction=\"vertical\" size={0}>\n          <span>{record.name}</span>\n          {record.alias_name ? (\n            <span style={{ color: '#8c8c8c', fontSize: 12 }}>\n              别名: {record.alias_name}\n            </span>\n          ) : null}\n        </Space>\n      ),\n    },\n    {\n      title: '网址',\n      dataIndex: 'url',\n      width: 200,\n      ellipsis: true,\n      copyable: true,\n      render: (_, record) => (\n        <Tooltip title={record.url}>\n          <a\n            onClick={() => {\n              window.open(record.url, '_blank', 'noopener,noreferrer');\n            }}\n          >\n            {record.url}\n          </a>\n        </Tooltip>\n      ),\n    },\n    {\n      title: '层级',\n      dataIndex: 'source_level',\n      valueType: 'select',\n      width: 100,\n      valueEnum: sourceLevelOptions.reduce<Record<string, { text: string }>>(\n        (acc, item) => {\n          acc[item.value] = { text: item.label };\n          return acc;\n        },\n        {},\n      ),\n    },\n    {\n      title: '平台类型',\n      dataIndex: 'platform_type',\n      valueType: 'select',\n      width: 100,\n      valueEnum: platformTypeOptions.reduce<Record<string, { text: string }>>(\n        (acc, item) => {\n          acc[item.value] = { text: item.label };\n          return acc;\n        },\n        {},\n      ),\n    },\n    {\n      title: '区域',\n      dataIndex: 'province',\n      search: false,\n      width: 120,\n      render: (_, record) => [record.province, record.city].filter(Boolean).join(' / ') || '-',\n    },\n    {\n      title: '官方',\n      dataIndex: 'is_official',\n      valueType: 'select',\n      width: 90,\n      valueEnum: {\n        true: { text: '是' },\n        false: { text: '否' },\n      },\n      render: (_, record) =>\n        record.is_official ? <Badge status=\"success\" text=\"官方\" /> : <Badge status=\"default\" text=\"第三方\" />,\n    },\n    {\n      title: '启用',\n      dataIndex: 'enabled',\n      valueType: 'select',\n      width: 90,\n      valueEnum: {\n        true: { text: '启用' },\n        false: { text: '停用' },\n      },\n      render: (_, record) =>\n        record.enabled ? <Tag color=\"green\">启用</Tag> : <Tag color=\"default\">停用</Tag>,\n    },\n    {\n      title: '校验状态',\n      dataIndex: 'validation_status',\n      valueType: 'select',\n      width: 120,\n      valueEnum: validationOptions.reduce<Record<string, { text: string }>>(\n        (acc, item) => {\n          acc[item.value] = { text: item.label };\n          return acc;\n        },\n        {},\n      ),\n      render: (_, record) => {\n        const config = validationStatusMap[record.validation_status];\n        return <Tag color={config.color}>{config.text}</Tag>;\n      },\n    },\n    {\n      title: '校验摘要',\n      dataIndex: 'validation_summary',\n      search: false,\n      ellipsis: true,\n      width:80,\n      render: (_, record) => {\n        if (!record.validation_summary) return '-';\n        return (\n          <Tooltip title={record.validation_summary}>\n            <span>{record.validation_summary}</span>\n          </Tooltip>\n        );\n      },\n    },\n    {\n      title: '最近校验',\n      dataIndex: 'last_validated_at',\n      search: false,\n      width: 180,\n      ellipsis: true,\n      valueType: 'dateTime',\n      render: (_, record) =>\n        record.last_validated_at ? (\n          <span style={{ whiteSpace: 'nowrap' }}>{record.last_validated_at}</span>\n        ) : (\n          '-'\n        ),\n    },\n    {\n      title: '操作',\n      valueType: 'option',\n      key: 'option',\n      width: 260,\n      render: (_, record) => [\n        <a key=\"validate\" onClick={() => handleValidate(record)}>\n          {validatingId === record.id ? '校验中...' : 'AI校验'}\n        </a>,\n        <a\n          key=\"detail\"\n          onClick={() => {\n            showValidationDetail(record);\n          }}\n        >\n          查看结果\n        </a>,\n        <a key=\"edit\" onClick={() => openEditModal(record)}>\n          编辑\n        </a>,\n        <Popconfirm\n          key=\"delete\"\n          title=\"确认删除该网站吗？\"\n          onConfirm={async () => {\n            try {\n              await deleteBiddingSite(record.id);\n              message.success('删除成功');\n              actionRef.current?.reload();\n            } catch (error: any) {\n              message.error(error?.message || '删除失败');\n            }\n          }}\n        >\n          <a>删除</a>\n        </Popconfirm>,\n      ],\n    },\n  ];\n\n  return (\n    <PageContainer>\n      <ProTable<API_OPPORTUNITY.BiddingSite>\n        actionRef={actionRef}\n        rowKey=\"id\"\n        columns={columns}\n        cardBordered\n        request={async (params) => {\n          const response = await getBiddingSites(params);\n          return {\n            data: response?.data?.items || [],\n            success: response?.success ?? true,\n            total: response?.data?.total || 0,\n          };\n        }}\n        pagination={{\n          defaultPageSize: 20,\n          showSizeChanger: true,\n          pageSizeOptions: [10, 20, 50, 100],\n        }}\n        search={{\n          labelWidth: 'auto',\n        }}\n        headerTitle=\"招标网站\"\n        toolBarRender={() => [\n          <Button key=\"new\" type=\"primary\" onClick={openCreateModal}>\n            新建网站\n          </Button>,\n        ]}\n      />\n\n      <ModalForm<API_OPPORTUNITY.BiddingSitePayload>\n        title={editingRecord ? '编辑招标网站' : '新建招标网站'}\n        open={formVisible}\n        form={form}\n        onOpenChange={setFormVisible}\n        modalProps={{\n          destroyOnHidden: true,\n        }}\n        width={640}\n        onFinish={handleSubmit}\n      >\n        <ProFormText\n          name=\"name\"\n          label=\"网站名称\"\n          placeholder=\"请输入网站名称\"\n          rules={[{ required: true, message: '请输入网站名称' }]}\n        />\n        <ProFormText\n          name=\"alias_name\"\n          label=\"别名\"\n          placeholder=\"可选，多个别名可使用 / 分隔\"\n        />\n        <ProFormText\n          name=\"url\"\n          label=\"网址\"\n          placeholder=\"必须以 http:// 或 https:// 开头\"\n          rules={[\n            { required: true, message: '请输入网址' },\n            {\n              pattern: /^https?:\\/\\//i,\n              message: '网址必须以 http:// 或 https:// 开头',\n            },\n          ]}\n        />\n        <ProFormSelect\n          name=\"source_level\"\n          label=\"层级\"\n          options={sourceLevelOptions}\n          allowClear\n        />\n        <ProFormSelect\n          name=\"platform_type\"\n          label=\"平台类型\"\n          options={platformTypeOptions}\n          allowClear\n        />\n        <ProFormText name=\"province\" label=\"省份\" placeholder=\"如：北京、广东、全国\" />\n        <ProFormText name=\"city\" label=\"城市\" placeholder=\"如：北京、深圳、全国\" />\n        <ProFormSwitch name=\"is_official\" label=\"是否官方\" />\n        <ProFormSwitch name=\"enabled\" label=\"是否启用\" />\n        <ProFormTextArea\n          name=\"notes\"\n          label=\"备注\"\n          placeholder=\"补充说明、站点覆盖范围、使用建议等\"\n          fieldProps={{ rows: 4 }}\n        />\n      </ModalForm>\n\n      <Modal\n        title={detailRecord ? `校验结果 - ${detailRecord.name}` : '校验结果'}\n        open={detailVisible}\n        onCancel={() => setDetailVisible(false)}\n        footer={null}\n        width={720}\n      >\n        {detailRecord ? (\n          <Space direction=\"vertical\" size=\"middle\" style={{ width: '100%' }}>\n            <Space wrap>\n              <Tag color={validationStatusMap[detailRecord.validation_status].color}>\n                {validationStatusMap[detailRecord.validation_status].text}\n              </Tag>\n              <Tag color={detailRecord.enabled ? 'green' : 'default'}>\n                {detailRecord.enabled ? '启用' : '停用'}\n              </Tag>\n              <Tag color={detailRecord.is_official ? 'blue' : 'default'}>\n                {detailRecord.is_official ? '官方' : '第三方'}\n              </Tag>\n            </Space>\n\n            <div>\n              <strong>网址：</strong>\n              <a\n                style={{ marginLeft: 8 }}\n                onClick={() => window.open(detailRecord.url, '_blank', 'noopener,noreferrer')}\n              >\n                {detailRecord.url}\n              </a>\n            </div>\n\n            <div>\n              <strong>摘要：</strong>\n              <div style={{ marginTop: 8 }}>\n                {detailRecord.validation_summary || '暂无校验摘要'}\n              </div>\n            </div>\n\n            <div>\n              <strong>结构化结果：</strong>\n              <pre\n                style={{\n                  marginTop: 8,\n                  maxHeight: 360,\n                  overflow: 'auto',\n                  padding: 12,\n                  background: '#fafafa',\n                  borderRadius: 6,\n                }}\n              >\n                {JSON.stringify(\n                  {\n                    auth_required: detailRecord.auth_required,\n                    is_bidding_site: detailRecord.is_bidding_site,\n                    http_status: detailRecord.http_status,\n                    final_url: detailRecord.final_url,\n                    validation_confidence: detailRecord.validation_confidence,\n                    last_validated_at: detailRecord.last_validated_at,\n                    redirect_chain: detailRecord.redirect_chain || [],\n                    validation_payload: detailRecord.validation_payload || null,\n                  },\n                  null,\n                  2,\n                )}\n              </pre>\n            </div>\n          </Space>\n        ) : null}\n      </Modal>\n    </PageContainer>\n  );\n};\n\nexport default BiddingSitesPage;\n",
+      "__content": "import {\n  createBiddingSite,\n  deleteBiddingSite,\n  getBiddingSites,\n  updateBiddingSite,\n  validateBiddingSite,\n} from '@/services/opportunity';\nimport {\n  ModalForm,\n  PageContainer,\n  ProFormSelect,\n  ProFormSwitch,\n  ProFormText,\n  ProFormTextArea,\n  ProTable,\n} from '@ant-design/pro-components';\nimport {\n  Badge,\n  Button,\n  Form,\n  message,\n  Modal,\n  Popconfirm,\n  Space,\n  Tag,\n  Tooltip,\n} from 'antd';\nimport type { ActionType, ProColumns } from '@ant-design/pro-components';\nimport React, { useMemo, useRef, useState } from 'react';\n\nconst sourceLevelOptions = [\n  { label: '国家级', value: '国家级' },\n  { label: '地方省市', value: '地方省市' },\n  { label: '行业垂直', value: '行业垂直' },\n  { label: '第三方综合', value: '第三方综合' },\n];\n\nconst platformTypeOptions = [\n  '官方核心',\n  '公共资源交易',\n  '政府采购',\n  '行业核心',\n  '电力 / 能源',\n  '建筑 / 基建',\n  '其他行业',\n  '聚合平台',\n].map((item) => ({ label: item, value: item }));\n\nconst validationStatusMap: Record<\n  API_OPPORTUNITY.ValidationStatus,\n  { text: string; color: string }\n> = {\n  never_validated: { text: '未校验', color: 'default' },\n  validated_ok: { text: '校验通过', color: 'success' },\n  validated_warning: { text: '存在警告', color: 'warning' },\n  validated_failed: { text: '校验失败', color: 'error' },\n  heuristic_only: { text: '仅启发式', color: 'processing' },\n};\n\nconst validationStatusOptions = Object.entries(validationStatusMap).map(\n  ([value, config]) => ({\n    label: config.text,\n    value,\n  }),\n);\n\nconst BiddingSitesPage: React.FC = () => {\n  const actionRef = useRef<ActionType>();\n  const [form] = Form.useForm<API_OPPORTUNITY.BiddingSitePayload>();\n  const [editingRecord, setEditingRecord] = useState<API_OPPORTUNITY.BiddingSite | null>(null);\n  const [formVisible, setFormVisible] = useState(false);\n  const [detailVisible, setDetailVisible] = useState(false);\n  const [detailRecord, setDetailRecord] = useState<API_OPPORTUNITY.BiddingSite | null>(null);\n  const [validatingId, setValidatingId] = useState<number | null>(null);\n\n  const validationOptions = useMemo(() => validationStatusOptions, []);\n\n  const openCreateModal = () => {\n    setEditingRecord(null);\n    form.resetFields();\n    form.setFieldsValue({\n      is_official: true,\n      enabled: true,\n    });\n    setFormVisible(true);\n  };\n\n  const openEditModal = (record: API_OPPORTUNITY.BiddingSite) => {\n    setEditingRecord(record);\n    form.setFieldsValue({\n      name: record.name,\n      alias_name: record.alias_name || '',\n      url: record.url,\n      source_level: record.source_level || undefined,\n      province: record.province || '',\n      city: record.city || '',\n      platform_type: record.platform_type || undefined,\n      is_official: record.is_official,\n      enabled: record.enabled,\n      notes: record.notes || '',\n    });\n    setFormVisible(true);\n  };\n\n  const showValidationDetail = (record: API_OPPORTUNITY.BiddingSite) => {\n    setDetailRecord(record);\n    setDetailVisible(true);\n  };\n\n  const handleSubmit = async (values: API_OPPORTUNITY.BiddingSitePayload) => {\n    try {\n      if (editingRecord) {\n        await updateBiddingSite(editingRecord.id, values);\n        message.success('更新成功');\n      } else {\n        await createBiddingSite(values);\n        message.success('创建成功');\n      }\n      setFormVisible(false);\n      actionRef.current?.reload();\n      return true;\n    } catch (error: any) {\n      message.error(error?.message || '保存失败');\n      return false;\n    }\n  };\n\n  const handleValidate = async (record: API_OPPORTUNITY.BiddingSite) => {\n    try {\n      setValidatingId(record.id);\n      const response = await validateBiddingSite(record.id);\n      message.success('校验完成');\n      if (response?.data?.site) {\n        setDetailRecord(response.data.site);\n        setDetailVisible(true);\n      }\n      actionRef.current?.reload();\n    } catch (error: any) {\n      message.error(error?.message || '校验失败');\n    } finally {\n      setValidatingId(null);\n    }\n  };\n\n  const columns: ProColumns<API_OPPORTUNITY.BiddingSite>[] = [\n    {\n      title: '网站名称',\n      dataIndex: 'name',\n      width: 240,\n      ellipsis: true,\n      copyable: true,\n      render: (_, record) => (\n        <Space direction=\"vertical\" size={0}>\n          <span>{record.name}</span>\n          {record.alias_name ? (\n            <span style={{ color: '#8c8c8c', fontSize: 12 }}>\n              别名: {record.alias_name}\n            </span>\n          ) : null}\n        </Space>\n      ),\n    },\n    {\n      title: '网址',\n      dataIndex: 'url',\n      width: 200,\n      ellipsis: true,\n      copyable: true,\n      render: (_, record) => (\n        <Tooltip title={record.url}>\n          <a\n            onClick={() => {\n              window.open(record.url, '_blank', 'noopener,noreferrer');\n            }}\n          >\n            {record.url}\n          </a>\n        </Tooltip>\n      ),\n    },\n    {\n      title: '层级',\n      dataIndex: 'source_level',\n      valueType: 'select',\n      width: 100,\n      valueEnum: sourceLevelOptions.reduce<Record<string, { text: string }>>(\n        (acc, item) => {\n          acc[item.value] = { text: item.label };\n          return acc;\n        },\n        {},\n      ),\n    },\n    {\n      title: '平台类型',\n      dataIndex: 'platform_type',\n      valueType: 'select',\n      width: 100,\n      valueEnum: platformTypeOptions.reduce<Record<string, { text: string }>>(\n        (acc, item) => {\n          acc[item.value] = { text: item.label };\n          return acc;\n        },\n        {},\n      ),\n    },\n    {\n      title: '区域',\n      dataIndex: 'province',\n      search: false,\n      width: 120,\n      render: (_, record) => [record.province, record.city].filter(Boolean).join(' / ') || '-',\n    },\n    {\n      title: '官方',\n      dataIndex: 'is_official',\n      valueType: 'select',\n      width: 90,\n      valueEnum: {\n        true: { text: '是' },\n        false: { text: '否' },\n      },\n      render: (_, record) =>\n        record.is_official ? <Badge status=\"success\" text=\"官方\" /> : <Badge status=\"default\" text=\"第三方\" />,\n    },\n    {\n      title: '启用',\n      dataIndex: 'enabled',\n      valueType: 'select',\n      width: 90,\n      valueEnum: {\n        true: { text: '启用' },\n        false: { text: '停用' },\n      },\n      render: (_, record) =>\n        record.enabled ? <Tag color=\"green\">启用</Tag> : <Tag color=\"default\">停用</Tag>,\n    },\n    {\n      title: '校验状态',\n      dataIndex: 'validation_status',\n      valueType: 'select',\n      width: 120,\n      valueEnum: validationOptions.reduce<Record<string, { text: string }>>(\n        (acc, item) => {\n          acc[item.value] = { text: item.label };\n          return acc;\n        },\n        {},\n      ),\n      render: (_, record) => {\n        const config = validationStatusMap[record.validation_status];\n        return <Tag color={config.color}>{config.text}</Tag>;\n      },\n    },\n    {\n      title: '校验摘要',\n      dataIndex: 'validation_summary',\n      search: false,\n      ellipsis: true,\n      render: (_, record) => {\n        if (!record.validation_summary) return '-';\n        return (\n          <Tooltip title={record.validation_summary}>\n            <span>{record.validation_summary}</span>\n          </Tooltip>\n        );\n      },\n    },\n    {\n      title: '最近校验',\n      dataIndex: 'last_validated_at',\n      search: false,\n      width: 180,\n      ellipsis: true,\n      valueType: 'dateTime',\n      render: (_, record) =>\n        record.last_validated_at ? (\n          <span style={{ whiteSpace: 'nowrap' }}>{record.last_validated_at}</span>\n        ) : (\n          '-'\n        ),\n    },\n    {\n      title: '操作',\n      valueType: 'option',\n      key: 'option',\n      width: 260,\n      render: (_, record) => [\n        <a key=\"validate\" onClick={() => handleValidate(record)}>\n          {validatingId === record.id ? '校验中...' : 'AI校验'}\n        </a>,\n        <a\n          key=\"detail\"\n          onClick={() => {\n            showValidationDetail(record);\n          }}\n        >\n          查看结果\n        </a>,\n        <a key=\"edit\" onClick={() => openEditModal(record)}>\n          编辑\n        </a>,\n        <Popconfirm\n          key=\"delete\"\n          title=\"确认删除该网站吗？\"\n          onConfirm={async () => {\n            try {\n              await deleteBiddingSite(record.id);\n              message.success('删除成功');\n              actionRef.current?.reload();\n            } catch (error: any) {\n              message.error(error?.message || '删除失败');\n            }\n          }}\n        >\n          <a>删除</a>\n        </Popconfirm>,\n      ],\n    },\n  ];\n\n  return (\n    <PageContainer>\n      <ProTable<API_OPPORTUNITY.BiddingSite>\n        actionRef={actionRef}\n        rowKey=\"id\"\n        columns={columns}\n        cardBordered\n        request={async (params) => {\n          const response = await getBiddingSites(params);\n          return {\n            data: response?.data?.items || [],\n            success: response?.success ?? true,\n            total: response?.data?.total || 0,\n          };\n        }}\n        pagination={{\n          defaultPageSize: 20,\n          showSizeChanger: true,\n          pageSizeOptions: [10, 20, 50, 100],\n        }}\n        search={{\n          labelWidth: 'auto',\n        }}\n        headerTitle=\"招标网站\"\n        toolBarRender={() => [\n          <Button key=\"new\" type=\"primary\" onClick={openCreateModal}>\n            新建网站\n          </Button>,\n        ]}\n      />\n\n      <ModalForm<API_OPPORTUNITY.BiddingSitePayload>\n        title={editingRecord ? '编辑招标网站' : '新建招标网站'}\n        open={formVisible}\n        form={form}\n        onOpenChange={setFormVisible}\n        modalProps={{\n          destroyOnHidden: true,\n        }}\n        width={640}\n        onFinish={handleSubmit}\n      >\n        <ProFormText\n          name=\"name\"\n          label=\"网站名称\"\n          placeholder=\"请输入网站名称\"\n          rules={[{ required: true, message: '请输入网站名称' }]}\n        />\n        <ProFormText\n          name=\"alias_name\"\n          label=\"别名\"\n          placeholder=\"可选，多个别名可使用 / 分隔\"\n        />\n        <ProFormText\n          name=\"url\"\n          label=\"网址\"\n          placeholder=\"必须以 http:// 或 https:// 开头\"\n          rules={[\n            { required: true, message: '请输入网址' },\n            {\n              pattern: /^https?:\\/\\//i,\n              message: '网址必须以 http:// 或 https:// 开头',\n            },\n          ]}\n        />\n        <ProFormSelect\n          name=\"source_level\"\n          label=\"层级\"\n          options={sourceLevelOptions}\n          allowClear\n        />\n        <ProFormSelect\n          name=\"platform_type\"\n          label=\"平台类型\"\n          options={platformTypeOptions}\n          allowClear\n        />\n        <ProFormText name=\"province\" label=\"省份\" placeholder=\"如：北京、广东、全国\" />\n        <ProFormText name=\"city\" label=\"城市\" placeholder=\"如：北京、深圳、全国\" />\n        <ProFormSwitch name=\"is_official\" label=\"是否官方\" />\n        <ProFormSwitch name=\"enabled\" label=\"是否启用\" />\n        <ProFormTextArea\n          name=\"notes\"\n          label=\"备注\"\n          placeholder=\"补充说明、站点覆盖范围、使用建议等\"\n          fieldProps={{ rows: 4 }}\n        />\n      </ModalForm>\n\n      <Modal\n        title={detailRecord ? `校验结果 - ${detailRecord.name}` : '校验结果'}\n        open={detailVisible}\n        onCancel={() => setDetailVisible(false)}\n        footer={null}\n        width={720}\n      >\n        {detailRecord ? (\n          <Space direction=\"vertical\" size=\"middle\" style={{ width: '100%' }}>\n            <Space wrap>\n              <Tag color={validationStatusMap[detailRecord.validation_status].color}>\n                {validationStatusMap[detailRecord.validation_status].text}\n              </Tag>\n              <Tag color={detailRecord.enabled ? 'green' : 'default'}>\n                {detailRecord.enabled ? '启用' : '停用'}\n              </Tag>\n              <Tag color={detailRecord.is_official ? 'blue' : 'default'}>\n                {detailRecord.is_official ? '官方' : '第三方'}\n              </Tag>\n            </Space>\n\n            <div>\n              <strong>网址：</strong>\n              <a\n                style={{ marginLeft: 8 }}\n                onClick={() => window.open(detailRecord.url, '_blank', 'noopener,noreferrer')}\n              >\n                {detailRecord.url}\n              </a>\n            </div>\n\n            <div>\n              <strong>摘要：</strong>\n              <div style={{ marginTop: 8 }}>\n                {detailRecord.validation_summary || '暂无校验摘要'}\n              </div>\n            </div>\n\n            <div>\n              <strong>结构化结果：</strong>\n              <pre\n                style={{\n                  marginTop: 8,\n                  maxHeight: 360,\n                  overflow: 'auto',\n                  padding: 12,\n                  background: '#fafafa',\n                  borderRadius: 6,\n                }}\n              >\n                {JSON.stringify(\n                  {\n                    auth_required: detailRecord.auth_required,\n                    is_bidding_site: detailRecord.is_bidding_site,\n                    http_status: detailRecord.http_status,\n                    final_url: detailRecord.final_url,\n                    validation_confidence: detailRecord.validation_confidence,\n                    last_validated_at: detailRecord.last_validated_at,\n                    redirect_chain: detailRecord.redirect_chain || [],\n                    validation_payload: detailRecord.validation_payload || null,\n                  },\n                  null,\n                  2,\n                )}\n              </pre>\n            </div>\n          </Space>\n        ) : null}\n      </Modal>\n    </PageContainer>\n  );\n};\n\nexport default BiddingSitesPage;\n",
       "__isJSFile": true,
       "__absFile": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/src/pages/Opportunity/BiddingSites.tsx"
     },
@@ -3992,6 +4171,7 @@
       "name": "系统监控",
       "path": "/monitoring",
       "icon": "MonitorOutlined",
+      "hideInMenu": true,
       "parentId": "ant-design-pro-layout",
       "id": "21",
       "absPath": "/monitoring"
@@ -7514,7 +7694,7 @@
             "format": "esm"
           },
           "src/.umi/core/route.tsx": {
-            "bytes": 4962,
+            "bytes": 5034,
             "imports": [
               {
                 "path": "react",
@@ -10082,7 +10262,7 @@
                 "bytesInOutput": 5893
               },
               "src/.umi/core/route.tsx": {
-                "bytesInOutput": 5459
+                "bytesInOutput": 5539
               },
               "src/.umi/core/polyfill.ts": {
                 "bytesInOutput": 39297
@@ -10091,7 +10271,7 @@
                 "bytesInOutput": 2010
               }
             },
-            "bytes": 639924
+            "bytes": 640004
           }
         }
       }
