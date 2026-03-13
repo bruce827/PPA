@@ -1,0 +1,7 @@
+review_order,name,province,existing_url,proposed_url,suggested_resolution,preferred_url_candidate,confidence,rationale,next_step
+1,军队采购网,全国,https://www.plap.cn,https://www.plap.mil.cn/,candidate_update_primary_url_after_validation,proposed,high,同名站点从 .cn 域切到 .mil.cn 域，像官方主域收敛，优先视为主 URL 更新候选,先做人工点验或在线校验
+2,河北省公共资源交易服务平台,河北,https://szj.hebei.gov.cn/hbggfwpt,http://ggzy.hebei.gov.cn/hbggfwpt/,manual_verify_then_update_primary_url,proposed,medium,同省 gov 域从 szj 子域切到 ggzy 独立子域，更像面向交易平台的主入口，但需先验证新旧关系,先做人工点验或在线校验
+4,浙江政府采购网,浙江,http://www.ccgp-zhejiang.gov.cn,https://zfcg.czt.zj.gov.cn/,manual_verify_then_update_primary_url,proposed,medium,同名站点从旧 ccgp 域切到财政厅子域，像官方迁移，但需要先验证是否稳定可访问,先做人工点验或在线校验
+5,福建省政府采购网,福建,http://www.ccgp-fujian.gov.cn,https://zfcg.czt.fujian.gov.cn/,manual_verify_then_update_primary_url,proposed,medium,同名站点从旧 ccgp 域切到财政厅子域，像官方迁移，但需要先验证是否稳定可访问,先做人工点验或在线校验
+6,河南省公共资源交易中心,河南,http://hnsggzyjy.henan.gov.cn,https://hnsggzyfwpt.hndrc.gov.cn/,manual_verify_then_update_primary_url,proposed,medium,同名站点从旧省级交易中心域切到发改委服务平台域，疑似主入口升级，但需先确认是否为现主站,先做人工点验或在线校验
+7,广西政府采购网,广西,http://www.ccgp-guangxi.gov.cn,http://zfcg.gxzf.gov.cn/,manual_verify_then_update_primary_url,proposed,medium,同名站点从旧 ccgp 域切到自治区政府 zfcg 域，像官方迁移，但应先校验再更新,先做人工点验或在线校验

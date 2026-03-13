@@ -10,6 +10,7 @@ const aiRoutes = require('./ai');
 const web3dRoutes = require('./web3d');
 const monitoringRoutes = require('./monitoring');
 const contractsRoutes = require('./contracts');
+const opportunityRoutes = require('./opportunity');
 
 // 挂载各模块路由
 router.use('/api', healthRoutes);
@@ -22,5 +23,6 @@ router.use('/api/ai', aiRoutes);
 router.use('/api/web3d', web3dRoutes);
 router.use('/api/monitoring', monitoringRoutes);
 router.use('/api/contracts', contractsRoutes);
+router.use('/api/opportunity', opportunityRoutes);
 
 module.exports = router;

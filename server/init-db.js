@@ -128,6 +128,44 @@ const CREATE_TABLES_SQL = `
 
   CREATE UNIQUE INDEX IF NOT EXISTS idx_web3d_workload_templates_unique ON web3d_workload_templates(category, item_name);
   CREATE INDEX IF NOT EXISTS idx_web3d_workload_templates_category ON web3d_workload_templates(category);
+
+  CREATE TABLE IF NOT EXISTS opportunity_bidding_sites (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    alias_name TEXT,
+    url TEXT NOT NULL,
+    normalized_url TEXT NOT NULL,
+    source_level TEXT,
+    province TEXT,
+    city TEXT,
+    platform_type TEXT,
+    is_official INTEGER DEFAULT 0,
+    enabled INTEGER DEFAULT 1,
+    notes TEXT,
+    validation_status TEXT NOT NULL DEFAULT 'never_validated',
+    validation_summary TEXT,
+    auth_required INTEGER,
+    is_bidding_site INTEGER,
+    http_status INTEGER,
+    final_url TEXT,
+    redirect_chain_json TEXT,
+    validation_confidence REAL,
+    validation_payload_json TEXT,
+    last_validated_at DATETIME,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+  );
+
+  CREATE UNIQUE INDEX IF NOT EXISTS idx_opportunity_bidding_sites_normalized_url
+    ON opportunity_bidding_sites(normalized_url);
+  CREATE INDEX IF NOT EXISTS idx_opportunity_bidding_sites_source_level
+    ON opportunity_bidding_sites(source_level);
+  CREATE INDEX IF NOT EXISTS idx_opportunity_bidding_sites_platform_type
+    ON opportunity_bidding_sites(platform_type);
+  CREATE INDEX IF NOT EXISTS idx_opportunity_bidding_sites_enabled
+    ON opportunity_bidding_sites(enabled);
+  CREATE INDEX IF NOT EXISTS idx_opportunity_bidding_sites_validation_status
+    ON opportunity_bidding_sites(validation_status);
 `;
 
 // 连接数据库并执行

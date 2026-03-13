@@ -1,0 +1,51 @@
+id,name,source_level,platform_type,url,status,http_status,final_url,redirect_count,auth_required,is_bidding_site,issue_type,severity,obvious_problem,issue_summary
+152,中国联通电子招标投标交易平台,行业垂直,企业招投标平台,http://111.198.162.67/zglt/index,validated_failed,,http://111.198.162.67/zglt/index,0,,,network_error,high,yes,socket hang up
+153,中国电力设备信息网电子招标交易平台,行业垂直,企业招投标平台,http://www.cpeinet.com.cn/,validated_failed,,http://www.cpeinet.com.cn/,0,,,timeout,high,yes,请求超时 (12000ms)
+154,浙能集团电子招投标交易平台,行业垂直,企业招投标平台,http://60.191.4.146:18600/,validated_failed,,http://60.191.4.146:18600/,0,,,network_error,high,yes,socket hang up
+155,湖南省招标综合管理系统,行业垂直,企业招投标平台,http://www.hnbidding.com/,heuristic_only,200,http://www.hnbidding.com/,0,true,true,auth_gate,medium,yes,命中关键词: 招标、采购、招投标、中标、政府采购；页面存在登录或身份认证特征
+156,机电产品招标投标电子交易平台,行业垂直,企业招投标平台,http://www.chinabidding.com/,heuristic_only,200,https://www.chinabidding.com/,1,true,true,auth_gate,medium,yes,命中关键词: 招标、采购、招投标、电子交易平台、政府采购、招采；页面存在登录或身份认证特征；发生 1 次跳转
+157,中核集团电子采购平台,行业垂直,企业采购平台,https://www.cnncecp.com,heuristic_only,200,https://one.cnncecp.com/cnnc-pm-web/#/portal,1,true,,auth_gate,medium,yes,命中关键词: 采购；页面存在登录或身份认证特征；发生 1 次跳转
+158,航天电子采购平台,行业垂直,企业采购平台,https://www.ispacechina.com/,heuristic_only,200,https://www.ispacechina.com/,0,true,true,auth_gate,medium,yes,命中关键词: 招标、采购、招投标、竞价、招采；页面存在登录或身份认证特征
+159,航空工业电子采购平台,行业垂直,企业采购平台,https://www.eavic.com/rest/index,heuristic_only,200,https://www.eavic.com/rest/index,0,true,true,auth_gate,medium,yes,命中关键词: 招标、采购、中标、竞价；页面存在登录或身份认证特征
+160,中国船舶采购管理电子商务平台,行业垂直,企业采购平台,http://www.ebuycsemc.com,heuristic_only,200,https://www.ebuycsemc.com/,1,false,false,non_bidding_content,medium,yes,命中关键词: 采购；发生 1 次跳转
+161,兵器工业集团公司采购电子商务平台,行业垂直,企业采购平台,https://www.norincogroup-ebuy.com/,heuristic_only,200,https://www.norincogroup-ebuy.com/,0,true,true,auth_gate,medium,yes,命中关键词: 采购、招投标；页面存在登录或身份认证特征
+162,中国电子科技集团有限公司电子采购平台,行业垂直,企业采购平台,http://www.cetceg.com/,heuristic_only,200,https://www.cetceg.com/,1,false,false,non_bidding_content,medium,yes,命中关键词: 采购；发生 1 次跳转
+163,中国融通电子商务平台,行业垂直,企业采购平台,https://www.ronghw.cn/,heuristic_only,200,https://www.ronghw.cn/web-portal/index.html,1,false,false,non_bidding_content,medium,yes,发生 1 次跳转
+164,中国石化物资采购电子商务平台,行业垂直,企业采购平台,https://ec.sinopec.com/,heuristic_only,200,https://ec.sinopec.com/,0,false,false,non_bidding_content,medium,yes,命中关键词: 采购
+165,中国华能集团有限公司电子商务平台,行业垂直,企业采购平台,https://ec.chng.com.cn/,validated_failed,412,https://ec.chng.com.cn/,0,,,network_error,high,yes,网络探测失败
+166,大唐集团电子商务平台,行业垂直,企业采购平台,https://www.cdt-ec.com/,heuristic_only,200,http://www.cdt-ec.com/home/,1,true,,auth_gate,medium,yes,页面存在登录或身份认证特征；发生 1 次跳转
+167,中国华电集团电子商务平台,行业垂直,企业采购平台,https://www.chdtp.com/,validated_failed,412,https://www.chdtp.com/,0,,,network_error,high,yes,网络探测失败
+168,国家电投电子商务平台,行业垂直,企业采购平台,https://www.espic.com.cn/,heuristic_only,200,https://www.espic.com.cn/,0,true,,auth_gate,medium,yes,命中关键词: 招采；页面存在登录或身份认证特征
+169,中国三峡电子采购平台,行业垂直,企业采购平台,https://eps.ctg.com.cn/,heuristic_only,200,https://eps.ctg.com.cn/,0,true,true,auth_gate,medium,yes,命中关键词: 招标、采购、中标；页面存在登录或身份认证特征
+170,CEC 电子采购平台,行业垂直,企业采购平台,http://www.cec-ec.com.cn,validated_failed,,http://www.cec-ec.com.cn,0,,,network_error,high,yes,socket hang up
+171,东风电子采购平台,行业垂直,企业采购平台,https://www.dfmjyzx.com/,validated_failed,468,https://www.dfmjyzx.com/,0,,,network_error,high,yes,网络探测失败
+172,中国一重集中采购平台,行业垂直,企业采购平台,http://jzcg.cfhi.com/,heuristic_only,200,http://jzcg.cfhi.com/cms/,1,true,true,auth_gate,medium,yes,命中关键词: 招标、采购、中标、政府采购；页面存在登录或身份认证特征；发生 1 次跳转
+173,国机集团电子采购平台,行业垂直,企业采购平台,https://epp.sinomach.com.cn/,heuristic_only,200,https://epp.sinomach.com.cn/,0,true,true,auth_gate,medium,yes,命中关键词: 招标、采购、中标；页面存在登录或身份认证特征
+174,哈尔滨电气集团电子商务平台,行业垂直,企业采购平台,https://scm.harbin-electric.com/,heuristic_only,200,https://scm.harbin-electric.com/,0,true,true,auth_gate,medium,yes,命中关键词: 招标、采购、公共资源、招投标、中标、政府采购；页面存在登录或身份认证特征
+175,东方电气集中采购管理平台,行业垂直,企业采购平台,https://nsrm.dongfang.com/,validated_failed,,https://nsrm.dongfang.com/,0,,,network_error,high,yes,Parse Error: Invalid header token
+176,中国航空集团有限公司采购管理平台,行业垂直,企业采购平台,https://pur.airchina.com.cn/,heuristic_only,200,https://pur.airchina.com.cn/,0,true,true,auth_gate,medium,yes,命中关键词: 招标、采购、中标；页面存在登录或身份认证特征
+177,东航集中采购平台,行业垂直,企业采购平台,https://caigou.ceair.com/,heuristic_only,200,https://caigou.ceair.com/portal/index,1,true,true,auth_gate,medium,yes,命中关键词: 招标、采购；页面存在登录或身份认证特征；发生 1 次跳转
+178,南航电子采购平台,行业垂直,企业采购平台,https://csbidding.csair.cn/,heuristic_only,200,https://csbidding.csair.cn/,0,true,true,auth_gate,medium,yes,命中关键词: 招标、采购、招投标、中标；页面存在登录或身份认证特征
+179,中国五矿集团采购电子商务平台,行业垂直,企业采购平台,https://ec.minmetals.com.cn/,heuristic_only,200,https://ec.minmetals.com.cn/logonAction.do,1,false,false,non_bidding_content,medium,yes,命中关键词: 采购；发生 1 次跳转
+180,通用技术中心采购平台,行业垂直,企业采购平台,https://cg.gt.cn/,heuristic_only,200,https://cg.gt.cn/,0,true,,auth_gate,medium,yes,命中关键词: 采购；页面存在登录或身份认证特征
+181,国投集团电子采购平台,行业垂直,企业采购平台,https://www.sdicc.com.cn/,heuristic_only,200,https://www.sdicc.com.cn/,0,true,true,auth_gate,medium,yes,命中关键词: 招标、采购；页面存在登录或身份认证特征
+182,中国节能电子采购平台,行业垂直,企业采购平台,https://www.ebidding.cecep.cn/,heuristic_only,200,https://www.ebidding.cecep.cn/,0,true,true,auth_gate,medium,yes,命中关键词: 招标、采购、中标、招采；页面存在登录或身份认证特征
+183,中煤集团采购一体化平台,行业垂直,企业采购平台,https://ego.chinacoal.com/,heuristic_only,200,https://ego.chinacoal.com/,0,true,,auth_gate,medium,yes,命中关键词: 采购；页面存在登录或身份认证特征
+184,中国煤科电子采购平台,行业垂直,企业采购平台,http://cg.ccteg.cn/,heuristic_only,200,http://cg.ccteg.cn/,0,false,false,non_bidding_content,medium,yes,命中关键词: 采购
+185,首创股份电子商务平台,行业垂直,企业采购平台,http://ecp.capitalwater.cn/,heuristic_only,200,http://ecp.capitalwater.cn/,0,true,true,auth_gate,medium,yes,命中关键词: 招标、采购、中标；页面存在登录或身份认证特征
+186,中国长江三峡集团公司电子采购平台,行业垂直,企业采购平台,http://epp.ctg.com.cn/,validated_failed,,http://epp.ctg.com.cn/,0,,,network_error,high,yes,socket hang up
+187,国铁采购平台,行业垂直,企业采购平台,https://cg.95306.cn/,heuristic_only,200,https://cg.95306.cn/,0,true,true,auth_gate,medium,yes,命中关键词: 招标、采购、招投标、中标、竞价；页面存在登录或身份认证特征
+188,中电采购平台,行业垂直,企业采购平台,http://bid.ceiec.com.cn,validated_failed,,http://bid.ceiec.com.cn,0,,,network_error,high,yes,socket hang up
+189,中国印钞造币集中采购电子平台,行业垂直,企业采购平台,https://bidding.cbpm.cn,heuristic_only,200,https://bidding.cbpm.cn,0,true,true,auth_gate,medium,yes,命中关键词: 招标、采购、中标；页面存在登录或身份认证特征
+190,中国交建装备采购管理信息系统,行业垂直,企业采购平台,http://ecp.ccccltd.cn,heuristic_only,200,https://portal.ccccltd.cn/sso_sys?cb=http://ecp.ccccltd.cn/,1,true,,auth_gate,medium,yes,命中关键词: 采购；页面存在登录或身份认证特征；发生 1 次跳转
+191,国家开发投资公司（集团）电子采购平台,行业垂直,企业采购平台,http://eps.sdic.com.cn/,validated_failed,,http://eps.sdic.com.cn/,0,,,network_error,high,yes,socket hang up
+192,内蒙古电力集团电子商务系统,行业垂直,企业采购平台,http://impc.e-bidding.org/,heuristic_only,200,http://impc.e-bidding.org/,0,true,true,auth_gate,medium,yes,命中关键词: 招标、采购、中标；页面存在登录或身份认证特征
+193,内蒙古能建电子商务平台,行业垂直,企业采购平台,http://et.imeec.cn/cms/index.htm,validated_failed,,http://et.imeec.cn/cms/index.htm,0,,,network_error,high,yes,socket hang up
+194,铁建汇采工程物资设备电商平台,行业垂直,企业采购平台,http://www.crcchc.com,heuristic_only,200,https://www.crcchc.com/,1,false,false,non_bidding_content,medium,yes,发生 1 次跳转
+195,南航采购平台CPP,行业垂直,企业采购平台,http://cpp.csair.com,validated_failed,,http://cpp.csair.com,0,,,network_error,high,yes,socket hang up
+196,中广核电子商务平台,行业垂直,企业采购平台,https://ecp.cgnpc.com.cn/,heuristic_only,201,https://ecp.cgnpc.com.cn/,0,false,false,non_bidding_content,medium,yes,页面特征较弱，启发式判断置信度有限
+197,中国通用招标网暨电子招标平台,第三方综合,聚合平台,http://www.china-tender.com.cn,heuristic_only,200,https://www.china-tender.com.cn/,1,true,true,auth_gate,medium,yes,命中关键词: 招标、采购、招投标、电子交易平台、竞价、政府采购；页面存在登录或身份认证特征；发生 1 次跳转
+198,中招联合招标采购平台,第三方综合,聚合平台,http://www.365trade.com.cn/,heuristic_only,200,http://www.365trade.com.cn/,0,true,true,auth_gate,medium,yes,命中关键词: 招标、采购、竞价；页面存在登录或身份认证特征
+199,中化商务电子招投标平台,第三方综合,聚合平台,http://e.sinochemitc.com,heuristic_only,200,http://e.sinochemitc.com,0,false,false,non_bidding_content,medium,yes,命中关键词: 招投标
+200,筑龙电子招标投标平台,第三方综合,聚合平台,http://www.jiaoyi365.com/zbcg,validated_failed,404,https://www.jiaoyi365.com/zbcg,1,,,http_not_found,high,yes,404 页面不存在
+201,易联招采网,第三方综合,聚合平台,http://www.elian.net,heuristic_only,200,http://www.elian.net,0,true,true,auth_gate,medium,yes,命中关键词: 招标、采购、中标、政府采购、招采；页面存在登录或身份认证特征

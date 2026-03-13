@@ -1,0 +1,30 @@
+execution_order,operation_type,source,name,province,source_level,track,platform_type,current_url,final_target_url,confidence,rationale,precheck_requirement
+1,create,direct_add_dry_run,中共中央直属机关采购中心,全国,国家级,政府采购,政府采购,,http://www.zzcg.gov.cn/,high,来源: 招标网站.xml；栏目: 央采军队采购平台；轨道: 政府采购；现有同省同轨记录: 中国政府采购网、中央政府采购网,
+2,create,direct_add_dry_run,中国海关政府采购网,全国,国家级,政府采购,政府采购,,http://hgcg.customs.gov.cn/,high,来源: 招标网站.xml；栏目: 央采军队采购平台；轨道: 政府采购；现有同省同轨记录: 中国政府采购网、中央政府采购网,
+3,create,direct_add_dry_run,中国人民银行集中采购中心,全国,国家级,政府采购,政府采购,,https://jzcg.pbc.gov.cn/,high,来源: 招标网站.xml；栏目: 央采军队采购平台；轨道: 政府采购；现有同省同轨记录: 中国政府采购网、中央政府采购网,
+4,create,direct_add_dry_run,全国人大机关采购中心,全国,国家级,政府采购,政府采购,,https://ww.ccgp.gov.cn/qgrd/,high,来源: 招标网站.xml；栏目: 央采军队采购平台；轨道: 政府采购；现有同省同轨记录: 中国政府采购网、中央政府采购网,
+5,create,direct_add_dry_run,税务采购网,全国,国家级,政府采购,政府采购,,https://swcg.chinatax.gov.cn/,high,来源: 招标网站.xml；栏目: 央采军队采购平台；轨道: 政府采购；现有同省同轨记录: 中国政府采购网、中央政府采购网,
+6,create,direct_add_dry_run,军网自采平台,全国,国家级,军采,军采,,https://zc.plap.mil.cn/,medium,来源: 招标网站.xml；栏目: 央采军队采购平台；轨道: 军采；现有同省同轨记录: 军队采购网,platform_type_pending / self_procurement_entry
+7,create,direct_add_dry_run,天津市政府采购中心,天津,地方省市,政府采购,政府采购,,http://tjgpc.zwfwb.tj.gov.cn/,high,来源: 招标网站.xml；栏目: 省市自治区政采、公共资源平台；轨道: 政府采购；现有同省同轨记录: 天津市政府采购网,
+8,create,direct_add_dry_run,山西公共资源交易平台,山西,地方省市,公共资源交易,公共资源交易,,https://prec.sxzwfw.gov.cn/,high,来源: 招标网站.xml；栏目: 省市自治区政采、公共资源平台；轨道: 公共资源交易；现有同省同轨记录: 山西省招标投标公共服务平台,
+9,create,direct_add_dry_run,辽宁公共资源交易服务平台,辽宁,地方省市,公共资源交易,公共资源交易,,http://www.lnggzy.gov.cn/lnggzy/,high,来源: 招标网站.xml；栏目: 省市自治区政采、公共资源平台；轨道: 公共资源交易；现有同省同轨记录: 大连市公共资源交易中心、辽宁省公共资源交易网,
+10,create,direct_add_dry_run,吉林公共资源交易服务平台,吉林,地方省市,公共资源交易,公共资源交易,,http://www.ggzyzx.jl.gov.cn/,high,来源: 招标网站.xml；栏目: 省市自治区政采、公共资源平台；轨道: 公共资源交易；现有同省同轨记录: 吉林省公共资源交易公共服务平台,
+11,create,direct_add_dry_run,江苏公共资源交易服务平台,江苏,地方省市,公共资源交易,公共资源交易,,http://jsggzy.jszwfw.gov.cn/,high,来源: 招标网站.xml；栏目: 省市自治区政采、公共资源平台；轨道: 公共资源交易；现有同省同轨记录: 江苏省招标投标公共服务平台,
+12,create,direct_add_dry_run,浙江公共资源交易服务平台,浙江,地方省市,公共资源交易,公共资源交易,,https://ggzy.zj.gov.cn/,high,来源: 招标网站.xml；栏目: 省市自治区政采、公共资源平台；轨道: 公共资源交易；现有同省同轨记录: 浙江招标投标公共服务平台,
+13,create,direct_add_dry_run,江西省公共资源交易服务平台,江西,地方省市,公共资源交易,公共资源交易,,https://www.jxsggzy.cn/,high,来源: 招标网站.xml；栏目: 省市自治区政采、公共资源平台；轨道: 公共资源交易；现有同省同轨记录: 江西省公共资源交易平台,
+14,create,direct_add_dry_run,山东政府采购网,山东,地方省市,政府采购,政府采购,,http://www.ccgp-shandong.gov.cn/sdgp2017/site/index.jsp,medium,来源: 招标网站.xml；栏目: 省市自治区政采、公共资源平台；轨道: 政府采购；现有同省同轨记录: 山东省政府采购网,deep_path / entry_file
+15,create,direct_add_dry_run,湖北公共资源交易中心,湖北,地方省市,公共资源交易,公共资源交易,,https://www.hbggzyfwpt.cn/,high,来源: 招标网站.xml；栏目: 省市自治区政采、公共资源平台；轨道: 公共资源交易；现有同省同轨记录: 湖北省公共资源交易电子服务系统,
+16,create,direct_add_dry_run,广东公共资源交易服务平台,广东,地方省市,公共资源交易,公共资源交易,,https://ygp.gdzwfw.gov.cn/,high,来源: 招标网站.xml；栏目: 省市自治区政采、公共资源平台；轨道: 公共资源交易；现有同省同轨记录: 广东省公共资源交易平台、深圳公共资源交易网,
+17,create,direct_add_dry_run,海南政府采购网,海南,地方省市,政府采购,政府采购,,https://ccgp-hainan.gov.cn/,high,来源: 招标网站.xml；栏目: 省市自治区政采、公共资源平台；轨道: 政府采购；现有同省同轨记录: 中国海南政府采购网,
+18,create,direct_add_dry_run,四川公共资源交易服务平台,四川,地方省市,公共资源交易,公共资源交易,,https://ggzyjy.sc.gov.cn/,high,来源: 招标网站.xml；栏目: 省市自治区政采、公共资源平台；轨道: 公共资源交易；现有同省同轨记录: 全国公共资源交易平台（四川省）,
+19,create,direct_add_dry_run,贵州政府采购网,贵州,地方省市,政府采购,政府采购,,http://www.ccgp-guizhou.gov.cn/,high,来源: 招标网站.xml；栏目: 省市自治区政采、公共资源平台；轨道: 政府采购；现有同省同轨记录: 贵州省政府采购网,
+20,create,direct_add_dry_run,云南公共资源交易服务平台,云南,地方省市,公共资源交易,公共资源交易,,https://ggzy.yn.gov.cn/homePage,medium,来源: 招标网站.xml；栏目: 省市自治区政采、公共资源平台；轨道: 公共资源交易；现有同省同轨记录: 云南省公共资源交易信息网,entry_file
+21,create,direct_add_dry_run,云南政府采购网,云南,地方省市,政府采购,政府采购,,http://www.yngp.com/,high,来源: 招标网站.xml；栏目: 省市自治区政采、公共资源平台；轨道: 政府采购；现有同省同轨记录: 云南省政府采购网,
+22,create,direct_add_dry_run,陕西省政府采购网,陕西,地方省市,政府采购,政府采购,,http://www.ccgp-shaanxi.gov.cn/cms-sx/site/shanxi/index.html,medium,来源: 招标网站.xml；栏目: 省市自治区政采、公共资源平台；轨道: 政府采购；现有同省同轨记录: 陕西政府采购网,deep_path / entry_file
+23,create,direct_add_dry_run,青海公共资源交易网,青海,地方省市,公共资源交易,公共资源交易,,http://www.qhggzyjy.gov.cn/ggzy/,high,来源: 招标网站.xml；栏目: 省市自治区政采、公共资源平台；轨道: 公共资源交易；现有同省同轨记录: 青海省公共资源交易网,
+24,create,direct_add_dry_run,西藏公共资源交易服务平台,西藏,地方省市,公共资源交易,公共资源交易,,https://ggzy.xizang.gov.cn/,high,来源: 招标网站.xml；栏目: 省市自治区政采、公共资源平台；轨道: 公共资源交易；现有同省同轨记录: 西藏自治区公共资源交易信息网,
+25,create,direct_add_dry_run,内蒙古公共资源交易网,内蒙古,地方省市,公共资源交易,公共资源交易,,https://ggzyjy.nmg.gov.cn/,high,来源: 招标网站.xml；栏目: 省市自治区政采、公共资源平台；轨道: 公共资源交易；现有同省同轨记录: 内蒙古招标投标公共服务平台,
+26,create,direct_add_dry_run,广西公共资源交易服务平台,广西,地方省市,公共资源交易,公共资源交易,,http://ggzy.jgswj.gxzf.gov.cn/gxggzy/,high,来源: 招标网站.xml；栏目: 省市自治区政采、公共资源平台；轨道: 公共资源交易；现有同省同轨记录: 广西壮族自治区公共资源交易中心,
+27,create,direct_add_dry_run,宁夏公共资源交易网,宁夏,地方省市,公共资源交易,公共资源交易,,https://ggzyjy.fzggw.nx.gov.cn/,high,来源: 招标网站.xml；栏目: 省市自治区政采、公共资源平台；轨道: 公共资源交易；现有同省同轨记录: 宁夏回族自治区公共资源交易网,
+28,create,direct_add_dry_run,宁夏政府采购网,宁夏,地方省市,政府采购,政府采购,,https://www.ccgp-ningxia.gov.cn/public/NXGPPNEW/dynamic/index.jsp?id=1,medium,来源: 招标网站.xml；栏目: 省市自治区政采、公共资源平台；轨道: 政府采购；现有同省同轨记录: 宁夏回族自治区政府采购网,has_query / deep_path / entry_file
+29,update_primary_url,same_name_merge_review,辽宁政府采购网,辽宁,,,,http://www.ccgp-liaoning.gov.cn/portalindex,http://www.ccgp-liaoning.gov.cn/,high,同主机下 proposed URL 收敛到根路径，优先于 portalindex 入口页，适合作为主 URL 候选,

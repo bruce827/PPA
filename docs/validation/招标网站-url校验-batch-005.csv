@@ -1,0 +1,51 @@
+id,name,source_level,platform_type,url,status,http_status,final_url,redirect_count,auth_required,is_bidding_site,issue_type,severity,obvious_problem,issue_summary
+202,国信创新招标投标交易平台,第三方综合,聚合平台,http://www.e-bidding.org,heuristic_only,200,http://www.e-bidding.org,0,true,true,auth_gate,medium,yes,命中关键词: 招标、采购、招投标、中标、政府采购；页面存在登录或身份认证特征
+203,龙源工程采购交易平台,第三方综合,聚合平台,http://lygccgpt.gdlygc.cn,validated_failed,,http://lygccgpt.gdlygc.cn,0,,,network_error,high,yes,socket hang up
+204,首开股份工程电子招标采购交易平台,第三方综合,聚合平台,http://ebidding.shoukaigufen.com.cn/,validated_failed,,http://ebidding.shoukaigufen.com.cn/,0,,,network_error,high,yes,socket hang up
+205,金润招投标交易平台,第三方综合,聚合平台,http://www.jrztbpt.com,validated_failed,,http://www.jrztbpt.com,0,,,network_error,high,yes,socket hang up
+206,冀招标交易平台,第三方综合,聚合平台,http://www.jizhaobiao.com,heuristic_only,200,https://www.jizhaobiao.com/,1,false,false,non_bidding_content,medium,yes,命中关键词: 招标；发生 1 次跳转
+207,隆道平台,第三方综合,聚合平台,http://www.longdaoyun.com,heuristic_only,200,https://www.longdaoyun.com/,1,true,true,auth_gate,medium,yes,命中关键词: 招标、采购；页面存在登录或身份认证特征；发生 1 次跳转
+208,正量网,第三方综合,聚合平台,http://www.zlw.net/,heuristic_only,200,http://www.zlw.net/,0,false,true,ok,none,no,命中关键词: 招标、采购、招投标、招采
+209,交易365招标采购平台,第三方综合,聚合平台,http://www.jiaoyi365.com,heuristic_only,200,https://www.jiaoyi365.com/,1,false,true,ok,none,no,命中关键词: 招标、采购；发生 1 次跳转
+210,清华控股招标采购交易平台,第三方综合,聚合平台,http://www.ronghui.net/,heuristic_only,200,https://wanwang.aliyun.com/hosting/manual_stop/,2,true,true,auth_gate,medium,yes,命中关键词: 招标、采购；页面存在登录或身份认证特征；发生 2 次跳转
+211,新奥能源电子采购平台,第三方综合,聚合平台,http://ecp.enn.cn/,validated_failed,,http://ecp.enn.cn/,0,,,timeout,high,yes,请求超时 (12000ms)
+212,比德电子采购平台,第三方综合,聚合平台,http://www.bdebid.com,heuristic_only,200,https://www.bdebid.com/,1,false,false,non_bidding_content,medium,yes,命中关键词: 采购；发生 1 次跳转
+213,物资网,第三方综合,聚合平台,http://www.wuzi.com/,heuristic_only,200,http://www.wuzi.com/,0,true,,auth_gate,medium,yes,页面存在登录或身份认证特征
+214,比比网,第三方综合,聚合平台,http://www.bitbid.cn,heuristic_only,200,http://www.bitbid.cn,0,false,false,non_bidding_content,medium,yes,命中关键词: 招投标
+215,中采惠招电子招投标交易平台,第三方综合,聚合平台,http://www.zchzb.com,heuristic_only,200,http://www.zchzb.com,0,true,true,auth_gate,medium,yes,命中关键词: 招标、采购、招投标、招采；页面存在登录或身份认证特征
+216,推绿网,第三方综合,聚合平台,http://www.twigreen.com/,validated_failed,520,https://www.twigreen.com/,1,,,http_server_error,high,yes,520 服务端错误
+217,招标通电子招投标交易平台,第三方综合,聚合平台,http://www.hebztb.com,heuristic_only,200,http://www.hebztb.com,0,true,true,auth_gate,medium,yes,命中关键词: 招标、采购、招投标、中标、招采；页面存在登录或身份认证特征
+218,河北电子招标投标交易平台,第三方综合,聚合平台,http://hbxh.86ztb.com,heuristic_only,200,http://hbxh.86ztb.com/index.htm?pf=hbxh,2,true,true,auth_gate,medium,yes,命中关键词: 招标、采购、公共资源、中标、政府采购；页面存在登录或身份认证特征；发生 2 次跳转
+219,河北张家口电子招标投标交易平台,第三方综合,聚合平台,http://hbzjk.86ztb.com,heuristic_only,200,http://hbzjk.86ztb.com/index.htm?pf=hbzjk,2,true,true,auth_gate,medium,yes,命中关键词: 招标、采购、公共资源、交易中心、招投标、中标；页面存在登录或身份认证特征；发生 2 次跳转
+220,圣诺联合电子招投标平台,第三方综合,聚合平台,http://www.okzhaobiao.com/,validated_failed,,http://www.okzhaobiao.com/,0,,,network_error,high,yes,socket hang up
+221,惠招标,第三方综合,聚合平台,http://www.hbidding.com/,heuristic_only,200,http://www.hbidding.com/,0,true,true,auth_gate,medium,yes,命中关键词: 招标、招投标；页面存在登录或身份认证特征
+222,E招冀成电子招投标交易平台,第三方综合,聚合平台,http://www.hebeibidding.com,heuristic_only,200,https://www.hebeibidding.com/,1,true,true,auth_gate,medium,yes,命中关键词: 招标、采购、招投标、中标、政府采购；页面存在登录或身份认证特征；发生 1 次跳转
+223,建投商务网,第三方综合,聚合平台,http://www.jtsww.com,heuristic_only,200,https://www.jtsww.com/,1,true,true,auth_gate,medium,yes,命中关键词: 招标、采购、中标、竞价；页面存在登录或身份认证特征；发生 1 次跳转
+224,中油管道电子招标投标交易平台,第三方综合,聚合平台,http://www.cppbidding.com.cn,validated_failed,,http://www.cppbidding.com.cn,0,,,network_error,high,yes,socket hang up
+225,质采智购,第三方综合,聚合平台,https://zc.ygyg.cn/,heuristic_only,200,https://zc.ygyg.cn/,0,false,false,non_bidding_content,medium,yes,页面特征较弱，启发式判断置信度有限
+226,中招联合（山西）招标采购平台,第三方综合,聚合平台,http://shanxi.365trade.com.cn,heuristic_only,200,http://shanxi.365trade.com.cn,0,true,true,auth_gate,medium,yes,命中关键词: 招标、采购；页面存在登录或身份认证特征
+227,旺采网山西交易平台,第三方综合,聚合平台,http://sx.5ibid.net,heuristic_only,200,https://www.5ibid.net/Liems/index.html,2,true,true,auth_gate,medium,yes,命中关键词: 招标、采购、公共资源、中标、竞价；页面存在登录或身份认证特征；发生 2 次跳转
+228,易招标山西交易平台,第三方综合,聚合平台,http://sxty.ebidding.net.cn,heuristic_only,200,http://sxty.ebidding.net.cn,0,true,true,auth_gate,medium,yes,命中关键词: 招标、采购、中标、招采；页面存在登录或身份认证特征
+229,中国（矿用）工业品电子招投标交易平台,第三方综合,聚合平台,http://zb365.com.cn,validated_failed,404,http://zb365.com.cn,0,,,http_not_found,high,yes,404 页面不存在
+230,云买卖电子综合交易平台,第三方综合,聚合平台,http://www.eqbidding.com,heuristic_only,200,http://www.eqbidding.com,0,false,true,ok,none,no,命中关键词: 招标、招投标、中标
+231,北京玖邦科技招标采购交易平台,第三方综合,聚合平台,http://www.bjjbkj.cn,heuristic_only,200,https://www.bjjbkj.cn/,1,false,true,ok,none,no,命中关键词: 招标、采购、电子交易平台；发生 1 次跳转
+232,易交在线电子招标投标交易平台,第三方综合,聚合平台,http://www.sxyjcg.com,validated_failed,,http://www.sxyjcg.com,0,,,timeout,high,yes,请求超时 (12000ms)
+233,金蝉电子招投标综合交易平台,第三方综合,聚合平台,http://www.jcebid.com,heuristic_only,200,http://www.jcebid.com,0,true,true,auth_gate,medium,yes,命中关键词: 招标、采购、公共资源、招投标、中标；页面存在登录或身份认证特征
+234,伟拓招标采购交易平台,第三方综合,聚合平台,http://www.wtjypt.com,heuristic_only,200,http://www.wtjypt.com,0,true,true,auth_gate,medium,yes,命中关键词: 招标、采购、招投标、中标、竞价、招采；页面存在登录或身份认证特征
+235,云采供内蒙古公共资源交易平台,第三方综合,聚合平台,http://nmg.86ztb.com,heuristic_only,200,http://nmg.86ztb.com/index.htm?pf=nmg,2,true,true,auth_gate,medium,yes,命中关键词: 招标、采购、公共资源、招投标、中标、政府采购；页面存在登录或身份认证特征；发生 2 次跳转
+236,内蒙古电子招标投标交易平台,第三方综合,聚合平台,http://nmgxh.86ztb.com,heuristic_only,200,http://nmgxh.86ztb.com/index.htm?pf=nmgxh,2,true,true,auth_gate,medium,yes,命中关键词: 招标、采购、招投标、中标、政府采购；页面存在登录或身份认证特征；发生 2 次跳转
+237,内蒙古宣宇电子交易平台,第三方综合,聚合平台,http://www.nmgxuanyu.com,heuristic_only,200,http://www.nmgxuanyu.com,0,true,true,auth_gate,medium,yes,命中关键词: 招标、采购、电子交易平台、中标、政府采购；页面存在登录或身份认证特征
+238,阳光臻达电子招投标平台,第三方综合,聚合平台,http://www.ygzdztb.com,heuristic_only,200,https://www.ygzdztb.com/,1,false,false,non_bidding_content,medium,yes,命中关键词: 招投标；发生 1 次跳转
+239,易土365电子招投标平台,第三方综合,聚合平台,http://www.etu365.com,heuristic_only,200,https://www.etu365.com/,1,false,true,ok,none,no,命中关键词: 采购、招投标；发生 1 次跳转
+240,一联易招电子招投标交易平台,第三方综合,聚合平台,http://www.ebid.sh.cn,heuristic_only,200,http://www.ebid.sh.cn,0,false,false,non_bidding_content,medium,yes,命中关键词: 招投标
+241,招采进宝,第三方综合,聚合平台,https://www.zcjb.com.cn/,heuristic_only,200,https://www.zcjb.com.cn/,0,true,true,auth_gate,medium,yes,命中关键词: 招标、采购、招投标、中标、政府采购、招采；页面存在登录或身份认证特征
+242,新点高校采购平台,第三方综合,聚合平台,http://www.ebidding.cn,heuristic_only,200,http://www.ebidding.cn,0,false,false,non_bidding_content,medium,yes,命中关键词: 采购
+243,华招药械交易平台,第三方综合,聚合平台,http://www.hzmed.com/,validated_failed,,http://www.hzmed.com/,0,,,network_error,high,yes,socket hang up
+244,旺采网,第三方综合,聚合平台,http://www.5ibid.net,heuristic_only,200,https://www.5ibid.net/Liems/index.html,2,true,true,auth_gate,medium,yes,命中关键词: 招标、采购、公共资源、中标、竞价；页面存在登录或身份认证特征；发生 2 次跳转
+245,南京鑫智链科技信息有限公司交易平台,第三方综合,聚合平台,http://mq.nisco.cn,validated_failed,,http://mq.nisco.cn,0,,,network_error,high,yes,socket hang up
+246,江苏省机电设备招标投标交易平台,第三方综合,聚合平台,http://www.szyc99.cn,heuristic_only,403,http://www.szyc99.cn,0,true,,auth_gate,medium,yes,HTTP 403，疑似需要登录或授权
+247,E交易,第三方综合,聚合平台,https://www.ejy365.com/,heuristic_only,200,https://www.ejy365.com/,0,true,true,auth_gate,medium,yes,命中关键词: 招标、采购、交易中心、竞价；页面存在登录或身份认证特征
+248,新点电子交易平台,第三方综合,聚合平台,http://www.etrading.cn,heuristic_only,200,https://www.etrading.cn/,1,true,true,auth_gate,medium,yes,命中关键词: 招标、采购、电子交易平台、中标、政府采购、招采；页面存在登录或身份认证特征；发生 1 次跳转
+249,中国e车网,第三方综合,聚合平台,http://www.ecrrc.com,heuristic_only,200,http://www.ecrrc.com,0,false,false,non_bidding_content,medium,yes,页面特征较弱，启发式判断置信度有限
+250,嗨招电子招标采购平台,第三方综合,聚合平台,http://www.hibidding.com,heuristic_only,200,https://www.hibidding.com/,1,false,true,ok,none,no,命中关键词: 招标、采购；发生 1 次跳转
+251,招天下招投标交易平台,第三方综合,聚合平台,http://www.zhaotx.cn/,heuristic_only,403,http://www.zhaotx.cn/,0,true,,auth_gate,medium,yes,HTTP 403，疑似需要登录或授权

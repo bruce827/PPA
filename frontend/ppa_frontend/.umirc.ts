@@ -101,6 +101,18 @@ export default defineConfig({
       ],
     },
     {
+      name: '项目机会',
+      path: '/opportunity',
+      icon: 'GlobalOutlined',
+      routes: [
+        {
+          name: '招标网站',
+          path: 'bidding-sites',
+          component: './Opportunity/BiddingSites',
+        },
+      ],
+    },
+    {
       name: '系统监控',
       path: '/monitoring',
       icon: 'MonitorOutlined',

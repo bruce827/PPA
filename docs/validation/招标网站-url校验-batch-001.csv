@@ -1,0 +1,53 @@
+id,name,source_level,platform_type,url,status,http_status,final_url,redirect_count,auth_required,is_bidding_site,issue_type,severity,obvious_problem,issue_summary
+1,中国国际招标网,国家级,官方核心,https://www.chinabidding.com.cn,heuristic_only,200,https://www.chinabidding.com.cn,0,false,false,non_bidding_content,medium,yes,命中关键词: 招标
+2,中国招标投标公共服务平台,国家级,官方核心,https://www.cebpubservice.com,validated_failed,502,https://www.cebpubservice.com,0,,,http_server_error,high,yes,502 服务端错误
+3,中国政府采购网,国家级,官方核心,https://www.ccgp.gov.cn,heuristic_only,200,https://www.ccgp.gov.cn,0,true,true,auth_gate,medium,yes,命中关键词: 招标、采购、招投标、政府采购；页面存在登录或身份认证特征
+4,中央政府采购网,国家级,官方核心,https://www.zycg.gov.cn,heuristic_only,200,https://www.zycg.gov.cn,0,true,true,auth_gate,medium,yes,命中关键词: 采购、政府采购；页面存在登录或身份认证特征
+5,全国公共资源交易平台,国家级,官方核心,https://www.ggzy.gov.cn,heuristic_only,200,https://www.ggzy.gov.cn,0,false,true,ok,none,no,命中关键词: 招标、采购、公共资源、政府采购
+6,军队采购网,国家级,官方核心,https://www.plap.mil.cn/,heuristic_only,200,https://www.plap.mil.cn/,0,true,true,auth_gate,medium,yes,命中关键词: 招标、采购、政府采购；页面存在登录或身份认证特征
+7,上海市公共资源交易中心,地方省市,公共资源交易,https://www.shggzy.com,heuristic_only,200,https://www.shggzy.com,0,true,true,auth_gate,medium,yes,命中关键词: 采购、公共资源、交易中心、政府采购；页面存在登录或身份认证特征
+8,上海市政府采购网,地方省市,政府采购,http://www.zfcg.sh.gov.cn,heuristic_only,200,http://www.zfcg.sh.gov.cn,0,true,true,auth_gate,medium,yes,命中关键词: 采购、政府采购；页面存在登录或身份认证特征
+9,云南省公共资源交易信息网,地方省市,公共资源交易,http://ggzy.yn.gov.cn,heuristic_only,200,https://ggzy.yn.gov.cn/,1,false,false,non_bidding_content,medium,yes,命中关键词: 公共资源；发生 1 次跳转
+10,云南省政府采购网,地方省市,政府采购,http://www.ccgp-yunnan.gov.cn,heuristic_only,200,http://www.ccgp-yunnan.gov.cn,0,true,true,auth_gate,medium,yes,命中关键词: 招标、采购、电子交易平台、政府采购；页面存在登录或身份认证特征
+11,兵团公共资源交易平台,地方省市,公共资源交易,https://ggzy.xjbt.gov.cn,heuristic_only,200,https://ggzy.xjbt.gov.cn,0,true,true,auth_gate,medium,yes,命中关键词: 招标、采购、公共资源、交易中心、招投标、政府采购；页面存在登录或身份认证特征
+12,兵团政府采购网,地方省市,政府采购,http://ccgp-bingtuan.gov.cn,heuristic_only,200,http://ccgp-bingtuan.gov.cn,0,true,true,auth_gate,medium,yes,命中关键词: 采购、政府采购；页面存在登录或身份认证特征
+13,内蒙古招标投标公共服务平台,地方省市,公共资源交易,https://zbgg.nmgztb.com.cn,validated_failed,,https://zbgg.nmgztb.com.cn,0,,,ssl_error,high,yes,self-signed certificate
+14,内蒙古自治区政府采购网,地方省市,政府采购,http://www.ccgp-neimenggu.gov.cn,validated_failed,410,http://www.ccgp-neimenggu.gov.cn,0,,,http_not_found,high,yes,410 页面不存在
+15,北京市公共资源交易服务平台,地方省市,公共资源交易,https://ggzyfw.beijing.gov.cn,validated_failed,,https://ggzyfw.beijing.gov.cn,0,,,ssl_error,high,yes,"write EPROTO 00F1F1F801000000:error:0A000132:SSL routines:tls_process_ske_ecdhe:bad ecpoint:../deps/openssl/openssl/ssl/statem/statem_clnt.c:2167:
+"
+16,北京市政府采购网,地方省市,政府采购,http://www.ccgp-beijing.gov.cn,heuristic_only,200,http://www.ccgp-beijing.gov.cn,0,true,true,auth_gate,medium,yes,命中关键词: 招标、采购、电子交易平台、中标、政府采购；页面存在登录或身份认证特征
+17,吉林省公共资源交易公共服务平台,地方省市,公共资源交易,http://www.jl.gov.cn,heuristic_only,200,http://www.jl.gov.cn,0,true,,auth_gate,medium,yes,命中关键词: 公共资源；页面存在登录或身份认证特征
+18,吉林省政府采购网,地方省市,政府采购,http://www.ccgp-jilin.gov.cn,heuristic_only,200,http://www.ccgp-jilin.gov.cn,0,true,true,auth_gate,medium,yes,命中关键词: 采购、政府采购；页面存在登录或身份认证特征
+19,全国公共资源交易平台（四川省）,地方省市,公共资源交易,http://www.scggzy.gov.cn,validated_failed,,http://www.scggzy.gov.cn,0,,,network_error,high,yes,socket hang up
+20,四川政府采购,地方省市,政府采购,http://www.ccgp-sichuan.gov.cn,validated_failed,,http://www.ccgp-sichuan.gov.cn,0,,,network_error,high,yes,socket hang up
+21,天津市公共资源交易平台,地方省市,公共资源交易,http://ggzy.zwfwb.tj.gov.cn,heuristic_only,200,http://ggzy.zwfwb.tj.gov.cn,0,false,false,non_bidding_content,medium,yes,命中关键词: 公共资源
+22,天津市政府采购网,地方省市,政府采购,http://www.ccgp-tianjin.gov.cn,heuristic_only,200,http://www.ccgp-tianjin.gov.cn,0,true,true,auth_gate,medium,yes,命中关键词: 采购、政府采购；页面存在登录或身份认证特征
+23,宁夏回族自治区公共资源交易网,地方省市,公共资源交易,http://www.nxggzyjy.org,heuristic_only,200,http://www.nxggzyjy.org,0,false,false,non_bidding_content,medium,yes,命中关键词: 公共资源
+24,宁夏回族自治区政府采购网,地方省市,政府采购,http://www.ccgp-ningxia.gov.cn,heuristic_only,200,http://www.ccgp-ningxia.gov.cn,0,false,true,ok,none,no,命中关键词: 采购、政府采购
+25,安徽省公共资源交易监管网,地方省市,公共资源交易,http://ggzy.ah.gov.cn,heuristic_only,200,https://ggzy.ah.gov.cn/,1,true,true,auth_gate,medium,yes,命中关键词: 招标、采购、公共资源、中标、政府采购；页面存在登录或身份认证特征；发生 1 次跳转
+26,安徽省政府采购网,地方省市,政府采购,http://www.ccgp-anhui.gov.cn,heuristic_only,200,https://www.ccgp-anhui.gov.cn/,1,true,true,auth_gate,medium,yes,命中关键词: 采购、政府采购；页面存在登录或身份认证特征；发生 1 次跳转
+27,山东省公共资源交易平台,地方省市,公共资源交易,https://ggzyjy.shandong.gov.cn,heuristic_only,200,https://ggzyjy.shandong.gov.cn,0,true,true,auth_gate,medium,yes,命中关键词: 招标、采购、公共资源、交易中心、中标、政府采购；页面存在登录或身份认证特征
+28,山东省政府采购网,地方省市,政府采购,http://www.ccgp-shandong.gov.cn,heuristic_only,200,http://www.ccgp-shandong.gov.cn,0,true,true,auth_gate,medium,yes,命中关键词: 采购、政府采购；页面存在登录或身份认证特征
+29,山西政府采购网,地方省市,政府采购,http://www.ccgp-shanxi.gov.cn,heuristic_only,200,http://www.ccgp-shanxi.gov.cn,0,true,true,auth_gate,medium,yes,命中关键词: 采购、政府采购；页面存在登录或身份认证特征
+30,山西省招标投标公共服务平台,地方省市,公共资源交易,http://www.sxbid.com.cn,heuristic_only,200,https://www.sxbid.com.cn/,1,true,true,auth_gate,medium,yes,命中关键词: 招标、公共资源、电子交易平台、中标；页面存在登录或身份认证特征；发生 1 次跳转
+31,广东省公共资源交易平台,地方省市,公共资源交易,http://bs.gdggzy.org.cn/osh-web,validated_failed,,http://bs.gdggzy.org.cn/osh-web,0,,,network_error,high,yes,socket hang up
+32,广东省政府采购网,地方省市,政府采购,https://gdgpo.czt.gd.gov.cn,heuristic_only,200,https://gdgpo.czt.gd.gov.cn,0,false,true,ok,none,no,命中关键词: 采购、政府采购
+33,深圳公共资源交易网,地方省市,公共资源交易,https://ww.szggzy.com,validated_failed,,https://ww.szggzy.com,0,,,ssl_error,high,yes,Client network socket disconnected before secure TLS connection was established
+34,深圳政府采购网,地方省市,政府采购,http://zfcg.sz.gov.cn,heuristic_only,200,http://zfcg.sz.gov.cn,0,true,true,auth_gate,medium,yes,命中关键词: 采购、政府采购；页面存在登录或身份认证特征
+35,广西壮族自治区公共资源交易中心,地方省市,公共资源交易,http://ggzyjy.gxzf.gov.cn,validated_failed,,http://ggzyjy.gxzf.gov.cn,0,,,network_error,high,yes,socket hang up
+36,广西政府采购网,地方省市,政府采购,http://www.ccgp-guangxi.gov.cn,heuristic_only,200,http://www.ccgp-guangxi.gov.cn,0,true,true,auth_gate,medium,yes,命中关键词: 采购、政府采购；页面存在登录或身份认证特征
+37,新疆公共资源交易网,地方省市,公共资源交易,https://ggzy.xinjiang.gov.cn,heuristic_only,200,https://ggzy.xinjiang.gov.cn,0,true,true,auth_gate,medium,yes,命中关键词: 招标、采购、公共资源、中标、政府采购；页面存在登录或身份认证特征
+38,新疆政府采购网,地方省市,政府采购,http://www.ccgp-xinjiang.gov.cn,heuristic_only,200,http://www.ccgp-xinjiang.gov.cn,0,true,true,auth_gate,medium,yes,命中关键词: 采购、政府采购；页面存在登录或身份认证特征
+39,江苏政府采购网,地方省市,政府采购,http://www.ccgp-jiangsu.gov.cn,heuristic_only,200,http://www.ccgp-jiangsu.gov.cn,0,true,true,auth_gate,medium,yes,命中关键词: 采购、政府采购；页面存在登录或身份认证特征
+40,江苏省招标投标公共服务平台,地方省市,公共资源交易,http://www.jszbtb.com,heuristic_only,200,https://www.jszbtb.com/,1,false,false,non_bidding_content,medium,yes,命中关键词: 招标；发生 1 次跳转
+41,江西省公共资源交易平台,地方省市,公共资源交易,http://www.jxsggzy.cn/web,validated_failed,404,http://www.jxsggzy.cn/web,0,,,http_not_found,high,yes,404 页面不存在
+42,江西省政府采购网,地方省市,政府采购,http://www.ccgp-jiangxi.gov.cn/web,heuristic_only,200,http://www.ccgp-jiangxi.gov.cn/web,0,false,true,ok,none,no,命中关键词: 采购、政府采购
+43,中国河北政府采购网,地方省市,政府采购,https://www.ccgp-hebei.gov.cn/province,heuristic_only,200,http://www.ccgp-hebei.gov.cn/province/,1,true,true,auth_gate,medium,yes,命中关键词: 招标、采购、中标、政府采购；页面存在登录或身份认证特征；发生 1 次跳转
+44,河北省公共资源交易服务平台,地方省市,公共资源交易,http://szj.hebei.gov.cn/,heuristic_only,200,http://szj.hebei.gov.cn/,0,true,true,auth_gate,medium,yes,命中关键词: 招标、公共资源；页面存在登录或身份认证特征
+45,河南省公共资源交易中心,地方省市,公共资源交易,https://hnsggzyjy.henan.gov.cn/,validated_failed,,https://hnsggzyjy.henan.gov.cn/,0,,,ssl_error,high,yes,"write EPROTO 00F1F1F801000000:error:0A000410:SSL routines:ssl3_read_bytes:sslv3 alert handshake failure:../deps/openssl/openssl/ssl/record/rec_layer_s3.c:1605:SSL alert number 40
+"
+46,河南省政府采购网,地方省市,政府采购,http://www.ccgp-henan.gov.cn,heuristic_only,200,http://www.ccgp-henan.gov.cn,0,true,true,auth_gate,medium,yes,命中关键词: 采购、政府采购；页面存在登录或身份认证特征
+47,浙江招标投标公共服务平台,地方省市,公共资源交易,https://zj.bidnews.cn,heuristic_only,200,https://zj.bidnews.cn,0,false,false,non_bidding_content,medium,yes,命中关键词: 招标
+48,浙江政府采购网,地方省市,政府采购,http://www.ccgp-zhejiang.gov.cn,heuristic_only,200,http://www.ccgp-zhejiang.gov.cn,0,true,true,auth_gate,medium,yes,命中关键词: 采购、政府采购；页面存在登录或身份认证特征
+49,中国海南政府采购网,地方省市,政府采购,http://www.ccgp-hainan.gov.cn,heuristic_only,200,https://ccgp-hainan.gov.cn/,2,false,true,cross_host_redirect,medium,yes,跳转到不同主机: ccgp-hainan.gov.cn
+50,海南省公共资源交易服务平台,地方省市,公共资源交易,http://ggzy.hainan.gov.cn,heuristic_only,200,https://ggzy.hainan.gov.cn/,1,true,true,auth_gate,medium,yes,命中关键词: 招标、采购、公共资源、招投标；页面存在登录或身份认证特征；发生 1 次跳转

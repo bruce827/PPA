@@ -4,6 +4,7 @@ const allRoutes = require('./routes');
 const db = require('./utils/db'); // Import db utility
 const errorHandler = require('./middleware/errorHandler'); // Global error handler
 const logger = require('./utils/logger');
+const biddingSiteModel = require('./models/biddingSiteModel');
 
 app.use(express.json({ limit: '1mb' }));
 app.use(allRoutes);
@@ -16,6 +17,7 @@ let server;
 async function startServer() {
   try {
     await db.init(); // Initialize database connection
+    await biddingSiteModel.ensureSchema();
     if (process.env.NODE_ENV !== 'test') {
       server = app.listen(3001, () => {
         logger.info('Server is running on port 3001');

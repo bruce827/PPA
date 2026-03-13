@@ -14,6 +14,7 @@ const scripts = [
   'seed-travel-costs.js',
   'seed-ai-prompts.js',
   'seed-web3d.js',
+  'seed-bidding-sites.js',
   // 'seed-risk-items.js', // 暂时注释，等待创建
 ];
 

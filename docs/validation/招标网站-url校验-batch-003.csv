@@ -1,0 +1,51 @@
+id,name,source_level,platform_type,url,status,http_status,final_url,redirect_count,auth_required,is_bidding_site,issue_type,severity,obvious_problem,issue_summary
+102,吉林公共资源交易服务平台,地方省市,公共资源交易,http://www.ggzyzx.jl.gov.cn/,heuristic_only,200,http://www.ggzyzx.jl.gov.cn/,0,true,true,auth_gate,medium,yes,命中关键词: 招标、采购、公共资源、交易中心、中标、竞价、政府采购、招采；页面存在登录或身份认证特征
+103,江苏公共资源交易服务平台,地方省市,公共资源交易,http://jsggzy.jszwfw.gov.cn/,heuristic_only,200,http://jsggzy.jszwfw.gov.cn/,0,true,true,auth_gate,medium,yes,命中关键词: 招标、采购、公共资源、交易中心、政府采购；页面存在登录或身份认证特征
+104,浙江公共资源交易服务平台,地方省市,公共资源交易,https://ggzy.zj.gov.cn/,heuristic_only,200,https://ggzy.zj.gov.cn/,0,false,true,ok,none,no,命中关键词: 招标、采购、公共资源、政府采购
+105,江西省公共资源交易服务平台,地方省市,公共资源交易,https://www.jxsggzy.cn/,heuristic_only,200,https://www.jxsggzy.cn/,0,true,true,auth_gate,medium,yes,命中关键词: 招标、公共资源、交易中心；页面存在登录或身份认证特征
+106,湖北公共资源交易中心,地方省市,公共资源交易,https://www.hbggzyfwpt.cn/,heuristic_only,200,https://www.hbggzyfwpt.cn/,0,true,true,auth_gate,medium,yes,命中关键词: 招标、采购、公共资源、交易中心、政府采购；页面存在登录或身份认证特征
+107,广东公共资源交易服务平台,地方省市,公共资源交易,https://ygp.gdzwfw.gov.cn/,heuristic_only,200,https://ygp.gdzwfw.gov.cn/,0,true,,auth_gate,medium,yes,命中关键词: 公共资源；页面存在登录或身份认证特征
+108,海南政府采购网,地方省市,政府采购,https://ccgp-hainan.gov.cn/,heuristic_only,200,https://ccgp-hainan.gov.cn/,0,false,true,ok,none,no,命中关键词: 采购、政府采购
+109,四川公共资源交易服务平台,地方省市,公共资源交易,https://ggzyjy.sc.gov.cn/,heuristic_only,200,https://ggzyjy.sc.gov.cn/,0,true,true,auth_gate,medium,yes,命中关键词: 招标、采购、公共资源、招投标、比选、政府采购；页面存在登录或身份认证特征
+110,贵州政府采购网,地方省市,政府采购,http://www.ccgp-guizhou.gov.cn/,heuristic_only,200,http://www.ccgp-guizhou.gov.cn/,0,true,true,auth_gate,medium,yes,命中关键词: 采购、政府采购；页面存在登录或身份认证特征
+111,云南政府采购网,地方省市,政府采购,http://www.yngp.com/,heuristic_only,200,http://www.yngp.com/,0,true,true,auth_gate,medium,yes,命中关键词: 招标、采购、电子交易平台、政府采购；页面存在登录或身份认证特征
+112,青海公共资源交易网,地方省市,公共资源交易,http://www.qhggzyjy.gov.cn/ggzy/,heuristic_only,200,http://www.qhggzyjy.gov.cn/ggzy/,0,false,false,non_bidding_content,medium,yes,命中关键词: 公共资源
+113,西藏公共资源交易服务平台,地方省市,公共资源交易,https://ggzy.xizang.gov.cn/,heuristic_only,200,https://ggzy.xizang.gov.cn/,0,true,true,auth_gate,medium,yes,命中关键词: 招标、采购、公共资源、电子交易平台、中标、政府采购；页面存在登录或身份认证特征
+114,内蒙古公共资源交易网,地方省市,公共资源交易,https://ggzyjy.nmg.gov.cn/,heuristic_only,200,https://ggzyjy.nmg.gov.cn/,0,true,true,auth_gate,medium,yes,命中关键词: 招标、公共资源、交易中心；页面存在登录或身份认证特征
+115,广西公共资源交易服务平台,地方省市,公共资源交易,http://ggzy.jgswj.gxzf.gov.cn/gxggzy/,heuristic_only,200,http://ggzy.jgswj.gxzf.gov.cn/gxggzy/,0,false,false,non_bidding_content,medium,yes,命中关键词: 公共资源
+116,宁夏公共资源交易网,地方省市,公共资源交易,https://ggzyjy.fzggw.nx.gov.cn/,heuristic_only,200,https://ggzyjy.fzggw.nx.gov.cn/,0,true,true,auth_gate,medium,yes,命中关键词: 招标、采购、公共资源、中标、政府采购；页面存在登录或身份认证特征
+117,军网自采平台,国家级,军采,https://zc.plap.mil.cn/,heuristic_only,200,https://zc.plap.mil.cn/,0,true,,auth_gate,medium,yes,命中关键词: 竞价；页面存在登录或身份认证特征
+118,中国兵器装备集团有限公司招标投标交易平台,行业垂直,企业招投标平台,https://www.cse-bidding.com,validated_failed,,https://www.cse-bidding.com,0,,,ssl_error,high,yes,Client network socket disconnected before secure TLS connection was established
+119,中国石油招标投标网,行业垂直,企业招投标平台,https://www.cnpcbidding.com/,heuristic_only,200,https://www.cnpcbidding.com/,0,false,false,non_bidding_content,medium,yes,命中关键词: 招标
+120,中国一汽电子招标采购电子交易平台,行业垂直,企业招投标平台,https://etp.faw.cn/,heuristic_only,200,https://etp.faw.cn/,0,true,true,auth_gate,medium,yes,命中关键词: 招标、采购、电子交易平台；页面存在登录或身份认证特征
+121,鞍钢集团电子招投标交易平台,行业垂直,企业招投标平台,https://bid.ansteelscm.com,validated_failed,,https://bid.ansteelscm.com,0,,,ssl_error,high,yes,Client network socket disconnected before secure TLS connection was established
+122,鞍钢集团电子招投标交易平台,行业垂直,企业招投标平台,http://bid.ansteel.cn,heuristic_only,200,https://bid.ansteel.cn/,1,true,true,auth_gate,medium,yes,命中关键词: 招标、采购、招投标、中标、竞价、招采；页面存在登录或身份认证特征；发生 1 次跳转
+123,中铝集团电子招投标平台,行业垂直,企业招投标平台,https://eb.chinalco.com.cn/,validated_failed,,https://eb.chinalco.com.cn/,0,,,ssl_error,high,yes,Client network socket disconnected before secure TLS connection was established
+124,中化电子招投标平台,行业垂直,企业招投标平台,http://e.sinochemitc.com/,heuristic_only,200,http://e.sinochemitc.com/,0,false,false,non_bidding_content,medium,yes,命中关键词: 招投标
+125,招商局集团电子招标采购交易平台,行业垂直,企业招投标平台,https://dzzb.ciesco.com.cn/,heuristic_only,200,https://dzzb.ciesco.com.cn/home,1,true,true,auth_gate,medium,yes,命中关键词: 招标、采购；页面存在登录或身份认证特征；发生 1 次跳转
+126,华润集团守正电子招标平台,行业垂直,企业招投标平台,https://szecp.crc.com.cn/,heuristic_only,200,https://szecp.crc.com.cn/,0,true,true,auth_gate,medium,yes,命中关键词: 招标、采购、中标、招采；页面存在登录或身份认证特征
+127,中国国电集团电子招投标系统,行业垂直,企业招投标平台,http://www.cgdcbidding.com/,validated_failed,,http://www.cgdcbidding.com/,0,,,timeout,high,yes,请求超时 (12000ms)
+128,中国有色集团采购招标电子商务平台,行业垂直,企业招投标平台,http://ecp.cnmc.com.cn,heuristic_only,200,http://ecp.cnmc.com.cn,0,true,true,auth_gate,medium,yes,命中关键词: 招标、采购、中标；页面存在登录或身份认证特征
+129,中煤招标有限责任公司电子招投标平台,行业垂直,企业招投标平台,http://www.zmzb.com/,heuristic_only,200,http://www.zmzb.com/,0,false,true,ok,none,no,命中关键词: 招标、招投标
+130,国药器材电子招标采购平台,行业垂直,企业招投标平台,https://sinopharmzc.com/#/home,heuristic_only,200,https://sinopharmzc.com/#/home,0,false,true,ok,none,no,命中关键词: 招标、采购
+131,中国石化电子招标投标交易平台（工程、服务交易平台）,行业垂直,企业招投标平台,https://ebidding.sinopec.com,heuristic_only,200,https://ebidding.sinopec.com,0,false,false,non_bidding_content,medium,yes,命中关键词: 招标
+132,中国电子进出口有限公司招标采购网,行业垂直,企业招投标平台,http://bidding.ceiec.com.cn/,validated_failed,,http://bidding.ceiec.com.cn/,0,,,network_error,high,yes,socket hang up
+133,电能易购招标采购平台,行业垂直,企业招投标平台,https://ebid.espic.com.cn/,heuristic_only,200,https://ebid.espic.com.cn/,0,true,true,auth_gate,medium,yes,命中关键词: 招标、采购、中标、竞价、招采；页面存在登录或身份认证特征
+134,北京能源招投标网,行业垂直,企业招投标平台,http://www.be-bidding.com,heuristic_only,200,http://www.be-bidding.com,0,false,false,non_bidding_content,medium,yes,命中关键词: 招投标
+135,航空工业电子招投标交易平台,行业垂直,企业招投标平台,http://ebid.eavic.com,heuristic_only,200,https://ebid.eavic.com/,1,false,false,non_bidding_content,medium,yes,命中关键词: 招投标；发生 1 次跳转
+136,中国华能集团公司电子招投标系统,行业垂直,企业招投标平台,http://www.chnzb.cn/hnzb/,validated_failed,,http://www.chnzb.cn/hnzb/,0,,,network_error,high,yes,socket hang up
+137,中国石化电子招标投标交易平台物资装备交易平台,行业垂直,企业招投标平台,http://bidding.sinopec.com,validated_failed,,http://bidding.sinopec.com,0,,,network_error,high,yes,socket hang up
+138,冀中能源集团招标投标电子交易平台,行业垂直,企业招投标平台,http://jzny.e-bidding.org/,validated_failed,,http://jzny.e-bidding.org/,0,,,network_error,high,yes,socket hang up
+139,太钢电子招投标交易平台,行业垂直,企业招投标平台,https://bid.tisco.com.cn,heuristic_only,200,https://bid.tisco.com.cn,0,false,true,ok,none,no,命中关键词: 招标、招投标
+140,晋能控股招标采购平台,行业垂直,企业招投标平台,http://dzzb.dtcoalmine.com,validated_failed,,http://dzzb.dtcoalmine.com,0,,,network_error,high,yes,socket hang up
+141,能建电子招投标交易平台,行业垂直,企业招投标平台,http://jc.imeec.cn/,validated_failed,,http://jc.imeec.cn/,0,,,network_error,high,yes,socket hang up
+142,鞍钢矿业招标投标平台,行业垂直,企业招投标平台,http://www.anmining.com/Tcrazy/Business.aspx,validated_failed,404,http://www.anmining.com/Tcrazy/Business.aspx,0,,,http_not_found,high,yes,404 页面不存在
+143,中国一汽电子招标采购交易平台,行业垂直,企业招投标平台,http://ept.fawiec.com,validated_failed,,http://ept.fawiec.com,0,,,network_error,high,yes,socket hang up
+144,济能发集团电子招投标平台,行业垂直,企业招投标平台,http://zc.jneasygo.com/cms/index.htm,heuristic_only,200,http://zc.jneasygo.com/cms/index.htm,0,true,true,auth_gate,medium,yes,命中关键词: 招标、招投标、中标；页面存在登录或身份认证特征
+145,中国通信服务湖南招投标服务平台,行业垂直,企业招投标平台,http://xtfzb.net/,validated_failed,,http://xtfzb.net/,0,,,network_error,high,yes,socket hang up
+146,中国燃气集团电子招标采购交易平台,行业垂直,企业招投标平台,https://zrzbcg.chinagasholdings.com,heuristic_only,200,https://zrzbcg.chinagasholdings.com,0,true,true,auth_gate,medium,yes,命中关键词: 招标、采购、招投标、招采；页面存在登录或身份认证特征
+147,陕投电子招标平台,行业垂直,企业招投标平台,http://www.stdzzb.com,heuristic_only,200,https://www.stdzzb.com/,1,false,false,non_bidding_content,medium,yes,命中关键词: 招标；发生 1 次跳转
+148,北京城市排水集团有限责任公司电子招标投标交易平台V1.0,行业垂直,企业招投标平台,https://www.bdc.cn/bdc/bpgyl/index.html,heuristic_only,200,https://www.bdc.cn/bdc/bpgyl/index.html,0,false,true,ok,none,no,命中关键词: 招标、采购
+149,中国海洋石油集团有限公司采办业务管理与交易系统,行业垂直,企业交易系统,https://buy.cnooc.com.cn,heuristic_only,401,https://buy.cnooc.com.cn,0,true,,auth_gate,medium,yes,HTTP 401，疑似需要登录或授权
+150,中储粮电子交易平台,行业垂直,企业交易系统,https://www.esinograin.com/,heuristic_only,200,https://www.esinograin.com/,0,true,true,auth_gate,medium,yes,命中关键词: 采购、交易中心、电子交易平台、竞价；页面存在登录或身份认证特征
+151,中国电建公共资源交易系统,行业垂直,企业交易系统,http://bid.powerchina.cn,heuristic_only,200,https://bid.powerchina.cn/,1,true,true,auth_gate,medium,yes,命中关键词: 采购、公共资源；页面存在登录或身份认证特征；发生 1 次跳转

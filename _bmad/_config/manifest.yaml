@@ -1,26 +1,39 @@
 installation:
-  version: 6.0.0-alpha.22
-  installDate: 2026-01-04T08:18:17.562Z
-  lastUpdated: 2026-01-04T08:18:17.562Z
+  version: 6.0.4
+  installDate: 2026-03-11T02:31:26.283Z
+  lastUpdated: 2026-03-11T02:31:26.283Z
 modules:
-  - core
-  - bmm
+  - name: core
+    version: 6.0.4
+    installDate: 2026-03-11T02:31:25.810Z
+    lastUpdated: 2026-03-11T02:31:25.810Z
+    source: built-in
+    npmPackage: null
+    repoUrl: null
+  - name: bmm
+    version: 6.0.4
+    installDate: 2026-03-11T02:31:18.778Z
+    lastUpdated: 2026-03-11T02:31:25.810Z
+    source: built-in
+    npmPackage: null
+    repoUrl: null
+  - name: tea
+    version: 1.5.3
+    installDate: 2026-03-11T02:31:22.901Z
+    lastUpdated: 2026-03-11T02:31:26.283Z
+    source: external
+    npmPackage: bmad-method-test-architecture-enterprise
+    repoUrl: https://github.com/bmad-code-org/bmad-method-test-architecture-enterprise
 ides:
   - claude-code
-  - codex
   - cursor
-  - github-copilot
-  - antigravity
-  - opencode
-  - windsurf
-  - rovo-dev
-  - auggie
   - cline
-  - crush
+  - codex
   - gemini
+  - github-copilot
   - iflow
-  - kilo
-  - kiro-cli
+  - opencode
   - qwen
   - roo
   - trae
+  - windsurf
