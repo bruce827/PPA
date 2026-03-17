@@ -10,6 +10,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@cloudbase/node-sdk": "^3.18.1",
     "chardet": "^2.1.0",
     "csv-parse": "^5.6.0",
     "exceljs": "^4.4.0",

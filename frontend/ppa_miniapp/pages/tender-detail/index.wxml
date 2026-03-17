@@ -1,0 +1,141 @@
+<view class="page detail-page">
+  <view wx:if="{{loading}}" class="empty">
+    <text>加载中...</text>
+  </view>
+
+  <block wx:elif="{{detail}}">
+    <view class="card hero-card">
+      <view class="hero-top">
+        <text class="title detail-title">{{detail.title}}</text>
+        <view class="status-chip {{detail.adopt_status === 'adopted' ? 'status-chip--locked' : 'status-chip--open'}}">
+          {{detail.adoptLabel}}
+        </view>
+      </view>
+      <text class="detail-summary subtle">{{detail.summary || '暂无摘要'}}</text>
+    </view>
+
+    <view class="card section-card">
+      <view class="section-title">基础信息</view>
+      <view class="detail-grid">
+        <view class="detail-item">
+          <text class="detail-label subtle">发布日期</text>
+          <text>{{detail.publishedText}}</text>
+        </view>
+        <view class="detail-item">
+          <text class="detail-label subtle">截止日期</text>
+          <text>{{detail.deadlineText}}</text>
+        </view>
+        <view class="detail-item">
+          <text class="detail-label subtle">招标单位</text>
+          <text>{{detail.issuer || '未填写'}}</text>
+        </view>
+        <view class="detail-item">
+          <text class="detail-label subtle">预算金额</text>
+          <text>{{detail.budgetText}}</text>
+        </view>
+        <view class="detail-item">
+          <text class="detail-label subtle">地区</text>
+          <text>{{detail.region || '未填写'}}</text>
+        </view>
+        <view class="detail-item">
+          <text class="detail-label subtle">来源平台</text>
+          <text>{{detail.source_platform || '未填写'}}</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="card section-card" wx:if="{{detail.extra}}">
+      <view class="section-title">更多信息</view>
+      <view class="detail-grid">
+        <view class="detail-item" wx:if="{{detail.extra.bid_package_no}}">
+          <text class="detail-label subtle">标段编号</text>
+          <text>{{detail.extra.bid_package_no}}</text>
+        </view>
+        <view class="detail-item" wx:if="{{detail.extra.document_receive_time}}">
+          <text class="detail-label subtle">文件领取时间</text>
+          <text>{{detail.extra.document_receive_time}}</text>
+        </view>
+        <view class="detail-item" wx:if="{{detail.extra.document_price}}">
+          <text class="detail-label subtle">文件价格</text>
+          <text>{{detail.extra.document_price}}</text>
+        </view>
+        <view class="detail-item" wx:if="{{detail.extra.delivery_term}}">
+          <text class="detail-label subtle">交付周期</text>
+          <text>{{detail.extra.delivery_term}}</text>
+        </view>
+        <view class="detail-item" wx:if="{{detail.extra.open_time}}">
+          <text class="detail-label subtle">开标时间</text>
+          <text>{{detail.extra.open_time}}</text>
+        </view>
+        <view class="detail-item" wx:if="{{detail.extra.open_place}}">
+          <text class="detail-label subtle">开标地点</text>
+          <text>{{detail.extra.open_place}}</text>
+        </view>
+      </view>
+      <view class="extra-block" wx:if="{{detail.extra.main_specification}}">
+        <text class="detail-label subtle">主要技术规格</text>
+        <text class="multiline">{{detail.extra.main_specification}}</text>
+      </view>
+      <view class="extra-block" wx:if="{{detail.extra.scope}}">
+        <text class="detail-label subtle">招标范围</text>
+        <text class="multiline">{{detail.extra.scope}}</text>
+      </view>
+      <view class="extra-block" wx:if="{{detail.extra.qualification_excerpt}}">
+        <text class="detail-label subtle">资格要求摘要</text>
+        <text class="multiline">{{detail.extra.qualification_excerpt}}</text>
+      </view>
+    </view>
+
+    <view class="card section-card">
+      <view class="section-title">采纳状态</view>
+      <view class="detail-grid">
+        <view class="detail-item">
+          <text class="detail-label subtle">当前状态</text>
+          <text>{{detail.adopt_status === 'adopted' ? '已采纳' : '未采纳'}}</text>
+        </view>
+        <view class="detail-item">
+          <text class="detail-label subtle">采纳人</text>
+          <text>{{detail.adopted_by_name || '暂无'}}</text>
+        </view>
+        <view class="detail-item">
+          <text class="detail-label subtle">采纳时间</text>
+          <text>{{detail.adoptedText || '暂无'}}</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="card section-card">
+      <view class="section-title">招标公告</view>
+      <rich-text wx:if="{{detail.announcement_html}}" nodes="{{detail.announcement_html}}"></rich-text>
+      <text wx:else class="plain-announcement">{{detail.announcement_plain_text || '暂无招标公告'}}</text>
+    </view>
+
+    <view class="card section-card">
+      <view class="section-title">原文链接</view>
+      <text class="source-link">{{detail.source_url || '暂无原文链接'}}</text>
+      <button wx:if="{{detail.source_url}}" class="secondary-button" bindtap="handleCopyLink">
+        复制原文链接
+      </button>
+    </view>
+
+    <view class="action-row">
+      <button
+        wx:if="{{canAdopt}}"
+        class="primary-button"
+        loading="{{submitting}}"
+        bindtap="handleAdopt"
+      >
+        采纳该项目
+      </button>
+
+      <button
+        wx:elif="{{canCancel}}"
+        class="secondary-button"
+        loading="{{submitting}}"
+        bindtap="handleCancelAdoption"
+      >
+        取消采纳
+      </button>
+    </view>
+  </block>
+</view>

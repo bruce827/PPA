@@ -97,4 +97,80 @@ declare namespace API_OPPORTUNITY {
       };
     };
   };
+
+  type TenderPushStatus = 'pending' | 'pushed' | 'failed';
+
+  type TenderStagingRecord = {
+    id: number;
+    source_item_id: string;
+    title: string;
+    published_at?: string | null;
+    published_date?: string | null;
+    deadline_at?: string | null;
+    deadline_date?: string | null;
+    issuer?: string | null;
+    budget_amount?: string | null;
+    region?: string | null;
+    source_platform?: string | null;
+    source_url?: string | null;
+    summary?: string | null;
+    announcement_html?: string | null;
+    announcement_plain_text?: string | null;
+    detail_payload?: Record<string, any> | null;
+    raw_payload?: Record<string, any> | null;
+    source_file?: string | null;
+    push_status: TenderPushStatus;
+    push_error?: string | null;
+    last_synced_at?: string | null;
+    pushed_at?: string | null;
+    created_at?: string;
+    updated_at?: string;
+  };
+
+  type TenderStagingStats = {
+    total: number;
+    pending: number;
+    pushed: number;
+    failed: number;
+  };
+
+  type TenderStagingListData = {
+    items: TenderStagingRecord[];
+    total: number;
+    page: number;
+    pageSize: number;
+    stats: TenderStagingStats;
+  };
+
+  type TenderStagingListResponse = {
+    success: boolean;
+    data: TenderStagingListData;
+  };
+
+  type TenderStagingSyncSummary = {
+    directoryPath: string;
+    fileCount: number;
+    rawRecordCount: number;
+    deduplicatedCount: number;
+    created: number;
+    updated: number;
+    unchanged: number;
+    errors: string[];
+  };
+
+  type TenderStagingSyncResponse = {
+    success: boolean;
+    data: TenderStagingSyncSummary;
+  };
+
+  type TenderStagingPushResult = {
+    record: TenderStagingRecord;
+    cloudResult?: Record<string, any> | null;
+    error?: string;
+  };
+
+  type TenderStagingPushResponse = {
+    success: boolean;
+    data: TenderStagingPushResult;
+  };
 }

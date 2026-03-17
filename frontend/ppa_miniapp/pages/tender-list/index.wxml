@@ -1,0 +1,72 @@
+<view class="page list-page">
+  <view class="card filter-card">
+    <view class="filter-header">
+      <text class="title">日期范围</text>
+      <text class="subtle">默认展示当天招标</text>
+    </view>
+
+    <view class="picker-row">
+      <view class="picker-field">
+        <text class="picker-label subtle">开始日期</text>
+        <picker mode="date" value="{{startDate}}" bindchange="onChangeStartDate">
+          <view class="picker-value">{{startDate}}</view>
+        </picker>
+      </view>
+
+      <view class="picker-field">
+        <text class="picker-label subtle">结束日期</text>
+        <picker mode="date" value="{{endDate}}" bindchange="onChangeEndDate">
+          <view class="picker-value">{{endDate}}</view>
+        </picker>
+      </view>
+    </view>
+
+    <button class="primary-button" bindtap="handleSearch" loading="{{loading}}">
+      查询招标信息
+    </button>
+  </view>
+
+  <view wx:if="{{loading && !list.length}}" class="empty">
+    <text>加载中...</text>
+  </view>
+
+  <view wx:elif="{{list.length}}" class="list-stack">
+    <view
+      wx:for="{{list}}"
+      wx:key="source_item_id"
+      class="card tender-card"
+      data-id="{{item.source_item_id}}"
+      bindtap="openDetail"
+    >
+      <view class="card-header">
+        <text class="tender-title">{{item.title}}</text>
+        <view class="status-chip {{item.adopt_status === 'adopted' ? 'status-chip--locked' : 'status-chip--open'}}">
+          {{item.adoptLabel}}
+        </view>
+      </view>
+
+      <view class="meta-grid">
+        <view class="meta-item">
+          <text class="meta-label subtle">发布日期</text>
+          <text>{{item.publishedDate}}</text>
+        </view>
+        <view class="meta-item">
+          <text class="meta-label subtle">截止日期</text>
+          <text>{{item.deadlineDate}}</text>
+        </view>
+        <view class="meta-item">
+          <text class="meta-label subtle">招标单位</text>
+          <text>{{item.issuer}}</text>
+        </view>
+        <view class="meta-item">
+          <text class="meta-label subtle">预算金额</text>
+          <text>{{item.budgetText}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view wx:else class="empty">
+    <text>{{emptyText}}</text>
+  </view>
+</view>

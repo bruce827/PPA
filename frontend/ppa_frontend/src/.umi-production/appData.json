@@ -51,7 +51,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 7
+        "register": 6
       },
       "enableBy": "register",
       "type": "preset",
@@ -81,7 +81,7 @@
             0
           ]
         },
-        "register": 5
+        "register": 3
       },
       "enableBy": "register",
       "type": "plugin",
@@ -95,7 +95,7 @@
       "time": {
         "hooks": {
           "onStart": [
-            4
+            2
           ]
         },
         "register": 2
@@ -128,7 +128,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -158,7 +158,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -195,7 +195,7 @@
             0
           ]
         },
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1091,7 +1091,7 @@
       "time": {
         "hooks": {
           "onStart": [
-            1
+            2
           ]
         },
         "register": 0
@@ -1120,7 +1120,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 54
+        "register": 56
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1133,7 +1133,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 28
+        "register": 30
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1146,7 +1146,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 8
+        "register": 10
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1227,7 +1227,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/preset-umi/dist/features/okam/okam.js",
@@ -1252,7 +1252,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1266,10 +1266,10 @@
       "time": {
         "hooks": {
           "modifyConfig": [
-            1
+            0
           ]
         },
-        "register": 1
+        "register": 2
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/preset-umi/dist/features/polyfill/polyfill.js",
@@ -1307,7 +1307,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1320,7 +1320,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1333,7 +1333,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1346,7 +1346,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 3
+        "register": 2
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1372,7 +1372,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/preset-umi/dist/features/routeProps/routeProps.js",
@@ -1486,7 +1486,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/preset-umi/dist/features/clickToComponent/clickToComponent.js",
@@ -1511,7 +1511,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1524,7 +1524,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/preset-umi/dist/features/webpack/webpack.js",
@@ -1666,7 +1666,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 32
+        "register": 27
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/preset-umi/dist/commands/dev/dev.js",
@@ -1717,7 +1717,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1730,7 +1730,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1886,7 +1886,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1899,7 +1899,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1912,7 +1912,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 14
+        "register": 15
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1979,13 +1979,13 @@
       "time": {
         "hooks": {
           "modifyConfig": [
-            3
+            4
           ],
           "modifyAppData": [
             0
           ]
         },
-        "register": 4
+        "register": 3
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/plugins/dist/antd.js",
@@ -2061,7 +2061,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 2
       },
       "enableBy": "config",
       "type": "plugin",
@@ -2087,7 +2087,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "config",
       "type": "plugin",
@@ -2100,7 +2100,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -2125,7 +2125,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/plugins/dist/qiankun/slave.js",
@@ -2220,7 +2220,7 @@
       "time": {
         "hooks": {
           "modifyAppData": [
-            0
+            1
           ]
         },
         "register": 0
@@ -2292,6 +2292,7 @@
         "name": "项目评估",
         "path": "/assessment",
         "icon": "FormOutlined",
+        "hideInMenu": true,
         "routes": [
           {
             "name": "新建评估",
@@ -2320,6 +2321,7 @@
         "name": "Web3D项目评估",
         "path": "/web3d",
         "icon": "BoxPlotOutlined",
+        "hideInMenu": true,
         "routes": [
           {
             "name": "新建评估",
@@ -2349,12 +2351,14 @@
         "name": "参数配置",
         "path": "/config",
         "component": "./Config",
-        "icon": "SettingOutlined"
+        "icon": "SettingOutlined",
+        "hideInMenu": true
       },
       {
         "name": "模型配置",
         "path": "/model-config",
         "icon": "RobotOutlined",
+        "hideInMenu": true,
         "routes": [
           {
             "name": "模型应用管理",
@@ -2389,6 +2393,11 @@
             "name": "招标网站",
             "path": "bidding-sites",
             "component": "./Opportunity/BiddingSites"
+          },
+          {
+            "name": "待推送招标",
+            "path": "tender-push",
+            "component": "./Opportunity/TenderPush"
           }
         ]
       },
@@ -2396,6 +2405,7 @@
         "name": "系统监控",
         "path": "/monitoring",
         "icon": "MonitorOutlined",
+        "hideInMenu": true,
         "routes": [
           {
             "name": "AI日志监控",
@@ -2475,6 +2485,7 @@
         "name": "项目评估",
         "path": "/assessment",
         "icon": "FormOutlined",
+        "hideInMenu": true,
         "routes": [
           {
             "name": "新建评估",
@@ -2503,6 +2514,7 @@
         "name": "Web3D项目评估",
         "path": "/web3d",
         "icon": "BoxPlotOutlined",
+        "hideInMenu": true,
         "routes": [
           {
             "name": "新建评估",
@@ -2532,12 +2544,14 @@
         "name": "参数配置",
         "path": "/config",
         "component": "./Config",
-        "icon": "SettingOutlined"
+        "icon": "SettingOutlined",
+        "hideInMenu": true
       },
       {
         "name": "模型配置",
         "path": "/model-config",
         "icon": "RobotOutlined",
+        "hideInMenu": true,
         "routes": [
           {
             "name": "模型应用管理",
@@ -2572,6 +2586,11 @@
             "name": "招标网站",
             "path": "bidding-sites",
             "component": "./Opportunity/BiddingSites"
+          },
+          {
+            "name": "待推送招标",
+            "path": "tender-push",
+            "component": "./Opportunity/TenderPush"
           }
         ]
       },
@@ -2579,6 +2598,7 @@
         "name": "系统监控",
         "path": "/monitoring",
         "icon": "MonitorOutlined",
+        "hideInMenu": true,
         "routes": [
           {
             "name": "AI日志监控",
@@ -3546,6 +3566,7 @@
       "name": "项目评估",
       "path": "/assessment",
       "icon": "FormOutlined",
+      "hideInMenu": true,
       "parentId": "ant-design-pro-layout",
       "id": "3",
       "absPath": "/assessment"
@@ -3599,6 +3620,7 @@
       "name": "Web3D项目评估",
       "path": "/web3d",
       "icon": "BoxPlotOutlined",
+      "hideInMenu": true,
       "parentId": "ant-design-pro-layout",
       "id": "8",
       "absPath": "/web3d"
@@ -3653,6 +3675,7 @@
       "name": "参数配置",
       "path": "/config",
       "icon": "SettingOutlined",
+      "hideInMenu": true,
       "file": "@/pages/Config.tsx",
       "parentId": "ant-design-pro-layout",
       "id": "13",
@@ -3665,6 +3688,7 @@
       "name": "模型配置",
       "path": "/model-config",
       "icon": "RobotOutlined",
+      "hideInMenu": true,
       "parentId": "ant-design-pro-layout",
       "id": "14",
       "absPath": "/model-config"
@@ -3730,36 +3754,48 @@
       "parentId": "19",
       "id": "20",
       "absPath": "/opportunity/bidding-sites",
-      "__content": "import {\n  createBiddingSite,\n  deleteBiddingSite,\n  getBiddingSites,\n  updateBiddingSite,\n  validateBiddingSite,\n} from '@/services/opportunity';\nimport {\n  ModalForm,\n  PageContainer,\n  ProFormSelect,\n  ProFormSwitch,\n  ProFormText,\n  ProFormTextArea,\n  ProTable,\n} from '@ant-design/pro-components';\nimport {\n  Badge,\n  Button,\n  Form,\n  message,\n  Modal,\n  Popconfirm,\n  Space,\n  Tag,\n  Tooltip,\n} from 'antd';\nimport type { ActionType, ProColumns } from '@ant-design/pro-components';\nimport React, { useMemo, useRef, useState } from 'react';\n\nconst sourceLevelOptions = [\n  { label: '国家级', value: '国家级' },\n  { label: '地方省市', value: '地方省市' },\n  { label: '行业垂直', value: '行业垂直' },\n  { label: '第三方综合', value: '第三方综合' },\n];\n\nconst platformTypeOptions = [\n  '官方核心',\n  '公共资源交易',\n  '政府采购',\n  '行业核心',\n  '电力 / 能源',\n  '建筑 / 基建',\n  '其他行业',\n  '聚合平台',\n].map((item) => ({ label: item, value: item }));\n\nconst validationStatusMap: Record<\n  API_OPPORTUNITY.ValidationStatus,\n  { text: string; color: string }\n> = {\n  never_validated: { text: '未校验', color: 'default' },\n  validated_ok: { text: '校验通过', color: 'success' },\n  validated_warning: { text: '存在警告', color: 'warning' },\n  validated_failed: { text: '校验失败', color: 'error' },\n  heuristic_only: { text: '仅启发式', color: 'processing' },\n};\n\nconst validationStatusOptions = Object.entries(validationStatusMap).map(\n  ([value, config]) => ({\n    label: config.text,\n    value,\n  }),\n);\n\nconst BiddingSitesPage: React.FC = () => {\n  const actionRef = useRef<ActionType>();\n  const [form] = Form.useForm<API_OPPORTUNITY.BiddingSitePayload>();\n  const [editingRecord, setEditingRecord] = useState<API_OPPORTUNITY.BiddingSite | null>(null);\n  const [formVisible, setFormVisible] = useState(false);\n  const [detailVisible, setDetailVisible] = useState(false);\n  const [detailRecord, setDetailRecord] = useState<API_OPPORTUNITY.BiddingSite | null>(null);\n  const [validatingId, setValidatingId] = useState<number | null>(null);\n\n  const validationOptions = useMemo(() => validationStatusOptions, []);\n\n  const openCreateModal = () => {\n    setEditingRecord(null);\n    form.resetFields();\n    form.setFieldsValue({\n      is_official: true,\n      enabled: true,\n    });\n    setFormVisible(true);\n  };\n\n  const openEditModal = (record: API_OPPORTUNITY.BiddingSite) => {\n    setEditingRecord(record);\n    form.setFieldsValue({\n      name: record.name,\n      alias_name: record.alias_name || '',\n      url: record.url,\n      source_level: record.source_level || undefined,\n      province: record.province || '',\n      city: record.city || '',\n      platform_type: record.platform_type || undefined,\n      is_official: record.is_official,\n      enabled: record.enabled,\n      notes: record.notes || '',\n    });\n    setFormVisible(true);\n  };\n\n  const showValidationDetail = (record: API_OPPORTUNITY.BiddingSite) => {\n    setDetailRecord(record);\n    setDetailVisible(true);\n  };\n\n  const handleSubmit = async (values: API_OPPORTUNITY.BiddingSitePayload) => {\n    try {\n      if (editingRecord) {\n        await updateBiddingSite(editingRecord.id, values);\n        message.success('更新成功');\n      } else {\n        await createBiddingSite(values);\n        message.success('创建成功');\n      }\n      setFormVisible(false);\n      actionRef.current?.reload();\n      return true;\n    } catch (error: any) {\n      message.error(error?.message || '保存失败');\n      return false;\n    }\n  };\n\n  const handleValidate = async (record: API_OPPORTUNITY.BiddingSite) => {\n    try {\n      setValidatingId(record.id);\n      const response = await validateBiddingSite(record.id);\n      message.success('校验完成');\n      if (response?.data?.site) {\n        setDetailRecord(response.data.site);\n        setDetailVisible(true);\n      }\n      actionRef.current?.reload();\n    } catch (error: any) {\n      message.error(error?.message || '校验失败');\n    } finally {\n      setValidatingId(null);\n    }\n  };\n\n  const columns: ProColumns<API_OPPORTUNITY.BiddingSite>[] = [\n    {\n      title: '网站名称',\n      dataIndex: 'name',\n      width: 240,\n      ellipsis: true,\n      copyable: true,\n      render: (_, record) => (\n        <Space direction=\"vertical\" size={0}>\n          <span>{record.name}</span>\n          {record.alias_name ? (\n            <span style={{ color: '#8c8c8c', fontSize: 12 }}>\n              别名: {record.alias_name}\n            </span>\n          ) : null}\n        </Space>\n      ),\n    },\n    {\n      title: '网址',\n      dataIndex: 'url',\n      width: 200,\n      ellipsis: true,\n      copyable: true,\n      render: (_, record) => (\n        <Tooltip title={record.url}>\n          <a\n            onClick={() => {\n              window.open(record.url, '_blank', 'noopener,noreferrer');\n            }}\n          >\n            {record.url}\n          </a>\n        </Tooltip>\n      ),\n    },\n    {\n      title: '层级',\n      dataIndex: 'source_level',\n      valueType: 'select',\n      width: 100,\n      valueEnum: sourceLevelOptions.reduce<Record<string, { text: string }>>(\n        (acc, item) => {\n          acc[item.value] = { text: item.label };\n          return acc;\n        },\n        {},\n      ),\n    },\n    {\n      title: '平台类型',\n      dataIndex: 'platform_type',\n      valueType: 'select',\n      width: 100,\n      valueEnum: platformTypeOptions.reduce<Record<string, { text: string }>>(\n        (acc, item) => {\n          acc[item.value] = { text: item.label };\n          return acc;\n        },\n        {},\n      ),\n    },\n    {\n      title: '区域',\n      dataIndex: 'province',\n      search: false,\n      width: 120,\n      render: (_, record) => [record.province, record.city].filter(Boolean).join(' / ') || '-',\n    },\n    {\n      title: '官方',\n      dataIndex: 'is_official',\n      valueType: 'select',\n      width: 90,\n      valueEnum: {\n        true: { text: '是' },\n        false: { text: '否' },\n      },\n      render: (_, record) =>\n        record.is_official ? <Badge status=\"success\" text=\"官方\" /> : <Badge status=\"default\" text=\"第三方\" />,\n    },\n    {\n      title: '启用',\n      dataIndex: 'enabled',\n      valueType: 'select',\n      width: 90,\n      valueEnum: {\n        true: { text: '启用' },\n        false: { text: '停用' },\n      },\n      render: (_, record) =>\n        record.enabled ? <Tag color=\"green\">启用</Tag> : <Tag color=\"default\">停用</Tag>,\n    },\n    {\n      title: '校验状态',\n      dataIndex: 'validation_status',\n      valueType: 'select',\n      width: 120,\n      valueEnum: validationOptions.reduce<Record<string, { text: string }>>(\n        (acc, item) => {\n          acc[item.value] = { text: item.label };\n          return acc;\n        },\n        {},\n      ),\n      render: (_, record) => {\n        const config = validationStatusMap[record.validation_status];\n        return <Tag color={config.color}>{config.text}</Tag>;\n      },\n    },\n    {\n      title: '校验摘要',\n      dataIndex: 'validation_summary',\n      search: false,\n      ellipsis: true,\n      width:80,\n      render: (_, record) => {\n        if (!record.validation_summary) return '-';\n        return (\n          <Tooltip title={record.validation_summary}>\n            <span>{record.validation_summary}</span>\n          </Tooltip>\n        );\n      },\n    },\n    {\n      title: '最近校验',\n      dataIndex: 'last_validated_at',\n      search: false,\n      width: 80,\n      valueType: 'dateTime',\n    },\n    {\n      title: '操作',\n      valueType: 'option',\n      key: 'option',\n      width: 260,\n      render: (_, record) => [\n        <a key=\"validate\" onClick={() => handleValidate(record)}>\n          {validatingId === record.id ? '校验中...' : 'AI校验'}\n        </a>,\n        <a\n          key=\"detail\"\n          onClick={() => {\n            showValidationDetail(record);\n          }}\n        >\n          查看结果\n        </a>,\n        <a key=\"edit\" onClick={() => openEditModal(record)}>\n          编辑\n        </a>,\n        <Popconfirm\n          key=\"delete\"\n          title=\"确认删除该网站吗？\"\n          onConfirm={async () => {\n            try {\n              await deleteBiddingSite(record.id);\n              message.success('删除成功');\n              actionRef.current?.reload();\n            } catch (error: any) {\n              message.error(error?.message || '删除失败');\n            }\n          }}\n        >\n          <a>删除</a>\n        </Popconfirm>,\n      ],\n    },\n  ];\n\n  return (\n    <PageContainer>\n      <ProTable<API_OPPORTUNITY.BiddingSite>\n        actionRef={actionRef}\n        rowKey=\"id\"\n        columns={columns}\n        cardBordered\n        request={async (params) => {\n          const response = await getBiddingSites(params);\n          return {\n            data: response?.data?.items || [],\n            success: response?.success ?? true,\n            total: response?.data?.total || 0,\n          };\n        }}\n        pagination={{\n          defaultPageSize: 20,\n          showSizeChanger: true,\n          pageSizeOptions: [10, 20, 50, 100],\n        }}\n        search={{\n          labelWidth: 'auto',\n        }}\n        headerTitle=\"招标网站\"\n        toolBarRender={() => [\n          <Button key=\"new\" type=\"primary\" onClick={openCreateModal}>\n            新建网站\n          </Button>,\n        ]}\n      />\n\n      <ModalForm<API_OPPORTUNITY.BiddingSitePayload>\n        title={editingRecord ? '编辑招标网站' : '新建招标网站'}\n        open={formVisible}\n        form={form}\n        onOpenChange={setFormVisible}\n        modalProps={{\n          destroyOnHidden: true,\n        }}\n        width={640}\n        onFinish={handleSubmit}\n      >\n        <ProFormText\n          name=\"name\"\n          label=\"网站名称\"\n          placeholder=\"请输入网站名称\"\n          rules={[{ required: true, message: '请输入网站名称' }]}\n        />\n        <ProFormText\n          name=\"alias_name\"\n          label=\"别名\"\n          placeholder=\"可选，多个别名可使用 / 分隔\"\n        />\n        <ProFormText\n          name=\"url\"\n          label=\"网址\"\n          placeholder=\"必须以 http:// 或 https:// 开头\"\n          rules={[\n            { required: true, message: '请输入网址' },\n            {\n              pattern: /^https?:\\/\\//i,\n              message: '网址必须以 http:// 或 https:// 开头',\n            },\n          ]}\n        />\n        <ProFormSelect\n          name=\"source_level\"\n          label=\"层级\"\n          options={sourceLevelOptions}\n          allowClear\n        />\n        <ProFormSelect\n          name=\"platform_type\"\n          label=\"平台类型\"\n          options={platformTypeOptions}\n          allowClear\n        />\n        <ProFormText name=\"province\" label=\"省份\" placeholder=\"如：北京、广东、全国\" />\n        <ProFormText name=\"city\" label=\"城市\" placeholder=\"如：北京、深圳、全国\" />\n        <ProFormSwitch name=\"is_official\" label=\"是否官方\" />\n        <ProFormSwitch name=\"enabled\" label=\"是否启用\" />\n        <ProFormTextArea\n          name=\"notes\"\n          label=\"备注\"\n          placeholder=\"补充说明、站点覆盖范围、使用建议等\"\n          fieldProps={{ rows: 4 }}\n        />\n      </ModalForm>\n\n      <Modal\n        title={detailRecord ? `校验结果 - ${detailRecord.name}` : '校验结果'}\n        open={detailVisible}\n        onCancel={() => setDetailVisible(false)}\n        footer={null}\n        width={720}\n      >\n        {detailRecord ? (\n          <Space direction=\"vertical\" size=\"middle\" style={{ width: '100%' }}>\n            <Space wrap>\n              <Tag color={validationStatusMap[detailRecord.validation_status].color}>\n                {validationStatusMap[detailRecord.validation_status].text}\n              </Tag>\n              <Tag color={detailRecord.enabled ? 'green' : 'default'}>\n                {detailRecord.enabled ? '启用' : '停用'}\n              </Tag>\n              <Tag color={detailRecord.is_official ? 'blue' : 'default'}>\n                {detailRecord.is_official ? '官方' : '第三方'}\n              </Tag>\n            </Space>\n\n            <div>\n              <strong>网址：</strong>\n              <a\n                style={{ marginLeft: 8 }}\n                onClick={() => window.open(detailRecord.url, '_blank', 'noopener,noreferrer')}\n              >\n                {detailRecord.url}\n              </a>\n            </div>\n\n            <div>\n              <strong>摘要：</strong>\n              <div style={{ marginTop: 8 }}>\n                {detailRecord.validation_summary || '暂无校验摘要'}\n              </div>\n            </div>\n\n            <div>\n              <strong>结构化结果：</strong>\n              <pre\n                style={{\n                  marginTop: 8,\n                  maxHeight: 360,\n                  overflow: 'auto',\n                  padding: 12,\n                  background: '#fafafa',\n                  borderRadius: 6,\n                }}\n              >\n                {JSON.stringify(\n                  {\n                    auth_required: detailRecord.auth_required,\n                    is_bidding_site: detailRecord.is_bidding_site,\n                    http_status: detailRecord.http_status,\n                    final_url: detailRecord.final_url,\n                    validation_confidence: detailRecord.validation_confidence,\n                    last_validated_at: detailRecord.last_validated_at,\n                    redirect_chain: detailRecord.redirect_chain || [],\n                    validation_payload: detailRecord.validation_payload || null,\n                  },\n                  null,\n                  2,\n                )}\n              </pre>\n            </div>\n          </Space>\n        ) : null}\n      </Modal>\n    </PageContainer>\n  );\n};\n\nexport default BiddingSitesPage;\n",
+      "__content": "import {\n  createBiddingSite,\n  deleteBiddingSite,\n  getBiddingSites,\n  updateBiddingSite,\n  validateBiddingSite,\n} from '@/services/opportunity';\nimport {\n  ModalForm,\n  PageContainer,\n  ProFormSelect,\n  ProFormSwitch,\n  ProFormText,\n  ProFormTextArea,\n  ProTable,\n} from '@ant-design/pro-components';\nimport {\n  Badge,\n  Button,\n  Form,\n  message,\n  Modal,\n  Popconfirm,\n  Space,\n  Tag,\n  Tooltip,\n} from 'antd';\nimport type { ActionType, ProColumns } from '@ant-design/pro-components';\nimport React, { useMemo, useRef, useState } from 'react';\n\nconst sourceLevelOptions = [\n  { label: '国家级', value: '国家级' },\n  { label: '地方省市', value: '地方省市' },\n  { label: '行业垂直', value: '行业垂直' },\n  { label: '第三方综合', value: '第三方综合' },\n];\n\nconst platformTypeOptions = [\n  '官方核心',\n  '公共资源交易',\n  '政府采购',\n  '行业核心',\n  '电力 / 能源',\n  '建筑 / 基建',\n  '其他行业',\n  '聚合平台',\n].map((item) => ({ label: item, value: item }));\n\nconst validationStatusMap: Record<\n  API_OPPORTUNITY.ValidationStatus,\n  { text: string; color: string }\n> = {\n  never_validated: { text: '未校验', color: 'default' },\n  validated_ok: { text: '校验通过', color: 'success' },\n  validated_warning: { text: '存在警告', color: 'warning' },\n  validated_failed: { text: '校验失败', color: 'error' },\n  heuristic_only: { text: '仅启发式', color: 'processing' },\n};\n\nconst validationStatusOptions = Object.entries(validationStatusMap).map(\n  ([value, config]) => ({\n    label: config.text,\n    value,\n  }),\n);\n\nconst BiddingSitesPage: React.FC = () => {\n  const actionRef = useRef<ActionType>();\n  const [form] = Form.useForm<API_OPPORTUNITY.BiddingSitePayload>();\n  const [editingRecord, setEditingRecord] = useState<API_OPPORTUNITY.BiddingSite | null>(null);\n  const [formVisible, setFormVisible] = useState(false);\n  const [detailVisible, setDetailVisible] = useState(false);\n  const [detailRecord, setDetailRecord] = useState<API_OPPORTUNITY.BiddingSite | null>(null);\n  const [validatingId, setValidatingId] = useState<number | null>(null);\n\n  const validationOptions = useMemo(() => validationStatusOptions, []);\n\n  const openCreateModal = () => {\n    setEditingRecord(null);\n    form.resetFields();\n    form.setFieldsValue({\n      is_official: true,\n      enabled: true,\n    });\n    setFormVisible(true);\n  };\n\n  const openEditModal = (record: API_OPPORTUNITY.BiddingSite) => {\n    setEditingRecord(record);\n    form.setFieldsValue({\n      name: record.name,\n      alias_name: record.alias_name || '',\n      url: record.url,\n      source_level: record.source_level || undefined,\n      province: record.province || '',\n      city: record.city || '',\n      platform_type: record.platform_type || undefined,\n      is_official: record.is_official,\n      enabled: record.enabled,\n      notes: record.notes || '',\n    });\n    setFormVisible(true);\n  };\n\n  const showValidationDetail = (record: API_OPPORTUNITY.BiddingSite) => {\n    setDetailRecord(record);\n    setDetailVisible(true);\n  };\n\n  const handleSubmit = async (values: API_OPPORTUNITY.BiddingSitePayload) => {\n    try {\n      if (editingRecord) {\n        await updateBiddingSite(editingRecord.id, values);\n        message.success('更新成功');\n      } else {\n        await createBiddingSite(values);\n        message.success('创建成功');\n      }\n      setFormVisible(false);\n      actionRef.current?.reload();\n      return true;\n    } catch (error: any) {\n      message.error(error?.message || '保存失败');\n      return false;\n    }\n  };\n\n  const handleValidate = async (record: API_OPPORTUNITY.BiddingSite) => {\n    try {\n      setValidatingId(record.id);\n      const response = await validateBiddingSite(record.id);\n      message.success('校验完成');\n      if (response?.data?.site) {\n        setDetailRecord(response.data.site);\n        setDetailVisible(true);\n      }\n      actionRef.current?.reload();\n    } catch (error: any) {\n      message.error(error?.message || '校验失败');\n    } finally {\n      setValidatingId(null);\n    }\n  };\n\n  const columns: ProColumns<API_OPPORTUNITY.BiddingSite>[] = [\n    {\n      title: '网站名称',\n      dataIndex: 'name',\n      width: 240,\n      ellipsis: true,\n      copyable: true,\n      render: (_, record) => (\n        <Space direction=\"vertical\" size={0}>\n          <span>{record.name}</span>\n          {record.alias_name ? (\n            <span style={{ color: '#8c8c8c', fontSize: 12 }}>\n              别名: {record.alias_name}\n            </span>\n          ) : null}\n        </Space>\n      ),\n    },\n    {\n      title: '网址',\n      dataIndex: 'url',\n      width: 200,\n      ellipsis: true,\n      copyable: true,\n      render: (_, record) => (\n        <Tooltip title={record.url}>\n          <a\n            onClick={() => {\n              window.open(record.url, '_blank', 'noopener,noreferrer');\n            }}\n          >\n            {record.url}\n          </a>\n        </Tooltip>\n      ),\n    },\n    {\n      title: '层级',\n      dataIndex: 'source_level',\n      valueType: 'select',\n      width: 100,\n      valueEnum: sourceLevelOptions.reduce<Record<string, { text: string }>>(\n        (acc, item) => {\n          acc[item.value] = { text: item.label };\n          return acc;\n        },\n        {},\n      ),\n    },\n    {\n      title: '平台类型',\n      dataIndex: 'platform_type',\n      valueType: 'select',\n      width: 100,\n      valueEnum: platformTypeOptions.reduce<Record<string, { text: string }>>(\n        (acc, item) => {\n          acc[item.value] = { text: item.label };\n          return acc;\n        },\n        {},\n      ),\n    },\n    {\n      title: '区域',\n      dataIndex: 'province',\n      search: false,\n      width: 120,\n      render: (_, record) => [record.province, record.city].filter(Boolean).join(' / ') || '-',\n    },\n    {\n      title: '官方',\n      dataIndex: 'is_official',\n      valueType: 'select',\n      width: 90,\n      valueEnum: {\n        true: { text: '是' },\n        false: { text: '否' },\n      },\n      render: (_, record) =>\n        record.is_official ? <Badge status=\"success\" text=\"官方\" /> : <Badge status=\"default\" text=\"第三方\" />,\n    },\n    {\n      title: '启用',\n      dataIndex: 'enabled',\n      valueType: 'select',\n      width: 90,\n      valueEnum: {\n        true: { text: '启用' },\n        false: { text: '停用' },\n      },\n      render: (_, record) =>\n        record.enabled ? <Tag color=\"green\">启用</Tag> : <Tag color=\"default\">停用</Tag>,\n    },\n    {\n      title: '校验状态',\n      dataIndex: 'validation_status',\n      valueType: 'select',\n      width: 120,\n      valueEnum: validationOptions.reduce<Record<string, { text: string }>>(\n        (acc, item) => {\n          acc[item.value] = { text: item.label };\n          return acc;\n        },\n        {},\n      ),\n      render: (_, record) => {\n        const config = validationStatusMap[record.validation_status];\n        return <Tag color={config.color}>{config.text}</Tag>;\n      },\n    },\n    {\n      title: '校验摘要',\n      dataIndex: 'validation_summary',\n      search: false,\n      ellipsis: true,\n      render: (_, record) => {\n        if (!record.validation_summary) return '-';\n        return (\n          <Tooltip title={record.validation_summary}>\n            <span>{record.validation_summary}</span>\n          </Tooltip>\n        );\n      },\n    },\n    {\n      title: '最近校验',\n      dataIndex: 'last_validated_at',\n      search: false,\n      width: 180,\n      ellipsis: true,\n      valueType: 'dateTime',\n      render: (_, record) =>\n        record.last_validated_at ? (\n          <span style={{ whiteSpace: 'nowrap' }}>{record.last_validated_at}</span>\n        ) : (\n          '-'\n        ),\n    },\n    {\n      title: '操作',\n      valueType: 'option',\n      key: 'option',\n      width: 260,\n      render: (_, record) => [\n        <a key=\"validate\" onClick={() => handleValidate(record)}>\n          {validatingId === record.id ? '校验中...' : 'AI校验'}\n        </a>,\n        <a\n          key=\"detail\"\n          onClick={() => {\n            showValidationDetail(record);\n          }}\n        >\n          查看结果\n        </a>,\n        <a key=\"edit\" onClick={() => openEditModal(record)}>\n          编辑\n        </a>,\n        <Popconfirm\n          key=\"delete\"\n          title=\"确认删除该网站吗？\"\n          onConfirm={async () => {\n            try {\n              await deleteBiddingSite(record.id);\n              message.success('删除成功');\n              actionRef.current?.reload();\n            } catch (error: any) {\n              message.error(error?.message || '删除失败');\n            }\n          }}\n        >\n          <a>删除</a>\n        </Popconfirm>,\n      ],\n    },\n  ];\n\n  return (\n    <PageContainer>\n      <ProTable<API_OPPORTUNITY.BiddingSite>\n        actionRef={actionRef}\n        rowKey=\"id\"\n        columns={columns}\n        cardBordered\n        request={async (params) => {\n          const response = await getBiddingSites(params);\n          return {\n            data: response?.data?.items || [],\n            success: response?.success ?? true,\n            total: response?.data?.total || 0,\n          };\n        }}\n        pagination={{\n          defaultPageSize: 20,\n          showSizeChanger: true,\n          pageSizeOptions: [10, 20, 50, 100],\n        }}\n        search={{\n          labelWidth: 'auto',\n        }}\n        headerTitle=\"招标网站\"\n        toolBarRender={() => [\n          <Button key=\"new\" type=\"primary\" onClick={openCreateModal}>\n            新建网站\n          </Button>,\n        ]}\n      />\n\n      <ModalForm<API_OPPORTUNITY.BiddingSitePayload>\n        title={editingRecord ? '编辑招标网站' : '新建招标网站'}\n        open={formVisible}\n        form={form}\n        onOpenChange={setFormVisible}\n        modalProps={{\n          destroyOnHidden: true,\n        }}\n        width={640}\n        onFinish={handleSubmit}\n      >\n        <ProFormText\n          name=\"name\"\n          label=\"网站名称\"\n          placeholder=\"请输入网站名称\"\n          rules={[{ required: true, message: '请输入网站名称' }]}\n        />\n        <ProFormText\n          name=\"alias_name\"\n          label=\"别名\"\n          placeholder=\"可选，多个别名可使用 / 分隔\"\n        />\n        <ProFormText\n          name=\"url\"\n          label=\"网址\"\n          placeholder=\"必须以 http:// 或 https:// 开头\"\n          rules={[\n            { required: true, message: '请输入网址' },\n            {\n              pattern: /^https?:\\/\\//i,\n              message: '网址必须以 http:// 或 https:// 开头',\n            },\n          ]}\n        />\n        <ProFormSelect\n          name=\"source_level\"\n          label=\"层级\"\n          options={sourceLevelOptions}\n          allowClear\n        />\n        <ProFormSelect\n          name=\"platform_type\"\n          label=\"平台类型\"\n          options={platformTypeOptions}\n          allowClear\n        />\n        <ProFormText name=\"province\" label=\"省份\" placeholder=\"如：北京、广东、全国\" />\n        <ProFormText name=\"city\" label=\"城市\" placeholder=\"如：北京、深圳、全国\" />\n        <ProFormSwitch name=\"is_official\" label=\"是否官方\" />\n        <ProFormSwitch name=\"enabled\" label=\"是否启用\" />\n        <ProFormTextArea\n          name=\"notes\"\n          label=\"备注\"\n          placeholder=\"补充说明、站点覆盖范围、使用建议等\"\n          fieldProps={{ rows: 4 }}\n        />\n      </ModalForm>\n\n      <Modal\n        title={detailRecord ? `校验结果 - ${detailRecord.name}` : '校验结果'}\n        open={detailVisible}\n        onCancel={() => setDetailVisible(false)}\n        footer={null}\n        width={720}\n      >\n        {detailRecord ? (\n          <Space direction=\"vertical\" size=\"middle\" style={{ width: '100%' }}>\n            <Space wrap>\n              <Tag color={validationStatusMap[detailRecord.validation_status].color}>\n                {validationStatusMap[detailRecord.validation_status].text}\n              </Tag>\n              <Tag color={detailRecord.enabled ? 'green' : 'default'}>\n                {detailRecord.enabled ? '启用' : '停用'}\n              </Tag>\n              <Tag color={detailRecord.is_official ? 'blue' : 'default'}>\n                {detailRecord.is_official ? '官方' : '第三方'}\n              </Tag>\n            </Space>\n\n            <div>\n              <strong>网址：</strong>\n              <a\n                style={{ marginLeft: 8 }}\n                onClick={() => window.open(detailRecord.url, '_blank', 'noopener,noreferrer')}\n              >\n                {detailRecord.url}\n              </a>\n            </div>\n\n            <div>\n              <strong>摘要：</strong>\n              <div style={{ marginTop: 8 }}>\n                {detailRecord.validation_summary || '暂无校验摘要'}\n              </div>\n            </div>\n\n            <div>\n              <strong>结构化结果：</strong>\n              <pre\n                style={{\n                  marginTop: 8,\n                  maxHeight: 360,\n                  overflow: 'auto',\n                  padding: 12,\n                  background: '#fafafa',\n                  borderRadius: 6,\n                }}\n              >\n                {JSON.stringify(\n                  {\n                    auth_required: detailRecord.auth_required,\n                    is_bidding_site: detailRecord.is_bidding_site,\n                    http_status: detailRecord.http_status,\n                    final_url: detailRecord.final_url,\n                    validation_confidence: detailRecord.validation_confidence,\n                    last_validated_at: detailRecord.last_validated_at,\n                    redirect_chain: detailRecord.redirect_chain || [],\n                    validation_payload: detailRecord.validation_payload || null,\n                  },\n                  null,\n                  2,\n                )}\n              </pre>\n            </div>\n          </Space>\n        ) : null}\n      </Modal>\n    </PageContainer>\n  );\n};\n\nexport default BiddingSitesPage;\n",
       "__isJSFile": true,
       "__absFile": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/src/pages/Opportunity/BiddingSites.tsx"
     },
     "21": {
+      "name": "待推送招标",
+      "path": "tender-push",
+      "file": "@/pages/Opportunity/TenderPush.tsx",
+      "parentId": "19",
+      "id": "21",
+      "absPath": "/opportunity/tender-push",
+      "__content": "import {\n  listTenderStaging,\n  pushTenderStaging,\n  syncTenderStaging,\n} from '@/services/opportunity';\nimport { PageContainer, ProTable } from '@ant-design/pro-components';\nimport { Button, Card, Col, message, Row, Space, Statistic, Tag, Tooltip } from 'antd';\nimport type { ActionType, ProColumns } from '@ant-design/pro-components';\nimport React, { useRef, useState } from 'react';\n\nconst pushStatusMap: Record<\n  API_OPPORTUNITY.TenderPushStatus,\n  { text: string; color: string }\n> = {\n  pending: { text: '待推送', color: 'processing' },\n  pushed: { text: '已推送', color: 'success' },\n  failed: { text: '推送失败', color: 'error' },\n};\n\nconst defaultStats: API_OPPORTUNITY.TenderStagingStats = {\n  total: 0,\n  pending: 0,\n  pushed: 0,\n  failed: 0,\n};\n\nconst TenderPushPage: React.FC = () => {\n  const actionRef = useRef<ActionType>();\n  const [stats, setStats] = useState<API_OPPORTUNITY.TenderStagingStats>(defaultStats);\n  const [syncLoading, setSyncLoading] = useState(false);\n  const [pushingId, setPushingId] = useState<number | null>(null);\n\n  const handleSync = async () => {\n    try {\n      setSyncLoading(true);\n      const response = await syncTenderStaging();\n      const summary = response?.data;\n      const errorCount = summary?.errors?.length || 0;\n      message.success(\n        `同步完成：文件 ${summary?.fileCount || 0} 个，去重后 ${\n          summary?.deduplicatedCount || 0\n        } 条，新增 ${summary?.created || 0}，更新 ${summary?.updated || 0}`\n      );\n      if (errorCount > 0) {\n        message.warning(`同步过程中有 ${errorCount} 条告警，请查看服务端返回`);\n      }\n      actionRef.current?.reload();\n    } catch (error: any) {\n      message.error(error?.message || '同步本地数据失败');\n    } finally {\n      setSyncLoading(false);\n    }\n  };\n\n  const handlePush = async (record: API_OPPORTUNITY.TenderStagingRecord) => {\n    try {\n      setPushingId(record.id);\n      const response = await pushTenderStaging(record.id);\n      const result = response?.data;\n      if (result?.error) {\n        message.error(result.error);\n      } else {\n        message.success('推送成功，小程序端现在可以查看这条数据');\n      }\n      actionRef.current?.reload();\n    } catch (error: any) {\n      message.error(error?.message || '推送失败');\n    } finally {\n      setPushingId(null);\n    }\n  };\n\n  const columns: ProColumns<API_OPPORTUNITY.TenderStagingRecord>[] = [\n    {\n      title: '项目名称',\n      dataIndex: 'title',\n      ellipsis: true,\n      width: 260,\n    },\n    {\n      title: '发布日期',\n      dataIndex: 'published_date',\n      width: 120,\n      search: false,\n      renderText: (value) => value || '-',\n    },\n    {\n      title: '截止日期',\n      dataIndex: 'deadline_date',\n      width: 120,\n      search: false,\n      renderText: (value) => value || '-',\n    },\n    {\n      title: '招标单位',\n      dataIndex: 'issuer',\n      ellipsis: true,\n      width: 220,\n      renderText: (value) => value || '-',\n    },\n    {\n      title: '来源文件',\n      dataIndex: 'source_file',\n      width: 180,\n      ellipsis: true,\n    },\n    {\n      title: '推送状态',\n      dataIndex: 'push_status',\n      valueType: 'select',\n      width: 120,\n      valueEnum: {\n        pending: { text: '待推送' },\n        pushed: { text: '已推送' },\n        failed: { text: '推送失败' },\n      },\n      render: (_, record) => {\n        const status = pushStatusMap[record.push_status];\n        return <Tag color={status.color}>{status.text}</Tag>;\n      },\n    },\n    {\n      title: '错误信息',\n      dataIndex: 'push_error',\n      search: false,\n      ellipsis: true,\n      render: (_, record) =>\n        record.push_error ? (\n          <Tooltip title={record.push_error}>{record.push_error}</Tooltip>\n        ) : (\n          '-'\n        ),\n    },\n    {\n      title: '原文',\n      dataIndex: 'source_url',\n      search: false,\n      width: 90,\n      render: (_, record) =>\n        record.source_url ? (\n          <a\n            href={record.source_url}\n            target=\"_blank\"\n            rel=\"noreferrer\"\n          >\n            打开\n          </a>\n        ) : (\n          '-'\n        ),\n    },\n    {\n      title: '操作',\n      valueType: 'option',\n      width: 140,\n      render: (_, record) => {\n        const buttonLabel =\n          record.push_status === 'failed'\n            ? '重试'\n            : record.push_status === 'pushed'\n              ? '重新推送'\n              : '推送';\n\n        return [\n          <Button\n            key=\"push\"\n            type=\"link\"\n            loading={pushingId === record.id}\n            onClick={() => handlePush(record)}\n          >\n            {buttonLabel}\n          </Button>,\n        ];\n      },\n    },\n  ];\n\n  return (\n    <PageContainer\n      header={{\n        title: '待推送招标',\n        subTitle: '把 spider/data 里的本地 JSON 同步到 staging，再单条推送到小程序',\n      }}\n    >\n      <Row gutter={16} style={{ marginBottom: 16 }}>\n        <Col span={6}>\n          <Card>\n            <Statistic title=\"总数\" value={stats.total} />\n          </Card>\n        </Col>\n        <Col span={6}>\n          <Card>\n            <Statistic title=\"待推送\" value={stats.pending} />\n          </Card>\n        </Col>\n        <Col span={6}>\n          <Card>\n            <Statistic title=\"已推送\" value={stats.pushed} />\n          </Card>\n        </Col>\n        <Col span={6}>\n          <Card>\n            <Statistic title=\"失败\" value={stats.failed} />\n          </Card>\n        </Col>\n      </Row>\n\n      <ProTable<API_OPPORTUNITY.TenderStagingRecord>\n        actionRef={actionRef}\n        rowKey=\"id\"\n        columns={columns}\n        search={{\n          labelWidth: 100,\n        }}\n        toolBarRender={() => [\n          <Space key=\"actions\">\n            <Button type=\"primary\" loading={syncLoading} onClick={handleSync}>\n              同步本地数据\n            </Button>\n          </Space>,\n        ]}\n        request={async (params) => {\n          const response = await listTenderStaging(params);\n          const result = response?.data;\n          setStats(result?.stats || defaultStats);\n          return {\n            data: result?.items || [],\n            success: response?.success,\n            total: result?.total || 0,\n          };\n        }}\n        pagination={{\n          pageSize: 20,\n        }}\n      />\n    </PageContainer>\n  );\n};\n\nexport default TenderPushPage;\n",
+      "__isJSFile": true,
+      "__absFile": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/src/pages/Opportunity/TenderPush.tsx"
+    },
+    "22": {
       "name": "系统监控",
       "path": "/monitoring",
       "icon": "MonitorOutlined",
+      "hideInMenu": true,
       "parentId": "ant-design-pro-layout",
-      "id": "21",
+      "id": "22",
       "absPath": "/monitoring"
     },
-    "22": {
+    "23": {
       "name": "AI日志监控",
       "path": "ai-logs",
       "file": "@/pages/Monitoring/AiLogs.tsx",
-      "parentId": "21",
-      "id": "22",
+      "parentId": "22",
+      "id": "23",
       "absPath": "/monitoring/ai-logs",
       "__content": "import { getMonitoringLogs, getMonitoringStats } from '@/services/monitoring';\nimport {\n  ActionType,\n  PageContainer,\n  ProColumns,\n  ProFormInstance,\n  ProTable,\n} from '@ant-design/pro-components';\nimport { Link } from '@umijs/max';\nimport { App, Button, Card, Col, Row, Space, Statistic, Tag, Typography } from 'antd';\nimport { useEffect, useMemo, useRef, useState } from 'react';\n\nconst AiLogs = () => {\n  const { message } = App.useApp();\n\n  const actionRef = useRef<ActionType>();\n  const formRef = useRef<ProFormInstance>();\n  const debounceTimerRef = useRef<NodeJS.Timeout | null>(null);\n  const desiredStatsKeyRef = useRef<string>('');\n  const lastSuccessStatsKeyRef = useRef<string>('');\n  const currentQueryRef = useRef<Record<string, any>>({});\n  const currentPageRef = useRef<number>(1);\n  const lastSubscribedKeyRef = useRef<string>('');\n  const wsRef = useRef<WebSocket | null>(null);\n  const wsReconnectTimerRef = useRef<NodeJS.Timeout | null>(null);\n  const wsRetryRef = useRef<number>(0);\n  const wsStoppedRef = useRef<boolean>(false);\n  const wsSeenHashesRef = useRef<string[]>([]);\n\n  const [stats, setStats] = useState<API.MonitoringStatsData | null>(null);\n  const [statsLoading, setStatsLoading] = useState(false);\n\n  const [wsStatus, setWsStatus] = useState<'connecting' | 'connected' | 'disconnected' | 'disabled'>(\n    'connecting',\n  );\n  const [wsInjectedRows, setWsInjectedRows] = useState<API.MonitoringLogItem[]>([]);\n  const [highlightMap, setHighlightMap] = useState<Record<string, number>>({});\n\n  const stepEnum = useMemo(\n    () => ({\n      risk: { text: 'risk' },\n      'risk-normalize': { text: 'risk-normalize' },\n      modules: { text: 'modules' },\n      workload: { text: 'workload' },\n      'model-test': { text: 'model-test' },\n    }),\n    [],\n  );\n\n  const statusEnum = useMemo(\n    () => ({\n      success: { text: 'success' },\n      fail: { text: 'fail' },\n      timeout: { text: 'timeout' },\n    }),\n    [],\n  );\n\n  const formatDuration = (value: any) => {\n    const ms = Number(value);\n    if (!Number.isFinite(ms)) return '-';\n    if (ms < 1000) return `${Math.round(ms)} ms`;\n    return `${(ms / 1000).toFixed(2)} s`;\n  };\n\n  const formatHash = (hash?: string | null) => {\n    const v = String(hash || '');\n    if (!v) return '-';\n    if (v.length <= 18) return v;\n    return `${v.slice(0, 10)}...${v.slice(-6)}`;\n  };\n\n  const buildStableKey = (obj: Record<string, any>) => {\n    const keys = Object.keys(obj || {}).sort();\n    const picked: Record<string, any> = {};\n    keys.forEach((k) => {\n      picked[k] = obj[k];\n    });\n    return JSON.stringify(picked);\n  };\n\n  const highlightRow = (hash: string) => {\n    if (!hash) return;\n    const expiresAt = Date.now() + 3000;\n    setHighlightMap((prev) => ({ ...prev, [hash]: expiresAt }));\n    setTimeout(() => {\n      setHighlightMap((prev) => {\n        if (!prev[hash]) return prev;\n        const next = { ...prev };\n        delete next[hash];\n        return next;\n      });\n    }, 3100);\n  };\n\n  const getSubscribeSteps = () => {\n    const q = currentQueryRef.current || {};\n    const steps = Array.isArray(q.steps) ? q.steps.map((s: any) => String(s)).filter(Boolean) : [];\n    if (steps.length > 0) return steps;\n    return Object.keys(stepEnum);\n  };\n\n  const sendSubscribe = () => {\n    const ws = wsRef.current;\n    if (!ws || ws.readyState !== WebSocket.OPEN) return;\n    const steps = getSubscribeSteps();\n    const key = JSON.stringify([...steps].sort());\n    if (key === lastSubscribedKeyRef.current) return;\n    lastSubscribedKeyRef.current = key;\n    try {\n      ws.send(JSON.stringify({ type: 'subscribe', steps }));\n    } catch (e) {}\n  };\n\n  const markSeen = (hash: string) => {\n    if (!hash) return false;\n    const arr = wsSeenHashesRef.current;\n    if (arr.includes(hash)) return true;\n    arr.unshift(hash);\n    if (arr.length > 500) arr.length = 500;\n    return false;\n  };\n\n  const columns: ProColumns<API.MonitoringLogItem>[] = [\n    {\n      title: '时间',\n      dataIndex: 'created_at',\n      valueType: 'dateTime',\n      width: 170,\n      hideInSearch: true,\n    },\n    {\n      title: '时间',\n      dataIndex: 'created_at_range',\n      valueType: 'dateRange',\n      hideInTable: true,\n      fieldProps: {\n        format: 'YYYY-MM-DD',\n      },\n      search: {\n        transform: (value) => {\n          const [start, end] = Array.isArray(value) ? value : [];\n          const next: Record<string, any> = {};\n          if (typeof start !== 'undefined') next.startDate = start;\n          if (typeof end !== 'undefined') next.endDate = end;\n          return next;\n        },\n      },\n    },\n    {\n      title: '状态',\n      dataIndex: 'status',\n      width: 90,\n      hideInSearch: true,\n      render: (_, record) => {\n        const v = record.status;\n        const color = v === 'success' ? 'green' : v === 'timeout' ? 'orange' : 'red';\n        return <Tag color={color}>{String(v)}</Tag>;\n      },\n    },\n    {\n      title: '状态',\n      dataIndex: 'statuses',\n      valueType: 'select',\n      valueEnum: statusEnum,\n      hideInTable: true,\n      fieldProps: {\n        mode: 'multiple',\n        allowClear: true,\n      },\n    },\n    {\n      title: '耗时',\n      dataIndex: 'duration_ms',\n      width: 110,\n      align: 'right',\n      hideInSearch: true,\n      render: (_, record) => {\n        const ms = Number(record.duration_ms);\n        const isHigh = Number.isFinite(ms) && ms >= 10000;\n        return (\n          <Typography.Text style={isHigh ? { color: '#cf1322' } : undefined}>\n            {formatDuration(record.duration_ms)}\n          </Typography.Text>\n        );\n      },\n    },\n    {\n      title: 'Step',\n      dataIndex: 'step',\n      width: 120,\n      hideInSearch: true,\n      render: (_, record) => (record.step ? String(record.step) : '-'),\n    },\n    {\n      title: 'Step',\n      dataIndex: 'steps',\n      valueType: 'select',\n      valueEnum: stepEnum,\n      hideInTable: true,\n      fieldProps: {\n        mode: 'multiple',\n        allowClear: true,\n      },\n    },\n    {\n      title: '模型',\n      dataIndex: 'model_used',\n      width: 180,\n      ellipsis: true,\n      hideInSearch: true,\n      responsive: ['md'],\n      render: (_, record) => (record.model_used ? String(record.model_used) : '-'),\n    },\n    {\n      title: '模型',\n      dataIndex: 'models',\n      valueType: 'select',\n      hideInTable: true,\n      fieldProps: {\n        mode: 'tags',\n        tokenSeparators: [','],\n        allowClear: true,\n        placeholder: '输入模型名，回车确认，可多个',\n      },\n    },\n    {\n      title: 'PromptId',\n      dataIndex: 'prompt_id',\n      width: 100,\n      hideInSearch: true,\n      render: (_, record) => (record.prompt_id ? String(record.prompt_id) : '-'),\n    },\n    {\n      title: 'PromptId',\n      dataIndex: 'promptId',\n      hideInTable: true,\n    },\n    {\n      title: 'Route',\n      dataIndex: 'route',\n      width: 180,\n      ellipsis: true,\n      hideInSearch: true,\n      responsive: ['lg'],\n      render: (_, record) => (record.route ? String(record.route) : '-'),\n    },\n    {\n      title: 'Hash',\n      dataIndex: 'request_hash',\n      width: 160,\n      ellipsis: true,\n      hideInSearch: true,\n      render: (_, record) => (\n        <Typography.Text\n          ellipsis\n          copyable={{ text: String(record.request_hash || '') }}\n          style={{ maxWidth: 150 }}\n        >\n          {formatHash(record.request_hash)}\n        </Typography.Text>\n      ),\n    },\n    {\n      title: 'Hash',\n      dataIndex: 'searchHash',\n      hideInTable: true,\n      fieldProps: {\n        placeholder: '支持部分匹配',\n      },\n    },\n    {\n      title: '错误',\n      dataIndex: 'error_message',\n      ellipsis: true,\n      hideInSearch: true,\n      render: (_, record) => (record.error_message ? String(record.error_message) : '-'),\n    },\n    {\n      title: '操作',\n      valueType: 'option',\n      width: 80,\n      render: (_, record) => [\n        <Link key=\"detail\" to={`/monitoring/ai-logs/${record.request_hash}`}>\n          详情\n        </Link>,\n      ],\n    },\n  ];\n\n  useEffect(() => {\n    return () => {\n      if (debounceTimerRef.current) {\n        clearTimeout(debounceTimerRef.current);\n        debounceTimerRef.current = null;\n      }\n    };\n  }, []);\n\n  useEffect(() => {\n    wsStoppedRef.current = false;\n\n    const connect = () => {\n      if (wsStoppedRef.current) return;\n      if (wsRef.current && (wsRef.current.readyState === WebSocket.OPEN || wsRef.current.readyState === WebSocket.CONNECTING)) {\n        return;\n      }\n\n      setWsStatus('connecting');\n      const proto = window.location.protocol === 'https:' ? 'wss' : 'ws';\n      const url = `${proto}://${window.location.host}/api/monitoring/ws`;\n\n      let ws: WebSocket;\n      try {\n        ws = new WebSocket(url);\n      } catch (e) {\n        setWsStatus('disabled');\n        return;\n      }\n\n      wsRef.current = ws;\n\n      ws.onopen = () => {\n        wsRetryRef.current = 0;\n        setWsStatus('connected');\n        sendSubscribe();\n      };\n\n      ws.onmessage = (evt) => {\n        try {\n          const msg = JSON.parse(String(evt.data || ''));\n          if (msg?.type !== 'ai_log_created') return;\n          const row = msg?.data as API.MonitoringLogItem;\n          const hash = String(row?.request_hash || '');\n          if (!hash) return;\n          if (markSeen(hash)) return;\n\n          setWsInjectedRows((prev) => {\n            const next = [row, ...(prev || [])].filter((x) => x && x.request_hash);\n            const seen = new Set<string>();\n            const deduped: API.MonitoringLogItem[] = [];\n            for (const r of next) {\n              const h = String(r.request_hash);\n              if (seen.has(h)) continue;\n              seen.add(h);\n              deduped.push(r);\n              if (deduped.length >= 50) break;\n            }\n            return deduped;\n          });\n          highlightRow(hash);\n\n          if (currentPageRef.current === 1) {\n            actionRef.current?.reload?.();\n          }\n        } catch (e) {}\n      };\n\n      ws.onclose = () => {\n        wsRef.current = null;\n        if (wsStoppedRef.current) return;\n        setWsStatus('disconnected');\n\n        const retry = wsRetryRef.current + 1;\n        wsRetryRef.current = retry;\n\n        if (retry >= 10) {\n          setWsStatus('disabled');\n          message.warning('WS 连接失败次数过多，已降级为手动刷新');\n          return;\n        }\n\n        const delay = Math.min(30000, 500 * Math.pow(2, retry));\n        if (wsReconnectTimerRef.current) {\n          clearTimeout(wsReconnectTimerRef.current);\n        }\n        wsReconnectTimerRef.current = setTimeout(() => {\n          connect();\n        }, delay);\n      };\n\n      ws.onerror = () => {\n        try {\n          ws.close();\n        } catch (e) {}\n      };\n    };\n\n    connect();\n    return () => {\n      wsStoppedRef.current = true;\n      if (wsReconnectTimerRef.current) {\n        clearTimeout(wsReconnectTimerRef.current);\n        wsReconnectTimerRef.current = null;\n      }\n      if (wsRef.current) {\n        try {\n          wsRef.current.close();\n        } catch (e) {}\n        wsRef.current = null;\n      }\n    };\n  }, []);\n\n  return (\n    <PageContainer header={{ title: 'AI日志监控' }}>\n      <Space direction=\"vertical\" size={16} style={{ width: '100%' }}>\n        <Row gutter={16}>\n          <Col xs={24} sm={12} md={6}>\n            <Card loading={statsLoading}>\n              <Statistic title=\"调用次数\" value={stats?.totalCalls ?? 0} />\n            </Card>\n          </Col>\n          <Col xs={24} sm={12} md={6}>\n            <Card loading={statsLoading}>\n              <Statistic\n                title=\"成功率\"\n                value={Number(stats?.successRate ?? 0)}\n                precision={2}\n                suffix=\"%\"\n              />\n            </Card>\n          </Col>\n          <Col xs={24} sm={12} md={6}>\n            <Card loading={statsLoading}>\n              <Statistic\n                title=\"平均耗时\"\n                value={formatDuration(stats?.avgDuration ?? 0)}\n              />\n            </Card>\n          </Col>\n          <Col xs={24} sm={12} md={6}>\n            <Card loading={statsLoading}>\n              <Statistic\n                title=\"错误（timeout/parse/network/other）\"\n                value={`${stats?.errorDistribution?.timeout ?? 0}/${stats?.errorDistribution?.parse ?? 0}/${stats?.errorDistribution?.network ?? 0}/${stats?.errorDistribution?.other ?? 0}`}\n              />\n            </Card>\n          </Col>\n        </Row>\n\n        <ProTable<API.MonitoringLogItem>\n          actionRef={actionRef}\n          formRef={formRef}\n          cardBordered\n          rowKey=\"id\"\n          columns={columns}\n          tableLayout=\"fixed\"\n          headerTitle=\"日志列表\"\n          dateFormatter=\"string\"\n          onRow={(record) => {\n            const exp = highlightMap[String(record.request_hash || '')];\n            if (exp && exp > Date.now()) {\n              return { style: { background: '#fffbe6' } };\n            }\n            return {};\n          }}\n          search={{\n            labelWidth: 'auto',\n            optionRender: () => [],\n          }}\n          toolBarRender={() => [\n            <Tag\n              key=\"ws\"\n              color={\n                wsStatus === 'connected'\n                  ? 'green'\n                  : wsStatus === 'connecting'\n                    ? 'blue'\n                    : wsStatus === 'disconnected'\n                      ? 'orange'\n                      : 'default'\n              }\n            >\n              WS: {wsStatus}\n            </Tag>,\n            currentPageRef.current !== 1 && wsInjectedRows.length > 0 ? (\n              <Button\n                key=\"new\"\n                onClick={() => {\n                  actionRef.current?.reloadAndRest?.();\n                }}\n              >\n                查看新日志（{wsInjectedRows.length}）\n              </Button>\n            ) : null,\n            <Button\n              key=\"reset\"\n              onClick={() => {\n                if (debounceTimerRef.current) {\n                  clearTimeout(debounceTimerRef.current);\n                  debounceTimerRef.current = null;\n                }\n                desiredStatsKeyRef.current = '';\n                lastSuccessStatsKeyRef.current = '';\n                setStats(null);\n                setWsInjectedRows([]);\n                setHighlightMap({});\n                formRef.current?.resetFields();\n                actionRef.current?.reloadAndRest?.();\n                sendSubscribe();\n              }}\n            >\n              重置\n            </Button>,\n            <Button\n              key=\"refresh\"\n              type=\"primary\"\n              onClick={() => {\n                lastSuccessStatsKeyRef.current = '';\n                actionRef.current?.reload();\n                sendSubscribe();\n              }}\n            >\n              刷新\n            </Button>,\n          ]}\n          postData={(rows) => {\n            if (!Array.isArray(rows)) return rows as any;\n            if (currentPageRef.current !== 1) return rows;\n            if (!wsInjectedRows || wsInjectedRows.length === 0) return rows;\n            const merged = [...wsInjectedRows, ...rows];\n            const seen = new Set<string>();\n            const out: API.MonitoringLogItem[] = [];\n            for (const r of merged) {\n              const h = String(r?.request_hash || '');\n              if (!h) continue;\n              if (seen.has(h)) continue;\n              seen.add(h);\n              out.push(r);\n              if (out.length >= rows.length) break;\n            }\n            return out;\n          }}\n          form={{\n            onValuesChange: () => {\n              if (debounceTimerRef.current) {\n                clearTimeout(debounceTimerRef.current);\n              }\n              debounceTimerRef.current = setTimeout(() => {\n                actionRef.current?.reloadAndRest?.();\n              }, 500);\n            },\n          }}\n          request={async (params) => {\n            const page = Number(params.current || 1);\n            const pageSize = Number(params.pageSize || 20);\n\n            const queryParams = { ...params } as Record<string, any>;\n            delete queryParams.current;\n            delete queryParams.pageSize;\n\n            currentQueryRef.current = queryParams;\n            currentPageRef.current = page;\n            sendSubscribe();\n\n            const statsKey = buildStableKey(queryParams);\n            desiredStatsKeyRef.current = statsKey;\n            const shouldFetchStats =\n              !stats ||\n              statsKey !== lastSuccessStatsKeyRef.current ||\n              lastSuccessStatsKeyRef.current === '';\n\n            if (shouldFetchStats) {\n              setStatsLoading(true);\n            }\n\n            try {\n              const logsPromise = getMonitoringLogs({ page, pageSize, ...queryParams });\n              const statsPromise = shouldFetchStats\n                ? getMonitoringStats(queryParams)\n                : Promise.resolve(null as any);\n\n              const [logsRes, statsRes] = await Promise.all([logsPromise, statsPromise]);\n\n              if (shouldFetchStats && statsRes) {\n                if (desiredStatsKeyRef.current === statsKey) {\n                  if (statsRes?.success) {\n                    setStats(statsRes.data);\n                    lastSuccessStatsKeyRef.current = statsKey;\n                  } else {\n                    setStats(null);\n                    message.error(statsRes?.error || '加载统计失败');\n                  }\n                }\n              }\n\n              if (!logsRes?.success) {\n                message.error(logsRes?.error || '加载日志列表失败');\n                return {\n                  data: [],\n                  success: false,\n                  total: 0,\n                };\n              }\n\n              if (page === 1 && wsInjectedRows.length > 0) {\n                const hashes = new Set<string>(\n                  (logsRes.data.list || []).map((x) => String(x?.request_hash || '')).filter(Boolean),\n                );\n                setWsInjectedRows((prev) => (prev || []).filter((r) => !hashes.has(String(r.request_hash || ''))));\n              }\n\n              return {\n                data: logsRes.data.list,\n                success: true,\n                total: logsRes.data.total,\n              };\n            } catch (_e) {\n              message.error('加载日志列表失败');\n              return {\n                data: [],\n                success: false,\n                total: 0,\n              };\n            } finally {\n              if (shouldFetchStats && desiredStatsKeyRef.current === statsKey) {\n                setStatsLoading(false);\n              }\n            }\n          }}\n          locale={{\n            emptyText: '暂无数据',\n          }}\n          pagination={{\n            pageSize: 20,\n          }}\n        />\n      </Space>\n    </PageContainer>\n  );\n};\n\nexport default AiLogs;\n",
       "__isJSFile": true,
       "__absFile": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/src/pages/Monitoring/AiLogs.tsx"
     },
-    "23": {
+    "24": {
       "name": "日志详情",
       "path": "ai-logs/:requestHash",
       "hideInMenu": true,
       "file": "@/pages/Monitoring/AiLogDetail.tsx",
-      "parentId": "21",
-      "id": "23",
+      "parentId": "22",
+      "id": "24",
       "absPath": "/monitoring/ai-logs/:requestHash",
       "__content": "import { getMonitoringLogDetail } from '@/services/monitoring';\nimport { PageContainer } from '@ant-design/pro-components';\nimport { Link, useParams } from '@umijs/max';\nimport {\n  Alert,\n  App,\n  Button,\n  Card,\n  Descriptions,\n  Empty,\n  Input,\n  Space,\n  Spin,\n  Tabs,\n  Tag,\n  Typography,\n} from 'antd';\nimport { useEffect, useMemo, useState } from 'react';\n\nconst escapeHtml = (raw: string) => {\n  return raw.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');\n};\n\nconst highlightJson = (raw: string) => {\n  const escaped = escapeHtml(raw);\n  const re =\n    /(\\x22(?:\\\\u[a-zA-Z0-9]{4}|\\\\[^u]|[^\\\\\\x22])*\\x22\\s*:)|(\\x22(?:\\\\u[a-zA-Z0-9]{4}|\\\\[^u]|[^\\\\\\x22])*\\x22)|\\b(true|false|null)\\b|-?\\d+(?:\\.\\d*)?(?:[eE][+\\-]?\\d+)?/g;\n  return escaped.replace(re, (m) => {\n    let color = '#096dd9';\n    if (/^\\s*\\x22/.test(m)) {\n      color = /:\\s*$/.test(m) ? '#0050b3' : '#237804';\n    } else if (/true|false/.test(m)) {\n      color = '#722ed1';\n    } else if (/null/.test(m)) {\n      color = '#8c8c8c';\n    } else {\n      color = '#d46b08';\n    }\n    return `<span style='color:${color}'>${m}</span>`;\n  });\n};\n\nconst ExpandablePre = ({\n  text,\n  highlight,\n}: {\n  text: string;\n  highlight?: 'json';\n}) => {\n  const [expanded, setExpanded] = useState(false);\n  const tooLong = text.length > 1000;\n  const shown = !tooLong || expanded ? text : `${text.slice(0, 1000)}...`;\n  return (\n    <Space direction=\"vertical\" size={8} style={{ width: '100%' }}>\n      <Typography.Paragraph copyable={{ text }} style={{ marginBottom: 0 }}>\n        {highlight === 'json' ? (\n          <pre\n            style={{\n              margin: 0,\n              padding: 12,\n              background: '#fafafa',\n              border: '1px solid #f0f0f0',\n              borderRadius: 6,\n              whiteSpace: 'pre-wrap',\n              wordBreak: 'break-word',\n              fontFamily:\n                \"ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace\",\n            }}\n            dangerouslySetInnerHTML={{ __html: highlightJson(shown) }}\n          />\n        ) : (\n          <pre\n            style={{\n              margin: 0,\n              padding: 12,\n              background: '#fafafa',\n              border: '1px solid #f0f0f0',\n              borderRadius: 6,\n              whiteSpace: 'pre-wrap',\n              wordBreak: 'break-word',\n            }}\n          >\n            {shown}\n          </pre>\n        )}\n      </Typography.Paragraph>\n      {tooLong && (\n        <Button type=\"link\" style={{ padding: 0 }} onClick={() => setExpanded((v) => !v)}>\n          {expanded ? '收起' : '展开'}\n        </Button>\n      )}\n    </Space>\n  );\n};\n\nconst HighlightedText = ({ text, keyword }: { text: string; keyword: string }) => {\n  const k = keyword.trim();\n  if (!k) {\n    return <>{text}</>;\n  }\n  const lower = text.toLowerCase();\n  const lk = k.toLowerCase();\n  const parts: Array<{ t: string; hit: boolean }> = [];\n  let i = 0;\n  while (true) {\n    const idx = lower.indexOf(lk, i);\n    if (idx < 0) {\n      parts.push({ t: text.slice(i), hit: false });\n      break;\n    }\n    parts.push({ t: text.slice(i, idx), hit: false });\n    parts.push({ t: text.slice(idx, idx + k.length), hit: true });\n    i = idx + k.length;\n  }\n  return (\n    <>\n      {parts\n        .filter((p) => p.t)\n        .map((p, idx) =>\n          p.hit ? (\n            <mark key={idx} style={{ background: '#ffe58f', padding: 0 }}>\n              {p.t}\n            </mark>\n          ) : (\n            <span key={idx}>{p.t}</span>\n          ),\n        )}\n    </>\n  );\n};\n\nconst AiLogDetail = () => {\n  const { message } = App.useApp();\n  const params = useParams<{ requestHash: string }>();\n  const requestHash = String(params.requestHash || '').trim();\n\n  const [loading, setLoading] = useState(false);\n  const [data, setData] = useState<API.MonitoringLogDetailData | null>(null);\n  const [rawSearch, setRawSearch] = useState('');\n\n  const formatDuration = (value: any) => {\n    const ms = Number(value);\n    if (!Number.isFinite(ms)) return '-';\n    if (ms < 1000) return `${Math.round(ms)} ms`;\n    return `${(ms / 1000).toFixed(2)} s`;\n  };\n\n  const statusTag = (status?: string | null) => {\n    const v = String(status || '');\n    if (!v) return <Tag>-</Tag>;\n    const color = v === 'success' ? 'green' : v === 'timeout' ? 'orange' : 'red';\n    return <Tag color={color}>{v}</Tag>;\n  };\n\n  const buildErrorAdvice = (meta: API.MonitoringLogDetailMeta | null) => {\n    const status = String(meta?.status || '').toLowerCase();\n    const err = String(meta?.errorMessage || '').toLowerCase();\n\n    if (!status || status === 'success') return null;\n\n    if (status === 'timeout') {\n      return {\n        title: '调用超时',\n        tips: ['检查模型服务是否可用/响应慢', '适当增大 timeout', '减少输入文本长度或拆分请求'],\n      };\n    }\n\n    if (err.includes('json') || err.includes('parse') || err.includes('解析')) {\n      return {\n        title: '响应解析失败',\n        tips: ['检查提示词是否要求严格 JSON 输出', '尝试在提示词中增加 JSON schema/示例', '查看“原始响应”确认模型实际输出'],\n      };\n    }\n\n    if (err.includes('econn') || err.includes('enotfound') || err.includes('etimedout') || err.includes('network') || err.includes('连接')) {\n      return {\n        title: '网络/连接异常',\n        tips: ['检查 API Host/网络连通性', '确认代理或防火墙设置', '重试或切换模型提供商'],\n      };\n    }\n\n    return {\n      title: '调用失败',\n      tips: ['查看错误信息与“原始响应”', '确认提示词与输入参数是否合理', '必要时重试'],\n    };\n  };\n\n  useEffect(() => {\n    if (!requestHash) return;\n    setLoading(true);\n    getMonitoringLogDetail(requestHash)\n      .then((res) => {\n        if (!res?.success) {\n          message.error(res?.error || '加载详情失败');\n          setData(null);\n          return;\n        }\n        setData(res.data);\n      })\n      .catch(() => {\n        message.error('加载详情失败');\n        setData(null);\n      })\n      .finally(() => setLoading(false));\n  }, [message, requestHash]);\n\n  const meta = data?.meta || null;\n  const indexAny: any = data?.index || null;\n\n  const statusDisplay = (meta?.status || indexAny?.status) ?? null;\n  const durationMsDisplay =\n    (typeof meta?.durationMs === 'number' ? meta.durationMs : undefined) ??\n    (Number.isFinite(Number(indexAny?.duration_ms)) ? Number(indexAny?.duration_ms) : null);\n  const stepDisplay = (meta?.step || indexAny?.step) ?? null;\n  const routeDisplay = (meta?.route || indexAny?.route) ?? null;\n  const createdAtDisplay = (meta?.createdAt || indexAny?.timestamp) ?? null;\n\n  const modelDisplay = (() => {\n    if (meta?.modelUsed) return String(meta.modelUsed);\n    const provider = indexAny?.model_provider ? String(indexAny.model_provider) : '';\n    const name = indexAny?.model_name ? String(indexAny.model_name) : '';\n    const joined = [provider, name].filter(Boolean).join('/');\n    return joined || null;\n  })();\n\n  const promptIdDisplay = (() => {\n    if (meta?.promptId) return String(meta.promptId);\n    if (indexAny?.prompt_template_id) return String(indexAny.prompt_template_id);\n    if (indexAny?.prompt_id) return String(indexAny.prompt_id);\n    return null;\n  })();\n\n  const timeoutMsDisplay = (() => {\n    const candidates = [\n      indexAny?.service_timeout_ms,\n      indexAny?.provider_timeout_ms,\n      indexAny?.timeout_ms,\n    ];\n    const v = candidates.map((x) => Number(x)).find((x) => Number.isFinite(x));\n    return typeof v === 'number' ? String(Math.round(v)) : null;\n  })();\n\n  const errorMessageDisplay = useMemo(() => {\n    if (meta?.errorMessage) return String(meta.errorMessage);\n    if (typeof data?.notes !== 'string') return null;\n    const firstLine = data.notes.split('\\n').find((s) => String(s || '').trim());\n    return firstLine ? String(firstLine) : null;\n  }, [data?.notes, meta?.errorMessage]);\n\n  const errorAdvice = useMemo(() => {\n    const merged: any = {\n      ...(meta || {}),\n      status: statusDisplay,\n      errorMessage: meta?.errorMessage || errorMessageDisplay,\n    };\n    return buildErrorAdvice(merged);\n  }, [errorMessageDisplay, meta, meta?.errorMessage, statusDisplay]);\n\n  const stringifyPretty = (value: any) => {\n    if (value === null || typeof value === 'undefined') return null;\n    try {\n      return JSON.stringify(value, null, 2);\n    } catch (_e) {\n      return String(value);\n    }\n  };\n\n  return (\n    <PageContainer\n      header={{ title: '日志详情', subTitle: params.requestHash || '' }}\n    >\n      <Space direction=\"vertical\" size={16} style={{ width: '100%' }}>\n        {!requestHash && (\n          <Alert type=\"error\" showIcon message=\"requestHash 为空\" />\n        )}\n\n        <Card>\n          {loading ? (\n            <div style={{ padding: 24, textAlign: 'center' }}>\n              <Spin />\n            </div>\n          ) : (\n            <Descriptions column={2} size=\"small\" bordered>\n              <Descriptions.Item label=\"时间\">\n                {createdAtDisplay ? String(createdAtDisplay) : '-'}\n              </Descriptions.Item>\n              <Descriptions.Item label=\"状态\">\n                {statusTag(statusDisplay)}\n              </Descriptions.Item>\n              <Descriptions.Item label=\"耗时\">\n                {formatDuration(durationMsDisplay)}\n              </Descriptions.Item>\n              <Descriptions.Item label=\"Timeout(ms)\">\n                {timeoutMsDisplay ? String(timeoutMsDisplay) : '-'}\n              </Descriptions.Item>\n              <Descriptions.Item label=\"Step\">\n                {stepDisplay ? String(stepDisplay) : '-'}\n              </Descriptions.Item>\n              <Descriptions.Item label=\"Route\">\n                {routeDisplay ? String(routeDisplay) : '-'}\n              </Descriptions.Item>\n              <Descriptions.Item label=\"模型\">\n                {modelDisplay ? String(modelDisplay) : '-'}\n              </Descriptions.Item>\n              <Descriptions.Item label=\"Prompt\">\n                {promptIdDisplay ? (\n                  <Link to={`/model-config/prompts/${promptIdDisplay}/edit`}>\n                    {String(promptIdDisplay)}\n                  </Link>\n                ) : (\n                  '-'\n                )}\n              </Descriptions.Item>\n              <Descriptions.Item label=\"Hash\">\n                <Typography.Text\n                  code\n                  copyable={{ text: requestHash }}\n                >\n                  {requestHash}\n                </Typography.Text>\n              </Descriptions.Item>\n              <Descriptions.Item label=\"日志路径\" span={2}>\n                {meta?.logDir ? (\n                  <Typography.Text copyable={{ text: String(meta.logDir) }}>\n                    {String(meta.logDir)}\n                  </Typography.Text>\n                ) : (\n                  '-'\n                )}\n              </Descriptions.Item>\n            </Descriptions>\n          )}\n        </Card>\n\n        {errorAdvice && (\n          <Alert\n            type=\"warning\"\n            showIcon\n            message={errorAdvice.title}\n            description={\n              <Space direction=\"vertical\" size={8} style={{ width: '100%' }}>\n                {errorMessageDisplay && (\n                  <Typography.Text>\n                    {String(errorMessageDisplay)}\n                  </Typography.Text>\n                )}\n                <div>\n                  {errorAdvice.tips.map((t) => (\n                    <div key={t}>{t}</div>\n                  ))}\n                </div>\n              </Space>\n            }\n          />\n        )}\n\n        <Card>\n          <Tabs\n            items={[\n              {\n                key: 'index',\n                label: 'Index',\n                children: data?.index ? (\n                  <ExpandablePre text={stringifyPretty(data.index) || ''} highlight=\"json\" />\n                ) : (\n                  <Empty description=\"暂无内容\" />\n                ),\n              },\n              {\n                key: 'request',\n                label: 'Request',\n                children: data?.request ? (\n                  <ExpandablePre text={stringifyPretty(data.request) || ''} highlight=\"json\" />\n                ) : (\n                  <Empty description=\"暂无内容\" />\n                ),\n              },\n              {\n                key: 'parsed',\n                label: 'Response Parsed',\n                children: data?.responseParsed ? (\n                  <ExpandablePre\n                    text={stringifyPretty(data.responseParsed) || ''}\n                    highlight=\"json\"\n                  />\n                ) : (\n                  <Empty description=\"暂无内容\" />\n                ),\n              },\n              {\n                key: 'raw',\n                label: 'Response Raw',\n                children: (\n                  <Space direction=\"vertical\" size={12} style={{ width: '100%' }}>\n                    <Input\n                      value={rawSearch}\n                      onChange={(e) => setRawSearch(e.target.value)}\n                      placeholder=\"搜索原始响应\"\n                      allowClear\n                    />\n                    {data?.responseRaw ? (\n                      <Typography.Paragraph\n                        copyable={{ text: String(data.responseRaw) }}\n                        style={{ marginBottom: 0 }}\n                      >\n                        <pre\n                          style={{\n                            margin: 0,\n                            padding: 12,\n                            background: '#fafafa',\n                            border: '1px solid #f0f0f0',\n                            borderRadius: 6,\n                            whiteSpace: 'pre-wrap',\n                            wordBreak: 'break-word',\n                          }}\n                        >\n                          <HighlightedText\n                            text={String(data.responseRaw)}\n                            keyword={rawSearch}\n                          />\n                        </pre>\n                      </Typography.Paragraph>\n                    ) : (\n                      <Empty description=\"暂无内容\" />\n                    )}\n                  </Space>\n                ),\n              },\n              {\n                key: 'notes',\n                label: 'Notes',\n                children: data?.notes ? (\n                  <ExpandablePre text={String(data.notes)} />\n                ) : (\n                  <Empty description=\"暂无内容\" />\n                ),\n              },\n            ]}\n          />\n        </Card>\n      </Space>\n    </PageContainer>\n  );\n};\n\nexport default AiLogDetail;\n",
       "__isJSFile": true,

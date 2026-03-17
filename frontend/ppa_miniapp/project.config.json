@@ -1,0 +1,43 @@
+{
+    "appid": "wxf6e7bedde16c1ffb",
+    "projectname": "ppa-miniapp",
+    "description": "PPA 招标快报微信小程序",
+    "compileType": "miniprogram",
+    "libVersion": "3.5.4",
+    "miniprogramRoot": ".",
+    "cloudfunctionRoot": "cloudfunctions/",
+    "simulatorType": "wechat",
+    "setting": {
+        "urlCheck": false,
+        "es6": true,
+        "enhance": true,
+        "postcss": true,
+        "minified": false,
+        "compileHotReLoad": true,
+        "compileWorklet": false,
+        "uglifyFileName": false,
+        "uploadWithSourceMap": true,
+        "packNpmManually": false,
+        "packNpmRelationList": [],
+        "minifyWXSS": true,
+        "minifyWXML": true,
+        "localPlugins": false,
+        "disableUseStrict": false,
+        "useCompilerPlugins": false,
+        "condition": false,
+        "swc": false,
+        "disableSWC": true,
+        "babelSetting": {
+            "ignore": [],
+            "disablePlugins": [],
+            "outputPath": ""
+        }
+    },
+    "packOptions": {
+        "ignore": [],
+        "include": []
+    },
+    "condition": {},
+    "simulatorPluginLibVersion": {},
+    "editorSetting": {}
+}

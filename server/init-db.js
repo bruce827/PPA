@@ -166,6 +166,42 @@ const CREATE_TABLES_SQL = `
     ON opportunity_bidding_sites(enabled);
   CREATE INDEX IF NOT EXISTS idx_opportunity_bidding_sites_validation_status
     ON opportunity_bidding_sites(validation_status);
+
+  CREATE TABLE IF NOT EXISTS opportunity_tender_staging (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    source_item_id TEXT NOT NULL,
+    title TEXT NOT NULL,
+    published_at TEXT,
+    published_date TEXT,
+    deadline_at TEXT,
+    deadline_date TEXT,
+    issuer TEXT,
+    budget_amount TEXT,
+    region TEXT,
+    source_platform TEXT,
+    source_url TEXT,
+    summary TEXT,
+    announcement_html TEXT,
+    announcement_plain_text TEXT,
+    detail_payload_json TEXT,
+    source_file TEXT,
+    raw_payload_json TEXT,
+    push_status TEXT NOT NULL DEFAULT 'pending',
+    push_error TEXT,
+    last_synced_at DATETIME,
+    pushed_at DATETIME,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+  );
+
+  CREATE UNIQUE INDEX IF NOT EXISTS idx_opportunity_tender_staging_source_item_id
+    ON opportunity_tender_staging(source_item_id);
+  CREATE INDEX IF NOT EXISTS idx_opportunity_tender_staging_push_status
+    ON opportunity_tender_staging(push_status);
+  CREATE INDEX IF NOT EXISTS idx_opportunity_tender_staging_published_date
+    ON opportunity_tender_staging(published_date);
+  CREATE INDEX IF NOT EXISTS idx_opportunity_tender_staging_source_file
+    ON opportunity_tender_staging(source_file);
 `;
 
 // 连接数据库并执行

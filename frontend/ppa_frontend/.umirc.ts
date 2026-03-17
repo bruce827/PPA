@@ -25,6 +25,8 @@ export default defineConfig({
       name: '项目评估',
       path: '/assessment',
       icon: 'FormOutlined',
+          hideInMenu: true,
+
       routes: [
         {
           name: '新建评估',
@@ -53,6 +55,8 @@ export default defineConfig({
       name: 'Web3D项目评估',
       path: '/web3d',
       icon: 'BoxPlotOutlined',
+          hideInMenu: true,
+
       routes: [
         { name: '新建评估', path: 'new', component: './Web3D/New' },
         { name: '历史项目', path: 'history', component: './Web3D/History' },
@@ -70,11 +74,14 @@ export default defineConfig({
       path: '/config',
       component: './Config',
       icon: 'SettingOutlined',
+          hideInMenu: true,
+
     },
     {
       name: '模型配置',
       path: '/model-config',
       icon: 'RobotOutlined',
+      hideInMenu: true,
       routes: [
         {
           name: '模型应用管理',
@@ -110,12 +117,19 @@ export default defineConfig({
           path: 'bidding-sites',
           component: './Opportunity/BiddingSites',
         },
+        {
+          name: '待推送招标',
+          path: 'tender-push',
+          component: './Opportunity/TenderPush',
+        },
       ],
     },
     {
       name: '系统监控',
       path: '/monitoring',
       icon: 'MonitorOutlined',
+          hideInMenu: true,
+
       routes: [
         {
           name: 'AI日志监控',

@@ -1,0 +1,50 @@
+.login-page {
+  display: flex;
+  flex-direction: column;
+  gap: 32rpx;
+  justify-content: center;
+}
+
+.hero {
+  padding: 48rpx;
+  background: linear-gradient(135deg, #0f766e, #115e59);
+}
+
+.hero .title,
+.hero-copy {
+  color: #ffffff;
+}
+
+.hero-copy {
+  margin-top: 16rpx;
+  line-height: 1.7;
+}
+
+.form-card {
+  padding: 40rpx 32rpx;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+  margin-bottom: 32rpx;
+}
+
+.label {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.text-input {
+  height: 88rpx;
+  padding: 0 24rpx;
+  border: 2rpx solid #cbd5e1;
+  border-radius: 20rpx;
+  background: #f8fafc;
+}
+
+.hint {
+  line-height: 1.6;
+}

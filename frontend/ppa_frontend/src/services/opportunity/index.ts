@@ -88,3 +88,47 @@ export async function validateBiddingSite(
     },
   );
 }
+
+export async function listTenderStaging(
+  params?: Record<string, any>,
+  options?: { [key: string]: any },
+) {
+  return request<API_OPPORTUNITY.TenderStagingListResponse>(
+    '/api/opportunity/tender-staging',
+    {
+      method: 'GET',
+      params,
+      ...(options || {}),
+    },
+  );
+}
+
+export async function syncTenderStaging(
+  data?: { directoryPath?: string },
+  options?: { [key: string]: any },
+) {
+  return request<API_OPPORTUNITY.TenderStagingSyncResponse>(
+    '/api/opportunity/tender-staging/sync',
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      data,
+      ...(options || {}),
+    },
+  );
+}
+
+export async function pushTenderStaging(
+  id: number | string,
+  options?: { [key: string]: any },
+) {
+  return request<API_OPPORTUNITY.TenderStagingPushResponse>(
+    `/api/opportunity/tender-staging/${id}/push`,
+    {
+      method: 'POST',
+      ...(options || {}),
+    },
+  );
+}
