@@ -2,7 +2,7 @@
     "version": "V1.4.6-alpha",
     "date": "2026-3-19",
     "changes": [
-      { "type": "feat", "content": "增加招标信息全网检索功能" },
+      { "type": "feat", "content": "增加招标信息全网检索功能" }
     ]
   },
   {
