@@ -154,6 +154,51 @@ describe('Bidding Sites API', () => {
     expect(duplicateResponse.body.success).toBe(false);
   });
 
+  test('should support fuzzy matching for name and url filters', async () => {
+    await request(app)
+      .post('/api/opportunity/bidding-sites')
+      .send({
+        name: '广东省政府采购网',
+        alias_name: '广东采购平台',
+        url: 'https://gd.example.com/portal/index',
+        source_level: '地方省市',
+        platform_type: '政府采购',
+        is_official: true,
+        enabled: true,
+      })
+      .expect(200);
+
+    await request(app)
+      .post('/api/opportunity/bidding-sites')
+      .send({
+        name: '深圳公共资源交易中心',
+        url: 'https://sz.example.com/trade/home',
+        source_level: '地方省市',
+        platform_type: '公共资源交易',
+        is_official: true,
+        enabled: true,
+      })
+      .expect(200);
+
+    const byNameResponse = await request(app)
+      .get('/api/opportunity/bidding-sites')
+      .query({ name: '广东采购' });
+
+    expect(byNameResponse.status).toBe(200);
+    expect(byNameResponse.body.success).toBe(true);
+    expect(byNameResponse.body.data.items).toHaveLength(1);
+    expect(byNameResponse.body.data.items[0].name).toBe('广东省政府采购网');
+
+    const byUrlResponse = await request(app)
+      .get('/api/opportunity/bidding-sites')
+      .query({ url: 'trade/home' });
+
+    expect(byUrlResponse.status).toBe(200);
+    expect(byUrlResponse.body.success).toBe(true);
+    expect(byUrlResponse.body.data.items).toHaveLength(1);
+    expect(byUrlResponse.body.data.items[0].name).toBe('深圳公共资源交易中心');
+  });
+
   test('should reject URL without scheme', async () => {
     const response = await request(app)
       .post('/api/opportunity/bidding-sites')

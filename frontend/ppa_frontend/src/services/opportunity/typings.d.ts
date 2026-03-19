@@ -173,4 +173,74 @@ declare namespace API_OPPORTUNITY {
     success: boolean;
     data: TenderStagingPushResult;
   };
+
+  type TenderWebSearchResultItem = {
+    site_name: string;
+    site_url: string;
+    page_title: string;
+    content_type: string;
+    published_at?: string | null;
+    snippet: string;
+    relevance_reason: string;
+    confidence?: number | null;
+  };
+
+  type TenderWebSearchExecutionState = 'fresh_result' | 'empty_result';
+
+  type TenderWebSearchExecutionResult = {
+    record_id: number;
+    model_id: number;
+    prompt_template_id: number;
+    searched_at: string;
+    state: TenderWebSearchExecutionState;
+    summary: string;
+    results: TenderWebSearchResultItem[];
+    result_count: number;
+  };
+
+  type TenderWebSearchState = 'has_saved_result' | 'empty';
+
+  type TenderWebSearchSavedResult = TenderWebSearchExecutionResult;
+
+  type TenderWebSearchData = {
+    record: TenderStagingRecord;
+    has_saved_result: boolean;
+    saved_result: TenderWebSearchSavedResult | null;
+    state: TenderWebSearchState;
+  };
+
+  type TenderWebSearchDraft = {
+    model_id?: number;
+    prompt_template_id?: number;
+    focus_keywords?: string;
+    exclude_keywords?: string;
+    max_results: number;
+  };
+
+  type TenderWebSearchPreparedRequest = {
+    recordId: number;
+    modelId: number;
+    promptId: number;
+    focusKeywords: string;
+    excludeKeywords: string;
+    maxResults: number;
+  };
+
+  type TenderWebSearchExecutePayload = {
+    model_id: number;
+    prompt_template_id: number;
+    focus_keywords?: string;
+    exclude_keywords?: string;
+    max_results: number;
+  };
+
+  type TenderWebSearchResponse = {
+    success: boolean;
+    data: TenderWebSearchData;
+  };
+
+  type TenderWebSearchExecuteResponse = {
+    success: boolean;
+    data: TenderWebSearchExecutionResult;
+  };
 }

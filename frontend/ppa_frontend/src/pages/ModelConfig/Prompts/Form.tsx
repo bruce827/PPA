@@ -5,6 +5,7 @@ import type { PromptTemplate, PromptVariable } from '@/services/promptTemplate';
 import {
   createPromptTemplate,
   getPromptTemplateById,
+  PROMPT_TEMPLATE_CATEGORY_OPTIONS,
   updatePromptTemplate,
 } from '@/services/promptTemplate';
 import { EyeOutlined } from '@ant-design/icons';
@@ -248,7 +249,7 @@ const PromptTemplateForm: React.FC = () => {
     }
   };
 
-  // 从角色配置自动灌入变量（成本估算）
+  // 从角色配置自动灌入变量（工作量评估）
   const syncCostVariables = async () => {
     try {
       const res: any = await getRoleList();
@@ -293,15 +294,18 @@ const PromptTemplateForm: React.FC = () => {
 
       if (!injected.length) {
         message.info('未发现可新增的角色变量（可能已存在当前变量中）');
-        setAutoInjectedByCategory((prev) => ({ ...prev, cost_estimation: [] }));
+        setAutoInjectedByCategory((prev) => ({
+          ...prev,
+          workload_evaluation: [],
+        }));
         return;
       }
 
       setVariables((prev) => [...prev, ...injected]);
       setAutoInjectedByCategory((prev) => ({
         ...prev,
-        cost_estimation: Array.from(
-          new Set([...(prev?.cost_estimation || []), ...injectedNames]),
+        workload_evaluation: Array.from(
+          new Set([...(prev?.workload_evaluation || []), ...injectedNames]),
         ),
       }));
       message.success(`已导入 ${injected.length} 个角色变量`);
@@ -359,8 +363,8 @@ const PromptTemplateForm: React.FC = () => {
                 await syncRiskVariables();
               }
 
-              // 切换到 成本估算：自动同步角色变量
-              if (newCat === 'cost_estimation') {
+              // 切换到 工作量评估：自动同步角色变量
+              if (newCat === 'workload_evaluation') {
                 await syncCostVariables();
               }
             }
@@ -387,12 +391,11 @@ const PromptTemplateForm: React.FC = () => {
             rules={[{ required: true, message: '请选择分类' }]}
           >
             <Select placeholder="请选择分类" disabled={isSystemTemplate}>
-              <Select.Option value="risk_analysis">风险分析</Select.Option>
-              <Select.Option value="cost_estimation">成本估算</Select.Option>
-              <Select.Option value="module_analysis">模块梳理</Select.Option>
-              <Select.Option value="project_tagging">标签生成</Select.Option>
-              <Select.Option value="report_generation">报告生成</Select.Option>
-              <Select.Option value="custom">自定义</Select.Option>
+              {PROMPT_TEMPLATE_CATEGORY_OPTIONS.map((option) => (
+                <Select.Option key={option.value} value={option.value}>
+                  {option.label}
+                </Select.Option>
+              ))}
             </Select>
           </Form.Item>
 
@@ -498,7 +501,8 @@ const PromptTemplateForm: React.FC = () => {
                     从评估类别导入
                   </Button>
                 )}
-                {categoryValue === 'cost_estimation' && !isSystemTemplate && (
+                {categoryValue === 'workload_evaluation' &&
+                  !isSystemTemplate && (
                   <Button size="small" onClick={syncCostVariables}>
                     从角色配置导入
                   </Button>

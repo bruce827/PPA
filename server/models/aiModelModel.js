@@ -6,10 +6,23 @@ async function getCurrentModel() {
   );
 }
 
-async function getAllModels() {
-  return db.all(
-    'SELECT * FROM ai_model_configs ORDER BY is_current DESC, created_at DESC'
-  );
+async function getAllModels(filters = {}) {
+  const { supports_web_search, is_active } = filters;
+  let sql = 'SELECT * FROM ai_model_configs WHERE 1 = 1';
+  const params = [];
+
+  if (supports_web_search !== undefined && supports_web_search !== null && supports_web_search !== '') {
+    sql += ' AND supports_web_search = ?';
+    params.push(supports_web_search);
+  }
+
+  if (is_active !== undefined && is_active !== null && is_active !== '') {
+    sql += ' AND is_active = ?';
+    params.push(is_active);
+  }
+
+  sql += ' ORDER BY is_current DESC, created_at DESC';
+  return db.all(sql, params);
 }
 
 async function getModelById(id) {
@@ -32,6 +45,7 @@ async function createModel(model) {
     timeout,
     is_current,
     is_active,
+    supports_web_search,
   } = model;
 
   if (is_current === 1) {
@@ -41,8 +55,8 @@ async function createModel(model) {
   const result = await db.run(
     `INSERT INTO ai_model_configs 
        (config_name, description, provider, api_key, api_host, model_name, 
-        temperature, max_tokens, timeout, is_current, is_active, created_at, updated_at)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)`,
+        temperature, max_tokens, timeout, is_current, is_active, supports_web_search, created_at, updated_at)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)`,
     [
       config_name,
       description,
@@ -55,6 +69,7 @@ async function createModel(model) {
       timeout,
       is_current,
       is_active,
+      supports_web_search,
     ]
   );
 
@@ -74,6 +89,7 @@ async function updateModel(id, model) {
     timeout,
     is_current,
     is_active,
+    supports_web_search,
   } = model;
 
   if (is_current === 1) {
@@ -84,7 +100,7 @@ async function updateModel(id, model) {
     `UPDATE ai_model_configs 
        SET config_name = ?, description = ?, provider = ?, api_key = ?, 
            api_host = ?, model_name = ?, temperature = ?, max_tokens = ?, 
-           timeout = ?, is_current = ?, is_active = ?, updated_at = CURRENT_TIMESTAMP
+           timeout = ?, is_current = ?, is_active = ?, supports_web_search = ?, updated_at = CURRENT_TIMESTAMP
        WHERE id = ?`,
     [
       config_name,
@@ -98,6 +114,7 @@ async function updateModel(id, model) {
       timeout,
       is_current,
       is_active,
+      supports_web_search,
       id,
     ]
   );

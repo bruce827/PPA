@@ -5,7 +5,7 @@ const aiModelService = require('../services/aiModelService');
  */
 exports.getAIModels = async (req, res, next) => {
   try {
-    const models = await aiModelService.getAllModels();
+    const models = await aiModelService.getAllModels(req.query || {});
     res.json({
       success: true,
       data: models,

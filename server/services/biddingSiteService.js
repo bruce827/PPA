@@ -142,6 +142,8 @@ function normalizeListQuery(query = {}) {
     page,
     pageSize,
     keyword: normalizeText(query.keyword, 120),
+    name: normalizeText(query.name, 120),
+    url: normalizeText(query.url, 500),
     source_level: normalizeText(query.source_level, 40),
     platform_type: normalizeText(query.platform_type, 60),
     validation_status: normalizeText(query.validation_status, 40),

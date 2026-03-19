@@ -3,9 +3,25 @@ const router = express.Router();
 const configController = require('../controllers/configController');
 const aiModelController = require('../controllers/aiModelController');
 const promptTemplateController = require('../controllers/promptTemplateController');
+const {
+  validateGetAIModels,
+  handleAIModelValidation,
+} = require('../middleware/aiModelValidation');
+const {
+  validateCreatePromptTemplate,
+  validateUpdatePromptTemplate,
+  validatePromptTemplateId,
+  validateGetPromptTemplates,
+  handlePromptTemplateValidation,
+} = require('../middleware/promptTemplateValidation');
 
 // AI 模型配置路由
-router.get('/ai-models', aiModelController.getAIModels);
+router.get(
+  '/ai-models',
+  validateGetAIModels,
+  handleAIModelValidation,
+  aiModelController.getAIModels
+);
 router.get('/ai-models/current', aiModelController.getCurrentModel);
 router.get('/ai-models/:id', aiModelController.getAIModel);
 router.post('/ai-models', aiModelController.createAIModel);
@@ -16,13 +32,48 @@ router.post('/ai-models/:id/test', aiModelController.testAIModel);
 router.post('/ai-models/test-temp', aiModelController.testAIModelTemp); // 临时测试（不保存）
 
 // 提示词模板路由 (Prompt Template Routes)
-router.get('/prompts', promptTemplateController.getPromptTemplates);
-router.get('/prompts/:id', promptTemplateController.getPromptTemplateById);
-router.post('/prompts', promptTemplateController.createPromptTemplate);
-router.put('/prompts/:id', promptTemplateController.updatePromptTemplate);
-router.delete('/prompts/:id', promptTemplateController.deletePromptTemplate);
-router.post('/prompts/:id/copy', promptTemplateController.copyTemplate);
-router.post('/prompts/:id/preview', promptTemplateController.previewTemplate);
+router.get(
+  '/prompts',
+  validateGetPromptTemplates,
+  handlePromptTemplateValidation,
+  promptTemplateController.getPromptTemplates
+);
+router.get(
+  '/prompts/:id',
+  validatePromptTemplateId,
+  handlePromptTemplateValidation,
+  promptTemplateController.getPromptTemplateById
+);
+router.post(
+  '/prompts',
+  validateCreatePromptTemplate,
+  handlePromptTemplateValidation,
+  promptTemplateController.createPromptTemplate
+);
+router.put(
+  '/prompts/:id',
+  validateUpdatePromptTemplate,
+  handlePromptTemplateValidation,
+  promptTemplateController.updatePromptTemplate
+);
+router.delete(
+  '/prompts/:id',
+  validatePromptTemplateId,
+  handlePromptTemplateValidation,
+  promptTemplateController.deletePromptTemplate
+);
+router.post(
+  '/prompts/:id/copy',
+  validatePromptTemplateId,
+  handlePromptTemplateValidation,
+  promptTemplateController.copyTemplate
+);
+router.post(
+  '/prompts/:id/preview',
+  validatePromptTemplateId,
+  handlePromptTemplateValidation,
+  promptTemplateController.previewTemplate
+);
 
 // 角色配置路由
 router.get('/roles', configController.getAllRoles);

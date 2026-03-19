@@ -64,6 +64,20 @@ const validationStatusOptions = Object.entries(validationStatusMap).map(
   }),
 );
 
+function padDatePart(value: number) {
+  return String(value).padStart(2, '0');
+}
+
+function formatDateTime(value?: string | null) {
+  if (!value) return '-';
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return value;
+
+  return `${date.getFullYear()}-${padDatePart(date.getMonth() + 1)}-${padDatePart(
+    date.getDate(),
+  )} ${padDatePart(date.getHours())}:${padDatePart(date.getMinutes())}`;
+}
+
 const BiddingSitesPage: React.FC = () => {
   const actionRef = useRef<ActionType>();
   const [form] = Form.useForm<API_OPPORTUNITY.BiddingSitePayload>();
@@ -275,7 +289,7 @@ const BiddingSitesPage: React.FC = () => {
       valueType: 'dateTime',
       render: (_, record) =>
         record.last_validated_at ? (
-          <span style={{ whiteSpace: 'nowrap' }}>{record.last_validated_at}</span>
+          <span style={{ whiteSpace: 'nowrap' }}>{formatDateTime(record.last_validated_at)}</span>
         ) : (
           '-'
         ),
@@ -465,7 +479,7 @@ const BiddingSitesPage: React.FC = () => {
                     http_status: detailRecord.http_status,
                     final_url: detailRecord.final_url,
                     validation_confidence: detailRecord.validation_confidence,
-                    last_validated_at: detailRecord.last_validated_at,
+                    last_validated_at: formatDateTime(detailRecord.last_validated_at),
                     redirect_chain: detailRecord.redirect_chain || [],
                     validation_payload: detailRecord.validation_payload || null,
                   },

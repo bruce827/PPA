@@ -120,6 +120,18 @@ function buildFilters(filters = {}) {
     params.push(keyword, keyword, keyword, keyword);
   }
 
+  if (filters.name) {
+    conditions.push('(name LIKE ? OR alias_name LIKE ?)');
+    const name = `%${filters.name}%`;
+    params.push(name, name);
+  }
+
+  if (filters.url) {
+    conditions.push('(url LIKE ? OR normalized_url LIKE ? OR final_url LIKE ?)');
+    const url = `%${filters.url}%`;
+    params.push(url, url, url);
+  }
+
   if (filters.source_level) {
     conditions.push('source_level = ?');
     params.push(filters.source_level);

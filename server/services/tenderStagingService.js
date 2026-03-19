@@ -541,6 +541,8 @@ function normalizeListQuery(query = {}) {
     page,
     pageSize,
     keyword: normalizeText(query.keyword, 120),
+    title: normalizeText(query.title, 200),
+    issuer: normalizeText(query.issuer, 200),
     push_status: normalizeText(query.push_status, 20),
     source_file: normalizeText(query.source_file, 200),
   };

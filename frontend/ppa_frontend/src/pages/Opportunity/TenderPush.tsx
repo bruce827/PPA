@@ -3,8 +3,9 @@ import {
   pushTenderStaging,
   syncTenderStaging,
 } from '@/services/opportunity';
+import TenderWebSearchModal from '@/pages/Opportunity/components/TenderWebSearchModal';
 import { PageContainer, ProTable } from '@ant-design/pro-components';
-import { Button, Card, Col, message, Row, Space, Statistic, Tag, Tooltip } from 'antd';
+import { Button, Card, Col, message, Modal, Row, Space, Statistic, Tag } from 'antd';
 import type { ActionType, ProColumns } from '@ant-design/pro-components';
 import React, { useRef, useState } from 'react';
 
@@ -24,11 +25,24 @@ const defaultStats: API_OPPORTUNITY.TenderStagingStats = {
   failed: 0,
 };
 
+const defaultWebSearchDraft: API_OPPORTUNITY.TenderWebSearchDraft = {
+  focus_keywords: '',
+  exclude_keywords: '',
+  max_results: 5,
+};
+
 const TenderPushPage: React.FC = () => {
   const actionRef = useRef<ActionType>();
   const [stats, setStats] = useState<API_OPPORTUNITY.TenderStagingStats>(defaultStats);
   const [syncLoading, setSyncLoading] = useState(false);
   const [pushingId, setPushingId] = useState<number | null>(null);
+  const [errorDetailRecord, setErrorDetailRecord] =
+    useState<API_OPPORTUNITY.TenderStagingRecord | null>(null);
+  const [webSearchRecord, setWebSearchRecord] =
+    useState<API_OPPORTUNITY.TenderStagingRecord | null>(null);
+  const [webSearchDraft, setWebSearchDraft] = useState<API_OPPORTUNITY.TenderWebSearchDraft>(
+    defaultWebSearchDraft,
+  );
 
   const handleSync = async () => {
     try {
@@ -70,6 +84,10 @@ const TenderPushPage: React.FC = () => {
     }
   };
 
+  const showErrorDetail = (record: API_OPPORTUNITY.TenderStagingRecord) => {
+    setErrorDetailRecord(record);
+  };
+
   const columns: ProColumns<API_OPPORTUNITY.TenderStagingRecord>[] = [
     {
       title: '项目名称',
@@ -109,6 +127,7 @@ const TenderPushPage: React.FC = () => {
       dataIndex: 'push_status',
       valueType: 'select',
       width: 120,
+      align: 'center',
       valueEnum: {
         pending: { text: '待推送' },
         pushed: { text: '已推送' },
@@ -120,39 +139,9 @@ const TenderPushPage: React.FC = () => {
       },
     },
     {
-      title: '错误信息',
-      dataIndex: 'push_error',
-      search: false,
-      ellipsis: true,
-      render: (_, record) =>
-        record.push_error ? (
-          <Tooltip title={record.push_error}>{record.push_error}</Tooltip>
-        ) : (
-          '-'
-        ),
-    },
-    {
-      title: '原文',
-      dataIndex: 'source_url',
-      search: false,
-      width: 90,
-      render: (_, record) =>
-        record.source_url ? (
-          <a
-            href={record.source_url}
-            target="_blank"
-            rel="noreferrer"
-          >
-            打开
-          </a>
-        ) : (
-          '-'
-        ),
-    },
-    {
       title: '操作',
       valueType: 'option',
-      width: 140,
+      width: 320,
       render: (_, record) => {
         const buttonLabel =
           record.push_status === 'failed'
@@ -162,6 +151,28 @@ const TenderPushPage: React.FC = () => {
               : '推送';
 
         return [
+          <Button
+            key="web-search"
+            type="link"
+            onClick={() => setWebSearchRecord(record)}
+          >
+            全网检索
+          </Button>,
+          record.source_url ? (
+            <a
+              key="source"
+              href={record.source_url}
+              target="_blank"
+              rel="noreferrer"
+            >
+              原文
+            </a>
+          ) : null,
+          record.push_error ? (
+            <Button key="error" type="link" onClick={() => showErrorDetail(record)}>
+              错误信息
+            </Button>
+          ) : null,
           <Button
             key="push"
             type="link"
@@ -232,6 +243,32 @@ const TenderPushPage: React.FC = () => {
         pagination={{
           pageSize: 20,
         }}
+      />
+
+      <Modal
+        title={errorDetailRecord ? `错误信息 - ${errorDetailRecord.title}` : '错误信息'}
+        open={Boolean(errorDetailRecord)}
+        onCancel={() => setErrorDetailRecord(null)}
+        footer={null}
+        width={720}
+      >
+        <div
+          style={{
+            whiteSpace: 'pre-wrap',
+            wordBreak: 'break-word',
+            lineHeight: 1.7,
+          }}
+        >
+          {errorDetailRecord?.push_error || '暂无错误信息'}
+        </div>
+      </Modal>
+
+      <TenderWebSearchModal
+        open={Boolean(webSearchRecord)}
+        record={webSearchRecord}
+        draft={webSearchDraft}
+        onDraftChange={setWebSearchDraft}
+        onCancel={() => setWebSearchRecord(null)}
       />
     </PageContainer>
   );

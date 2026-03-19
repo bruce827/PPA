@@ -1,5 +1,7 @@
-
 const sqlite3 = require('sqlite3').verbose();
+const {
+  getPromptTemplateCategorySqlList,
+} = require('./utils/promptTemplateCategories');
 
 // SQL语句
 const CREATE_TABLES_SQL = `
@@ -53,7 +55,7 @@ const CREATE_TABLES_SQL = `
   CREATE TABLE IF NOT EXISTS prompt_templates (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     template_name TEXT NOT NULL,
-    category TEXT NOT NULL,
+    category TEXT NOT NULL CHECK(category IN (${getPromptTemplateCategorySqlList()})),
     description TEXT,
     system_prompt TEXT NOT NULL,
     user_prompt_template TEXT NOT NULL,
@@ -67,6 +69,33 @@ const CREATE_TABLES_SQL = `
   CREATE INDEX IF NOT EXISTS idx_prompt_category ON prompt_templates(category);
   CREATE INDEX IF NOT EXISTS idx_prompt_active ON prompt_templates(is_active);
   CREATE INDEX IF NOT EXISTS idx_prompt_system ON prompt_templates(is_system);
+
+  CREATE TABLE IF NOT EXISTS ai_model_configs (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    config_name TEXT NOT NULL UNIQUE,
+    description TEXT,
+    provider TEXT NOT NULL,
+    api_key TEXT NOT NULL,
+    api_host TEXT NOT NULL,
+    model_name TEXT NOT NULL,
+    temperature REAL NOT NULL DEFAULT 0.7,
+    max_tokens INTEGER NOT NULL DEFAULT 2000,
+    timeout INTEGER NOT NULL DEFAULT 30,
+    is_current INTEGER NOT NULL DEFAULT 0,
+    is_active INTEGER NOT NULL DEFAULT 1,
+    supports_web_search INTEGER NOT NULL DEFAULT 0,
+    last_test_time DATETIME,
+    test_status TEXT,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+  );
+
+  CREATE UNIQUE INDEX IF NOT EXISTS idx_ai_model_configs_is_current
+    ON ai_model_configs(is_current)
+    WHERE is_current = 1;
+
+  CREATE INDEX IF NOT EXISTS idx_ai_model_configs_config_name
+    ON ai_model_configs(config_name);
 
   CREATE TABLE IF NOT EXISTS ai_prompts (
     id TEXT PRIMARY KEY,
@@ -202,6 +231,24 @@ const CREATE_TABLES_SQL = `
     ON opportunity_tender_staging(published_date);
   CREATE INDEX IF NOT EXISTS idx_opportunity_tender_staging_source_file
     ON opportunity_tender_staging(source_file);
+
+  CREATE TABLE IF NOT EXISTS tender_staging_web_search_results (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    tender_staging_id INTEGER NOT NULL UNIQUE,
+    model_config_id INTEGER NOT NULL,
+    prompt_template_id INTEGER NOT NULL,
+    searched_at TEXT NOT NULL,
+    summary TEXT NOT NULL,
+    results_json TEXT NOT NULL,
+    meta_json TEXT,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+  );
+
+  CREATE UNIQUE INDEX IF NOT EXISTS idx_tender_web_search_results_tender_staging_id
+    ON tender_staging_web_search_results(tender_staging_id);
+  CREATE INDEX IF NOT EXISTS idx_tender_web_search_results_searched_at
+    ON tender_staging_web_search_results(searched_at);
 `;
 
 // 连接数据库并执行

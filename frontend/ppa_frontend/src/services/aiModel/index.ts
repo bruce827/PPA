@@ -3,11 +3,12 @@ import { request } from '@umijs/max';
 /**
  * 获取 AI 模型配置列表
  */
-export async function getAIModels() {
+export async function getAIModels(params?: API.GetAIModelsParams) {
   return request<API.AIModelResponse<API.AIModelConfig[]>>(
     '/api/config/ai-models',
     {
       method: 'GET',
+      params,
     },
   );
 }

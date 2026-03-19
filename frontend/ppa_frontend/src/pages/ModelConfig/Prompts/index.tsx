@@ -3,6 +3,7 @@ import {
   copyPromptTemplate,
   deletePromptTemplate,
   getPromptTemplates,
+  PROMPT_TEMPLATE_CATEGORY_VALUE_ENUM,
 } from '@/services/promptTemplate';
 import { PlusOutlined } from '@ant-design/icons';
 import type { ActionType, ProColumns } from '@ant-design/pro-table';
@@ -43,14 +44,7 @@ const PromptTemplateListPage: React.FC = () => {
       width: '15%',
       filters: true,
       onFilter: true,
-      valueEnum: {
-        risk_analysis: { text: '风险分析' },
-        cost_estimation: { text: '成本估算' },
-        module_analysis: { text: '模块梳理' },
-        project_tagging: { text: '标签生成' },
-        report_generation: { text: '报告生成' },
-        custom: { text: '自定义' },
-      },
+      valueEnum: PROMPT_TEMPLATE_CATEGORY_VALUE_ENUM,
     },
     {
       title: '类型',

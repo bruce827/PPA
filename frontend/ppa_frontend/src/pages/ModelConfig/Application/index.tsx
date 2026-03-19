@@ -1,4 +1,4 @@
-import { AI_PROVIDER_VALUE_ENUM } from '@/constants';
+import { AI_PROVIDER_VALUE_ENUM, isTavilyProvider } from '@/constants';
 import { deleteAIModel, getAIModels, setCurrentModel, testAIModel } from '@/services/aiModel';
 import {
   PlusOutlined,
@@ -92,6 +92,15 @@ const AIModelApplication: React.FC = () => {
       dataIndex: 'model_name',
     },
     {
+      title: '能力',
+      dataIndex: 'supports_web_search',
+      render: (_, record) => (
+        <Tag color={record.supports_web_search === 1 ? 'cyan' : 'default'}>
+          {record.supports_web_search === 1 ? '联网搜索' : '普通模型'}
+        </Tag>
+      ),
+    },
+    {
       title: '状态',
       dataIndex: 'is_active',
       render: (_, record) => {
@@ -142,6 +151,7 @@ const AIModelApplication: React.FC = () => {
       valueType: 'option',
       render: (_, record) => {
         const actions = [];
+        const tavilyOnly = isTavilyProvider(record.provider);
 
         // 设为当前按钮（当前模型禁用）
         if (record.is_current === 1) {
@@ -151,6 +161,15 @@ const AIModelApplication: React.FC = () => {
               style={{ color: '#999', cursor: 'not-allowed' }}
             >
               <StarOutlined /> 当前模型
+            </span>,
+          );
+        } else if (tavilyOnly) {
+          actions.push(
+            <span
+              key="search-only"
+              style={{ color: '#999', cursor: 'not-allowed' }}
+            >
+              <StarOutlined /> 仅联网搜索
             </span>,
           );
         } else {

@@ -1,5 +1,10 @@
 const promptTemplateModel = require('../models/promptTemplateModel');
 const { HttpError, validationError } = require('../utils/errors');
+const {
+  normalizePromptTemplateCategory,
+  normalizePromptTemplateCategoryFilter,
+  isValidPromptTemplateCategory,
+} = require('../utils/promptTemplateCategories');
 
 function ensureTemplateExists(template, notFoundMessage = 'Template not found') {
   if (!template) {
@@ -31,6 +36,25 @@ function createPlaceholderRegex(varName, flags = 'g') {
   return new RegExp(`\\{\\{\\s*${escaped}\\s*\\}\\}`, flags);
 }
 
+function ensureValidCategory(category) {
+  const normalizedCategory = normalizePromptTemplateCategory(category);
+  if (!normalizedCategory || !isValidPromptTemplateCategory(normalizedCategory)) {
+    throw validationError('category 必须为合法分类');
+  }
+  return normalizedCategory;
+}
+
+function normalizeTemplateCategory(template) {
+  if (!template) {
+    return template;
+  }
+
+  return {
+    ...template,
+    category: normalizePromptTemplateCategory(template.category),
+  };
+}
+
 async function createPromptTemplate(payload) {
   const { template_name, category, system_prompt, user_prompt_template } = payload || {};
 
@@ -38,16 +62,44 @@ async function createPromptTemplate(payload) {
     throw validationError('Missing required fields.');
   }
 
-  return promptTemplateModel.create(payload);
+  return promptTemplateModel.create({
+    ...payload,
+    category: ensureValidCategory(category),
+  });
 }
 
 async function getPromptTemplates(filters = {}) {
-  return promptTemplateModel.getAll(filters);
+  const normalizedFilters = { ...filters };
+  if (Object.prototype.hasOwnProperty.call(filters, 'category')) {
+    normalizedFilters.category = normalizePromptTemplateCategoryFilter(filters.category);
+  }
+
+  const result = await promptTemplateModel.getAll(normalizedFilters);
+  return {
+    ...result,
+    data: Array.isArray(result.data)
+      ? result.data.map((template) => normalizeTemplateCategory(template))
+      : [],
+  };
 }
 
 async function getPromptTemplateById(id) {
   const template = await promptTemplateModel.getById(id);
-  return ensureTemplateExists(template);
+  return normalizeTemplateCategory(ensureTemplateExists(template));
+}
+
+async function ensureActiveWebSearchTemplate(id) {
+  const template = await getPromptTemplateById(id);
+
+  if (template.is_active !== 1) {
+    throw validationError('所选提示词模板未启用，无法用于联网搜索');
+  }
+
+  if (template.category !== 'web_search') {
+    throw validationError('所选提示词模板不属于联网搜索分类');
+  }
+
+  return template;
 }
 
 async function updatePromptTemplate(id, payload) {
@@ -62,7 +114,12 @@ async function updatePromptTemplate(id, payload) {
     );
   }
 
-  return promptTemplateModel.update(id, payload);
+  const nextPayload = { ...payload };
+  if (Object.prototype.hasOwnProperty.call(payload || {}, 'category')) {
+    nextPayload.category = ensureValidCategory(payload.category);
+  }
+
+  return promptTemplateModel.update(id, nextPayload);
 }
 
 async function deletePromptTemplate(id) {
@@ -82,7 +139,8 @@ async function deletePromptTemplate(id) {
 
 async function copyTemplate(id) {
   try {
-    return await promptTemplateModel.copy(id);
+    const template = await promptTemplateModel.copy(id);
+    return normalizeTemplateCategory(template);
   } catch (error) {
     if (error && error.message === 'Template not found') {
       throw new HttpError(404, 'Template not found', 'NotFoundError');
@@ -134,6 +192,7 @@ module.exports = {
   createPromptTemplate,
   getPromptTemplates,
   getPromptTemplateById,
+  ensureActiveWebSearchTemplate,
   updatePromptTemplate,
   deletePromptTemplate,
   copyTemplate,

@@ -2,7 +2,9 @@ import {
   AI_MODEL_MAX_TOKENS_CONFIG,
   AI_MODEL_TEMPERATURE_CONFIG,
   AI_MODEL_TIMEOUT_CONFIG,
+  AI_PROVIDER_LABELS,
   AI_PROVIDER_OPTIONS,
+  isTavilyProvider,
 } from '@/constants';
 import { createAIModel, updateAIModel } from '@/services/aiModel';
 import {
@@ -45,6 +47,17 @@ const ModelForm: React.FC<ModelFormProps> = ({
     message: string;
     duration?: number;
   } | null>(null);
+  const providerValue = Form.useWatch('provider', form);
+  const isTavilySelected = isTavilyProvider(providerValue);
+  const apiHostPlaceholder = isTavilySelected
+    ? '例如：https://api.tavily.com/search'
+    : '例如：https://api.openai.com/v1/chat/completions 或 https://generativelanguage.googleapis.com';
+  const modelNamePlaceholder = isTavilySelected
+    ? '例如：basic、advanced、fast、ultra-fast'
+    : '例如: gpt-4, gpt-3.5-turbo, 你的部署 ID';
+  const testPromptHint = isTavilySelected
+    ? '提示：测试会发送固定检索词“Tavily Search API 是什么？”，使用当前表单数据，不会保存到数据库'
+    : '提示：测试会发送固定问题“你是什么模型？”，使用当前表单数据，不会保存到数据库';
 
   useEffect(() => {
     if (visible) {
@@ -56,6 +69,17 @@ const ModelForm: React.FC<ModelFormProps> = ({
       setTestResult(null); // 清空测试结果
     }
   }, [visible, record, form]);
+
+  useEffect(() => {
+    if (!visible || !isTavilySelected) {
+      return;
+    }
+
+    form.setFieldsValue({
+      supports_web_search: 1,
+      is_current: 0,
+    });
+  }, [visible, isTavilySelected, form]);
 
   const handleSubmit = async (values: any) => {
     try {
@@ -181,6 +205,16 @@ const ModelForm: React.FC<ModelFormProps> = ({
         options={AI_PROVIDER_OPTIONS}
       />
 
+      {isTavilySelected && (
+        <Alert
+          type="info"
+          showIcon
+          style={{ marginBottom: 16 }}
+          message={`${AI_PROVIDER_LABELS.TAVILY} 仅用于联网搜索`}
+          description="Tavily 属于搜索型 Provider，会自动标记为支持联网搜索，且不能设为当前通用模型。模型名称字段可填写搜索档位，如 basic 或 advanced。"
+        />
+      )}
+
       <ProFormText
         name="api_key"
         label="API Key"
@@ -194,7 +228,7 @@ const ModelForm: React.FC<ModelFormProps> = ({
       <ProFormText
         name="api_host"
         label="API Host"
-        placeholder="例如：https://api.openai.com/v1/chat/completions 或 https://generativelanguage.googleapis.com"
+        placeholder={apiHostPlaceholder}
         rules={[
           { required: true, message: '请输入 API Host' },
           { type: 'url', message: '请输入有效的 URL' },
@@ -203,9 +237,14 @@ const ModelForm: React.FC<ModelFormProps> = ({
 
       <ProFormText
         name="model_name"
-        label="模型名称"
-        placeholder="例如: gpt-4, gpt-3.5-turbo, 你的部署 ID"
+        label={isTavilySelected ? '搜索档位' : '模型名称'}
+        placeholder={modelNamePlaceholder}
         rules={[{ required: true, message: '请输入模型名称' }]}
+        extra={
+          isTavilySelected
+            ? 'Tavily 推荐填写 basic、advanced、fast 或 ultra-fast。'
+            : undefined
+        }
       />
 
       <ProFormSlider
@@ -247,12 +286,14 @@ const ModelForm: React.FC<ModelFormProps> = ({
         name="is_current"
         label="设为当前使用"
         tooltip={
-          hasOtherCurrent
+          isTavilySelected
+            ? 'Tavily 仅可用于联网搜索，不能设为当前使用模型'
+            : hasOtherCurrent
             ? '已有当前模型，需先取消后再设'
             : '将此配置设为当前使用的模型'
         }
         fieldProps={{
-          disabled: hasOtherCurrent,
+          disabled: hasOtherCurrent || isTavilySelected,
         }}
         transform={(value) => ({ is_current: value ? 1 : 0 })}
         convertValue={(value) => value === 1}
@@ -264,6 +305,22 @@ const ModelForm: React.FC<ModelFormProps> = ({
         tooltip="是否启用此配置"
         initialValue={true}
         transform={(value) => ({ is_active: value ? 1 : 0 })}
+        convertValue={(value) => value === 1}
+      />
+
+      <ProFormSwitch
+        name="supports_web_search"
+        label="支持联网搜索"
+        tooltip={
+          isTavilySelected
+            ? 'Tavily 会自动启用联网搜索能力'
+            : '开启后，该模型可用于全网检索场景'
+        }
+        initialValue={false}
+        fieldProps={{
+          disabled: isTavilySelected,
+        }}
+        transform={(value) => ({ supports_web_search: value ? 1 : 0 })}
         convertValue={(value) => value === 1}
       />
 
@@ -311,7 +368,7 @@ const ModelForm: React.FC<ModelFormProps> = ({
           )}
 
           <div style={{ fontSize: 12, color: '#999' }}>
-            提示：测试会发送固定问题“你是什么模型？”，使用当前表单数据，不会保存到数据库
+            {testPromptHint}
           </div>
         </Space>
       </Card>

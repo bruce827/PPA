@@ -1,5 +1,6 @@
 export type AIProviderValue =
   | 'OpenAI'
+  | 'tavily'
   | 'Google'
   | 'Minimax'
   | 'doubao'
@@ -13,6 +14,7 @@ export type AIProviderValue =
 
 export const AI_PROVIDER_LABELS = {
   OPENAI: 'OpenAI',
+  TAVILY: 'Tavily（联网搜索）',
   GOOGLE: 'Google',
   MINIMAX: 'Minimax',
   DOU_BAO: 'Doubao（火山方舟 Ark）',
@@ -27,6 +29,7 @@ export const AI_PROVIDER_LABELS = {
 
 export const AI_PROVIDER_OPTIONS: { label: string; value: AIProviderValue }[] = [
   { label: AI_PROVIDER_LABELS.OPENAI, value: 'OpenAI' },
+  { label: AI_PROVIDER_LABELS.TAVILY, value: 'tavily' },
   { label: AI_PROVIDER_LABELS.GOOGLE, value: 'Google' },
   { label: AI_PROVIDER_LABELS.MINIMAX, value: 'Minimax' },
   { label: AI_PROVIDER_LABELS.DOU_BAO, value: 'doubao' },
@@ -44,6 +47,7 @@ export const AI_PROVIDER_VALUE_ENUM: Record<
   { text: string }
 > = {
   OpenAI: { text: AI_PROVIDER_LABELS.OPENAI },
+  tavily: { text: AI_PROVIDER_LABELS.TAVILY },
   Google: { text: AI_PROVIDER_LABELS.GOOGLE },
   Minimax: { text: AI_PROVIDER_LABELS.MINIMAX },
   doubao: { text: AI_PROVIDER_LABELS.DOU_BAO },
@@ -57,10 +61,18 @@ export const AI_PROVIDER_VALUE_ENUM: Record<
 };
 
 export const DOU_BAO_PROVIDER_VALUE: AIProviderValue = 'doubao';
+export const TAVILY_PROVIDER_VALUE: AIProviderValue = 'tavily';
 
 export function isDoubaoProvider(
   provider?: string | null | undefined,
 ): boolean {
   if (!provider) return false;
   return String(provider).toLowerCase().includes('doubao');
+}
+
+export function isTavilyProvider(
+  provider?: string | null | undefined,
+): boolean {
+  if (!provider) return false;
+  return String(provider).toLowerCase().includes('tavily');
 }

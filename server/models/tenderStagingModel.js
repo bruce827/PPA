@@ -106,14 +106,24 @@ function buildFilters(filters = {}) {
     params.push(keyword, keyword, keyword, keyword);
   }
 
+  if (filters.title) {
+    conditions.push('title LIKE ?');
+    params.push(`%${filters.title}%`);
+  }
+
+  if (filters.issuer) {
+    conditions.push('issuer LIKE ?');
+    params.push(`%${filters.issuer}%`);
+  }
+
   if (filters.push_status) {
     conditions.push('push_status = ?');
     params.push(filters.push_status);
   }
 
   if (filters.source_file) {
-    conditions.push('source_file = ?');
-    params.push(filters.source_file);
+    conditions.push('source_file LIKE ?');
+    params.push(`%${filters.source_file}%`);
   }
 
   return {

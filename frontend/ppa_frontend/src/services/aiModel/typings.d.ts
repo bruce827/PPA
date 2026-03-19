@@ -15,6 +15,7 @@ declare namespace API {
     timeout: number;
     is_current: number;
     is_active: number;
+    supports_web_search: number;
     last_test_time?: string;
     test_status?: string;
     created_at: string;
@@ -36,6 +37,7 @@ declare namespace API {
     timeout?: number;
     is_current?: number;
     is_active?: number;
+    supports_web_search?: number;
   }
 
   /**
@@ -53,6 +55,7 @@ declare namespace API {
     timeout?: number;
     is_current?: number;
     is_active?: number;
+    supports_web_search?: number;
   }
 
   /**
@@ -62,5 +65,10 @@ declare namespace API {
     success: boolean;
     data?: T;
     message?: string;
+  }
+
+  export interface GetAIModelsParams {
+    supports_web_search?: number | string;
+    is_active?: number | string;
   }
 }

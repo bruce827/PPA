@@ -46,13 +46,13 @@ exports.getAll = async (filters) => {
     countParams.push(category);
     params.push(category);
   }
-  if (is_system) {
+  if (is_system !== undefined && is_system !== null && is_system !== '') {
     countSql += " AND is_system = ?";
     sql += " AND is_system = ?";
     countParams.push(is_system);
     params.push(is_system);
   }
-  if (is_active) {
+  if (is_active !== undefined && is_active !== null && is_active !== '') {
     countSql += " AND is_active = ?";
     sql += " AND is_active = ?";
     countParams.push(is_active);

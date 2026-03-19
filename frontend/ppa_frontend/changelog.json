@@ -1,10 +1,16 @@
-[
-  {
-    "version": "V1.4.0-alpha",
-    "date": "2026-1-16",
+[{
+    "version": "V1.4.6-alpha",
+    "date": "2026-3-19",
     "changes": [
-      { "type": "feat", "content": "增加业绩库" },
-      { "type": "feat", "content": "增加业绩推荐" }
+      { "type": "feat", "content": "增加招标信息全网检索功能" },
+    ]
+  },
+  {
+    "version": "V1.4.5-alpha",
+    "date": "2026-3-17",
+    "changes": [
+      { "type": "feat", "content": "增加招标网站管理" },
+      { "type": "feat", "content": "增加待推送招标" }
     ]
   },
     {

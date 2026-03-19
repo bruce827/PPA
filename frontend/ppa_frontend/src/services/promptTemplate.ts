@@ -9,18 +9,43 @@ export interface PromptVariable {
   required: boolean;
 }
 
+export type PromptTemplateCategory =
+  | 'risk_analysis'
+  | 'workload_evaluation'
+  | 'module_analysis'
+  | 'project_tagging'
+  | 'report_generation'
+  | 'web_search'
+  | 'custom';
+
+export const PROMPT_TEMPLATE_CATEGORY_OPTIONS: Array<{
+  label: string;
+  value: PromptTemplateCategory;
+}> = [
+  { value: 'risk_analysis', label: '风险分析' },
+  { value: 'workload_evaluation', label: '工作量评估' },
+  { value: 'module_analysis', label: '模块梳理' },
+  { value: 'project_tagging', label: '标签生成' },
+  { value: 'report_generation', label: '报告生成' },
+  { value: 'web_search', label: '联网搜索' },
+  { value: 'custom', label: '自定义' },
+];
+
+export const PROMPT_TEMPLATE_CATEGORY_VALUE_ENUM = {
+  risk_analysis: { text: '风险分析' },
+  workload_evaluation: { text: '工作量评估' },
+  module_analysis: { text: '模块梳理' },
+  project_tagging: { text: '标签生成' },
+  report_generation: { text: '报告生成' },
+  web_search: { text: '联网搜索' },
+  custom: { text: '自定义' },
+} as const;
+
 // 定义提示词模板接口
 export interface PromptTemplate {
   id: number;
   template_name: string;
-  category:
-    | 'risk_analysis'
-    | 'cost_estimation'
-    | 'module_analysis'
-    | 'project_tagging'
-    | 'report_generation'
-    | '标签生成'
-    | 'custom';
+  category: PromptTemplateCategory;
   description?: string;
   system_prompt: string;
   user_prompt_template: string;

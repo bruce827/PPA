@@ -132,3 +132,34 @@ export async function pushTenderStaging(
     },
   );
 }
+
+export async function getTenderWebSearch(
+  id: number | string,
+  options?: { [key: string]: any },
+) {
+  return request<API_OPPORTUNITY.TenderWebSearchResponse>(
+    `/api/opportunity/tender-staging/${id}/web-search`,
+    {
+      method: 'GET',
+      ...(options || {}),
+    },
+  );
+}
+
+export async function searchTenderWebSearch(
+  id: number | string,
+  data: API_OPPORTUNITY.TenderWebSearchExecutePayload,
+  options?: { [key: string]: any },
+) {
+  return request<API_OPPORTUNITY.TenderWebSearchExecuteResponse>(
+    `/api/opportunity/tender-staging/${id}/web-search`,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      data,
+      ...(options || {}),
+    },
+  );
+}

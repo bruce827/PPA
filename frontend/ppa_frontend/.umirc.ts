@@ -25,7 +25,7 @@ export default defineConfig({
       name: '项目评估',
       path: '/assessment',
       icon: 'FormOutlined',
-          hideInMenu: true,
+          // hideInMenu: true,
 
       routes: [
         {
@@ -55,7 +55,7 @@ export default defineConfig({
       name: 'Web3D项目评估',
       path: '/web3d',
       icon: 'BoxPlotOutlined',
-          hideInMenu: true,
+          // hideInMenu: true,
 
       routes: [
         { name: '新建评估', path: 'new', component: './Web3D/New' },
@@ -74,14 +74,14 @@ export default defineConfig({
       path: '/config',
       component: './Config',
       icon: 'SettingOutlined',
-          hideInMenu: true,
+          // hideInMenu: true,
 
     },
     {
       name: '模型配置',
       path: '/model-config',
       icon: 'RobotOutlined',
-      hideInMenu: true,
+      // hideInMenu: true,
       routes: [
         {
           name: '模型应用管理',
@@ -128,7 +128,7 @@ export default defineConfig({
       name: '系统监控',
       path: '/monitoring',
       icon: 'MonitorOutlined',
-          hideInMenu: true,
+          // hideInMenu: true,
 
       routes: [
         {

@@ -7,6 +7,15 @@ const errorHandler = require('./middleware/errorHandler'); // Global error handl
 const logger = require('./utils/logger');
 const biddingSiteModel = require('./models/biddingSiteModel');
 const tenderStagingModel = require('./models/tenderStagingModel');
+const {
+  runMigration: runAIModelSupportsWebSearchMigration,
+} = require('./migrations/006_add_supports_web_search_to_ai_model_configs');
+const {
+  runMigration: runPromptTemplateCategoryMigration,
+} = require('./migrations/007_expand_prompt_template_categories');
+const {
+  runMigration: runTenderWebSearchResultsMigration,
+} = require('./migrations/008_create_tender_web_search_results');
 
 loadEnvFile();
 
@@ -20,6 +29,9 @@ let server;
 
 async function startServer() {
   try {
+    await runAIModelSupportsWebSearchMigration();
+    await runPromptTemplateCategoryMigration();
+    await runTenderWebSearchResultsMigration();
     await db.init(); // Initialize database connection
     await biddingSiteModel.ensureSchema();
     await tenderStagingModel.ensureSchema();
