@@ -5,6 +5,7 @@ import {
 } from '@/services/opportunity';
 import TenderWebSearchModal from '@/pages/Opportunity/components/TenderWebSearchModal';
 import { PageContainer, ProTable } from '@ant-design/pro-components';
+import { Link } from '@umijs/max';
 import { Button, Card, Col, message, Modal, Row, Space, Statistic, Tag } from 'antd';
 import type { ActionType, ProColumns } from '@ant-design/pro-components';
 import React, { useRef, useState } from 'react';
@@ -151,6 +152,9 @@ const TenderPushPage: React.FC = () => {
               : '推送';
 
         return [
+          <Link key="assess" to="/assessment/new">
+            评估
+          </Link>,
           <Button
             key="web-search"
             type="link"

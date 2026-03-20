@@ -3,7 +3,7 @@
   "pkg": {
     "private": true,
     "author": "jim <bruce870827@gmail.com>",
-    "version": "V1.4.0-alpha",
+    "version": "V1.4.6-alpha",
     "scripts": {
       "build": "max build",
       "dev": "max dev",
@@ -38,7 +38,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "preset",
@@ -51,7 +51,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 9
+        "register": 5
       },
       "enableBy": "register",
       "type": "preset",
@@ -64,7 +64,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 2
+        "register": 1
       },
       "enableBy": "register",
       "type": "preset",
@@ -81,7 +81,7 @@
             0
           ]
         },
-        "register": 3
+        "register": 2
       },
       "enableBy": "register",
       "type": "plugin",
@@ -95,10 +95,10 @@
       "time": {
         "hooks": {
           "onStart": [
-            2
+            1
           ]
         },
-        "register": 3
+        "register": 2
       },
       "enableBy": "register",
       "type": "plugin",
@@ -112,7 +112,6 @@
       "time": {
         "hooks": {
           "modifyRoutes": [
-            0,
             0
           ]
         },
@@ -130,10 +129,8 @@
       "time": {
         "hooks": {
           "onDevCompileDone": [
-            162,
-            34,
-            28,
-            30
+            201,
+            35
           ]
         },
         "register": 1
@@ -150,14 +147,13 @@
       "time": {
         "hooks": {
           "modifyAppData": [
-            29
+            26
           ],
           "onGenerateFiles": [
-            2,
-            32
+            2
           ]
         },
-        "register": 15
+        "register": 13
       },
       "enableBy": "register",
       "type": "plugin",
@@ -171,7 +167,6 @@
       "time": {
         "hooks": {
           "addEntryCode": [
-            1,
             0
           ]
         },
@@ -195,8 +190,6 @@
             0
           ],
           "onPrepareBuildSuccess": [
-            0,
-            0,
             0,
             0,
             0
@@ -238,10 +231,69 @@
             0,
             0,
             0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
             0
           ]
         },
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -258,7 +310,7 @@
             0
           ]
         },
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -271,7 +323,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "config",
       "type": "plugin",
@@ -288,7 +340,7 @@
             0
           ]
         },
-        "register": 6
+        "register": 5
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1174,7 +1226,7 @@
             7
           ]
         },
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1187,7 +1239,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 53
+        "register": 50
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1200,7 +1252,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 30
+        "register": 22
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1213,7 +1265,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 15
+        "register": 13
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1235,10 +1287,10 @@
           "modifyHTMLFavicon": [
             0,
             0,
-            1
+            0
           ]
         },
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1252,15 +1304,13 @@
       "time": {
         "hooks": {
           "onGenerateFiles": [
-            1,
-            0
+            1
           ],
           "addRuntimePlugin": [
-            0,
             0
           ]
         },
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1273,7 +1323,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1293,7 +1343,7 @@
             2
           ]
         },
-        "register": 25
+        "register": 23
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/preset-umi/dist/features/mock/mock.js",
@@ -1331,12 +1381,9 @@
       "time": {
         "hooks": {
           "onGenerateFiles": [
-            1,
             0
           ],
           "addEntryImports": [
-            0,
-            0,
             0,
             0
           ]
@@ -1368,15 +1415,12 @@
       "time": {
         "hooks": {
           "modifyConfig": [
-            1
+            0
           ],
           "onGenerateFiles": [
-            54,
-            28
+            51
           ],
           "addPolyfillImports": [
-            0,
-            0,
             0,
             0
           ]
@@ -1395,8 +1439,6 @@
         "hooks": {
           "addPolyfillImports": [
             0,
-            0,
-            0,
             0
           ]
         },
@@ -1414,11 +1456,10 @@
       "time": {
         "hooks": {
           "onGenerateFiles": [
-            103,
-            0
+            98
           ]
         },
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1431,7 +1472,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1444,7 +1485,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1458,7 +1499,6 @@
       "time": {
         "hooks": {
           "onGenerateFiles": [
-            1,
             0
           ],
           "addBeforeMiddlewares": [
@@ -1479,13 +1519,11 @@
       "time": {
         "hooks": {
           "onGenerateFiles": [
-            12,
-            5,
-            13,
-            4
+            8,
+            5
           ]
         },
-        "register": 2
+        "register": 3
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1498,7 +1536,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1537,8 +1575,7 @@
       "time": {
         "hooks": {
           "onGenerateFiles": [
-            263,
-            12
+            252
           ]
         },
         "register": 1
@@ -1584,7 +1621,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1609,7 +1646,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 14
+        "register": 13
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1623,11 +1660,10 @@
       "time": {
         "hooks": {
           "onGenerateFiles": [
-            1,
-            0
+            1
           ]
         },
-        "register": 1
+        "register": 0
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/preset-umi/dist/features/test/test.js",
@@ -1639,7 +1675,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1652,7 +1688,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1665,7 +1701,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1678,7 +1714,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/preset-umi/dist/features/webpack/webpack.js",
@@ -1694,7 +1730,7 @@
             0
           ]
         },
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1707,7 +1743,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 2
+        "register": 1
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/preset-umi/dist/features/ui/ui.js",
@@ -1719,7 +1755,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1732,7 +1768,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/preset-umi/dist/features/utoopack/utoopack.js",
@@ -1744,7 +1780,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 2
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/preset-umi/dist/features/hmrGuardian/hmrGuardian.js",
@@ -1756,7 +1792,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 17
+        "register": 16
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/preset-umi/dist/features/routePreloadOnLoad/routePreloadOnLoad.js",
@@ -1782,7 +1818,7 @@
       "time": {
         "hooks": {
           "modifyUniBundler": [
-            341
+            298
           ]
         },
         "register": 1
@@ -1798,7 +1834,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 3
+        "register": 2
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1811,7 +1847,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 23
+        "register": 21
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1825,10 +1861,10 @@
       "time": {
         "hooks": {
           "modifyAppData": [
-            8
+            7
           ]
         },
-        "register": 28
+        "register": 20
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/preset-umi/dist/commands/dev/dev.js",
@@ -1918,7 +1954,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1931,7 +1967,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1944,7 +1980,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1970,7 +2006,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -2009,7 +2045,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -2022,7 +2058,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -2074,7 +2110,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 15
+        "register": 14
       },
       "enableBy": "register",
       "type": "plugin",
@@ -2087,7 +2123,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -2100,7 +2136,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 2
       },
       "enableBy": "register",
       "type": "plugin",
@@ -2114,12 +2150,10 @@
       "time": {
         "hooks": {
           "addRuntimePlugin": [
-            0,
             0
           ],
           "onGenerateFiles": [
-            1,
-            1
+            0
           ],
           "addTmpGenerateWatcherPaths": [
             0
@@ -2160,21 +2194,16 @@
           ],
           "addEntryImportsAhead": [
             0,
-            0,
-            0,
             0
           ],
           "addRuntimePlugin": [
-            0,
             0
           ],
           "addRuntimePluginKey": [
-            0,
             0
           ],
           "onGenerateFiles": [
-            2,
-            1
+            2
           ],
           "addExtraBabelPlugins": [
             0
@@ -2183,7 +2212,7 @@
             0
           ]
         },
-        "register": 4
+        "register": 3
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/plugins/dist/antd.js",
@@ -2195,7 +2224,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 3
+        "register": 4
       },
       "enableBy": "config",
       "type": "plugin",
@@ -2209,19 +2238,15 @@
       "time": {
         "hooks": {
           "addRuntimePlugin": [
-            0,
             0
           ],
           "addRuntimePluginKey": [
-            0,
             0
           ],
           "onGenerateFiles": [
-            0,
             0
           ],
           "addExtraModels": [
-            0,
             0
           ]
         },
@@ -2244,23 +2269,19 @@
             0
           ],
           "addLayouts": [
-            0,
             0
           ],
           "modifyAppData": [
             0
           ],
           "addRuntimePlugin": [
-            0,
             0
           ],
           "addRuntimePluginKey": [
-            0,
             0
           ],
           "onGenerateFiles": [
-            5,
-            3
+            6
           ]
         },
         "register": 2
@@ -2276,7 +2297,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 2
       },
       "enableBy": "config",
       "type": "plugin",
@@ -2289,7 +2310,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 2
+        "register": 3
       },
       "enableBy": "config",
       "type": "plugin",
@@ -2303,18 +2324,16 @@
       "time": {
         "hooks": {
           "addRuntimePlugin": [
-            0,
             0
           ],
           "onGenerateFiles": [
-            23,
             20
           ],
           "addTmpGenerateWatcherPaths": [
             0
           ]
         },
-        "register": 3
+        "register": 1
       },
       "enableBy": "config",
       "type": "plugin",
@@ -2327,7 +2346,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "config",
       "type": "plugin",
@@ -2341,11 +2360,10 @@
       "time": {
         "hooks": {
           "addRuntimePluginKey": [
-            0,
             0
           ]
         },
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -2370,7 +2388,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/plugins/dist/qiankun/slave.js",
@@ -2382,7 +2400,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "config",
       "type": "plugin",
@@ -2396,15 +2414,13 @@
       "time": {
         "hooks": {
           "addRuntimePluginKey": [
-            0,
             0
           ],
           "onGenerateFiles": [
-            2,
-            1
+            2
           ]
         },
-        "register": 0
+        "register": 1
       },
       "enableBy": "config",
       "type": "plugin",
@@ -2430,7 +2446,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "config",
       "type": "plugin",
@@ -2443,7 +2459,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "config",
       "type": "plugin",
@@ -2460,7 +2476,7 @@
             0
           ]
         },
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -2680,7 +2696,7 @@
     },
     "mfsu": false,
     "define": {
-      "app_version": "V1.4.0-alpha"
+      "app_version": "V1.4.6-alpha"
     }
   },
   "mainConfigFile": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/.umirc.ts",
@@ -2867,7 +2883,7 @@
       }
     },
     "define": {
-      "app_version": "V1.4.0-alpha"
+      "app_version": "V1.4.6-alpha"
     },
     "targets": {
       "chrome": 80
@@ -3940,7 +3956,7 @@
       "parentId": "14",
       "id": "15",
       "absPath": "/model-config/application",
-      "__content": "import { AI_PROVIDER_VALUE_ENUM } from '@/constants';\nimport { deleteAIModel, getAIModels, setCurrentModel, testAIModel } from '@/services/aiModel';\nimport {\n  PlusOutlined,\n  StarOutlined,\n  ThunderboltOutlined,\n} from '@ant-design/icons';\nimport type { ActionType, ProColumns } from '@ant-design/pro-components';\nimport { PageContainer, ProTable } from '@ant-design/pro-components';\nimport { Button, message, Popconfirm, Tag } from 'antd';\nimport { useRef, useState } from 'react';\nimport ModelForm from './components/ModelForm';\n\nconst AIModelApplication: React.FC = () => {\n  const [modalVisible, setModalVisible] = useState(false);\n  const [currentRecord, setCurrentRecord] = useState<\n    API.AIModelConfig | undefined\n  >();\n  const [currentModelId, setCurrentModelId] = useState<number | undefined>(\n    undefined,\n  );\n  const actionRef = useRef<ActionType>();\n\n  const handleDelete = async (id: number) => {\n    try {\n      const response = await deleteAIModel(id);\n      if (response.success) {\n        message.success('删除成功');\n        actionRef.current?.reload();\n      } else {\n        message.error(response.message || '删除失败');\n      }\n    } catch (error: any) {\n      message.error(error.message || '删除失败');\n    }\n  };\n\n  const handleTest = async (id: number, configName: string) => {\n    const hide = message.loading(`正在测试 ${configName}...`, 0);\n    try {\n      const response = await testAIModel(id);\n      hide();\n      if (response.success) {\n        message.success(response.message || '测试成功');\n        actionRef.current?.reload();\n      } else {\n        message.error(response.message || '测试失败');\n      }\n    } catch (error: any) {\n      hide();\n      message.error(error.message || '测试失败');\n    }\n  };\n\n  const handleSetCurrent = async (id: number, configName: string) => {\n    try {\n      const response = await setCurrentModel(id);\n      if (response.success) {\n        message.success(response.message || `已将 ${configName} 设为当前模型`);\n        actionRef.current?.reload();\n      } else {\n        message.error(response.message || '设置失败');\n      }\n    } catch (error: any) {\n      message.error(error.message || '设置失败');\n    }\n  };\n\n  const columns: ProColumns<API.AIModelConfig>[] = [\n    {\n      title: '配置名称',\n      dataIndex: 'config_name',\n      sorter: true,\n      render: (_, record) => (\n        <>\n          {record.is_current === 1 && (\n            <span style={{ color: '#faad14', marginRight: 4 }}>⭐</span>\n          )}\n          {record.config_name}\n        </>\n      ),\n    },\n    {\n      title: '服务商',\n      dataIndex: 'provider',\n      sorter: true,\n      filters: true,\n      valueEnum: AI_PROVIDER_VALUE_ENUM,\n    },\n    {\n      title: '模型',\n      dataIndex: 'model_name',\n    },\n    {\n      title: '能力',\n      dataIndex: 'supports_web_search',\n      render: (_, record) => (\n        <Tag color={record.supports_web_search === 1 ? 'cyan' : 'default'}>\n          {record.supports_web_search === 1 ? '联网搜索' : '普通模型'}\n        </Tag>\n      ),\n    },\n    {\n      title: '状态',\n      dataIndex: 'is_active',\n      render: (_, record) => {\n        const tags = [];\n\n        // 当前使用标识（绿色 Tag）\n        if (record.is_current === 1) {\n          tags.push(\n            <Tag key=\"current\" color=\"green\">\n              当前使用\n            </Tag>,\n          );\n        }\n\n        // 启用/禁用状态\n        tags.push(\n          <Tag key=\"active\" color={record.is_active === 1 ? 'blue' : 'default'}>\n            {record.is_active === 1 ? '启用' : '禁用'}\n          </Tag>,\n        );\n\n        // 测试状态\n        if (record.test_status === 'success') {\n          tags.push(\n            <Tag key=\"test\" color=\"success\">\n              测试通过\n            </Tag>,\n          );\n        } else if (record.test_status === 'failed') {\n          tags.push(\n            <Tag key=\"test\" color=\"error\">\n              测试失败\n            </Tag>,\n          );\n        }\n\n        return <>{tags}</>;\n      },\n    },\n    {\n      title: '最后测试',\n      dataIndex: 'last_test_time',\n      valueType: 'dateTime',\n      sorter: true,\n    },\n    {\n      title: '操作',\n      valueType: 'option',\n      render: (_, record) => {\n        const actions = [];\n\n        // 设为当前按钮（当前模型禁用）\n        if (record.is_current === 1) {\n          actions.push(\n            <span\n              key=\"current\"\n              style={{ color: '#999', cursor: 'not-allowed' }}\n            >\n              <StarOutlined /> 当前模型\n            </span>,\n          );\n        } else {\n          actions.push(\n            <Popconfirm\n              key=\"set-current\"\n              title={`切换当前模型为 ${record.config_name}？`}\n              description=\"将使用此模型配置进行 AI 功能调用。\"\n              onConfirm={() => handleSetCurrent(record.id, record.config_name)}\n              okText=\"确定\"\n              cancelText=\"取消\"\n            >\n              <a>\n                <StarOutlined /> 设为当前\n              </a>\n            </Popconfirm>,\n          );\n        }\n\n        // 测试按钮\n        actions.push(\n          <a\n            key=\"test\"\n            onClick={() => handleTest(record.id, record.config_name)}\n          >\n            <ThunderboltOutlined /> 测试\n          </a>,\n        );\n\n        // 编辑按钮\n        actions.push(\n          <a\n            key=\"edit\"\n            onClick={() => {\n              setCurrentRecord(record);\n              setModalVisible(true);\n            }}\n          >\n            编辑\n          </a>,\n        );\n\n        // 删除按钮（当前模型禁用）\n        if (record.is_current === 1) {\n          actions.push(\n            <span key=\"delete\" style={{ color: '#999', cursor: 'not-allowed' }}>\n              删除\n            </span>,\n          );\n        } else {\n          actions.push(\n            <Popconfirm\n              key=\"delete\"\n              title={`确定删除 ${record.config_name}？`}\n              description=\"删除后无法恢复。\"\n              onConfirm={() => handleDelete(record.id)}\n              okText=\"确定\"\n              cancelText=\"取消\"\n            >\n              <a style={{ color: 'red' }}>删除</a>\n            </Popconfirm>,\n          );\n        }\n\n        return actions;\n      },\n    },\n  ];\n\n  return (\n    <PageContainer>\n      <ProTable<API.AIModelConfig>\n        headerTitle=\"AI 模型配置列表\"\n        actionRef={actionRef}\n        rowKey=\"id\"\n        toolBarRender={() => [\n          <Button\n            key=\"button\"\n            icon={<PlusOutlined />}\n            onClick={() => {\n              setCurrentRecord(undefined);\n              setModalVisible(true);\n            }}\n            type=\"primary\"\n          >\n            新建模型配置\n          </Button>,\n        ]}\n        request={async (params, sort) => {\n          try {\n            const response = await getAIModels();\n            if (response.success) {\n              const current = (response.data || []).find(\n                (item) => item.is_current === 1,\n              );\n              setCurrentModelId(current?.id);\n              return {\n                data: response.data || [],\n                success: true,\n              };\n            }\n            return {\n              data: [],\n              success: false,\n            };\n          } catch (error) {\n            return {\n              data: [],\n              success: false,\n            };\n          }\n        }}\n        columns={columns}\n        pagination={{\n          defaultPageSize: 10,\n          showSizeChanger: true,\n        }}\n      />\n      <ModelForm\n        visible={modalVisible}\n        record={currentRecord}\n        currentModelId={currentModelId}\n        onCancel={() => {\n          setModalVisible(false);\n          setCurrentRecord(undefined);\n        }}\n        onSuccess={() => {\n          setModalVisible(false);\n          setCurrentRecord(undefined);\n          actionRef.current?.reload();\n        }}\n      />\n    </PageContainer>\n  );\n};\n\nexport default AIModelApplication;\n",
+      "__content": "import { AI_PROVIDER_VALUE_ENUM, isTavilyProvider } from '@/constants';\nimport { deleteAIModel, getAIModels, setCurrentModel, testAIModel } from '@/services/aiModel';\nimport {\n  PlusOutlined,\n  StarOutlined,\n  ThunderboltOutlined,\n} from '@ant-design/icons';\nimport type { ActionType, ProColumns } from '@ant-design/pro-components';\nimport { PageContainer, ProTable } from '@ant-design/pro-components';\nimport { Button, message, Popconfirm, Tag } from 'antd';\nimport { useRef, useState } from 'react';\nimport ModelForm from './components/ModelForm';\n\nconst AIModelApplication: React.FC = () => {\n  const [modalVisible, setModalVisible] = useState(false);\n  const [currentRecord, setCurrentRecord] = useState<\n    API.AIModelConfig | undefined\n  >();\n  const [currentModelId, setCurrentModelId] = useState<number | undefined>(\n    undefined,\n  );\n  const actionRef = useRef<ActionType>();\n\n  const handleDelete = async (id: number) => {\n    try {\n      const response = await deleteAIModel(id);\n      if (response.success) {\n        message.success('删除成功');\n        actionRef.current?.reload();\n      } else {\n        message.error(response.message || '删除失败');\n      }\n    } catch (error: any) {\n      message.error(error.message || '删除失败');\n    }\n  };\n\n  const handleTest = async (id: number, configName: string) => {\n    const hide = message.loading(`正在测试 ${configName}...`, 0);\n    try {\n      const response = await testAIModel(id);\n      hide();\n      if (response.success) {\n        message.success(response.message || '测试成功');\n        actionRef.current?.reload();\n      } else {\n        message.error(response.message || '测试失败');\n      }\n    } catch (error: any) {\n      hide();\n      message.error(error.message || '测试失败');\n    }\n  };\n\n  const handleSetCurrent = async (id: number, configName: string) => {\n    try {\n      const response = await setCurrentModel(id);\n      if (response.success) {\n        message.success(response.message || `已将 ${configName} 设为当前模型`);\n        actionRef.current?.reload();\n      } else {\n        message.error(response.message || '设置失败');\n      }\n    } catch (error: any) {\n      message.error(error.message || '设置失败');\n    }\n  };\n\n  const columns: ProColumns<API.AIModelConfig>[] = [\n    {\n      title: '配置名称',\n      dataIndex: 'config_name',\n      sorter: true,\n      render: (_, record) => (\n        <>\n          {record.is_current === 1 && (\n            <span style={{ color: '#faad14', marginRight: 4 }}>⭐</span>\n          )}\n          {record.config_name}\n        </>\n      ),\n    },\n    {\n      title: '服务商',\n      dataIndex: 'provider',\n      sorter: true,\n      filters: true,\n      valueEnum: AI_PROVIDER_VALUE_ENUM,\n    },\n    {\n      title: '模型',\n      dataIndex: 'model_name',\n    },\n    {\n      title: '能力',\n      dataIndex: 'supports_web_search',\n      render: (_, record) => (\n        <Tag color={record.supports_web_search === 1 ? 'cyan' : 'default'}>\n          {record.supports_web_search === 1 ? '联网搜索' : '普通模型'}\n        </Tag>\n      ),\n    },\n    {\n      title: '状态',\n      dataIndex: 'is_active',\n      render: (_, record) => {\n        const tags = [];\n\n        // 当前使用标识（绿色 Tag）\n        if (record.is_current === 1) {\n          tags.push(\n            <Tag key=\"current\" color=\"green\">\n              当前使用\n            </Tag>,\n          );\n        }\n\n        // 启用/禁用状态\n        tags.push(\n          <Tag key=\"active\" color={record.is_active === 1 ? 'blue' : 'default'}>\n            {record.is_active === 1 ? '启用' : '禁用'}\n          </Tag>,\n        );\n\n        // 测试状态\n        if (record.test_status === 'success') {\n          tags.push(\n            <Tag key=\"test\" color=\"success\">\n              测试通过\n            </Tag>,\n          );\n        } else if (record.test_status === 'failed') {\n          tags.push(\n            <Tag key=\"test\" color=\"error\">\n              测试失败\n            </Tag>,\n          );\n        }\n\n        return <>{tags}</>;\n      },\n    },\n    {\n      title: '最后测试',\n      dataIndex: 'last_test_time',\n      valueType: 'dateTime',\n      sorter: true,\n    },\n    {\n      title: '操作',\n      valueType: 'option',\n      render: (_, record) => {\n        const actions = [];\n        const tavilyOnly = isTavilyProvider(record.provider);\n\n        // 设为当前按钮（当前模型禁用）\n        if (record.is_current === 1) {\n          actions.push(\n            <span\n              key=\"current\"\n              style={{ color: '#999', cursor: 'not-allowed' }}\n            >\n              <StarOutlined /> 当前模型\n            </span>,\n          );\n        } else if (tavilyOnly) {\n          actions.push(\n            <span\n              key=\"search-only\"\n              style={{ color: '#999', cursor: 'not-allowed' }}\n            >\n              <StarOutlined /> 仅联网搜索\n            </span>,\n          );\n        } else {\n          actions.push(\n            <Popconfirm\n              key=\"set-current\"\n              title={`切换当前模型为 ${record.config_name}？`}\n              description=\"将使用此模型配置进行 AI 功能调用。\"\n              onConfirm={() => handleSetCurrent(record.id, record.config_name)}\n              okText=\"确定\"\n              cancelText=\"取消\"\n            >\n              <a>\n                <StarOutlined /> 设为当前\n              </a>\n            </Popconfirm>,\n          );\n        }\n\n        // 测试按钮\n        actions.push(\n          <a\n            key=\"test\"\n            onClick={() => handleTest(record.id, record.config_name)}\n          >\n            <ThunderboltOutlined /> 测试\n          </a>,\n        );\n\n        // 编辑按钮\n        actions.push(\n          <a\n            key=\"edit\"\n            onClick={() => {\n              setCurrentRecord(record);\n              setModalVisible(true);\n            }}\n          >\n            编辑\n          </a>,\n        );\n\n        // 删除按钮（当前模型禁用）\n        if (record.is_current === 1) {\n          actions.push(\n            <span key=\"delete\" style={{ color: '#999', cursor: 'not-allowed' }}>\n              删除\n            </span>,\n          );\n        } else {\n          actions.push(\n            <Popconfirm\n              key=\"delete\"\n              title={`确定删除 ${record.config_name}？`}\n              description=\"删除后无法恢复。\"\n              onConfirm={() => handleDelete(record.id)}\n              okText=\"确定\"\n              cancelText=\"取消\"\n            >\n              <a style={{ color: 'red' }}>删除</a>\n            </Popconfirm>,\n          );\n        }\n\n        return actions;\n      },\n    },\n  ];\n\n  return (\n    <PageContainer>\n      <ProTable<API.AIModelConfig>\n        headerTitle=\"AI 模型配置列表\"\n        actionRef={actionRef}\n        rowKey=\"id\"\n        toolBarRender={() => [\n          <Button\n            key=\"button\"\n            icon={<PlusOutlined />}\n            onClick={() => {\n              setCurrentRecord(undefined);\n              setModalVisible(true);\n            }}\n            type=\"primary\"\n          >\n            新建模型配置\n          </Button>,\n        ]}\n        request={async (params, sort) => {\n          try {\n            const response = await getAIModels();\n            if (response.success) {\n              const current = (response.data || []).find(\n                (item) => item.is_current === 1,\n              );\n              setCurrentModelId(current?.id);\n              return {\n                data: response.data || [],\n                success: true,\n              };\n            }\n            return {\n              data: [],\n              success: false,\n            };\n          } catch (error) {\n            return {\n              data: [],\n              success: false,\n            };\n          }\n        }}\n        columns={columns}\n        pagination={{\n          defaultPageSize: 10,\n          showSizeChanger: true,\n        }}\n      />\n      <ModelForm\n        visible={modalVisible}\n        record={currentRecord}\n        currentModelId={currentModelId}\n        onCancel={() => {\n          setModalVisible(false);\n          setCurrentRecord(undefined);\n        }}\n        onSuccess={() => {\n          setModalVisible(false);\n          setCurrentRecord(undefined);\n          actionRef.current?.reload();\n        }}\n      />\n    </PageContainer>\n  );\n};\n\nexport default AIModelApplication;\n",
       "__isJSFile": true,
       "__absFile": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/src/pages/ModelConfig/Application/index.tsx"
     },
@@ -7364,7 +7380,7 @@
             "format": "esm"
           },
           "src/pages/Opportunity/TenderPush.tsx": {
-            "bytes": 7930,
+            "bytes": 8054,
             "imports": [
               {
                 "path": "src/services/opportunity/index.ts",
@@ -7380,6 +7396,11 @@
                 "path": "@ant-design/pro-components",
                 "kind": "import-statement",
                 "external": true
+              },
+              {
+                "path": "src/.umi/exports.ts",
+                "kind": "import-statement",
+                "original": "@umijs/max"
               },
               {
                 "path": "antd",
@@ -10197,7 +10218,7 @@
                 "bytesInOutput": 27945
               },
               "src/pages/Opportunity/TenderPush.tsx": {
-                "bytesInOutput": 9924
+                "bytesInOutput": 10050
               },
               "src/services/monitoring/index.ts": {
                 "bytesInOutput": 615
@@ -10230,7 +10251,7 @@
                 "bytesInOutput": 2010
               }
             },
-            "bytes": 683660
+            "bytes": 683786
           }
         }
       }
@@ -19171,7 +19192,21 @@
           "type": "ImportDeclaration"
         },
         {
-          "end": 349,
+          "end": 298,
+          "importKind": "value",
+          "source": "@umijs/max",
+          "specifiers": [
+            {
+              "imported": "Link",
+              "local": "Link",
+              "type": "ImportSpecifier"
+            }
+          ],
+          "start": 264,
+          "type": "ImportDeclaration"
+        },
+        {
+          "end": 384,
           "importKind": "value",
           "source": "antd",
           "specifiers": [
@@ -19221,11 +19256,11 @@
               "type": "ImportSpecifier"
             }
           ],
-          "start": 264,
+          "start": 299,
           "type": "ImportDeclaration"
         },
         {
-          "end": 423,
+          "end": 458,
           "importKind": "type",
           "source": "@ant-design/pro-components",
           "specifiers": [
@@ -19240,11 +19275,11 @@
               "type": "ImportSpecifier"
             }
           ],
-          "start": 350,
+          "start": 385,
           "type": "ImportDeclaration"
         },
         {
-          "end": 472,
+          "end": 507,
           "importKind": "value",
           "source": "react",
           "specifiers": [
@@ -19263,7 +19298,7 @@
               "type": "ImportSpecifier"
             }
           ],
-          "start": 424,
+          "start": 459,
           "type": "ImportDeclaration"
         }
       ],
