@@ -1,0 +1,35 @@
+draft_id: "draft-20260323-000002"
+generated_at: "2026-03-23T12:00:00+08:00"
+
+query_execution:
+  project_query:
+    sql: "SELECT COUNT(*) FROM projects WHERE name LIKE '%国网%' OR name LIKE '%电网%'"
+    result: 1
+    details:
+      - id: 53
+        name: "国网数据中心大屏开发"
+
+  tender_query:
+    sql: "SELECT COUNT(*) FROM opportunity_tender_staging WHERE issuer LIKE '%国网%' OR issuer LIKE '%电网%' OR title LIKE '%国网%' OR title LIKE '%电网%'"
+    result: 0
+    details: []
+
+  match_query:
+    description: "项目与招标模糊匹配"
+    result:
+      - project_id: 53
+        project_name: "国网数据中心大屏开发"
+        matched_tenders: 0
+
+summary:
+  total_projects: 41
+  sgcc_projects: 1
+  sgcc_tenders: 0
+  matched_tenders: 0
+
+analysis:
+  - "当前评估项目中，属于国家电网/国网的项目有 1 个：'国网数据中心大屏开发'"
+  - "招标表中，属于国家电网/国网的招标为 0 条"
+  - "原因：当前招标数据源主要来自：中国石油 (CNPC)、中国海油 (CNOOC)、国家管网 (PipeChina)，不含国家电网数据"
+
+next_step: "REPORT_GEN"

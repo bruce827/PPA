@@ -29,7 +29,9 @@
       "Bash(python3 scripts/validate_sql.py \"SELECT strftime\\(''%Y-%m-%d'', published_date\\) as period, COUNT\\(*\\) as value FROM opportunity_tender_staging WHERE published_date >= date\\(''now'', ''-30 days''\\) GROUP BY period ORDER BY period\")",
       "Bash(grep:*)",
       "Bash(cat ./scripts/*)",
-      "Bash(cd /Users/maylis/Desktop/github 上的项目/项目评估系统/PPA)"
+      "Bash(cd /Users/maylis/Desktop/github 上的项目/项目评估系统/PPA)",
+      "Bash(bash -c 'cd \"/Users/maylis/Desktop/github 上的项目/项目评估系统/PPA/server\" && sqlite3 ppa.db \".tables\"')",
+      "Bash(find .claude/skills/infographic-requirement-guide -name *.yaml -o -name *.md)"
     ]
   }
 }
