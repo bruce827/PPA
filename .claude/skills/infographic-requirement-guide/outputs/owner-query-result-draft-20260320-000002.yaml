@@ -1,0 +1,28 @@
+draft_id: "draft-20260320-000002"
+generated_at: "2026-03-20T17:15:00+08:00"
+
+executed_sql: |
+  SELECT push_status, COUNT(*) as count,
+         ROUND(COUNT(*) * 100.0 / SUM(COUNT(*)) OVER(), 1) as percentage
+  FROM opportunity_tender_staging
+  GROUP BY push_status
+  ORDER BY count DESC
+
+query_result:
+  columns: ["push_status", "count", "percentage"]
+  rows:
+    - ["pending", 115, 95.8]
+    - ["pushed", 5, 4.2]
+  row_count: 2
+
+result_summary:
+  total_value: 120
+  pushed_count: 5
+  pending_count: 115
+  push_success_rate: 4.2
+
+business_interpretation: |
+  当前推送成功率仅为 **4.2%**（5/120），主要原因是 **95.8% 的数据（115 条）仍处于待推送状态（pending）**。
+  这表明推送系统可能存在积压或推送机制未正常执行。
+
+next_step: "REPORT_GEN"

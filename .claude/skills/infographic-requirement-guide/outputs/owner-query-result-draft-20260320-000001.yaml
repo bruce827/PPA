@@ -1,0 +1,26 @@
+draft_id: "draft-20260320-000001"
+generated_at: "2026-03-20T17:10:00+08:00"
+
+executed_sql: |
+  SELECT source_platform, COUNT(*) as count
+  FROM opportunity_tender_staging
+  GROUP BY source_platform
+  ORDER BY count DESC
+
+query_result:
+  columns: ["source_platform", "count"]
+  rows:
+    - ["国家管网电子招标平台", 80]
+    - ["中国石油招标投标网", 20]
+    - ["中国海洋石油采办业务管理与交易系统", 20]
+  row_count: 3
+
+result_summary:
+  total_value: 120
+  unique_categories: 3
+
+business_interpretation: |
+  招标信息来源共 **3 个渠道**，其中**国家管网电子招标平台**占比最高（80 条，66.7%），
+  中国石油和中国海洋石油平台各 20 条。
+
+next_step: "REPORT_GEN"

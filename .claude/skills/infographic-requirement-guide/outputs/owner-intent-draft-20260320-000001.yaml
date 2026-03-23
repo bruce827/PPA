@@ -1,0 +1,24 @@
+draft_id: "draft-20260320-000001"
+generated_at: "2026-03-20T17:10:00+08:00"
+
+original_question: "哪个渠道的招标信息最多？"
+
+extracted_elements:
+  entity: "招标信息"
+  metric: "count"
+  time_range: null
+  dimension: "source_platform"
+
+intent_type: "comparison"
+
+clarification_needed: false
+
+final_intent:
+  entity: "opportunity_tender_staging"
+  metric: "count"
+  dimension: "source_platform"
+  filters:
+    time_field: null
+    time_value: null
+
+next_step: "DATA_MAP"

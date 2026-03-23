@@ -1,0 +1,629 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Demo - Dual View (Pitch + Evidence Table)</title>
+  <style>
+    :root {
+      --bg: #f3f7ff;
+      --panel: #ffffff;
+      --line: #d7e3f7;
+      --text: #0f172a;
+      --muted: #5b6b84;
+      --brand: #2563eb;
+      --ok: #15803d;
+      --warn: #b45309;
+      --bad: #b91c1c;
+      --shadow: 0 12px 28px rgba(37, 99, 235, 0.12);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, -apple-system, Segoe UI, PingFang SC, Microsoft YaHei, sans-serif;
+      background: radial-gradient(circle at 8% 0%, #dbeafe, #f3f7ff 35%), var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+    .wrap {
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    .head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    h1 {
+      margin: 0;
+      font-size: 28px;
+      line-height: 1.2;
+    }
+    .sub {
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .back-link {
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 36px;
+      border-radius: 10px;
+      border: 1px solid #bfdbfe;
+      background: #eff6ff;
+      color: #1e40af;
+      padding: 0 12px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .view-switch {
+      margin-top: 14px;
+      display: inline-flex;
+      background: #eaf2ff;
+      border: 1px solid #cfe0ff;
+      border-radius: 12px;
+      padding: 4px;
+      gap: 4px;
+    }
+    .view-tab {
+      height: 36px;
+      border: 0;
+      border-radius: 9px;
+      background: transparent;
+      color: #1f3b7a;
+      padding: 0 12px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .view-tab[aria-selected="true"] {
+      background: var(--brand);
+      color: #fff;
+      box-shadow: 0 6px 18px rgba(37, 99, 235, 0.25);
+    }
+
+    .view {
+      margin-top: 14px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+      padding: 14px;
+    }
+    .hidden { display: none; }
+
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(140px, 1fr));
+      gap: 10px;
+    }
+    .kpi {
+      border: 1px solid #dbe7ff;
+      border-radius: 12px;
+      padding: 12px;
+      background: linear-gradient(180deg, #f8fbff, #ffffff);
+    }
+    .kpi .k {
+      font-size: 12px;
+      color: #64748b;
+    }
+    .kpi .v {
+      margin-top: 6px;
+      font-size: 22px;
+      font-weight: 800;
+    }
+    .kpi .delta {
+      margin-top: 4px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .delta-up { color: var(--ok); }
+    .delta-down { color: var(--bad); }
+
+    .pitch-layout {
+      margin-top: 12px;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 12px;
+    }
+    .panel {
+      border: 1px solid #e5ecfa;
+      border-radius: 12px;
+      padding: 12px;
+      background: #fff;
+    }
+    .panel h2 {
+      margin: 0;
+      font-size: 16px;
+    }
+    .panel .tip {
+      margin-top: 4px;
+      color: #64748b;
+      font-size: 12px;
+    }
+
+    .rank {
+      margin: 10px 0 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 10px;
+    }
+    .rank li {
+      border: 1px solid #e7eefc;
+      border-radius: 10px;
+      padding: 10px;
+      display: grid;
+      gap: 6px;
+    }
+    .row-line {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+    }
+    .name {
+      font-weight: 700;
+    }
+    .meta {
+      color: #64748b;
+      font-size: 12px;
+    }
+    .state {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      border: 1px solid;
+      padding: 2px 8px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .state-up { color: var(--ok); border-color: #86efac; background: #f0fdf4; }
+    .state-flat { color: var(--warn); border-color: #fcd34d; background: #fffbeb; }
+    .state-down { color: var(--bad); border-color: #fecaca; background: #fef2f2; }
+
+    .spark {
+      width: 100%;
+      height: 42px;
+      border-radius: 8px;
+      background: #f8fbff;
+      border: 1px solid #ebf1fd;
+    }
+
+    .actions {
+      margin-top: 12px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .btn {
+      border: 1px solid #bfdbfe;
+      background: #eff6ff;
+      color: #1e40af;
+      border-radius: 9px;
+      height: 36px;
+      padding: 0 12px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .btn.primary {
+      background: var(--brand);
+      color: white;
+      border-color: var(--brand);
+    }
+
+    .table-toolbar {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(120px, 1fr));
+      gap: 8px;
+      align-items: end;
+      margin-bottom: 10px;
+    }
+    label {
+      display: grid;
+      gap: 5px;
+      font-size: 12px;
+      color: #475569;
+    }
+    input, select {
+      height: 34px;
+      border: 1px solid #cfd9e8;
+      border-radius: 8px;
+      padding: 0 10px;
+      background: #fff;
+      color: #0f172a;
+      font-size: 14px;
+    }
+    .table-wrap {
+      overflow: auto;
+      border: 1px solid #e5ecfa;
+      border-radius: 12px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 900px;
+    }
+    th, td {
+      border-bottom: 1px solid #ebf1fd;
+      padding: 10px;
+      font-size: 14px;
+      white-space: nowrap;
+      text-align: left;
+    }
+    th {
+      position: sticky;
+      top: 0;
+      background: #f8fbff;
+      color: #334155;
+      z-index: 1;
+    }
+    td.num { text-align: right; }
+    .th-btn {
+      border: 0;
+      background: transparent;
+      color: inherit;
+      font-weight: 700;
+      cursor: pointer;
+      padding: 0;
+    }
+    .hint {
+      margin-top: 10px;
+      color: #64748b;
+      font-size: 12px;
+    }
+
+    @media (max-width: 980px) {
+      .kpi-grid { grid-template-columns: repeat(2, minmax(120px, 1fr)); }
+      .pitch-layout { grid-template-columns: 1fr; }
+      .table-toolbar { grid-template-columns: repeat(2, minmax(120px, 1fr)); }
+    }
+
+    @media (max-width: 640px) {
+      h1 { font-size: 22px; }
+      .wrap { padding: 14px; }
+      .head { flex-direction: column; }
+      .kpi-grid { grid-template-columns: 1fr; }
+      .view-switch { width: 100%; display: grid; grid-template-columns: 1fr 1fr; }
+      .view-tab { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <div class="head">
+      <div>
+        <h1>Dual View Demo（Pitch + Evidence）</h1>
+        <div class="sub">移动端先讲结论，完整表格做证据下钻。适合电梯演讲与会后核对并存的场景。</div>
+      </div>
+      <a class="back-link" href="index.html">返回总览</a>
+    </div>
+
+    <div class="view-switch" role="tablist" aria-label="视图切换">
+      <button id="tab-pitch" class="view-tab" role="tab" aria-selected="true" aria-controls="panel-pitch" data-view="pitch">移动端结论视图</button>
+      <button id="tab-table" class="view-tab" role="tab" aria-selected="false" aria-controls="panel-table" data-view="table">完整证据表格</button>
+    </div>
+
+    <section id="panel-pitch" class="view" role="tabpanel" aria-labelledby="tab-pitch">
+      <div class="kpi-grid">
+        <article class="kpi">
+          <div class="k">本月营收</div>
+          <div class="v" id="kpi-revenue">-</div>
+          <div class="delta delta-up" id="kpi-revenue-delta">-</div>
+        </article>
+        <article class="kpi">
+          <div class="k">订单量</div>
+          <div class="v" id="kpi-orders">-</div>
+          <div class="delta delta-up" id="kpi-orders-delta">-</div>
+        </article>
+        <article class="kpi">
+          <div class="k">毛利率</div>
+          <div class="v" id="kpi-margin">-</div>
+          <div class="delta delta-down" id="kpi-margin-delta">-</div>
+        </article>
+        <article class="kpi">
+          <div class="k">异常门店</div>
+          <div class="v" id="kpi-risk">-</div>
+          <div class="delta" id="kpi-risk-delta">-</div>
+        </article>
+      </div>
+
+      <div class="pitch-layout">
+        <section class="panel">
+          <h2>Top3 变化摘要</h2>
+          <div class="tip">用“文本 + 图形”双编码，不只靠颜色。</div>
+          <ul id="top-list" class="rank"></ul>
+        </section>
+
+        <section class="panel">
+          <h2>关键信息一句话</h2>
+          <div class="tip">60 秒内可读完，适合手机场景。</div>
+          <p id="key-message" style="margin-top:10px; line-height:1.7; color:#334155;"></p>
+          <div class="actions">
+            <button id="to-table" class="btn primary">查看完整数据表</button>
+            <button id="refresh" class="btn">刷新摘要</button>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <section id="panel-table" class="view hidden" role="tabpanel" aria-labelledby="tab-table">
+      <div class="table-toolbar">
+        <label>区域
+          <select id="region-filter">
+            <option value="">全部</option>
+            <option value="华东">华东</option>
+            <option value="华南">华南</option>
+            <option value="华北">华北</option>
+            <option value="西南">西南</option>
+          </select>
+        </label>
+        <label>月份
+          <select id="month-filter">
+            <option value="">全部</option>
+            <option value="2026-04">2026-04</option>
+            <option value="2026-05">2026-05</option>
+            <option value="2026-06">2026-06</option>
+          </select>
+        </label>
+        <label>搜索门店
+          <input id="search" placeholder="输入门店名" />
+        </label>
+        <div class="actions" style="justify-content:flex-end; margin:0;">
+          <button id="back-pitch" class="btn">返回结论视图</button>
+          <button id="reset" class="btn">重置筛选</button>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th aria-sort="none"><button class="th-btn" data-key="store">门店</button></th>
+              <th aria-sort="none"><button class="th-btn" data-key="region">区域</button></th>
+              <th aria-sort="none"><button class="th-btn" data-key="month">月份</button></th>
+              <th aria-sort="descending"><button class="th-btn" data-key="revenue">营收(万)</button></th>
+              <th aria-sort="none"><button class="th-btn" data-key="orders">订单</button></th>
+              <th aria-sort="none"><button class="th-btn" data-key="margin">毛利率</button></th>
+              <th aria-sort="none"><button class="th-btn" data-key="status">状态</button></th>
+            </tr>
+          </thead>
+          <tbody id="table-body"></tbody>
+        </table>
+      </div>
+      <div class="hint" id="table-summary">-</div>
+    </section>
+  </main>
+
+  <script>
+    const rows = [
+      { store: '浦东旗舰店', region: '华东', month: '2026-06', revenue: 186, orders: 423, margin: 0.31, status: 'up', trend: [154, 162, 171, 178, 180, 186] },
+      { store: '徐汇生活馆', region: '华东', month: '2026-06', revenue: 132, orders: 301, margin: 0.27, status: 'flat', trend: [126, 129, 131, 135, 131, 132] },
+      { store: '深圳福田店', region: '华南', month: '2026-06', revenue: 149, orders: 336, margin: 0.29, status: 'up', trend: [121, 128, 134, 140, 145, 149] },
+      { store: '广州天河店', region: '华南', month: '2026-06', revenue: 117, orders: 265, margin: 0.23, status: 'down', trend: [126, 123, 121, 120, 118, 117] },
+      { store: '北京国贸店', region: '华北', month: '2026-06', revenue: 141, orders: 312, margin: 0.28, status: 'up', trend: [119, 124, 131, 134, 138, 141] },
+      { store: '重庆渝中店', region: '西南', month: '2026-06', revenue: 108, orders: 248, margin: 0.21, status: 'down', trend: [122, 119, 116, 113, 111, 108] },
+      { store: '成都高新店', region: '西南', month: '2026-06', revenue: 126, orders: 281, margin: 0.25, status: 'flat', trend: [121, 124, 126, 128, 127, 126] },
+      { store: '西安曲江店', region: '华北', month: '2026-06', revenue: 119, orders: 257, margin: 0.22, status: 'down', trend: [131, 129, 126, 124, 121, 119] }
+    ];
+
+    let currentView = 'pitch';
+    let sortKey = 'revenue';
+    let sortDir = 'desc';
+
+    function fmtNum(n) {
+      return Number(n).toLocaleString('zh-CN');
+    }
+
+    function fmtPct(v) {
+      return (v * 100).toFixed(1) + '%';
+    }
+
+    function deltaText(v) {
+      if (v > 0) return `+${v.toFixed(1)}%`;
+      if (v < 0) return `${v.toFixed(1)}%`;
+      return '0.0%';
+    }
+
+    function statusLabel(s) {
+      if (s === 'up') return { cls: 'state-up', text: '上升 ↑' };
+      if (s === 'down') return { cls: 'state-down', text: '下降 ↓' };
+      return { cls: 'state-flat', text: '持平 →' };
+    }
+
+    function sparkline(values) {
+      const w = 260;
+      const h = 42;
+      const min = Math.min(...values);
+      const max = Math.max(...values);
+      const span = max - min || 1;
+      const pts = values
+        .map((v, i) => {
+          const x = (i / (values.length - 1)) * (w - 10) + 5;
+          const y = h - ((v - min) / span) * (h - 10) - 5;
+          return `${x.toFixed(2)},${y.toFixed(2)}`;
+        })
+        .join(' ');
+      return `<svg class="spark" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none" aria-label="趋势图"><polyline points="${pts}" fill="none" stroke="#2563eb" stroke-width="2.2" /></svg>`;
+    }
+
+    function computeSummary() {
+      const totalRevenue = rows.reduce((s, r) => s + r.revenue, 0);
+      const totalOrders = rows.reduce((s, r) => s + r.orders, 0);
+      const avgMargin = rows.reduce((s, r) => s + r.margin, 0) / rows.length;
+      const riskCount = rows.filter((r) => r.status === 'down').length;
+
+      document.getElementById('kpi-revenue').textContent = `${fmtNum(totalRevenue)} 万`;
+      document.getElementById('kpi-orders').textContent = fmtNum(totalOrders);
+      document.getElementById('kpi-margin').textContent = fmtPct(avgMargin);
+      document.getElementById('kpi-risk').textContent = `${riskCount} 家`;
+
+      const revenueDelta = 7.8;
+      const orderDelta = 4.1;
+      const marginDelta = -1.3;
+      const riskDelta = -2;
+
+      document.getElementById('kpi-revenue-delta').textContent = `较上月 ${deltaText(revenueDelta)}`;
+      document.getElementById('kpi-orders-delta').textContent = `较上月 ${deltaText(orderDelta)}`;
+      document.getElementById('kpi-margin-delta').textContent = `较上月 ${deltaText(marginDelta)}`;
+      document.getElementById('kpi-risk-delta').textContent = riskDelta < 0 ? `异常门店减少 ${Math.abs(riskDelta)} 家` : `异常门店增加 ${riskDelta} 家`;
+    }
+
+    function renderPitch() {
+      const topChanges = [...rows]
+        .map((r) => {
+          const first = r.trend[0];
+          const last = r.trend[r.trend.length - 1];
+          const change = ((last - first) / first) * 100;
+          return { ...r, change };
+        })
+        .sort((a, b) => Math.abs(b.change) - Math.abs(a.change))
+        .slice(0, 3);
+
+      const topList = document.getElementById('top-list');
+      topList.innerHTML = topChanges
+        .map((r) => {
+          const state = statusLabel(r.status);
+          return `
+            <li>
+              <div class="row-line">
+                <span class="name">${r.store}</span>
+                <span class="state ${state.cls}">${state.text}</span>
+              </div>
+              <div class="row-line meta">
+                <span>${r.region} | 本月营收 ${fmtNum(r.revenue)} 万</span>
+                <span>较 1 月 ${deltaText(r.change)}</span>
+              </div>
+              ${sparkline(r.trend)}
+            </li>
+          `;
+        })
+        .join('');
+
+      const msg = '结论：华东与华南驱动总体增长，但西南两家门店连续下滑。移动端先给出 Top3 变化，详细口径在完整表格中核对。';
+      document.getElementById('key-message').textContent = msg;
+    }
+
+    function applyFilters(data) {
+      const region = document.getElementById('region-filter').value;
+      const month = document.getElementById('month-filter').value;
+      const keyword = document.getElementById('search').value.trim();
+
+      return data.filter((r) => {
+        if (region && r.region !== region) return false;
+        if (month && r.month !== month) return false;
+        if (keyword && !r.store.includes(keyword)) return false;
+        return true;
+      });
+    }
+
+    function sortedData(data) {
+      const list = [...data];
+      list.sort((a, b) => {
+        const av = a[sortKey];
+        const bv = b[sortKey];
+        if (av === bv) return 0;
+        if (sortDir === 'asc') return av > bv ? 1 : -1;
+        return av < bv ? 1 : -1;
+      });
+      return list;
+    }
+
+    function updateSortAria() {
+      document.querySelectorAll('thead th').forEach((th) => {
+        const btn = th.querySelector('[data-key]');
+        if (!btn) return;
+        if (btn.dataset.key !== sortKey) {
+          th.setAttribute('aria-sort', 'none');
+          return;
+        }
+        th.setAttribute('aria-sort', sortDir === 'asc' ? 'ascending' : 'descending');
+      });
+    }
+
+    function renderTable() {
+      const body = document.getElementById('table-body');
+      const list = sortedData(applyFilters(rows));
+
+      body.innerHTML = list
+        .map((r) => {
+          const st = statusLabel(r.status);
+          return `
+            <tr>
+              <td>${r.store}</td>
+              <td>${r.region}</td>
+              <td>${r.month}</td>
+              <td class="num">${fmtNum(r.revenue)}</td>
+              <td class="num">${fmtNum(r.orders)}</td>
+              <td class="num">${fmtPct(r.margin)}</td>
+              <td><span class="state ${st.cls}">${st.text}</span></td>
+            </tr>
+          `;
+        })
+        .join('');
+
+      document.getElementById('table-summary').textContent = `当前 ${list.length} 条记录，排序字段：${sortKey}（${sortDir === 'asc' ? '升序' : '降序'}）`;
+      updateSortAria();
+    }
+
+    function setView(view) {
+      currentView = view;
+      const isPitch = view === 'pitch';
+      document.getElementById('panel-pitch').classList.toggle('hidden', !isPitch);
+      document.getElementById('panel-table').classList.toggle('hidden', isPitch);
+      document.getElementById('tab-pitch').setAttribute('aria-selected', String(isPitch));
+      document.getElementById('tab-table').setAttribute('aria-selected', String(!isPitch));
+
+      const url = new URL(window.location.href);
+      url.searchParams.set('view', view);
+      window.history.replaceState({}, '', url);
+    }
+
+    document.querySelectorAll('.view-tab').forEach((tab) => {
+      tab.addEventListener('click', () => setView(tab.dataset.view));
+    });
+
+    document.getElementById('to-table').addEventListener('click', () => setView('table'));
+    document.getElementById('back-pitch').addEventListener('click', () => setView('pitch'));
+    document.getElementById('refresh').addEventListener('click', renderPitch);
+
+    document.getElementById('region-filter').addEventListener('change', renderTable);
+    document.getElementById('month-filter').addEventListener('change', renderTable);
+    document.getElementById('search').addEventListener('input', renderTable);
+    document.getElementById('reset').addEventListener('click', () => {
+      document.getElementById('region-filter').value = '';
+      document.getElementById('month-filter').value = '';
+      document.getElementById('search').value = '';
+      renderTable();
+    });
+
+    document.querySelectorAll('thead .th-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const key = btn.dataset.key;
+        if (sortKey === key) {
+          sortDir = sortDir === 'asc' ? 'desc' : 'asc';
+        } else {
+          sortKey = key;
+          sortDir = key === 'store' || key === 'region' || key === 'month' || key === 'status' ? 'asc' : 'desc';
+        }
+        renderTable();
+      });
+    });
+
+    computeSummary();
+    renderPitch();
+    renderTable();
+
+    const initialView = new URL(window.location.href).searchParams.get('view');
+    if (initialView === 'table') {
+      setView('table');
+    } else {
+      setView('pitch');
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<!-- 引入 Tailwind CSS (为了美观和布局) -->
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+    /* 定义字体 */
+    body { font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Microsoft YaHei', Arial, sans-serif; }
+    /* 解决 SVG 溢出问题 */
+    svg { overflow: visible; }
+</style>
+</head>
+<body class="bg-gray-100 flex justify-center items-center min-h-screen p-4">
+
+<!-- 卡片容器 -->
+<div class="bg-[#FFFDF5] w-full max-w-2xl rounded-xl shadow-xl border border-gray-200 overflow-hidden relative">
+    
+    <!-- 1. 标题区 -->
+    <div class="p-6 border-b border-gray-100">
+        <h2 class="text-3xl font-extrabold text-gray-800 tracking-tight">{{ report_title }}</h2>
+        <p class="text-gray-500 mt-2 text-sm">{{ sub_title }}</p>
+    </div>
+
+    <!-- 2. 可视化核心区 (SVG) -->
+    <div class="relative h-[400px] w-full bg-white p-4">
+        
+        <!-- SVG 画布：ViewBox 设为 0 0 100 100，方便 AI 进行归一化计算 -->
+        <svg viewBox="0 0 100 100" preserveAspectRatio="none" class="w-full h-full">
+            
+            <defs>
+                <!-- 关键：裁剪路径 (由 AI 根据数据计算生成) -->
+                <!-- 逻辑：M(起点) -> L(数据点...) -> L(右下角) -> L(左下角) -> Z(闭合) -->
+                <clipPath id="data-mask">
+                    <path d="{{ area_path_d }}" />
+                </clipPath>
+            </defs>
+
+            <!-- A. 背景网格 (可选，增加专业感) -->
+            <line x1="0" y1="25" x2="100" y2="25" stroke="#eee" stroke-width="0.5" />
+            <line x1="0" y1="50" x2="100" y2="50" stroke="#eee" stroke-width="0.5" />
+            <line x1="0" y1="75" x2="100" y2="75" stroke="#eee" stroke-width="0.5" />
+
+            <!-- B. 材质层 (核心) -->
+            <!-- 如果用户没给贴图，这里可以用一个灰色兜底： fill="#333" -->
+            <!-- preserveAspectRatio="none" 确保贴图拉伸填满整个区域 -->
+            <image href="{{ texture_url }}" 
+                   x="0" y="0" width="100" height="100" 
+                   preserveAspectRatio="xMidYMid slice"
+                   clip-path="url(#data-mask)" />
+            
+            <!-- C. 叠加折线 (第二组数据，比如储量) -->
+            <!-- 如果不需要，Skill 可以留空 -->
+            <polyline points="{{ line_path_points }}" 
+                      fill="none" 
+                      stroke="#F59E0B" 
+                      stroke-width="1" 
+                      stroke-linecap="round"
+                      vector-effect="non-scaling-stroke" /> <!-- 保持线条粗细不随缩放改变 -->
+
+        </svg>
+
+        <!-- D. 数据标注 (绝对定位的 HTML 层，比 SVG 写字更容易控制换行) -->
+        <!-- 这里的 top/left 由 AI 计算百分比位置 -->
+        <div class="absolute" style="left: {{ annotation_x }}%; top: {{ annotation_y }}%;">
+            <div class="bg-white/90 border border-gray-800 p-2 text-xs shadow-sm max-w-[120px] leading-tight">
+                {{ annotation_text }}
+            </div>
+            <!-- 引线 -->
+            <div class="h-8 border-l border-dashed border-gray-800 absolute left-1/2 -bottom-8"></div>
+        </div>
+
+    </div>
+
+    <!-- 3. 底部结论区 -->
+    <div class="bg-gray-50 p-4 border-t border-gray-100 flex justify-between items-center">
+        <div class="text-xs text-gray-400">数据来源: {{ data_source }}</div>
+        <div class="text-sm font-bold text-red-800">💡 核心洞察: {{ insight_summary }}</div>
+    </div>
+
+</div>
+
+</body>
+</html>

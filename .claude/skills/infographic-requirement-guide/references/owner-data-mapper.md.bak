@@ -1,0 +1,194 @@
+# 数据映射 (Data Mapper)
+
+**版本**: v1.0
+**快捷键**: `[DATA_MAP]`
+**用途**: 将业务问题映射到数据库表和字段。
+
+---
+
+## 前置检查
+
+1. 读取 `workflow-state.json` 与 `owner-intent` 产物。
+2. 若 `INTENT_CLARIFY` 未完成，提示先执行 `[CLARIFY]`。
+3. 若 `final_intent` 为空，提示需要先澄清意图。
+
+---
+
+## 1. 业务术语映射表
+
+### 1.1 实体映射
+
+| 业务术语 | 数据库表 | 说明 |
+|----------|----------|------|
+| 招标文件 | `opportunity_tender_staging` | 招标公告待推送数据 |
+| 推送记录 | `opportunity_tender_staging` | 使用 push_status 字段 |
+| 项目/项目评估 | `projects` | 项目评估数据 |
+| 渠道/来源/平台 | `opportunity_tender_staging.source_platform` | 招标信息来源平台（字段） |
+| 渠道/来源 | `opportunity_bidding_sites` | 招标信息来源网站 |
+| 用户 | `users` | 系统用户 |
+
+### 1.4 常用字段映射
+
+| 业务字段 | 数据库字段 | 说明 |
+|----------|------------|------|
+| 渠道/来源 | `source_platform` | 招标信息来源平台 |
+| 地区 | `region` | 招标项目所在地区 |
+| 发布时间 | `published_date` | 招标公告发布日期 |
+| 截止时间 | `deadline_date` | 投标截止日期 |
+| 预算金额 | `budget_amount` | 项目预算 |
+| 推送状态 | `push_status` | pushed/pending/error |
+| 业主单位 | `issuer` | 招标业主 |
+
+### 1.2 指标映射
+
+| 业务指标 | SQL 表达 | 说明 |
+|----------|---------|------|
+| 数量/多少 | `COUNT(*)` | 计数 |
+| 总计/合计 | `SUM(field)` | 求和 |
+| 平均 | `AVG(field)` | 平均值 |
+| 占比 | `COUNT(*) * 100.0 / SUM(COUNT(*)) OVER()` | 百分比 |
+| 成功率 | `COUNT(CASE WHEN status='success') / COUNT(*)` | 比率 |
+
+### 1.3 时间范围映射
+
+| 业务表达 | SQL 表达 | 说明 |
+|----------|---------|------|
+| 最近一周 | `date >= date('now', '-7 days')` | 7 天前至今 |
+| 最近一月 | `date >= date('now', '-1 month')` | 30 天前至今 |
+| 最近三月 | `date >= date('now', '-3 months')` | 90 天前至今 |
+| 今年 | `strftime('%Y', date) = strftime('%Y', 'now')` | 当前年份 |
+| 全部时间 | 无时间过滤 | - |
+
+---
+
+## 2. 映射逻辑
+
+### 2.1 根据意图类型选择映射
+
+```python
+# 伪代码示例
+if intent_type == "count":
+    select_clause = "COUNT(*) as value"
+elif intent_type == "comparison":
+    select_clause = "{dimension}, COUNT(*) as value"
+elif intent_type == "trend":
+    select_clause = "strftime('%Y-%m', {time_field}) as period, COUNT(*) as value"
+elif intent_type == "diagnosis":
+    # 多维下钻
+    select_clause = "{dim1}, {dim2}, COUNT(*) as value"
+```
+
+### 2.2 构建 WHERE 子句
+
+根据 `final_intent.filters` 构建：
+
+```python
+where_clauses = []
+if filters.get("time_field") and filters.get("time_value"):
+    where_clauses.append(f"{filters['time_field']} >= '{filters['time_value']}'")
+if filters.get("push_status"):
+    where_clauses.append(f"push_status = '{filters['push_status']}'")
+
+where_clause = " AND ".join(where_clauses) if where_clauses else ""
+```
+
+---
+
+## 3. 产物输出
+
+### 3.1 文件名
+
+`owner-data-map-{draft_id}.yaml`
+
+### 3.2 保存路径
+
+`./outputs/owner-data-map-{draft_id}.yaml`
+
+### 3.3 文件结构
+
+```yaml
+draft_id: "{draft_id}"
+generated_at: "{timestamp}"
+
+mapping_result:
+  target_table: "{表名}"
+  target_table_cn: "{中文说明}"
+
+  select_clause: "{SELECT 子句}"
+  from_clause: "{FROM 子句}"
+  where_clause: "{WHERE 子句}"
+  group_by_clause: "{GROUP BY 子句或 null}"
+  order_by_clause: "{ORDER BY 子句或 null}"
+
+  full_sql: "{完整 SQL}"
+
+  expected_columns:
+    - name: "{列名}"
+      type: "{类型}"
+      description: "{中文含义}"
+
+data_preview:
+  description: "预期数据样例"
+  columns: ["列名清单"]
+
+next_step: "QUERY_BUILD"
+```
+
+---
+
+## 4. 示例
+
+### 4.1 示例输入
+
+```yaml
+final_intent:
+  entity: "招标文件推送"
+  metric: "count"
+  filters:
+    time_field: "published_date"
+    time_value: "2026-02-20"
+    time_operator: ">="
+    push_status: "pushed"
+```
+
+### 4.2 示例输出
+
+```yaml
+mapping_result:
+  target_table: "opportunity_tender_staging"
+  target_table_cn: "招标公告待推送数据"
+
+  select_clause: "COUNT(*) as value"
+  from_clause: "FROM opportunity_tender_staging"
+  where_clause: "WHERE published_date >= '2026-02-20' AND push_status = 'pushed'"
+  group_by_clause: null
+  order_by_clause: null
+
+  full_sql: |
+    SELECT COUNT(*) as value
+    FROM opportunity_tender_staging
+    WHERE published_date >= '2026-02-20'
+      AND push_status = 'pushed'
+```
+
+---
+
+## 5. 状态更新
+
+```json
+{
+  "workflow_mode": "owner-guided",
+  "current_step": "DATA_MAP",
+  "completed_steps": ["OWNER_ENTRY", "INTENT_CLARIFY", "DATA_MAP"],
+  "artifacts": {
+    "owner_intent": "./outputs/owner-intent-{draft_id}.yaml",
+    "owner_data_map": "./outputs/owner-data-map-{draft_id}.yaml"
+  }
+}
+```
+
+---
+
+## 6. 下一步建议
+
+推荐执行 `[QUERY_BUILD]` - 查询构建与执行。

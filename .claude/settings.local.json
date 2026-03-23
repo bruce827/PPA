@@ -1,0 +1,35 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3:*)",
+      "Bash(sqlite3 server/ppa.db \".schema\")",
+      "Bash(sqlite3:*)",
+      "Bash(/tmp/library_header.txt:*)",
+      "Bash(if ! grep -q \"已废弃\" \".claude/skills/infographic-requirement-guide/references/library-adapter-contract.md\")",
+      "Bash(then)",
+      "Bash(sed -i.bak '1,6d' \".claude/skills/infographic-requirement-guide/references/library-adapter-contract.md\")",
+      "Read(//tmp/**)",
+      "Bash(find '/Users/maylis/Desktop/github 上的项目/项目评估系统/PPA' -name SKILL.md -path *infographic*)",
+      "Bash(git -C \"/Users/maylis/Desktop/github 上的项目/项目评估系统/PPA\" status)",
+      "Bash(xargs ls:*)",
+      "Bash(cp:*)",
+      "Bash(cp '/Users/maylis/Desktop/github 上的项目/项目评估系统/PPA/.claude/skills/infographic-requirement-guide/references/owner-data-mapper.md' '/Users/maylis/Desktop/github 上的项目/项目评估系统/PPA/.claude/skills/infographic-requirement-guide/references/owner-data-mapper.md.bak')",
+      "Bash(cp /tmp/owner-data-mapper-patch.md '.claude/skills/infographic-requirement-guide/references/owner-data-mapper.md')",
+      "Bash(cp .claude/skills/infographic-requirement-guide/references/owner-data-mapper.md .claude/skills/infographic-requirement-guide/references/owner-data-mapper.md.bak)",
+      "Bash(cp /tmp/owner-data-mapper-patch.md .claude/skills/infographic-requirement-guide/references/owner-data-mapper.md)",
+      "Bash(cp /tmp/owner-intent-types.md .claude/skills/infographic-requirement-guide/references/owner-followup.md)",
+      "Bash(.claude/skills/infographic-requirement-guide/references/owner-followup.md:*)",
+      "Bash(echo \"=== 产物文件验证 ===\" ls -la .claude/skills/infographic-requirement-guide/outputs/owner-*-draft-20260323-000000.* __NEW_LINE_0db0a84dba13a5e8__ echo \"\" echo \"=== 状态验证 ===\" cat .claude/skills/infographic-requirement-guide/workflow-state.json)",
+      "Bash(chmod +x .claude/skills/infographic-requirement-guide/scripts/validate_sql.py)",
+      "Bash(chmod +x \"/Users/maylis/Desktop/github 上的项目/项目评估系统/PPA/.claude/skills/infographic-requirement-guide/scripts/validate_sql.py\")",
+      "Bash(ls server/migrations/*.sql)",
+      "Bash(ls server/migrations/*.js)",
+      "Bash(mkdir -p \"/Users/maylis/Desktop/github 上的项目/项目评估系统/PPA/.claude/skills/infographic-requirement-guide/references\")",
+      "Bash(mkdir -p \"/Users/maylis/Desktop/github 上的项目/项目评估系统/PPA/.claude/skills/infographic-requirement-guide/outputs\")",
+      "Bash(python3 scripts/validate_sql.py \"SELECT strftime\\(''%Y-%m-%d'', published_date\\) as period, COUNT\\(*\\) as value FROM opportunity_tender_staging WHERE published_date >= date\\(''now'', ''-30 days''\\) GROUP BY period ORDER BY period\")",
+      "Bash(grep:*)",
+      "Bash(cat ./scripts/*)",
+      "Bash(cd /Users/maylis/Desktop/github 上的项目/项目评估系统/PPA)"
+    ]
+  }
+}

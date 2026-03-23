@@ -1,0 +1,456 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Demo - ProTable Direction</title>
+  <style>
+    :root {
+      --bg: #f5f7fb;
+      --card: #ffffff;
+      --line: #dbe3f0;
+      --text: #0f172a;
+      --sub: #64748b;
+      --brand: #1677ff;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, -apple-system, Segoe UI, PingFang SC, Microsoft YaHei, sans-serif;
+      background: linear-gradient(180deg, #eef4ff, #f5f7fb 38%);
+      color: var(--text);
+    }
+    .wrap { max-width: 1200px; margin: 0 auto; padding: 22px; }
+    .head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+    }
+    .title { margin: 0; font-size: 24px; }
+    .sub { margin-top: 6px; color: var(--sub); font-size: 14px; }
+    .back-link {
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 34px;
+      border-radius: 8px;
+      border: 1px solid #cfe0ff;
+      padding: 0 12px;
+      font-weight: 600;
+      color: #1e40af;
+      background: #eff6ff;
+      white-space: nowrap;
+    }
+    .card {
+      margin-top: 14px;
+      border: 1px solid var(--line);
+      background: var(--card);
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
+      overflow: hidden;
+    }
+    .policy {
+      margin-top: 10px;
+      font-size: 12px;
+      color: #334155;
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-radius: 10px;
+      padding: 8px 10px;
+      line-height: 1.6;
+    }
+    .boundary {
+      margin-top: 10px;
+      font-size: 12px;
+      color: #334155;
+      background: #f8fafc;
+      border: 1px solid #dbe3f0;
+      border-radius: 10px;
+      padding: 8px 10px;
+      line-height: 1.6;
+    }
+    .state-box {
+      margin: 10px 14px 0;
+      border-radius: 10px;
+      border: 1px solid;
+      padding: 10px 12px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+    .state-loading { color: #1e40af; background: #eff6ff; border-color: #bfdbfe; }
+    .state-empty { color: #92400e; background: #fffbeb; border-color: #fde68a; }
+    .state-error { color: #991b1b; background: #fef2f2; border-color: #fecaca; }
+    .hidden { display: none; }
+    .query {
+      padding: 14px;
+      border-bottom: 1px solid #e8eef8;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(120px, 1fr));
+      gap: 10px;
+      align-items: end;
+    }
+    label { display: grid; gap: 6px; font-size: 12px; color: #475569; }
+    input, select {
+      height: 34px;
+      border-radius: 8px;
+      border: 1px solid #cfd9e8;
+      padding: 0 10px;
+      font-size: 14px;
+      background: white;
+    }
+    .ops {
+      display: flex;
+      gap: 8px;
+      justify-content: flex-end;
+    }
+    button {
+      height: 34px;
+      border-radius: 8px;
+      border: 1px solid #cfe0ff;
+      padding: 0 12px;
+      font-weight: 600;
+      color: #1e40af;
+      background: #eff6ff;
+      cursor: pointer;
+    }
+    button.primary { background: var(--brand); border-color: var(--brand); color: white; }
+    .table-wrap { overflow: auto; }
+    table { width: 100%; border-collapse: collapse; min-width: 980px; }
+    th, td {
+      padding: 10px;
+      border-bottom: 1px solid #edf1f7;
+      text-align: left;
+      font-size: 14px;
+      white-space: nowrap;
+    }
+    th { background: #f8fafc; color: #334155; }
+    tr:hover td { background: #f8fbff; }
+    .right { text-align: right; }
+    .state { font-size: 12px; border-radius: 999px; padding: 2px 8px; font-weight: 700; }
+    .s-running { background: #dbeafe; color: #1d4ed8; }
+    .s-delay { background: #fee2e2; color: #b91c1c; }
+    .s-done { background: #dcfce7; color: #166534; }
+    .row-ops a {
+      color: #2563eb;
+      text-decoration: none;
+      margin-right: 10px;
+      font-weight: 600;
+      font-size: 13px;
+    }
+    .footer {
+      padding: 12px 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #64748b;
+      font-size: 13px;
+      border-top: 1px solid #e8eef8;
+    }
+    .pager { display: flex; gap: 6px; align-items: center; }
+    .pager button { height: 30px; padding: 0 10px; }
+    @media (max-width: 980px) {
+      .query { grid-template-columns: repeat(2, minmax(120px, 1fr)); }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <div class="head">
+      <div>
+        <h1 class="title">ProTable 方向 Demo</h1>
+        <div class="sub">侧重点：后台管理范式（查询表单 + 列表 + 操作列 + 分页）</div>
+      </div>
+      <a href="index.html" class="back-link">返回总览</a>
+    </div>
+
+    <div id="baseInfo"></div>
+
+    <section class="card">
+      <div class="query">
+        <label>项目关键字
+          <input id="kw" placeholder="输入项目名称" />
+        </label>
+        <label>负责人
+          <select id="owner">
+            <option value="">全部</option>
+            <option>刘敏</option>
+            <option>王强</option>
+            <option>陈悦</option>
+          </select>
+        </label>
+        <label>状态
+          <select id="status">
+            <option value="">全部</option>
+            <option value="running">进行中</option>
+            <option value="delay">延期</option>
+            <option value="done">已完成</option>
+          </select>
+        </label>
+        <div class="ops">
+          <label>导出角色
+            <select id="exportRole">
+              <option value="admin">管理员</option>
+              <option value="analyst">分析师</option>
+              <option value="viewer">访客</option>
+            </select>
+          </label>
+          <button id="reset">重置</button>
+          <button class="primary" id="search">查询</button>
+          <button id="export">导出</button>
+          <button id="mockLoading">加载态</button>
+          <button id="mockError">错误态</button>
+          <button id="mockRecover">恢复</button>
+        </div>
+      </div>
+
+      <div id="stateBox" class="state-box hidden" role="status" aria-live="polite"></div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th style="width:60px">#</th>
+              <th>项目名</th>
+              <th>负责人</th>
+              <th>更新时间</th>
+              <th class="right">预算(万)</th>
+              <th class="right">完成率</th>
+              <th>状态</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody id="tbody"></tbody>
+        </table>
+      </div>
+
+      <div class="footer">
+        <span id="summary">共 0 条</span>
+        <div class="pager">
+          <button id="prev">上一页</button>
+          <span id="page">1 / 1</span>
+          <button id="next">下一页</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="table-demo-base.js"></script>
+  <script>
+    const source = [
+      { name: 'Q1 销售看板', owner: '刘敏', update: '2026-03-01', budget: 120, progress: 0.88, status: 'running' },
+      { name: '渠道归因复盘', owner: '王强', update: '2026-03-03', budget: 80, progress: 0.61, status: 'delay' },
+      { name: '产品利润分析', owner: '陈悦', update: '2026-02-22', budget: 95, progress: 1, status: 'done' },
+      { name: '区域对标专题', owner: '刘敏', update: '2026-03-04', budget: 76, progress: 0.45, status: 'running' },
+      { name: '用户分群项目', owner: '王强', update: '2026-03-02', budget: 110, progress: 0.72, status: 'running' },
+      { name: '营收预测模型', owner: '陈悦', update: '2026-02-27', budget: 130, progress: 0.95, status: 'done' },
+      { name: '价格弹性实验', owner: '刘敏', update: '2026-03-05', budget: 68, progress: 0.39, status: 'delay' }
+    ];
+
+    let filtered = [...source];
+    let pageNo = 1;
+    const pageSize = 4;
+    let mockState = 'ready';
+    const base = window.TableDemoBase.create({
+      infoContainerId: 'baseInfo',
+      stateBoxId: 'stateBox',
+      unit: '行',
+      amountLabel: '当前数据量',
+      thresholds: [
+        { max: 500, label: '前端分页' },
+        { max: 2000, label: '分页+服务端筛选' },
+        { max: 10000, label: '虚拟滚动' },
+        { label: '服务端查询' }
+      ],
+      boundaryText: '图表负责结论展示与对比叙事；本表格负责筛选、翻页、操作与导出审计。'
+    });
+    const exportPolicy = {
+      admin: {
+        columns: ['name', 'owner', 'update', 'budget', 'progress', 'status'],
+        mask: {}
+      },
+      analyst: {
+        columns: ['name', 'owner', 'update', 'budget', 'progress', 'status'],
+        mask: { owner: 'partial' }
+      },
+      viewer: {
+        columns: ['name', 'update', 'budget', 'progress', 'status'],
+        mask: { name: 'partial' }
+      }
+    };
+    const exportLabels = {
+      name: '项目名',
+      owner: '负责人',
+      update: '更新时间',
+      budget: '预算(万)',
+      progress: '完成率',
+      status: '状态'
+    };
+
+    function statusBadge(s) {
+      if (s === 'done') return '<span class="state s-done">已完成</span>';
+      if (s === 'delay') return '<span class="state s-delay">延期</span>';
+      return '<span class="state s-running">进行中</span>';
+    }
+
+    function maskValue(value, mode) {
+      const text = String(value ?? '');
+      if (mode !== 'partial' || text.length <= 1) return text;
+      return text[0] + '*'.repeat(Math.max(1, text.length - 1));
+    }
+
+    function csvSafe(value) {
+      let text = String(value ?? '');
+      if (/^[=+\-@]/.test(text)) text = `'${text}`;
+      text = text.replace(/\"/g, '\"\"');
+      return `"${text}"`;
+    }
+
+    function statusText(s) {
+      if (s === 'done') return '已完成';
+      if (s === 'delay') return '延期';
+      return '进行中';
+    }
+
+    function buildExportRows() {
+      const role = document.getElementById('exportRole').value;
+      const policy = exportPolicy[role] || exportPolicy.viewer;
+      const columns = policy.columns;
+      const header = columns.map((c) => exportLabels[c]);
+      const body = filtered.map((row) => columns.map((key) => {
+        let value = row[key];
+        if (key === 'status') value = statusText(row.status);
+        if (key === 'progress') value = (row.progress * 100).toFixed(0) + '%';
+        if (policy.mask[key]) value = maskValue(value, policy.mask[key]);
+        return csvSafe(value);
+      }));
+      return [header.map(csvSafe), ...body].map((cells) => cells.join(',')).join('\n');
+    }
+
+    function downloadCsv(content) {
+      const blob = new Blob([content], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const role = document.getElementById('exportRole').value;
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `pro-table-demo-export-${role}.csv`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
+    function render() {
+      const total = filtered.length;
+      base.updateScaleHint(total);
+
+      if (mockState === 'loading') {
+        document.getElementById('tbody').innerHTML = '';
+        document.getElementById('summary').textContent = '加载中...';
+        document.getElementById('page').textContent = '- / -';
+        base.setState('loading', '加载中：正在拉取分页数据...');
+        return;
+      }
+      if (mockState === 'error') {
+        document.getElementById('tbody').innerHTML = '';
+        document.getElementById('summary').textContent = '加载失败';
+        document.getElementById('page').textContent = '- / -';
+        base.setState('error', '请求失败：请检查筛选条件或稍后重试。');
+        return;
+      }
+      if (total === 0) {
+        document.getElementById('tbody').innerHTML = '';
+        document.getElementById('summary').textContent = '共 0 条';
+        document.getElementById('page').textContent = '0 / 0';
+        document.getElementById('prev').disabled = true;
+        document.getElementById('next').disabled = true;
+        base.setState('empty', '暂无匹配结果，请调整筛选条件。');
+        return;
+      }
+      base.setState('ready');
+
+      const pageCount = Math.max(1, Math.ceil(total / pageSize));
+      pageNo = Math.min(pageNo, pageCount);
+      const start = (pageNo - 1) * pageSize;
+      const list = filtered.slice(start, start + pageSize);
+
+      document.getElementById('tbody').innerHTML = list.map((r, i) => `
+        <tr>
+          <td>${start + i + 1}</td>
+          <td>${r.name}</td>
+          <td>${r.owner}</td>
+          <td>${r.update}</td>
+          <td class="right">${r.budget}</td>
+          <td class="right">${(r.progress * 100).toFixed(0)}%</td>
+          <td>${statusBadge(r.status)}</td>
+          <td class="row-ops"><a href="#">查看</a><a href="#">编辑</a><a href="#">更多</a></td>
+        </tr>
+      `).join('');
+
+      document.getElementById('summary').textContent = `共 ${total} 条，当前第 ${start + 1}-${Math.min(start + pageSize, total)} 条`;
+      document.getElementById('page').textContent = `${pageNo} / ${pageCount}`;
+      document.getElementById('prev').disabled = pageNo <= 1;
+      document.getElementById('next').disabled = pageNo >= pageCount;
+    }
+
+    function query() {
+      mockState = 'ready';
+      const kw = document.getElementById('kw').value.trim();
+      const owner = document.getElementById('owner').value;
+      const status = document.getElementById('status').value;
+
+      filtered = source.filter((r) => {
+        if (kw && !r.name.includes(kw)) return false;
+        if (owner && r.owner !== owner) return false;
+        if (status && r.status !== status) return false;
+        return true;
+      });
+      pageNo = 1;
+      render();
+    }
+
+    document.getElementById('search').addEventListener('click', query);
+    document.getElementById('reset').addEventListener('click', () => {
+      mockState = 'ready';
+      document.getElementById('kw').value = '';
+      document.getElementById('owner').value = '';
+      document.getElementById('status').value = '';
+      filtered = [...source];
+      pageNo = 1;
+      render();
+    });
+    document.getElementById('prev').addEventListener('click', () => { pageNo -= 1; render(); });
+    document.getElementById('next').addEventListener('click', () => { pageNo += 1; render(); });
+    document.getElementById('export').addEventListener('click', () => {
+      const role = document.getElementById('exportRole').value;
+      const csv = buildExportRows();
+      downloadCsv(csv);
+      base.setState('loading', `导出完成：角色 ${role}，已按权限与脱敏策略生成 CSV。`);
+      setTimeout(() => {
+        if (mockState === 'ready') base.setState('ready');
+      }, 900);
+    });
+    document.getElementById('mockLoading').addEventListener('click', () => {
+      mockState = 'loading';
+      render();
+      setTimeout(() => {
+        if (mockState === 'loading') {
+          mockState = 'ready';
+          render();
+        }
+      }, 800);
+    });
+    document.getElementById('mockError').addEventListener('click', () => {
+      mockState = 'error';
+      render();
+    });
+    document.getElementById('mockRecover').addEventListener('click', () => {
+      mockState = 'ready';
+      render();
+    });
+
+    render();
+  </script>
+</body>
+</html>

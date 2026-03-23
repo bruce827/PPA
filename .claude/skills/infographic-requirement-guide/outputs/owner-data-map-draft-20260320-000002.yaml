@@ -1,0 +1,37 @@
+draft_id: "draft-20260320-000002"
+generated_at: "2026-03-20T17:15:00+08:00"
+
+mapping_result:
+  target_table: "opportunity_tender_staging"
+  target_table_cn: "招标公告待推送数据"
+
+  select_clause: "push_status, COUNT(*) as count, ROUND(COUNT(*) * 100.0 / SUM(COUNT(*)) OVER(), 1) as percentage"
+  from_clause: "FROM opportunity_tender_staging"
+  where_clause: null
+  group_by_clause: "GROUP BY push_status"
+  order_by_clause: "ORDER BY count DESC"
+
+  full_sql: |
+    SELECT push_status, COUNT(*) as count,
+           ROUND(COUNT(*) * 100.0 / SUM(COUNT(*)) OVER(), 1) as percentage
+    FROM opportunity_tender_staging
+    GROUP BY push_status
+    ORDER BY count DESC
+
+  expected_columns:
+    - name: "push_status"
+      type: "text"
+      description: "推送状态"
+    - name: "count"
+      type: "integer"
+      description: "数量"
+    - name: "percentage"
+      type: "real"
+      description: "占比"
+
+data_preview:
+  description: "预期数据样例 - 推送状态分布"
+  columns: ["push_status", "count", "percentage"]
+  expected_row_count: 2
+
+next_step: "QUERY_BUILD"

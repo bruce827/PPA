@@ -138,7 +138,8 @@ server/logs/
 .pnp.*
 
 /.augment
-/.claude
+# skill
+# /.claude
 /.cursor
 /.trae
 /.windsurf

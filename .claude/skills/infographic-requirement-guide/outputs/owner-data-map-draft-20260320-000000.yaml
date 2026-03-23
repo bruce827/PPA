@@ -1,0 +1,29 @@
+draft_id: "draft-20260320-000000"
+generated_at: "2026-03-20T17:00:00+08:00"
+
+mapping_result:
+  target_table: "opportunity_tender_staging"
+  target_table_cn: "招标公告待推送数据"
+
+  select_clause: "COUNT(*) as value"
+  from_clause: "FROM opportunity_tender_staging"
+  where_clause: "WHERE push_status = 'pushed'"
+  group_by_clause: null
+  order_by_clause: null
+
+  full_sql: |
+    SELECT COUNT(*) as value
+    FROM opportunity_tender_staging
+    WHERE push_status = 'pushed'
+
+  expected_columns:
+    - name: "value"
+      type: "integer"
+      description: "已推送的招标文件数量"
+
+data_preview:
+  description: "预期数据样例"
+  columns: ["value"]
+  expected_row_count: 1
+
+next_step: "QUERY_BUILD"

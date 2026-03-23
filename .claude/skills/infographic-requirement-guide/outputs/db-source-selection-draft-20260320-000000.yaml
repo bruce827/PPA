@@ -1,0 +1,8 @@
+draft_id: "draft-20260320-000000"
+generated_at: "2026-03-20T16:25:00+08:00"
+
+selected_table: "projects"
+table_description: "项目评估数据（成本、风险、工作量）"
+analysis_intent: "项目成本/风险/工作量分布分析"
+
+next_step: "DBS"
