@@ -155,6 +155,7 @@ declare namespace API_OPPORTUNITY {
     created: number;
     updated: number;
     unchanged: number;
+    pruned: number;
     errors: string[];
   };
 

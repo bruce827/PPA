@@ -31,7 +31,11 @@
       "Bash(cat ./scripts/*)",
       "Bash(cd /Users/maylis/Desktop/github 上的项目/项目评估系统/PPA)",
       "Bash(bash -c 'cd \"/Users/maylis/Desktop/github 上的项目/项目评估系统/PPA/server\" && sqlite3 ppa.db \".tables\"')",
-      "Bash(find .claude/skills/infographic-requirement-guide -name *.yaml -o -name *.md)"
+      "Bash(find .claude/skills/infographic-requirement-guide -name *.yaml -o -name *.md)",
+      "Bash(find . -name *.db)",
+      "Bash(ls -la server/*.db)",
+      "Bash(ls -la data/*.db)",
+      "Bash(find . -name *infographic* -type d)"
     ]
   }
 }

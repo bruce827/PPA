@@ -338,6 +338,37 @@ async function getTenderStagingStats() {
   return stats;
 }
 
+async function listAllTenderStagingSourceItemIds() {
+  await ensureSchema();
+  const rows = await db.all(`SELECT source_item_id FROM ${TABLE_NAME}`);
+  return rows
+    .map((row) => row?.source_item_id)
+    .filter((sourceItemId) => typeof sourceItemId === 'string' && sourceItemId);
+}
+
+async function deleteTenderStagingBySourceItemIds(sourceItemIds = []) {
+  await ensureSchema();
+
+  if (!Array.isArray(sourceItemIds) || sourceItemIds.length === 0) {
+    return 0;
+  }
+
+  let deletedCount = 0;
+  const chunkSize = 200;
+
+  for (let index = 0; index < sourceItemIds.length; index += chunkSize) {
+    const chunk = sourceItemIds.slice(index, index + chunkSize);
+    const placeholders = chunk.map(() => '?').join(', ');
+    const result = await db.run(
+      `DELETE FROM ${TABLE_NAME} WHERE source_item_id IN (${placeholders})`,
+      chunk
+    );
+    deletedCount += result.changes || 0;
+  }
+
+  return deletedCount;
+}
+
 module.exports = {
   ensureSchema,
   listTenderStaging,
@@ -347,4 +378,6 @@ module.exports = {
   updateTenderStaging,
   updateTenderPushState,
   getTenderStagingStats,
+  listAllTenderStagingSourceItemIds,
+  deleteTenderStagingBySourceItemIds,
 };

@@ -1,6 +1,6 @@
 # 📊 项目功能架构更新（当前实现）
 
-本文档已根据最新代码（含 `feat_cal` 分支的实时计算与导出实现）同步更新。系统为 **软件项目评估系统（PPA - Project Portfolio Assessment）**，聚焦“项目成本 & 风险 & 工作量”在线化、模板化与可视化管理。
+本文档已根据最新代码同步更新。系统为 **软件项目评估系统（PPA - Project Portfolio Assessment）**，当前除“项目成本 / 风险 / 工作量”在线评估外，也已包含“项目机会 / 待推送招标 / 招标网站 / 小程序推送”等运营能力。
 
 ## 🏗️ 系统架构
 
@@ -63,6 +63,28 @@
 - 健康检查：`GET /api/health` / 根路由 `/`
 - 优雅关闭（SIGINT 捕获 + 数据库连接关闭）
 
+### 6. **项目机会** (`/opportunity`)
+
+- **招标网站管理**
+   - 招标网站列表、编辑、删除、URL 校验
+   - 后端接口：`/api/opportunity/bidding-sites`
+- **待推送招标**
+   - 页面：`/opportunity/tender-push`
+   - 本地数据同步：`POST /api/opportunity/tender-staging/sync`
+   - staging 列表：`GET /api/opportunity/tender-staging`
+   - 单条推送到小程序：`POST /api/opportunity/tender-staging/:id/push`
+   - 单条全网检索：`GET/POST /api/opportunity/tender-staging/:id/web-search`
+- **同步规则（当前实现）**
+   - `spider/data` 顶层 `.json` 文件被视为当前真源
+   - 支持站点级 JSON 与聚合 JSON 混合同步
+   - 聚合文件按 `source + source_id` 做来源识别与业务主键归一化
+   - 同步后会自动清理当前目录中已经不存在的 staging 旧记录
+   - 建议仅保留聚合文件在 `spider/data` 根目录，旧文件移入备份目录
+- **小程序推送链路**
+   - server 调用 CloudBase 云函数 `upsertTenderBySourceId`
+   - 成功后回写 `push_status = pushed`
+   - 失败后保留 `push_error` 便于重试与排障
+
 ## 💾 数据模型（当前表）
 
 1. **projects**
@@ -78,7 +100,22 @@
    - `category, item_name, options_json`（每个选项含 score/value，用于动态计算最大风险分值）
 4. **config_travel_costs**
    - `item_name, cost_per_month, is_active`（仅激活项参与聚合：`SUM(cost_per_month)`）
-5. （预留）**用户 / 权限**（尚未实现，计划用于多用户评估与审计）
+5. **opportunity_bidding_sites**
+   - 招标网站主数据
+   - 包含 `name, url, normalized_url, source_level, province, city, platform_type`
+   - 支持校验结果字段：`validation_status, validation_summary, final_url, redirect_chain`
+6. **opportunity_tender_staging**
+   - 待推送招标 staging 表
+   - 包含 `source_item_id, title, issuer, source_platform, source_url`
+   - 保存公告正文：`announcement_html, announcement_plain_text, detail_payload_json`
+   - 保存同步状态：`last_synced_at`
+   - 保存推送状态：`push_status, push_error, pushed_at`
+   - `source_item_id` 为唯一业务键
+7. **tender_staging_web_search_results**
+   - 待推送招标单条全网检索结果
+   - 包含 `tender_staging_id, model_config_id, prompt_template_id`
+   - 保存 `summary, results_json, meta_json, searched_at`
+8. （预留）**用户 / 权限**（尚未实现，计划用于多用户评估与审计）
 
 ### 计算结果字段（实时计算返回）
 
@@ -118,6 +155,10 @@ risk_max_score
 5. **结构化持久化**：评估明细 JSON 全量存储，支持再分析 / 回放 / 导出
 6. **专业导出**：PDF & Excel 一键生成（后续可加水印、版本号）
 7. **统一聚合加载**：`/api/config/all` 降低前端初始化请求开销
+8. **本地招标真源同步**：`spider/data` 到 staging 的全量收敛可视化执行
+9. **来源感知主键归一化**：聚合文件与旧站点文件可按业务键自动对齐
+10. **小程序桥接推送**：待推送招标可由运营端按条推送到微信小程序
+11. **全网检索补充判断**：支持对单条待推送招标发起结构化联网检索
 
 ## 📈 开发进度
 
@@ -130,6 +171,7 @@ risk_max_score
 5. 模板化与评估持久化完善
 6. 导出功能与成本计算算法增强（风险因子插值 + 成本拆解）
 7. Bug 修复与测试优化（目录：`docs/bugfix/`）
+8. 项目机会域能力补齐（招标网站、待推送招标、小程序推送、全网检索）
 
 后续规划（草案）：
 
@@ -145,6 +187,7 @@ risk_max_score
 - 评估算法与计算细节：`prd/calculation-logic-spec.md`
 - 模型配置说明：`prd/model-config-spec.md`
 - 评估流程规格：`prd/assessment-spec.md`
+- 项目机会-待推送招标规格：`prd/opportunity-tender-staging-spec.md`
 - 数据样本：`csv/`
 
 ## 🎯 系统定位
@@ -164,6 +207,9 @@ risk_max_score
 - 评分因子插值算法：区间线性 + 封顶控制（平衡敏感度与上限）
 - 评估详情 JSON 持久化：为后续分析 / 回归测试提供基础
 - 可扩展的配置聚合接口：减少前端请求次序耦合
+- 来源感知的本地 JSON 收敛逻辑：兼容站点级文件与聚合文件并存过渡
+- CloudBase 云函数桥接：避免前端直接持有小程序写入鉴权
+- staging 全量收敛模式：让本地目录状态可直接映射为可推送数据集
 
 ---
-（最后更新日期：2025-10-22）
+（最后更新日期：2026-03-24）

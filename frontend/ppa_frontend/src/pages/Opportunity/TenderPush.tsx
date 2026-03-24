@@ -52,9 +52,11 @@ const TenderPushPage: React.FC = () => {
       const summary = response?.data;
       const errorCount = summary?.errors?.length || 0;
       message.success(
-        `同步完成：文件 ${summary?.fileCount || 0} 个，去重后 ${
+        `同步完成：文件 ${summary?.fileCount || 0} 个，当前目录有效 ${
           summary?.deduplicatedCount || 0
-        } 条，新增 ${summary?.created || 0}，更新 ${summary?.updated || 0}`
+        } 条，新增 ${summary?.created || 0}，更新 ${summary?.updated || 0}，清理 ${
+          summary?.pruned || 0
+        }`
       );
       if (errorCount > 0) {
         message.warning(`同步过程中有 ${errorCount} 条告警，请查看服务端返回`);
@@ -194,7 +196,7 @@ const TenderPushPage: React.FC = () => {
     <PageContainer
       header={{
         title: '待推送招标',
-        subTitle: '把 spider/data 里的本地 JSON 同步到 staging，再单条推送到小程序',
+        subTitle: '以 spider/data 为当前真源全量同步到 staging，再单条推送到小程序',
       }}
     >
       <Row gutter={16} style={{ marginBottom: 16 }}>

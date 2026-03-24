@@ -7,9 +7,13 @@ const { validationError, HttpError } = require('../utils/errors');
 const KNOWN_FIELDS = new Set([
   'source_item_id',
   'sourceItemId',
+  'source',
+  'source_id',
+  'sourceId',
   'id',
   'rowGuid',
   'goodsId',
+  'businessId',
   'title',
   'project_name',
   'projectName',
@@ -78,10 +82,16 @@ const KNOWN_FIELDS = new Set([
   'detail_text',
   'detail_payload',
   'detailPayload',
+  'raw_payload',
+  'rawPayload',
+  'raw_payload_json',
+  'rawPayloadJson',
   'last_pushed_at',
   'lastPushedAt',
   'crawl_time',
 ]);
+
+const SOURCE_ID_AS_PRIMARY_SOURCES = new Set(['cnpc', 'cnooc', 'pipechina']);
 
 function getDefaultSpiderDataDir() {
   return path.resolve(__dirname, '../../spider/data');
@@ -185,6 +195,24 @@ function isPlainObject(value) {
   return Boolean(value) && typeof value === 'object' && !Array.isArray(value);
 }
 
+function parseJsonObject(value) {
+  if (isPlainObject(value)) {
+    return value;
+  }
+
+  const text = normalizeText(value);
+  if (!text) {
+    return null;
+  }
+
+  try {
+    const parsed = JSON.parse(text);
+    return isPlainObject(parsed) ? parsed : null;
+  } catch (_error) {
+    return null;
+  }
+}
+
 function pickFirst(...values) {
   for (const value of values) {
     const text = normalizeText(value);
@@ -206,14 +234,171 @@ function collectExtraDetailPayload(record) {
   return Object.keys(extra).length ? extra : null;
 }
 
-function normalizeDetailPayload(record) {
+function normalizeDetailPayload(record, embeddedRawPayload) {
   const directPayload = record.detail_payload || record.detailPayload;
   if (isPlainObject(directPayload)) {
     return directPayload;
   }
 
+  if (embeddedRawPayload) {
+    return embeddedRawPayload;
+  }
+
   const extraPayload = collectExtraDetailPayload(record);
   return extraPayload || null;
+}
+
+function normalizeSourceCode(value) {
+  const text = normalizeText(value, 120);
+  if (!text) return null;
+
+  if (/cnpc|中国石油招标投标网/i.test(text)) {
+    return 'cnpc';
+  }
+
+  if (/cnooc|中国海洋石油|采办业务管理与交易系统/i.test(text)) {
+    return 'cnooc';
+  }
+
+  if (/pipechina|国家管网/i.test(text)) {
+    return 'pipechina';
+  }
+
+  if (/eavic|中航工业电子采购平台/i.test(text)) {
+    return 'eavic';
+  }
+
+  if (/sdicc|国投集团电子采购平台/i.test(text)) {
+    return 'sdicc';
+  }
+
+  if (/liaoning|辽宁政府采购网/i.test(text)) {
+    return 'liaoning';
+  }
+
+  return text
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '_')
+    .replace(/^_+|_+$/g, '') || null;
+}
+
+function getEmbeddedRawPayload(record) {
+  return (
+    parseJsonObject(record.raw_payload || record.rawPayload) ||
+    parseJsonObject(record.raw_payload_json || record.rawPayloadJson)
+  );
+}
+
+function inferSourceCode(record, embeddedRawPayload, sourceFile) {
+  const candidates = [
+    record.source,
+    embeddedRawPayload?.source,
+    record.source_platform,
+    record.sourcePlatform,
+    record.platform,
+    record.site_name,
+    embeddedRawPayload?.source_platform,
+    embeddedRawPayload?.sourcePlatform,
+    embeddedRawPayload?.platform,
+    embeddedRawPayload?.site_name,
+    sourceFile,
+  ];
+
+  for (const candidate of candidates) {
+    const sourceCode = normalizeSourceCode(candidate);
+    if (sourceCode) {
+      return sourceCode;
+    }
+  }
+
+  return null;
+}
+
+function buildScopedIdentifier(sourceCode, identifier) {
+  const normalizedIdentifier = normalizeText(identifier, 240);
+  if (!sourceCode || !normalizedIdentifier) {
+    return null;
+  }
+
+  return `${sourceCode}:${normalizedIdentifier}`;
+}
+
+function resolveSourceItemId(record, embeddedRawPayload, sourceCode) {
+  const explicitSourceItemId = pickFirst(
+    record.source_item_id,
+    record.sourceItemId,
+    embeddedRawPayload?.source_item_id,
+    embeddedRawPayload?.sourceItemId
+  );
+  if (explicitSourceItemId) {
+    return explicitSourceItemId;
+  }
+
+  const directLegacyId = pickFirst(record.rowGuid, record.goodsId);
+  if (directLegacyId) {
+    return directLegacyId;
+  }
+
+  const embeddedLegacyId = pickFirst(
+    embeddedRawPayload?.rowGuid,
+    embeddedRawPayload?.goodsId
+  );
+  if (embeddedLegacyId) {
+    return embeddedLegacyId;
+  }
+
+  const plainIdFallback = record.source ? null : record.id;
+  const embeddedIdFallback = embeddedRawPayload?.id;
+
+  if (sourceCode === 'pipechina') {
+    return pickFirst(
+      plainIdFallback,
+      embeddedIdFallback,
+      record.businessId,
+      embeddedRawPayload?.businessId,
+      record.source_id,
+      record.sourceId,
+      embeddedRawPayload?.source_id,
+      embeddedRawPayload?.sourceId
+    );
+  }
+
+  if (sourceCode && SOURCE_ID_AS_PRIMARY_SOURCES.has(sourceCode)) {
+    return pickFirst(
+      record.source_id,
+      record.sourceId,
+      embeddedRawPayload?.source_id,
+      embeddedRawPayload?.sourceId,
+      embeddedIdFallback,
+      plainIdFallback
+    );
+  }
+
+  const aggregateSourceId = pickFirst(
+    record.source_id,
+    record.sourceId,
+    embeddedRawPayload?.source_id,
+    embeddedRawPayload?.sourceId
+  );
+  if (aggregateSourceId) {
+    return buildScopedIdentifier(sourceCode, aggregateSourceId);
+  }
+
+  const businessId = pickFirst(record.businessId, embeddedRawPayload?.businessId);
+  if (businessId) {
+    return buildScopedIdentifier(sourceCode, businessId) || businessId;
+  }
+
+  const fallbackId = pickFirst(plainIdFallback, embeddedIdFallback);
+  if (!fallbackId) {
+    return null;
+  }
+
+  if (record.source && sourceCode) {
+    return buildScopedIdentifier(sourceCode, fallbackId);
+  }
+
+  return fallbackId;
 }
 
 function normalizeSingleRecord(record, sourceFile, fileMeta = {}) {
@@ -221,19 +406,20 @@ function normalizeSingleRecord(record, sourceFile, fileMeta = {}) {
     return null;
   }
 
-  const sourceItemId = pickFirst(
-    record.source_item_id,
-    record.sourceItemId,
-    record.rowGuid,
-    record.goodsId,
-    record.id
-  );
+  const embeddedRawPayload = getEmbeddedRawPayload(record);
+  const sourceCode = inferSourceCode(record, embeddedRawPayload, sourceFile);
+  const sourceItemId = resolveSourceItemId(record, embeddedRawPayload, sourceCode);
   const title = pickFirst(
     record.title,
     record.project_name,
     record.projectName,
     record.goodsName,
-    record.name
+    record.name,
+    embeddedRawPayload?.title,
+    embeddedRawPayload?.project_name,
+    embeddedRawPayload?.projectName,
+    embeddedRawPayload?.goodsName,
+    embeddedRawPayload?.name
   );
 
   if (!sourceItemId || !title) {
@@ -256,7 +442,23 @@ function normalizeSingleRecord(record, sourceFile, fileMeta = {}) {
       record.releaseTime ||
       record.createTime ||
       getNestedTimeValue(record, 'bidSectionList', 'releaseTime') ||
-      record.startTime
+      record.startTime ||
+      embeddedRawPayload?.published_at ||
+      embeddedRawPayload?.publishedAt ||
+      embeddedRawPayload?.published_date ||
+      embeddedRawPayload?.publishedDate ||
+      embeddedRawPayload?.publish_date ||
+      embeddedRawPayload?.publishDate ||
+      embeddedRawPayload?.publish_time ||
+      embeddedRawPayload?.publishTime ||
+      embeddedRawPayload?.infodate ||
+      embeddedRawPayload?.detail_publish_date ||
+      embeddedRawPayload?.detailPublishDate ||
+      embeddedRawPayload?.bidSaleStartDateTime ||
+      embeddedRawPayload?.releaseTime ||
+      embeddedRawPayload?.createTime ||
+      getNestedTimeValue(embeddedRawPayload, 'bidSectionList', 'releaseTime') ||
+      embeddedRawPayload?.startTime
   );
   const deadlineAt = normalizeDateTime(
     record.deadline_at ||
@@ -267,7 +469,16 @@ function normalizeSingleRecord(record, sourceFile, fileMeta = {}) {
       record.end_date ||
       record.endDate ||
       record.bidSaleEndDateTime ||
-      record.openBidDateTime
+      record.openBidDateTime ||
+      embeddedRawPayload?.deadline_at ||
+      embeddedRawPayload?.deadlineAt ||
+      embeddedRawPayload?.deadline_date ||
+      embeddedRawPayload?.deadlineDate ||
+      embeddedRawPayload?.deadline ||
+      embeddedRawPayload?.end_date ||
+      embeddedRawPayload?.endDate ||
+      embeddedRawPayload?.bidSaleEndDateTime ||
+      embeddedRawPayload?.openBidDateTime
   );
 
   const announcementHtml = normalizeText(
@@ -275,7 +486,12 @@ function normalizeSingleRecord(record, sourceFile, fileMeta = {}) {
       record.announcementHtml ||
       record.html ||
       record.content_html ||
-      record.detail_html
+      record.detail_html ||
+      embeddedRawPayload?.announcement_html ||
+      embeddedRawPayload?.announcementHtml ||
+      embeddedRawPayload?.html ||
+      embeddedRawPayload?.content_html ||
+      embeddedRawPayload?.detail_html
   );
   const announcementPlainText =
     normalizeText(
@@ -283,16 +499,41 @@ function normalizeSingleRecord(record, sourceFile, fileMeta = {}) {
         record.announcementPlainText ||
         record.plain_text ||
         record.content_text ||
-        record.detail_text
+        record.detail_text ||
+        embeddedRawPayload?.announcement_plain_text ||
+        embeddedRawPayload?.announcementPlainText ||
+        embeddedRawPayload?.plain_text ||
+        embeddedRawPayload?.content_text ||
+        embeddedRawPayload?.detail_text
     ) || stripHtmlTags(announcementHtml);
   const summary =
-    normalizeText(record.summary || record.description || record.strcomment, 500) ||
+    normalizeText(
+      record.summary ||
+        record.description ||
+        record.strcomment ||
+        embeddedRawPayload?.summary ||
+        embeddedRawPayload?.description ||
+        embeddedRawPayload?.strcomment,
+      500
+    ) ||
     (announcementPlainText ? announcementPlainText.slice(0, 120) : null);
 
-  const detailPayload = normalizeDetailPayload(record);
+  const detailPayload = normalizeDetailPayload(record, embeddedRawPayload);
   const region =
-    pickFirst(record.region, record.area, record.goodsAddress) ||
-    [normalizeText(record.province, 40), normalizeText(record.city, 40)]
+    pickFirst(
+      record.region,
+      record.area,
+      record.goodsAddress,
+      embeddedRawPayload?.region,
+      embeddedRawPayload?.area,
+      embeddedRawPayload?.goodsAddress
+    ) ||
+    [
+      normalizeText(record.province, 40),
+      normalizeText(record.city, 40),
+      normalizeText(embeddedRawPayload?.province, 40),
+      normalizeText(embeddedRawPayload?.city, 40),
+    ]
       .filter(Boolean)
       .join('/') ||
     null;
@@ -303,25 +544,56 @@ function normalizeSingleRecord(record, sourceFile, fileMeta = {}) {
     source_item_id: sourceItemId,
     title,
     published_at: publishedAt,
-    published_date: inferDate(publishedAt) || inferDate(record.published_date || record.publish_date),
+    published_date:
+      inferDate(publishedAt) ||
+      inferDate(
+        record.published_date ||
+          record.publish_date ||
+          embeddedRawPayload?.published_date ||
+          embeddedRawPayload?.publish_date
+      ),
     deadline_at: deadlineAt,
-    deadline_date: inferDate(deadlineAt) || inferDate(record.deadline_date || record.end_date),
+    deadline_date:
+      inferDate(deadlineAt) ||
+      inferDate(
+        record.deadline_date ||
+          record.end_date ||
+          embeddedRawPayload?.deadline_date ||
+          embeddedRawPayload?.end_date
+      ),
     issuer: pickFirst(
       record.issuer,
       record.tender_unit,
       record.tenderUnit,
       record.purchaser,
-      record.tenantName
+      record.tenantName,
+      embeddedRawPayload?.issuer,
+      embeddedRawPayload?.tender_unit,
+      embeddedRawPayload?.tenderUnit,
+      embeddedRawPayload?.purchaser,
+      embeddedRawPayload?.tenantName
     ),
     budget_amount: normalizeBudgetAmount(
-      record.budget_amount || record.budgetAmount || record.budget || record.goodsPrice
+      record.budget_amount ||
+        record.budgetAmount ||
+        record.budget ||
+        record.goodsPrice ||
+        embeddedRawPayload?.budget_amount ||
+        embeddedRawPayload?.budgetAmount ||
+        embeddedRawPayload?.budget ||
+        embeddedRawPayload?.goodsPrice
     ),
     region,
     source_platform: pickFirst(
       record.source_platform,
       record.sourcePlatform,
       record.platform,
-      record.site_name
+      record.site_name,
+      embeddedRawPayload?.source_platform,
+      embeddedRawPayload?.sourcePlatform,
+      embeddedRawPayload?.platform,
+      embeddedRawPayload?.site_name,
+      sourceCode
     ),
     source_url: pickFirst(
       record.source_url,
@@ -329,7 +601,13 @@ function normalizeSingleRecord(record, sourceFile, fileMeta = {}) {
       record.url,
       record.detail_url,
       record.detailUrl,
-      record.list_href
+      record.list_href,
+      embeddedRawPayload?.source_url,
+      embeddedRawPayload?.sourceUrl,
+      embeddedRawPayload?.url,
+      embeddedRawPayload?.detail_url,
+      embeddedRawPayload?.detailUrl,
+      embeddedRawPayload?.list_href
     ),
     summary,
     announcement_html: announcementHtml,
@@ -339,7 +617,12 @@ function normalizeSingleRecord(record, sourceFile, fileMeta = {}) {
     raw_payload_json: rawPayloadJson,
     raw_payload: record,
     last_pushed_at: normalizeDateTime(
-      record.last_pushed_at || record.lastPushedAt || record.crawl_time
+      record.last_pushed_at ||
+        record.lastPushedAt ||
+        record.crawl_time ||
+        embeddedRawPayload?.last_pushed_at ||
+        embeddedRawPayload?.lastPushedAt ||
+        embeddedRawPayload?.crawl_time
     ),
     _source_file_mtime_ms: Number(fileMeta.mtimeMs || 0),
   };
@@ -469,6 +752,7 @@ async function syncTenderFiles(options = {}) {
     created: 0,
     updated: 0,
     unchanged: 0,
+    pruned: 0,
     errors,
   };
 
@@ -525,6 +809,23 @@ async function syncTenderFiles(options = {}) {
 
     await tenderStagingModel.updateTenderStaging(existing.id, nextRow);
     summary.updated += 1;
+  }
+
+  if (options.pruneMissing !== false) {
+    const syncedSourceItemIds = new Set(
+      normalizedRecords.map((record) => record.source_item_id)
+    );
+    const existingSourceItemIds =
+      await tenderStagingModel.listAllTenderStagingSourceItemIds();
+    const staleSourceItemIds = existingSourceItemIds.filter(
+      (sourceItemId) => !syncedSourceItemIds.has(sourceItemId)
+    );
+
+    if (staleSourceItemIds.length > 0) {
+      summary.pruned = await tenderStagingModel.deleteTenderStagingBySourceItemIds(
+        staleSourceItemIds
+      );
+    }
   }
 
   return summary;

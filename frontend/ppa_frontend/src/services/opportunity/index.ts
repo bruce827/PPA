@@ -104,7 +104,7 @@ export async function listTenderStaging(
 }
 
 export async function syncTenderStaging(
-  data?: { directoryPath?: string },
+  data?: { directoryPath?: string; pruneMissing?: boolean },
   options?: { [key: string]: any },
 ) {
   return request<API_OPPORTUNITY.TenderStagingSyncResponse>(
