@@ -1,0 +1,29 @@
+draft_id: draft-20260325-000001
+generated_at: 2026-03-25T00:00:00+08:00
+
+original_question: "一共推送了多少"
+
+extracted_elements:
+  entity: "招标文件（opportunity_tender_staging）"
+  metric: "数量（count）"
+  time_range: "全部时间"
+  dimension: "按推送状态分组"
+
+intent_type: "count"
+
+clarification_needed: true
+clarification_log:
+  - question: "你想看哪个时间范围的数据？"
+    answer: "全部"
+  - question: "你的意思是总数还是已推送数？"
+    answer: "都要，给我一个完整的"
+
+final_intent:
+  entity: "招标文件（opportunity_tender_staging）"
+  metric: "数量统计（含分状态）"
+  filters:
+    time_field: null
+    time_value: null
+    other_filters: []
+
+next_step: "REPORT_GEN"

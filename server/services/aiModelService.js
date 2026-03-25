@@ -1,4 +1,5 @@
 const aiModelModel = require('../models/aiModelModel');
+const { normalizeApiHost: normalizeCherryStudioApiHost } = require('../providers/ai/cherryStudioProvider');
 const { HttpError, validationError } = require('../utils/errors');
 const aiTestService = require('./aiTestService');
 const promptTemplateService = require('./promptTemplateService');
@@ -16,6 +17,49 @@ function toNotFoundError(message) {
 
 function isTavilyProvider(provider) {
   return typeof provider === 'string' && provider.toLowerCase().includes('tavily');
+}
+
+function isCherryStudioProvider(provider) {
+  return typeof provider === 'string' && provider.toLowerCase().includes('cherry');
+}
+
+function isGeminiProvider(provider) {
+  if (typeof provider !== 'string') return false;
+  const normalized = provider.toLowerCase();
+  return normalized.includes('google') || normalized.includes('gemini');
+}
+
+function normalizeApiHost(provider, apiHost) {
+  if (apiHost === undefined || apiHost === null || apiHost === '') {
+    return apiHost;
+  }
+
+  const trimmed = String(apiHost).trim();
+  let url;
+  try {
+    url = new URL(trimmed);
+  } catch (_error) {
+    throw validationError('API Host 必须为有效的 URL');
+  }
+
+  const normalizedUrl = url.toString();
+
+  if (isCherryStudioProvider(provider)) {
+    return normalizeCherryStudioApiHost(normalizedUrl);
+  }
+
+  if (isGeminiProvider(provider) || isTavilyProvider(provider)) {
+    return normalizedUrl;
+  }
+
+  const normalizedPathname = (url.pathname || '').replace(/\/+$/, '') || '/';
+  if (normalizedPathname === '/' || normalizedPathname === '/v1') {
+    throw validationError(
+      'OpenAI 兼容服务的 API Host 需填写完整接口 URL，例如 https://api.openai.com/v1/chat/completions'
+    );
+  }
+
+  return normalizedUrl;
 }
 
 function normalizeFlag(name, value, fallback = 0) {
@@ -55,7 +99,7 @@ function normalizePayload(payload, defaults = {}) {
     description,
     provider,
     api_key,
-    api_host,
+    api_host: normalizeApiHost(provider, api_host),
     model_name,
     temperature,
     max_tokens,
@@ -264,7 +308,7 @@ async function testTempConnection(payload) {
   const tempConfig = {
     provider,
     api_key,
-    api_host,
+    api_host: normalizeApiHost(provider, api_host),
     model_name,
     timeout,
   };
@@ -285,4 +329,6 @@ module.exports = {
   testModelConnection,
   testTempConnection,
   isTavilyProvider,
+  isCherryStudioProvider,
+  normalizeApiHost,
 };

@@ -1,0 +1,42 @@
+draft_id: draft-20260325-000001
+generated_at: 2026-03-25T00:00:00+08:00
+
+data_source:
+  table: "opportunity_tender_staging"
+  description: "招标信息暂存表（从各平台抓取的原始数据）"
+
+statistics_query:
+  sql: |
+    SELECT
+      '全部招标文件' as 类别,
+      COUNT(*) as 数量
+    FROM opportunity_tender_staging
+    UNION ALL
+    SELECT
+      push_status as 类别,
+      COUNT(*) as 数量
+    FROM opportunity_tender_staging
+    GROUP BY push_status
+
+field_mapping:
+  total_count:
+    description: "招标文件总数"
+    value: 285
+  pushed_count:
+    description: "已成功推送"
+    value: 3
+  pending_count:
+    description: "待推送"
+    value: 282
+
+status_breakdown:
+  - status: "pushed"
+    label: "已推送"
+    count: 3
+    percentage: "1.05%"
+  - status: "pending"
+    label: "待推送"
+    count: 282
+    percentage: "98.95%"
+
+next_step: "REPORT_GEN"

@@ -1,0 +1,555 @@
+- generic [ref=e5]:
+  - complementary [ref=e7]:
+    - generic [ref=e8]:
+      - generic [ref=e10] [cursor=pointer]:
+        - img "logo" [ref=e11]
+        - heading "项目评估系统" [level=1] [ref=e12]
+      - menu [ref=e14]:
+        - menuitem "dashboard 数据看板" [ref=e15] [cursor=pointer]:
+          - link "dashboard 数据看板" [ref=e17]:
+            - /url: /dashboard
+            - generic [ref=e18]:
+              - img "dashboard" [ref=e20]:
+                - img [ref=e21]
+              - generic [ref=e23]: 数据看板
+        - menuitem "form 项目评估" [ref=e24] [cursor=pointer]:
+          - generic [ref=e26]:
+            - img "form" [ref=e28]:
+              - img [ref=e29]
+            - generic [ref=e32]: 项目评估
+        - menuitem "box-plot Web3D项目评估" [ref=e33] [cursor=pointer]:
+          - generic [ref=e35]:
+            - img "box-plot" [ref=e37]:
+              - img [ref=e38]
+            - generic [ref=e40]: Web3D项目评估
+        - menuitem "setting 参数配置" [ref=e41] [cursor=pointer]:
+          - link "setting 参数配置" [ref=e43]:
+            - /url: /config
+            - generic [ref=e44]:
+              - img "setting" [ref=e46]:
+                - img [ref=e47]
+              - generic [ref=e49]: 参数配置
+        - menuitem "robot 模型配置" [ref=e50] [cursor=pointer]:
+          - generic [ref=e52]:
+            - img "robot" [ref=e54]:
+              - img [ref=e55]
+            - generic [ref=e57]: 模型配置
+        - menuitem "global 项目机会" [ref=e58] [cursor=pointer]:
+          - generic [ref=e60]:
+            - img "global" [ref=e62]:
+              - img [ref=e63]
+            - generic [ref=e65]: 项目机会
+        - menuitem "monitor 系统监控" [expanded] [ref=e66] [cursor=pointer]:
+          - generic [ref=e68]:
+            - img "monitor" [ref=e70]:
+              - img [ref=e71]
+            - generic [ref=e73]: 系统监控
+        - menu [ref=e74]:
+          - menuitem "AI日志监控" [ref=e75] [cursor=pointer]:
+            - generic [ref=e78]: AI日志监控
+      - generic [ref=e81] [cursor=pointer]:
+        - img "version icon" [ref=e82]
+        - text: V1.4.6-alpha
+      - img [ref=e84] [cursor=pointer]
+  - main [ref=e87]:
+    - generic [ref=e88]:
+      - generic [ref=e89]:
+        - navigation [ref=e90]:
+          - list [ref=e91]:
+            - listitem [ref=e92]:
+              - link "系统监控" [ref=e93] [cursor=pointer]:
+                - /url: /monitoring
+            - listitem [ref=e94]: /
+            - listitem [ref=e95]: AI日志监控
+        - generic "AI日志监控" [ref=e98]
+      - generic [ref=e102]:
+        - generic [ref=e104]:
+          - generic [ref=e108]:
+            - generic [ref=e109]: 调用次数
+            - generic [ref=e111]: "480"
+          - generic [ref=e115]:
+            - generic [ref=e116]: 成功率
+            - generic [ref=e117]:
+              - generic [ref=e118]: "92.50"
+              - generic [ref=e119]: "%"
+          - generic [ref=e123]:
+            - generic [ref=e124]: 平均耗时
+            - generic [ref=e126]: 13.27 s
+          - generic [ref=e130]:
+            - generic [ref=e131]: 错误（timeout/parse/network/other）
+            - generic [ref=e133]: 7/8/1/20
+        - generic [ref=e135]:
+          - generic [ref=e139]:
+            - generic [ref=e142]:
+              - generic "时间" [ref=e144]: "时间 :"
+              - generic [ref=e148]:
+                - textbox "时间 :" [ref=e150]:
+                  - /placeholder: 请选择
+                - generic "to" [ref=e152]:
+                  - img "swap-right" [ref=e153]:
+                    - img [ref=e154]
+                - textbox "请选择" [ref=e157]
+                - generic:
+                  - img "calendar":
+                    - img
+            - generic [ref=e160]:
+              - generic "状态" [ref=e162]: "状态 :"
+              - generic [ref=e166] [cursor=pointer]:
+                - generic [ref=e168]:
+                  - combobox "状态 :" [ref=e172]
+                  - generic: 请选择
+                - generic:
+                  - img:
+                    - img
+            - text: ": : : :"
+            - generic [ref=e183] [cursor=pointer]:
+              - text: 展开
+              - img "down" [ref=e184]:
+                - img [ref=e185]
+          - generic [ref=e188]:
+            - generic [ref=e190]:
+              - generic [ref=e192]: 日志列表
+              - generic [ref=e193]:
+                - generic [ref=e194]:
+                  - generic [ref=e195]: "WS: connected"
+                  - button "重 置" [ref=e196] [cursor=pointer]:
+                    - generic [ref=e197]: 重 置
+                  - button "刷 新" [ref=e198] [cursor=pointer]:
+                    - generic [ref=e199]: 刷 新
+                - generic [ref=e200]:
+                  - img "reload" [ref=e203] [cursor=pointer]:
+                    - img [ref=e204]
+                  - img "column-height" [ref=e208] [cursor=pointer]:
+                    - img [ref=e209]
+                  - img "setting" [ref=e212] [cursor=pointer]:
+                    - img [ref=e213]
+            - generic [ref=e217]:
+              - table [ref=e221]:
+                - rowgroup [ref=e232]:
+                  - row "时间 状态 耗时 Step 模型 PromptId Route Hash 错误 操作" [ref=e233]:
+                    - columnheader "时间" [ref=e234]
+                    - columnheader "状态" [ref=e235]
+                    - columnheader "耗时" [ref=e236]
+                    - columnheader "Step" [ref=e237]
+                    - columnheader "模型" [ref=e238]
+                    - columnheader "PromptId" [ref=e239]
+                    - columnheader "Route" [ref=e240]
+                    - columnheader "Hash" [ref=e241]
+                    - columnheader "错误"
+                    - columnheader "操作" [ref=e242]
+                - rowgroup [ref=e243]:
+                  - 'row "2026-03-25 04:02:52 fail 174 ms model-test qwen3-coder-plus test /api/config/ai-models/test 84b505536d...99be1a Incorrect API key provided. For details, see: https://help.aliyun.com/zh/model-studio/error-code#apikey-error 详情" [ref=e244]':
+                    - cell "2026-03-25 04:02:52" [ref=e245]
+                    - cell "fail" [ref=e246]:
+                      - generic [ref=e247]: fail
+                    - cell "174 ms" [ref=e248]
+                    - cell "model-test" [ref=e249]
+                    - cell "qwen3-coder-plus" [ref=e250]
+                    - cell "test" [ref=e251]
+                    - cell "/api/config/ai-models/test" [ref=e252]
+                    - cell "84b505536d...99be1a" [ref=e253]:
+                      - generic "84b505536d...99be1a" [ref=e254]:
+                        - text: 84b505536d...99...
+                        - button "复制" [ref=e255] [cursor=pointer]:
+                          - img "copy" [ref=e256]:
+                            - img [ref=e257]
+                    - 'cell "Incorrect API key provided. For details, see: https://help.aliyun.com/zh/model-studio/error-code#apikey-error"'
+                    - cell "详情" [ref=e259]:
+                      - link "详情" [ref=e261] [cursor=pointer]:
+                        - /url: /monitoring/ai-logs/84b505536d4109033176756f3a08636433ae1ff020b8b68b36f2170fdf99be1a
+                  - row "2026-03-25 04:01:51 success 10.80 s project-tags gemini-2.5-flash 38 /api/ai/generate-project-tags 1158978f9f...25a7a0 - 详情" [ref=e262]:
+                    - cell "2026-03-25 04:01:51" [ref=e263]
+                    - cell "success" [ref=e264]:
+                      - generic [ref=e265]: success
+                    - cell "10.80 s" [ref=e266]
+                    - cell "project-tags" [ref=e267]
+                    - cell "gemini-2.5-flash" [ref=e268]
+                    - cell "38" [ref=e269]
+                    - cell "/api/ai/generate-project-tags" [ref=e270]
+                    - cell "1158978f9f...25a7a0" [ref=e271]:
+                      - generic "1158978f9f...25a7a0" [ref=e272]:
+                        - text: 1158978f9f...25a7...
+                        - button "复制" [ref=e273] [cursor=pointer]:
+                          - img "copy" [ref=e274]:
+                            - img [ref=e275]
+                    - cell "-"
+                    - cell "详情" [ref=e277]:
+                      - link "详情" [ref=e279] [cursor=pointer]:
+                        - /url: /monitoring/ai-logs/1158978f9fa087eb34a0b7ae3698055d214b91b69780751e30a5c11e8925a7a0
+                  - row "2026-03-25 04:01:19 success 3.19 s model-test gemini-2.5-flash test /api/config/ai-models/test a06b94f340...f5bf67 - 详情" [ref=e280]:
+                    - cell "2026-03-25 04:01:19" [ref=e281]
+                    - cell "success" [ref=e282]:
+                      - generic [ref=e283]: success
+                    - cell "3.19 s" [ref=e284]
+                    - cell "model-test" [ref=e285]
+                    - cell "gemini-2.5-flash" [ref=e286]
+                    - cell "test" [ref=e287]
+                    - cell "/api/config/ai-models/test" [ref=e288]
+                    - cell "a06b94f340...f5bf67" [ref=e289]:
+                      - generic "a06b94f340...f5bf67" [ref=e290]:
+                        - text: a06b94f340...f5bf...
+                        - button "复制" [ref=e291] [cursor=pointer]:
+                          - img "copy" [ref=e292]:
+                            - img [ref=e293]
+                    - cell "-"
+                    - cell "详情" [ref=e295]:
+                      - link "详情" [ref=e297] [cursor=pointer]:
+                        - /url: /monitoring/ai-logs/a06b94f340b50d6be23c51b9d704bff8d357b90c06e5c8a15e77501201f5bf67
+                  - row "2026-03-25 04:00:57 fail 677 ms model-test glm-4.5-flash test /api/config/ai-models/test 03afcf27b5...9de384 您的账户已达到速率限制，请您控制请求频率 详情" [ref=e298]:
+                    - cell "2026-03-25 04:00:57" [ref=e299]
+                    - cell "fail" [ref=e300]:
+                      - generic [ref=e301]: fail
+                    - cell "677 ms" [ref=e302]
+                    - cell "model-test" [ref=e303]
+                    - cell "glm-4.5-flash" [ref=e304]
+                    - cell "test" [ref=e305]
+                    - cell "/api/config/ai-models/test" [ref=e306]
+                    - cell "03afcf27b5...9de384" [ref=e307]:
+                      - generic "03afcf27b5...9de384" [ref=e308]:
+                        - text: 03afcf27b5...9de3...
+                        - button "复制" [ref=e309] [cursor=pointer]:
+                          - img "copy" [ref=e310]:
+                            - img [ref=e311]
+                    - cell "您的账户已达到速率限制，请您控制请求频率"
+                    - cell "详情" [ref=e313]:
+                      - link "详情" [ref=e315] [cursor=pointer]:
+                        - /url: /monitoring/ai-logs/03afcf27b577b3f570e65a542ba3ba5b441ee7e8c4fc9e26b9b5506e949de384
+                  - row "2026-03-25 04:00:41 timeout 32.01 s project-tags glm-4.5-flash 38 /api/ai/generate-project-tags 1158978f9f...25a7a0 AI 调用超时 详情" [ref=e316]:
+                    - cell "2026-03-25 04:00:41" [ref=e317]
+                    - cell "timeout" [ref=e318]:
+                      - generic [ref=e319]: timeout
+                    - cell "32.01 s" [ref=e320]
+                    - cell "project-tags" [ref=e321]
+                    - cell "glm-4.5-flash" [ref=e322]
+                    - cell "38" [ref=e323]
+                    - cell "/api/ai/generate-project-tags" [ref=e324]
+                    - cell "1158978f9f...25a7a0" [ref=e325]:
+                      - generic "1158978f9f...25a7a0" [ref=e326]:
+                        - text: 1158978f9f...25a7...
+                        - button "复制" [ref=e327] [cursor=pointer]:
+                          - img "copy" [ref=e328]:
+                            - img [ref=e329]
+                    - cell "AI 调用超时"
+                    - cell "详情" [ref=e331]:
+                      - link "详情" [ref=e333] [cursor=pointer]:
+                        - /url: /monitoring/ai-logs/1158978f9fa087eb34a0b7ae3698055d214b91b69780751e30a5c11e8925a7a0
+                  - 'row "2026-03-25 03:59:38 fail 478 ms model-test qwen3-coder-plus test /api/config/ai-models/test fbc1ea63bd...7b0bfd Incorrect API key provided. For details, see: https://help.aliyun.com/zh/model-studio/error-code#apikey-error 详情" [ref=e334]':
+                    - cell "2026-03-25 03:59:38" [ref=e335]
+                    - cell "fail" [ref=e336]:
+                      - generic [ref=e337]: fail
+                    - cell "478 ms" [ref=e338]
+                    - cell "model-test" [ref=e339]
+                    - cell "qwen3-coder-plus" [ref=e340]
+                    - cell "test" [ref=e341]
+                    - cell "/api/config/ai-models/test" [ref=e342]
+                    - cell "fbc1ea63bd...7b0bfd" [ref=e343]:
+                      - generic "fbc1ea63bd...7b0bfd" [ref=e344]:
+                        - text: fbc1ea63bd...7b0...
+                        - button "复制" [ref=e345] [cursor=pointer]:
+                          - img "copy" [ref=e346]:
+                            - img [ref=e347]
+                    - 'cell "Incorrect API key provided. For details, see: https://help.aliyun.com/zh/model-studio/error-code#apikey-error"'
+                    - cell "详情" [ref=e349]:
+                      - link "详情" [ref=e351] [cursor=pointer]:
+                        - /url: /monitoring/ai-logs/fbc1ea63bd836d2d6e3da7bf0889b813f02f4c65da28b64762fe5f00477b0bfd
+                  - 'row "2026-03-25 03:57:55 fail 176 ms project-tags qwen3-coder-plus 38 /api/ai/generate-project-tags 1158978f9f...25a7a0 Incorrect API key provided. For details, see: https://help.aliyun.com/zh/model-studio/error-code#apikey-error 详情" [ref=e352]':
+                    - cell "2026-03-25 03:57:55" [ref=e353]
+                    - cell "fail" [ref=e354]:
+                      - generic [ref=e355]: fail
+                    - cell "176 ms" [ref=e356]
+                    - cell "project-tags" [ref=e357]
+                    - cell "qwen3-coder-plus" [ref=e358]
+                    - cell "38" [ref=e359]
+                    - cell "/api/ai/generate-project-tags" [ref=e360]
+                    - cell "1158978f9f...25a7a0" [ref=e361]:
+                      - generic "1158978f9f...25a7a0" [ref=e362]:
+                        - text: 1158978f9f...25a7...
+                        - button "复制" [ref=e363] [cursor=pointer]:
+                          - img "copy" [ref=e364]:
+                            - img [ref=e365]
+                    - 'cell "Incorrect API key provided. For details, see: https://help.aliyun.com/zh/model-studio/error-code#apikey-error"'
+                    - cell "详情" [ref=e367]:
+                      - link "详情" [ref=e369] [cursor=pointer]:
+                        - /url: /monitoring/ai-logs/1158978f9fa087eb34a0b7ae3698055d214b91b69780751e30a5c11e8925a7a0
+                  - 'row "2026-03-25 03:57:36 fail 407 ms project-tags qwen3-coder-plus 38 /api/ai/generate-project-tags 1158978f9f...25a7a0 Incorrect API key provided. For details, see: https://help.aliyun.com/zh/model-studio/error-code#apikey-error 详情" [ref=e370]':
+                    - cell "2026-03-25 03:57:36" [ref=e371]
+                    - cell "fail" [ref=e372]:
+                      - generic [ref=e373]: fail
+                    - cell "407 ms" [ref=e374]
+                    - cell "project-tags" [ref=e375]
+                    - cell "qwen3-coder-plus" [ref=e376]
+                    - cell "38" [ref=e377]
+                    - cell "/api/ai/generate-project-tags" [ref=e378]
+                    - cell "1158978f9f...25a7a0" [ref=e379]:
+                      - generic "1158978f9f...25a7a0" [ref=e380]:
+                        - text: 1158978f9f...25a7...
+                        - button "复制" [ref=e381] [cursor=pointer]:
+                          - img "copy" [ref=e382]:
+                            - img [ref=e383]
+                    - 'cell "Incorrect API key provided. For details, see: https://help.aliyun.com/zh/model-studio/error-code#apikey-error"'
+                    - cell "详情" [ref=e385]:
+                      - link "详情" [ref=e387] [cursor=pointer]:
+                        - /url: /monitoring/ai-logs/1158978f9fa087eb34a0b7ae3698055d214b91b69780751e30a5c11e8925a7a0
+                  - 'row "2026-03-24 02:46:56 failed 237 ms site-validation qwen3-coder-plus bidding-site-validation /api/opportunity/bidding-sites/:id/validate de2b2be8e4...decfd6 Incorrect API key provided. For details, see: https://help.aliyun.com/zh/model-studio/error-code#apikey-error 详情" [ref=e388]':
+                    - cell "2026-03-24 02:46:56" [ref=e389]
+                    - cell "failed" [ref=e390]:
+                      - generic [ref=e391]: failed
+                    - cell "237 ms" [ref=e392]
+                    - cell "site-validation" [ref=e393]
+                    - cell "qwen3-coder-plus" [ref=e394]
+                    - cell "bidding-site-validation" [ref=e395]
+                    - cell "/api/opportunity/bidding-sites/:id/validate" [ref=e396]
+                    - cell "de2b2be8e4...decfd6" [ref=e397]:
+                      - generic "de2b2be8e4...decfd6" [ref=e398]:
+                        - text: de2b2be8e4...dec...
+                        - button "复制" [ref=e399] [cursor=pointer]:
+                          - img "copy" [ref=e400]:
+                            - img [ref=e401]
+                    - 'cell "Incorrect API key provided. For details, see: https://help.aliyun.com/zh/model-studio/error-code#apikey-error"'
+                    - cell "详情" [ref=e403]:
+                      - link "详情" [ref=e405] [cursor=pointer]:
+                        - /url: /monitoring/ai-logs/de2b2be8e4d3fe5f2be52e68266817a5e1c7e95a90fd2bb35022d4c7d5decfd6
+                  - row "2026-03-19 03:34:56 success 3.51 s model-test basic test /api/config/ai-models/test f7b8524eca...9dff30 - 详情" [ref=e406]:
+                    - cell "2026-03-19 03:34:56" [ref=e407]
+                    - cell "success" [ref=e408]:
+                      - generic [ref=e409]: success
+                    - cell "3.51 s" [ref=e410]
+                    - cell "model-test" [ref=e411]
+                    - cell "basic" [ref=e412]
+                    - cell "test" [ref=e413]
+                    - cell "/api/config/ai-models/test" [ref=e414]
+                    - cell "f7b8524eca...9dff30" [ref=e415]:
+                      - generic "f7b8524eca...9dff30" [ref=e416]:
+                        - text: f7b8524eca...9dff...
+                        - button "复制" [ref=e417] [cursor=pointer]:
+                          - img "copy" [ref=e418]:
+                            - img [ref=e419]
+                    - cell "-"
+                    - cell "详情" [ref=e421]:
+                      - link "详情" [ref=e423] [cursor=pointer]:
+                        - /url: /monitoring/ai-logs/f7b8524ecafd58cec96a1947e502436264efd58960d7bdb7c2a3973c849dff30
+                  - 'row "2026-03-19 03:27:51 fail 10.46 s model-test basic test /api/config/ai-models/test 6fbf2c0b8d...e5ee64 Tavily 网络错误: Client network socket disconnected before secure TLS connection was established 详情" [ref=e424]':
+                    - cell "2026-03-19 03:27:51" [ref=e425]
+                    - cell "fail" [ref=e426]:
+                      - generic [ref=e427]: fail
+                    - cell "10.46 s" [ref=e428]
+                    - cell "model-test" [ref=e429]
+                    - cell "basic" [ref=e430]
+                    - cell "test" [ref=e431]
+                    - cell "/api/config/ai-models/test" [ref=e432]
+                    - cell "6fbf2c0b8d...e5ee64" [ref=e433]:
+                      - generic "6fbf2c0b8d...e5ee64" [ref=e434]:
+                        - text: 6fbf2c0b8d...e5e...
+                        - button "复制" [ref=e435] [cursor=pointer]:
+                          - img "copy" [ref=e436]:
+                            - img [ref=e437]
+                    - 'cell "Tavily 网络错误: Client network socket disconnected before secure TLS connection was established"'
+                    - cell "详情" [ref=e439]:
+                      - link "详情" [ref=e441] [cursor=pointer]:
+                        - /url: /monitoring/ai-logs/6fbf2c0b8d133abe011f42e8d627d5b24cc34ac63d2a63bd543b4ef834e5ee64
+                  - row "2026-03-16 07:41:40 success 2.75 s site-validation qwen3-coder-plus bidding-site-validation /api/opportunity/bidding-sites/:id/validate 33eb612e58...43c899 - 详情" [ref=e442]:
+                    - cell "2026-03-16 07:41:40" [ref=e443]
+                    - cell "success" [ref=e444]:
+                      - generic [ref=e445]: success
+                    - cell "2.75 s" [ref=e446]
+                    - cell "site-validation" [ref=e447]
+                    - cell "qwen3-coder-plus" [ref=e448]
+                    - cell "bidding-site-validation" [ref=e449]
+                    - cell "/api/opportunity/bidding-sites/:id/validate" [ref=e450]
+                    - cell "33eb612e58...43c899" [ref=e451]:
+                      - generic "33eb612e58...43c899" [ref=e452]:
+                        - text: 33eb612e58...43c...
+                        - button "复制" [ref=e453] [cursor=pointer]:
+                          - img "copy" [ref=e454]:
+                            - img [ref=e455]
+                    - cell "-"
+                    - cell "详情" [ref=e457]:
+                      - link "详情" [ref=e459] [cursor=pointer]:
+                        - /url: /monitoring/ai-logs/33eb612e58bf745d9ac2117ea3200df0e05d7b700dfab6b842b99e6efe43c899
+                  - row "2026-03-16 07:41:07 success 3.10 s site-validation qwen3-coder-plus bidding-site-validation /api/opportunity/bidding-sites/:id/validate 16836f6c8e...f61cf2 - 详情" [ref=e460]:
+                    - cell "2026-03-16 07:41:07" [ref=e461]
+                    - cell "success" [ref=e462]:
+                      - generic [ref=e463]: success
+                    - cell "3.10 s" [ref=e464]
+                    - cell "site-validation" [ref=e465]
+                    - cell "qwen3-coder-plus" [ref=e466]
+                    - cell "bidding-site-validation" [ref=e467]
+                    - cell "/api/opportunity/bidding-sites/:id/validate" [ref=e468]
+                    - cell "16836f6c8e...f61cf2" [ref=e469]:
+                      - generic "16836f6c8e...f61cf2" [ref=e470]:
+                        - text: 16836f6c8e...f61c...
+                        - button "复制" [ref=e471] [cursor=pointer]:
+                          - img "copy" [ref=e472]:
+                            - img [ref=e473]
+                    - cell "-"
+                    - cell "详情" [ref=e475]:
+                      - link "详情" [ref=e477] [cursor=pointer]:
+                        - /url: /monitoring/ai-logs/16836f6c8ea7a337eabc69fc805c6b526ebd3bf91590c1dee3e02d4ff7f61cf2
+                  - row "2026-03-13 03:02:36 success 1.99 s site-validation qwen3-coder-plus bidding-site-validation /api/opportunity/bidding-sites/:id/validate 1898d85f83...a83097 - 详情" [ref=e478]:
+                    - cell "2026-03-13 03:02:36" [ref=e479]
+                    - cell "success" [ref=e480]:
+                      - generic [ref=e481]: success
+                    - cell "1.99 s" [ref=e482]
+                    - cell "site-validation" [ref=e483]
+                    - cell "qwen3-coder-plus" [ref=e484]
+                    - cell "bidding-site-validation" [ref=e485]
+                    - cell "/api/opportunity/bidding-sites/:id/validate" [ref=e486]
+                    - cell "1898d85f83...a83097" [ref=e487]:
+                      - generic "1898d85f83...a83097" [ref=e488]:
+                        - text: 1898d85f83...a83...
+                        - button "复制" [ref=e489] [cursor=pointer]:
+                          - img "copy" [ref=e490]:
+                            - img [ref=e491]
+                    - cell "-"
+                    - cell "详情" [ref=e493]:
+                      - link "详情" [ref=e495] [cursor=pointer]:
+                        - /url: /monitoring/ai-logs/1898d85f83b69f2221e8e6f25cbb1a805b86adcf205bd4238e05d8f32ea83097
+                  - row "2026-03-04 09:07:33 success 3.20 s workload qwen3-coder-plus 34 /api/ai/evaluate-workload a34f5f3008...dbfcab - 详情" [ref=e496]:
+                    - cell "2026-03-04 09:07:33" [ref=e497]
+                    - cell "success" [ref=e498]:
+                      - generic [ref=e499]: success
+                    - cell "3.20 s" [ref=e500]
+                    - cell "workload" [ref=e501]
+                    - cell "qwen3-coder-plus" [ref=e502]
+                    - cell "34" [ref=e503]
+                    - cell "/api/ai/evaluate-workload" [ref=e504]
+                    - cell "a34f5f3008...dbfcab" [ref=e505]:
+                      - generic "a34f5f3008...dbfcab" [ref=e506]:
+                        - text: a34f5f3008...dbfc...
+                        - button "复制" [ref=e507] [cursor=pointer]:
+                          - img "copy" [ref=e508]:
+                            - img [ref=e509]
+                    - cell "-"
+                    - cell "详情" [ref=e511]:
+                      - link "详情" [ref=e513] [cursor=pointer]:
+                        - /url: /monitoring/ai-logs/a34f5f30081b9a3da0533ea622756959d418026883cdbd8f96d66374b1dbfcab
+                  - row "2026-03-04 09:07:27 success 2.23 s workload qwen3-coder-plus 34 /api/ai/evaluate-workload 2714e4d99c...53824a - 详情" [ref=e514]:
+                    - cell "2026-03-04 09:07:27" [ref=e515]
+                    - cell "success" [ref=e516]:
+                      - generic [ref=e517]: success
+                    - cell "2.23 s" [ref=e518]
+                    - cell "workload" [ref=e519]
+                    - cell "qwen3-coder-plus" [ref=e520]
+                    - cell "34" [ref=e521]
+                    - cell "/api/ai/evaluate-workload" [ref=e522]
+                    - cell "2714e4d99c...53824a" [ref=e523]:
+                      - generic "2714e4d99c...53824a" [ref=e524]:
+                        - text: 2714e4d99c...538...
+                        - button "复制" [ref=e525] [cursor=pointer]:
+                          - img "copy" [ref=e526]:
+                            - img [ref=e527]
+                    - cell "-"
+                    - cell "详情" [ref=e529]:
+                      - link "详情" [ref=e531] [cursor=pointer]:
+                        - /url: /monitoring/ai-logs/2714e4d99cde9e072ac9c697290950ae471d2cdd14a3d666b0dd794b9053824a
+                  - row "2026-03-04 09:07:22 success 2.26 s workload qwen3-coder-plus 34 /api/ai/evaluate-workload 23456031cc...0b70c6 - 详情" [ref=e532]:
+                    - cell "2026-03-04 09:07:22" [ref=e533]
+                    - cell "success" [ref=e534]:
+                      - generic [ref=e535]: success
+                    - cell "2.26 s" [ref=e536]
+                    - cell "workload" [ref=e537]
+                    - cell "qwen3-coder-plus" [ref=e538]
+                    - cell "34" [ref=e539]
+                    - cell "/api/ai/evaluate-workload" [ref=e540]
+                    - cell "23456031cc...0b70c6" [ref=e541]:
+                      - generic "23456031cc...0b70c6" [ref=e542]:
+                        - text: 23456031cc...0b7...
+                        - button "复制" [ref=e543] [cursor=pointer]:
+                          - img "copy" [ref=e544]:
+                            - img [ref=e545]
+                    - cell "-"
+                    - cell "详情" [ref=e547]:
+                      - link "详情" [ref=e549] [cursor=pointer]:
+                        - /url: /monitoring/ai-logs/23456031cc027d160fe2ede18a0fe27bf6e75119ad8296dd42964237540b70c6
+                  - row "2026-03-04 09:07:18 success 1.99 s workload qwen3-coder-plus 34 /api/ai/evaluate-workload b7e08ef516...8e1da5 - 详情" [ref=e550]:
+                    - cell "2026-03-04 09:07:18" [ref=e551]
+                    - cell "success" [ref=e552]:
+                      - generic [ref=e553]: success
+                    - cell "1.99 s" [ref=e554]
+                    - cell "workload" [ref=e555]
+                    - cell "qwen3-coder-plus" [ref=e556]
+                    - cell "34" [ref=e557]
+                    - cell "/api/ai/evaluate-workload" [ref=e558]
+                    - cell "b7e08ef516...8e1da5" [ref=e559]:
+                      - generic "b7e08ef516...8e1da5" [ref=e560]:
+                        - text: b7e08ef516...8e1d...
+                        - button "复制" [ref=e561] [cursor=pointer]:
+                          - img "copy" [ref=e562]:
+                            - img [ref=e563]
+                    - cell "-"
+                    - cell "详情" [ref=e565]:
+                      - link "详情" [ref=e567] [cursor=pointer]:
+                        - /url: /monitoring/ai-logs/b7e08ef5160da2ea03ff1f85c8eb6f21e0a6639a9e4bf314aedbfbfc438e1da5
+                  - row "2026-03-04 09:07:14 success 2.75 s workload qwen3-coder-plus 34 /api/ai/evaluate-workload 5398b10b15...ea3200 - 详情" [ref=e568]:
+                    - cell "2026-03-04 09:07:14" [ref=e569]
+                    - cell "success" [ref=e570]:
+                      - generic [ref=e571]: success
+                    - cell "2.75 s" [ref=e572]
+                    - cell "workload" [ref=e573]
+                    - cell "qwen3-coder-plus" [ref=e574]
+                    - cell "34" [ref=e575]
+                    - cell "/api/ai/evaluate-workload" [ref=e576]
+                    - cell "5398b10b15...ea3200" [ref=e577]:
+                      - generic "5398b10b15...ea3200" [ref=e578]:
+                        - text: 5398b10b15...ea3...
+                        - button "复制" [ref=e579] [cursor=pointer]:
+                          - img "copy" [ref=e580]:
+                            - img [ref=e581]
+                    - cell "-"
+                    - cell "详情" [ref=e583]:
+                      - link "详情" [ref=e585] [cursor=pointer]:
+                        - /url: /monitoring/ai-logs/5398b10b153c356c850bb91c787ed1e4ec80f03320d385906993ea6750ea3200
+                  - row "2026-03-04 09:07:09 success 1.94 s workload qwen3-coder-plus 34 /api/ai/evaluate-workload b9eb5bbafc...afc014 - 详情" [ref=e586]:
+                    - cell "2026-03-04 09:07:09" [ref=e587]
+                    - cell "success" [ref=e588]:
+                      - generic [ref=e589]: success
+                    - cell "1.94 s" [ref=e590]
+                    - cell "workload" [ref=e591]
+                    - cell "qwen3-coder-plus" [ref=e592]
+                    - cell "34" [ref=e593]
+                    - cell "/api/ai/evaluate-workload" [ref=e594]
+                    - cell "b9eb5bbafc...afc014" [ref=e595]:
+                      - generic "b9eb5bbafc...afc014" [ref=e596]:
+                        - text: b9eb5bbafc...afc0...
+                        - button "复制" [ref=e597] [cursor=pointer]:
+                          - img "copy" [ref=e598]:
+                            - img [ref=e599]
+                    - cell "-"
+                    - cell "详情" [ref=e601]:
+                      - link "详情" [ref=e603] [cursor=pointer]:
+                        - /url: /monitoring/ai-logs/b9eb5bbafcb1ad2da9397ea1b31fc3bab53dbd0ea1e67a46780bdedba7afc014
+              - list [ref=e604]:
+                - listitem [ref=e605]: 第 1-20 条/总共 480 条
+                - listitem "上一页" [ref=e606]:
+                  - button "left" [disabled] [ref=e607]:
+                    - img "left" [ref=e608]:
+                      - img [ref=e609]
+                - listitem "1" [ref=e611] [cursor=pointer]:
+                  - generic [ref=e612]: "1"
+                - listitem "2" [ref=e613] [cursor=pointer]:
+                  - generic [ref=e614]: "2"
+                - listitem "3" [ref=e615] [cursor=pointer]:
+                  - generic [ref=e616]: "3"
+                - listitem "4" [ref=e617] [cursor=pointer]:
+                  - generic [ref=e618]: "4"
+                - listitem "5" [ref=e619] [cursor=pointer]:
+                  - generic [ref=e620]: "5"
+                - listitem "向后 5 页" [ref=e621] [cursor=pointer]:
+                  - generic [ref=e623]:
+                    - img "double-right" [ref=e624]:
+                      - img [ref=e625]
+                    - generic [ref=e627]: •••
+                - listitem "24" [ref=e628] [cursor=pointer]:
+                  - generic [ref=e629]: "24"
+                - listitem "下一页" [ref=e630] [cursor=pointer]:
+                  - button "right" [ref=e631]:
+                    - img "right" [ref=e632]:
+                      - img [ref=e633]
+                - listitem [ref=e635]:
+                  - generic "页码" [ref=e636] [cursor=pointer]:
+                    - generic [ref=e638]:
+                      - combobox "页码" [ref=e640]
+                      - generic "20 条/页" [ref=e641]
+                    - generic:
+                      - img:
+                        - img

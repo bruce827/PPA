@@ -38,7 +38,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "preset",
@@ -51,7 +51,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 11
+        "register": 5
       },
       "enableBy": "register",
       "type": "preset",
@@ -64,7 +64,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 2
+        "register": 1
       },
       "enableBy": "register",
       "type": "preset",
@@ -81,7 +81,7 @@
             0
           ]
         },
-        "register": 4
+        "register": 2
       },
       "enableBy": "register",
       "type": "plugin",
@@ -95,7 +95,7 @@
       "time": {
         "hooks": {
           "onStart": [
-            2
+            1
           ]
         },
         "register": 2
@@ -115,7 +115,7 @@
             0
           ]
         },
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -129,11 +129,11 @@
       "time": {
         "hooks": {
           "onDevCompileDone": [
-            124,
-            33
+            113,
+            32
           ]
         },
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -147,7 +147,7 @@
       "time": {
         "hooks": {
           "modifyAppData": [
-            29
+            22
           ],
           "onGenerateFiles": [
             2
@@ -192,46 +192,46 @@
           "onPrepareBuildSuccess": [
             0,
             0,
-            0
+            1
           ],
           "onCheckCode": [
             0,
             0,
             0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
             1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
             0
           ]
         },
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -245,10 +245,10 @@
       "time": {
         "hooks": {
           "onCheck": [
-            1
+            0
           ]
         },
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -261,7 +261,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "config",
       "type": "plugin",
@@ -278,7 +278,7 @@
             0
           ]
         },
-        "register": 8
+        "register": 6
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1144,7 +1144,7 @@
       "time": {
         "hooks": {
           "onStart": [
-            0
+            1
           ]
         },
         "register": 1
@@ -1177,7 +1177,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 56
+        "register": 51
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1203,7 +1203,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 14
+        "register": 12
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1223,6 +1223,8 @@
             0
           ],
           "modifyHTMLFavicon": [
+            0,
+            0,
             0,
             0,
             0,
@@ -1277,13 +1279,13 @@
       "time": {
         "hooks": {
           "onStart": [
-            1
+            0
           ],
           "addBeforeMiddlewares": [
             2
           ]
         },
-        "register": 23
+        "register": 21
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/preset-umi/dist/features/mock/mock.js",
@@ -1308,7 +1310,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/preset-umi/dist/features/okam/okam.js",
@@ -1341,7 +1343,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1355,17 +1357,17 @@
       "time": {
         "hooks": {
           "modifyConfig": [
-            1
+            0
           ],
           "onGenerateFiles": [
-            55
+            50
           ],
           "addPolyfillImports": [
             0,
             0
           ]
         },
-        "register": 1
+        "register": 0
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/preset-umi/dist/features/polyfill/polyfill.js",
@@ -1382,7 +1384,7 @@
             0
           ]
         },
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1396,10 +1398,10 @@
       "time": {
         "hooks": {
           "onGenerateFiles": [
-            113
+            90
           ]
         },
-        "register": 2
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1412,7 +1414,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1445,7 +1447,7 @@
             0
           ]
         },
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1459,11 +1461,11 @@
       "time": {
         "hooks": {
           "onGenerateFiles": [
-            9,
-            6
+            8,
+            4
           ]
         },
-        "register": 2
+        "register": 3
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1476,7 +1478,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1515,7 +1517,7 @@
       "time": {
         "hooks": {
           "onGenerateFiles": [
-            263
+            243
           ]
         },
         "register": 1
@@ -1532,7 +1534,7 @@
       "time": {
         "hooks": {
           "addBeforeBabelPresets": [
-            0
+            1
           ]
         },
         "register": 1
@@ -1548,7 +1550,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 2
+        "register": 1
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1561,7 +1563,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1574,7 +1576,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 6
+        "register": 2
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/preset-umi/dist/features/apiRoute/apiRoute.js",
@@ -1586,7 +1588,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 15
+        "register": 13
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1600,7 +1602,7 @@
       "time": {
         "hooks": {
           "onGenerateFiles": [
-            1
+            2
           ]
         },
         "register": 0
@@ -1628,7 +1630,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1641,7 +1643,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1670,7 +1672,7 @@
             0
           ]
         },
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1683,7 +1685,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 2
+        "register": 1
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/preset-umi/dist/features/ui/ui.js",
@@ -1708,7 +1710,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/preset-umi/dist/features/utoopack/utoopack.js",
@@ -1720,7 +1722,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 2
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/preset-umi/dist/features/hmrGuardian/hmrGuardian.js",
@@ -1732,7 +1734,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 17
+        "register": 16
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/preset-umi/dist/features/routePreloadOnLoad/routePreloadOnLoad.js",
@@ -1758,10 +1760,10 @@
       "time": {
         "hooks": {
           "modifyUniBundler": [
-            367
+            299
           ]
         },
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1787,7 +1789,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 23
+        "register": 20
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1801,10 +1803,10 @@
       "time": {
         "hooks": {
           "modifyAppData": [
-            8
+            7
           ]
         },
-        "register": 27
+        "register": 20
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/preset-umi/dist/commands/dev/dev.js",
@@ -1829,7 +1831,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1842,7 +1844,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 2
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1855,7 +1857,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1920,7 +1922,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1933,7 +1935,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1972,7 +1974,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1985,7 +1987,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -2024,7 +2026,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -2037,7 +2039,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -2050,7 +2052,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 15
+        "register": 13
       },
       "enableBy": "register",
       "type": "plugin",
@@ -2063,7 +2065,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -2076,7 +2078,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 2
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -2093,7 +2095,7 @@
             0
           ],
           "onGenerateFiles": [
-            1
+            0
           ],
           "addTmpGenerateWatcherPaths": [
             0
@@ -2127,7 +2129,7 @@
       "time": {
         "hooks": {
           "modifyConfig": [
-            4
+            3
           ],
           "modifyAppData": [
             0
@@ -2152,7 +2154,7 @@
             0
           ]
         },
-        "register": 4
+        "register": 3
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/plugins/dist/antd.js",
@@ -2164,7 +2166,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 4
+        "register": 3
       },
       "enableBy": "config",
       "type": "plugin",
@@ -2187,10 +2189,10 @@
             0
           ],
           "addExtraModels": [
-            0
+            1
           ]
         },
-        "register": 0
+        "register": 1
       },
       "enableBy": "config",
       "type": "plugin",
@@ -2221,7 +2223,7 @@
             0
           ],
           "onGenerateFiles": [
-            6
+            5
           ]
         },
         "register": 2
@@ -2237,7 +2239,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 2
+        "register": 1
       },
       "enableBy": "config",
       "type": "plugin",
@@ -2250,7 +2252,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 2
+        "register": 3
       },
       "enableBy": "config",
       "type": "plugin",
@@ -2267,7 +2269,7 @@
             0
           ],
           "onGenerateFiles": [
-            24
+            21
           ],
           "addTmpGenerateWatcherPaths": [
             0
@@ -2316,7 +2318,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/plugins/dist/qiankun/master.js",
@@ -2340,7 +2342,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "config",
       "type": "plugin",
@@ -2357,10 +2359,10 @@
             0
           ],
           "onGenerateFiles": [
-            3
+            2
           ]
         },
-        "register": 1
+        "register": 0
       },
       "enableBy": "config",
       "type": "plugin",
@@ -2373,7 +2375,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 2
+        "register": 1
       },
       "enableBy": "config",
       "type": "plugin",
@@ -2386,7 +2388,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "config",
       "type": "plugin",
@@ -2450,7 +2452,7 @@
             0
           ]
         },
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -2463,7 +2465,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -3961,7 +3963,7 @@
       "parentId": "19",
       "id": "21",
       "absPath": "/opportunity/tender-push",
-      "__content": "import {\n  listTenderStaging,\n  pushTenderStaging,\n  syncTenderStaging,\n} from '@/services/opportunity';\nimport TenderWebSearchModal from '@/pages/Opportunity/components/TenderWebSearchModal';\nimport { PageContainer, ProTable } from '@ant-design/pro-components';\nimport { Link } from '@umijs/max';\nimport { Button, Card, Col, message, Modal, Row, Space, Statistic, Tag } from 'antd';\nimport type { ActionType, ProColumns } from '@ant-design/pro-components';\nimport React, { useRef, useState } from 'react';\n\nconst pushStatusMap: Record<\n  API_OPPORTUNITY.TenderPushStatus,\n  { text: string; color: string }\n> = {\n  pending: { text: '待推送', color: 'processing' },\n  pushed: { text: '已推送', color: 'success' },\n  failed: { text: '推送失败', color: 'error' },\n};\n\nconst defaultStats: API_OPPORTUNITY.TenderStagingStats = {\n  total: 0,\n  pending: 0,\n  pushed: 0,\n  failed: 0,\n};\n\nconst defaultWebSearchDraft: API_OPPORTUNITY.TenderWebSearchDraft = {\n  focus_keywords: '',\n  exclude_keywords: '',\n  max_results: 5,\n};\n\nconst TenderPushPage: React.FC = () => {\n  const actionRef = useRef<ActionType>();\n  const [stats, setStats] = useState<API_OPPORTUNITY.TenderStagingStats>(defaultStats);\n  const [syncLoading, setSyncLoading] = useState(false);\n  const [pushingId, setPushingId] = useState<number | null>(null);\n  const [errorDetailRecord, setErrorDetailRecord] =\n    useState<API_OPPORTUNITY.TenderStagingRecord | null>(null);\n  const [webSearchRecord, setWebSearchRecord] =\n    useState<API_OPPORTUNITY.TenderStagingRecord | null>(null);\n  const [webSearchDraft, setWebSearchDraft] = useState<API_OPPORTUNITY.TenderWebSearchDraft>(\n    defaultWebSearchDraft,\n  );\n\n  const handleSync = async () => {\n    try {\n      setSyncLoading(true);\n      const response = await syncTenderStaging();\n      const summary = response?.data;\n      const errorCount = summary?.errors?.length || 0;\n      message.success(\n        `同步完成：文件 ${summary?.fileCount || 0} 个，去重后 ${\n          summary?.deduplicatedCount || 0\n        } 条，新增 ${summary?.created || 0}，更新 ${summary?.updated || 0}`\n      );\n      if (errorCount > 0) {\n        message.warning(`同步过程中有 ${errorCount} 条告警，请查看服务端返回`);\n      }\n      actionRef.current?.reload();\n    } catch (error: any) {\n      message.error(error?.message || '同步本地数据失败');\n    } finally {\n      setSyncLoading(false);\n    }\n  };\n\n  const handlePush = async (record: API_OPPORTUNITY.TenderStagingRecord) => {\n    try {\n      setPushingId(record.id);\n      const response = await pushTenderStaging(record.id);\n      const result = response?.data;\n      if (result?.error) {\n        message.error(result.error);\n      } else {\n        message.success('推送成功，小程序端现在可以查看这条数据');\n      }\n      actionRef.current?.reload();\n    } catch (error: any) {\n      message.error(error?.message || '推送失败');\n    } finally {\n      setPushingId(null);\n    }\n  };\n\n  const showErrorDetail = (record: API_OPPORTUNITY.TenderStagingRecord) => {\n    setErrorDetailRecord(record);\n  };\n\n  const columns: ProColumns<API_OPPORTUNITY.TenderStagingRecord>[] = [\n    {\n      title: '项目名称',\n      dataIndex: 'title',\n      ellipsis: true,\n      width: 260,\n    },\n    {\n      title: '发布日期',\n      dataIndex: 'published_date',\n      width: 120,\n      search: false,\n      renderText: (value) => value || '-',\n    },\n    {\n      title: '截止日期',\n      dataIndex: 'deadline_date',\n      width: 120,\n      search: false,\n      renderText: (value) => value || '-',\n    },\n    {\n      title: '招标单位',\n      dataIndex: 'issuer',\n      ellipsis: true,\n      width: 220,\n      renderText: (value) => value || '-',\n    },\n    {\n      title: '来源文件',\n      dataIndex: 'source_file',\n      width: 180,\n      ellipsis: true,\n    },\n    {\n      title: '推送状态',\n      dataIndex: 'push_status',\n      valueType: 'select',\n      width: 120,\n      align: 'center',\n      valueEnum: {\n        pending: { text: '待推送' },\n        pushed: { text: '已推送' },\n        failed: { text: '推送失败' },\n      },\n      render: (_, record) => {\n        const status = pushStatusMap[record.push_status];\n        return <Tag color={status.color}>{status.text}</Tag>;\n      },\n    },\n    {\n      title: '操作',\n      valueType: 'option',\n      width: 320,\n      render: (_, record) => {\n        const buttonLabel =\n          record.push_status === 'failed'\n            ? '重试'\n            : record.push_status === 'pushed'\n              ? '重新推送'\n              : '推送';\n\n        return [\n          <Link key=\"assess\" to=\"/assessment/new\">\n            评估\n          </Link>,\n          <Button\n            key=\"web-search\"\n            type=\"link\"\n            onClick={() => setWebSearchRecord(record)}\n          >\n            全网检索\n          </Button>,\n          record.source_url ? (\n            <a\n              key=\"source\"\n              href={record.source_url}\n              target=\"_blank\"\n              rel=\"noreferrer\"\n            >\n              原文\n            </a>\n          ) : null,\n          record.push_error ? (\n            <Button key=\"error\" type=\"link\" onClick={() => showErrorDetail(record)}>\n              错误信息\n            </Button>\n          ) : null,\n          <Button\n            key=\"push\"\n            type=\"link\"\n            loading={pushingId === record.id}\n            onClick={() => handlePush(record)}\n          >\n            {buttonLabel}\n          </Button>,\n        ];\n      },\n    },\n  ];\n\n  return (\n    <PageContainer\n      header={{\n        title: '待推送招标',\n        subTitle: '把 spider/data 里的本地 JSON 同步到 staging，再单条推送到小程序',\n      }}\n    >\n      <Row gutter={16} style={{ marginBottom: 16 }}>\n        <Col span={6}>\n          <Card>\n            <Statistic title=\"总数\" value={stats.total} />\n          </Card>\n        </Col>\n        <Col span={6}>\n          <Card>\n            <Statistic title=\"待推送\" value={stats.pending} />\n          </Card>\n        </Col>\n        <Col span={6}>\n          <Card>\n            <Statistic title=\"已推送\" value={stats.pushed} />\n          </Card>\n        </Col>\n        <Col span={6}>\n          <Card>\n            <Statistic title=\"失败\" value={stats.failed} />\n          </Card>\n        </Col>\n      </Row>\n\n      <ProTable<API_OPPORTUNITY.TenderStagingRecord>\n        actionRef={actionRef}\n        rowKey=\"id\"\n        columns={columns}\n        search={{\n          labelWidth: 100,\n        }}\n        toolBarRender={() => [\n          <Space key=\"actions\">\n            <Button type=\"primary\" loading={syncLoading} onClick={handleSync}>\n              同步本地数据\n            </Button>\n          </Space>,\n        ]}\n        request={async (params) => {\n          const response = await listTenderStaging(params);\n          const result = response?.data;\n          setStats(result?.stats || defaultStats);\n          return {\n            data: result?.items || [],\n            success: response?.success,\n            total: result?.total || 0,\n          };\n        }}\n        pagination={{\n          pageSize: 20,\n        }}\n      />\n\n      <Modal\n        title={errorDetailRecord ? `错误信息 - ${errorDetailRecord.title}` : '错误信息'}\n        open={Boolean(errorDetailRecord)}\n        onCancel={() => setErrorDetailRecord(null)}\n        footer={null}\n        width={720}\n      >\n        <div\n          style={{\n            whiteSpace: 'pre-wrap',\n            wordBreak: 'break-word',\n            lineHeight: 1.7,\n          }}\n        >\n          {errorDetailRecord?.push_error || '暂无错误信息'}\n        </div>\n      </Modal>\n\n      <TenderWebSearchModal\n        open={Boolean(webSearchRecord)}\n        record={webSearchRecord}\n        draft={webSearchDraft}\n        onDraftChange={setWebSearchDraft}\n        onCancel={() => setWebSearchRecord(null)}\n      />\n    </PageContainer>\n  );\n};\n\nexport default TenderPushPage;\n",
+      "__content": "import {\n  listTenderStaging,\n  pushTenderStaging,\n  syncTenderStaging,\n} from '@/services/opportunity';\nimport TenderWebSearchModal from '@/pages/Opportunity/components/TenderWebSearchModal';\nimport { PageContainer, ProTable } from '@ant-design/pro-components';\nimport { Link } from '@umijs/max';\nimport { Button, Card, Col, message, Modal, Row, Space, Statistic, Tag } from 'antd';\nimport type { ActionType, ProColumns } from '@ant-design/pro-components';\nimport React, { useRef, useState } from 'react';\n\nconst pushStatusMap: Record<\n  API_OPPORTUNITY.TenderPushStatus,\n  { text: string; color: string }\n> = {\n  pending: { text: '待推送', color: 'processing' },\n  pushed: { text: '已推送', color: 'success' },\n  failed: { text: '推送失败', color: 'error' },\n};\n\nconst defaultStats: API_OPPORTUNITY.TenderStagingStats = {\n  total: 0,\n  pending: 0,\n  pushed: 0,\n  failed: 0,\n};\n\nconst defaultWebSearchDraft: API_OPPORTUNITY.TenderWebSearchDraft = {\n  focus_keywords: '',\n  exclude_keywords: '',\n  max_results: 5,\n};\n\nconst TenderPushPage: React.FC = () => {\n  const actionRef = useRef<ActionType>();\n  const [stats, setStats] = useState<API_OPPORTUNITY.TenderStagingStats>(defaultStats);\n  const [syncLoading, setSyncLoading] = useState(false);\n  const [pushingId, setPushingId] = useState<number | null>(null);\n  const [errorDetailRecord, setErrorDetailRecord] =\n    useState<API_OPPORTUNITY.TenderStagingRecord | null>(null);\n  const [webSearchRecord, setWebSearchRecord] =\n    useState<API_OPPORTUNITY.TenderStagingRecord | null>(null);\n  const [webSearchDraft, setWebSearchDraft] = useState<API_OPPORTUNITY.TenderWebSearchDraft>(\n    defaultWebSearchDraft,\n  );\n\n  const handleSync = async () => {\n    try {\n      setSyncLoading(true);\n      const response = await syncTenderStaging();\n      const summary = response?.data;\n      const errorCount = summary?.errors?.length || 0;\n      message.success(\n        `同步完成：文件 ${summary?.fileCount || 0} 个，当前目录有效 ${\n          summary?.deduplicatedCount || 0\n        } 条，新增 ${summary?.created || 0}，更新 ${summary?.updated || 0}，清理 ${\n          summary?.pruned || 0\n        }`\n      );\n      if (errorCount > 0) {\n        message.warning(`同步过程中有 ${errorCount} 条告警，请查看服务端返回`);\n      }\n      actionRef.current?.reload();\n    } catch (error: any) {\n      message.error(error?.message || '同步本地数据失败');\n    } finally {\n      setSyncLoading(false);\n    }\n  };\n\n  const handlePush = async (record: API_OPPORTUNITY.TenderStagingRecord) => {\n    try {\n      setPushingId(record.id);\n      const response = await pushTenderStaging(record.id);\n      const result = response?.data;\n      if (result?.error) {\n        message.error(result.error);\n      } else {\n        message.success('推送成功，小程序端现在可以查看这条数据');\n      }\n      actionRef.current?.reload();\n    } catch (error: any) {\n      message.error(error?.message || '推送失败');\n    } finally {\n      setPushingId(null);\n    }\n  };\n\n  const showErrorDetail = (record: API_OPPORTUNITY.TenderStagingRecord) => {\n    setErrorDetailRecord(record);\n  };\n\n  const columns: ProColumns<API_OPPORTUNITY.TenderStagingRecord>[] = [\n    {\n      title: '项目名称',\n      dataIndex: 'title',\n      ellipsis: true,\n      width: 260,\n    },\n    {\n      title: '发布日期',\n      dataIndex: 'published_date',\n      width: 120,\n      search: false,\n      renderText: (value) => value || '-',\n    },\n    {\n      title: '截止日期',\n      dataIndex: 'deadline_date',\n      width: 120,\n      search: false,\n      renderText: (value) => value || '-',\n    },\n    {\n      title: '招标单位',\n      dataIndex: 'issuer',\n      ellipsis: true,\n      width: 220,\n      renderText: (value) => value || '-',\n    },\n    {\n      title: '来源文件',\n      dataIndex: 'source_file',\n      width: 180,\n      ellipsis: true,\n    },\n    {\n      title: '推送状态',\n      dataIndex: 'push_status',\n      valueType: 'select',\n      width: 120,\n      align: 'center',\n      valueEnum: {\n        pending: { text: '待推送' },\n        pushed: { text: '已推送' },\n        failed: { text: '推送失败' },\n      },\n      render: (_, record) => {\n        const status = pushStatusMap[record.push_status];\n        return <Tag color={status.color}>{status.text}</Tag>;\n      },\n    },\n    {\n      title: '操作',\n      valueType: 'option',\n      width: 320,\n      render: (_, record) => {\n        const buttonLabel =\n          record.push_status === 'failed'\n            ? '重试'\n            : record.push_status === 'pushed'\n              ? '重新推送'\n              : '推送';\n\n        return [\n          <Link key=\"assess\" to=\"/assessment/new\">\n            评估\n          </Link>,\n          <Button\n            key=\"web-search\"\n            type=\"link\"\n            onClick={() => setWebSearchRecord(record)}\n          >\n            全网检索\n          </Button>,\n          record.source_url ? (\n            <a\n              key=\"source\"\n              href={record.source_url}\n              target=\"_blank\"\n              rel=\"noreferrer\"\n            >\n              原文\n            </a>\n          ) : null,\n          record.push_error ? (\n            <Button key=\"error\" type=\"link\" onClick={() => showErrorDetail(record)}>\n              错误信息\n            </Button>\n          ) : null,\n          <Button\n            key=\"push\"\n            type=\"link\"\n            loading={pushingId === record.id}\n            onClick={() => handlePush(record)}\n          >\n            {buttonLabel}\n          </Button>,\n        ];\n      },\n    },\n  ];\n\n  return (\n    <PageContainer\n      header={{\n        title: '待推送招标',\n        subTitle: '以 spider/data 为当前真源全量同步到 staging，再单条推送到小程序',\n      }}\n    >\n      <Row gutter={16} style={{ marginBottom: 16 }}>\n        <Col span={6}>\n          <Card>\n            <Statistic title=\"总数\" value={stats.total} />\n          </Card>\n        </Col>\n        <Col span={6}>\n          <Card>\n            <Statistic title=\"待推送\" value={stats.pending} />\n          </Card>\n        </Col>\n        <Col span={6}>\n          <Card>\n            <Statistic title=\"已推送\" value={stats.pushed} />\n          </Card>\n        </Col>\n        <Col span={6}>\n          <Card>\n            <Statistic title=\"失败\" value={stats.failed} />\n          </Card>\n        </Col>\n      </Row>\n\n      <ProTable<API_OPPORTUNITY.TenderStagingRecord>\n        actionRef={actionRef}\n        rowKey=\"id\"\n        columns={columns}\n        search={{\n          labelWidth: 100,\n        }}\n        toolBarRender={() => [\n          <Space key=\"actions\">\n            <Button type=\"primary\" loading={syncLoading} onClick={handleSync}>\n              同步本地数据\n            </Button>\n          </Space>,\n        ]}\n        request={async (params) => {\n          const response = await listTenderStaging(params);\n          const result = response?.data;\n          setStats(result?.stats || defaultStats);\n          return {\n            data: result?.items || [],\n            success: response?.success,\n            total: result?.total || 0,\n          };\n        }}\n        pagination={{\n          defaultPageSize: 20,\n          showSizeChanger: true,\n          pageSizeOptions: [10, 20, 50, 100],\n        }}\n      />\n\n      <Modal\n        title={errorDetailRecord ? `错误信息 - ${errorDetailRecord.title}` : '错误信息'}\n        open={Boolean(errorDetailRecord)}\n        onCancel={() => setErrorDetailRecord(null)}\n        footer={null}\n        width={720}\n      >\n        <div\n          style={{\n            whiteSpace: 'pre-wrap',\n            wordBreak: 'break-word',\n            lineHeight: 1.7,\n          }}\n        >\n          {errorDetailRecord?.push_error || '暂无错误信息'}\n        </div>\n      </Modal>\n\n      <TenderWebSearchModal\n        open={Boolean(webSearchRecord)}\n        record={webSearchRecord}\n        draft={webSearchDraft}\n        onDraftChange={setWebSearchDraft}\n        onCancel={() => setWebSearchRecord(null)}\n      />\n    </PageContainer>\n  );\n};\n\nexport default TenderPushPage;\n",
       "__isJSFile": true,
       "__absFile": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/src/pages/Opportunity/TenderPush.tsx"
     },
@@ -5443,7 +5445,7 @@
             "format": "esm"
           },
           "src/constants/aiProviders.ts": {
-            "bytes": 2607,
+            "bytes": 2982,
             "imports": [],
             "format": "esm"
           },
@@ -6908,7 +6910,7 @@
             "format": "esm"
           },
           "src/pages/ModelConfig/Application/components/ModelForm.tsx": {
-            "bytes": 10991,
+            "bytes": 13027,
             "imports": [
               {
                 "path": "src/constants/index.ts",
@@ -7242,7 +7244,7 @@
             "format": "esm"
           },
           "src/services/opportunity/index.ts": {
-            "bytes": 3634,
+            "bytes": 3658,
             "imports": [
               {
                 "path": "src/.umi/exports.ts",
@@ -7320,7 +7322,7 @@
             "format": "esm"
           },
           "src/pages/Opportunity/TenderPush.tsx": {
-            "bytes": 8119,
+            "bytes": 8205,
             "imports": [
               {
                 "path": "src/services/opportunity/index.ts",
@@ -9960,7 +9962,7 @@
                 "bytesInOutput": 813
               },
               "src/constants/aiProviders.ts": {
-                "bytesInOutput": 2434
+                "bytesInOutput": 2751
               },
               "src/constants/businessRules.ts": {
                 "bytesInOutput": 154
@@ -10116,7 +10118,7 @@
                 "bytesInOutput": 23801
               },
               "src/pages/ModelConfig/Application/components/ModelForm.tsx": {
-                "bytesInOutput": 14667
+                "bytesInOutput": 17155
               },
               "src/pages/ModelConfig/Application/index.tsx": {
                 "bytesInOutput": 10966
@@ -10158,7 +10160,7 @@
                 "bytesInOutput": 27945
               },
               "src/pages/Opportunity/TenderPush.tsx": {
-                "bytesInOutput": 10122
+                "bytesInOutput": 10224
               },
               "src/services/monitoring/index.ts": {
                 "bytesInOutput": 615
@@ -10191,7 +10193,7 @@
                 "bytesInOutput": 2010
               }
             },
-            "bytes": 683858
+            "bytes": 686765
           }
         }
       }
@@ -17399,7 +17401,7 @@
       ],
       "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/src/pages/ModelConfig/Application/components/ModelForm.tsx": [
         {
-          "end": 184,
+          "end": 210,
           "importKind": "value",
           "source": "@/constants",
           "specifiers": [
@@ -17429,6 +17431,11 @@
               "type": "ImportSpecifier"
             },
             {
+              "imported": "isCherryStudioProvider",
+              "local": "isCherryStudioProvider",
+              "type": "ImportSpecifier"
+            },
+            {
               "imported": "isTavilyProvider",
               "local": "isTavilyProvider",
               "type": "ImportSpecifier"
@@ -17438,7 +17445,7 @@
           "type": "ImportDeclaration"
         },
         {
-          "end": 251,
+          "end": 277,
           "importKind": "value",
           "source": "@/services/aiModel",
           "specifiers": [
@@ -17453,11 +17460,11 @@
               "type": "ImportSpecifier"
             }
           ],
-          "start": 185,
+          "start": 211,
           "type": "ImportDeclaration"
         },
         {
-          "end": 357,
+          "end": 383,
           "importKind": "value",
           "source": "@ant-design/icons",
           "specifiers": [
@@ -17477,11 +17484,11 @@
               "type": "ImportSpecifier"
             }
           ],
-          "start": 252,
+          "start": 278,
           "type": "ImportDeclaration"
         },
         {
-          "end": 517,
+          "end": 543,
           "importKind": "value",
           "source": "@ant-design/pro-components",
           "specifiers": [
@@ -17521,11 +17528,11 @@
               "type": "ImportSpecifier"
             }
           ],
-          "start": 358,
+          "start": 384,
           "type": "ImportDeclaration"
         },
         {
-          "end": 555,
+          "end": 581,
           "importKind": "value",
           "source": "@umijs/max",
           "specifiers": [
@@ -17535,11 +17542,11 @@
               "type": "ImportSpecifier"
             }
           ],
-          "start": 518,
+          "start": 544,
           "type": "ImportDeclaration"
         },
         {
-          "end": 621,
+          "end": 647,
           "importKind": "value",
           "source": "antd",
           "specifiers": [
@@ -17574,11 +17581,11 @@
               "type": "ImportSpecifier"
             }
           ],
-          "start": 556,
+          "start": 582,
           "type": "ImportDeclaration"
         },
         {
-          "end": 666,
+          "end": 692,
           "importKind": "value",
           "source": "react",
           "specifiers": [
@@ -17593,7 +17600,7 @@
               "type": "ImportSpecifier"
             }
           ],
-          "start": 622,
+          "start": 648,
           "type": "ImportDeclaration"
         }
       ],

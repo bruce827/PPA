@@ -4,6 +4,7 @@ import {
   AI_MODEL_TIMEOUT_CONFIG,
   AI_PROVIDER_LABELS,
   AI_PROVIDER_OPTIONS,
+  isCherryStudioProvider,
   isTavilyProvider,
 } from '@/constants';
 import { createAIModel, updateAIModel } from '@/services/aiModel';
@@ -49,9 +50,15 @@ const ModelForm: React.FC<ModelFormProps> = ({
   } | null>(null);
   const providerValue = Form.useWatch('provider', form);
   const isTavilySelected = isTavilyProvider(providerValue);
+  const isCherryStudioSelected = isCherryStudioProvider(providerValue);
+  const isGeminiSelected =
+    typeof providerValue === 'string' &&
+    /google|gemini/i.test(providerValue);
   const apiHostPlaceholder = isTavilySelected
     ? '例如：https://api.tavily.com/search'
-    : '例如：https://api.openai.com/v1/chat/completions 或 https://generativelanguage.googleapis.com';
+    : isCherryStudioSelected
+      ? '例如：https://open.cherryin.cc/ 或 https://open.cherryin.cc/v1/chat/completions'
+      : '例如：https://api.openai.com/v1/chat/completions 或 https://generativelanguage.googleapis.com';
   const modelNamePlaceholder = isTavilySelected
     ? '例如：basic、advanced、fast、ultra-fast'
     : '例如: gpt-4, gpt-3.5-turbo, 你的部署 ID';
@@ -215,6 +222,16 @@ const ModelForm: React.FC<ModelFormProps> = ({
         />
       )}
 
+      {isCherryStudioSelected && (
+        <Alert
+          type="info"
+          showIcon
+          style={{ marginBottom: 16 }}
+          message={AI_PROVIDER_LABELS.CHERRY_STUDIO}
+          description="Cherry Studio 走 OpenAI 兼容协议。API Host 可填写站点根地址，后端会自动补全为 /v1/chat/completions；如果你已经填写了完整接口地址，也会原样使用。"
+        />
+      )}
+
       <ProFormText
         name="api_key"
         label="API Key"
@@ -232,7 +249,39 @@ const ModelForm: React.FC<ModelFormProps> = ({
         rules={[
           { required: true, message: '请输入 API Host' },
           { type: 'url', message: '请输入有效的 URL' },
+          {
+            validator: async (_rule, value) => {
+              if (!value || isTavilySelected || isCherryStudioSelected || isGeminiSelected) {
+                return;
+              }
+
+              let parsed: URL;
+              try {
+                parsed = new URL(String(value));
+              } catch (_error) {
+                return;
+              }
+
+              const normalizedPathname =
+                (parsed.pathname || '').replace(/\/+$/, '') || '/';
+
+              if (normalizedPathname === '/' || normalizedPathname === '/v1') {
+                throw new Error(
+                  '该服务商请填写完整接口 URL，例如 https://api.openai.com/v1/chat/completions'
+                );
+              }
+            },
+          },
         ]}
+        extra={
+          isTavilySelected
+            ? 'Tavily 请填写实际搜索接口 URL。'
+            : isCherryStudioSelected
+              ? 'Cherry Studio 可填写站点根地址，保存或测试时会自动补全为 /v1/chat/completions。'
+              : isGeminiSelected
+                ? 'Gemini 请填写基础地址，例如 https://generativelanguage.googleapis.com'
+                : 'OpenAI 兼容服务请填写完整接口 URL，例如 https://api.openai.com/v1/chat/completions'
+        }
       />
 
       <ProFormText

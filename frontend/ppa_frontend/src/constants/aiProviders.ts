@@ -1,5 +1,6 @@
 export type AIProviderValue =
   | 'OpenAI'
+  | 'Cherry Studio'
   | 'tavily'
   | 'Google'
   | 'Minimax'
@@ -14,6 +15,7 @@ export type AIProviderValue =
 
 export const AI_PROVIDER_LABELS = {
   OPENAI: 'OpenAI',
+  CHERRY_STUDIO: 'Cherry Studio',
   TAVILY: 'Tavily（联网搜索）',
   GOOGLE: 'Google',
   MINIMAX: 'Minimax',
@@ -29,6 +31,7 @@ export const AI_PROVIDER_LABELS = {
 
 export const AI_PROVIDER_OPTIONS: { label: string; value: AIProviderValue }[] = [
   { label: AI_PROVIDER_LABELS.OPENAI, value: 'OpenAI' },
+  { label: AI_PROVIDER_LABELS.CHERRY_STUDIO, value: 'Cherry Studio' },
   { label: AI_PROVIDER_LABELS.TAVILY, value: 'tavily' },
   { label: AI_PROVIDER_LABELS.GOOGLE, value: 'Google' },
   { label: AI_PROVIDER_LABELS.MINIMAX, value: 'Minimax' },
@@ -47,6 +50,7 @@ export const AI_PROVIDER_VALUE_ENUM: Record<
   { text: string }
 > = {
   OpenAI: { text: AI_PROVIDER_LABELS.OPENAI },
+  'Cherry Studio': { text: AI_PROVIDER_LABELS.CHERRY_STUDIO },
   tavily: { text: AI_PROVIDER_LABELS.TAVILY },
   Google: { text: AI_PROVIDER_LABELS.GOOGLE },
   Minimax: { text: AI_PROVIDER_LABELS.MINIMAX },
@@ -75,4 +79,11 @@ export function isTavilyProvider(
 ): boolean {
   if (!provider) return false;
   return String(provider).toLowerCase().includes('tavily');
+}
+
+export function isCherryStudioProvider(
+  provider?: string | null | undefined,
+): boolean {
+  if (!provider) return false;
+  return String(provider).toLowerCase().includes('cherry');
 }

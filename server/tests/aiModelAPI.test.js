@@ -96,6 +96,34 @@ describe('AI Model API', () => {
     expect(response.body.data.supports_web_search).toBe(0);
   });
 
+  test('POST /api/config/ai-models should reject root host for OpenAI compatible providers', async () => {
+    const response = await request(app).post('/api/config/ai-models').send({
+      config_name: 'invalid-openai-host',
+      provider: 'OpenAI',
+      api_key: 'secret-key',
+      api_host: 'https://open.cherryin.cc/',
+      model_name: 'gpt-test',
+    });
+
+    expect(response.status).toBe(400);
+    expect(response.body.success).toBe(false);
+    expect(response.body.message).toContain('OpenAI 兼容服务的 API Host 需填写完整接口 URL');
+  });
+
+  test('POST /api/config/ai-models should normalize Cherry Studio root host', async () => {
+    const response = await request(app).post('/api/config/ai-models').send({
+      config_name: 'cherry-root-host',
+      provider: 'Cherry Studio',
+      api_key: 'secret-key',
+      api_host: 'https://open.cherryin.cc/',
+      model_name: 'agent/qwen',
+    });
+
+    expect(response.status).toBe(201);
+    expect(response.body.success).toBe(true);
+    expect(response.body.data.api_host).toBe('https://open.cherryin.cc/v1/chat/completions');
+  });
+
   test('POST /api/config/ai-models should force Tavily models to enable supports_web_search', async () => {
     const response = await request(app).post('/api/config/ai-models').send({
       config_name: 'tavily-search-model',

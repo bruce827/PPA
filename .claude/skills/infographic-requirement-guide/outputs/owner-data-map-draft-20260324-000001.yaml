@@ -1,0 +1,64 @@
+# Owner Data Map - 招标信息获取情况
+draft_id: "draft-20260324-000001"
+generated_at: "2026-03-25T00:00:00+08:00"
+
+mapping_result:
+  target_table: "opportunity_tender_staging"
+  target_table_cn: "招标公告待推送数据"
+
+  select_clause: "COUNT(*) as total, source_platform as channel, push_status as status"
+  from_clause: "FROM opportunity_tender_staging"
+  where_clause: "WHERE created_at >= datetime('now', '-3 days')"
+  group_by_clause: "GROUP BY source_platform, push_status"
+  order_by_clause: "ORDER BY count DESC"
+
+  full_sql: |
+    SELECT
+      COUNT(*) as total_count,
+      source_platform as channel,
+      push_status as status
+    FROM opportunity_tender_staging
+    WHERE created_at >= datetime('now', '-3 days')
+    GROUP BY source_platform, push_status
+    ORDER BY count DESC
+
+  preview_sql: |
+    SELECT
+      source_platform as channel,
+      COUNT(*) as count,
+      push_status as status
+    FROM opportunity_tender_staging
+    WHERE created_at >= datetime('now', '-3 days')
+    GROUP BY source_platform, push_status
+    LIMIT 20
+
+  data_preview:
+    columns: ["channel", "count", "status"]
+    sample_rows:
+      - ["国家管网电子招标平台", 175, "pending"]
+      - ["中国石油招标投标网", 33, "pending"]
+      - ["eavic", 30, "pending"]
+      - ["中国海洋石油采办业务管理与交易系统", 20, "pending"]
+      - ["liaoning", 11, "pending"]
+      - ["sdicc", 10, "pending"]
+    row_count: 6
+
+  expected_columns:
+    - name: "total_count"
+      type: "INTEGER"
+      description: "总获取数量"
+    - name: "channel"
+      type: "TEXT"
+      description: "来源渠道"
+    - name: "status"
+      type: "TEXT"
+      description: "推送状态"
+
+security_check:
+  passed: true
+  read_only: true
+  validated_tables: ["opportunity_tender_staging"]
+  injection_risk: false
+  notes: "SQL 验证通过，仅使用 SELECT 查询"
+
+next_step: "QUERY_BUILD"

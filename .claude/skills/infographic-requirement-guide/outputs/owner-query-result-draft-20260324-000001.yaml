@@ -1,0 +1,49 @@
+# Owner Query Result - 招标信息获取情况
+draft_id: "draft-20260324-000001"
+generated_at: "2026-03-25T00:00:00+08:00"
+
+query_summary:
+  time_range: "最近3天"
+  entity: "招标信息"
+  executed_at: "2026-03-25T00:00:00+08:00"
+
+results:
+  overview:
+    total_count: 279
+    pushed_count: 0
+    pending_count: 279
+    error_count: 0
+
+  channel_distribution:
+    - channel: "国家管网电子招标平台"
+      count: 175
+      percentage: 62.7
+    - channel: "中国石油招标投标网"
+      count: 33
+      percentage: 11.8
+    - channel: "eavic"
+      count: 30
+      percentage: 10.8
+    - channel: "中国海洋石油采办业务管理与交易系统"
+      count: 20
+      percentage: 7.2
+    - channel: "liauning"
+      count: 11
+      percentage: 3.9
+    - channel: "sdicc"
+      count: 10
+      percentage: 3.6
+
+  status_distribution:
+    - status: "pending"
+      count: 279
+      percentage: 100.0
+
+key_findings:
+  - "最近3天共获取 279 条招标信息"
+  - "全部来自 6 个渠道"
+  - "国家管网电子招标平台占比最高（62.7%）"
+  - "所有信息均为待推送状态（pending），尚未推送给用户"
+  - "已推送数量为 0，可能需要检查推送流程"
+
+next_step: "REPORT_GEN"
