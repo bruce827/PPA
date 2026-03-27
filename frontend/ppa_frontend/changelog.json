@@ -1,4 +1,13 @@
 [{
+    "version": "V1.4.7-alpha",
+    "date": "2026-3-25",
+    "changes": [
+      { "type": "feat", "content": "增加cherry供应商" },
+      { "type": "bugfix", "content": "修复模型应用bug" }
+
+    ]
+  },
+  {
     "version": "V1.4.6-alpha",
     "date": "2026-3-19",
     "changes": [
