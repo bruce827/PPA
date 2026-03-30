@@ -2,7 +2,10 @@
   "pages": [
     "pages/login/index",
     "pages/tender-list/index",
-    "pages/tender-detail/index"
+    "pages/membership-status/index",
+    "pages/tender-detail/index",
+    "pages/ops-membership-diagnostics/index",
+    "pages/membership-insights/index"
   ],
   "window": {
     "navigationBarTitleText": "PPA 招标快报",

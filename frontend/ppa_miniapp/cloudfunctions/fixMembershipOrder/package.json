@@ -1,0 +1,9 @@
+{
+  "name": "fixMembershipOrder",
+  "version": "1.0.0",
+  "description": "Manual membership fix and operation logging for internal diagnostics",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "latest"
+  }
+}

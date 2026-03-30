@@ -1,0 +1,100 @@
+<view class="page insights-page">
+  <view class="card insights-card">
+    <view class="insights-card__header">
+      <view>
+        <view class="insights-card__title">会员经营概览</view>
+        <text class="subtle">最近生成：{{generatedAtText || '暂无'}}</text>
+      </view>
+      <button class="secondary-button insights-card__action" bindtap="handleReload" loading="{{loading}}" disabled="{{loading}}">
+        刷新
+      </button>
+    </view>
+
+    <view class="insights-grid">
+      <view class="insight-stat">
+        <text class="insight-stat__value">{{summary.paidOrders}}</text>
+        <text class="subtle">成功付费订单</text>
+      </view>
+      <view class="insight-stat">
+        <text class="insight-stat__value">{{summary.renewOrders}}</text>
+        <text class="subtle">成功续费订单</text>
+      </view>
+      <view class="insight-stat">
+        <text class="insight-stat__value">{{summary.activeMembers}}</text>
+        <text class="subtle">当前有效会员</text>
+      </view>
+      <view class="insight-stat">
+        <text class="insight-stat__value">{{summary.expiredMembers}}</text>
+        <text class="subtle">当前已过期会员</text>
+      </view>
+      <view class="insight-stat">
+        <text class="insight-stat__value">{{summary.fullDetailViews}}</text>
+        <text class="subtle">完整详情访问次数</text>
+      </view>
+      <view class="insight-stat">
+        <text class="insight-stat__value">{{summary.activeViewerCount}}</text>
+        <text class="subtle">活跃查看用户数</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="card insights-card">
+    <view class="insights-card__title">内容偏好</view>
+    <view class="insights-row">
+      <text class="subtle">已付费用户数</text>
+      <text>{{summary.payingUsersCount}}</text>
+    </view>
+    <view class="insights-row">
+      <text class="subtle">被查看项目数</text>
+      <text>{{summary.uniqueViewedTenderCount}}</text>
+    </view>
+    <view class="insights-row">
+      <text class="subtle">最近访问时间</text>
+      <text>{{summary.latestActivityText}}</text>
+    </view>
+  </view>
+
+  <view class="card insights-card">
+    <view class="insights-card__title">高关注项目</view>
+    <block wx:if="{{summary.topContent.length}}">
+      <view wx:for="{{summary.topContent}}" wx:key="source_item_id" class="insights-item">
+        <text class="insights-item__title">{{item.title}}</text>
+        <text class="subtle">{{item.view_count}} 次查看 · {{item.issuer}} · {{item.source_platform}}</text>
+        <text class="subtle">最近查看：{{item.latestViewedText}}</text>
+      </view>
+    </block>
+    <text wx:else class="subtle">{{emptyText}}</text>
+  </view>
+
+  <view class="card insights-card">
+    <view class="insights-card__title">高关注来源</view>
+    <block wx:if="{{summary.topSourcePlatforms.length}}">
+      <view wx:for="{{summary.topSourcePlatforms}}" wx:key="label" class="insights-row">
+        <text>{{item.label}}</text>
+        <text>{{item.view_count}} 次</text>
+      </view>
+    </block>
+    <text wx:else class="subtle">暂无来源偏好数据</text>
+  </view>
+
+  <view class="card insights-card">
+    <view class="insights-card__title">高关注招标单位</view>
+    <block wx:if="{{summary.topIssuers.length}}">
+      <view wx:for="{{summary.topIssuers}}" wx:key="label" class="insights-row">
+        <text>{{item.label}}</text>
+        <text>{{item.view_count}} 次</text>
+      </view>
+    </block>
+    <text wx:else class="subtle">暂无招标单位偏好数据</text>
+  </view>
+
+  <view wx:if="{{activityLogState === 'unavailable'}}" class="card insights-card">
+    <view class="insights-card__title">活动留痕状态</view>
+    <text class="insights-warning">当前未能读取 `miniapp_membership_activity_logs`：{{activityLogError || '未知错误'}}</text>
+    <text class="subtle">会员经营分析仍会返回订单与会员基础数据，但内容偏好结果可能为空。</text>
+  </view>
+
+  <view class="insights-actions">
+    <button class="secondary-button" bindtap="handleBackToOps">返回异常处理页</button>
+  </view>
+</view>

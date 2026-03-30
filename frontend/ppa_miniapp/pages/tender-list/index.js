@@ -1,5 +1,6 @@
 const { getCachedUser } = require('../../utils/auth');
 const { buildTenderListPath, formatDateTime, getTodayRange, normalizeDateRange } = require('../../utils/date');
+const { getReminderPreferences, getTenderReminder } = require('../../utils/reminders');
 const { callFunction } = require('../../utils/request');
 
 function formatBudget(value) {
@@ -19,10 +20,12 @@ function formatBudget(value) {
 function mapTenderList(list = []) {
   return list.map((item) => ({
     ...item,
+    title: item.title || '未命名项目',
     adoptLabel: item.adopt_status === 'adopted' ? `已采纳：${item.adopted_by_name || '已锁定'}` : '可采纳',
     budgetText: formatBudget(item.budget_amount),
-    publishedDate: formatDateTime(item.published_at) || item.published_date || '',
-    deadlineDate: formatDateTime(item.deadline_at) || item.deadline_date || '',
+    publishedDate: formatDateTime(item.published_at) || item.published_date || '未填写',
+    deadlineDate: formatDateTime(item.deadline_at) || item.deadline_date || '未填写',
+    issuerText: item.issuer || '未填写',
   }));
 }
 
@@ -38,6 +41,9 @@ Page({
     total: 0,
     finished: false,
     emptyText: '当前日期范围内暂无招标信息',
+    reminderType: '',
+    reminderBanner: null,
+    tenderSubscriptionEnabled: false,
   },
 
   onLoad(options) {
@@ -48,6 +54,7 @@ Page({
       today: todayRange.startDate,
       startDate: range.startDate,
       endDate: range.endDate,
+      reminderType: (options && options.reminderType) || '',
     });
   },
 
@@ -61,7 +68,16 @@ Page({
       return;
     }
 
-    this.reloadList();
+    this.loadReminderPreferences();
+    return this.reloadList();
+  },
+
+  loadReminderPreferences() {
+    const preferences = getReminderPreferences();
+
+    this.setData({
+      tenderSubscriptionEnabled: preferences.tenderSubscriptionEnabled,
+    });
   },
 
   onPullDownRefresh() {
@@ -144,6 +160,15 @@ Page({
         pageNo: data.pageNo || pageNo,
         total: data.total || 0,
         finished,
+        reminderBanner: getTenderReminder({
+          preferences: {
+            tenderSubscriptionEnabled: this.data.tenderSubscriptionEnabled,
+          },
+          total: data.total || 0,
+          startDate: this.data.startDate,
+          endDate: this.data.endDate,
+          reminderType: this.data.reminderType,
+        }),
       });
     } catch (error) {
       wx.showToast({
@@ -162,6 +187,18 @@ Page({
 
     wx.navigateTo({
       url: `/pages/tender-detail/index?sourceItemId=${id}`,
+    });
+  },
+
+  openMembershipStatus() {
+    wx.navigateTo({
+      url: '/pages/membership-status/index',
+    });
+  },
+
+  handleReminderAction() {
+    wx.navigateTo({
+      url: '/pages/membership-status/index?reminderType=new_tender_subscription',
     });
   },
 

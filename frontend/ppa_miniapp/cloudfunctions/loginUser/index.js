@@ -6,6 +6,32 @@ cloud.init({
 
 const db = cloud.database();
 
+function toTrimmedString(value) {
+  return String(value || '').trim();
+}
+
+function resolveDisplayName(event = {}, existingUser = null) {
+  const requestedDisplayName = toTrimmedString(event.displayName);
+
+  if (requestedDisplayName) {
+    return requestedDisplayName;
+  }
+
+  const candidates = existingUser
+    ? [existingUser.display_name, existingUser.nickname, event.nickname, '微信用户']
+    : [event.nickname, '微信用户'];
+
+  for (const candidate of candidates) {
+    const normalized = toTrimmedString(candidate);
+
+    if (normalized) {
+      return normalized;
+    }
+  }
+
+  return '微信用户';
+}
+
 function success(data) {
   return {
     success: true,
@@ -33,14 +59,17 @@ exports.main = async (event = {}) => {
     }
 
     const now = new Date().toISOString();
-    const displayName = String(event.displayName || event.nickname || '微信用户').trim();
-    const nickname = String(event.nickname || '').trim();
-    const avatarUrl = String(event.avatarUrl || '').trim();
+    const requestedNickname = toTrimmedString(event.nickname);
+    const requestedAvatarUrl = toTrimmedString(event.avatarUrl);
     const collection = db.collection('miniapp_users');
     const existing = await collection.where({ openid: OPENID }).limit(1).get();
+    const existingUser = existing.data[0] || null;
+    const displayName = resolveDisplayName(event, existingUser);
+    const nickname = requestedNickname || (existingUser && existingUser.nickname) || '';
+    const avatarUrl = requestedAvatarUrl || (existingUser && existingUser.avatar_url) || '';
 
-    if (existing.data.length > 0) {
-      await collection.doc(existing.data[0]._id).update({
+    if (existingUser) {
+      await collection.doc(existingUser._id).update({
         data: {
           display_name: displayName,
           nickname,

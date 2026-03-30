@@ -7,6 +7,19 @@ cloud.init({
 const db = cloud.database();
 const command = db.command;
 const DATE_PATTERN = /^\d{4}-\d{2}-\d{2}$/;
+const PUBLIC_LIST_FIELDS = [
+  'source_item_id',
+  'title',
+  'published_at',
+  'published_date',
+  'deadline_at',
+  'deadline_date',
+  'issuer',
+  'budget_amount',
+  'adopt_status',
+  'adopted_by_name',
+  'adopted_at',
+];
 
 function success(data) {
   return {
@@ -37,6 +50,18 @@ function getChinaDateString(date = new Date()) {
   const month = pad(chinaDate.getUTCMonth() + 1);
   const day = pad(chinaDate.getUTCDate());
   return `${year}-${month}-${day}`;
+}
+
+function buildListItem(tender = {}) {
+  const listItem = {};
+
+  PUBLIC_LIST_FIELDS.forEach((field) => {
+    if (tender[field] !== undefined) {
+      listItem[field] = tender[field];
+    }
+  });
+
+  return listItem;
 }
 
 exports.main = async (event = {}) => {
@@ -71,7 +96,7 @@ exports.main = async (event = {}) => {
       .get();
 
     return success({
-      list: listResponse.data || [],
+      list: (listResponse.data || []).map(buildListItem),
       pageNo,
       pageSize,
       total: totalResponse.total || 0,

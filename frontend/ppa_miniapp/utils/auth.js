@@ -1,15 +1,47 @@
 const USER_STORAGE_KEY = 'ppaMiniappUser';
 
+function toTrimmedString(value) {
+  return String(value || '').trim();
+}
+
+function normalizeUser(user) {
+  if (!user || typeof user !== 'object') {
+    return null;
+  }
+
+  const openid = toTrimmedString(user.openid);
+  const displayName = toTrimmedString(user.displayName || user.display_name);
+
+  if (!openid || !displayName) {
+    return null;
+  }
+
+  return {
+    openid,
+    displayName,
+    nickname: toTrimmedString(user.nickname),
+    avatarUrl: toTrimmedString(user.avatarUrl || user.avatar_url),
+  };
+}
+
 function getCachedUser() {
   try {
-    return wx.getStorageSync(USER_STORAGE_KEY) || null;
+    return normalizeUser(wx.getStorageSync(USER_STORAGE_KEY));
   } catch (error) {
     return null;
   }
 }
 
 function setCachedUser(user) {
-  wx.setStorageSync(USER_STORAGE_KEY, user);
+  const normalizedUser = normalizeUser(user);
+
+  if (!normalizedUser) {
+    clearCachedUser();
+    return null;
+  }
+
+  wx.setStorageSync(USER_STORAGE_KEY, normalizedUser);
+  return normalizedUser;
 }
 
 function clearCachedUser() {
@@ -19,5 +51,6 @@ function clearCachedUser() {
 module.exports = {
   clearCachedUser,
   getCachedUser,
+  normalizeUser,
   setCachedUser,
 };

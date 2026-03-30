@@ -74,9 +74,13 @@ Page({
         nickname: this.data.nickname,
         avatarUrl: this.data.avatarUrl,
       });
+      const cachedUser = setCachedUser(user);
 
-      setCachedUser(user);
-      getApp().globalData.user = user;
+      if (!cachedUser) {
+        throw new Error('登录返回用户信息无效');
+      }
+
+      getApp().globalData.user = cachedUser;
 
       wx.hideLoading();
       wx.showToast({

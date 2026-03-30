@@ -1,7 +1,23 @@
 <view class="page list-page">
+  <view wx:if="{{reminderBanner}}" class="card reminder-banner">
+    <view class="reminder-banner__header">
+      <text class="reminder-banner__title">{{reminderBanner.title}}</text>
+      <text class="status-chip status-chip--open">站内提醒</text>
+    </view>
+    <text class="reminder-banner__description">{{reminderBanner.description}}</text>
+    <button class="secondary-button reminder-banner__action" bindtap="handleReminderAction">
+      {{reminderBanner.actionText}}
+    </button>
+  </view>
+
   <view class="card filter-card">
     <view class="filter-header">
-      <text class="title">日期范围</text>
+      <view class="filter-header__top">
+        <text class="title">日期范围</text>
+        <button class="secondary-button filter-header__action" bindtap="openMembershipStatus">
+          会员状态
+        </button>
+      </view>
       <text class="subtle">默认展示当天招标</text>
     </view>
 
@@ -56,7 +72,7 @@
         </view>
         <view class="meta-item">
           <text class="meta-label subtle">招标单位</text>
-          <text>{{item.issuer}}</text>
+          <text>{{item.issuerText}}</text>
         </view>
         <view class="meta-item">
           <text class="meta-label subtle">预算金额</text>

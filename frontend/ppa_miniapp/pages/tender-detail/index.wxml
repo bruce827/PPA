@@ -44,7 +44,25 @@
       </view>
     </view>
 
-    <view class="card section-card" wx:if="{{detail.extra}}">
+    <view class="card membership-card" wx:if="{{!hasFullAccess}}">
+      <view class="membership-card__header">
+        <text class="membership-card__title">{{detail.accessTitle}}</text>
+        <text class="membership-card__badge">{{detail.membershipStatus === 'expired' ? '已过期' : '未开通'}}</text>
+      </view>
+      <text class="membership-card__description">{{detail.accessDescription}}</text>
+      <button class="primary-button membership-card__button" bindtap="handleMembershipAction">
+        {{detail.accessActionText}}
+      </button>
+      <view class="service-entry-card" wx:if="{{detail.serviceEntry.hasServiceEntry}}">
+        <text class="service-entry-card__title">{{detail.serviceEntry.title}}</text>
+        <text class="service-entry-card__description">{{detail.serviceEntry.description}}</text>
+        <button class="secondary-button service-entry-card__button" bindtap="handleOpenWebService">
+          {{detail.serviceEntry.ctaText}}
+        </button>
+      </view>
+    </view>
+
+    <view class="card section-card" wx:if="{{hasFullAccess && detail.extra}}">
       <view class="section-title">更多信息</view>
       <view class="detail-grid">
         <view class="detail-item" wx:if="{{detail.extra.bid_package_no}}">
@@ -104,13 +122,13 @@
       </view>
     </view>
 
-    <view class="card section-card">
+    <view class="card section-card" wx:if="{{hasFullAccess}}">
       <view class="section-title">招标公告</view>
       <rich-text wx:if="{{detail.announcement_html}}" nodes="{{detail.announcement_html}}"></rich-text>
       <text wx:else class="plain-announcement">{{detail.announcement_plain_text || '暂无招标公告'}}</text>
     </view>
 
-    <view class="card section-card">
+    <view class="card section-card" wx:if="{{hasFullAccess}}">
       <view class="section-title">原文链接</view>
       <text class="source-link">{{detail.source_url || '暂无原文链接'}}</text>
       <button wx:if="{{detail.source_url}}" class="secondary-button" bindtap="handleCopyLink">
@@ -118,9 +136,106 @@
       </button>
     </view>
 
+    <view class="card section-card" wx:if="{{hasFullAccess}}">
+      <view class="section-title">人工评估</view>
+      <block wx:if="{{detail.evaluationSummary && detail.evaluationSummary.has_evaluation}}">
+        <view class="detail-grid">
+          <view class="detail-item" wx:if="{{detail.evaluationResult.decision_label}}">
+            <text class="detail-label subtle">评估结论</text>
+            <text>{{detail.evaluationResult.decision_label}}</text>
+          </view>
+          <view class="detail-item" wx:if="{{detail.evaluationResult.confidence_label}}">
+            <text class="detail-label subtle">判断信心</text>
+            <text>{{detail.evaluationResult.confidence_label}}</text>
+          </view>
+          <view class="detail-item">
+            <text class="detail-label subtle">评估版本</text>
+            <text>V{{detail.evaluationSummary.evaluation_version || 1}}</text>
+          </view>
+          <view class="detail-item">
+            <text class="detail-label subtle">成果物数量</text>
+            <text>{{detail.evaluationSummary.artifact_count || 0}}</text>
+          </view>
+          <view class="detail-item" wx:if="{{detail.evaluationSummary.updatedText}}">
+            <text class="detail-label subtle">最近更新</text>
+            <text>{{detail.evaluationSummary.updatedText}}</text>
+          </view>
+        </view>
+        <view class="extra-block" wx:if="{{detail.evaluationSummary.title}}">
+          <text class="detail-label subtle">评估标题</text>
+          <text class="multiline">{{detail.evaluationSummary.title}}</text>
+        </view>
+        <view class="extra-block" wx:if="{{detail.evaluationSummary.summary}}">
+          <text class="detail-label subtle">评估摘要</text>
+          <text class="multiline">{{detail.evaluationSummary.summary}}</text>
+        </view>
+        <view class="extra-block" wx:if="{{detail.evaluationSummary.result_excerpt}}">
+          <text class="detail-label subtle">判断摘要</text>
+          <text class="multiline">{{detail.evaluationSummary.result_excerpt}}</text>
+        </view>
+        <view class="extra-block" wx:if="{{detail.evaluationResult.analysis_summary}}">
+          <text class="detail-label subtle">完整判断</text>
+          <text class="multiline">{{detail.evaluationResult.analysis_summary}}</text>
+        </view>
+        <view class="extra-block" wx:if="{{detail.evaluationResult.strengths.length}}">
+          <text class="detail-label subtle">利好因素</text>
+          <view class="bullet-list">
+            <text wx:for="{{detail.evaluationResult.strengths}}" wx:key="index" class="bullet-item">• {{item}}</text>
+          </view>
+        </view>
+        <view class="extra-block" wx:if="{{detail.evaluationResult.risks.length}}">
+          <text class="detail-label subtle">主要风险</text>
+          <view class="bullet-list">
+            <text wx:for="{{detail.evaluationResult.risks}}" wx:key="index" class="bullet-item">• {{item}}</text>
+          </view>
+        </view>
+        <view class="extra-block" wx:if="{{detail.evaluationResult.recommendedActions.length}}">
+          <text class="detail-label subtle">建议动作</text>
+          <view class="bullet-list">
+            <text wx:for="{{detail.evaluationResult.recommendedActions}}" wx:key="index" class="bullet-item">• {{item}}</text>
+          </view>
+        </view>
+      </block>
+      <text wx:else class="subtle">暂无人工评估结果，后续接入 Web 端人工评估后会在这里展示。</text>
+    </view>
+
+    <view class="card section-card" wx:if="{{hasFullAccess}}">
+      <view class="section-title">Excel 成果物</view>
+      <block wx:if="{{detail.evaluationArtifacts.length}}">
+        <view wx:for="{{detail.evaluationArtifacts}}" wx:key="artifactId" class="artifact-item">
+          <view class="artifact-item__main">
+            <text class="artifact-item__title">{{item.name}}</text>
+            <text class="subtle">{{item.fileType.toUpperCase()}} · {{item.updatedText || '最新版本'}}</text>
+          </view>
+          <button
+            class="secondary-button artifact-item__button"
+            data-id="{{item.artifactId}}"
+            data-url="{{item.downloadUrl}}"
+            bindtap="handleDownloadArtifact"
+            loading="{{artifactDownloadingId === item.artifactId}}"
+            disabled="{{artifactDownloadingId && artifactDownloadingId !== item.artifactId}}"
+          >
+            下载成果物
+          </button>
+        </view>
+      </block>
+      <text wx:else class="subtle">当前项目暂未生成 Excel 成果物，后续生成后会在这里提供下载。</text>
+    </view>
+
+    <view class="card section-card" wx:if="{{hasFullAccess && detail.serviceEntry.hasServiceEntry}}">
+      <view class="section-title">进一步服务</view>
+      <view class="service-entry-card service-entry-card--embedded">
+        <text class="service-entry-card__title">{{detail.serviceEntry.title}}</text>
+        <text class="service-entry-card__description">{{detail.serviceEntry.description}}</text>
+        <button class="secondary-button service-entry-card__button" bindtap="handleOpenWebService">
+          {{detail.serviceEntry.ctaText}}
+        </button>
+      </view>
+    </view>
+
     <view class="action-row">
       <button
-        wx:if="{{canAdopt}}"
+        wx:if="{{hasFullAccess && canAdopt}}"
         class="primary-button"
         loading="{{submitting}}"
         bindtap="handleAdopt"
@@ -129,7 +244,7 @@
       </button>
 
       <button
-        wx:elif="{{canCancel}}"
+        wx:elif="{{hasFullAccess && canCancel}}"
         class="secondary-button"
         loading="{{submitting}}"
         bindtap="handleCancelAdoption"
