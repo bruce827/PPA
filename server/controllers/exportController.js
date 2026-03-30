@@ -114,6 +114,10 @@ exports.exportExcel = async (req, res, next) => {
         errorMessage = 'Failed to parse assessment data';
       } else if (error.name === 'ExportDataInvalidError') {
         errorMessage = 'Invalid assessment data structure';
+      } else if (error.name === 'BusinessQuoteMissingError') {
+        errorMessage = 'Business quote not found';
+      } else if (error.name === 'BusinessQuoteParseError') {
+        errorMessage = 'Failed to parse business quote data';
       } else if (error.name === 'ExportCostMismatchError') {
         errorMessage = error.message;
       } else if (error.name === 'ExportConsistencyError') {

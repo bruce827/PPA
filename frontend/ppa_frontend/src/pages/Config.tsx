@@ -5,37 +5,51 @@ import {
   deleteRiskItem,
   deleteRole,
   deleteTravelCost,
+  getBusinessPricingConfig,
   getRiskItemList,
   getRoleList,
   getTravelCostList,
+  updateBusinessPricingConfig,
   updateRiskItem,
   updateRole,
   updateTravelCost,
 } from '@/services/config';
+import {
+  CUSTOM_DEVELOPMENT_PRICING_FIELD_CONFIGS,
+  ENTERPRISE_PRODUCT_RATE_TOTAL,
+  ENTERPRISE_PRODUCT_PRICING_FIELD_CONFIGS,
+  calculateEnterpriseProductRateTotal,
+  normalizeBusinessPricingSettingsValues,
+} from '@/constants/businessPricing';
 import {
   PageContainer,
   ProForm,
   ProFormDigit,
   ProFormList,
   ProFormSelect,
+  ProFormSlider,
   ProFormText,
   ProTable,
 } from '@ant-design/pro-components';
 import { MenuOutlined } from '@ant-design/icons';
 import {
   Button,
+  Col,
   Divider,
   Form,
   Input,
   message,
   Modal,
   Popconfirm,
+  Row,
   Space,
   Tabs,
   Tooltip,
+  Typography,
 } from 'antd';
 import React, { useMemo, useRef, useState } from 'react';
 import Web3DRiskConfig from './Config/Web3DRisk';
+import './Config.less';
 
 const RoleManagement = () => {
   const actionRef = useRef();
@@ -619,6 +633,147 @@ const TravelCostManagement = () => {
   );
 };
 
+const BusinessPricingManagement = () => {
+  const [form] = Form.useForm();
+  const [loading, setLoading] = useState(false);
+  const getRequestErrorMessage = (error: any, fallback: string) =>
+    error?.info?.data?.message || error?.info?.message || error?.message || fallback;
+
+  const renderPricingSection = (
+    title: string,
+    fields: Array<{
+      name: string;
+      configLabel: string;
+      description: string;
+      min: number;
+      max: number;
+    }>,
+    sectionKey: 'custom_development' | 'enterprise_product',
+    description?: string,
+  ) => (
+    <div className="business-pricing-grid" style={{ marginTop: 24 }}>
+      <Typography.Title level={5} style={{ marginBottom: 12 }}>
+        {title}
+      </Typography.Title>
+      {description ? (
+        <Typography.Paragraph type="secondary" style={{ marginBottom: 16 }}>
+          {description}
+        </Typography.Paragraph>
+      ) : null}
+      <Row gutter={[32, 16]} className="business-pricing-fields-row">
+        {fields.map((field) => (
+          <Col
+            key={field.name}
+            xs={24}
+            md={12}
+            className="business-pricing-field-col"
+          >
+            <div className="business-pricing-slider-item">
+              <ProFormSlider
+                name={[sectionKey, field.name]}
+                label={field.configLabel}
+                tooltip={field.description}
+                extra={`建议区间：${field.min}% - ${field.max}%`}
+                min={field.min}
+                max={field.max}
+                marks={{
+                  [field.min]: `${field.min}%`,
+                  [field.max]: `${field.max}%`,
+                }}
+                fieldProps={{
+                  className: 'business-pricing-slider-control',
+                  step: 1,
+                  tooltip: {
+                    formatter: (value) =>
+                      typeof value === 'number' ? `${value}%` : '',
+                  },
+                }}
+                rules={[{ required: true, message: `请选择${field.configLabel}` }]}
+              />
+            </div>
+          </Col>
+        ))}
+      </Row>
+    </div>
+  );
+
+  const loadConfig = async () => {
+    try {
+      setLoading(true);
+      const res = await getBusinessPricingConfig();
+      if (res?.data) {
+        form.setFieldsValue(normalizeBusinessPricingSettingsValues(res.data));
+      }
+    } catch (error) {
+      message.error(getRequestErrorMessage(error, '加载商务报价配置失败'));
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    loadConfig();
+  }, []);
+
+  return (
+    <ProForm
+      form={form}
+      loading={loading}
+      layout="vertical"
+      initialValues={normalizeBusinessPricingSettingsValues()}
+      submitter={{
+        searchConfig: { submitText: '保存配置' },
+        resetButtonProps: {
+          onClick: () => {
+            loadConfig();
+          },
+        },
+      }}
+      onFinish={async (values) => {
+        try {
+          const normalized = normalizeBusinessPricingSettingsValues(values);
+          const enterpriseProductTotal = calculateEnterpriseProductRateTotal(
+            normalized.enterprise_product,
+          );
+          if (
+            Math.abs(enterpriseProductTotal - ENTERPRISE_PRODUCT_RATE_TOTAL) >
+            0.001
+          ) {
+            message.error(
+              `企业级产品成本结构合计必须为 ${ENTERPRISE_PRODUCT_RATE_TOTAL}%`,
+            );
+            return false;
+          }
+          await updateBusinessPricingConfig(
+            normalized,
+          );
+          message.success('商务报价配置已保存');
+          return true;
+        } catch (error) {
+          message.error(getRequestErrorMessage(error, '保存商务报价配置失败'));
+          return false;
+        }
+      }}
+    >
+      <Typography.Paragraph type="secondary" style={{ marginBottom: 24 }}>
+        商务报价配置当前分成两组：一组用于 B 端定制开发报价，一组用于企业级产品实施成本结构。
+      </Typography.Paragraph>
+      {renderPricingSection(
+        'B端定制开发默认参数',
+        CUSTOM_DEVELOPMENT_PRICING_FIELD_CONFIGS,
+        'custom_development',
+        '用于当前商务报价弹窗和默认报价参数，适用于人力交付为主的定制开发项目。',
+      )}
+      {renderPricingSection(
+        '企业级产品默认成本结构',
+        ENTERPRISE_PRODUCT_PRICING_FIELD_CONFIGS,
+        'enterprise_product',
+        '用于标准化产品实施场景的成本结构配置。四项占比合计必须保持为 100%，系统会按 COGS + CSM 占比反推总商业成本池。',
+      )}
+    </ProForm>
+  );
+};
+
 const ConfigPage = () => {
   const items = [
     {
@@ -640,6 +795,11 @@ const ConfigPage = () => {
       key: 'web3d-risk',
       label: 'Web3D 风险配置',
       children: <Web3DRiskConfig />,
+    },
+    {
+      key: 'business-pricing',
+      label: '商务报价配置',
+      children: <BusinessPricingManagement />,
     },
   ];
 

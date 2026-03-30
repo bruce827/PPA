@@ -122,6 +122,46 @@ function validateExternal(formatted) {
   // 这里暂不强制做一致性校验，只保留成本的一致性兜底。
 }
 
+function validateBusiness(formatted) {
+  if (!formatted || typeof formatted !== 'object') {
+    return;
+  }
+
+  const summary = formatted.summary || {};
+  const modules = Array.isArray(formatted.modules) ? formatted.modules : [];
+  if (!modules.length) {
+    return;
+  }
+
+  const summaryReferenceValue =
+    summary.pricingMode === 'enterprise_product'
+      ? toNumber(summary.implementationCostWan)
+      : toNumber(summary.totalCost);
+  const modulesTotalCost = modules.reduce(
+    (sum, m) => sum + toNumber(m.quoteCostWan != null ? m.quoteCostWan : m.costWan),
+    0
+  );
+  const diffCost = Math.abs(summaryReferenceValue - modulesTotalCost);
+
+  if (diffCost > 0.05) {
+    throw new HttpError(
+      500,
+      `Business export consistency check failed: referenceValue (${summaryReferenceValue}) != sum(modules.quoteCostWan) (${modulesTotalCost})`,
+      'ExportConsistencyError',
+      {
+        type: 'business',
+        field:
+          summary.pricingMode === 'enterprise_product'
+            ? 'implementationCostWan'
+            : 'totalCost',
+        summaryReferenceValue,
+        modulesTotalCost,
+        diff: roundToDecimals(diffCost, 3)
+      }
+    );
+  }
+}
+
 /**
  * 描述：根据导出版本分派到内部版或对外版的具体一致性校验函数。
  * @param {Object} formatted - 标准化导出数据对象。
@@ -132,6 +172,8 @@ function validateExportData(formatted, version) {
   const normalized = (version || 'internal').toLowerCase();
   if (normalized === 'external') {
     validateExternal(formatted);
+  } else if (normalized === 'business') {
+    validateBusiness(formatted);
   } else {
     validateInternal(formatted);
   }

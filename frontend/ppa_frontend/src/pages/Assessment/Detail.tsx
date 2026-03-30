@@ -1,11 +1,16 @@
 import { NEUTRAL_TEXT_COLOR, RISK_LEVEL_COLORS } from '@/constants';
 import {
+  ENTERPRISE_PRODUCT_RATE_TOTAL,
+  getBusinessPricingModeLabel,
+} from '@/constants/businessPricing';
+import {
   generateProjectTagsWithAI,
   getConfigAll,
   getProjectDetail,
   getProjectTagPrompts,
   type AiPrompt,
 } from '@/services/assessment';
+import BusinessQuoteModal from '@/components/BusinessQuoteModal';
 import { recommendContracts } from '@/services/contracts';
 import { exportProjectToExcel, updateProject } from '@/services/projects';
 import { PageContainer } from '@ant-design/pro-components';
@@ -30,7 +35,7 @@ import {
   Tag,
   Typography,
 } from 'antd';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 type ProjectDetail = API.ProjectInfo & { tags_json?: string };
 
@@ -116,6 +121,271 @@ const safeParseAssessmentDetails = (raw?: string) => {
   } catch (_e) {
     return null;
   }
+};
+
+const safeParseBusinessQuote = (raw?: string) => {
+  if (!raw || typeof raw !== 'string') return null;
+  try {
+    const parsed = JSON.parse(raw);
+    if (parsed && typeof parsed === 'object' && !Array.isArray(parsed)) {
+      const pricingMode =
+        parsed.pricing_mode === 'enterprise_product'
+          ? 'enterprise_product'
+          : 'custom_development';
+      return {
+        ...parsed,
+        pricing_mode: pricingMode,
+        pricing_mode_label:
+          parsed.pricing_mode_label ||
+          getBusinessPricingModeLabel(pricingMode),
+        amounts:
+          pricingMode === 'enterprise_product'
+            ? (() => {
+                const baseCostWan = Number(parsed.base_cost_wan || 0);
+                const rates = parsed.rates || {};
+                const variableShareRate =
+                  Number(rates.cogs_rate || 0) + Number(rates.csm_rate || 0);
+                const quoteTotal =
+                  variableShareRate > 0
+                    ? baseCostWan / (variableShareRate / 100)
+                    : 0;
+                return {
+                  rd_cost_wan: Number(
+                    (quoteTotal * (Number(rates.rd_rate || 0) / 100)).toFixed(2),
+                  ),
+                  cac_cost_wan: Number(
+                    (quoteTotal * (Number(rates.cac_rate || 0) / 100)).toFixed(2),
+                  ),
+                  cogs_cost_wan: Number(
+                    (quoteTotal * (Number(rates.cogs_rate || 0) / 100)).toFixed(2),
+                  ),
+                  csm_cost_wan: Number(
+                    (quoteTotal * (Number(rates.csm_rate || 0) / 100)).toFixed(2),
+                  ),
+                  variable_cost_share_rate: Number(
+                    variableShareRate.toFixed(2),
+                  ),
+                  non_variable_cost_wan: Number(
+                    (
+                      quoteTotal * (Number(rates.rd_rate || 0) / 100) +
+                      quoteTotal * (Number(rates.cac_rate || 0) / 100)
+                    ).toFixed(2),
+                  ),
+                  quote_total_wan: Number(quoteTotal.toFixed(2)),
+                };
+              })()
+            : parsed.amounts,
+      };
+    }
+    return null;
+  } catch (_e) {
+    return null;
+  }
+};
+
+const renderBusinessQuoteSummaryStats = (
+  businessQuote: API.BusinessQuoteSnapshot,
+  implementationCost: number,
+) => {
+  const amounts = businessQuote?.amounts || {};
+  const isEnterpriseProduct = businessQuote.pricing_mode === 'enterprise_product';
+
+  if (isEnterpriseProduct) {
+    return (
+      <Row gutter={[24, 16]}>
+        <Col xs={12} sm={12} md={4}>
+          <Statistic
+            title="单客户实施基线"
+            value={implementationCost}
+            suffix="万元"
+            precision={2}
+          />
+        </Col>
+        <Col xs={12} sm={12} md={4}>
+          <Statistic
+            title="R&D"
+            value={amounts.rd_cost_wan || 0}
+            suffix="万元"
+            precision={2}
+          />
+        </Col>
+        <Col xs={12} sm={12} md={4}>
+          <Statistic
+            title="CAC"
+            value={amounts.cac_cost_wan || 0}
+            suffix="万元"
+            precision={2}
+          />
+        </Col>
+        <Col xs={12} sm={12} md={4}>
+          <Statistic
+            title="COGS"
+            value={amounts.cogs_cost_wan || 0}
+            suffix="万元"
+            precision={2}
+          />
+        </Col>
+        <Col xs={12} sm={12} md={4}>
+          <Statistic
+            title="CSM"
+            value={amounts.csm_cost_wan || 0}
+            suffix="万元"
+            precision={2}
+          />
+        </Col>
+        <Col xs={12} sm={12} md={4}>
+          <Statistic
+            title="总商业成本池"
+            value={amounts.quote_total_wan || 0}
+            suffix="万元"
+            precision={2}
+            valueStyle={{ color: '#cf1322' }}
+          />
+        </Col>
+      </Row>
+    );
+  }
+
+  return (
+    <Row gutter={[24, 16]}>
+      <Col xs={12} sm={12} md={6}>
+        <Statistic
+          title="实施成本"
+          value={implementationCost}
+          suffix="万元"
+          precision={2}
+        />
+      </Col>
+      <Col xs={12} sm={12} md={6}>
+        <Statistic
+          title="税费"
+          value={amounts.tax_fee_wan || 0}
+          suffix="万元"
+          precision={2}
+        />
+      </Col>
+      <Col xs={12} sm={12} md={6}>
+        <Statistic
+          title="毛利额"
+          value={amounts.gross_profit_wan || 0}
+          suffix="万元"
+          precision={2}
+          valueStyle={{ color: '#52c41a' }}
+        />
+      </Col>
+      <Col xs={12} sm={12} md={6}>
+        <Statistic
+          title="商务报价总计"
+          value={amounts.quote_total_wan || 0}
+          suffix="万元"
+          precision={2}
+          valueStyle={{ color: '#cf1322' }}
+        />
+      </Col>
+    </Row>
+  );
+};
+
+const renderBusinessQuoteDescriptions = (
+  businessQuote: API.BusinessQuoteSnapshot,
+) => {
+  const amounts = businessQuote?.amounts || {};
+  const rates = businessQuote?.rates || {};
+  const isEnterpriseProduct = businessQuote.pricing_mode === 'enterprise_product';
+
+  if (isEnterpriseProduct) {
+    return (
+      <Descriptions bordered column={2}>
+        <Descriptions.Item label="报价模式">
+          {businessQuote.pricing_mode_label || getBusinessPricingModeLabel('enterprise_product')}
+        </Descriptions.Item>
+        <Descriptions.Item label="单客户实施基线口径">
+          按 COGS + CSM 占比反推
+        </Descriptions.Item>
+        <Descriptions.Item label="研发成本（R&D）占比">
+          {Number((rates as API.EnterpriseProductPricingConfig).rd_rate || 0).toFixed(2)}%
+        </Descriptions.Item>
+        <Descriptions.Item label="研发成本金额">
+          {Number(amounts.rd_cost_wan || 0).toFixed(2)} 万元
+        </Descriptions.Item>
+        <Descriptions.Item label="营销与获客成本（CAC）占比">
+          {Number((rates as API.EnterpriseProductPricingConfig).cac_rate || 0).toFixed(2)}%
+        </Descriptions.Item>
+        <Descriptions.Item label="营销与获客成本金额">
+          {Number(amounts.cac_cost_wan || 0).toFixed(2)} 万元
+        </Descriptions.Item>
+        <Descriptions.Item label="基础设施成本（COGS）占比">
+          {Number((rates as API.EnterpriseProductPricingConfig).cogs_rate || 0).toFixed(2)}%
+        </Descriptions.Item>
+        <Descriptions.Item label="基础设施成本金额">
+          {Number(amounts.cogs_cost_wan || 0).toFixed(2)} 万元
+        </Descriptions.Item>
+        <Descriptions.Item label="客户成功与运维（CSM）占比">
+          {Number((rates as API.EnterpriseProductPricingConfig).csm_rate || 0).toFixed(2)}%
+        </Descriptions.Item>
+        <Descriptions.Item label="客户成功与运维金额">
+          {Number(amounts.csm_cost_wan || 0).toFixed(2)} 万元
+        </Descriptions.Item>
+        <Descriptions.Item label="可变成本占比（COGS+CSM）">
+          {Number(amounts.variable_cost_share_rate || 0).toFixed(2)}%
+        </Descriptions.Item>
+        <Descriptions.Item label="非可变成本合计">
+          {Number(amounts.non_variable_cost_wan || 0).toFixed(2)} 万元
+        </Descriptions.Item>
+        <Descriptions.Item label="四项结构合计">
+          {ENTERPRISE_PRODUCT_RATE_TOTAL.toFixed(2)}%
+        </Descriptions.Item>
+        <Descriptions.Item label="备注" span={2}>
+          {businessQuote?.remark || '—'}
+        </Descriptions.Item>
+        <Descriptions.Item label="报价时间" span={2}>
+          {businessQuote?.updated_at
+            ? new Date(businessQuote.updated_at).toLocaleString('zh-CN')
+            : '—'}
+        </Descriptions.Item>
+      </Descriptions>
+    );
+  }
+
+  return (
+      <Descriptions bordered column={2}>
+      <Descriptions.Item label="报价模式">
+        {businessQuote.pricing_mode_label || getBusinessPricingModeLabel('custom_development')}
+      </Descriptions.Item>
+      <Descriptions.Item label="管理分摊率">
+        {Number((rates as API.BusinessPricingConfig).management_rate || 0).toFixed(2)}%
+      </Descriptions.Item>
+      <Descriptions.Item label="管理分摊金额">
+        {Number(amounts.management_fee_wan || 0).toFixed(2)} 万元
+      </Descriptions.Item>
+      <Descriptions.Item label="销售商务率">
+        {Number((rates as API.BusinessPricingConfig).sales_rate || 0).toFixed(2)}%
+      </Descriptions.Item>
+      <Descriptions.Item label="销售商务金额">
+        {Number(amounts.sales_fee_wan || 0).toFixed(2)} 万元
+      </Descriptions.Item>
+      <Descriptions.Item label="利润率">
+        {Number((rates as API.BusinessPricingConfig).profit_rate || 0).toFixed(2)}%
+      </Descriptions.Item>
+      <Descriptions.Item label="利润金额">
+        {Number(amounts.profit_fee_wan || 0).toFixed(2)} 万元
+      </Descriptions.Item>
+      <Descriptions.Item label="税率">
+        {Number((rates as API.BusinessPricingConfig).tax_rate || 0).toFixed(2)}%
+      </Descriptions.Item>
+      <Descriptions.Item label="毛利率">
+        {Number(amounts.gross_margin_rate || 0).toFixed(2)}%
+      </Descriptions.Item>
+      <Descriptions.Item label="备注" span={2}>
+        {businessQuote?.remark || '—'}
+      </Descriptions.Item>
+      <Descriptions.Item label="报价时间" span={2}>
+        {businessQuote?.updated_at
+          ? new Date(businessQuote.updated_at).toLocaleString('zh-CN')
+          : '—'}
+      </Descriptions.Item>
+    </Descriptions>
+  );
 };
 
 const normalizeSnapshotText = (value: any) => {
@@ -238,6 +508,7 @@ const AssessmentDetailPage = () => {
   const [recommendLoading, setRecommendLoading] = useState(false);
   const [recommendItems, setRecommendItems] = useState<any[]>([]);
   const [collapsedRecommend, setCollapsedRecommend] = useState<Record<string, boolean>>({});
+  const [quoteModalOpen, setQuoteModalOpen] = useState(false);
 
   const [configData, setConfigData] = useState<{
     roles: API.RoleConfig[];
@@ -245,7 +516,7 @@ const AssessmentDetailPage = () => {
   const [loading, setLoading] = useState(true);
   const params = useParams();
 
-  const loadRecommendations = async (tags: string[]) => {
+  const loadRecommendations = useCallback(async (tags: string[]) => {
     const nextTags = normalizeTags(tags);
     if (!nextTags.length) {
       setRecommendItems([]);
@@ -263,9 +534,9 @@ const AssessmentDetailPage = () => {
     } finally {
       setRecommendLoading(false);
     }
-  };
+  }, [messageApi]);
 
-  const loadTagPrompts = async () => {
+  const loadTagPrompts = useCallback(async () => {
     setTagPromptsLoading(true);
     try {
       const res = await getProjectTagPrompts();
@@ -279,68 +550,65 @@ const AssessmentDetailPage = () => {
     } finally {
       setTagPromptsLoading(false);
     }
-  };
+  }, [messageApi]);
+
+  const loadData = useCallback(async () => {
+    if (!params.id) return;
+
+    try {
+      setLoading(true);
+
+      const projectRes = await getProjectDetail(params.id);
+      const projectData: any = projectRes.data;
+      setProject(projectData);
+
+      const parsedDetails = safeParseAssessmentDetails(projectData?.assessment_details_json);
+      const tagsFromAssessment = Array.isArray(parsedDetails?.tags) ? parsedDetails.tags : [];
+      const tagsFromColumn = safeParseTagsJson(projectData?.tags_json);
+      const initialTags = normalizeTags(tagsFromColumn.length ? tagsFromColumn : tagsFromAssessment);
+      setSavedTags(initialTags);
+      setEditingTags(initialTags);
+
+      if (projectRes.data?.assessment_details_json) {
+        try {
+          const parsed = JSON.parse(projectRes.data.assessment_details_json);
+          const normalized = {
+            ...parsed,
+            ai_unmatched_risks: Array.isArray(parsed?.ai_unmatched_risks)
+              ? parsed.ai_unmatched_risks
+              : [],
+            custom_risk_items: Array.isArray(parsed?.custom_risk_items)
+              ? parsed.custom_risk_items
+              : [],
+          };
+          setAssessmentData(normalized);
+        } catch (error) {
+          messageApi.error('评估数据解析失败');
+        }
+      }
+
+      const configRes = await getConfigAll();
+      setConfigData({ roles: configRes.data.roles || [] });
+
+      await loadRecommendations(initialTags);
+    } catch (error: any) {
+      messageApi.error('加载项目详情失败');
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  }, [params.id, messageApi, loadRecommendations]);
 
   useEffect(() => {
-    const loadData = async () => {
-      if (!params.id) return;
-
-      try {
-        setLoading(true);
-
-        // 加载项目详情
-        const projectRes = await getProjectDetail(params.id);
-        const projectData: any = projectRes.data;
-        setProject(projectData);
-
-        const parsedDetails = safeParseAssessmentDetails(projectData?.assessment_details_json);
-        const tagsFromAssessment = Array.isArray(parsedDetails?.tags) ? parsedDetails.tags : [];
-        const tagsFromColumn = safeParseTagsJson(projectData?.tags_json);
-        const initialTags = normalizeTags(tagsFromColumn.length ? tagsFromColumn : tagsFromAssessment);
-        setSavedTags(initialTags);
-        setEditingTags(initialTags);
-
-        // 解析评估数据
-        if (projectRes.data?.assessment_details_json) {
-          try {
-            const parsed = JSON.parse(projectRes.data.assessment_details_json);
-            const normalized = {
-              ...parsed,
-              ai_unmatched_risks: Array.isArray(parsed?.ai_unmatched_risks)
-                ? parsed.ai_unmatched_risks
-                : [],
-              custom_risk_items: Array.isArray(parsed?.custom_risk_items)
-                ? parsed.custom_risk_items
-                : [],
-            };
-            setAssessmentData(normalized);
-          } catch (error) {
-            messageApi.error('评估数据解析失败');
-          }
-        }
-
-        // 加载配置数据（用于显示角色名称）
-        const configRes = await getConfigAll();
-        setConfigData({ roles: configRes.data.roles || [] });
-
-        await loadRecommendations(initialTags);
-      } catch (error: any) {
-        messageApi.error('加载项目详情失败');
-        console.error(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     loadData();
-  }, [params.id]);
+  }, [loadData]);
 
   useEffect(() => {
     if (tagModalOpen) {
       loadTagPrompts();
       tagForm.setFieldsValue({ promptId: undefined, variables: {} });
     }
-  }, [tagModalOpen]);
+  }, [tagModalOpen, loadTagPrompts, tagForm]);
 
   const confirmOverwriteTags = () => {
     return new Promise<boolean>((resolve) => {
@@ -509,11 +777,34 @@ const AssessmentDetailPage = () => {
       label: '基本信息',
       children: (
         <>
+          {project?.business_quote_json ? (
+            <Card title="商务报价概览" style={{ marginBottom: 16 }}>
+              {(() => {
+                const businessQuote = safeParseBusinessQuote(
+                  project.business_quote_json,
+                );
+                if (!businessQuote) return null;
+
+                return (
+                  <>
+                    <div style={{ marginBottom: 16 }}>
+                      {renderBusinessQuoteSummaryStats(
+                        businessQuote,
+                        businessQuote?.base_cost_wan || 0,
+                      )}
+                    </div>
+                    {renderBusinessQuoteDescriptions(businessQuote)}
+                  </>
+                );
+              })()}
+            </Card>
+          ) : null}
+
           <Card title="项目概览" style={{ marginBottom: 16 }}>
             <Row gutter={16}>
               <Col span={6}>
                 <Statistic
-                  title="报价总计"
+                  title="实施成本"
                   value={project.final_total_cost}
                   suffix="万元"
                   precision={2}
@@ -824,16 +1115,55 @@ const AssessmentDetailPage = () => {
     },
   ];
 
-  const handleExport = (version: 'internal' | 'external') => {
+  const handleExport = (version: 'internal' | 'external' | 'business') => {
     if (!project) return;
     const baseUrl = exportProjectToExcel(project.id);
     const url =
-      version === 'external' ? `${baseUrl}?version=external` : baseUrl;
+      version === 'internal' ? baseUrl : `${baseUrl}?version=${version}`;
     window.open(url, '_blank');
   };
 
+  const businessQuote = safeParseBusinessQuote(project?.business_quote_json);
+  const headerImplementationCost =
+    businessQuote?.base_cost_wan ?? project?.final_total_cost ?? 0;
+
   return (
     <PageContainer
+      content={
+        businessQuote ? (
+          <Space direction="vertical" size={12} style={{ width: '100%' }}>
+            <Space wrap size={[12, 8]}>
+              <Tag color="green">已生成商务报价</Tag>
+              <Tag color="blue">
+                {businessQuote.pricing_mode_label ||
+                  getBusinessPricingModeLabel(businessQuote.pricing_mode)}
+              </Tag>
+              <Typography.Text type="secondary">
+                报价时间：
+                {businessQuote.updated_at
+                  ? new Date(businessQuote.updated_at).toLocaleString('zh-CN')
+                  : '—'}
+              </Typography.Text>
+              {businessQuote.remark ? (
+                <Typography.Text type="secondary">
+                  备注：{businessQuote.remark}
+                </Typography.Text>
+              ) : null}
+            </Space>
+            {renderBusinessQuoteSummaryStats(
+              businessQuote,
+              headerImplementationCost,
+            )}
+          </Space>
+        ) : (
+          <Space wrap size={[12, 8]}>
+            <Tag>未生成商务报价</Tag>
+            <Typography.Text type="secondary">
+              商务报价会基于当前实施成本后置生成，可直接点击右侧“商务报价”。
+            </Typography.Text>
+          </Space>
+        )
+      }
       header={{
         title: project.name,
         subTitle: project.is_template ? (
@@ -855,6 +1185,12 @@ const AssessmentDetailPage = () => {
             重新评估
           </Button>,
           <Button
+            key="business-quote"
+            onClick={() => setQuoteModalOpen(true)}
+          >
+            商务报价
+          </Button>,
+          <Button
             key="export-internal"
             onClick={() => handleExport('internal')}
           >
@@ -866,11 +1202,28 @@ const AssessmentDetailPage = () => {
           >
             导出Excel（对外版）
           </Button>,
+          <Button
+            key="export-business"
+            disabled={!project?.business_quote_json}
+            onClick={() => handleExport('business')}
+          >
+            导出Excel（商务版）
+          </Button>,
         ],
       }}
     >
       {contextHolder}
       <Tabs items={tabItems} />
+      <BusinessQuoteModal
+        open={quoteModalOpen}
+        projectId={project?.id}
+        projectName={project?.name}
+        onCancel={() => setQuoteModalOpen(false)}
+        onSuccess={async () => {
+          setQuoteModalOpen(false);
+          await loadData();
+        }}
+      />
 
       <Modal
         title="AI 生成项目标签"

@@ -45,6 +45,23 @@ const CREATE_TABLES_SQL = `
       is_active BOOLEAN DEFAULT 1
   );
 
+  CREATE TABLE IF NOT EXISTS config_business_pricing (
+      id INTEGER PRIMARY KEY CHECK (id = 1),
+      tax_rate REAL NOT NULL DEFAULT 6,
+      management_rate REAL NOT NULL DEFAULT 12,
+      sales_rate REAL NOT NULL DEFAULT 12,
+      profit_rate REAL NOT NULL DEFAULT 15,
+      rd_rate REAL NOT NULL DEFAULT 35,
+      cac_rate REAL NOT NULL DEFAULT 40,
+      cogs_rate REAL NOT NULL DEFAULT 15,
+      csm_rate REAL NOT NULL DEFAULT 10,
+      updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+  );
+
+  INSERT OR IGNORE INTO config_business_pricing
+    (id, tax_rate, management_rate, sales_rate, profit_rate, rd_rate, cac_rate, cogs_rate, csm_rate)
+  VALUES (1, 6, 12, 12, 15, 35, 40, 15, 10);
+
   CREATE TABLE IF NOT EXISTS users (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       username TEXT NOT NULL UNIQUE,

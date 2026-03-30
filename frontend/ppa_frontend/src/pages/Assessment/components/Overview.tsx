@@ -577,8 +577,8 @@ const Overview: React.FC<OverviewProps> = ({
                 precision={2}
               />
             </Descriptions.Item>
-            <Descriptions.Item label="报价总计" span={2}>
-              <Tooltip title={`精确总成本 ${preciseTotal.toFixed(2)} 万元`}>
+            <Descriptions.Item label="实施成本" span={2}>
+              <Tooltip title={`精确实施成本 ${preciseTotal.toFixed(2)} 万元`}>
                 <Statistic
                   value={calculationResult.total_cost}
                   suffix="万元"

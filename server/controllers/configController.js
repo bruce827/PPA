@@ -1,4 +1,5 @@
 const configModel = require('../models/configModel');
+const { BUSINESS_PRICING } = require('../utils/constants');
 
 // ============ 角色配置 ============
 
@@ -122,6 +123,27 @@ exports.deleteTravelCost = async (req, res, next) => {
   }
 };
 
+// ============ 商务报价配置 ============
+
+exports.getBusinessPricingConfig = async (req, res, next) => {
+  try {
+    const config = await configModel.getBusinessPricingConfig();
+    res.json({ data: config });
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.updateBusinessPricingConfig = async (req, res, next) => {
+  try {
+    const payload = normalizeBusinessPricingConfig(req.body);
+    const result = await configModel.updateBusinessPricingConfig(payload);
+    res.json({ data: result });
+  } catch (error) {
+    next(error);
+  }
+};
+
 // ============ 聚合配置 ============
 
 exports.getAllConfigs = async (req, res, next) => {
@@ -153,4 +175,61 @@ function parseOptionsJSON(optionsJSON) {
     error.statusCode = 400;
     throw error;
   }
+}
+
+function normalizeBusinessPricingConfig(input) {
+  return {
+    custom_development: normalizeBusinessPricingSection(
+      input?.custom_development,
+      BUSINESS_PRICING.CUSTOM_DEVELOPMENT
+    ),
+    enterprise_product: normalizeBusinessPricingSection(
+      input?.enterprise_product,
+      BUSINESS_PRICING.ENTERPRISE_PRODUCT,
+      {
+        expectedTotal: 100,
+        totalLabel: '企业级产品成本结构',
+      }
+    ),
+  };
+}
+
+function normalizeBusinessPricingSection(input, ranges, options = {}) {
+  const normalized = {};
+
+  Object.entries(ranges).forEach(([field, range]) => {
+    const numeric = Number(input?.[field]);
+    if (!Number.isFinite(numeric)) {
+      const error = new Error(`${range.label}必须是有效数字`);
+      error.name = 'ValidationError';
+      error.statusCode = 400;
+      throw error;
+    }
+    if (numeric < range.min || numeric > range.max) {
+      const error = new Error(
+        `${range.label}必须在 ${range.min}% 到 ${range.max}% 之间`
+      );
+      error.name = 'ValidationError';
+      error.statusCode = 400;
+      throw error;
+    }
+    normalized[field] = numeric;
+  });
+
+  if (typeof options.expectedTotal === 'number') {
+    const total = Object.values(normalized).reduce(
+      (sum, value) => sum + Number(value || 0),
+      0
+    );
+    if (Math.abs(total - options.expectedTotal) > 0.001) {
+      const error = new Error(
+        `${options.totalLabel || '费率配置'}合计必须为 ${options.expectedTotal}%`
+      );
+      error.name = 'ValidationError';
+      error.statusCode = 400;
+      throw error;
+    }
+  }
+
+  return normalized;
 }

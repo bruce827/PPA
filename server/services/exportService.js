@@ -3,6 +3,7 @@
  *       并协调格式化器、渲染器和配置数据，对导出结果做一致性校验。
  */
 const PDFDocument = require('pdfkit');
+const businessFormatter = require('./export/formatters/businessFormatter');
 const internalFormatter = require('./export/formatters/internalFormatter');
 const externalFormatter = require('./export/formatters/externalFormatter');
 const excelRenderer = require('./export/renderers/excelRenderer');
@@ -133,7 +134,7 @@ const generatePDF = (project, res) => {
  * 描述：生成 Excel 导出结果，根据导出版本选择内部/对外格式，
  *       补充风险评估配置数据，执行一致性校验后返回工作簿和中间结构。
  * @param {Object} project - 项目记录，需包含 assessment_details_json 等原始评估数据。
- * @param {string} version - 导出版本标识，支持 internal（内部版）和 external（对外版）。
+ * @param {string} version - 导出版本标识，支持 internal（内部版）、external（对外版）和 business（商务版）。
  * @returns {Promise<{workbook: any, formattedData: Object, version: string}>}
  *          返回 ExcelJS 工作簿、格式化后的导出数据及归一化版本标识。
  */
@@ -153,7 +154,7 @@ const generateExcel = async (project, version) => {
   }
 
   const normalizedVersion = (version || 'internal').toLowerCase();
-  if (!['internal', 'external'].includes(normalizedVersion)) {
+  if (!['internal', 'external', 'business'].includes(normalizedVersion)) {
     throw new HttpError(
       400,
       'Invalid export version',
@@ -161,8 +162,12 @@ const generateExcel = async (project, version) => {
     );
   }
 
-  const formatter =
-    normalizedVersion === 'external' ? externalFormatter : internalFormatter;
+  let formatter = internalFormatter;
+  if (normalizedVersion === 'external') {
+    formatter = externalFormatter;
+  } else if (normalizedVersion === 'business') {
+    formatter = businessFormatter;
+  }
 
   const formattedData = await formatter.formatForExport(project);
 

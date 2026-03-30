@@ -71,6 +71,8 @@ declare namespace API {
     final_risk_score: number;
     final_workload_days: number;
     assessment_details_json: string;
+    business_quote_json?: string;
+    has_business_quote?: number | boolean;
     created_at: string;
     updated_at: string;
   };

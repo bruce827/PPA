@@ -93,6 +93,10 @@ router.post('/travel-costs', configController.createTravelCost);
 router.put('/travel-costs/:id', configController.updateTravelCost);
 router.delete('/travel-costs/:id', configController.deleteTravelCost);
 
+// 商务报价配置路由
+router.get('/business-pricing', configController.getBusinessPricingConfig);
+router.put('/business-pricing', configController.updateBusinessPricingConfig);
+
 // 聚合配置路由
 router.get('/all', configController.getAllConfigs);
 

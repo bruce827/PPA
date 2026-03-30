@@ -9,6 +9,8 @@ router.get('/templates', projectController.getAllTemplates);
 // 导出路由
 router.get('/:id/export/pdf', exportController.exportPDF);
 router.get('/:id/export/excel', exportController.exportExcel);
+router.get('/:id/business-quote', projectController.getBusinessQuote);
+router.post('/:id/business-quote', projectController.saveBusinessQuote);
 
 // 项目 CRUD 路由
 router.get('/:id', projectController.getProjectById);

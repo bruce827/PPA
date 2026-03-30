@@ -1,4 +1,5 @@
 const projectService = require('../services/projectService');
+const businessQuoteService = require('../services/businessQuoteService');
 
 const ALLOWED_SORT_BY_FIELDS = new Set([
   'final_total_cost',
@@ -38,6 +39,9 @@ const parseListOptions = (query) => {
   }
   if (typeof query?.final_total_cost_max !== 'undefined') {
     options.final_total_cost_max = query.final_total_cost_max;
+  }
+  if (typeof query?.has_business_quote !== 'undefined') {
+    options.has_business_quote = query.has_business_quote;
   }
   if (typeof query?.created_at_start !== 'undefined') {
     options.created_at_start = query.created_at_start;
@@ -87,6 +91,30 @@ exports.getProjectById = async (req, res, next) => {
     }
 
     res.json({ data: project });
+  } catch (error) {
+    next(error);
+  }
+};
+
+/**
+ * 获取商务报价上下文
+ */
+exports.getBusinessQuote = async (req, res, next) => {
+  try {
+    const result = await businessQuoteService.getBusinessQuoteContext(req.params.id);
+    res.json({ data: result });
+  } catch (error) {
+    next(error);
+  }
+};
+
+/**
+ * 保存商务报价快照
+ */
+exports.saveBusinessQuote = async (req, res, next) => {
+  try {
+    const result = await businessQuoteService.saveBusinessQuote(req.params.id, req.body);
+    res.json({ data: result });
   } catch (error) {
     next(error);
   }

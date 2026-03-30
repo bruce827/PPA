@@ -178,3 +178,34 @@ export async function deleteTravelCost(
     ...(options || {}),
   });
 }
+
+// ==================== 商务报价配置 ====================
+
+/** 获取商务报价配置 GET /api/config/business-pricing */
+export async function getBusinessPricingConfig(
+  options?: { [key: string]: any },
+) {
+  return request<{
+    data: API.BusinessPricingSettings;
+  }>('/api/config/business-pricing', {
+    method: 'GET',
+    ...(options || {}),
+  });
+}
+
+/** 更新商务报价配置 PUT /api/config/business-pricing */
+export async function updateBusinessPricingConfig(
+  data: API.BusinessPricingSettings,
+  options?: { [key: string]: any },
+) {
+  return request<{
+    data: API.BusinessPricingSettings;
+  }>('/api/config/business-pricing', {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data,
+    ...(options || {}),
+  });
+}

@@ -3,17 +3,51 @@ import {
   getProjectList,
   exportProjectToExcel,
 } from '@/services/projects';
+import BusinessQuoteModal from '@/components/BusinessQuoteModal';
 import { PageContainer, ProTable } from '@ant-design/pro-components';
 import { Link } from '@umijs/max';
 import { Button, Dropdown, Popconfirm, Tag, Tooltip, App } from 'antd';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 
 const HistoryPage = () => {
   const { message } = App.useApp();
   const actionRef = useRef();
+  const [quoteModalOpen, setQuoteModalOpen] = useState(false);
+  const [selectedProject, setSelectedProject] = useState<API.ProjectInfo | null>(
+    null,
+  );
   const isTemplateValue = (value: any) => {
     const normalized = String(value).toLowerCase();
     return ['1', 'true', 'yes'].includes(normalized);
+  };
+  const hasBusinessQuote = (value: any) => {
+    const normalized = String(value).toLowerCase();
+    return ['1', 'true', 'yes'].includes(normalized);
+  };
+  const getBusinessQuoteTotal = (record: API.ProjectInfo) => {
+    if (!record?.business_quote_json) return undefined;
+    try {
+      const parsed = JSON.parse(record.business_quote_json);
+      const pricingMode =
+        parsed?.pricing_mode === 'enterprise_product'
+          ? 'enterprise_product'
+          : 'custom_development';
+      const total =
+        pricingMode === 'enterprise_product'
+          ? (() => {
+              const baseCostWan = Number(parsed?.base_cost_wan || 0);
+              const variableShareRate =
+                Number(parsed?.rates?.cogs_rate || 0) +
+                Number(parsed?.rates?.csm_rate || 0);
+              return variableShareRate > 0
+                ? baseCostWan / (variableShareRate / 100)
+                : undefined;
+            })()
+          : parsed?.amounts?.quote_total_wan;
+      return Number.isFinite(Number(total)) ? Number(total) : undefined;
+    } catch (_error) {
+      return undefined;
+    }
   };
   const columns = [
     {
@@ -42,6 +76,20 @@ const HistoryPage = () => {
       },
     },
     {
+      valueType: 'select',
+      valueEnum: {
+        1: { text: '已生成' },
+        0: { text: '未生成' },
+      },
+      title: '商务报价状态',
+      dataIndex: 'has_business_quote_filter',
+      key: 'has_business_quote_filter',
+      hideInTable: true,
+      search: {
+        transform: (value) => ({ has_business_quote: value }),
+      },
+    },
+    {
       title: '是否模板',
       dataIndex: 'is_template',
       key: 'is_template',
@@ -56,7 +104,21 @@ const HistoryPage = () => {
         ),
     },
     {
-      title: '报价总计 (万元)',
+      title: '商务报价状态',
+      dataIndex: 'has_business_quote',
+      key: 'has_business_quote',
+      width: 120,
+      align: 'center',
+      hideInSearch: true,
+      render: (value) =>
+        hasBusinessQuote(value) ? (
+          <Tag color="green">已生成</Tag>
+        ) : (
+          <Tag>未生成</Tag>
+        ),
+    },
+    {
+      title: '实施成本 (万元)',
       dataIndex: 'final_total_cost',
       key: 'final_total_cost',
       width: 140,
@@ -66,7 +128,7 @@ const HistoryPage = () => {
       hideInSearch: true,
     },
     {
-      title: '报价总计 (万元)',
+      title: '实施成本 (万元)',
       dataIndex: 'final_total_cost_range',
       key: 'final_total_cost_range',
       valueType: 'digitRange',
@@ -79,6 +141,18 @@ const HistoryPage = () => {
           if (typeof max !== 'undefined') next.final_total_cost_max = max;
           return next;
         },
+      },
+    },
+    {
+      title: '商务报价总计 (万元)',
+      dataIndex: 'business_quote_total',
+      key: 'business_quote_total',
+      width: 160,
+      align: 'right',
+      hideInSearch: true,
+      render: (_, record) => {
+        const total = getBusinessQuoteTotal(record);
+        return typeof total === 'number' ? total.toFixed(2) : '-';
       },
     },
     {
@@ -123,7 +197,7 @@ const HistoryPage = () => {
       valueType: 'option',
       key: 'option',
       align: 'center',
-      width: 260,
+      width: 320,
       render: (text, record, _, action) => [
         <Link key="view" to={`/assessment/detail/${record.id}`}>
           查看
@@ -159,11 +233,39 @@ const HistoryPage = () => {
                   </a>
                 ),
               },
+              {
+                key: 'business',
+                disabled: !hasBusinessQuote(record.has_business_quote),
+                label: (
+                  <a
+                    href={`${exportProjectToExcel(record.id)}?version=business`}
+                    target="_blank"
+                    rel="noreferrer"
+                    onClick={(event) => {
+                      if (!hasBusinessQuote(record.has_business_quote)) {
+                        event.preventDefault();
+                      }
+                    }}
+                  >
+                    导出Excel（商务）
+                  </a>
+                ),
+              },
             ],
           }}
         >
           <Button type="link">导出</Button>
         </Dropdown>,
+        <Button
+          key="business-quote"
+          type="link"
+          onClick={() => {
+            setSelectedProject(record);
+            setQuoteModalOpen(true);
+          }}
+        >
+          商务报价
+        </Button>,
         isTemplateValue(record.is_template) ? (
           <Tooltip
             key="delete-disabled"
@@ -234,6 +336,20 @@ const HistoryPage = () => {
         }}
         dateFormatter="string"
         headerTitle="历史项目列表"
+      />
+      <BusinessQuoteModal
+        open={quoteModalOpen}
+        projectId={selectedProject?.id}
+        projectName={selectedProject?.name}
+        onCancel={() => {
+          setQuoteModalOpen(false);
+          setSelectedProject(null);
+        }}
+        onSuccess={() => {
+          setQuoteModalOpen(false);
+          setSelectedProject(null);
+          actionRef.current?.reload();
+        }}
       />
     </PageContainer>
   );
