@@ -85,6 +85,25 @@
    - 成功后回写 `push_status = pushed`
    - 失败后保留 `push_error` 便于重试与排障
 
+### 7. **小程序会员支付（一期）** (`frontend/ppa_miniapp`)
+
+- **核心目标**
+   - 在现有招标快报小程序上建立“列表浏览 -> 详情拦截 -> 会员开通 / 续费 -> 会员内容消费”的最小闭环
+- **当前能力**
+   - 微信登录与用户档案初始化
+   - 会员三态识别：`inactive / active / expired`
+   - 详情页会员拦截与开通 / 续费入口
+   - 月会员订单创建与支付发起
+   - 支付后会员状态刷新与生效
+   - 续费顺延、过期重开、订单留痕与人工修正
+   - 会员状态页、站内提醒、经营分析
+   - 人工评估结果、Excel 成果物与 Web 服务导流
+- **运行架构**
+   - 小程序会员能力运行在 `微信原生小程序 + CloudBase 云函数 + CloudBase 文档数据库`
+   - 不直接复用当前 `server/ppa.db` 作为运行时主数据源
+- **详细设计**
+   - 详见 `docs/prd/miniapp-membership-payment-spec.md`
+
 ## 💾 数据模型（当前表）
 
 1. **projects**
@@ -116,6 +135,14 @@
    - 包含 `tender_staging_id, model_config_id, prompt_template_id`
    - 保存 `summary, results_json, meta_json, searched_at`
 8. （预留）**用户 / 权限**（尚未实现，计划用于多用户评估与审计）
+9. **小程序 CloudBase 集合（会员一期）**
+   - `miniapp_users`
+   - `tenders`
+   - `miniapp_memberships`
+   - `miniapp_membership_orders`
+   - `miniapp_membership_ops_log`
+   - `miniapp_membership_activity_logs`
+   - `miniapp_tender_evaluations`
 
 ### 计算结果字段（实时计算返回）
 
@@ -188,6 +215,7 @@ risk_max_score
 - 模型配置说明：`prd/model-config-spec.md`
 - 评估流程规格：`prd/assessment-spec.md`
 - 项目机会-待推送招标规格：`prd/opportunity-tender-staging-spec.md`
+- 小程序会员支付一期规格：`prd/miniapp-membership-payment-spec.md`
 - 数据样本：`csv/`
 
 ## 🎯 系统定位
@@ -212,4 +240,4 @@ risk_max_score
 - staging 全量收敛模式：让本地目录状态可直接映射为可推送数据集
 
 ---
-（最后更新日期：2026-03-24）
+（最后更新日期：2026-03-30）
