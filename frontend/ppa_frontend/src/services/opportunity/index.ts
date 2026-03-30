@@ -89,6 +89,26 @@ export async function validateBiddingSite(
   );
 }
 
+export async function uploadBiddingSiteScript(
+  id: number | string,
+  fileName: string,
+  fileContent: string,
+  options?: { [key: string]: any },
+) {
+  return request<API_OPPORTUNITY.BiddingSiteScriptUploadResponse>(
+    `/api/opportunity/bidding-sites/${id}/script`,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'text/plain',
+        'X-Script-Filename': encodeURIComponent(fileName),
+      },
+      data: fileContent,
+      ...(options || {}),
+    },
+  );
+}
+
 export async function listTenderStaging(
   params?: Record<string, any>,
   options?: { [key: string]: any },

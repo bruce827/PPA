@@ -1,5 +1,8 @@
+const path = require('path');
+
 const biddingSiteModel = require('../models/biddingSiteModel');
 const biddingSiteValidationService = require('./biddingSiteValidationService');
+const biddingSiteScriptStorage = require('./biddingSiteScriptStorage');
 const { HttpError, validationError } = require('../utils/errors');
 
 const VALIDATION_STATUS = [
@@ -9,6 +12,7 @@ const VALIDATION_STATUS = [
   'validated_failed',
   'heuristic_only',
 ];
+const MAX_SCRIPT_FILE_SIZE_BYTES = 1024 * 1024;
 
 function normalizeText(value, maxLength = null) {
   if (value === null || typeof value === 'undefined') return null;
@@ -34,6 +38,45 @@ function normalizeBoolean(value, fieldName, defaultValue = null) {
 function normalizeListBoolean(value) {
   if (value === null || typeof value === 'undefined' || value === '') return undefined;
   return normalizeBoolean(value, 'query', null);
+}
+
+function normalizeScriptFileName(fileName) {
+  let decodedName = fileName;
+  if (typeof fileName === 'string') {
+    try {
+      decodedName = decodeURIComponent(fileName.trim());
+    } catch (_error) {
+      throw validationError('脚本文件名格式不正确');
+    }
+  }
+
+  const baseName = normalizeText(decodedName ? path.basename(decodedName) : null, 255);
+  if (!baseName) {
+    throw validationError('脚本文件名不能为空');
+  }
+
+  if (path.extname(baseName).toLowerCase() !== '.py') {
+    throw validationError('仅支持上传 .py 脚本文件');
+  }
+
+  return baseName;
+}
+
+function normalizeScriptContent(content) {
+  if (typeof content !== 'string') {
+    throw validationError('脚本内容不能为空');
+  }
+
+  if (!content.length) {
+    throw validationError('脚本内容不能为空');
+  }
+
+  const byteLength = Buffer.byteLength(content, 'utf8');
+  if (byteLength > MAX_SCRIPT_FILE_SIZE_BYTES) {
+    throw validationError('脚本文件大小不能超过 1MB');
+  }
+
+  return content;
 }
 
 function normalizeUrl(rawUrl) {
@@ -149,6 +192,7 @@ function normalizeListQuery(query = {}) {
     validation_status: normalizeText(query.validation_status, 40),
     is_official: normalizeListBoolean(query.is_official),
     enabled: normalizeListBoolean(query.enabled),
+    has_script: normalizeListBoolean(query.has_script),
   };
 }
 
@@ -197,7 +241,31 @@ async function updateBiddingSite(id, payload) {
 async function deleteBiddingSite(id) {
   const site = await getRequiredSite(id);
   await biddingSiteModel.deleteBiddingSite(site.id);
+  try {
+    await biddingSiteScriptStorage.deleteScriptFile(site.id);
+  } catch (error) {
+    console.error('Failed to delete bidding site script file', {
+      siteId: site.id,
+      error: error && error.message,
+    });
+  }
   return { id: site.id };
+}
+
+async function uploadBiddingSiteScript(id, payload) {
+  const site = await getRequiredSite(id);
+  const scriptFilename = normalizeScriptFileName(payload && payload.fileName);
+  const scriptContent = normalizeScriptContent(payload && payload.content);
+
+  await biddingSiteScriptStorage.saveScriptFile(site.id, scriptContent);
+
+  const updated = await biddingSiteModel.updateScriptMetadata(site.id, {
+    has_script: true,
+    script_filename: scriptFilename,
+    script_uploaded_at: new Date().toISOString(),
+  });
+
+  return { site: updated };
 }
 
 async function validateBiddingSite(id) {
@@ -252,4 +320,5 @@ module.exports = {
   deleteBiddingSite,
   validateBiddingSite,
   upsertSeedSite,
+  uploadBiddingSiteScript,
 };

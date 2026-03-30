@@ -38,11 +38,18 @@ function closeServer(server) {
 
 describe('Bidding Sites API', () => {
   const TEST_DB_PATH = path.join(os.tmpdir(), `ppa.bidding.sites.${process.pid}.${Date.now()}.db`);
+  const TEST_SCRIPT_DIR = path.join(
+    os.tmpdir(),
+    `ppa.bidding.sites.scripts.${process.pid}.${Date.now()}`
+  );
 
   beforeAll(async () => {
+    process.env.BIDDING_SITE_SCRIPT_DIR = TEST_SCRIPT_DIR;
     if (fs.existsSync(TEST_DB_PATH)) {
       fs.unlinkSync(TEST_DB_PATH);
     }
+
+    fs.rmSync(TEST_SCRIPT_DIR, { recursive: true, force: true });
 
     await db.init(TEST_DB_PATH);
 
@@ -70,6 +77,9 @@ describe('Bidding Sites API', () => {
         validation_confidence REAL,
         validation_payload_json TEXT,
         last_validated_at DATETIME,
+        has_script INTEGER NOT NULL DEFAULT 0,
+        script_filename TEXT,
+        script_uploaded_at DATETIME,
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
         updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
       );
@@ -116,6 +126,7 @@ describe('Bidding Sites API', () => {
       if (fs.existsSync(TEST_DB_PATH)) {
         fs.unlinkSync(TEST_DB_PATH);
       }
+      fs.rmSync(TEST_SCRIPT_DIR, { recursive: true, force: true });
     } catch (_error) {}
   });
 
@@ -197,6 +208,107 @@ describe('Bidding Sites API', () => {
     expect(byUrlResponse.body.success).toBe(true);
     expect(byUrlResponse.body.data.items).toHaveLength(1);
     expect(byUrlResponse.body.data.items[0].name).toBe('深圳公共资源交易中心');
+  });
+
+  test('should upload python script and filter sites by has_script', async () => {
+    const createResponse = await request(app)
+      .post('/api/opportunity/bidding-sites')
+      .send({
+        name: '脚本站点',
+        url: 'https://script.example.com/portal',
+      })
+      .expect(200);
+
+    await request(app)
+      .post('/api/opportunity/bidding-sites')
+      .send({
+        name: '无脚本站点',
+        url: 'https://noscript.example.com/portal',
+      })
+      .expect(200);
+
+    const siteId = createResponse.body.data.id;
+    const uploadResponse = await request(app)
+      .post(`/api/opportunity/bidding-sites/${siteId}/script`)
+      .set('Content-Type', 'text/plain')
+      .set('X-Script-Filename', encodeURIComponent('crawler.py'))
+      .send('print("hello world")\n')
+      .expect(200);
+
+    expect(uploadResponse.body.success).toBe(true);
+    expect(uploadResponse.body.data.site.has_script).toBe(true);
+    expect(uploadResponse.body.data.site.script_filename).toBe('crawler.py');
+    expect(uploadResponse.body.data.site.script_storage_filename).toBe(`site_${siteId}.py`);
+    expect(uploadResponse.body.data.site.script_storage_path).toBe(
+      `server/uploads/bidding-site-scripts/site_${siteId}.py`
+    );
+    expect(uploadResponse.body.data.site.script_uploaded_at).toBeTruthy();
+
+    const scriptPath = path.join(TEST_SCRIPT_DIR, `site_${siteId}.py`);
+    expect(fs.existsSync(scriptPath)).toBe(true);
+    expect(fs.readFileSync(scriptPath, 'utf8')).toContain('hello world');
+
+    const withScriptResponse = await request(app)
+      .get('/api/opportunity/bidding-sites')
+      .query({ has_script: 'true' })
+      .expect(200);
+
+    expect(withScriptResponse.body.data.items.some((item) => item.id === siteId)).toBe(true);
+    expect(withScriptResponse.body.data.items.every((item) => item.has_script)).toBe(true);
+
+    const withoutScriptResponse = await request(app)
+      .get('/api/opportunity/bidding-sites')
+      .query({ has_script: 'false' })
+      .expect(200);
+
+    expect(withoutScriptResponse.body.data.items.every((item) => item.has_script === false)).toBe(
+      true
+    );
+  });
+
+  test('should reject non python script upload', async () => {
+    const createResponse = await request(app)
+      .post('/api/opportunity/bidding-sites')
+      .send({
+        name: '非法脚本站点',
+        url: 'https://invalid-script.example.com/portal',
+      })
+      .expect(200);
+
+    const siteId = createResponse.body.data.id;
+    const response = await request(app)
+      .post(`/api/opportunity/bidding-sites/${siteId}/script`)
+      .set('Content-Type', 'text/plain')
+      .set('X-Script-Filename', encodeURIComponent('crawler.txt'))
+      .send('print("hello world")\n');
+
+    expect(response.status).toBe(400);
+    expect(response.body.message).toContain('.py');
+  });
+
+  test('should delete stored script file when deleting bidding site', async () => {
+    const createResponse = await request(app)
+      .post('/api/opportunity/bidding-sites')
+      .send({
+        name: '删除脚本站点',
+        url: 'https://delete-script.example.com/portal',
+      })
+      .expect(200);
+
+    const siteId = createResponse.body.data.id;
+    await request(app)
+      .post(`/api/opportunity/bidding-sites/${siteId}/script`)
+      .set('Content-Type', 'text/plain')
+      .set('X-Script-Filename', encodeURIComponent('delete_me.py'))
+      .send('print("bye")\n')
+      .expect(200);
+
+    const scriptPath = path.join(TEST_SCRIPT_DIR, `site_${siteId}.py`);
+    expect(fs.existsSync(scriptPath)).toBe(true);
+
+    await request(app).delete(`/api/opportunity/bidding-sites/${siteId}`).expect(200);
+
+    expect(fs.existsSync(scriptPath)).toBe(false);
   });
 
   test('should reject URL without scheme', async () => {

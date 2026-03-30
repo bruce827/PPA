@@ -11,6 +11,14 @@ router.get('/bidding-sites/:id', opportunityController.getBiddingSiteById);
 router.post('/bidding-sites', opportunityController.createBiddingSite);
 router.put('/bidding-sites/:id', opportunityController.updateBiddingSite);
 router.delete('/bidding-sites/:id', opportunityController.deleteBiddingSite);
+router.post(
+  '/bidding-sites/:id/script',
+  express.text({
+    type: ['text/plain', 'text/x-python', 'application/x-python-code'],
+    limit: '1mb',
+  }),
+  opportunityController.uploadBiddingSiteScript
+);
 router.post('/bidding-sites/:id/validate', opportunityController.validateBiddingSite);
 router.get('/tender-staging', tenderStagingController.listTenderStaging);
 router.get('/tender-staging/:id/web-search', tenderWebSearchController.getTenderWebSearch);

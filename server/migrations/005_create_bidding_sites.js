@@ -27,6 +27,9 @@ const CREATE_BIDDING_SITE_TABLE_SQL = `
     validation_confidence REAL,
     validation_payload_json TEXT,
     last_validated_at DATETIME,
+    has_script INTEGER NOT NULL DEFAULT 0,
+    script_filename TEXT,
+    script_uploaded_at DATETIME,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
   );
@@ -41,6 +44,8 @@ const CREATE_BIDDING_SITE_TABLE_SQL = `
     ON opportunity_bidding_sites(enabled);
   CREATE INDEX IF NOT EXISTS idx_opportunity_bidding_sites_validation_status
     ON opportunity_bidding_sites(validation_status);
+  CREATE INDEX IF NOT EXISTS idx_opportunity_bidding_sites_has_script
+    ON opportunity_bidding_sites(has_script);
 `;
 
 function execSql(db, sql) {

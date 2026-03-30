@@ -66,7 +66,7 @@
 ### 6. **项目机会** (`/opportunity`)
 
 - **招标网站管理**
-   - 招标网站列表、编辑、删除、URL 校验
+   - 招标网站列表、筛选、编辑、删除、URL 校验、脚本挂载
    - 后端接口：`/api/opportunity/bidding-sites`
 - **待推送招标**
    - 页面：`/opportunity/tender-push`
@@ -123,6 +123,7 @@
    - 招标网站主数据
    - 包含 `name, url, normalized_url, source_level, province, city, platform_type`
    - 支持校验结果字段：`validation_status, validation_summary, final_url, redirect_chain`
+   - 支持脚本挂接字段：`has_script, script_filename, script_uploaded_at`
 6. **opportunity_tender_staging**
    - 待推送招标 staging 表
    - 包含 `source_item_id, title, issuer, source_platform, source_url`
@@ -214,6 +215,7 @@ risk_max_score
 - 评估算法与计算细节：`prd/calculation-logic-spec.md`
 - 模型配置说明：`prd/model-config-spec.md`
 - 评估流程规格：`prd/assessment-spec.md`
+- 项目机会-招标网站规格：`prd/opportunity-bidding-sites-spec.md`
 - 项目机会-待推送招标规格：`prd/opportunity-tender-staging-spec.md`
 - 小程序会员支付一期规格：`prd/miniapp-membership-payment-spec.md`
 - 数据样本：`csv/`

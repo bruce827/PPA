@@ -54,6 +54,18 @@ async function validateBiddingSite(req, res, next) {
   }
 }
 
+async function uploadBiddingSiteScript(req, res, next) {
+  try {
+    const result = await biddingSiteService.uploadBiddingSiteScript(req.params.id, {
+      fileName: req.get('x-script-filename'),
+      content: req.body,
+    });
+    res.json({ success: true, data: result });
+  } catch (error) {
+    next(error);
+  }
+}
+
 module.exports = {
   getBiddingSites,
   getBiddingSiteById,
@@ -61,4 +73,5 @@ module.exports = {
   updateBiddingSite,
   deleteBiddingSite,
   validateBiddingSite,
+  uploadBiddingSiteScript,
 };

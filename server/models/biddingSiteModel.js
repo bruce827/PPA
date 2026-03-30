@@ -1,4 +1,5 @@
 const db = require('../utils/db');
+const biddingSiteScriptStorage = require('../services/biddingSiteScriptStorage');
 
 const TABLE_NAME = 'opportunity_bidding_sites';
 const ENSURE_SCHEMA_STATEMENTS = [
@@ -25,6 +26,9 @@ const ENSURE_SCHEMA_STATEMENTS = [
     validation_confidence REAL,
     validation_payload_json TEXT,
     last_validated_at DATETIME,
+    has_script INTEGER NOT NULL DEFAULT 0,
+    script_filename TEXT,
+    script_uploaded_at DATETIME,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
   )`,
@@ -72,6 +76,28 @@ async function ensureSchema() {
     for (const statement of ENSURE_SCHEMA_STATEMENTS) {
       await db.run(statement);
     }
+
+    const columns = await db.all(`PRAGMA table_info(${TABLE_NAME})`);
+    const columnNames = new Set(columns.map((column) => column && column.name).filter(Boolean));
+
+    if (!columnNames.has('has_script')) {
+      await db.run(
+        `ALTER TABLE ${TABLE_NAME} ADD COLUMN has_script INTEGER NOT NULL DEFAULT 0`
+      );
+    }
+
+    if (!columnNames.has('script_filename')) {
+      await db.run(`ALTER TABLE ${TABLE_NAME} ADD COLUMN script_filename TEXT`);
+    }
+
+    if (!columnNames.has('script_uploaded_at')) {
+      await db.run(`ALTER TABLE ${TABLE_NAME} ADD COLUMN script_uploaded_at DATETIME`);
+    }
+
+    await db.run(
+      `CREATE INDEX IF NOT EXISTS idx_opportunity_bidding_sites_has_script
+       ON ${TABLE_NAME}(has_script)`
+    );
   })();
 
   return schemaEnsuredPromise;
@@ -103,6 +129,13 @@ function mapRow(row) {
     ...row,
     is_official: Boolean(row.is_official),
     enabled: Boolean(row.enabled),
+    has_script: Boolean(row.has_script),
+    script_storage_filename: row.has_script
+      ? biddingSiteScriptStorage.getScriptStoredFileName(row.id)
+      : null,
+    script_storage_path: row.has_script
+      ? biddingSiteScriptStorage.getScriptProjectRelativePath(row.id)
+      : null,
     auth_required: parseBooleanField(row.auth_required),
     is_bidding_site: parseBooleanField(row.is_bidding_site),
     redirect_chain: parseJsonField(row.redirect_chain_json, []),
@@ -150,6 +183,11 @@ function buildFilters(filters = {}) {
   if (typeof filters.enabled === 'boolean') {
     conditions.push('enabled = ?');
     params.push(filters.enabled ? 1 : 0);
+  }
+
+  if (typeof filters.has_script === 'boolean') {
+    conditions.push('has_script = ?');
+    params.push(filters.has_script ? 1 : 0);
   }
 
   if (filters.validation_status) {
@@ -312,6 +350,26 @@ async function deleteBiddingSite(id) {
   return db.run(`DELETE FROM ${TABLE_NAME} WHERE id = ?`, [id]);
 }
 
+async function updateScriptMetadata(id, data) {
+  await ensureSchema();
+  await db.run(
+    `UPDATE ${TABLE_NAME}
+       SET has_script = ?,
+           script_filename = ?,
+           script_uploaded_at = ?,
+           updated_at = CURRENT_TIMESTAMP
+     WHERE id = ?`,
+    [
+      toDbBoolean(data.has_script),
+      data.script_filename,
+      data.script_uploaded_at,
+      id,
+    ]
+  );
+
+  return getBiddingSiteById(id);
+}
+
 module.exports = {
   ensureSchema,
   listBiddingSites,
@@ -321,4 +379,5 @@ module.exports = {
   updateBiddingSite,
   updateValidationResult,
   deleteBiddingSite,
+  updateScriptMetadata,
 };

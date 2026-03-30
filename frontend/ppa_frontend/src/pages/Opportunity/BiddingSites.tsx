@@ -3,8 +3,10 @@ import {
   deleteBiddingSite,
   getBiddingSites,
   updateBiddingSite,
+  uploadBiddingSiteScript,
   validateBiddingSite,
 } from '@/services/opportunity';
+import { InboxOutlined } from '@ant-design/icons';
 import {
   ModalForm,
   PageContainer,
@@ -17,16 +19,22 @@ import {
 import {
   Badge,
   Button,
+  Col,
   Form,
   message,
   Modal,
   Popconfirm,
+  Row,
   Space,
   Tag,
   Tooltip,
+  Upload,
 } from 'antd';
 import type { ActionType, ProColumns } from '@ant-design/pro-components';
+import type { UploadProps } from 'antd';
 import React, { useMemo, useRef, useState } from 'react';
+
+const { Dragger } = Upload;
 
 const sourceLevelOptions = [
   { label: '国家级', value: '国家级' },
@@ -82,15 +90,20 @@ const BiddingSitesPage: React.FC = () => {
   const actionRef = useRef<ActionType>();
   const [form] = Form.useForm<API_OPPORTUNITY.BiddingSitePayload>();
   const [editingRecord, setEditingRecord] = useState<API_OPPORTUNITY.BiddingSite | null>(null);
+  const [editingScriptMeta, setEditingScriptMeta] = useState<API_OPPORTUNITY.BiddingSite | null>(
+    null,
+  );
   const [formVisible, setFormVisible] = useState(false);
   const [detailVisible, setDetailVisible] = useState(false);
   const [detailRecord, setDetailRecord] = useState<API_OPPORTUNITY.BiddingSite | null>(null);
   const [validatingId, setValidatingId] = useState<number | null>(null);
+  const [uploadingScript, setUploadingScript] = useState(false);
 
   const validationOptions = useMemo(() => validationStatusOptions, []);
 
   const openCreateModal = () => {
     setEditingRecord(null);
+    setEditingScriptMeta(null);
     form.resetFields();
     form.setFieldsValue({
       is_official: true,
@@ -101,6 +114,7 @@ const BiddingSitesPage: React.FC = () => {
 
   const openEditModal = (record: API_OPPORTUNITY.BiddingSite) => {
     setEditingRecord(record);
+    setEditingScriptMeta(record);
     form.setFieldsValue({
       name: record.name,
       alias_name: record.alias_name || '',
@@ -137,6 +151,64 @@ const BiddingSitesPage: React.FC = () => {
       message.error(error?.message || '保存失败');
       return false;
     }
+  };
+
+  const handleScriptUpload: UploadProps['customRequest'] = async (options) => {
+    if (!editingRecord) {
+      const error = new Error('请先保存网站，再上传脚本');
+      message.warning(error.message);
+      options.onError?.(error);
+      return;
+    }
+
+    try {
+      setUploadingScript(true);
+      const file = options.file as File;
+      const fileContent = await file.text();
+      const response = await uploadBiddingSiteScript(editingRecord.id, file.name, fileContent);
+      const nextRecord = response?.data?.site;
+
+      if (nextRecord) {
+        setEditingRecord(nextRecord);
+        setEditingScriptMeta(nextRecord);
+        if (detailRecord?.id === nextRecord.id) {
+          setDetailRecord(nextRecord);
+        }
+      }
+
+      message.success('脚本上传成功');
+      actionRef.current?.reload();
+      options.onSuccess?.(response);
+    } catch (error: any) {
+      const nextError = error instanceof Error ? error : new Error(error?.message || '脚本上传失败');
+      message.error(nextError.message || '脚本上传失败');
+      options.onError?.(nextError);
+    } finally {
+      setUploadingScript(false);
+    }
+  };
+
+  const uploadProps: UploadProps = {
+    accept: '.py',
+    maxCount: 1,
+    showUploadList: false,
+    customRequest: handleScriptUpload,
+    onDrop: () => {
+      message.info('已接收拖拽文件，开始校验并上传');
+    },
+    beforeUpload: (file) => {
+      if (!file.name.toLowerCase().endsWith('.py')) {
+        message.error('仅支持上传 .py 脚本文件');
+        return Upload.LIST_IGNORE;
+      }
+
+      if (file.size > 1024 * 1024) {
+        message.error('脚本文件大小不能超过 1MB');
+        return Upload.LIST_IGNORE;
+      }
+
+      return true;
+    },
   };
 
   const handleValidate = async (record: API_OPPORTUNITY.BiddingSite) => {
@@ -235,7 +307,11 @@ const BiddingSitesPage: React.FC = () => {
         false: { text: '否' },
       },
       render: (_, record) =>
-        record.is_official ? <Badge status="success" text="官方" /> : <Badge status="default" text="第三方" />,
+        record.is_official ? (
+          <Badge status="success" text="官方" />
+        ) : (
+          <Badge status="default" text="第三方" />
+        ),
     },
     {
       title: '启用',
@@ -248,6 +324,18 @@ const BiddingSitesPage: React.FC = () => {
       },
       render: (_, record) =>
         record.enabled ? <Tag color="green">启用</Tag> : <Tag color="default">停用</Tag>,
+    },
+    {
+      title: '脚本',
+      dataIndex: 'has_script',
+      valueType: 'select',
+      width: 120,
+      valueEnum: {
+        true: { text: '是' },
+        false: { text: '否' },
+      },
+      render: (_, record) =>
+        record.has_script ? <Tag color="blue">是</Tag> : <Tag color="default">否</Tag>,
     },
     {
       title: '校验状态',
@@ -398,28 +486,112 @@ const BiddingSitesPage: React.FC = () => {
             },
           ]}
         />
-        <ProFormSelect
-          name="source_level"
-          label="层级"
-          options={sourceLevelOptions}
-          allowClear
-        />
-        <ProFormSelect
-          name="platform_type"
-          label="平台类型"
-          options={platformTypeOptions}
-          allowClear
-        />
-        <ProFormText name="province" label="省份" placeholder="如：北京、广东、全国" />
-        <ProFormText name="city" label="城市" placeholder="如：北京、深圳、全国" />
-        <ProFormSwitch name="is_official" label="是否官方" />
-        <ProFormSwitch name="enabled" label="是否启用" />
+        <Row gutter={16}>
+          <Col span={12}>
+            <ProFormSelect
+              name="source_level"
+              label="层级"
+              options={sourceLevelOptions}
+              allowClear
+            />
+          </Col>
+          <Col span={12}>
+            <ProFormSelect
+              name="platform_type"
+              label="平台类型"
+              options={platformTypeOptions}
+              allowClear
+            />
+          </Col>
+        </Row>
+        <Row gutter={16}>
+          <Col span={12}>
+            <ProFormText
+              name="province"
+              label="省份"
+              placeholder="如：北京、广东、全国"
+            />
+          </Col>
+          <Col span={12}>
+            <ProFormText
+              name="city"
+              label="城市"
+              placeholder="如：北京、深圳、全国"
+            />
+          </Col>
+        </Row>
+        <Row gutter={16}>
+          <Col span={12}>
+            <ProFormSwitch name="is_official" label="是否官方" />
+          </Col>
+          <Col span={12}>
+            <ProFormSwitch name="enabled" label="是否启用" />
+          </Col>
+        </Row>
         <ProFormTextArea
           name="notes"
           label="备注"
           placeholder="补充说明、站点覆盖范围、使用建议等"
           fieldProps={{ rows: 4 }}
         />
+        <div>
+          <div style={{ marginBottom: 8, fontWeight: 500 }}>采集脚本</div>
+          {editingRecord ? (
+            <Space direction="vertical" size="small" style={{ width: '100%' }}>
+              <Space wrap>
+                <Tag color={editingScriptMeta?.has_script ? 'blue' : 'default'}>
+                  {editingScriptMeta?.has_script ? '已上传脚本' : '未上传脚本'}
+                </Tag>
+                {editingScriptMeta?.script_filename ? (
+                  <span style={{ color: '#8c8c8c' }}>
+                    上传文件名：{editingScriptMeta.script_filename}
+                  </span>
+                ) : null}
+                {editingScriptMeta?.script_storage_filename ? (
+                  <span style={{ color: '#8c8c8c' }}>
+                    保存文件名：{editingScriptMeta.script_storage_filename}
+                  </span>
+                ) : null}
+                {editingScriptMeta?.script_storage_path ? (
+                  <span style={{ color: '#8c8c8c' }}>
+                    保存路径：{editingScriptMeta.script_storage_path}
+                  </span>
+                ) : null}
+                {editingScriptMeta?.script_uploaded_at ? (
+                  <span style={{ color: '#8c8c8c' }}>
+                    上传时间：{formatDateTime(editingScriptMeta.script_uploaded_at)}
+                  </span>
+                ) : null}
+              </Space>
+              <Dragger
+                {...uploadProps}
+                disabled={uploadingScript}
+                style={{ padding: 8, background: '#fafafa' }}
+              >
+                <p className="ant-upload-drag-icon">
+                  <InboxOutlined />
+                </p>
+                <p className="ant-upload-text">
+                  {uploadingScript
+                    ? '脚本上传中...'
+                    : editingScriptMeta?.has_script
+                      ? '点击或拖拽重新上传 .py 脚本'
+                      : '点击或拖拽上传 .py 脚本'}
+                </p>
+                <p className="ant-upload-hint">
+                  仅支持单个 `.py` 文件，大小不超过 1MB。重复上传会覆盖当前站点脚本。
+                </p>
+              </Dragger>
+              <span style={{ color: '#8c8c8c', fontSize: 12 }}>
+                仅支持上传 .py 文件，大小不超过 1MB。上传成功后会覆盖该站点此前的脚本。
+              </span>
+            </Space>
+          ) : (
+            <span style={{ color: '#8c8c8c', fontSize: 12 }}>
+              请先保存网站，再上传脚本。
+            </span>
+          )}
+        </div>
       </ModalForm>
 
       <Modal
@@ -441,6 +613,9 @@ const BiddingSitesPage: React.FC = () => {
               <Tag color={detailRecord.is_official ? 'blue' : 'default'}>
                 {detailRecord.is_official ? '官方' : '第三方'}
               </Tag>
+              <Tag color={detailRecord.has_script ? 'blue' : 'default'}>
+                {detailRecord.has_script ? '是' : '否'}
+              </Tag>
             </Space>
 
             <div>
@@ -457,6 +632,39 @@ const BiddingSitesPage: React.FC = () => {
               <strong>摘要：</strong>
               <div style={{ marginTop: 8 }}>
                 {detailRecord.validation_summary || '暂无校验摘要'}
+              </div>
+            </div>
+
+            <div>
+              <strong>采集脚本：</strong>
+              <div style={{ marginTop: 8 }}>
+                {detailRecord.has_script ? (
+                  <Space direction="vertical" size={0}>
+                    <span>已上传</span>
+                    {detailRecord.script_filename ? (
+                      <span style={{ color: '#8c8c8c' }}>
+                        上传文件名：{detailRecord.script_filename}
+                      </span>
+                    ) : null}
+                    {detailRecord.script_storage_filename ? (
+                      <span style={{ color: '#8c8c8c' }}>
+                        保存文件名：{detailRecord.script_storage_filename}
+                      </span>
+                    ) : null}
+                    {detailRecord.script_storage_path ? (
+                      <span style={{ color: '#8c8c8c' }}>
+                        保存路径：{detailRecord.script_storage_path}
+                      </span>
+                    ) : null}
+                    {detailRecord.script_uploaded_at ? (
+                      <span style={{ color: '#8c8c8c' }}>
+                        上传时间：{formatDateTime(detailRecord.script_uploaded_at)}
+                      </span>
+                    ) : null}
+                  </Space>
+                ) : (
+                  '未上传'
+                )}
               </div>
             </div>
 

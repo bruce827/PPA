@@ -34,6 +34,11 @@ declare namespace API_OPPORTUNITY {
     platform_type?: string | null;
     is_official: boolean;
     enabled: boolean;
+    has_script: boolean;
+    script_filename?: string | null;
+    script_storage_filename?: string | null;
+    script_storage_path?: string | null;
+    script_uploaded_at?: string | null;
     notes?: string | null;
     validation_status: ValidationStatus;
     validation_summary?: string | null;
@@ -95,6 +100,13 @@ declare namespace API_OPPORTUNITY {
         validation_payload?: ValidationPayload | null;
         last_validated_at?: string | null;
       };
+    };
+  };
+
+  type BiddingSiteScriptUploadResponse = {
+    success: boolean;
+    data: {
+      site: BiddingSite;
     };
   };
 
