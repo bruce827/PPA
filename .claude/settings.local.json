@@ -35,7 +35,9 @@
       "Bash(find . -name *.db)",
       "Bash(ls -la server/*.db)",
       "Bash(ls -la data/*.db)",
-      "Bash(find . -name *infographic* -type d)"
+      "Bash(find . -name *infographic* -type d)",
+      "Bash(curl:*)",
+      "WebFetch(domain:longcat.chat)"
     ]
   }
 }
