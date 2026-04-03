@@ -109,6 +109,7 @@ const OtherCostsForm: React.FC<OtherCostsFormProps> = ({
       cost: Number(record.final_total_cost) || 0,
     };
     form.setFieldsValue({ risk_cost_items: next });
+    onValuesChange({ risk_cost_items: next });
     setProjectModalOpen(false);
   };
 

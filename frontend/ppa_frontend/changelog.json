@@ -1,4 +1,13 @@
-[{
+[
+    {
+    "version": "V1.6.1-alpha",
+    "date": "2026-3-30",
+    "changes": [
+      { "type": "bugfix", "content": "修改引用项目导致计算不更新" },
+      { "type": "feat", "content": "添加内部渠道推送" }
+
+    ]
+  },{
     "version": "V1.5.0-alpha",
     "date": "2026-3-30",
     "changes": [

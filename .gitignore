@@ -167,3 +167,6 @@ frontend/ppa_frontend/src/.umi/appData.json
 /_bmad
 /_bmad
 /_bmad-output
+/.cline
+/.claude
+/.agents
