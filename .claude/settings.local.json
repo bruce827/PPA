@@ -37,7 +37,27 @@
       "Bash(ls -la data/*.db)",
       "Bash(find . -name *infographic* -type d)",
       "Bash(curl:*)",
-      "WebFetch(domain:longcat.chat)"
+      "WebFetch(domain:longcat.chat)",
+      "mcp__context7__resolve-library-id",
+      "mcp__context7__query-docs",
+      "Bash(npm install:*)",
+      "Bash(npx tsc:*)",
+      "Bash(node:*)",
+      "Bash(cloudbase functions:deploy:*)",
+      "Bash(cloudbase functions:update:*)",
+      "Bash(tcb fn:*)",
+      "Bash(printf 'y\\\\n')",
+      "Bash(pkill -f \"node index.js\")",
+      "Bash(tcb --help)",
+      "Bash(tcb db:*)",
+      "Bash(printf '\\\\r\\\\n')",
+      "Bash(cloudbase functions:list -e cloud1-9gf2hg9lbc3ff385)",
+      "Bash(kill 44068)",
+      "Bash(kill 46532)",
+      "Bash(xargs kill:*)",
+      "WebFetch(domain:github.com)",
+      "WebSearch",
+      "Bash(mkdir:*)"
     ]
   }
 }

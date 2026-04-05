@@ -11,12 +11,16 @@ const web3dRoutes = require('./web3d');
 const monitoringRoutes = require('./monitoring');
 const contractsRoutes = require('./contracts');
 const opportunityRoutes = require('./opportunity');
+const attachmentRoutes = require('./attachment');
+const pushRoutes = require('./push');
 
 // 挂载各模块路由
 router.use('/api', healthRoutes);
 router.use('/api/config', configRoutes);
 router.use('/api/calculate', calculationRoutes);
 router.use('/api/projects', projectRoutes);
+router.use('/api/projects', attachmentRoutes); // 项目附件管理
+router.use('/api/projects', pushRoutes); // 项目推送
 router.use('/api/templates', projectRoutes); // 模板也使用 projects 路由
 router.use('/api/dashboard', dashboardRoutes);
 router.use('/api/ai', aiRoutes);

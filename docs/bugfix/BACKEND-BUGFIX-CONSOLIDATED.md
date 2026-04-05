@@ -1,6 +1,6 @@
 # 后端 Bug 修复记录（整合版）
 
-> **最后更新**: 2025-11-26  
+> **最后更新**: 2026-04-03  
 > **适用范围**: PPA 项目后端 (server/)  
 > **架构版本**: 当前三层架构（Controller-Service-Model）
 
@@ -13,6 +13,7 @@
 3. [SQLite JSON 函数陷阱](#3-sqlite-json-函数陷阱)
 4. [服务器重启与开发流程](#4-服务器重启与开发流程)
 5. [数据查询与字段映射问题](#5-数据查询与字段映射问题)
+6. [项目推送小程序功能](#6-项目推送小程序功能)
 
 ---
 
@@ -1157,3 +1158,222 @@ Web3D 新建评估 Step4 选择“性能与兼容性”类别后，重新计算/
 **涉及文件**:
 - `server/services/web3dProjectService.js`
 - `server/services/export/formatters/web3dFormatter.js`
+
+### 5.10 项目推送小程序：ourQuote 字段为 null
+
+**故障现象**:  
+推送项目到小程序内部渠道后，查询 `internal_projects` 集合，`ourQuote` 字段为 `null`，前端显示 "— 万元"。
+
+**根本原因**:  
+`pushService.buildPushSnapshot` 中取报价总额时只查了 `businessQuote.quote_total_wan`（顶层），但自定义开发（`custom_development`）模式下商务报价 JSON 的结构为：
+```json
+{
+  "pricing_mode": "custom_development",
+  "base_cost_wan": 70.0,
+  "amounts": {
+    "quote_total_wan": 88.96,
+    "management_fee_wan": ...,
+    "tax_fee_wan": ...
+  }
+}
+```
+`quote_total_wan` 嵌套在 `amounts` 对象内，而非顶层。
+
+**解决方案**:  
+优先查 `amounts.quote_total_wan`，兜底查顶层：
+```javascript
+ourQuote = businessQuote.amounts?.quote_total_wan || businessQuote.quote_total_wan || null;
+```
+
+**验证步骤**:
+1. 重启后端服务
+2. 对项目 86 执行推送
+3. 查询 CloudBase `internal_projects` 集合，`ourQuote` 应为 `88.96`
+
+**涉及文件**:
+- `server/services/pushService.js` — `buildPushSnapshot` 函数
+
+### 5.11 项目推送小程序：assessment_data_json 字段名拼写错误
+
+**故障现象**:  
+推送后小程序内部渠道中"总工作量"、"新功能开发工作量"、"差旅成本"全部显示 "—"。
+
+**根本原因**:  
+数据库 `projects` 表的列为 `assessment_details_json`，但 `pushService.buildPushSnapshot` 中使用了 `project.assessment_data_json`（多了一个 s），导致 `safeParseJson(undefined)` 返回 `null`，后续 `extractWorkloadTotal` 和 `extractTravelCost` 都因无数据而返回 `null`。
+
+```javascript
+// ❌ 错误：字段名不存在
+const assessmentData = safeParseJson(project.assessment_data_json);
+
+// ✅ 正确：与数据库列名一致
+const assessmentData = safeParseJson(project.assessment_details_json);
+```
+
+**验证步骤**:
+1. 重启后端服务
+2. 重新推送一个已填写工作量评估的项目
+3. 小程序内部渠道展开详情，应显示工作量数值
+
+**涉及文件**:
+- `server/services/pushService.js` — `buildPushSnapshot` 函数
+
+### 5.12 项目推送小程序：extractWorkloadTotal 和 extractTravelCost 字段不匹配实际数据结构
+
+**故障现象**:  
+修复字段名拼写错误后，工作量和差旅成本仍为 null。
+
+**根本原因**:  
+推送服务中 `extractWorkloadTotal` 和 `extractTravelCost` 函数使用的字段名与实际评估数据的存储结构不一致：
+
+| 函数 | 原查找字段 | 实际存储字段 |
+|------|-----------|------------|
+| `extractWorkloadTotal('new_feature')` | `workload_list`（旧版） | `development_workload` 数组，每项含 `workload` |
+| `extractTravelCost` | `travel_cost_total`（旧版） | `travel_months` + `travel_headcount` |
+
+实际评估数据结构（以项目 86 为例）：
+```json
+{
+  "development_workload": [
+    { "module1": "xxx", "workload": 30.8, "roles": {...} },
+    { "module1": "yyy", "workload": 25.3, "roles": {...} }
+  ],
+  "integration_workload": [],
+  "travel_months": 3,
+  "travel_headcount": 0
+}
+```
+
+**解决方案**:  
+1. `extractWorkloadTotal` 优先查找新版数据结构（`development_workload` / `integration_workload`），兼容旧版 `workload_list`
+2. `extractTravelCost` 从 `travel_months × travel_headcount × (7500 / 10000)` 计算（7500 元/月/人取自 `config_travel_costs` 总和，结果转万元），兼容旧版 `travel_cost_total`
+
+```javascript
+function extractWorkloadTotal(assessmentData, category) {
+  if (!assessmentData) return null;
+  // 新版：development_workload / integration_workload
+  if (category === 'new_feature' && assessmentData.development_workload) {
+    return assessmentData.development_workload.reduce(
+      (sum, w) => sum + (Number(w.workload) || 0), 0);
+  }
+  // 旧版：workload_list
+  if (assessmentData.workload_list) { ... }
+  return null;
+}
+
+function extractTravelCost(assessmentData) {
+  if (!assessmentData) return null;
+  // 新版：按月数 × 人数 × 月度单价
+  if (assessmentData.travel_months != null && assessmentData.travel_headcount != null) {
+    const travelCostPerMonth = 7500; // 元/月/人
+    const cost = travel_months * travel_headcount * (travelCostPerMonth / 10000);
+    return cost > 0 ? Number(cost.toFixed(2)) : 0;
+  }
+  // 旧版：travel_cost_total
+  return assessmentData.travel_cost_total || null;
+}
+```
+
+**验证步骤**:
+1. 重启后端服务
+2. 对项目 86 重新推送（`development_workload` 共 18 条，总计 322.8 人天；`travel_headcount=0`，差旅成本为 0）
+3. 小程序内部渠道显示总工作量 322.8 人天，差旅成本 0 万元
+
+**涉及文件**:
+- `server/services/pushService.js` — `extractWorkloadTotal`、`extractTravelCost` 函数
+
+### 5.13 项目推送小程序：环境变量 MINIAPP_PUSH_FUNCTION_NAME 与招标推送冲突
+
+**故障现象**:  
+推送校验通过但云函数调用报错 `缺少 source_item_id`。
+
+**根本原因**:  
+`.env` 中 `MINIAPP_PUSH_FUNCTION_NAME` 被招标推送功能占用，值为 `upsertTenderBySourceId`。`pushService.callUpsertInternalProject` 使用此环境变量获取云函数名，导致调用了错误的云函数。
+
+```
+# .env 中该变量被两个功能复用：
+MINIAPP_PUSH_FUNCTION_NAME=upsertTenderBySourceId  # 招标推送
+```
+
+**解决方案**:  
+新增独立的 `INTERNAL_PUSH_FUNCTION_NAME` 环境变量，专用于内部渠道推送：
+```javascript
+const functionName = String(
+  process.env.INTERNAL_PUSH_FUNCTION_NAME || 'upsertInternalProject',
+).trim();
+```
+
+**验证步骤**:
+1. 确保 `.env` 中无 `INTERNAL_PUSH_FUNCTION_NAME` 时会使用默认值 `upsertInternalProject`
+2. 重新推送项目，不再报 `source_item_id` 错误
+
+**涉及文件**:
+- `server/services/pushService.js` — `callUpsertInternalProject` 函数
+- `server/.env`
+
+### 5.14 项目推送小程序：客户预算为 0 时前置校验失败
+
+**故障现象**:  
+打开推送 Modal 时自动触发的校验返回 "前置校验失败"，错误信息为预算相关。
+
+**根本原因**:  
+`validatePush` 中对 `customerBudget` 调用 `validateBudget`，而 `validateBudget` 拒绝 `<= 0` 的值。Modal 打开时默认预算为 0 用于校验前置条件，并非真正推送。
+
+```javascript
+// ❌ 错误：预算 0 也被校验拦截
+if (customerBudget !== undefined && customerBudget !== null) {
+  validateBudget(customerBudget); // 0 <= 0 → 抛异常
+}
+```
+
+**解决方案**:  
+预算为 0 时跳过校验（0 表示用户尚未输入预算，是合法的校验场景）：
+```javascript
+if (customerBudget !== undefined && customerBudget !== null && customerBudget !== 0) {
+  validateBudget(customerBudget);
+}
+```
+
+**验证步骤**:
+1. 打开推送 Modal（不输入预算），应显示校验通过（绿色勾）
+2. 输入负数或非数字值应显示对应错误提示
+
+**涉及文件**:
+- `server/services/pushService.js` — `validatePush` 函数
+
+### 5.15 附件上传：中文文件名乱码（Multer 2.x 编码问题）
+
+**故障现象**:  
+上传含中文的文件（如 `蓟城山水集团绩效考核管理系统需求说明书v4(1).docx`），保存后文件名变为 `___________...docx`（全下划线）。
+
+**根本原因**:  
+Multer 2.x / busboy 将 UTF-8 文件名按 Latin-1 解析，导致中文字符变为乱码（如 `蓟` → `è`），`sanitize` 正则将非字母数字字符替换为下划线。
+
+```
+原始: 蓟城山水集团绩效考核...
+busboy: èåå±±æ°´éå¢...  (UTF-8 → Latin-1 错误解码)
+sanitize: _________________    (乱码字符被替换为下划线)
+```
+
+**解决方案**:  
+新增 `fixEncoding` 函数，将 Latin-1 字节还原为 UTF-8：
+```javascript
+function fixEncoding(str) {
+  const buf = Buffer.from(str, 'latin1');
+  return buf.toString('utf8');
+}
+```
+在 `generateUniqueFilename` 和 `saveAttachment` 返回值中应用：
+```javascript
+// generateUniqueFilename 中
+const sanitizedName = fixEncoding(file.originalname).replace(/[^a-zA-Z0-9\u4e00-\u9fff.\-()]/g, '_');
+
+// saveAttachment 返回值中
+originalname: fixEncoding(file.originalname),
+```
+
+**验证步骤**:
+1. 上传中文文件名附件
+2. 文件名应正常显示，不再变为下划线
+
+**涉及文件**:
+- `server/services/attachmentService.js` — `fixEncoding`、`generateUniqueFilename`、`saveAttachment`

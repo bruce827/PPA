@@ -1,0 +1,117 @@
+<view class="page list-page">
+  <view wx:if="{{loading && !list.length}}" class="empty">
+    <text>加载中...</text>
+  </view>
+
+  <view wx:elif="{{list.length}}" class="list-stack">
+    <view
+      wx:for="{{list}}"
+      wx:key="_id"
+      class="card push-card"
+      bindtap="toggleDetail"
+      data-index="{{index}}"
+    >
+      <!-- 摘要卡片头部 -->
+      <view class="card-header">
+        <text class="push-title">{{item.projectName}}</text>
+        <view class="status-chip {{item.riskChipClass}}">
+          {{item.riskLevel}}
+        </view>
+      </view>
+
+      <!-- 摘要指标 -->
+      <view class="summary-row">
+        <view class="summary-item">
+          <text class="summary-label subtle">我方报价</text>
+          <text class="summary-value">{{item.ourQuoteText}}</text>
+        </view>
+        <view class="summary-item">
+          <text class="summary-label subtle">客户预算</text>
+          <text class="summary-value">{{item.budgetText}}</text>
+        </view>
+        <view class="summary-item">
+          <text class="summary-label subtle">差额</text>
+          <text class="summary-value {{item.diffClass}}">{{item.diffText}}</text>
+        </view>
+      </view>
+
+      <text class="push-time subtle">推送时间：{{item.pushTimeText}}</text>
+
+      <!-- 展开详情 -->
+      <view wx:if="{{item.expanded}}" class="detail-section" catchtap="noop">
+        <view class="divider"></view>
+
+        <!-- 项目描述独占一行 -->
+        <view class="description-block">
+          <text class="detail-label subtle">项目描述</text>
+          <text class="description-text">{{item.projectDescription}}</text>
+        </view>
+
+        <view class="detail-grid">
+          <view class="detail-item">
+            <text class="detail-label subtle">商务报价总计</text>
+            <text>{{item.ourQuoteText}}</text>
+          </view>
+          <view class="detail-item">
+            <text class="detail-label subtle">实施成本</text>
+            <text>{{item.implementationCostText}}</text>
+          </view>
+          <view class="detail-item">
+            <text class="detail-label subtle">总工作量</text>
+            <text>{{item.totalWorkloadText}}</text>
+          </view>
+          <view class="detail-item">
+            <text class="detail-label subtle">新功能开发工作量</text>
+            <text>{{item.newDevWorkloadText}}</text>
+          </view>
+          <view class="detail-item">
+            <text class="detail-label subtle">差旅成本</text>
+            <text>{{item.travelCostText}}</text>
+          </view>
+          <view class="detail-item">
+            <text class="detail-label subtle">风险总分</text>
+            <text>{{item.riskTotalScore}}</text>
+          </view>
+          <view class="detail-item">
+            <text class="detail-label subtle">风险等级</text>
+            <text class="detail-value--risk {{item.riskChipClass}}">{{item.riskLevel}}</text>
+          </view>
+        </view>
+
+        <!-- 商务报价组成饼图 -->
+        <view wx:if="{{item.pieChartData.length > 0}}" class="chart-section">
+          <text class="section-label">{{item.pieChartTitle}}</text>
+          <view class="chart-container">
+            <ec-canvas
+              id="{{item.ecId}}"
+              canvas-id="{{item.ecId}}"
+              ec="{{}}"
+            ></ec-canvas>
+          </view>
+        </view>
+
+        <!-- TOP 3 风险 -->
+        <view wx:if="{{item.top3RiskScores.length > 0}}" class="risk-section">
+          <text class="section-label">TOP 3 风险评分</text>
+          <view wx:for="{{item.top3RiskScores}}" wx:key="name" wx:for-item="risk" class="risk-item">
+            <text class="risk-name">{{risk.name}}</text>
+            <text class="risk-score">{{risk.score}}</text>
+          </view>
+        </view>
+
+        <!-- 附件列表 -->
+        <view wx:if="{{item.attachments.length > 0}}" class="attachment-section">
+          <text class="section-label">附件</text>
+          <view wx:for="{{item.attachments}}" wx:key="fileID" wx:for-item="att" class="attachment-item">
+            <text class="attachment-name" bindlongpress="shareAttachment" data-fileid="{{att.fileID}}">{{att.originalname}}</text>
+            <button class="link-btn" size="mini" bindtap="downloadAttachment" data-fileid="{{att.fileID}}" data-name="{{att.originalname}}">下载</button>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view wx:else class="empty">
+    <text>暂无推送内容</text>
+  </view>
+</view>

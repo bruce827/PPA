@@ -1,0 +1,12 @@
+{
+  "envId": "cloud1-9gf2hg9lbc3ff385",
+  "functionRootPath": "./",
+  "functions": [
+    {
+      "name": "getInternalProjectList",
+      "runtime": "Nodejs18.15",
+      "handler": "index.main",
+      "timeout": 15
+    }
+  ]
+}

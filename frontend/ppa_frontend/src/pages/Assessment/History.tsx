@@ -4,6 +4,7 @@ import {
   exportProjectToExcel,
 } from '@/services/projects';
 import BusinessQuoteModal from '@/components/BusinessQuoteModal';
+import PushModal from './components/PushModal';
 import { PageContainer, ProTable } from '@ant-design/pro-components';
 import { Link } from '@umijs/max';
 import { Button, Dropdown, Popconfirm, Tag, Tooltip, App } from 'antd';
@@ -13,6 +14,8 @@ const HistoryPage = () => {
   const { message } = App.useApp();
   const actionRef = useRef();
   const [quoteModalOpen, setQuoteModalOpen] = useState(false);
+  const [pushModalOpen, setPushModalOpen] = useState(false);
+  const [pushProject, setPushProject] = useState<API.ProjectInfo | null>(null);
   const [selectedProject, setSelectedProject] = useState<API.ProjectInfo | null>(
     null,
   );
@@ -266,6 +269,17 @@ const HistoryPage = () => {
         >
           商务报价
         </Button>,
+        <Button
+          key="push"
+          type="link"
+          disabled={isTemplateValue(record.is_template)}
+          onClick={() => {
+            setPushProject(record);
+            setPushModalOpen(true);
+          }}
+        >
+          推送
+        </Button>,
         isTemplateValue(record.is_template) ? (
           <Tooltip
             key="delete-disabled"
@@ -348,6 +362,30 @@ const HistoryPage = () => {
         onSuccess={() => {
           setQuoteModalOpen(false);
           setSelectedProject(null);
+          actionRef.current?.reload();
+        }}
+      />
+      <PushModal
+        open={pushModalOpen}
+        projectId={pushProject?.id}
+        projectName={pushProject?.name}
+        projectRiskScore={pushProject?.final_risk_score}
+        projectQuoteTotal={(() => {
+          if (!pushProject?.business_quote_json) return undefined;
+          try {
+            const parsed = JSON.parse(pushProject.business_quote_json);
+            return parsed?.amounts?.quote_total_wan || parsed?.quote_total_wan;
+          } catch {
+            return undefined;
+          }
+        })()}
+        onCancel={() => {
+          setPushModalOpen(false);
+          setPushProject(null);
+        }}
+        onSuccess={() => {
+          setPushModalOpen(false);
+          setPushProject(null);
           actionRef.current?.reload();
         }}
       />

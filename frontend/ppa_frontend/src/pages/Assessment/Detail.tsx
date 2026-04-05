@@ -13,6 +13,7 @@ import {
 import BusinessQuoteModal from '@/components/BusinessQuoteModal';
 import { recommendContracts } from '@/services/contracts';
 import { exportProjectToExcel, updateProject } from '@/services/projects';
+import AttachmentManager from './components/AttachmentManager';
 import { PageContainer } from '@ant-design/pro-components';
 import { history, useParams } from '@umijs/max';
 import {
@@ -1112,6 +1113,11 @@ const AssessmentDetailPage = () => {
           </Space>
         </Card>
       ),
+    },
+    {
+      key: '7',
+      label: '附件管理',
+      children: project?.id ? <AttachmentManager projectId={project.id} /> : null,
     },
   ];
 
