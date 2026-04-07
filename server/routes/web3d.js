@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const web3dConfigController = require('../controllers/web3dConfigController');
+const web3dAiController = require('../controllers/web3dAiController');
 const web3dProjectController = require('../controllers/web3dProjectController');
 
 // Config: 风险项
@@ -15,6 +16,14 @@ router.get('/config/workload-templates', web3dConfigController.getWorkloadTempla
 router.post('/config/workload-templates', web3dConfigController.createWorkloadTemplate);
 router.put('/config/workload-templates/:id', web3dConfigController.updateWorkloadTemplate);
 router.delete('/config/workload-templates/:id', web3dConfigController.deleteWorkloadTemplate);
+
+// AI: Step4 分析
+router.get('/ai/step4-prompts', web3dAiController.getStep4Prompts);
+router.post(
+  '/ai/step4-analyze',
+  web3dAiController.uploadStep4Images,
+  web3dAiController.analyzeStep4
+);
 
 // Projects
 router.post('/projects/calculate', web3dProjectController.calculate);

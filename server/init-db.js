@@ -99,8 +99,10 @@ const CREATE_TABLES_SQL = `
     max_tokens INTEGER NOT NULL DEFAULT 2000,
     timeout INTEGER NOT NULL DEFAULT 30,
     is_current INTEGER NOT NULL DEFAULT 0,
+    is_current_vision INTEGER NOT NULL DEFAULT 0,
     is_active INTEGER NOT NULL DEFAULT 1,
     supports_web_search INTEGER NOT NULL DEFAULT 0,
+    supports_vision INTEGER NOT NULL DEFAULT 0,
     last_test_time DATETIME,
     test_status TEXT,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -110,6 +112,10 @@ const CREATE_TABLES_SQL = `
   CREATE UNIQUE INDEX IF NOT EXISTS idx_ai_model_configs_is_current
     ON ai_model_configs(is_current)
     WHERE is_current = 1;
+
+  CREATE UNIQUE INDEX IF NOT EXISTS idx_ai_model_configs_is_current_vision
+    ON ai_model_configs(is_current_vision)
+    WHERE is_current_vision = 1;
 
   CREATE INDEX IF NOT EXISTS idx_ai_model_configs_config_name
     ON ai_model_configs(config_name);

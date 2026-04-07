@@ -30,6 +30,7 @@ interface ModelFormProps {
   visible: boolean;
   record?: API.AIModelConfig;
   currentModelId?: number;
+  currentVisionModelId?: number;
   onCancel: () => void;
   onSuccess: () => void;
 }
@@ -38,6 +39,7 @@ const ModelForm: React.FC<ModelFormProps> = ({
   visible,
   record,
   currentModelId,
+  currentVisionModelId,
   onCancel,
   onSuccess,
 }) => {
@@ -54,6 +56,9 @@ const ModelForm: React.FC<ModelFormProps> = ({
   const isGeminiSelected =
     typeof providerValue === 'string' &&
     /google|gemini/i.test(providerValue);
+  const isMinimaxSelected =
+    typeof providerValue === 'string' &&
+    /minimax/i.test(providerValue);
   const apiHostPlaceholder = isTavilySelected
     ? '例如：https://api.tavily.com/search'
     : isCherryStudioSelected
@@ -65,11 +70,14 @@ const ModelForm: React.FC<ModelFormProps> = ({
   const testPromptHint = isTavilySelected
     ? '提示：测试会发送固定检索词“Tavily Search API 是什么？”，使用当前表单数据，不会保存到数据库'
     : '提示：测试会发送固定问题“你是什么模型？”，使用当前表单数据，不会保存到数据库';
+  const hasOtherCurrentVision =
+    currentVisionModelId !== undefined &&
+    (record?.id === undefined || currentVisionModelId !== record.id);
 
   useEffect(() => {
-    if (visible) {
-      if (record) {
-        form.setFieldsValue(record);
+      if (visible) {
+        if (record) {
+          form.setFieldsValue(record);
       } else {
         form.resetFields();
       }
@@ -87,6 +95,17 @@ const ModelForm: React.FC<ModelFormProps> = ({
       is_current: 0,
     });
   }, [visible, isTavilySelected, form]);
+
+  useEffect(() => {
+    if (!visible || !(isGeminiSelected || isMinimaxSelected)) {
+      return;
+    }
+
+    const currentVision = form.getFieldValue('supports_vision');
+    if (currentVision !== 1 && currentVision !== true) {
+      form.setFieldValue('supports_vision', 1);
+    }
+  }, [visible, isGeminiSelected, isMinimaxSelected, form]);
 
   const handleSubmit = async (values: any) => {
     try {
@@ -232,6 +251,16 @@ const ModelForm: React.FC<ModelFormProps> = ({
         />
       )}
 
+      {isMinimaxSelected && (
+        <Alert
+          type="info"
+          showIcon
+          style={{ marginBottom: 16 }}
+          message={AI_PROVIDER_LABELS.MINIMAX}
+          description="MiniMax 将用于 Web3D Step4 图片识别。建议填写兼容视觉对话的接口地址或网关地址。"
+        />
+      )}
+
       <ProFormText
         name="api_key"
         label="API Key"
@@ -370,6 +399,33 @@ const ModelForm: React.FC<ModelFormProps> = ({
           disabled: isTavilySelected,
         }}
         transform={(value) => ({ supports_web_search: value ? 1 : 0 })}
+        convertValue={(value) => value === 1}
+      />
+
+      <ProFormSwitch
+        name="supports_vision"
+        label="支持图片识别"
+        tooltip="开启后，该模型可用于 Web3D Step4 的图片识别分析"
+        initialValue={isGeminiSelected || isMinimaxSelected}
+        fieldProps={{
+          disabled: isTavilySelected,
+        }}
+        transform={(value) => ({ supports_vision: value ? 1 : 0 })}
+        convertValue={(value) => value === 1}
+      />
+
+      <ProFormSwitch
+        name="is_current_vision"
+        label="设为当前视觉模型"
+        tooltip={
+          hasOtherCurrentVision
+            ? '已有当前视觉模型，需先切换后再设'
+            : '将此配置设为当前 Web3D 图片识别模型'
+        }
+        fieldProps={{
+          disabled: hasOtherCurrentVision || isTavilySelected,
+        }}
+        transform={(value) => ({ is_current_vision: value ? 1 : 0 })}
         convertValue={(value) => value === 1}
       />
 

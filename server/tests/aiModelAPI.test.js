@@ -33,8 +33,10 @@ describe('AI Model API', () => {
         max_tokens INTEGER NOT NULL DEFAULT 2000,
         timeout INTEGER NOT NULL DEFAULT 30,
         is_current INTEGER NOT NULL DEFAULT 0,
+        is_current_vision INTEGER NOT NULL DEFAULT 0,
         is_active INTEGER NOT NULL DEFAULT 1,
         supports_web_search INTEGER NOT NULL DEFAULT 0,
+        supports_vision INTEGER NOT NULL DEFAULT 0,
         last_test_time DATETIME,
         test_status TEXT,
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -45,6 +47,11 @@ describe('AI Model API', () => {
       CREATE UNIQUE INDEX IF NOT EXISTS idx_ai_model_configs_is_current
       ON ai_model_configs(is_current)
       WHERE is_current = 1
+    `);
+    await db.run(`
+      CREATE UNIQUE INDEX IF NOT EXISTS idx_ai_model_configs_is_current_vision
+      ON ai_model_configs(is_current_vision)
+      WHERE is_current_vision = 1
     `);
   });
 
@@ -94,6 +101,48 @@ describe('AI Model API', () => {
     expect(response.status).toBe(201);
     expect(response.body.success).toBe(true);
     expect(response.body.data.supports_web_search).toBe(0);
+    expect(response.body.data.supports_vision).toBe(0);
+  });
+
+  test('POST /api/config/ai-models should persist supports_vision and allow setting current vision model', async () => {
+    const response = await request(app).post('/api/config/ai-models').send({
+      config_name: 'vision-model',
+      provider: 'Google',
+      api_key: 'secret-key',
+      api_host: 'https://generativelanguage.googleapis.com',
+      model_name: 'gemini-2.5-pro',
+      supports_vision: 1,
+      is_current_vision: 1,
+    });
+
+    expect(response.status).toBe(201);
+    expect(response.body.success).toBe(true);
+    expect(response.body.data.supports_vision).toBe(1);
+    expect(response.body.data.is_current_vision).toBe(1);
+
+    const currentVisionRes = await request(app).get('/api/config/ai-models/current-vision');
+    expect(currentVisionRes.status).toBe(200);
+    expect(currentVisionRes.body.success).toBe(true);
+    expect(currentVisionRes.body.data.config_name).toBe('vision-model');
+  });
+
+  test('POST /api/config/ai-models/:id/set-current-vision should reject non-vision models', async () => {
+    const createRes = await request(app).post('/api/config/ai-models').send({
+      config_name: 'non-vision-model',
+      provider: 'OpenAI',
+      api_key: 'secret-key',
+      api_host: 'https://example.com/v1/chat/completions',
+      model_name: 'gpt-test',
+      supports_vision: 0,
+    });
+
+    const response = await request(app).post(
+      `/api/config/ai-models/${createRes.body.data.id}/set-current-vision`
+    );
+
+    expect(response.status).toBe(400);
+    expect(response.body.success).toBe(false);
+    expect(response.body.message).toContain('图片识别');
   });
 
   test('POST /api/config/ai-models should reject root host for OpenAI compatible providers', async () => {

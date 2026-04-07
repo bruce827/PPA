@@ -108,7 +108,8 @@ function requestOnce({ prompt, model, requestHash, api_host, api_key, timeoutMs,
 
   let url;
   try {
-    url = new URL(`/v1/models/${encodeURIComponent(model)}:generateContent`, api_host);
+    // Gemini 官方 generateContent REST 目前以 v1beta 为主，部分新模型在 v1 下不可用。
+    url = new URL(`/v1beta/models/${encodeURIComponent(model)}:generateContent`, api_host);
     url.searchParams.set('key', api_key);
   } catch (error) {
     return Promise.reject(internalError('Gemini API Host 配置不正确'));

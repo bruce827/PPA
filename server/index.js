@@ -16,6 +16,15 @@ const {
 const {
   runMigration: runTenderWebSearchResultsMigration,
 } = require('./migrations/008_create_tender_web_search_results');
+const {
+  runMigration: runProjectPushRecordsMigration,
+} = require('./migrations/009_project_push_records');
+const {
+  runMigration: runAIModelVisionFlagsMigration,
+} = require('./migrations/010_add_vision_flags_to_ai_model_configs');
+const {
+  runMigration: runPromptTemplateWeb3dStep4Migration,
+} = require('./migrations/011_expand_prompt_template_categories_for_web3d_step4');
 
 loadEnvFile();
 
@@ -32,6 +41,9 @@ async function startServer() {
     await runAIModelSupportsWebSearchMigration();
     await runPromptTemplateCategoryMigration();
     await runTenderWebSearchResultsMigration();
+    await runProjectPushRecordsMigration();
+    await runAIModelVisionFlagsMigration();
+    await runPromptTemplateWeb3dStep4Migration();
     await db.init(); // Initialize database connection
     await biddingSiteModel.ensureSchema();
     await tenderStagingModel.ensureSchema();

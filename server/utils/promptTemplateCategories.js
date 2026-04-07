@@ -2,6 +2,7 @@ const CANONICAL_PROMPT_TEMPLATE_CATEGORIES = [
   'risk_analysis',
   'workload_evaluation',
   'module_analysis',
+  'web3d_step4_analysis',
   'project_tagging',
   'report_generation',
   'custom',

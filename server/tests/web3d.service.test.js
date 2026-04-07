@@ -128,13 +128,13 @@ const sampleAssessment = {
     { item_name: '数据质量', selected_value: 5 }
   ],
   workload_items: [
-    { category: 'data_processing', item_name: 'BIM 清洗与轻量化', quantity: 1, role_name: '前端开发' },
-    { category: 'data_processing', item_name: '贴图与材质修复', quantity: 1, role_name: '前端开发' },
-    { category: 'core_dev', item_name: '场景搭建与基础交互', quantity: 1, role_name: '前端开发' },
-    { category: 'core_dev', item_name: 'UI 联调', quantity: 1, role_name: '前端开发' },
-    { category: 'core_dev', item_name: 'Shader/特效', quantity: 1, role_name: '前端开发' },
-    { category: 'business_logic', item_name: '点击弹窗', quantity: 1, role_name: '前端开发' },
-    { category: 'business_logic', item_name: '数据联动与图表', quantity: 1, role_name: '前端开发' }
+    { category: 'data_processing', item_name: 'BIM 清洗与轻量化', quantity: 1, role_name: '前端开发', reason: '需要处理原始 BIM 模型' },
+    { category: 'data_processing', item_name: '贴图与材质修复', quantity: 1, role_name: '前端开发', reason: '材质需要补齐' },
+    { category: 'core_dev', item_name: '场景搭建与基础交互', quantity: 1, role_name: '前端开发', reason: '基础浏览能力必须建设' },
+    { category: 'core_dev', item_name: 'UI 联调', quantity: 1, role_name: '前端开发', reason: '需要和业务面板联调' },
+    { category: 'core_dev', item_name: 'Shader/特效', quantity: 1, role_name: '前端开发', reason: '有视觉表现要求' },
+    { category: 'business_logic', item_name: '点击弹窗', quantity: 1, role_name: '前端开发', reason: '存在点击查看需求' },
+    { category: 'business_logic', item_name: '数据联动与图表', quantity: 1, role_name: '前端开发', reason: '需要图表联动' }
   ],
   mix_tech: false
 };
@@ -176,5 +176,8 @@ describe('Web3D project service', () => {
     expect(project.project_type).toBe('web3d');
     expect(Number(project.final_total_cost)).toBeGreaterThan(0);
     expect(Number(project.final_workload_days)).toBeGreaterThan(0);
+    expect(JSON.parse(project.assessment_details_json).workload_items[0].reason).toBe(
+      '需要处理原始 BIM 模型'
+    );
   });
 });

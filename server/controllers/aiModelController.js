@@ -108,6 +108,31 @@ exports.getCurrentModel = async (req, res, next) => {
   }
 };
 
+exports.setCurrentVisionModel = async (req, res, next) => {
+  try {
+    const updatedModel = await aiModelService.setCurrentVisionModel(req.params.id);
+    res.json({
+      success: true,
+      data: updatedModel,
+      message: `已成功将 "${updatedModel.config_name}" 设置为当前视觉模型`,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.getCurrentVisionModel = async (req, res, next) => {
+  try {
+    const currentModel = await aiModelService.getCurrentVisionModel();
+    res.json({
+      success: true,
+      data: currentModel,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 /**
  * 测试 AI 模型连接
  */

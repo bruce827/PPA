@@ -5,6 +5,7 @@ import {
   getWeb3dWorkloadTemplates,
   getRoles,
 } from '@/services/web3d';
+import Web3DAiStep4Analyzer from './components/Web3DAiStep4Analyzer';
 import {
   ArrowDownOutlined,
   ArrowUpOutlined,
@@ -96,6 +97,7 @@ type WorkloadRow = {
   unit_price_yuan?: number;
   role_names?: string[];
   delivery_factor?: number;
+  reason?: string;
 };
 
 const defaultAssessment = {
@@ -152,6 +154,7 @@ const NewWeb3D: React.FC = () => {
             unit_price_yuan: defaultPrice,
             role_names: defaultRole ? [defaultRole] : [],
             delivery_factor: 1,
+            reason: '',
           }),
         );
         setWorkloadRows(initRows);
@@ -208,6 +211,7 @@ const NewWeb3D: React.FC = () => {
       role_name: row.role_name,
       role_names: row.role_names,
       unit_price_yuan: row.unit_price_yuan,
+      reason: row.reason,
     }));
 
     return {
@@ -270,6 +274,7 @@ const NewWeb3D: React.FC = () => {
       role_name: defaultRole,
       unit_price_yuan: defaultPrice,
       delivery_factor: 1,
+      reason: '',
     };
     setWorkloadRows((prev) => [...prev, next]);
   };
@@ -280,6 +285,7 @@ const NewWeb3D: React.FC = () => {
         if (row.key !== key) return row;
         const merged = { ...row, ...patch };
         if (patch.item_name || patch.category) {
+          merged.reason = '';
           const tpl =
             templates.find(
               (t) =>
@@ -317,6 +323,7 @@ const NewWeb3D: React.FC = () => {
         role_name: defaultRole,
         unit_price_yuan: defaultPrice,
         delivery_factor: record.delivery_factor || 1,
+        reason: '',
       };
     });
     setWorkloadRows((prev) => {
@@ -327,6 +334,39 @@ const NewWeb3D: React.FC = () => {
 
   const removeRow = (key: string) => {
     setWorkloadRows((prev) => prev.filter((row) => row.key !== key));
+  };
+
+  const handleApplyAiRows = (rows: API_WEB3D.Step4AnalyzeRow[]) => {
+    const nextRows: WorkloadRow[] = rows.map((row, index) => {
+      const template = templates.find(
+        (item) =>
+          item.category === row.category && item.item_name === row.item_name,
+      );
+      const roleNames = Array.isArray(row.role_names) ? row.role_names : [];
+      const unitPrice =
+        roleNames.length > 0
+          ? roleNames.reduce((sum, roleName) => {
+              const role = roles.find((item) => item.role_name === roleName);
+              return sum + Number(role?.unit_price || 0);
+            }, 0) / roleNames.length
+          : undefined;
+
+      return {
+        key: `${row.category}-${row.item_name}-${Date.now()}-${index}`,
+        category: row.category,
+        item_name: row.item_name,
+        quantity: Number(row.delivery_factor || 1),
+        base_days: Number(row.base_days || template?.base_days || 1),
+        unit: template?.unit,
+        role_name: roleNames[0] || '',
+        unit_price_yuan: unitPrice,
+        role_names: roleNames,
+        delivery_factor: Number(row.delivery_factor || 1),
+        reason: row.reason || '',
+      };
+    });
+
+    setWorkloadRows(nextRows);
   };
 
   const summaryCards = [
@@ -377,6 +417,20 @@ const NewWeb3D: React.FC = () => {
           />
         );
       },
+    },
+    {
+      title: '原因说明',
+      dataIndex: 'reason',
+      width: 320,
+      render: (val: string | undefined, record: WorkloadRow) => (
+        <Input.TextArea
+          autoSize={{ minRows: 1, maxRows: 3 }}
+          placeholder="可填写 AI 原因或手工调整后的说明"
+          style={{ minWidth: 280 }}
+          value={val}
+          onChange={(event) => updateRow(record.key, { reason: event.target.value })}
+        />
+      ),
     },
     {
       title: '角色（多选取均价）',
@@ -666,37 +720,48 @@ const NewWeb3D: React.FC = () => {
       )}
 
       {currentStep === 3 && (
-        <Card
-          title="Step4 工作量估算"
-          extra={
-            <Tooltip title="按模板选项与数量计算 A/B/C 分类工作量">
-              <InfoCircleOutlined />
-            </Tooltip>
-          }
-        >
-          <Table
-            pagination={false}
-            rowKey="key"
-            dataSource={workloadRows}
-            columns={workloadColumns}
-            summary={() => (
-              <Table.Summary>
-                <Table.Summary.Row>
-                  <Table.Summary.Cell index={0} colSpan={workloadColumns.length}>
-                    <Space>
-                      <Button type="dashed" icon={<PlusOutlined />} onClick={addWorkloadRow}>
-                        新增一行
-                      </Button>
-                      <Typography.Text type="secondary">
-                        滚动到表尾后可连续新增，无需回到顶部
-                      </Typography.Text>
-                    </Space>
-                  </Table.Summary.Cell>
-                </Table.Summary.Row>
-              </Table.Summary>
-            )}
+        <>
+          <Web3DAiStep4Analyzer
+            basicForm={basicForm}
+            riskItems={riskItems}
+            riskSelections={riskSelections}
+            templates={templates}
+            roles={roles}
+            onApplyRows={handleApplyAiRows}
           />
-        </Card>
+          <Card
+            title="Step4 工作量估算"
+            extra={
+              <Tooltip title="按模板选项与数量计算 A/B/C 分类工作量">
+                <InfoCircleOutlined />
+              </Tooltip>
+            }
+          >
+            <Table
+              pagination={false}
+              rowKey="key"
+              dataSource={workloadRows}
+              scroll={{ x: 1700 }}
+              columns={workloadColumns}
+              summary={() => (
+                <Table.Summary>
+                  <Table.Summary.Row>
+                    <Table.Summary.Cell index={0} colSpan={workloadColumns.length}>
+                      <Space>
+                        <Button type="dashed" icon={<PlusOutlined />} onClick={addWorkloadRow}>
+                          新增一行
+                        </Button>
+                        <Typography.Text type="secondary">
+                          滚动到表尾后可连续新增，无需回到顶部
+                        </Typography.Text>
+                      </Space>
+                    </Table.Summary.Cell>
+                  </Table.Summary.Row>
+                </Table.Summary>
+              )}
+            />
+          </Card>
+        </>
       )}
 
       {currentStep === 4 && (
@@ -756,9 +821,16 @@ const NewWeb3D: React.FC = () => {
                 pagination={false}
                 rowKey="key"
                 dataSource={workloadRows}
+                scroll={{ x: 'max-content' }}
                 columns={[
                   { title: '类别', dataIndex: 'category', render: (v) => categoryLabel[v] || v },
                   { title: '工作项', dataIndex: 'item_name' },
+                  {
+                    title: '原因说明',
+                    dataIndex: 'reason',
+                    width: 320,
+                    render: (value: string | undefined) => value || '-',
+                  },
                   { title: '工作量（人天）', dataIndex: 'base_days', align: 'center' },
                   {
                     title: '小计(万元)',

@@ -1,6 +1,13 @@
 import { AI_PROVIDER_VALUE_ENUM, isTavilyProvider } from '@/constants';
-import { deleteAIModel, getAIModels, setCurrentModel, testAIModel } from '@/services/aiModel';
 import {
+  deleteAIModel,
+  getAIModels,
+  setCurrentModel,
+  setCurrentVisionModel,
+  testAIModel,
+} from '@/services/aiModel';
+import {
+  EyeOutlined,
   PlusOutlined,
   StarOutlined,
   ThunderboltOutlined,
@@ -17,6 +24,9 @@ const AIModelApplication: React.FC = () => {
     API.AIModelConfig | undefined
   >();
   const [currentModelId, setCurrentModelId] = useState<number | undefined>(
+    undefined,
+  );
+  const [currentVisionModelId, setCurrentVisionModelId] = useState<number | undefined>(
     undefined,
   );
   const actionRef = useRef<ActionType>();
@@ -66,6 +76,20 @@ const AIModelApplication: React.FC = () => {
     }
   };
 
+  const handleSetCurrentVision = async (id: number, configName: string) => {
+    try {
+      const response = await setCurrentVisionModel(id);
+      if (response.success) {
+        message.success(response.message || `已将 ${configName} 设为当前视觉模型`);
+        actionRef.current?.reload();
+      } else {
+        message.error(response.message || '设置失败');
+      }
+    } catch (error: any) {
+      message.error(error.message || '设置失败');
+    }
+  };
+
   const columns: ProColumns<API.AIModelConfig>[] = [
     {
       title: '配置名称',
@@ -75,6 +99,11 @@ const AIModelApplication: React.FC = () => {
         <>
           {record.is_current === 1 && (
             <span style={{ color: '#faad14', marginRight: 4 }}>⭐</span>
+          )}
+          {record.is_current_vision === 1 && (
+            <span style={{ color: '#722ed1', marginRight: 4 }}>
+              <EyeOutlined />
+            </span>
           )}
           {record.config_name}
         </>
@@ -95,9 +124,12 @@ const AIModelApplication: React.FC = () => {
       title: '能力',
       dataIndex: 'supports_web_search',
       render: (_, record) => (
-        <Tag color={record.supports_web_search === 1 ? 'cyan' : 'default'}>
-          {record.supports_web_search === 1 ? '联网搜索' : '普通模型'}
-        </Tag>
+        <>
+          <Tag color={record.supports_web_search === 1 ? 'cyan' : 'default'}>
+            {record.supports_web_search === 1 ? '联网搜索' : '普通模型'}
+          </Tag>
+          {record.supports_vision === 1 && <Tag color="purple">图片识别</Tag>}
+        </>
       ),
     },
     {
@@ -111,6 +143,14 @@ const AIModelApplication: React.FC = () => {
           tags.push(
             <Tag key="current" color="green">
               当前使用
+            </Tag>,
+          );
+        }
+
+        if (record.is_current_vision === 1) {
+          tags.push(
+            <Tag key="current-vision" color="purple">
+              当前视觉模型
             </Tag>,
           );
         }
@@ -189,6 +229,32 @@ const AIModelApplication: React.FC = () => {
           );
         }
 
+        if (record.supports_vision === 1) {
+          if (record.is_current_vision === 1) {
+            actions.push(
+              <span
+                key="current-vision"
+                style={{ color: '#999', cursor: 'not-allowed' }}
+              >
+                当前视觉
+              </span>,
+            );
+          } else {
+            actions.push(
+              <Popconfirm
+                key="set-current-vision"
+                title={`切换当前视觉模型为 ${record.config_name}？`}
+                description="Web3D Step4 图片识别将使用此模型。"
+                onConfirm={() => handleSetCurrentVision(record.id, record.config_name)}
+                okText="确定"
+                cancelText="取消"
+              >
+                <a>设为视觉模型</a>
+              </Popconfirm>,
+            );
+          }
+        }
+
         // 测试按钮
         actions.push(
           <a
@@ -265,7 +331,11 @@ const AIModelApplication: React.FC = () => {
               const current = (response.data || []).find(
                 (item) => item.is_current === 1,
               );
+              const currentVision = (response.data || []).find(
+                (item) => item.is_current_vision === 1,
+              );
               setCurrentModelId(current?.id);
+              setCurrentVisionModelId(currentVision?.id);
               return {
                 data: response.data || [],
                 success: true,
@@ -292,6 +362,7 @@ const AIModelApplication: React.FC = () => {
         visible={modalVisible}
         record={currentRecord}
         currentModelId={currentModelId}
+        currentVisionModelId={currentVisionModelId}
         onCancel={() => {
           setModalVisible(false);
           setCurrentRecord(undefined);

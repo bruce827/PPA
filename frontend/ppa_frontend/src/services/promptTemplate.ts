@@ -13,6 +13,7 @@ export type PromptTemplateCategory =
   | 'risk_analysis'
   | 'workload_evaluation'
   | 'module_analysis'
+  | 'web3d_step4_analysis'
   | 'project_tagging'
   | 'report_generation'
   | 'web_search'
@@ -25,6 +26,7 @@ export const PROMPT_TEMPLATE_CATEGORY_OPTIONS: Array<{
   { value: 'risk_analysis', label: '风险分析' },
   { value: 'workload_evaluation', label: '工作量评估' },
   { value: 'module_analysis', label: '模块梳理' },
+  { value: 'web3d_step4_analysis', label: 'Web3D Step4 分析' },
   { value: 'project_tagging', label: '标签生成' },
   { value: 'report_generation', label: '报告生成' },
   { value: 'web_search', label: '联网搜索' },
@@ -35,6 +37,7 @@ export const PROMPT_TEMPLATE_CATEGORY_VALUE_ENUM = {
   risk_analysis: { text: '风险分析' },
   workload_evaluation: { text: '工作量评估' },
   module_analysis: { text: '模块梳理' },
+  web3d_step4_analysis: { text: 'Web3D Step4 分析' },
   project_tagging: { text: '标签生成' },
   report_generation: { text: '报告生成' },
   web_search: { text: '联网搜索' },

@@ -29,6 +29,11 @@ function isGeminiProvider(provider) {
   return normalized.includes('google') || normalized.includes('gemini');
 }
 
+function isMinimaxProvider(provider) {
+  if (typeof provider !== 'string') return false;
+  return provider.toLowerCase().includes('minimax');
+}
+
 function normalizeApiHost(provider, apiHost) {
   if (apiHost === undefined || apiHost === null || apiHost === '') {
     return apiHost;
@@ -49,6 +54,10 @@ function normalizeApiHost(provider, apiHost) {
   }
 
   if (isGeminiProvider(provider) || isTavilyProvider(provider)) {
+    return normalizedUrl;
+  }
+
+  if (isMinimaxProvider(provider)) {
     return normalizedUrl;
   }
 
@@ -90,8 +99,10 @@ function normalizePayload(payload, defaults = {}) {
     max_tokens = defaults.max_tokens ?? 2000,
     timeout = defaults.timeout ?? 30,
     is_current = defaults.is_current ?? 0,
+    is_current_vision = defaults.is_current_vision ?? 0,
     is_active = defaults.is_active ?? 1,
     supports_web_search,
+    supports_vision,
   } = payload;
 
   const normalized = {
@@ -105,11 +116,21 @@ function normalizePayload(payload, defaults = {}) {
     max_tokens,
     timeout,
     is_current: normalizeFlag('is_current', is_current, defaults.is_current ?? 0),
+    is_current_vision: normalizeFlag(
+      'is_current_vision',
+      is_current_vision,
+      defaults.is_current_vision ?? 0
+    ),
     is_active: normalizeFlag('is_active', is_active, defaults.is_active ?? 1),
     supports_web_search: normalizeFlag(
       'supports_web_search',
       supports_web_search,
       defaults.supports_web_search ?? 0
+    ),
+    supports_vision: normalizeFlag(
+      'supports_vision',
+      supports_vision,
+      defaults.supports_vision ?? 0
     ),
   };
 
@@ -118,7 +139,16 @@ function normalizePayload(payload, defaults = {}) {
       throw validationError('Tavily 仅可用于联网搜索，不能设为当前使用模型');
     }
 
+    if (normalized.is_current_vision === 1) {
+      throw validationError('Tavily 不支持图片识别，不能设为当前视觉模型');
+    }
+
     normalized.supports_web_search = 1;
+    normalized.supports_vision = 0;
+  }
+
+  if (normalized.is_current_vision === 1 && normalized.supports_vision !== 1) {
+    throw validationError('仅支持图片识别的模型才能设为当前视觉模型');
   }
 
   return normalized;
@@ -149,6 +179,13 @@ function normalizeModelFilters(filters = {}) {
     normalized.supports_web_search = normalizeFlag(
       'supports_web_search',
       filters.supports_web_search
+    );
+  }
+
+  if (Object.prototype.hasOwnProperty.call(filters, 'supports_vision')) {
+    normalized.supports_vision = normalizeFlag(
+      'supports_vision',
+      filters.supports_vision
     );
   }
 
@@ -231,12 +268,41 @@ async function setCurrentModel(id) {
   return aiModelModel.getModelById(modelId);
 }
 
+async function setCurrentVisionModel(id) {
+  const modelId = ensureId(id);
+  const existing = await aiModelModel.getModelById(modelId);
+  if (!existing) {
+    throw toNotFoundError('未找到指定的 AI 模型配置');
+  }
+  if (existing.is_active !== 1) {
+    throw validationError('无法设置未启用的模型为当前视觉模型');
+  }
+  if (existing.supports_vision !== 1) {
+    throw validationError('该模型未启用图片识别能力');
+  }
+
+  await aiModelModel.setCurrentVisionModel(modelId);
+  return aiModelModel.getModelById(modelId);
+}
+
 async function getCurrentModel() {
   const current = await aiModelModel.getCurrentModel();
   if (!current) {
     throw new HttpError(
       404,
       '当前没有设置使用的模型，请先配置并设置一个模型为当前使用',
+      'NotFoundError'
+    );
+  }
+  return current;
+}
+
+async function getCurrentVisionModel() {
+  const current = await aiModelModel.getCurrentVisionModel();
+  if (!current) {
+    throw new HttpError(
+      404,
+      '当前没有设置视觉模型，请先配置并设置一个支持图片识别的模型',
       'NotFoundError'
     );
   }
@@ -323,12 +389,15 @@ module.exports = {
   updateModel,
   deleteModel,
   setCurrentModel,
+  setCurrentVisionModel,
   getCurrentModel,
+  getCurrentVisionModel,
   ensureActiveWebSearchModel,
   validateWebSearchRuntimeConfig,
   testModelConnection,
   testTempConnection,
   isTavilyProvider,
   isCherryStudioProvider,
+  isMinimaxProvider,
   normalizeApiHost,
 };

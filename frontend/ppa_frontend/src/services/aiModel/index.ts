@@ -83,12 +83,30 @@ export async function setCurrentModel(id: number) {
   );
 }
 
+export async function setCurrentVisionModel(id: number) {
+  return request<API.AIModelResponse<API.AIModelConfig>>(
+    `/api/config/ai-models/${id}/set-current-vision`,
+    {
+      method: 'POST',
+    },
+  );
+}
+
 /**
  * 获取当前使用的模型
  */
 export async function getCurrentModel() {
   return request<API.AIModelResponse<API.AIModelConfig>>(
     '/api/config/ai-models/current',
+    {
+      method: 'GET',
+    },
+  );
+}
+
+export async function getCurrentVisionModel() {
+  return request<API.AIModelResponse<API.AIModelConfig>>(
+    '/api/config/ai-models/current-vision',
     {
       method: 'GET',
     },

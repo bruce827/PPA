@@ -176,3 +176,29 @@ export async function deleteWeb3dProject(
     ...(options || {}),
   });
 }
+
+/** 获取 Web3D Step4 AI 提示词 GET /api/web3d/ai/step4-prompts */
+export async function getWeb3dStep4Prompts(options?: { [key: string]: any }) {
+  return request<{ success: boolean; data: API_WEB3D.Step4Prompt[] }>(
+    '/api/web3d/ai/step4-prompts',
+    {
+      method: 'GET',
+      ...(options || {}),
+    },
+  );
+}
+
+/** Web3D Step4 AI 分析 POST /api/web3d/ai/step4-analyze */
+export async function analyzeWeb3dStep4WithAI(
+  data: FormData,
+  options?: { [key: string]: any },
+) {
+  return request<{ success: boolean; data: API_WEB3D.Step4AnalyzeResult }>(
+    '/api/web3d/ai/step4-analyze',
+    {
+      method: 'POST',
+      data,
+      ...(options || {}),
+    },
+  );
+}

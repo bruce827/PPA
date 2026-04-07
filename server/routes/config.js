@@ -23,11 +23,13 @@ router.get(
   aiModelController.getAIModels
 );
 router.get('/ai-models/current', aiModelController.getCurrentModel);
+router.get('/ai-models/current-vision', aiModelController.getCurrentVisionModel);
 router.get('/ai-models/:id', aiModelController.getAIModel);
 router.post('/ai-models', aiModelController.createAIModel);
 router.put('/ai-models/:id', aiModelController.updateAIModel);
 router.delete('/ai-models/:id', aiModelController.deleteAIModel);
 router.post('/ai-models/:id/set-current', aiModelController.setCurrentModel);
+router.post('/ai-models/:id/set-current-vision', aiModelController.setCurrentVisionModel);
 router.post('/ai-models/:id/test', aiModelController.testAIModel);
 router.post('/ai-models/test-temp', aiModelController.testAIModelTemp); // 临时测试（不保存）
 
