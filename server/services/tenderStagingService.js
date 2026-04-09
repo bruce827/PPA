@@ -2,6 +2,7 @@ const fs = require('fs/promises');
 const path = require('path');
 
 const tenderStagingModel = require('../models/tenderStagingModel');
+const tenderWebSearchResultModel = require('../models/tenderWebSearchResultModel');
 const { validationError, HttpError } = require('../utils/errors');
 
 const KNOWN_FIELDS = new Set([
@@ -723,6 +724,7 @@ async function readTenderRecordsFromDirectory(directoryPath) {
 
 async function syncTenderFiles(options = {}) {
   await tenderStagingModel.ensureSchema();
+  await tenderWebSearchResultModel.ensureSchema();
 
   const directoryPath = path.resolve(options.directoryPath || getDefaultSpiderDataDir());
 
@@ -753,6 +755,7 @@ async function syncTenderFiles(options = {}) {
     updated: 0,
     unchanged: 0,
     pruned: 0,
+    preservedWithTrace: 0,
     errors,
   };
 
@@ -765,6 +768,7 @@ async function syncTenderFiles(options = {}) {
       ? existing.raw_payload_json !== record.raw_payload_json ||
         existing.source_file !== record.source_file
       : true;
+    const wasSoftDeleted = Boolean(existing?.deleted_at);
 
     const nextRow = {
       source_item_id: record.source_item_id,
@@ -791,6 +795,8 @@ async function syncTenderFiles(options = {}) {
       last_synced_at: now,
       pushed_at:
         existing && !payloadChanged ? existing.pushed_at : null,
+      deleted_at: null,
+      delete_reason: null,
       created_at: existing?.created_at || now,
       updated_at: now,
     };
@@ -801,7 +807,7 @@ async function syncTenderFiles(options = {}) {
       continue;
     }
 
-    if (!payloadChanged) {
+    if (!payloadChanged && !wasSoftDeleted) {
       await tenderStagingModel.updateTenderStaging(existing.id, nextRow);
       summary.unchanged += 1;
       continue;
@@ -815,16 +821,35 @@ async function syncTenderFiles(options = {}) {
     const syncedSourceItemIds = new Set(
       normalizedRecords.map((record) => record.source_item_id)
     );
-    const existingSourceItemIds =
-      await tenderStagingModel.listAllTenderStagingSourceItemIds();
-    const staleSourceItemIds = existingSourceItemIds.filter(
-      (sourceItemId) => !syncedSourceItemIds.has(sourceItemId)
+    const activeRows = await tenderStagingModel.listActiveTenderStagingForPrune();
+    const staleRows = activeRows.filter(
+      (record) => !syncedSourceItemIds.has(record.source_item_id)
     );
 
-    if (staleSourceItemIds.length > 0) {
-      summary.pruned = await tenderStagingModel.deleteTenderStagingBySourceItemIds(
-        staleSourceItemIds
-      );
+    if (staleRows.length > 0) {
+      const staleIdsToSoftDelete = [];
+
+      for (const staleRow of staleRows) {
+        const hasPushTrace =
+          staleRow.push_status !== 'pending' ||
+          Boolean(staleRow.push_error) ||
+          Boolean(staleRow.pushed_at);
+        const hasWebSearchTrace =
+          await tenderWebSearchResultModel.hasSavedResultByTenderStagingId(staleRow.id);
+
+        if (hasPushTrace || hasWebSearchTrace) {
+          summary.preservedWithTrace += 1;
+          continue;
+        }
+
+        staleIdsToSoftDelete.push(staleRow.id);
+      }
+
+      if (staleIdsToSoftDelete.length > 0) {
+        summary.pruned = await tenderStagingModel.softDeleteTenderStagingByIds(
+          staleIdsToSoftDelete
+        );
+      }
     }
   }
 
@@ -870,7 +895,7 @@ async function getRequiredTenderStaging(id) {
   }
 
   const record = await tenderStagingModel.getTenderStagingById(numericId);
-  if (!record) {
+  if (!record || record.deleted_at) {
     throw new HttpError(404, '待推送招标不存在', 'NotFoundError');
   }
 

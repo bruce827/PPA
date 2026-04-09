@@ -6,6 +6,7 @@ const path = require('path');
 
 const db = require('../utils/db');
 const tenderStagingModel = require('../models/tenderStagingModel');
+const tenderWebSearchResultModel = require('../models/tenderWebSearchResultModel');
 const tenderStagingService = require('../services/tenderStagingService');
 
 describe('tenderStagingService', () => {
@@ -21,9 +22,11 @@ describe('tenderStagingService', () => {
 
     await db.init(TEST_DB_PATH);
     await tenderStagingModel.ensureSchema();
+    await tenderWebSearchResultModel.ensureSchema();
   });
 
   afterEach(async () => {
+    await db.run('DELETE FROM tender_staging_web_search_results');
     await db.run('DELETE FROM opportunity_tender_staging');
   });
 
@@ -216,6 +219,96 @@ describe('tenderStagingService', () => {
       const list = await tenderStagingService.listTenderStaging({ pageSize: 20 });
       expect(list.total).toBe(1);
       expect(list.items[0].source_item_id).toBe('alpha');
+
+      const softDeleted = await tenderStagingModel.getTenderStagingBySourceItemId('beta');
+      expect(softDeleted).toBeTruthy();
+      expect(softDeleted?.deleted_at).toBeTruthy();
+      expect(softDeleted?.delete_reason).toBe('missing_from_sync_source');
+    } finally {
+      fs.rmSync(firstDirectory, { recursive: true, force: true });
+      fs.rmSync(secondDirectory, { recursive: true, force: true });
+    }
+  });
+
+  test('should preserve stale rows with operation traces during sync pruning', async () => {
+    const firstDirectory = createTempSyncDir('ppa.tender.sync.trace.first');
+    const secondDirectory = createTempSyncDir('ppa.tender.sync.trace.second');
+
+    try {
+      writeJsonFile(firstDirectory, 'first.json', [
+        {
+          source_item_id: 'alpha',
+          title: 'Alpha 项目',
+          published_at: '2026-03-20T10:00:00.000Z',
+        },
+        {
+          source_item_id: 'beta',
+          title: 'Beta 项目',
+          published_at: '2026-03-21T10:00:00.000Z',
+        },
+        {
+          source_item_id: 'gamma',
+          title: 'Gamma 项目',
+          published_at: '2026-03-22T10:00:00.000Z',
+        },
+      ]);
+
+      writeJsonFile(secondDirectory, 'second.json', [
+        {
+          source_item_id: 'alpha',
+          title: 'Alpha 项目',
+          published_at: '2026-03-23T10:00:00.000Z',
+        },
+      ]);
+
+      await tenderStagingService.syncTenderFiles({
+        directoryPath: firstDirectory,
+      });
+
+      const beta = await tenderStagingModel.getTenderStagingBySourceItemId('beta');
+      const gamma = await tenderStagingModel.getTenderStagingBySourceItemId('gamma');
+
+      await tenderStagingModel.updateTenderPushState(beta.id, {
+        push_status: 'pushed',
+        push_error: null,
+        pushed_at: '2026-03-24T08:00:00.000Z',
+      });
+
+      await tenderWebSearchResultModel.saveLatestResult({
+        tender_staging_id: gamma.id,
+        model_config_id: 1,
+        prompt_template_id: 1,
+        searched_at: '2026-03-24T09:00:00.000Z',
+        summary: '已找到相关线索',
+        results: [
+          {
+            site_name: '中国政府采购网',
+            site_url: 'https://www.ccgp.gov.cn',
+            page_title: 'Gamma 项目公告',
+            content_type: '招标公告',
+            snippet: 'Gamma 项目招标公告片段',
+            relevance_reason: '标题与招标单位高度匹配',
+            confidence: 0.92,
+          },
+        ],
+      });
+
+      const secondResult = await tenderStagingService.syncTenderFiles({
+        directoryPath: secondDirectory,
+      });
+      expect(secondResult.created).toBe(0);
+      expect(secondResult.updated).toBe(1);
+      expect(secondResult.pruned).toBe(0);
+      expect(secondResult.preservedWithTrace).toBe(2);
+
+      const list = await tenderStagingService.listTenderStaging({ pageSize: 20 });
+      const sourceItemIds = list.items.map((item) => item.source_item_id).sort();
+      expect(sourceItemIds).toEqual(['alpha', 'beta', 'gamma']);
+
+      const preservedBeta = await tenderStagingModel.getTenderStagingBySourceItemId('beta');
+      const preservedGamma = await tenderStagingModel.getTenderStagingBySourceItemId('gamma');
+      expect(preservedBeta?.deleted_at || null).toBeNull();
+      expect(preservedGamma?.deleted_at || null).toBeNull();
     } finally {
       fs.rmSync(firstDirectory, { recursive: true, force: true });
       fs.rmSync(secondDirectory, { recursive: true, force: true });

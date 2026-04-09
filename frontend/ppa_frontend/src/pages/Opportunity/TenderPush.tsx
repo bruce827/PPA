@@ -56,7 +56,7 @@ const TenderPushPage: React.FC = () => {
           summary?.deduplicatedCount || 0
         } 条，新增 ${summary?.created || 0}，更新 ${summary?.updated || 0}，清理 ${
           summary?.pruned || 0
-        }`
+        }，保留 ${summary?.preservedWithTrace || 0}`
       );
       if (errorCount > 0) {
         message.warning(`同步过程中有 ${errorCount} 条告警，请查看服务端返回`);

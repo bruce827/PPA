@@ -247,6 +247,8 @@ const CREATE_TABLES_SQL = `
     push_error TEXT,
     last_synced_at DATETIME,
     pushed_at DATETIME,
+    deleted_at DATETIME,
+    delete_reason TEXT,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
   );

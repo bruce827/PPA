@@ -1,4 +1,12 @@
-[
+[{
+    "version": "V1.6.2-alpha",
+    "date": "2026-4-08",
+    "changes": [
+      { "type": "opt", "content": "3D评估增加剪切板上传图片" },
+      { "type": "feat", "content": "3D评估增加AI评估" }
+
+    ]
+  },
     {
     "version": "V1.6.1-alpha",
     "date": "2026-3-30",

@@ -135,6 +135,8 @@ declare namespace API_OPPORTUNITY {
     push_error?: string | null;
     last_synced_at?: string | null;
     pushed_at?: string | null;
+    deleted_at?: string | null;
+    delete_reason?: string | null;
     created_at?: string;
     updated_at?: string;
   };
@@ -168,6 +170,7 @@ declare namespace API_OPPORTUNITY {
     updated: number;
     unchanged: number;
     pruned: number;
+    preservedWithTrace: number;
     errors: string[];
   };
 

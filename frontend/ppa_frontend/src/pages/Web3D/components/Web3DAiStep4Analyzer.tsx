@@ -436,7 +436,7 @@ const Web3DAiStep4Analyzer: React.FC<Web3DAiStep4AnalyzerProps> = ({
 
           <Form.Item
             label="参考图片"
-            extra="支持 0-3 张图片，单张不超过 5MB。合法图片会保留在列表中，点击“开始 AI 分析”时统一提交。"
+            extra="支持 0-3 张图片，单张不超过 5MB。可点击上传、拖拽上传，或直接复制图片后在此处粘贴。合法图片会保留在列表中，点击“开始 AI 分析”时统一提交。"
           >
             <Upload
               accept="image/*"
@@ -444,6 +444,7 @@ const Web3DAiStep4Analyzer: React.FC<Web3DAiStep4AnalyzerProps> = ({
               fileList={imageFileList}
               listType="picture-card"
               maxCount={3}
+              pastable
               onChange={({ fileList }) => setImageFileList(fileList.slice(0, 3))}
             >
               {imageFileList.length >= 3 ? null : (

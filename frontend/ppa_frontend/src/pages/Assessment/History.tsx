@@ -200,7 +200,7 @@ const HistoryPage = () => {
       valueType: 'option',
       key: 'option',
       align: 'center',
-      width: 320,
+      width: 420,
       render: (text, record, _, action) => [
         <Link key="view" to={`/assessment/detail/${record.id}`}>
           查看

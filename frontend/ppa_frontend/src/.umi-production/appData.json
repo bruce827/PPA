@@ -51,7 +51,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 7
+        "register": 9
       },
       "enableBy": "register",
       "type": "preset",
@@ -95,10 +95,10 @@
       "time": {
         "hooks": {
           "onStart": [
-            4
+            1
           ]
         },
-        "register": 4
+        "register": 2
       },
       "enableBy": "register",
       "type": "plugin",
@@ -158,7 +158,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -225,7 +225,7 @@
             0
           ]
         },
-        "register": 6
+        "register": 7
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1077,7 +1077,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1094,7 +1094,7 @@
             0
           ]
         },
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1120,7 +1120,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 54
+        "register": 56
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1176,7 +1176,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1189,7 +1189,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1214,7 +1214,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1227,7 +1227,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/preset-umi/dist/features/okam/okam.js",
@@ -1252,7 +1252,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1269,7 +1269,7 @@
             1
           ]
         },
-        "register": 1
+        "register": 2
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/preset-umi/dist/features/polyfill/polyfill.js",
@@ -1320,7 +1320,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1333,7 +1333,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1346,7 +1346,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 3
+        "register": 2
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1384,7 +1384,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 2
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1410,7 +1410,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 2
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1423,7 +1423,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 2
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1436,7 +1436,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1461,7 +1461,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 14
+        "register": 15
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1486,7 +1486,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/preset-umi/dist/features/clickToComponent/clickToComponent.js",
@@ -1498,7 +1498,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1511,7 +1511,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1524,7 +1524,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/preset-umi/dist/features/webpack/webpack.js",
@@ -1565,7 +1565,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1578,7 +1578,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/preset-umi/dist/features/utoopack/utoopack.js",
@@ -1590,7 +1590,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 2
+        "register": 1
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/preset-umi/dist/features/hmrGuardian/hmrGuardian.js",
@@ -1602,7 +1602,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 19
+        "register": 20
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/preset-umi/dist/features/routePreloadOnLoad/routePreloadOnLoad.js",
@@ -1640,7 +1640,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 2
+        "register": 3
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1653,7 +1653,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 25
+        "register": 27
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1666,7 +1666,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 28
+        "register": 30
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/preset-umi/dist/commands/dev/dev.js",
@@ -1678,7 +1678,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1691,7 +1691,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1756,7 +1756,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1769,7 +1769,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1782,7 +1782,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1808,7 +1808,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1834,7 +1834,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1847,7 +1847,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1886,7 +1886,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1899,7 +1899,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1925,7 +1925,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1938,7 +1938,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 2
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1951,7 +1951,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 2
+        "register": 1
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1985,7 +1985,7 @@
             0
           ]
         },
-        "register": 4
+        "register": 5
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/plugins/dist/antd.js",
@@ -1997,7 +1997,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 4
+        "register": 3
       },
       "enableBy": "config",
       "type": "plugin",
@@ -2010,7 +2010,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "config",
       "type": "plugin",
@@ -2035,7 +2035,7 @@
             0
           ]
         },
-        "register": 3
+        "register": 2
       },
       "enableBy": "config",
       "type": "plugin",
@@ -2061,7 +2061,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 2
       },
       "enableBy": "config",
       "type": "plugin",
@@ -2087,7 +2087,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "config",
       "type": "plugin",
@@ -2100,7 +2100,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -2137,7 +2137,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "config",
       "type": "plugin",
@@ -2150,7 +2150,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "config",
       "type": "plugin",
@@ -2176,7 +2176,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "config",
       "type": "plugin",
@@ -2189,7 +2189,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "config",
       "type": "plugin",
@@ -2206,7 +2206,7 @@
             0
           ]
         },
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -2240,7 +2240,7 @@
             0
           ]
         },
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -2253,7 +2253,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -3578,7 +3578,7 @@
       "parentId": "3",
       "id": "5",
       "absPath": "/assessment/history",
-      "__content": "import {\n  deleteProject,\n  getProjectList,\n  exportProjectToExcel,\n} from '@/services/projects';\nimport BusinessQuoteModal from '@/components/BusinessQuoteModal';\nimport PushModal from './components/PushModal';\nimport { PageContainer, ProTable } from '@ant-design/pro-components';\nimport { Link } from '@umijs/max';\nimport { Button, Dropdown, Popconfirm, Tag, Tooltip, App } from 'antd';\nimport { useRef, useState } from 'react';\n\nconst HistoryPage = () => {\n  const { message } = App.useApp();\n  const actionRef = useRef();\n  const [quoteModalOpen, setQuoteModalOpen] = useState(false);\n  const [pushModalOpen, setPushModalOpen] = useState(false);\n  const [pushProject, setPushProject] = useState<API.ProjectInfo | null>(null);\n  const [selectedProject, setSelectedProject] = useState<API.ProjectInfo | null>(\n    null,\n  );\n  const isTemplateValue = (value: any) => {\n    const normalized = String(value).toLowerCase();\n    return ['1', 'true', 'yes'].includes(normalized);\n  };\n  const hasBusinessQuote = (value: any) => {\n    const normalized = String(value).toLowerCase();\n    return ['1', 'true', 'yes'].includes(normalized);\n  };\n  const getBusinessQuoteTotal = (record: API.ProjectInfo) => {\n    if (!record?.business_quote_json) return undefined;\n    try {\n      const parsed = JSON.parse(record.business_quote_json);\n      const pricingMode =\n        parsed?.pricing_mode === 'enterprise_product'\n          ? 'enterprise_product'\n          : 'custom_development';\n      const total =\n        pricingMode === 'enterprise_product'\n          ? (() => {\n              const baseCostWan = Number(parsed?.base_cost_wan || 0);\n              const variableShareRate =\n                Number(parsed?.rates?.cogs_rate || 0) +\n                Number(parsed?.rates?.csm_rate || 0);\n              return variableShareRate > 0\n                ? baseCostWan / (variableShareRate / 100)\n                : undefined;\n            })()\n          : parsed?.amounts?.quote_total_wan;\n      return Number.isFinite(Number(total)) ? Number(total) : undefined;\n    } catch (_error) {\n      return undefined;\n    }\n  };\n  const columns = [\n    {\n      title: '项目名称',\n      dataIndex: 'name',\n      key: 'name',\n      render: (text, record) => (\n        <Link to={`/assessment/detail/${record.id}`}>{text}</Link>\n      ),\n      fieldProps: {\n        placeholder: '支持模糊搜索',\n      },\n    },\n    {\n      valueType: 'select',\n      valueEnum: {\n        1: { text: '是' },\n        0: { text: '否' },\n      },\n      title: '是否模板',\n      dataIndex: 'is_template_filter',\n      key: 'is_template_filter',\n      hideInTable: true,\n      search: {\n        transform: (value) => ({ is_template: value }),\n      },\n    },\n    {\n      valueType: 'select',\n      valueEnum: {\n        1: { text: '已生成' },\n        0: { text: '未生成' },\n      },\n      title: '商务报价状态',\n      dataIndex: 'has_business_quote_filter',\n      key: 'has_business_quote_filter',\n      hideInTable: true,\n      search: {\n        transform: (value) => ({ has_business_quote: value }),\n      },\n    },\n    {\n      title: '是否模板',\n      dataIndex: 'is_template',\n      key: 'is_template',\n      width: 100,\n      align: 'center',\n      hideInSearch: true,\n      render: (value) =>\n        isTemplateValue(value) ? (\n          <Tag color=\"blue\">当前模板</Tag>\n        ) : (\n          '-'\n        ),\n    },\n    {\n      title: '商务报价状态',\n      dataIndex: 'has_business_quote',\n      key: 'has_business_quote',\n      width: 120,\n      align: 'center',\n      hideInSearch: true,\n      render: (value) =>\n        hasBusinessQuote(value) ? (\n          <Tag color=\"green\">已生成</Tag>\n        ) : (\n          <Tag>未生成</Tag>\n        ),\n    },\n    {\n      title: '实施成本 (万元)',\n      dataIndex: 'final_total_cost',\n      key: 'final_total_cost',\n      width: 140,\n      valueType: 'money',\n      sorter: true,\n      align: 'right',\n      hideInSearch: true,\n    },\n    {\n      title: '实施成本 (万元)',\n      dataIndex: 'final_total_cost_range',\n      key: 'final_total_cost_range',\n      valueType: 'digitRange',\n      hideInTable: true,\n      search: {\n        transform: (value) => {\n          const [min, max] = Array.isArray(value) ? value : [];\n          const next: Record<string, any> = {};\n          if (typeof min !== 'undefined') next.final_total_cost_min = min;\n          if (typeof max !== 'undefined') next.final_total_cost_max = max;\n          return next;\n        },\n      },\n    },\n    {\n      title: '商务报价总计 (万元)',\n      dataIndex: 'business_quote_total',\n      key: 'business_quote_total',\n      width: 160,\n      align: 'right',\n      hideInSearch: true,\n      render: (_, record) => {\n        const total = getBusinessQuoteTotal(record);\n        return typeof total === 'number' ? total.toFixed(2) : '-';\n      },\n    },\n    {\n      title: '风险总分',\n      dataIndex: 'final_risk_score',\n      key: 'final_risk_score',\n      sorter: true,\n      align: 'right',\n      width: 140,\n    },\n    {\n      title: '创建时间',\n      dataIndex: 'created_at',\n      key: 'created_at',\n      valueType: 'dateTime',\n      sorter: true,\n      align: 'center',\n      width: 200,\n      hideInSearch: true,\n    },\n    {\n      title: '创建时间',\n      dataIndex: 'created_at_range',\n      key: 'created_at_range',\n      valueType: 'dateRange',\n      hideInTable: true,\n      fieldProps: {\n        format: 'YYYY-MM-DD',\n      },\n      search: {\n        transform: (value) => {\n          const [start, end] = Array.isArray(value) ? value : [];\n          const next: Record<string, any> = {};\n          if (typeof start !== 'undefined') next.created_at_start = start;\n          if (typeof end !== 'undefined') next.created_at_end = end;\n          return next;\n        },\n      },\n    },\n    {\n      title: '操作',\n      valueType: 'option',\n      key: 'option',\n      align: 'center',\n      width: 320,\n      render: (text, record, _, action) => [\n        <Link key=\"view\" to={`/assessment/detail/${record.id}`}>\n          查看\n        </Link>,\n        <Link key=\"reassess\" to={`/assessment/new?template_id=${record.id}`}>\n          重新评估\n        </Link>,\n        <Dropdown\n          key=\"export\"\n          menu={{\n            items: [\n              {\n                key: 'internal',\n                label: (\n                  <a\n                    href={exportProjectToExcel(record.id)}\n                    target=\"_blank\"\n                    rel=\"noreferrer\"\n                  >\n                    导出Excel（内部）\n                  </a>\n                ),\n              },\n              {\n                key: 'external',\n                label: (\n                  <a\n                    href={`${exportProjectToExcel(record.id)}?version=external`}\n                    target=\"_blank\"\n                    rel=\"noreferrer\"\n                  >\n                    导出Excel（对外）\n                  </a>\n                ),\n              },\n              {\n                key: 'business',\n                disabled: !hasBusinessQuote(record.has_business_quote),\n                label: (\n                  <a\n                    href={`${exportProjectToExcel(record.id)}?version=business`}\n                    target=\"_blank\"\n                    rel=\"noreferrer\"\n                    onClick={(event) => {\n                      if (!hasBusinessQuote(record.has_business_quote)) {\n                        event.preventDefault();\n                      }\n                    }}\n                  >\n                    导出Excel（商务）\n                  </a>\n                ),\n              },\n            ],\n          }}\n        >\n          <Button type=\"link\">导出</Button>\n        </Dropdown>,\n        <Button\n          key=\"business-quote\"\n          type=\"link\"\n          onClick={() => {\n            setSelectedProject(record);\n            setQuoteModalOpen(true);\n          }}\n        >\n          商务报价\n        </Button>,\n        <Button\n          key=\"push\"\n          type=\"link\"\n          disabled={isTemplateValue(record.is_template)}\n          onClick={() => {\n            setPushProject(record);\n            setPushModalOpen(true);\n          }}\n        >\n          推送\n        </Button>,\n        isTemplateValue(record.is_template) ? (\n          <Tooltip\n            key=\"delete-disabled\"\n            title=\"当前模板不可删除，请先在新评估中设置新的模板\"\n          >\n            <Button type=\"link\" disabled>\n              删除\n            </Button>\n          </Tooltip>\n        ) : (\n          <Popconfirm\n            key=\"delete\"\n            title=\"确认删除此项目？\"\n            onConfirm={async () => {\n              await deleteProject(record.id);\n              message.success('项目已删除');\n              actionRef.current?.reload();\n            }}\n          >\n            <a>删除</a>\n          </Popconfirm>\n        ),\n      ],\n    },\n  ];\n\n  return (\n    <PageContainer>\n      <ProTable\n        columns={columns}\n        actionRef={actionRef}\n        cardBordered\n        request={async (params, sorter) => {\n          const [sortBy, sortOrderRaw] =\n            Object.entries(sorter || {}).find(([, order]) => !!order) || [];\n          const sortOrder =\n            sortOrderRaw === 'ascend'\n              ? 'asc'\n              : sortOrderRaw === 'descend'\n                ? 'desc'\n                : undefined;\n\n          const queryParams = { ...params } as Record<string, any>;\n          delete queryParams.current;\n          delete queryParams.pageSize;\n\n          const res = await getProjectList({\n            params:\n              sortBy && sortOrder\n                ? {\n                    ...queryParams,\n                    sort_by: sortBy,\n                    sort_order: sortOrder,\n                  }\n                : queryParams,\n          });\n          return {\n            data: res.data,\n            success: true,\n          };\n        }}\n        rowKey=\"id\"\n        search={{\n          labelWidth: 'auto',\n        }}\n        pagination={{\n          pageSize: 10,\n        }}\n        dateFormatter=\"string\"\n        headerTitle=\"历史项目列表\"\n      />\n      <BusinessQuoteModal\n        open={quoteModalOpen}\n        projectId={selectedProject?.id}\n        projectName={selectedProject?.name}\n        onCancel={() => {\n          setQuoteModalOpen(false);\n          setSelectedProject(null);\n        }}\n        onSuccess={() => {\n          setQuoteModalOpen(false);\n          setSelectedProject(null);\n          actionRef.current?.reload();\n        }}\n      />\n      <PushModal\n        open={pushModalOpen}\n        projectId={pushProject?.id}\n        projectName={pushProject?.name}\n        projectRiskScore={pushProject?.final_risk_score}\n        projectQuoteTotal={(() => {\n          if (!pushProject?.business_quote_json) return undefined;\n          try {\n            const parsed = JSON.parse(pushProject.business_quote_json);\n            return parsed?.amounts?.quote_total_wan || parsed?.quote_total_wan;\n          } catch {\n            return undefined;\n          }\n        })()}\n        onCancel={() => {\n          setPushModalOpen(false);\n          setPushProject(null);\n        }}\n        onSuccess={() => {\n          setPushModalOpen(false);\n          setPushProject(null);\n          actionRef.current?.reload();\n        }}\n      />\n    </PageContainer>\n  );\n};\n\nexport default HistoryPage;\n",
+      "__content": "import {\n  deleteProject,\n  getProjectList,\n  exportProjectToExcel,\n} from '@/services/projects';\nimport BusinessQuoteModal from '@/components/BusinessQuoteModal';\nimport PushModal from './components/PushModal';\nimport { PageContainer, ProTable } from '@ant-design/pro-components';\nimport { Link } from '@umijs/max';\nimport { Button, Dropdown, Popconfirm, Tag, Tooltip, App } from 'antd';\nimport { useRef, useState } from 'react';\n\nconst HistoryPage = () => {\n  const { message } = App.useApp();\n  const actionRef = useRef();\n  const [quoteModalOpen, setQuoteModalOpen] = useState(false);\n  const [pushModalOpen, setPushModalOpen] = useState(false);\n  const [pushProject, setPushProject] = useState<API.ProjectInfo | null>(null);\n  const [selectedProject, setSelectedProject] = useState<API.ProjectInfo | null>(\n    null,\n  );\n  const isTemplateValue = (value: any) => {\n    const normalized = String(value).toLowerCase();\n    return ['1', 'true', 'yes'].includes(normalized);\n  };\n  const hasBusinessQuote = (value: any) => {\n    const normalized = String(value).toLowerCase();\n    return ['1', 'true', 'yes'].includes(normalized);\n  };\n  const getBusinessQuoteTotal = (record: API.ProjectInfo) => {\n    if (!record?.business_quote_json) return undefined;\n    try {\n      const parsed = JSON.parse(record.business_quote_json);\n      const pricingMode =\n        parsed?.pricing_mode === 'enterprise_product'\n          ? 'enterprise_product'\n          : 'custom_development';\n      const total =\n        pricingMode === 'enterprise_product'\n          ? (() => {\n              const baseCostWan = Number(parsed?.base_cost_wan || 0);\n              const variableShareRate =\n                Number(parsed?.rates?.cogs_rate || 0) +\n                Number(parsed?.rates?.csm_rate || 0);\n              return variableShareRate > 0\n                ? baseCostWan / (variableShareRate / 100)\n                : undefined;\n            })()\n          : parsed?.amounts?.quote_total_wan;\n      return Number.isFinite(Number(total)) ? Number(total) : undefined;\n    } catch (_error) {\n      return undefined;\n    }\n  };\n  const columns = [\n    {\n      title: '项目名称',\n      dataIndex: 'name',\n      key: 'name',\n      render: (text, record) => (\n        <Link to={`/assessment/detail/${record.id}`}>{text}</Link>\n      ),\n      fieldProps: {\n        placeholder: '支持模糊搜索',\n      },\n    },\n    {\n      valueType: 'select',\n      valueEnum: {\n        1: { text: '是' },\n        0: { text: '否' },\n      },\n      title: '是否模板',\n      dataIndex: 'is_template_filter',\n      key: 'is_template_filter',\n      hideInTable: true,\n      search: {\n        transform: (value) => ({ is_template: value }),\n      },\n    },\n    {\n      valueType: 'select',\n      valueEnum: {\n        1: { text: '已生成' },\n        0: { text: '未生成' },\n      },\n      title: '商务报价状态',\n      dataIndex: 'has_business_quote_filter',\n      key: 'has_business_quote_filter',\n      hideInTable: true,\n      search: {\n        transform: (value) => ({ has_business_quote: value }),\n      },\n    },\n    {\n      title: '是否模板',\n      dataIndex: 'is_template',\n      key: 'is_template',\n      width: 100,\n      align: 'center',\n      hideInSearch: true,\n      render: (value) =>\n        isTemplateValue(value) ? (\n          <Tag color=\"blue\">当前模板</Tag>\n        ) : (\n          '-'\n        ),\n    },\n    {\n      title: '商务报价状态',\n      dataIndex: 'has_business_quote',\n      key: 'has_business_quote',\n      width: 120,\n      align: 'center',\n      hideInSearch: true,\n      render: (value) =>\n        hasBusinessQuote(value) ? (\n          <Tag color=\"green\">已生成</Tag>\n        ) : (\n          <Tag>未生成</Tag>\n        ),\n    },\n    {\n      title: '实施成本 (万元)',\n      dataIndex: 'final_total_cost',\n      key: 'final_total_cost',\n      width: 140,\n      valueType: 'money',\n      sorter: true,\n      align: 'right',\n      hideInSearch: true,\n    },\n    {\n      title: '实施成本 (万元)',\n      dataIndex: 'final_total_cost_range',\n      key: 'final_total_cost_range',\n      valueType: 'digitRange',\n      hideInTable: true,\n      search: {\n        transform: (value) => {\n          const [min, max] = Array.isArray(value) ? value : [];\n          const next: Record<string, any> = {};\n          if (typeof min !== 'undefined') next.final_total_cost_min = min;\n          if (typeof max !== 'undefined') next.final_total_cost_max = max;\n          return next;\n        },\n      },\n    },\n    {\n      title: '商务报价总计 (万元)',\n      dataIndex: 'business_quote_total',\n      key: 'business_quote_total',\n      width: 160,\n      align: 'right',\n      hideInSearch: true,\n      render: (_, record) => {\n        const total = getBusinessQuoteTotal(record);\n        return typeof total === 'number' ? total.toFixed(2) : '-';\n      },\n    },\n    {\n      title: '风险总分',\n      dataIndex: 'final_risk_score',\n      key: 'final_risk_score',\n      sorter: true,\n      align: 'right',\n      width: 140,\n    },\n    {\n      title: '创建时间',\n      dataIndex: 'created_at',\n      key: 'created_at',\n      valueType: 'dateTime',\n      sorter: true,\n      align: 'center',\n      width: 200,\n      hideInSearch: true,\n    },\n    {\n      title: '创建时间',\n      dataIndex: 'created_at_range',\n      key: 'created_at_range',\n      valueType: 'dateRange',\n      hideInTable: true,\n      fieldProps: {\n        format: 'YYYY-MM-DD',\n      },\n      search: {\n        transform: (value) => {\n          const [start, end] = Array.isArray(value) ? value : [];\n          const next: Record<string, any> = {};\n          if (typeof start !== 'undefined') next.created_at_start = start;\n          if (typeof end !== 'undefined') next.created_at_end = end;\n          return next;\n        },\n      },\n    },\n    {\n      title: '操作',\n      valueType: 'option',\n      key: 'option',\n      align: 'center',\n      width: 420,\n      render: (text, record, _, action) => [\n        <Link key=\"view\" to={`/assessment/detail/${record.id}`}>\n          查看\n        </Link>,\n        <Link key=\"reassess\" to={`/assessment/new?template_id=${record.id}`}>\n          重新评估\n        </Link>,\n        <Dropdown\n          key=\"export\"\n          menu={{\n            items: [\n              {\n                key: 'internal',\n                label: (\n                  <a\n                    href={exportProjectToExcel(record.id)}\n                    target=\"_blank\"\n                    rel=\"noreferrer\"\n                  >\n                    导出Excel（内部）\n                  </a>\n                ),\n              },\n              {\n                key: 'external',\n                label: (\n                  <a\n                    href={`${exportProjectToExcel(record.id)}?version=external`}\n                    target=\"_blank\"\n                    rel=\"noreferrer\"\n                  >\n                    导出Excel（对外）\n                  </a>\n                ),\n              },\n              {\n                key: 'business',\n                disabled: !hasBusinessQuote(record.has_business_quote),\n                label: (\n                  <a\n                    href={`${exportProjectToExcel(record.id)}?version=business`}\n                    target=\"_blank\"\n                    rel=\"noreferrer\"\n                    onClick={(event) => {\n                      if (!hasBusinessQuote(record.has_business_quote)) {\n                        event.preventDefault();\n                      }\n                    }}\n                  >\n                    导出Excel（商务）\n                  </a>\n                ),\n              },\n            ],\n          }}\n        >\n          <Button type=\"link\">导出</Button>\n        </Dropdown>,\n        <Button\n          key=\"business-quote\"\n          type=\"link\"\n          onClick={() => {\n            setSelectedProject(record);\n            setQuoteModalOpen(true);\n          }}\n        >\n          商务报价\n        </Button>,\n        <Button\n          key=\"push\"\n          type=\"link\"\n          disabled={isTemplateValue(record.is_template)}\n          onClick={() => {\n            setPushProject(record);\n            setPushModalOpen(true);\n          }}\n        >\n          推送\n        </Button>,\n        isTemplateValue(record.is_template) ? (\n          <Tooltip\n            key=\"delete-disabled\"\n            title=\"当前模板不可删除，请先在新评估中设置新的模板\"\n          >\n            <Button type=\"link\" disabled>\n              删除\n            </Button>\n          </Tooltip>\n        ) : (\n          <Popconfirm\n            key=\"delete\"\n            title=\"确认删除此项目？\"\n            onConfirm={async () => {\n              await deleteProject(record.id);\n              message.success('项目已删除');\n              actionRef.current?.reload();\n            }}\n          >\n            <a>删除</a>\n          </Popconfirm>\n        ),\n      ],\n    },\n  ];\n\n  return (\n    <PageContainer>\n      <ProTable\n        columns={columns}\n        actionRef={actionRef}\n        cardBordered\n        request={async (params, sorter) => {\n          const [sortBy, sortOrderRaw] =\n            Object.entries(sorter || {}).find(([, order]) => !!order) || [];\n          const sortOrder =\n            sortOrderRaw === 'ascend'\n              ? 'asc'\n              : sortOrderRaw === 'descend'\n                ? 'desc'\n                : undefined;\n\n          const queryParams = { ...params } as Record<string, any>;\n          delete queryParams.current;\n          delete queryParams.pageSize;\n\n          const res = await getProjectList({\n            params:\n              sortBy && sortOrder\n                ? {\n                    ...queryParams,\n                    sort_by: sortBy,\n                    sort_order: sortOrder,\n                  }\n                : queryParams,\n          });\n          return {\n            data: res.data,\n            success: true,\n          };\n        }}\n        rowKey=\"id\"\n        search={{\n          labelWidth: 'auto',\n        }}\n        pagination={{\n          pageSize: 10,\n        }}\n        dateFormatter=\"string\"\n        headerTitle=\"历史项目列表\"\n      />\n      <BusinessQuoteModal\n        open={quoteModalOpen}\n        projectId={selectedProject?.id}\n        projectName={selectedProject?.name}\n        onCancel={() => {\n          setQuoteModalOpen(false);\n          setSelectedProject(null);\n        }}\n        onSuccess={() => {\n          setQuoteModalOpen(false);\n          setSelectedProject(null);\n          actionRef.current?.reload();\n        }}\n      />\n      <PushModal\n        open={pushModalOpen}\n        projectId={pushProject?.id}\n        projectName={pushProject?.name}\n        projectRiskScore={pushProject?.final_risk_score}\n        projectQuoteTotal={(() => {\n          if (!pushProject?.business_quote_json) return undefined;\n          try {\n            const parsed = JSON.parse(pushProject.business_quote_json);\n            return parsed?.amounts?.quote_total_wan || parsed?.quote_total_wan;\n          } catch {\n            return undefined;\n          }\n        })()}\n        onCancel={() => {\n          setPushModalOpen(false);\n          setPushProject(null);\n        }}\n        onSuccess={() => {\n          setPushModalOpen(false);\n          setPushProject(null);\n          actionRef.current?.reload();\n        }}\n      />\n    </PageContainer>\n  );\n};\n\nexport default HistoryPage;\n",
       "__isJSFile": true,
       "__absFile": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/src/pages/Assessment/History.tsx"
     },

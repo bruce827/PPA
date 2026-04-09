@@ -104,6 +104,15 @@ async function getByTenderStagingId(tenderStagingId) {
   return mapRow(row);
 }
 
+async function hasSavedResultByTenderStagingId(tenderStagingId) {
+  await ensureSchema();
+  const row = await db.get(
+    `SELECT 1 AS matched FROM ${TABLE_NAME} WHERE tender_staging_id = ?`,
+    [tenderStagingId]
+  );
+  return Boolean(row?.matched);
+}
+
 async function saveLatestResult(payload) {
   await ensureSchema();
 
@@ -170,5 +179,6 @@ module.exports = {
   ENSURE_SCHEMA_STATEMENTS,
   ensureSchema,
   getByTenderStagingId,
+  hasSavedResultByTenderStagingId,
   saveLatestResult,
 };

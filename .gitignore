@@ -172,3 +172,5 @@ frontend/ppa_frontend/src/.umi/appData.json
 /.agents
 /_bmad
 /_bmad
+/.playwright-cli
+/notion

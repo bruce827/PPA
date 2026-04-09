@@ -25,6 +25,8 @@ const ENSURE_SCHEMA_STATEMENTS = [
     push_error TEXT,
     last_synced_at DATETIME,
     pushed_at DATETIME,
+    deleted_at DATETIME,
+    delete_reason TEXT,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
   )`,
@@ -70,6 +72,17 @@ async function ensureSchema() {
     for (const statement of ENSURE_SCHEMA_STATEMENTS) {
       await db.run(statement);
     }
+
+    const columns = await db.all(`PRAGMA table_info(${TABLE_NAME})`);
+    const columnNames = new Set(columns.map((column) => column && column.name).filter(Boolean));
+
+    if (!columnNames.has('deleted_at')) {
+      await db.run(`ALTER TABLE ${TABLE_NAME} ADD COLUMN deleted_at DATETIME`);
+    }
+
+    if (!columnNames.has('delete_reason')) {
+      await db.run(`ALTER TABLE ${TABLE_NAME} ADD COLUMN delete_reason TEXT`);
+    }
   })();
 
   return schemaEnsuredPromise;
@@ -97,6 +110,11 @@ function mapRow(row) {
 function buildFilters(filters = {}) {
   const conditions = [];
   const params = [];
+  const includeDeleted = filters.include_deleted === true;
+
+  if (!includeDeleted) {
+    conditions.push('deleted_at IS NULL');
+  }
 
   if (filters.keyword) {
     conditions.push(
@@ -208,9 +226,11 @@ async function createTenderStaging(data) {
       push_error,
       last_synced_at,
       pushed_at,
+      deleted_at,
+      delete_reason,
       created_at,
       updated_at
-    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
     [
       data.source_item_id,
       data.title,
@@ -233,6 +253,8 @@ async function createTenderStaging(data) {
       data.push_error,
       data.last_synced_at,
       data.pushed_at,
+      data.deleted_at,
+      data.delete_reason,
       data.created_at,
       data.updated_at,
     ]
@@ -266,6 +288,8 @@ async function updateTenderStaging(id, data) {
            push_error = ?,
            last_synced_at = ?,
            pushed_at = ?,
+           deleted_at = ?,
+           delete_reason = ?,
            updated_at = ?
      WHERE id = ?`,
     [
@@ -290,6 +314,8 @@ async function updateTenderStaging(id, data) {
       data.push_error,
       data.last_synced_at,
       data.pushed_at,
+      data.deleted_at,
+      data.delete_reason,
       data.updated_at,
       id,
     ]
@@ -315,10 +341,13 @@ async function updateTenderPushState(id, payload = {}) {
 
 async function getTenderStagingStats() {
   await ensureSchema();
-  const totalRow = await db.get(`SELECT COUNT(1) AS total FROM ${TABLE_NAME}`);
+  const totalRow = await db.get(
+    `SELECT COUNT(1) AS total FROM ${TABLE_NAME} WHERE deleted_at IS NULL`
+  );
   const groupedRows = await db.all(
     `SELECT push_status, COUNT(1) AS total
      FROM ${TABLE_NAME}
+     WHERE deleted_at IS NULL
      GROUP BY push_status`
   );
 
@@ -340,10 +369,48 @@ async function getTenderStagingStats() {
 
 async function listAllTenderStagingSourceItemIds() {
   await ensureSchema();
-  const rows = await db.all(`SELECT source_item_id FROM ${TABLE_NAME}`);
+  const rows = await db.all(
+    `SELECT source_item_id FROM ${TABLE_NAME} WHERE deleted_at IS NULL`
+  );
   return rows
     .map((row) => row?.source_item_id)
     .filter((sourceItemId) => typeof sourceItemId === 'string' && sourceItemId);
+}
+
+async function listActiveTenderStagingForPrune() {
+  await ensureSchema();
+  return db.all(
+    `SELECT id, source_item_id, push_status, push_error, pushed_at
+     FROM ${TABLE_NAME}
+     WHERE deleted_at IS NULL`
+  );
+}
+
+async function softDeleteTenderStagingByIds(ids = [], reason = 'missing_from_sync_source') {
+  await ensureSchema();
+
+  if (!Array.isArray(ids) || ids.length === 0) {
+    return 0;
+  }
+
+  let deletedCount = 0;
+  const chunkSize = 200;
+
+  for (let index = 0; index < ids.length; index += chunkSize) {
+    const chunk = ids.slice(index, index + chunkSize);
+    const placeholders = chunk.map(() => '?').join(', ');
+    const result = await db.run(
+      `UPDATE ${TABLE_NAME}
+       SET deleted_at = CURRENT_TIMESTAMP,
+           delete_reason = ?,
+           updated_at = CURRENT_TIMESTAMP
+       WHERE id IN (${placeholders}) AND deleted_at IS NULL`,
+      [reason, ...chunk]
+    );
+    deletedCount += result.changes || 0;
+  }
+
+  return deletedCount;
 }
 
 async function deleteTenderStagingBySourceItemIds(sourceItemIds = []) {
@@ -379,5 +446,7 @@ module.exports = {
   updateTenderPushState,
   getTenderStagingStats,
   listAllTenderStagingSourceItemIds,
+  listActiveTenderStagingForPrune,
+  softDeleteTenderStagingByIds,
   deleteTenderStagingBySourceItemIds,
 };
