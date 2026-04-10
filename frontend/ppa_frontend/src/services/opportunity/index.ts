@@ -140,6 +140,50 @@ export async function syncTenderStaging(
   );
 }
 
+export async function archiveTenderSourceFiles(
+  data?: { directoryPath?: string },
+  options?: { [key: string]: any },
+) {
+  return request<API_OPPORTUNITY.TenderSourceArchiveResponse>(
+    '/api/opportunity/tender-staging/archive-source-files',
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      data,
+      ...(options || {}),
+    },
+  );
+}
+
+export async function previewTenderDedupe(options?: { [key: string]: any }) {
+  return request<API_OPPORTUNITY.TenderDedupePreviewResponse>(
+    '/api/opportunity/tender-staging/dedupe/preview',
+    {
+      method: 'POST',
+      ...(options || {}),
+    },
+  );
+}
+
+export async function executeTenderDedupe(
+  data?: { group_keys?: string[] },
+  options?: { [key: string]: any },
+) {
+  return request<API_OPPORTUNITY.TenderDedupeExecuteResponse>(
+    '/api/opportunity/tender-staging/dedupe/execute',
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      data,
+      ...(options || {}),
+    },
+  );
+}
+
 export async function pushTenderStaging(
   id: number | string,
   options?: { [key: string]: any },
@@ -148,6 +192,24 @@ export async function pushTenderStaging(
     `/api/opportunity/tender-staging/${id}/push`,
     {
       method: 'POST',
+      ...(options || {}),
+    },
+  );
+}
+
+export async function parseTenderStagingFields(
+  id: number | string,
+  data: API_OPPORTUNITY.TenderStagingParsePayload,
+  options?: { [key: string]: any },
+) {
+  return request<API_OPPORTUNITY.TenderStagingParseResponse>(
+    `/api/opportunity/tender-staging/${id}/parse-fields`,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      data,
       ...(options || {}),
     },
   );

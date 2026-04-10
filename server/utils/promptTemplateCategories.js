@@ -7,6 +7,7 @@ const CANONICAL_PROMPT_TEMPLATE_CATEGORIES = [
   'report_generation',
   'custom',
   'web_search',
+  'tender_field_parse',
 ];
 
 const PROMPT_TEMPLATE_CATEGORY_ALIASES = {
@@ -17,6 +18,7 @@ const PROMPT_TEMPLATE_CATEGORY_ALIASES = {
   项目标签: 'project_tagging',
   标签生成: 'project_tagging',
   联网搜索: 'web_search',
+  招标字段解析: 'tender_field_parse',
 };
 
 function normalizePromptTemplateCategory(value) {

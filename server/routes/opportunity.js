@@ -1,6 +1,7 @@
 const express = require('express');
 
 const opportunityController = require('../controllers/opportunityController');
+const tenderFieldParseController = require('../controllers/tenderFieldParseController');
 const tenderStagingController = require('../controllers/tenderStagingController');
 const tenderWebSearchController = require('../controllers/tenderWebSearchController');
 
@@ -21,6 +22,22 @@ router.post(
 );
 router.post('/bidding-sites/:id/validate', opportunityController.validateBiddingSite);
 router.get('/tender-staging', tenderStagingController.listTenderStaging);
+router.post(
+  '/tender-staging/dedupe/preview',
+  tenderStagingController.previewTenderDedupe
+);
+router.post(
+  '/tender-staging/dedupe/execute',
+  tenderStagingController.executeTenderDedupe
+);
+router.post(
+  '/tender-staging/archive-source-files',
+  tenderStagingController.archiveTenderSourceFiles
+);
+router.post(
+  '/tender-staging/:id/parse-fields',
+  tenderFieldParseController.parseTenderFields
+);
 router.get('/tender-staging/:id/web-search', tenderWebSearchController.getTenderWebSearch);
 router.post('/tender-staging/:id/web-search', tenderWebSearchController.searchTenderWebSearch);
 router.post('/tender-staging/sync', tenderStagingController.syncTenderStaging);

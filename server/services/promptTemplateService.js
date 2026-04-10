@@ -89,17 +89,44 @@ async function getPromptTemplateById(id) {
 }
 
 async function ensureActiveWebSearchTemplate(id) {
+  return ensureActiveTemplateByCategory(id, 'web_search', '联网搜索');
+}
+
+async function ensureActiveTemplateByCategory(id, category, usageLabel = '当前操作') {
   const template = await getPromptTemplateById(id);
+  const normalizedCategory = ensureValidCategory(category);
 
   if (template.is_active !== 1) {
-    throw validationError('所选提示词模板未启用，无法用于联网搜索');
+    throw validationError(`所选提示词模板未启用，无法用于${usageLabel}`);
   }
 
-  if (template.category !== 'web_search') {
-    throw validationError('所选提示词模板不属于联网搜索分类');
+  if (template.category !== normalizedCategory) {
+    throw validationError(`所选提示词模板不属于${usageLabel}分类`);
   }
 
   return template;
+}
+
+async function getLatestActiveTemplateByCategory(category) {
+  const normalizedCategory = ensureValidCategory(category);
+  const result = await promptTemplateModel.getAll({
+    current: 1,
+    pageSize: 1,
+    category: normalizedCategory,
+    is_active: 1,
+  });
+
+  const latest = Array.isArray(result?.data) ? result.data[0] : null;
+  if (!latest?.id) {
+    throw validationError(`未找到已启用的 ${normalizedCategory} 提示词模板`);
+  }
+
+  return normalizeTemplateCategory(
+    ensureTemplateExists(
+      await promptTemplateModel.getById(latest.id),
+      'Template not found'
+    )
+  );
 }
 
 async function updatePromptTemplate(id, payload) {
@@ -192,7 +219,9 @@ module.exports = {
   createPromptTemplate,
   getPromptTemplates,
   getPromptTemplateById,
+  ensureActiveTemplateByCategory,
   ensureActiveWebSearchTemplate,
+  getLatestActiveTemplateByCategory,
   updatePromptTemplate,
   deletePromptTemplate,
   copyTemplate,

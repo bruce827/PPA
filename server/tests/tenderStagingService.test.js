@@ -177,6 +177,78 @@ describe('tenderStagingService', () => {
     }
   });
 
+  test('should map detail_excerpt into announcement_plain_text for parsing', async () => {
+    const directoryPath = createTempSyncDir('ppa.tender.sync.detail-excerpt');
+
+    try {
+      writeJsonFile(directoryPath, 'liaoning.json', [
+        {
+          id: 2006,
+          source: 'liaoning',
+          source_id: '-79749f919d4e41b4c0-697b',
+          title: '浑南区机关食堂食材配送服务工作项目招标公告',
+          notice_type: '公开招标公告',
+          publish_time: '2026-04-06',
+          detail_url:
+            'http://218.60.151.59:9004/lnnew5/M03/0A/DF/oYYBAGnTadOAM5JLAADA8gv58y846.html',
+          detail_excerpt:
+            '项目概况 浑南区机关食堂食材配送服务工作项目招标项目的潜在供应商应在线上获取招标文件,并于2026年04月27日 09时00分前递交投标文件。',
+          summary: '火山模型返回不可解析 JSON，已降级人工复核。',
+        },
+      ]);
+
+      const result = await tenderStagingService.syncTenderFiles({
+        directoryPath,
+      });
+
+      expect(result.created).toBe(1);
+
+      const list = await tenderStagingService.listTenderStaging({
+        pageSize: 20,
+      });
+      expect(list.items).toHaveLength(1);
+      expect(list.items[0].source_item_id).toBe('liaoning:-79749f919d4e41b4c0-697b');
+      expect(list.items[0].source_origin_id).toBe('-79749f919d4e41b4c0-697b');
+      expect(list.items[0].source_record_id).toBe('2006');
+      expect(list.items[0].notice_type).toBe('公开招标公告');
+      expect(list.items[0].published_date).toBe('2026-04-06');
+      expect(list.items[0].source_url).toBe(
+        'http://218.60.151.59:9004/lnnew5/M03/0A/DF/oYYBAGnTadOAM5JLAADA8gv58y846.html'
+      );
+      expect(list.items[0].detail_excerpt).toContain('项目概况 浑南区机关食堂食材配送服务工作项目');
+      expect(list.items[0].announcement_plain_text).toContain('并于2026年04月27日 09时00分前递交投标文件');
+    } finally {
+      fs.rmSync(directoryPath, { recursive: true, force: true });
+    }
+  });
+
+  test('should archive root json source files into a backup directory', async () => {
+    const directoryPath = createTempSyncDir('ppa.tender.archive');
+    const nestedDirectoryPath = path.join(directoryPath, '_backup_existing');
+
+    try {
+      fs.mkdirSync(nestedDirectoryPath, { recursive: true });
+      writeJsonFile(directoryPath, 'a.json', [{ source_item_id: 'a', title: 'A 项目' }]);
+      writeJsonFile(directoryPath, 'b.json', [{ source_item_id: 'b', title: 'B 项目' }]);
+      writeJsonFile(nestedDirectoryPath, 'nested.json', [{ source_item_id: 'c', title: 'C 项目' }]);
+
+      const result = await tenderStagingService.archiveTenderSourceFiles({
+        directoryPath,
+      });
+
+      expect(result.fileCount).toBe(2);
+      expect(result.archivedFiles).toEqual(['a.json', 'b.json']);
+      expect(result.archiveDirectoryPath).toContain('_backup_');
+      expect(fs.existsSync(path.join(directoryPath, 'a.json'))).toBe(false);
+      expect(fs.existsSync(path.join(directoryPath, 'b.json'))).toBe(false);
+      expect(fs.existsSync(path.join(result.archiveDirectoryPath, 'a.json'))).toBe(true);
+      expect(fs.existsSync(path.join(result.archiveDirectoryPath, 'b.json'))).toBe(true);
+      expect(fs.existsSync(path.join(nestedDirectoryPath, 'nested.json'))).toBe(true);
+    } finally {
+      fs.rmSync(directoryPath, { recursive: true, force: true });
+    }
+  });
+
   test('should prune stale staging rows based on current sync directory', async () => {
     const firstDirectory = createTempSyncDir('ppa.tender.sync.first');
     const secondDirectory = createTempSyncDir('ppa.tender.sync.second');
@@ -312,6 +384,120 @@ describe('tenderStagingService', () => {
     } finally {
       fs.rmSync(firstDirectory, { recursive: true, force: true });
       fs.rmSync(secondDirectory, { recursive: true, force: true });
+    }
+  });
+
+  test('should preserve stale rows with parse traces during sync pruning', async () => {
+    const firstDirectory = createTempSyncDir('ppa.tender.sync.parse.first');
+    const secondDirectory = createTempSyncDir('ppa.tender.sync.parse.second');
+
+    try {
+      writeJsonFile(firstDirectory, 'first.json', [
+        {
+          source_item_id: 'alpha',
+          title: 'Alpha 项目',
+          published_at: '2026-03-20T10:00:00.000Z',
+        },
+        {
+          source_item_id: 'beta',
+          title: 'Beta 项目',
+          published_at: '2026-03-21T10:00:00.000Z',
+        },
+      ]);
+
+      writeJsonFile(secondDirectory, 'second.json', [
+        {
+          source_item_id: 'alpha',
+          title: 'Alpha 项目',
+          published_at: '2026-03-22T10:00:00.000Z',
+        },
+      ]);
+
+      await tenderStagingService.syncTenderFiles({
+        directoryPath: firstDirectory,
+      });
+
+      const beta = await tenderStagingModel.getTenderStagingBySourceItemId('beta');
+      await tenderStagingModel.updateTenderParseState(beta.id, {
+        issuer: '某招标单位',
+        deadline_at: '2026-03-30T00:00:00.000Z',
+        deadline_date: '2026-03-30',
+        last_parsed_at: '2026-03-24T09:00:00.000Z',
+        parse_status: 'parsed_ok',
+        parse_error: null,
+        parse_meta_json: JSON.stringify({
+          updated_fields: ['issuer', 'deadline_date'],
+        }),
+      });
+
+      const secondResult = await tenderStagingService.syncTenderFiles({
+        directoryPath: secondDirectory,
+      });
+      expect(secondResult.pruned).toBe(0);
+      expect(secondResult.preservedWithTrace).toBe(1);
+
+      const list = await tenderStagingService.listTenderStaging({ pageSize: 20 });
+      const sourceItemIds = list.items.map((item) => item.source_item_id).sort();
+      expect(sourceItemIds).toEqual(['alpha', 'beta']);
+
+      const preservedBeta = await tenderStagingModel.getTenderStagingBySourceItemId('beta');
+      expect(preservedBeta?.deleted_at || null).toBeNull();
+      expect(preservedBeta?.parse_status).toBe('parsed_ok');
+    } finally {
+      fs.rmSync(firstDirectory, { recursive: true, force: true });
+      fs.rmSync(secondDirectory, { recursive: true, force: true });
+    }
+  });
+
+  test('should preserve parsed issuer, deadline and parse traces on re-sync', async () => {
+    const directoryPath = createTempSyncDir('ppa.tender.sync.parse-preserve');
+
+    try {
+      writeJsonFile(directoryPath, 'liaoning.json', [
+        {
+          id: 2006,
+          source: 'liaoning',
+          source_id: '-79749f919d4e41b4c0-697b',
+          title: '浑南区机关食堂食材配送服务工作项目招标公告',
+          notice_type: '公开招标公告',
+          publish_time: '2026-04-06',
+          detail_url:
+            'http://218.60.151.59:9004/lnnew5/M03/0A/DF/oYYBAGnTadOAM5JLAADA8gv58y846.html',
+          detail_excerpt:
+            '项目概况 浑南区机关食堂食材配送服务工作项目招标项目的潜在供应商应在线上获取招标文件。',
+          summary: '火山模型返回不可解析 JSON，已降级人工复核。',
+        },
+      ]);
+
+      await tenderStagingService.syncTenderFiles({ directoryPath });
+
+      const created = await tenderStagingModel.getTenderStagingBySourceItemId(
+        'liaoning:-79749f919d4e41b4c0-697b'
+      );
+      await tenderStagingModel.updateTenderParseState(created.id, {
+        issuer: '沈阳市浑南区机关事务保障中心',
+        deadline_at: '2026-04-27T00:00:00.000Z',
+        deadline_date: '2026-04-27',
+        last_parsed_at: '2026-04-10T03:00:00.000Z',
+        parse_status: 'parsed_ok',
+        parse_error: null,
+        parse_meta_json: JSON.stringify({
+          updated_fields: ['issuer', 'deadline_date'],
+        }),
+      });
+
+      const secondResult = await tenderStagingService.syncTenderFiles({ directoryPath });
+      expect(secondResult.unchanged).toBe(1);
+
+      const synced = await tenderStagingModel.getTenderStagingBySourceItemId(
+        'liaoning:-79749f919d4e41b4c0-697b'
+      );
+      expect(synced?.issuer).toBe('沈阳市浑南区机关事务保障中心');
+      expect(synced?.deadline_date).toBe('2026-04-27');
+      expect(synced?.parse_status).toBe('parsed_ok');
+      expect(synced?.parse_meta?.updated_fields).toEqual(['issuer', 'deadline_date']);
+    } finally {
+      fs.rmSync(directoryPath, { recursive: true, force: true });
     }
   });
 });

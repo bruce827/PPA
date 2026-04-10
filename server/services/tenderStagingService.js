@@ -20,6 +20,10 @@ const KNOWN_FIELDS = new Set([
   'projectName',
   'name',
   'goodsName',
+  'notice_type',
+  'noticeType',
+  'list_notice_type',
+  'listNoticeType',
   'published_at',
   'publishedAt',
   'published_date',
@@ -81,6 +85,8 @@ const KNOWN_FIELDS = new Set([
   'plain_text',
   'content_text',
   'detail_text',
+  'detail_excerpt',
+  'detailExcerpt',
   'detail_payload',
   'detailPayload',
   'raw_payload',
@@ -96,6 +102,16 @@ const SOURCE_ID_AS_PRIMARY_SOURCES = new Set(['cnpc', 'cnooc', 'pipechina']);
 
 function getDefaultSpiderDataDir() {
   return path.resolve(__dirname, '../../spider/data');
+}
+
+function formatArchiveTimestamp(date = new Date()) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  const hours = String(date.getHours()).padStart(2, '0');
+  const minutes = String(date.getMinutes()).padStart(2, '0');
+  const seconds = String(date.getSeconds()).padStart(2, '0');
+  return `${year}${month}${day}_${hours}${minutes}${seconds}`;
 }
 
 function normalizeText(value, maxLength = null) {
@@ -410,6 +426,22 @@ function normalizeSingleRecord(record, sourceFile, fileMeta = {}) {
   const embeddedRawPayload = getEmbeddedRawPayload(record);
   const sourceCode = inferSourceCode(record, embeddedRawPayload, sourceFile);
   const sourceItemId = resolveSourceItemId(record, embeddedRawPayload, sourceCode);
+  const sourceOriginId = pickFirst(
+    record.source_id,
+    record.sourceId,
+    embeddedRawPayload?.source_id,
+    embeddedRawPayload?.sourceId
+  );
+  const sourceRecordId = pickFirst(
+    record.id,
+    embeddedRawPayload?.id,
+    record.businessId,
+    embeddedRawPayload?.businessId,
+    record.goodsId,
+    embeddedRawPayload?.goodsId,
+    record.rowGuid,
+    embeddedRawPayload?.rowGuid
+  );
   const title = pickFirst(
     record.title,
     record.project_name,
@@ -494,6 +526,12 @@ function normalizeSingleRecord(record, sourceFile, fileMeta = {}) {
       embeddedRawPayload?.content_html ||
       embeddedRawPayload?.detail_html
   );
+  const detailExcerpt = normalizeText(
+    record.detail_excerpt ||
+      record.detailExcerpt ||
+      embeddedRawPayload?.detail_excerpt ||
+      embeddedRawPayload?.detailExcerpt
+  );
   const announcementPlainText =
     normalizeText(
       record.announcement_plain_text ||
@@ -501,6 +539,7 @@ function normalizeSingleRecord(record, sourceFile, fileMeta = {}) {
         record.plain_text ||
         record.content_text ||
         record.detail_text ||
+        detailExcerpt ||
         embeddedRawPayload?.announcement_plain_text ||
         embeddedRawPayload?.announcementPlainText ||
         embeddedRawPayload?.plain_text ||
@@ -543,7 +582,19 @@ function normalizeSingleRecord(record, sourceFile, fileMeta = {}) {
 
   return {
     source_item_id: sourceItemId,
+    source_origin_id: sourceOriginId,
+    source_record_id: sourceRecordId,
     title,
+    notice_type: pickFirst(
+      record.notice_type,
+      record.noticeType,
+      record.list_notice_type,
+      record.listNoticeType,
+      embeddedRawPayload?.notice_type,
+      embeddedRawPayload?.noticeType,
+      embeddedRawPayload?.list_notice_type,
+      embeddedRawPayload?.listNoticeType
+    ),
     published_at: publishedAt,
     published_date:
       inferDate(publishedAt) ||
@@ -611,6 +662,7 @@ function normalizeSingleRecord(record, sourceFile, fileMeta = {}) {
       embeddedRawPayload?.list_href
     ),
     summary,
+    detail_excerpt: detailExcerpt,
     announcement_html: announcementHtml,
     announcement_plain_text: announcementPlainText,
     detail_payload_json: detailPayload ? JSON.stringify(detailPayload) : null,
@@ -670,6 +722,10 @@ function pickPreferredRecord(existingRecord, nextRecord) {
     : existingRecord;
 }
 
+function preserveExistingValue(nextValue, existingValue) {
+  return nextValue === null || typeof nextValue === 'undefined' ? existingValue ?? null : nextValue;
+}
+
 async function readTenderRecordsFromDirectory(directoryPath) {
   const targetDirectory = path.resolve(directoryPath || getDefaultSpiderDataDir());
   const entries = await fs.readdir(targetDirectory, { withFileTypes: true });
@@ -719,6 +775,57 @@ async function readTenderRecordsFromDirectory(directoryPath) {
     rawRecordCount,
     normalizedRecords: Array.from(dedupedMap.values()),
     errors,
+  };
+}
+
+async function archiveTenderSourceFiles(options = {}) {
+  const directoryPath = path.resolve(options.directoryPath || getDefaultSpiderDataDir());
+
+  let directoryStat = null;
+  try {
+    directoryStat = await fs.stat(directoryPath);
+  } catch (_error) {
+    throw validationError(`未找到本地招标数据目录: ${directoryPath}`);
+  }
+
+  if (!directoryStat.isDirectory()) {
+    throw validationError(`本地招标数据路径不是目录: ${directoryPath}`);
+  }
+
+  const entries = await fs.readdir(directoryPath, { withFileTypes: true });
+  const jsonFiles = entries
+    .filter((entry) => entry.isFile() && entry.name.toLowerCase().endsWith('.json'))
+    .map((entry) => entry.name)
+    .sort((left, right) => left.localeCompare(right, 'zh-CN'));
+
+  if (jsonFiles.length === 0) {
+    return {
+      directoryPath,
+      archiveDirectoryPath: null,
+      fileCount: 0,
+      archivedFiles: [],
+    };
+  }
+
+  const archiveDirectoryPath = path.join(
+    directoryPath,
+    `_backup_${formatArchiveTimestamp()}`
+  );
+  await fs.mkdir(archiveDirectoryPath, { recursive: true });
+
+  const archivedFiles = [];
+  for (const fileName of jsonFiles) {
+    const sourcePath = path.join(directoryPath, fileName);
+    const targetPath = path.join(archiveDirectoryPath, fileName);
+    await fs.rename(sourcePath, targetPath);
+    archivedFiles.push(fileName);
+  }
+
+  return {
+    directoryPath,
+    archiveDirectoryPath,
+    fileCount: archivedFiles.length,
+    archivedFiles,
   };
 }
 
@@ -772,17 +879,21 @@ async function syncTenderFiles(options = {}) {
 
     const nextRow = {
       source_item_id: record.source_item_id,
+      source_origin_id: record.source_origin_id,
+      source_record_id: record.source_record_id,
       title: record.title,
+      notice_type: record.notice_type,
       published_at: record.published_at,
       published_date: record.published_date,
-      deadline_at: record.deadline_at,
-      deadline_date: record.deadline_date,
-      issuer: record.issuer,
+      deadline_at: preserveExistingValue(record.deadline_at, existing?.deadline_at),
+      deadline_date: preserveExistingValue(record.deadline_date, existing?.deadline_date),
+      issuer: preserveExistingValue(record.issuer, existing?.issuer),
       budget_amount: record.budget_amount,
       region: record.region,
       source_platform: record.source_platform,
       source_url: record.source_url,
       summary: record.summary,
+      detail_excerpt: record.detail_excerpt,
       announcement_html: record.announcement_html,
       announcement_plain_text: record.announcement_plain_text,
       detail_payload_json: record.detail_payload_json,
@@ -795,6 +906,10 @@ async function syncTenderFiles(options = {}) {
       last_synced_at: now,
       pushed_at:
         existing && !payloadChanged ? existing.pushed_at : null,
+      last_parsed_at: existing?.last_parsed_at || null,
+      parse_status: existing?.parse_status || 'never_parsed',
+      parse_error: existing?.parse_error || null,
+      parse_meta_json: existing?.parse_meta_json || null,
       deleted_at: null,
       delete_reason: null,
       created_at: existing?.created_at || now,
@@ -834,10 +949,12 @@ async function syncTenderFiles(options = {}) {
           staleRow.push_status !== 'pending' ||
           Boolean(staleRow.push_error) ||
           Boolean(staleRow.pushed_at);
+        const hasParseTrace =
+          staleRow.parse_status && staleRow.parse_status !== 'never_parsed';
         const hasWebSearchTrace =
           await tenderWebSearchResultModel.hasSavedResultByTenderStagingId(staleRow.id);
 
-        if (hasPushTrace || hasWebSearchTrace) {
+        if (hasPushTrace || hasWebSearchTrace || hasParseTrace) {
           summary.preservedWithTrace += 1;
           continue;
         }
@@ -904,6 +1021,7 @@ async function getRequiredTenderStaging(id) {
 
 module.exports = {
   getDefaultSpiderDataDir,
+  archiveTenderSourceFiles,
   listTenderStaging,
   getRequiredTenderStaging,
   syncTenderFiles,

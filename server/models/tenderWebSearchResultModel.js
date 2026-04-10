@@ -113,6 +113,35 @@ async function hasSavedResultByTenderStagingId(tenderStagingId) {
   return Boolean(row?.matched);
 }
 
+async function listTenderStagingIdsWithSavedResults(tenderStagingIds = []) {
+  await ensureSchema();
+
+  if (!Array.isArray(tenderStagingIds) || tenderStagingIds.length === 0) {
+    return [];
+  }
+
+  const matchedIds = [];
+  const chunkSize = 200;
+
+  for (let index = 0; index < tenderStagingIds.length; index += chunkSize) {
+    const chunk = tenderStagingIds.slice(index, index + chunkSize);
+    const placeholders = chunk.map(() => '?').join(', ');
+    const rows = await db.all(
+      `SELECT tender_staging_id
+       FROM ${TABLE_NAME}
+       WHERE tender_staging_id IN (${placeholders})`,
+      chunk
+    );
+    rows.forEach((row) => {
+      if (Number.isInteger(row?.tender_staging_id)) {
+        matchedIds.push(row.tender_staging_id);
+      }
+    });
+  }
+
+  return matchedIds;
+}
+
 async function saveLatestResult(payload) {
   await ensureSchema();
 
@@ -174,11 +203,36 @@ async function saveLatestResult(payload) {
   return getByTenderStagingId(payload.tender_staging_id);
 }
 
+async function deleteByTenderStagingIds(tenderStagingIds = []) {
+  await ensureSchema();
+
+  if (!Array.isArray(tenderStagingIds) || tenderStagingIds.length === 0) {
+    return 0;
+  }
+
+  let deletedCount = 0;
+  const chunkSize = 200;
+
+  for (let index = 0; index < tenderStagingIds.length; index += chunkSize) {
+    const chunk = tenderStagingIds.slice(index, index + chunkSize);
+    const placeholders = chunk.map(() => '?').join(', ');
+    const result = await db.run(
+      `DELETE FROM ${TABLE_NAME} WHERE tender_staging_id IN (${placeholders})`,
+      chunk
+    );
+    deletedCount += result.changes || 0;
+  }
+
+  return deletedCount;
+}
+
 module.exports = {
   TABLE_NAME,
   ENSURE_SCHEMA_STATEMENTS,
   ensureSchema,
   getByTenderStagingId,
   hasSavedResultByTenderStagingId,
+  listTenderStagingIdsWithSavedResults,
   saveLatestResult,
+  deleteByTenderStagingIds,
 };

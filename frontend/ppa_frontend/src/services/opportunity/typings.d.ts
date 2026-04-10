@@ -115,7 +115,10 @@ declare namespace API_OPPORTUNITY {
   type TenderStagingRecord = {
     id: number;
     source_item_id: string;
+    source_origin_id?: string | null;
+    source_record_id?: string | null;
     title: string;
+    notice_type?: string | null;
     published_at?: string | null;
     published_date?: string | null;
     deadline_at?: string | null;
@@ -126,6 +129,7 @@ declare namespace API_OPPORTUNITY {
     source_platform?: string | null;
     source_url?: string | null;
     summary?: string | null;
+    detail_excerpt?: string | null;
     announcement_html?: string | null;
     announcement_plain_text?: string | null;
     detail_payload?: Record<string, any> | null;
@@ -135,6 +139,10 @@ declare namespace API_OPPORTUNITY {
     push_error?: string | null;
     last_synced_at?: string | null;
     pushed_at?: string | null;
+    last_parsed_at?: string | null;
+    parse_status?: 'never_parsed' | 'parsed_ok' | 'parsed_empty' | 'parsed_failed';
+    parse_error?: string | null;
+    parse_meta?: Record<string, any> | null;
     deleted_at?: string | null;
     delete_reason?: string | null;
     created_at?: string;
@@ -179,6 +187,73 @@ declare namespace API_OPPORTUNITY {
     data: TenderStagingSyncSummary;
   };
 
+  type TenderSourceArchiveSummary = {
+    directoryPath: string;
+    archiveDirectoryPath?: string | null;
+    fileCount: number;
+    archivedFiles: string[];
+  };
+
+  type TenderSourceArchiveResponse = {
+    success: boolean;
+    data: TenderSourceArchiveSummary;
+  };
+
+  type TenderDedupePreviewRecord = {
+    id: number;
+    source_item_id: string;
+    title: string;
+    source_platform?: string | null;
+    source_url?: string | null;
+    published_date?: string | null;
+    deadline_date?: string | null;
+    issuer?: string | null;
+    extracted_code?: string | null;
+    text_length: number;
+    has_push_trace: boolean;
+    has_web_search_trace: boolean;
+    has_parse_trace: boolean;
+    is_keeper: boolean;
+  };
+
+  type TenderDedupePreviewGroup = {
+    group_key: string;
+    action: 'auto_delete' | 'review_only';
+    reason_keys: string[];
+    keeper_id: number;
+    keeper_reason: string;
+    skipped_reason?: string | null;
+    delete_ids: number[];
+    records: TenderDedupePreviewRecord[];
+    traced_record_count: number;
+  };
+
+  type TenderDedupePreviewResult = {
+    scanned_record_count: number;
+    groups_total: number;
+    auto_deletable_groups: number;
+    review_only_groups: number;
+    delete_candidate_count: number;
+    groups: TenderDedupePreviewGroup[];
+  };
+
+  type TenderDedupePreviewResponse = {
+    success: boolean;
+    data: TenderDedupePreviewResult;
+  };
+
+  type TenderDedupeExecuteResult = {
+    deleted_staging_count: number;
+    deleted_web_search_count: number;
+    executed_group_count: number;
+    skipped_group_count: number;
+  };
+
+  type TenderDedupeExecuteResponse = {
+    success: boolean;
+    data: TenderDedupeExecuteResult;
+  };
+
   type TenderStagingPushResult = {
     record: TenderStagingRecord;
     cloudResult?: Record<string, any> | null;
@@ -188,6 +263,27 @@ declare namespace API_OPPORTUNITY {
   type TenderStagingPushResponse = {
     success: boolean;
     data: TenderStagingPushResult;
+  };
+
+  type TenderStagingParseResult = {
+    record: TenderStagingRecord;
+    parsed: {
+      issuer?: string;
+      deadline_date?: string;
+    };
+    updated_fields: string[];
+    skipped_fields: string[];
+    warnings: string[];
+    meta?: Record<string, any>;
+  };
+
+  type TenderStagingParsePayload = {
+    prompt_template_id: number;
+  };
+
+  type TenderStagingParseResponse = {
+    success: boolean;
+    data: TenderStagingParseResult;
   };
 
   type TenderWebSearchResultItem = {

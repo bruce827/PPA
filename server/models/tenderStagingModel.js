@@ -5,7 +5,10 @@ const ENSURE_SCHEMA_STATEMENTS = [
   `CREATE TABLE IF NOT EXISTS opportunity_tender_staging (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     source_item_id TEXT NOT NULL,
+    source_origin_id TEXT,
+    source_record_id TEXT,
     title TEXT NOT NULL,
+    notice_type TEXT,
     published_at TEXT,
     published_date TEXT,
     deadline_at TEXT,
@@ -16,6 +19,7 @@ const ENSURE_SCHEMA_STATEMENTS = [
     source_platform TEXT,
     source_url TEXT,
     summary TEXT,
+    detail_excerpt TEXT,
     announcement_html TEXT,
     announcement_plain_text TEXT,
     detail_payload_json TEXT,
@@ -25,6 +29,10 @@ const ENSURE_SCHEMA_STATEMENTS = [
     push_error TEXT,
     last_synced_at DATETIME,
     pushed_at DATETIME,
+    last_parsed_at DATETIME,
+    parse_status TEXT NOT NULL DEFAULT 'never_parsed',
+    parse_error TEXT,
+    parse_meta_json TEXT,
     deleted_at DATETIME,
     delete_reason TEXT,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -83,6 +91,40 @@ async function ensureSchema() {
     if (!columnNames.has('delete_reason')) {
       await db.run(`ALTER TABLE ${TABLE_NAME} ADD COLUMN delete_reason TEXT`);
     }
+
+    if (!columnNames.has('last_parsed_at')) {
+      await db.run(`ALTER TABLE ${TABLE_NAME} ADD COLUMN last_parsed_at DATETIME`);
+    }
+
+    if (!columnNames.has('parse_status')) {
+      await db.run(
+        `ALTER TABLE ${TABLE_NAME} ADD COLUMN parse_status TEXT NOT NULL DEFAULT 'never_parsed'`
+      );
+    }
+
+    if (!columnNames.has('parse_error')) {
+      await db.run(`ALTER TABLE ${TABLE_NAME} ADD COLUMN parse_error TEXT`);
+    }
+
+    if (!columnNames.has('parse_meta_json')) {
+      await db.run(`ALTER TABLE ${TABLE_NAME} ADD COLUMN parse_meta_json TEXT`);
+    }
+
+    if (!columnNames.has('source_origin_id')) {
+      await db.run(`ALTER TABLE ${TABLE_NAME} ADD COLUMN source_origin_id TEXT`);
+    }
+
+    if (!columnNames.has('source_record_id')) {
+      await db.run(`ALTER TABLE ${TABLE_NAME} ADD COLUMN source_record_id TEXT`);
+    }
+
+    if (!columnNames.has('notice_type')) {
+      await db.run(`ALTER TABLE ${TABLE_NAME} ADD COLUMN notice_type TEXT`);
+    }
+
+    if (!columnNames.has('detail_excerpt')) {
+      await db.run(`ALTER TABLE ${TABLE_NAME} ADD COLUMN detail_excerpt TEXT`);
+    }
   })();
 
   return schemaEnsuredPromise;
@@ -104,6 +146,7 @@ function mapRow(row) {
     ...row,
     detail_payload: parseJsonField(row.detail_payload_json, null),
     raw_payload: parseJsonField(row.raw_payload_json, null),
+    parse_meta: parseJsonField(row.parse_meta_json, null),
   };
 }
 
@@ -206,7 +249,10 @@ async function createTenderStaging(data) {
   const result = await db.run(
     `INSERT INTO ${TABLE_NAME} (
       source_item_id,
+      source_origin_id,
+      source_record_id,
       title,
+      notice_type,
       published_at,
       published_date,
       deadline_at,
@@ -217,6 +263,7 @@ async function createTenderStaging(data) {
       source_platform,
       source_url,
       summary,
+      detail_excerpt,
       announcement_html,
       announcement_plain_text,
       detail_payload_json,
@@ -226,14 +273,21 @@ async function createTenderStaging(data) {
       push_error,
       last_synced_at,
       pushed_at,
+      last_parsed_at,
+      parse_status,
+      parse_error,
+      parse_meta_json,
       deleted_at,
       delete_reason,
       created_at,
       updated_at
-    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
     [
       data.source_item_id,
+      data.source_origin_id,
+      data.source_record_id,
       data.title,
+      data.notice_type,
       data.published_at,
       data.published_date,
       data.deadline_at,
@@ -244,6 +298,7 @@ async function createTenderStaging(data) {
       data.source_platform,
       data.source_url,
       data.summary,
+      data.detail_excerpt,
       data.announcement_html,
       data.announcement_plain_text,
       data.detail_payload_json,
@@ -253,6 +308,10 @@ async function createTenderStaging(data) {
       data.push_error,
       data.last_synced_at,
       data.pushed_at,
+      data.last_parsed_at || null,
+      data.parse_status || 'never_parsed',
+      data.parse_error || null,
+      data.parse_meta_json || null,
       data.deleted_at,
       data.delete_reason,
       data.created_at,
@@ -268,7 +327,10 @@ async function updateTenderStaging(id, data) {
   await db.run(
     `UPDATE ${TABLE_NAME}
        SET source_item_id = ?,
+           source_origin_id = ?,
+           source_record_id = ?,
            title = ?,
+           notice_type = ?,
            published_at = ?,
            published_date = ?,
            deadline_at = ?,
@@ -279,6 +341,7 @@ async function updateTenderStaging(id, data) {
            source_platform = ?,
            source_url = ?,
            summary = ?,
+           detail_excerpt = ?,
            announcement_html = ?,
            announcement_plain_text = ?,
            detail_payload_json = ?,
@@ -288,13 +351,20 @@ async function updateTenderStaging(id, data) {
            push_error = ?,
            last_synced_at = ?,
            pushed_at = ?,
+           last_parsed_at = ?,
+           parse_status = ?,
+           parse_error = ?,
+           parse_meta_json = ?,
            deleted_at = ?,
            delete_reason = ?,
            updated_at = ?
      WHERE id = ?`,
     [
       data.source_item_id,
+      data.source_origin_id,
+      data.source_record_id,
       data.title,
+      data.notice_type,
       data.published_at,
       data.published_date,
       data.deadline_at,
@@ -305,6 +375,7 @@ async function updateTenderStaging(id, data) {
       data.source_platform,
       data.source_url,
       data.summary,
+      data.detail_excerpt,
       data.announcement_html,
       data.announcement_plain_text,
       data.detail_payload_json,
@@ -314,6 +385,10 @@ async function updateTenderStaging(id, data) {
       data.push_error,
       data.last_synced_at,
       data.pushed_at,
+      data.last_parsed_at || null,
+      data.parse_status || 'never_parsed',
+      data.parse_error || null,
+      data.parse_meta_json || null,
       data.deleted_at,
       data.delete_reason,
       data.updated_at,
@@ -334,6 +409,34 @@ async function updateTenderPushState(id, payload = {}) {
            updated_at = CURRENT_TIMESTAMP
      WHERE id = ?`,
     [payload.push_status, payload.push_error || null, payload.pushed_at || null, id]
+  );
+
+  return getTenderStagingById(id);
+}
+
+async function updateTenderParseState(id, payload = {}) {
+  await ensureSchema();
+  await db.run(
+    `UPDATE ${TABLE_NAME}
+       SET issuer = COALESCE(?, issuer),
+           deadline_at = COALESCE(?, deadline_at),
+           deadline_date = COALESCE(?, deadline_date),
+           last_parsed_at = ?,
+           parse_status = ?,
+           parse_error = ?,
+           parse_meta_json = ?,
+           updated_at = CURRENT_TIMESTAMP
+     WHERE id = ?`,
+    [
+      payload.issuer ?? null,
+      payload.deadline_at ?? null,
+      payload.deadline_date ?? null,
+      payload.last_parsed_at || null,
+      payload.parse_status || 'never_parsed',
+      payload.parse_error || null,
+      payload.parse_meta_json || null,
+      id,
+    ]
   );
 
   return getTenderStagingById(id);
@@ -380,10 +483,21 @@ async function listAllTenderStagingSourceItemIds() {
 async function listActiveTenderStagingForPrune() {
   await ensureSchema();
   return db.all(
-    `SELECT id, source_item_id, push_status, push_error, pushed_at
+    `SELECT id, source_item_id, push_status, push_error, pushed_at, parse_status
      FROM ${TABLE_NAME}
      WHERE deleted_at IS NULL`
   );
+}
+
+async function listActiveTenderStagingForDedupe() {
+  await ensureSchema();
+  const rows = await db.all(
+    `SELECT *
+     FROM ${TABLE_NAME}
+     WHERE deleted_at IS NULL
+     ORDER BY id ASC`
+  );
+  return rows.map(mapRow);
 }
 
 async function softDeleteTenderStagingByIds(ids = [], reason = 'missing_from_sync_source') {
@@ -436,6 +550,29 @@ async function deleteTenderStagingBySourceItemIds(sourceItemIds = []) {
   return deletedCount;
 }
 
+async function deleteTenderStagingByIds(ids = []) {
+  await ensureSchema();
+
+  if (!Array.isArray(ids) || ids.length === 0) {
+    return 0;
+  }
+
+  let deletedCount = 0;
+  const chunkSize = 200;
+
+  for (let index = 0; index < ids.length; index += chunkSize) {
+    const chunk = ids.slice(index, index + chunkSize);
+    const placeholders = chunk.map(() => '?').join(', ');
+    const result = await db.run(
+      `DELETE FROM ${TABLE_NAME} WHERE id IN (${placeholders})`,
+      chunk
+    );
+    deletedCount += result.changes || 0;
+  }
+
+  return deletedCount;
+}
+
 module.exports = {
   ensureSchema,
   listTenderStaging,
@@ -444,9 +581,12 @@ module.exports = {
   createTenderStaging,
   updateTenderStaging,
   updateTenderPushState,
+  updateTenderParseState,
   getTenderStagingStats,
   listAllTenderStagingSourceItemIds,
   listActiveTenderStagingForPrune,
+  listActiveTenderStagingForDedupe,
   softDeleteTenderStagingByIds,
+  deleteTenderStagingByIds,
   deleteTenderStagingBySourceItemIds,
 };

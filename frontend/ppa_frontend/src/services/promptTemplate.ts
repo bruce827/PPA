@@ -17,6 +17,7 @@ export type PromptTemplateCategory =
   | 'project_tagging'
   | 'report_generation'
   | 'web_search'
+  | 'tender_field_parse'
   | 'custom';
 
 export const PROMPT_TEMPLATE_CATEGORY_OPTIONS: Array<{
@@ -30,6 +31,7 @@ export const PROMPT_TEMPLATE_CATEGORY_OPTIONS: Array<{
   { value: 'project_tagging', label: '标签生成' },
   { value: 'report_generation', label: '报告生成' },
   { value: 'web_search', label: '联网搜索' },
+  { value: 'tender_field_parse', label: '招标字段解析' },
   { value: 'custom', label: '自定义' },
 ];
 
@@ -41,6 +43,7 @@ export const PROMPT_TEMPLATE_CATEGORY_VALUE_ENUM = {
   project_tagging: { text: '标签生成' },
   report_generation: { text: '报告生成' },
   web_search: { text: '联网搜索' },
+  tender_field_parse: { text: '招标字段解析' },
   custom: { text: '自定义' },
 } as const;
 
