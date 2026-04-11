@@ -1,7 +1,7 @@
 # 项目评估功能详细规格
 
-**版本**: v1.0  
-**最后更新**: 2025-10-21
+**版本**: v1.1  
+**最后更新**: 2026-04-11
 
 ---
 
@@ -102,7 +102,7 @@ onTemplateSelect(templateId) {
 │  │ 风险评分总览                        │   │
 │  │ • 已评估: 5/5                      │   │
 │  │ • 风险总分: 85 / 200              │   │
-│  │ • 评分因子: 0.43                  │   │
+│  │ • 评分因子: 1.00                  │   │
 │  │ • 风险等级: 🟡 中风险              │   │
 │  └────────────────────────────────────┘   │
 │                                             │
@@ -147,15 +147,30 @@ const maxScore = riskItems.reduce((sum, item) => {
   return sum + maxOption;
 }, 0);
 
-// 3. 评分因子
-const factor = totalScore / 100;
+// 3. 风险比例
+const ratio = maxScore > 0 ? totalScore / maxScore : 0;
 
-// 4. 风险等级判定
-const ratio = totalScore / maxScore;
+// 4. 评分因子（按风险比例分段映射，最低为 1.0）
+let factor = 1;
+if (ratio > 0.7 && ratio <= 1.0) {
+  factor = 1 + ((ratio - 0.7) / (1.0 - 0.7)) * 0.2;
+} else if (ratio > 1.0) {
+  const cappedRatio = Math.min(ratio, 1.2);
+  factor = Math.min(1.5, 1.2 + ((cappedRatio - 1.0) / (1.2 - 1.0)) * 0.3);
+}
+
+// 5. 风险等级判定
 let level = '低风险';
 if (ratio >= 0.7) level = '高风险';
 else if (ratio >= 0.4) level = '中风险';
 ```
+
+说明：
+
+- 风险等级用于展示分层
+- 评分因子用于成本放缩
+- 二者都基于 `风险总分 / 最大可达风险分值`，但用途不同
+- 当前口径下，评分因子不会低于 `1.0`
 
 #### 4.2.4 验证规则
 
@@ -225,8 +240,8 @@ function calculateModuleCost(record: WorkloadRecord, roles: RoleConfig[]): numbe
   for (const [roleId, days] of Object.entries(record.role_workdays)) {
     const role = roles.find(r => r.id === parseInt(roleId));
     if (role && days > 0) {
-      // 成本 = 天数 × 单价 / 20（月工作日）
-      const cost = (days * role.unit_price / 20) * record.delivery_coefficient;
+      // 成本 = 天数 × 日单价 × 交付系数
+      const cost = days * role.unit_price * record.delivery_coefficient;
       totalCost += cost;
     }
   }
@@ -283,14 +298,15 @@ const integrationCost = integrationWorkload.reduce((sum, record) => {
 │                                           │
 │  💼 差旅成本                              │
 │  ├─ 差旅月数: [____] 月                  │
-│  └─ 预计成本: ¥ 32,400                   │
-│      (每月 ¥10,800 × 3 月)               │
+│  ├─ 差旅人数: [____] 人                  │
+│  └─ 预计成本: ¥ 64,800                   │
+│      (每人每月 ¥10,800 × 2 人 × 3 月)    │
 │                                           │
 │  🔧 运维成本                              │
 │  ├─ 运维月数: [____] 月                  │
 │  ├─ 平均人数: [____] 人                  │
-│  └─ 预计成本: ¥ 90,000                   │
-│      (6月 × 2人 × ¥7,500/人月)          │
+│  └─ 预计成本: ¥ 412,800                  │
+│      (6月 × 2人 × 21.5人天/月 × ¥1,600/人天) │
 │                                           │
 │  ⚠️ 风险成本                              │
 │  ┌────────────────────────────────────┐  │
@@ -310,11 +326,13 @@ const integrationCost = integrationWorkload.reduce((sum, record) => {
 interface OtherCosts {
   // 差旅成本
   travel_months: number;           // 差旅月数
+  travel_headcount: number;        // 差旅人数
   travel_cost?: number;            // 自动计算
   
   // 运维成本
   maintenance_months: number;      // 运维月数
   maintenance_headcount: number;   // 运维人数
+  maintenance_daily_cost?: number; // 运维日单价（元/人天），默认1600
   maintenance_cost?: number;       // 自动计算
   
   // 风险成本
@@ -331,11 +349,12 @@ interface OtherCosts {
 ```typescript
 // 1. 差旅成本
 const travelCostStandard = 10800; // 元/人/月（从配置表获取）
-const travelCost = (travel_months * travelCostStandard) / 10000; // 转为万元
+const travelCost = (travel_months * travel_headcount * travelCostStandard) / 10000; // 转为万元
 
 // 2. 运维成本
-const avgRolePrice = roles.reduce((sum, r) => sum + r.unit_price, 0) / roles.length;
-const maintenanceCost = maintenance_months * maintenance_headcount * avgRolePrice;
+const maintenanceWorkload = maintenance_months * maintenance_headcount * 21.5;
+const maintenanceDailyCost = maintenance_daily_cost || 1600; // 元/人天
+const maintenanceCost = (maintenanceWorkload * maintenanceDailyCost) / 10000; // 转为万元
 
 // 3. 风险成本
 const riskCost = risk_items.reduce((sum, item) => sum + item.estimated_cost, 0);

@@ -1,8 +1,8 @@
 # 项目报价计算逻辑技术文档
 
-**文档版本**: v1.0  
-**创建日期**: 2025-10-21  
-**适用范围**: 项目评估系统 (PPA) - 新建评估页面第4步
+**文档版本**: v1.1  
+**最后更新**: 2026-04-11  
+**适用范围**: 项目评估系统 (PPA) - 标准评估实时计算与项目保存复算
 
 ---
 
@@ -15,7 +15,10 @@
 - **步骤**: 第4步 - 生成总览
 - **组件**: `frontend/ppa_frontend/src/pages/Assessment/components/Overview.tsx`
 - **API**: `POST /api/calculate`
-- **后端实现**: `server/index.js` (line 211-264)
+- **后端实现**:
+  - `server/controllers/calculationController.js`
+  - `server/services/calculationService.js`
+  - `server/utils/rating.js`
 
 ### 1.2 业务目标
 根据用户在前三个步骤中填写的：
@@ -164,34 +167,64 @@ const handleCalculate = async () => {
 #### 3.2.1 风险总分计算
 
 ```javascript
-const riskScore = Object.values(assessmentData.risk_scores || {})
+const configRiskScore = Object.values(assessmentData.risk_scores || {})
   .reduce((sum, score) => sum + Number(score), 0);
+
+const aiUnmatchedRiskScore = (assessmentData.ai_unmatched_risks || [])
+  .reduce((sum, item) => sum + Number(item.score || 0), 0);
+
+const customRiskScore = (assessmentData.custom_risk_items || [])
+  .reduce((sum, item) => sum + Number(item.score || 0), 0);
+
+const riskScore = configRiskScore + aiUnmatchedRiskScore + customRiskScore;
 ```
 
 **说明**:
-- 累加所有风险项的评分
-- 示例: 如果有8个风险项，每项10分，则 `riskScore = 80`
+- 当前总风险分是三类来源的汇总：
+  - 配置化风险项 `risk_scores`
+  - AI 未匹配风险项 `ai_unmatched_risks`
+  - 自定义风险项 `custom_risk_items`
+- 示例: 如果配置化风险项合计 80 分，AI 未匹配补充 5 分，自定义补充 3 分，则 `riskScore = 88`
 
 #### 3.2.2 评分因子计算
 
 ```javascript
-const ratingFactor = riskScore / 100;
+const ratio = maxScore > 0 ? riskScore / maxScore : 0;
+
+let ratingFactor = 1;
+if (ratio > 0.7 && ratio <= 1.0) {
+  ratingFactor = 1 + ((ratio - 0.7) / (1.0 - 0.7)) * 0.2;
+} else if (ratio > 1.0) {
+  const cappedRatio = Math.min(ratio, 1.2);
+  ratingFactor = Math.min(1.5, 1.2 + ((cappedRatio - 1.0) / (1.2 - 1.0)) * 0.3);
+}
 ```
 
-**公式**: 
+**公式**:
 $$
-\text{ratingFactor} = \frac{\text{风险总分}}{100}
+\text{ratio} = \frac{\text{风险总分}}{\text{最大可达风险分值}}
+$$
+
+$$
+\text{ratingFactor} =
+\begin{cases}
+1.0, & ratio \le 0.7 \\
+1.0 + \frac{ratio - 0.7}{1.0 - 0.7} \times 0.2, & 0.7 < ratio \le 1.0 \\
+\min\left(1.5,\ 1.2 + \frac{\min(ratio, 1.2) - 1.0}{1.2 - 1.0} \times 0.3\right), & ratio > 1.0
+\end{cases}
 $$
 
 **作用**:
-- 将风险总分归一化为倍数系数
-- 风险越高，系数越大，最终报价越高
-- 示例: `riskScore = 80` → `ratingFactor = 0.8`
+- 将风险得分映射为成本放缩因子
+- 因子最低为 `1.0`，不会因为低风险而把成本压到 1 以下
+- 风险越高，系数越大，最高封顶 `1.5`
+- 示例: `riskScore = 88`、`maxScore = 100` → `ratio = 0.88` → `ratingFactor = 1.12`
 
 **业务意义**:
-- 基准情况 (100分): 系数为1.0，按原价计算
-- 低风险项目 (60分): 系数为0.6，报价降低40%
-- 高风险项目 (150分): 系数为1.5，报价增加50%
+- 低到中风险区间 (`ratio <= 0.7`)：维持基准系数 `1.0`
+- 高风险接近满分区间 (`0.7 < ratio <= 1.0`)：系数线性抬升到 `1.2`
+- 超配或附加风险区间 (`1.0 < ratio <= 1.2`)：继续抬升到 `1.5`
+- 超过 `1.2` 的部分不再继续放大，避免极端报价失控
 
 ---
 
@@ -282,11 +315,11 @@ $$
 ```
 基础成本: 2.14万
 交付系数: 1.2 (紧急项目)
-评分因子: 0.8 (风险总分80)
+评分因子: 1.12 (风险比例0.88)
 范围系数: 1.1 (需求可能变更)
 技术系数: 1.05 (有一定技术难度)
 
-最终成本 = 2.14 × 1.2 × 0.8 × 1.1 × 1.05 = 2.376 万元
+最终成本 = 2.14 × 1.2 × 1.12 × 1.1 × 1.05 = 3.167 万元
 ```
 
 **3️⃣ 工作量计算**
@@ -308,13 +341,15 @@ $$
 // 新功能开发成本
 const dev = calculateWorkloadCost(
   assessmentData.development_workload || [], 
-  assessmentData.roles || []
+  assessmentData.roles || [],
+  ratingFactor
 );
 
 // 系统对接成本
 const integration = calculateWorkloadCost(
   assessmentData.integration_workload || [], 
-  assessmentData.roles || []
+  assessmentData.roles || [],
+  ratingFactor
 );
 ```
 
@@ -517,7 +552,9 @@ res.json({ data: result });
 #### **第1步: 评分因子**
 ```
 风险总分 = 10+12+8+15+9+11+13+10 = 88
-评分因子 = 88 / 100 = 0.88
+最大可达风险分值 = 100
+风险比例 = 88 / 100 = 0.88
+评分因子 = 1 + ((0.88 - 0.7) / 0.3) × 0.2 = 1.12
 ```
 
 #### **第2步: 软件研发成本**
@@ -525,38 +562,39 @@ res.json({ data: result });
 **记录1: 用户注册**
 ```
 角色成本 = 2×0.18 + 5×0.16 + 3×0.14 = 0.36 + 0.8 + 0.42 = 1.58万
-最终成本 = 1.58 × 1.0 × 0.88 × 1.0 × 1.0 = 1.39万
+最终成本 = 1.58 × 1.0 × 1.12 × 1.0 × 1.0 = 1.77万
 ```
 
 **记录2: 订单创建**
 ```
 角色成本 = 3×0.18 + 10×0.16 + 5×0.14 = 0.54 + 1.6 + 0.7 = 2.84万
-最终成本 = 2.84 × 1.2 × 0.88 × 1.1 × 1.05 = 3.44万
+最终成本 = 2.84 × 1.2 × 1.12 × 1.1 × 1.05 = 4.41万
 ```
 
-**软件研发总成本 = 1.39 + 3.44 = 4.83万 → 取整为 5万**
+**软件研发总成本 = 1.77 + 4.41 = 6.18万**
 
 #### **第3步: 系统对接成本**
 
 **记录3: 支付系统对接**
 ```
 角色成本 = 8×0.16 + 4×0.14 = 1.28 + 0.56 = 1.84万
-最终成本 = 1.84 × 1.0 × 0.88 × 1.0 × 1.2 = 1.94万
+最终成本 = 1.84 × 1.0 × 1.12 × 1.0 × 1.2 = 2.47万
 ```
 
-**系统对接总成本 = 1.94万 → 取整为 2万**
+**系统对接总成本 = 2.47万**
 
 #### **第4步: 其他成本**
 ```
-差旅成本 = 2(月) × 2(人) × (10800 ÷ 10000) = 4.32万 → 取整为 4万
+差旅成本 = 2(月) × 2(人) × (10800 ÷ 10000) = 4.32万
 运维工作量 = 12 × 2 × 21.5 = 516人天
-运维成本 = 516 × (1600 ÷ 10000) = 82.56万 → 取整为 83万
+运维成本 = 516 × (1600 ÷ 10000) = 82.56万
 风险成本 = 5 + 3 = 8万
 ```
 
 #### **第5步: 总计**
 ```
-报价总计 = 5 + 2 + 2 + 83 + 8 = 100万
+精确总价 = 6.18 + 2.47 + 4.32 + 82.56 + 8 = 103.53万
+展示总价 = round(103.53) = 104万
 ```
 
 ### 4.3 输出结果
@@ -564,12 +602,17 @@ res.json({ data: result });
 ```json
 {
   "data": {
-    "software_dev_cost": 5,
-    "system_integration_cost": 2,
-    "travel_cost": 2,
-    "maintenance_cost": 83,
+    "software_dev_cost": 6.18,
+    "system_integration_cost": 2.47,
+    "travel_cost": 4.32,
+    "maintenance_cost": 82.56,
     "risk_cost": 8,
-    "total_cost": 100
+    "total_cost_exact": 103.53,
+    "total_cost": 104,
+    "risk_score": 88,
+    "rating_factor": 1.12,
+    "rating_ratio": 0.88,
+    "risk_max_score": 100
   }
 }
 ```
@@ -636,38 +679,23 @@ res.json({ data: result });
 
 ### 6.1 计算逻辑复用
 
-在 `POST /api/projects` (保存项目) 中，**后端会重新执行完整的计算逻辑**，而不是直接使用前端传来的计算结果。
+在 `server/services/projectService.js` 的项目创建与更新流程中，**后端会重新执行完整的计算逻辑**，而不是直接使用前端传来的计算结果。
 
 ```javascript
-// server/index.js - POST /api/projects (line 270-340)
-app.post('/api/projects', (req, res) => {
-  const { name, description, is_template, assessmentData } = req.body;
+const normalizedAssessment = normalizeAssessmentData(assessmentData);
+const calculation = await calculationService.calculateProjectCost(normalizedAssessment);
 
-  try {
-    // 在后端重新执行完整的计算逻辑，以确保数据一致性
-    const riskScore = Object.values(assessmentData.risk_scores || {})
-      .reduce((sum, score) => sum + Number(score), 0);
-    const ratingFactor = riskScore / 100;
+const dbData = {
+  name,
+  description,
+  is_template,
+  final_total_cost: calculation.total_cost,
+  final_risk_score: calculation.risk_score,
+  final_workload_days: calculation.total_workload_days,
+  assessment_details_json: JSON.stringify(normalizedAssessment),
+};
 
-    const calculateWorkloadCost = (workloadItems, roles) => {
-      // ... (完整计算逻辑)
-    };
-
-    const dev = calculateWorkloadCost(...);
-    const integration = calculateWorkloadCost(...);
-    // ... (计算其他成本)
-    
-    const finalTotalCost = Math.round(totalExactCost);
-    const finalWorkloadDays = dev.totalWorkload + integration.totalWorkload + maintenanceWorkload;
-
-    // 数据入库
-    db.run(`INSERT INTO projects (...) VALUES (?, ?, ?, ?, ?, ?, ?)`, 
-      [name, description, is_template, finalTotalCost, riskScore, finalWorkloadDays, assessmentDetailsJson]
-    );
-  } catch (error) {
-    res.status(500).json({ error: 'Save failed', message: error.message });
-  }
-});
+await projectModel.createProject(dbData);
 ```
 
 **为什么要重新计算？**
@@ -707,29 +735,24 @@ db.get("SELECT cost_per_month FROM config_travel_costs WHERE item_name = '标准
 });
 ```
 
-### 7.2 评分因子设计
+### 7.2 评分因子设计现状
 
-**当前问题**:
-- 评分因子 = 风险总分 / 100
-- 如果风险总分 < 100，系数 < 1，报价反而降低 (不符合业务逻辑)
+**当前实现**:
+- 评分因子不再使用 `风险总分 / 100`
+- 当前采用“风险比例 + 分段插值 + 1.5 封顶”的方式
+- 风险比例分母来自配置化风险项的最大可达分值总和
 
-**改进方案1: 非线性映射**
-```javascript
-// 使用指数函数
-const ratingFactor = Math.pow(1.01, riskScore - 100);
-// 风险100分 → 系数1.0
-// 风险80分  → 系数0.82
-// 风险120分 → 系数1.22
-```
+**当前收益**:
+- 避免低风险项目把系数压到 `1` 以下
+- 在高风险区间保持平滑抬升，而不是突然跳变
+- 当存在额外风险项时，仍能通过比例和封顶机制保持可解释性
 
-**改进方案2: 分段函数**
-```javascript
-const ratingFactor = 
-  riskScore < 80  ? 0.9  :
-  riskScore < 100 ? 1.0  :
-  riskScore < 120 ? 1.2  :
-                    1.5;
-```
+**后续可调参数**:
+- 基准阈值 `0.7`
+- 中位阈值 `1.0`
+- 峰值阈值 `1.2`
+- 中位因子 `1.2`
+- 封顶因子 `1.5`
 
 ### 7.3 四舍五入时机
 
@@ -823,8 +846,10 @@ const result = {
 | `frontend/ppa_frontend/src/pages/Assessment/components/Overview.tsx` | 前端计算触发组件 |
 | `frontend/ppa_frontend/src/services/assessment/index.ts` | 前端API调用定义 |
 | `frontend/ppa_frontend/src/services/assessment/typings.d.ts` | TypeScript类型定义 |
-| `server/index.js` (line 211-264) | 后端计算逻辑实现 |
-| `server/index.js` (line 270-340) | 项目保存时的重复计算 |
+| `server/controllers/calculationController.js` | 后端计算接口入口 |
+| `server/services/calculationService.js` | 后端计算逻辑实现 |
+| `server/services/projectService.js` | 项目保存时的后端复算 |
+| `server/utils/rating.js` | 风险比例与评分因子映射 |
 
 ### 9.2 数据库表结构
 
@@ -866,7 +891,8 @@ CREATE TABLE projects (
 
 | 计算项 | 公式 |
 |-------|------|
-| 评分因子 | `riskScore / 100` |
+| 风险比例 | `riskScore / riskMaxScore` |
+| 评分因子 | `ratio <= 0.7 -> 1.0；0.7~1.0 线性增至 1.2；1.0~1.2 线性增至 1.5 并封顶` |
 | 角色成本 | `Σ(天数 × 日单价)` |
 | 工作量 | `总天数 × 交付系数` |
 | 单项成本 | `角色成本 × 交付系数 × 评分因子 × 范围系数 × 技术系数` |
@@ -882,6 +908,7 @@ CREATE TABLE projects (
 
 | 版本 | 日期 | 作者 | 变更说明 |
 |-----|------|------|---------|
+| v1.1 | 2026-04-11 | Codex | 修正评分因子口径与日单价描述，回填当前实现 |
 | v1.0 | 2025-10-21 | System | 初始版本，完整记录计算逻辑 |
 
 ---

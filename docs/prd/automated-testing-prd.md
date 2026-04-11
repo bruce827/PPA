@@ -1,7 +1,7 @@
 # 项目评估系统 - 自动化测试PRD
 
-**文档版本**: v1.0  
-**创建日期**: 2025-10-20  
+**文档版本**: v1.1  
+**最后更新**: 2026-04-11  
 **目标**: 为自动化测试脚本生成提供详尽的功能规格说明
 
 ---
@@ -117,7 +117,11 @@ Steps 导航 (1/2/3/4)
 **计算逻辑**:
 ```javascript
 风险总分 = sum(Object.values(risk_scores))
-评分因子 = 风险总分 / 100
+风险比例 = 风险总分 / 最大可达风险分值
+评分因子 =
+  风险比例 <= 0.7  ? 1.0 :
+  风险比例 <= 1.0 ? 1.0 + ((风险比例 - 0.7) / 0.3) * 0.2 :
+  Math.min(1.5, 1.2 + ((Math.min(风险比例, 1.2) - 1.0) / 0.2) * 0.3)
 ```
 
 **验证规则**:
@@ -215,10 +219,12 @@ workload = totalRoleDays × delivery_factor
 {
   // 差旅成本
   travel_months: 3,  // 差旅月数
+  travel_headcount: 2,  // 差旅人数
   
   // 运维成本
   maintenance_months: 12,  // 运维月数
   maintenance_headcount: 2,  // 平均每月投入人数
+  maintenance_daily_cost: 1600,  // 可选，默认 1600 元/人天
   
   // 风险成本
   risk_items: [
@@ -232,11 +238,11 @@ workload = totalRoleDays × delivery_factor
 **计算逻辑**:
 ```javascript
 // 差旅成本
-travel_cost = travel_months × 1.08  // 1.08万元/月 (配置化)
+travel_cost = travel_months × travel_headcount × (travelCostPerMonth / 10000)  // travelCostPerMonth 默认 10800 元/人/月
 
 // 运维成本
 maintenance_workload = maintenance_months × maintenance_headcount × 21.5  // 21.5天/月
-maintenance_cost = maintenance_workload × 0.16  // 0.16万元/天
+maintenance_cost = maintenance_workload × ((maintenance_daily_cost || 1600) / 10000)
 
 // 风险成本
 risk_cost = sum(risk_items.map(item => item.cost))
@@ -304,21 +310,29 @@ risk_cost = sum(risk_items.map(item => item.cost))
 
 **后端计算逻辑** (在 `/api/projects` POST 中重新计算):
 ```javascript
-// 1. 计算评分因子
-riskScore = sum(Object.values(risk_scores))
-ratingFactor = riskScore / 100
+// 1. 汇总风险总分
+configRiskScore = sum(Object.values(risk_scores))
+aiUnmatchedRiskScore = sum(ai_unmatched_risks.map(item => item.score || 0))
+customRiskScore = sum(custom_risk_items.map(item => item.score || 0))
+riskScore = configRiskScore + aiUnmatchedRiskScore + customRiskScore
 
-// 2. 计算工作量成本 (新功能开发)
+// 2. 计算风险比例与评分因子
+maxScore = sum(配置风险项的最大可选分值)
+ratingRatio = riskScore / maxScore
+ratingFactor = computeFactorFromRatio(ratingRatio)
+
+// 3. 计算工作量成本 (新功能开发)
 development_workload.forEach(item => {
+  itemRoleCost = sum(roles.map(role => (item[role.role_name] || 0) * (role.unit_price / 10000)))
   totalRoleDays = sum(roles.map(role => item[role.role_name] || 0))
   workload = totalRoleDays × item.delivery_factor
-  cost = workload × ratingFactor × (item.scope_factor || 1) × (item.tech_factor || 1) × 0.16  // 0.16万元/人天
+  cost = itemRoleCost × (item.delivery_factor || 1) × ratingFactor × (item.scope_factor || 1) × (item.tech_factor || 1)
   dev_total_cost += cost
 })
 
-// 3. 计算系统对接成本 (同上逻辑)
-// 4. 其他成本计算 (见 Step 3)
-// 5. 汇总
+// 4. 计算系统对接成本 (同上逻辑)
+// 5. 其他成本计算 (见 Step 3)
+// 6. 汇总
 final_total_cost = dev_total_cost + integration_total_cost + travel_cost + maintenance_cost + risk_cost
 final_workload_days = dev_workload + integration_workload + maintenance_workload
 final_risk_score = riskScore
@@ -567,7 +581,7 @@ final_risk_score = riskScore
 | 列名 | 字段名 | 类型 | 验证规则 |
 |------|--------|------|---------|
 | 成本项名称 | item_name | text | 必填 |
-| 月度费用(万元) | cost_per_month | money | 必填, ≥0 |
+| 月度费用(元/人/月) | cost_per_month | money | 必填, ≥0 |
 | 操作 | - | option | 编辑、删除 |
 
 **API依赖**:
@@ -638,7 +652,7 @@ final_risk_score = riskScore
 ### 3.4 计算 API
 | 方法 | 端点 | 请求体 | 响应 | 说明 |
 |------|------|--------|------|------|
-| POST | `/api/calculate` | `{ risk_scores, development_workload, integration_workload, travel_months, maintenance_months, maintenance_headcount, risk_items, roles }` | `{ data: { software_dev_cost, system_integration_cost, travel_cost, maintenance_cost, risk_cost, total_cost } }` | 实时计算成本 |
+| POST | `/api/calculate` | `{ risk_scores, development_workload, integration_workload, travel_months, travel_headcount, maintenance_months, maintenance_headcount, maintenance_daily_cost, risk_items, roles }` | `{ data: { software_dev_cost, system_integration_cost, travel_cost, maintenance_cost, risk_cost, total_cost_exact, total_cost, risk_score, rating_factor, rating_ratio, risk_max_score } }` | 实时计算成本 |
 
 ### 3.5 导出 API
 | 方法 | 端点 | 响应类型 | 说明 |
@@ -683,7 +697,7 @@ final_risk_score = riskScore
 |--------|------|------|------|
 | id | INTEGER | PRIMARY KEY AUTOINCREMENT | 主键 |
 | item_name | TEXT | NOT NULL | 成本项名称 |
-| cost_per_month | REAL | NOT NULL | 月度费用(万元) |
+| cost_per_month | REAL | NOT NULL | 月度费用(元/人/月) |
 
 ---
 
@@ -692,15 +706,20 @@ final_risk_score = riskScore
 ### 5.1 风险评分计算
 ```javascript
 风险总分 = Σ(所有风险项的选择分值)
-评分因子 = 风险总分 / 100
+风险比例 = 风险总分 / 最大可达风险分值
+评分因子 =
+  风险比例 <= 0.7  ? 1.0 :
+  风险比例 <= 1.0 ? 1.0 + ((风险比例 - 0.7) / 0.3) * 0.2 :
+  Math.min(1.5, 1.2 + ((Math.min(风险比例, 1.2) - 1.0) / 0.2) * 0.3)
 ```
 
 ### 5.2 工作量成本计算
 ```javascript
 // 单个工作项
+itemRoleCost = Σ(各角色工作天数 × 对应日单价 / 10000)
 totalRoleDays = Σ(所有角色的工作天数)
 workload = totalRoleDays × 交付系数
-cost = workload × 评分因子 × (范围因子 || 1) × (技术因子 || 1) × 0.16万元/人天
+cost = itemRoleCost × 评分因子 × 交付系数 × (范围因子 || 1) × (技术因子 || 1)
 
 // 汇总
 软件研发成本 = Σ(新功能开发各项 cost)
@@ -709,9 +728,9 @@ cost = workload × 评分因子 × (范围因子 || 1) × (技术因子 || 1) ×
 
 ### 5.3 其他成本计算
 ```javascript
-差旅成本 = 差旅月数 × 1.08万元/月
+差旅成本 = 差旅月数 × 差旅人数 × (cost_per_month / 10000)
 运维工作量 = 运维月数 × 平均月投入人数 × 21.5天/月
-运维成本 = 运维工作量 × 0.16万元/人天
+运维成本 = 运维工作量 × ((maintenance_daily_cost || 1600) / 10000)
 风险成本 = Σ(风险项费用)
 ```
 
@@ -804,7 +823,7 @@ cost = workload × 评分因子 × (范围因子 || 1) × (技术因子 || 1) ×
 
 **差旅成本配置**:
 ```javascript
-{ item_name: "标准差旅包", cost_per_month: 1.08 }
+{ item_name: "标准差旅包", cost_per_month: 10800 }
 ```
 
 ### 10.2 测试项目数据
@@ -953,4 +972,3 @@ graph TD
 
 **文档维护**: 随着功能迭代，请及时更新本文档  
 **联系方式**: [项目负责人联系方式]
-

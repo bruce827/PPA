@@ -1,4 +1,13 @@
 [{
+    "version": "V1.6.3",
+    "date": "2026-4-10",
+    "changes": [
+      { "type": "feat", "content": "待推送招标增加字段解析与重复数据整理能力" },
+      { "type": "opt", "content": "优化招标数据同步与源文件归档流程" },
+      { "type": "bugfix", "content": "修复招标信息同步、解析及提示词选择逻辑" }
+    ]
+  },
+  {
     "version": "V1.6.2-alpha",
     "date": "2026-4-08",
     "changes": [
