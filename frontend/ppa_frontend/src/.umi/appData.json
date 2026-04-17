@@ -38,7 +38,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "preset",
@@ -51,7 +51,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 11
+        "register": 12
       },
       "enableBy": "register",
       "type": "preset",
@@ -81,7 +81,7 @@
             0
           ]
         },
-        "register": 3
+        "register": 2
       },
       "enableBy": "register",
       "type": "plugin",
@@ -95,7 +95,7 @@
       "time": {
         "hooks": {
           "onStart": [
-            1
+            2
           ]
         },
         "register": 3
@@ -130,9 +130,9 @@
       "time": {
         "hooks": {
           "onDevCompileDone": [
-            190,
-            33,
-            32
+            194,
+            44,
+            33
           ]
         },
         "register": 1
@@ -149,14 +149,14 @@
       "time": {
         "hooks": {
           "modifyAppData": [
-            31
+            27
           ],
           "onGenerateFiles": [
             2,
-            10
+            19
           ]
         },
-        "register": 15
+        "register": 14
       },
       "enableBy": "register",
       "type": "plugin",
@@ -203,12 +203,12 @@
             0,
             0,
             0,
+            1,
             0,
             0,
             0,
             0,
-            0,
-            0,
+            1,
             0,
             0,
             0,
@@ -267,7 +267,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1136,7 +1136,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1150,10 +1150,10 @@
       "time": {
         "hooks": {
           "onStart": [
-            1
+            0
           ]
         },
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1167,7 +1167,7 @@
       "time": {
         "hooks": {
           "addBeforeMiddlewares": [
-            6
+            7
           ]
         },
         "register": 0
@@ -1183,7 +1183,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 54
+        "register": 50
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1196,7 +1196,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 28
+        "register": 26
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1209,7 +1209,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 16
+        "register": 14
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1231,15 +1231,10 @@
           "modifyHTMLFavicon": [
             0,
             0,
-            0,
-            0,
-            0,
-            0,
-            0,
             0
           ]
         },
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1261,7 +1256,7 @@
             0
           ]
         },
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1274,7 +1269,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 2
+        "register": 1
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1288,13 +1283,13 @@
       "time": {
         "hooks": {
           "onStart": [
-            0
+            1
           ],
           "addBeforeMiddlewares": [
             2
           ]
         },
-        "register": 25
+        "register": 21
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/preset-umi/dist/features/mock/mock.js",
@@ -1306,7 +1301,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1319,7 +1314,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/preset-umi/dist/features/okam/okam.js",
@@ -1332,7 +1327,7 @@
       "time": {
         "hooks": {
           "onGenerateFiles": [
-            1,
+            0,
             0
           ],
           "addEntryImports": [
@@ -1369,11 +1364,11 @@
       "time": {
         "hooks": {
           "modifyConfig": [
-            0
+            1
           ],
           "onGenerateFiles": [
-            58,
-            15
+            53,
+            32
           ],
           "addPolyfillImports": [
             0,
@@ -1415,7 +1410,7 @@
       "time": {
         "hooks": {
           "onGenerateFiles": [
-            109,
+            102,
             0
           ]
         },
@@ -1466,7 +1461,7 @@
             0
           ]
         },
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1482,11 +1477,11 @@
           "onGenerateFiles": [
             10,
             5,
-            10,
+            19,
             4
           ]
         },
-        "register": 2
+        "register": 3
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1524,7 +1519,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 2
+        "register": 1
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1538,8 +1533,8 @@
       "time": {
         "hooks": {
           "onGenerateFiles": [
-            269,
-            11
+            258,
+            37
           ]
         },
         "register": 2
@@ -1559,7 +1554,7 @@
             0
           ]
         },
-        "register": 2
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1572,7 +1567,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 2
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1598,7 +1593,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 4
+        "register": 3
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/preset-umi/dist/features/apiRoute/apiRoute.js",
@@ -1610,7 +1605,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 16
+        "register": 14
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1624,11 +1619,11 @@
       "time": {
         "hooks": {
           "onGenerateFiles": [
-            2,
-            0
+            1,
+            1
           ]
         },
-        "register": 0
+        "register": 1
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/preset-umi/dist/features/test/test.js",
@@ -1640,7 +1635,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1692,7 +1687,7 @@
       "time": {
         "hooks": {
           "addOnDemandDeps": [
-            1
+            0
           ]
         },
         "register": 0
@@ -1733,7 +1728,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/preset-umi/dist/features/utoopack/utoopack.js",
@@ -1745,7 +1740,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 2
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/preset-umi/dist/features/hmrGuardian/hmrGuardian.js",
@@ -1757,7 +1752,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 18
+        "register": 16
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/preset-umi/dist/features/routePreloadOnLoad/routePreloadOnLoad.js",
@@ -1783,7 +1778,7 @@
       "time": {
         "hooks": {
           "modifyUniBundler": [
-            337
+            333
           ]
         },
         "register": 1
@@ -1799,7 +1794,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 3
+        "register": 2
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1812,7 +1807,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 25
+        "register": 23
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1826,10 +1821,10 @@
       "time": {
         "hooks": {
           "modifyAppData": [
-            9
+            8
           ]
         },
-        "register": 28
+        "register": 29
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/preset-umi/dist/commands/dev/dev.js",
@@ -1906,7 +1901,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 2
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1919,7 +1914,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -2023,7 +2018,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -2036,7 +2031,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -2075,7 +2070,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 15
+        "register": 13
       },
       "enableBy": "register",
       "type": "plugin",
@@ -2101,7 +2096,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 2
       },
       "enableBy": "register",
       "type": "plugin",
@@ -2119,7 +2114,7 @@
             0
           ],
           "onGenerateFiles": [
-            0,
+            1,
             1
           ],
           "addTmpGenerateWatcherPaths": [
@@ -2141,7 +2136,7 @@
       },
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/plugins/dist/analytics.js",
@@ -2154,7 +2149,7 @@
       "time": {
         "hooks": {
           "modifyConfig": [
-            4
+            3
           ],
           "modifyAppData": [
             0
@@ -2196,7 +2191,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 4
+        "register": 3
       },
       "enableBy": "config",
       "type": "plugin",
@@ -2218,7 +2213,7 @@
             0
           ],
           "onGenerateFiles": [
-            1,
+            0,
             0
           ],
           "addExtraModels": [
@@ -2226,7 +2221,7 @@
             0
           ]
         },
-        "register": 0
+        "register": 1
       },
       "enableBy": "config",
       "type": "plugin",
@@ -2249,7 +2244,7 @@
             0
           ],
           "modifyAppData": [
-            0
+            1
           ],
           "addRuntimePlugin": [
             0,
@@ -2261,10 +2256,10 @@
           ],
           "onGenerateFiles": [
             6,
-            4
+            2
           ]
         },
-        "register": 3
+        "register": 2
       },
       "enableBy": "config",
       "type": "plugin",
@@ -2290,7 +2285,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 3
+        "register": 2
       },
       "enableBy": "config",
       "type": "plugin",
@@ -2308,8 +2303,8 @@
             0
           ],
           "onGenerateFiles": [
-            25,
-            20
+            24,
+            29
           ],
           "addTmpGenerateWatcherPaths": [
             0
@@ -2328,7 +2323,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "config",
       "type": "plugin",
@@ -2402,7 +2397,7 @@
           ],
           "onGenerateFiles": [
             3,
-            2
+            1
           ]
         },
         "register": 1
@@ -2431,7 +2426,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "config",
       "type": "plugin",
@@ -2444,7 +2439,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "config",
       "type": "plugin",
@@ -2461,7 +2456,7 @@
             0
           ]
         },
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -2495,7 +2490,7 @@
             0
           ]
         },
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -2508,7 +2503,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -3833,7 +3828,7 @@
       "parentId": "3",
       "id": "5",
       "absPath": "/assessment/history",
-      "__content": "import {\n  deleteProject,\n  getProjectList,\n  exportProjectToExcel,\n} from '@/services/projects';\nimport BusinessQuoteModal from '@/components/BusinessQuoteModal';\nimport PushModal from './components/PushModal';\nimport { PageContainer, ProTable } from '@ant-design/pro-components';\nimport { Link } from '@umijs/max';\nimport { Button, Dropdown, Popconfirm, Tag, Tooltip, App } from 'antd';\nimport { useRef, useState } from 'react';\n\nconst HistoryPage = () => {\n  const { message } = App.useApp();\n  const actionRef = useRef();\n  const [quoteModalOpen, setQuoteModalOpen] = useState(false);\n  const [pushModalOpen, setPushModalOpen] = useState(false);\n  const [pushProject, setPushProject] = useState<API.ProjectInfo | null>(null);\n  const [selectedProject, setSelectedProject] = useState<API.ProjectInfo | null>(\n    null,\n  );\n  const isTemplateValue = (value: any) => {\n    const normalized = String(value).toLowerCase();\n    return ['1', 'true', 'yes'].includes(normalized);\n  };\n  const hasBusinessQuote = (value: any) => {\n    const normalized = String(value).toLowerCase();\n    return ['1', 'true', 'yes'].includes(normalized);\n  };\n  const getBusinessQuoteTotal = (record: API.ProjectInfo) => {\n    if (!record?.business_quote_json) return undefined;\n    try {\n      const parsed = JSON.parse(record.business_quote_json);\n      const pricingMode =\n        parsed?.pricing_mode === 'enterprise_product'\n          ? 'enterprise_product'\n          : 'custom_development';\n      const total =\n        pricingMode === 'enterprise_product'\n          ? (() => {\n              const baseCostWan = Number(parsed?.base_cost_wan || 0);\n              const variableShareRate =\n                Number(parsed?.rates?.cogs_rate || 0) +\n                Number(parsed?.rates?.csm_rate || 0);\n              return variableShareRate > 0\n                ? baseCostWan / (variableShareRate / 100)\n                : undefined;\n            })()\n          : parsed?.amounts?.quote_total_wan;\n      return Number.isFinite(Number(total)) ? Number(total) : undefined;\n    } catch (_error) {\n      return undefined;\n    }\n  };\n  const columns = [\n    {\n      title: '项目名称',\n      dataIndex: 'name',\n      key: 'name',\n      render: (text, record) => (\n        <Link to={`/assessment/detail/${record.id}`}>{text}</Link>\n      ),\n      fieldProps: {\n        placeholder: '支持模糊搜索',\n      },\n    },\n    {\n      valueType: 'select',\n      valueEnum: {\n        1: { text: '是' },\n        0: { text: '否' },\n      },\n      title: '是否模板',\n      dataIndex: 'is_template_filter',\n      key: 'is_template_filter',\n      hideInTable: true,\n      search: {\n        transform: (value) => ({ is_template: value }),\n      },\n    },\n    {\n      valueType: 'select',\n      valueEnum: {\n        1: { text: '已生成' },\n        0: { text: '未生成' },\n      },\n      title: '商务报价状态',\n      dataIndex: 'has_business_quote_filter',\n      key: 'has_business_quote_filter',\n      hideInTable: true,\n      search: {\n        transform: (value) => ({ has_business_quote: value }),\n      },\n    },\n    {\n      title: '是否模板',\n      dataIndex: 'is_template',\n      key: 'is_template',\n      width: 100,\n      align: 'center',\n      hideInSearch: true,\n      render: (value) =>\n        isTemplateValue(value) ? (\n          <Tag color=\"blue\">当前模板</Tag>\n        ) : (\n          '-'\n        ),\n    },\n    {\n      title: '商务报价状态',\n      dataIndex: 'has_business_quote',\n      key: 'has_business_quote',\n      width: 120,\n      align: 'center',\n      hideInSearch: true,\n      render: (value) =>\n        hasBusinessQuote(value) ? (\n          <Tag color=\"green\">已生成</Tag>\n        ) : (\n          <Tag>未生成</Tag>\n        ),\n    },\n    {\n      title: '实施成本 (万元)',\n      dataIndex: 'final_total_cost',\n      key: 'final_total_cost',\n      width: 140,\n      valueType: 'money',\n      sorter: true,\n      align: 'right',\n      hideInSearch: true,\n    },\n    {\n      title: '实施成本 (万元)',\n      dataIndex: 'final_total_cost_range',\n      key: 'final_total_cost_range',\n      valueType: 'digitRange',\n      hideInTable: true,\n      search: {\n        transform: (value) => {\n          const [min, max] = Array.isArray(value) ? value : [];\n          const next: Record<string, any> = {};\n          if (typeof min !== 'undefined') next.final_total_cost_min = min;\n          if (typeof max !== 'undefined') next.final_total_cost_max = max;\n          return next;\n        },\n      },\n    },\n    {\n      title: '商务报价总计 (万元)',\n      dataIndex: 'business_quote_total',\n      key: 'business_quote_total',\n      width: 160,\n      align: 'right',\n      hideInSearch: true,\n      render: (_, record) => {\n        const total = getBusinessQuoteTotal(record);\n        return typeof total === 'number' ? total.toFixed(2) : '-';\n      },\n    },\n    {\n      title: '风险总分',\n      dataIndex: 'final_risk_score',\n      key: 'final_risk_score',\n      sorter: true,\n      align: 'right',\n      width: 140,\n    },\n    {\n      title: '创建时间',\n      dataIndex: 'created_at',\n      key: 'created_at',\n      valueType: 'dateTime',\n      sorter: true,\n      align: 'center',\n      width: 200,\n      hideInSearch: true,\n    },\n    {\n      title: '创建时间',\n      dataIndex: 'created_at_range',\n      key: 'created_at_range',\n      valueType: 'dateRange',\n      hideInTable: true,\n      fieldProps: {\n        format: 'YYYY-MM-DD',\n      },\n      search: {\n        transform: (value) => {\n          const [start, end] = Array.isArray(value) ? value : [];\n          const next: Record<string, any> = {};\n          if (typeof start !== 'undefined') next.created_at_start = start;\n          if (typeof end !== 'undefined') next.created_at_end = end;\n          return next;\n        },\n      },\n    },\n    {\n      title: '操作',\n      valueType: 'option',\n      key: 'option',\n      align: 'center',\n      width: 420,\n      render: (text, record, _, action) => [\n        <Link key=\"view\" to={`/assessment/detail/${record.id}`}>\n          查看\n        </Link>,\n        <Link key=\"reassess\" to={`/assessment/new?template_id=${record.id}`}>\n          重新评估\n        </Link>,\n        <Dropdown\n          key=\"export\"\n          menu={{\n            items: [\n              {\n                key: 'internal',\n                label: (\n                  <a\n                    href={exportProjectToExcel(record.id)}\n                    target=\"_blank\"\n                    rel=\"noreferrer\"\n                  >\n                    导出Excel（内部）\n                  </a>\n                ),\n              },\n              {\n                key: 'external',\n                label: (\n                  <a\n                    href={`${exportProjectToExcel(record.id)}?version=external`}\n                    target=\"_blank\"\n                    rel=\"noreferrer\"\n                  >\n                    导出Excel（对外）\n                  </a>\n                ),\n              },\n              {\n                key: 'business',\n                disabled: !hasBusinessQuote(record.has_business_quote),\n                label: (\n                  <a\n                    href={`${exportProjectToExcel(record.id)}?version=business`}\n                    target=\"_blank\"\n                    rel=\"noreferrer\"\n                    onClick={(event) => {\n                      if (!hasBusinessQuote(record.has_business_quote)) {\n                        event.preventDefault();\n                      }\n                    }}\n                  >\n                    导出Excel（商务）\n                  </a>\n                ),\n              },\n            ],\n          }}\n        >\n          <Button type=\"link\">导出</Button>\n        </Dropdown>,\n        <Button\n          key=\"business-quote\"\n          type=\"link\"\n          onClick={() => {\n            setSelectedProject(record);\n            setQuoteModalOpen(true);\n          }}\n        >\n          商务报价\n        </Button>,\n        <Button\n          key=\"push\"\n          type=\"link\"\n          disabled={isTemplateValue(record.is_template)}\n          onClick={() => {\n            setPushProject(record);\n            setPushModalOpen(true);\n          }}\n        >\n          推送\n        </Button>,\n        isTemplateValue(record.is_template) ? (\n          <Tooltip\n            key=\"delete-disabled\"\n            title=\"当前模板不可删除，请先在新评估中设置新的模板\"\n          >\n            <Button type=\"link\" disabled>\n              删除\n            </Button>\n          </Tooltip>\n        ) : (\n          <Popconfirm\n            key=\"delete\"\n            title=\"确认删除此项目？\"\n            onConfirm={async () => {\n              await deleteProject(record.id);\n              message.success('项目已删除');\n              actionRef.current?.reload();\n            }}\n          >\n            <a>删除</a>\n          </Popconfirm>\n        ),\n      ],\n    },\n  ];\n\n  return (\n    <PageContainer>\n      <ProTable\n        columns={columns}\n        actionRef={actionRef}\n        cardBordered\n        request={async (params, sorter) => {\n          const [sortBy, sortOrderRaw] =\n            Object.entries(sorter || {}).find(([, order]) => !!order) || [];\n          const sortOrder =\n            sortOrderRaw === 'ascend'\n              ? 'asc'\n              : sortOrderRaw === 'descend'\n                ? 'desc'\n                : undefined;\n\n          const queryParams = { ...params } as Record<string, any>;\n          delete queryParams.current;\n          delete queryParams.pageSize;\n\n          const res = await getProjectList({\n            params:\n              sortBy && sortOrder\n                ? {\n                    ...queryParams,\n                    sort_by: sortBy,\n                    sort_order: sortOrder,\n                  }\n                : queryParams,\n          });\n          return {\n            data: res.data,\n            success: true,\n          };\n        }}\n        rowKey=\"id\"\n        search={{\n          labelWidth: 'auto',\n        }}\n        pagination={{\n          pageSize: 10,\n        }}\n        dateFormatter=\"string\"\n        headerTitle=\"历史项目列表\"\n      />\n      <BusinessQuoteModal\n        open={quoteModalOpen}\n        projectId={selectedProject?.id}\n        projectName={selectedProject?.name}\n        onCancel={() => {\n          setQuoteModalOpen(false);\n          setSelectedProject(null);\n        }}\n        onSuccess={() => {\n          setQuoteModalOpen(false);\n          setSelectedProject(null);\n          actionRef.current?.reload();\n        }}\n      />\n      <PushModal\n        open={pushModalOpen}\n        projectId={pushProject?.id}\n        projectName={pushProject?.name}\n        projectRiskScore={pushProject?.final_risk_score}\n        projectQuoteTotal={(() => {\n          if (!pushProject?.business_quote_json) return undefined;\n          try {\n            const parsed = JSON.parse(pushProject.business_quote_json);\n            return parsed?.amounts?.quote_total_wan || parsed?.quote_total_wan;\n          } catch {\n            return undefined;\n          }\n        })()}\n        onCancel={() => {\n          setPushModalOpen(false);\n          setPushProject(null);\n        }}\n        onSuccess={() => {\n          setPushModalOpen(false);\n          setPushProject(null);\n          actionRef.current?.reload();\n        }}\n      />\n    </PageContainer>\n  );\n};\n\nexport default HistoryPage;\n",
+      "__content": "import {\n  deleteProject,\n  getProjectList,\n  exportProjectToExcel,\n} from '@/services/projects';\nimport BusinessQuoteModal from '@/components/BusinessQuoteModal';\nimport PushModal from './components/PushModal';\nimport { PageContainer, ProTable } from '@ant-design/pro-components';\nimport { Link } from '@umijs/max';\nimport { Button, Dropdown, Popconfirm, Tag, Tooltip, App } from 'antd';\nimport { useRef, useState } from 'react';\n\nconst HistoryPage = () => {\n  const { message } = App.useApp();\n  const actionRef = useRef();\n  const [quoteModalOpen, setQuoteModalOpen] = useState(false);\n  const [pushModalOpen, setPushModalOpen] = useState(false);\n  const [pushProject, setPushProject] = useState<API.ProjectInfo | null>(null);\n  const [selectedProject, setSelectedProject] = useState<API.ProjectInfo | null>(\n    null,\n  );\n  const isTemplateValue = (value: any) => {\n    const normalized = String(value).toLowerCase();\n    return ['1', 'true', 'yes'].includes(normalized);\n  };\n  const hasBusinessQuote = (value: any) => {\n    const normalized = String(value).toLowerCase();\n    return ['1', 'true', 'yes'].includes(normalized);\n  };\n  const getBusinessQuoteTotal = (record: API.ProjectInfo) => {\n    if (!record?.business_quote_json) return undefined;\n    try {\n      const parsed = JSON.parse(record.business_quote_json);\n      const pricingMode =\n        parsed?.pricing_mode === 'enterprise_product'\n          ? 'enterprise_product'\n          : 'custom_development';\n      const total =\n        pricingMode === 'enterprise_product'\n          ? (() => {\n              const baseCostWan = Number(parsed?.base_cost_wan || 0);\n              const variableShareRate =\n                Number(parsed?.rates?.cogs_rate || 0) +\n                Number(parsed?.rates?.csm_rate || 0);\n              return variableShareRate > 0\n                ? baseCostWan / (variableShareRate / 100)\n                : undefined;\n            })()\n          : parsed?.amounts?.quote_total_wan;\n      return Number.isFinite(Number(total)) ? Number(total) : undefined;\n    } catch (_error) {\n      return undefined;\n    }\n  };\n  const columns = [\n    {\n      title: '项目名称',\n      dataIndex: 'name',\n      key: 'name',\n      render: (text, record) => (\n        <Link to={`/assessment/detail/${record.id}`}>{text}</Link>\n      ),\n      fieldProps: {\n        placeholder: '支持模糊搜索',\n      },\n    },\n    {\n      valueType: 'select',\n      valueEnum: {\n        1: { text: '是' },\n        0: { text: '否' },\n      },\n      title: '是否模板',\n      dataIndex: 'is_template_filter',\n      key: 'is_template_filter',\n      hideInTable: true,\n      search: {\n        transform: (value) => ({ is_template: value }),\n      },\n    },\n    {\n      valueType: 'select',\n      valueEnum: {\n        1: { text: '已生成' },\n        0: { text: '未生成' },\n      },\n      title: '商务报价状态',\n      dataIndex: 'has_business_quote_filter',\n      key: 'has_business_quote_filter',\n      hideInTable: true,\n      search: {\n        transform: (value) => ({ has_business_quote: value }),\n      },\n    },\n    {\n      title: '是否模板',\n      dataIndex: 'is_template',\n      key: 'is_template',\n      width: 100,\n      align: 'center',\n      hideInSearch: true,\n      render: (value) =>\n        isTemplateValue(value) ? (\n          <Tag color=\"blue\">当前模板</Tag>\n        ) : (\n          '-'\n        ),\n    },\n    {\n      title: '商务报价状态',\n      dataIndex: 'has_business_quote',\n      key: 'has_business_quote',\n      width: 120,\n      align: 'center',\n      hideInSearch: true,\n      render: (value) =>\n        hasBusinessQuote(value) ? (\n          <Tag color=\"green\">已生成</Tag>\n        ) : (\n          <Tag>未生成</Tag>\n        ),\n    },\n    {\n      title: '实施成本 (万元)',\n      dataIndex: 'final_total_cost',\n      key: 'final_total_cost',\n      width: 140,\n      valueType: 'money',\n      sorter: true,\n      align: 'right',\n      hideInSearch: true,\n    },\n    {\n      title: '实施成本 (万元)',\n      dataIndex: 'final_total_cost_range',\n      key: 'final_total_cost_range',\n      valueType: 'digitRange',\n      hideInTable: true,\n      search: {\n        transform: (value) => {\n          const [min, max] = Array.isArray(value) ? value : [];\n          const next: Record<string, any> = {};\n          if (typeof min !== 'undefined') next.final_total_cost_min = min;\n          if (typeof max !== 'undefined') next.final_total_cost_max = max;\n          return next;\n        },\n      },\n    },\n    {\n      title: '商务报价总计 (万元)',\n      dataIndex: 'business_quote_total',\n      key: 'business_quote_total',\n      width: 160,\n      align: 'right',\n      hideInSearch: true,\n      render: (_, record) => {\n        const total = getBusinessQuoteTotal(record);\n        return typeof total === 'number' ? total.toFixed(2) : '-';\n      },\n    },\n    {\n      title: '风险总分',\n      dataIndex: 'final_risk_score',\n      key: 'final_risk_score',\n      sorter: true,\n      align: 'right',\n      width: 140,\n    },\n    {\n      title: '创建时间',\n      dataIndex: 'created_at',\n      key: 'created_at',\n      valueType: 'dateTime',\n      sorter: true,\n      align: 'center',\n      width: 200,\n      hideInSearch: true,\n    },\n    {\n      title: '创建时间',\n      dataIndex: 'created_at_range',\n      key: 'created_at_range',\n      valueType: 'dateRange',\n      hideInTable: true,\n      fieldProps: {\n        format: 'YYYY-MM-DD',\n      },\n      search: {\n        transform: (value) => {\n          const [start, end] = Array.isArray(value) ? value : [];\n          const next: Record<string, any> = {};\n          if (typeof start !== 'undefined') next.created_at_start = start;\n          if (typeof end !== 'undefined') next.created_at_end = end;\n          return next;\n        },\n      },\n    },\n    {\n      title: '操作',\n      valueType: 'option',\n      key: 'option',\n      align: 'center',\n      width: 420,\n      render: (text, record, _, action) => [\n        <Link key=\"view\" to={`/assessment/detail/${record.id}`}>\n          查看\n        </Link>,\n        <Link key=\"reassess\" to={`/assessment/new?template_id=${record.id}`}>\n          重新评估\n        </Link>,\n        <Dropdown\n          key=\"export\"\n          menu={{\n            items: [\n              {\n                key: 'internal',\n                label: (\n                  <a\n                    href={exportProjectToExcel(record.id)}\n                    target=\"_blank\"\n                    rel=\"noreferrer\"\n                  >\n                    导出Excel（内部）\n                  </a>\n                ),\n              },\n              {\n                key: 'external',\n                label: (\n                  <a\n                    href={`${exportProjectToExcel(record.id)}?version=external`}\n                    target=\"_blank\"\n                    rel=\"noreferrer\"\n                  >\n                    导出Excel（对外）\n                  </a>\n                ),\n              },\n              {\n                key: 'business',\n                disabled: !hasBusinessQuote(record.has_business_quote),\n                label: (\n                  <a\n                    href={`${exportProjectToExcel(record.id)}?version=business`}\n                    target=\"_blank\"\n                    rel=\"noreferrer\"\n                    onClick={(event) => {\n                      if (!hasBusinessQuote(record.has_business_quote)) {\n                        event.preventDefault();\n                      }\n                    }}\n                  >\n                    导出Excel（商务）\n                  </a>\n                ),\n              },\n            ],\n          }}\n        >\n          <Button type=\"link\">导出</Button>\n        </Dropdown>,\n        <Button\n          key=\"business-quote\"\n          type=\"link\"\n          onClick={() => {\n            setSelectedProject(record);\n            setQuoteModalOpen(true);\n          }}\n        >\n          商务报价\n        </Button>,\n        <Button\n          key=\"push\"\n          type=\"link\"\n          disabled={isTemplateValue(record.is_template)}\n          onClick={() => {\n            setPushProject(record);\n            setPushModalOpen(true);\n          }}\n        >\n          推送\n        </Button>,\n        isTemplateValue(record.is_template) ? (\n          <Tooltip\n            key=\"delete-disabled\"\n            title=\"当前模板不可删除，请先在新评估中设置新的模板\"\n          >\n            <Button type=\"link\" disabled>\n              删除\n            </Button>\n          </Tooltip>\n        ) : (\n          <Popconfirm\n            key=\"delete\"\n            title=\"确认删除此项目？\"\n            onConfirm={async () => {\n              await deleteProject(record.id);\n              message.success('项目已删除');\n              actionRef.current?.reload();\n            }}\n          >\n            <a>删除</a>\n          </Popconfirm>\n        ),\n      ],\n    },\n  ];\n\n  return (\n    <PageContainer>\n      <ProTable\n        columns={columns}\n        actionRef={actionRef}\n        cardBordered\n        request={async (params, sorter) => {\n          const [sortBy, sortOrderRaw] =\n            Object.entries(sorter || {}).find(([, order]) => !!order) || [];\n          const sortOrder =\n            sortOrderRaw === 'ascend'\n              ? 'asc'\n              : sortOrderRaw === 'descend'\n                ? 'desc'\n                : undefined;\n\n          const queryParams = { ...params } as Record<string, any>;\n          delete queryParams.current;\n          delete queryParams.pageSize;\n\n          const res = await getProjectList({\n            params:\n              sortBy && sortOrder\n                ? {\n                    ...queryParams,\n                    sort_by: sortBy,\n                    sort_order: sortOrder,\n                  }\n                : queryParams,\n          });\n          return {\n            data: res.data,\n            success: true,\n          };\n        }}\n        rowKey=\"id\"\n        search={{\n          labelWidth: 'auto',\n        }}\n        pagination={{\n          defaultPageSize: 10,\n          showSizeChanger: true,\n          pageSizeOptions: [10, 20, 50, 100],\n        }}\n        dateFormatter=\"string\"\n        headerTitle=\"历史项目列表\"\n      />\n      <BusinessQuoteModal\n        open={quoteModalOpen}\n        projectId={selectedProject?.id}\n        projectName={selectedProject?.name}\n        onCancel={() => {\n          setQuoteModalOpen(false);\n          setSelectedProject(null);\n        }}\n        onSuccess={() => {\n          setQuoteModalOpen(false);\n          setSelectedProject(null);\n          actionRef.current?.reload();\n        }}\n      />\n      <PushModal\n        open={pushModalOpen}\n        projectId={pushProject?.id}\n        projectName={pushProject?.name}\n        projectRiskScore={pushProject?.final_risk_score}\n        projectQuoteTotal={(() => {\n          if (!pushProject?.business_quote_json) return undefined;\n          try {\n            const parsed = JSON.parse(pushProject.business_quote_json);\n            return parsed?.amounts?.quote_total_wan || parsed?.quote_total_wan;\n          } catch {\n            return undefined;\n          }\n        })()}\n        onCancel={() => {\n          setPushModalOpen(false);\n          setPushProject(null);\n        }}\n        onSuccess={() => {\n          setPushModalOpen(false);\n          setPushProject(null);\n          actionRef.current?.reload();\n        }}\n      />\n    </PageContainer>\n  );\n};\n\nexport default HistoryPage;\n",
       "__isJSFile": true,
       "__absFile": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/src/pages/Assessment/History.tsx"
     },
@@ -4006,7 +4001,7 @@
       "parentId": "19",
       "id": "21",
       "absPath": "/opportunity/tender-push",
-      "__content": "import {\n  archiveTenderSourceFiles,\n  executeTenderDedupe,\n  listTenderStaging,\n  previewTenderDedupe,\n  pushTenderStaging,\n  syncTenderStaging,\n} from '@/services/opportunity';\nimport TenderFieldParseModal from '@/pages/Opportunity/components/TenderFieldParseModal';\nimport TenderWebSearchModal from '@/pages/Opportunity/components/TenderWebSearchModal';\nimport { PageContainer, ProTable } from '@ant-design/pro-components';\nimport { Link } from '@umijs/max';\nimport { Button, Card, Col, message, Modal, Row, Space, Statistic, Tag } from 'antd';\nimport type { ActionType, ProColumns } from '@ant-design/pro-components';\nimport React, { useRef, useState } from 'react';\n\nconst pushStatusMap: Record<\n  API_OPPORTUNITY.TenderPushStatus,\n  { text: string; color: string }\n> = {\n  pending: { text: '待推送', color: 'processing' },\n  pushed: { text: '已推送', color: 'success' },\n  failed: { text: '推送失败', color: 'error' },\n};\n\nconst defaultStats: API_OPPORTUNITY.TenderStagingStats = {\n  total: 0,\n  pending: 0,\n  pushed: 0,\n  failed: 0,\n};\n\nconst defaultWebSearchDraft: API_OPPORTUNITY.TenderWebSearchDraft = {\n  focus_keywords: '',\n  exclude_keywords: '',\n  max_results: 5,\n};\n\nconst dedupeReasonTextMap: Record<string, string> = {\n  same_code: '编号一致',\n  same_url: '链接一致',\n  same_title: '标题一致',\n  same_text_prefix: '正文前缀一致',\n  same_meta: '关键字段一致',\n};\n\nconst dedupeSkipReasonTextMap: Record<string, string> = {\n  multiple_traced_records: '组内存在多条有操作痕迹的数据，已跳过',\n  candidate_only: '仅命中候选条件，未达到自动硬删标准',\n};\n\nconst extractParseableText = (record: API_OPPORTUNITY.TenderStagingRecord) => {\n  const plainText = String(record.announcement_plain_text || '').trim();\n  if (plainText) {\n    return plainText;\n  }\n\n  return String(record.announcement_html || '')\n    .replace(/<style[\\s\\S]*?<\\/style>/gi, ' ')\n    .replace(/<script[\\s\\S]*?<\\/script>/gi, ' ')\n    .replace(/<[^>]+>/g, ' ')\n    .replace(/&nbsp;/gi, ' ')\n    .replace(/\\s+/g, ' ')\n    .trim();\n};\n\nconst hasParseableContent = (record: API_OPPORTUNITY.TenderStagingRecord) =>\n  Boolean(extractParseableText(record));\n\nconst TenderPushPage: React.FC = () => {\n  const actionRef = useRef<ActionType>();\n  const [stats, setStats] = useState<API_OPPORTUNITY.TenderStagingStats>(defaultStats);\n  const [syncLoading, setSyncLoading] = useState(false);\n  const [archiveLoading, setArchiveLoading] = useState(false);\n  const [dedupeLoading, setDedupeLoading] = useState(false);\n  const [dedupeExecuting, setDedupeExecuting] = useState(false);\n  const [pushingId, setPushingId] = useState<number | null>(null);\n  const [dedupePreview, setDedupePreview] =\n    useState<API_OPPORTUNITY.TenderDedupePreviewResult | null>(null);\n  const [dedupeModalOpen, setDedupeModalOpen] = useState(false);\n  const [errorDetailRecord, setErrorDetailRecord] =\n    useState<API_OPPORTUNITY.TenderStagingRecord | null>(null);\n  const [parseRecord, setParseRecord] =\n    useState<API_OPPORTUNITY.TenderStagingRecord | null>(null);\n  const [webSearchRecord, setWebSearchRecord] =\n    useState<API_OPPORTUNITY.TenderStagingRecord | null>(null);\n  const [webSearchDraft, setWebSearchDraft] = useState<API_OPPORTUNITY.TenderWebSearchDraft>(\n    defaultWebSearchDraft,\n  );\n\n  const handleSync = async () => {\n    try {\n      setSyncLoading(true);\n      const response = await syncTenderStaging();\n      const summary = response?.data;\n      const errorCount = summary?.errors?.length || 0;\n      message.success(\n        `同步完成：文件 ${summary?.fileCount || 0} 个，当前目录有效 ${\n          summary?.deduplicatedCount || 0\n        } 条，新增 ${summary?.created || 0}，更新 ${summary?.updated || 0}，清理 ${\n          summary?.pruned || 0\n        }，保留 ${summary?.preservedWithTrace || 0}`\n      );\n      if (errorCount > 0) {\n        message.warning(`同步过程中有 ${errorCount} 条告警，请查看服务端返回`);\n      }\n      actionRef.current?.reload();\n    } catch (error: any) {\n      message.error(error?.message || '同步本地数据失败');\n    } finally {\n      setSyncLoading(false);\n    }\n  };\n\n  const handleArchiveSourceFiles = async () => {\n    try {\n      setArchiveLoading(true);\n      const response = await archiveTenderSourceFiles();\n      const summary = response?.data;\n\n      if (!summary?.fileCount) {\n        message.info('当前没有可归档的 JSON 文件');\n        return;\n      }\n\n      message.success(\n        `已归档 ${summary.fileCount} 个文件到 ${summary.archiveDirectoryPath || '备份目录'}`\n      );\n    } catch (error: any) {\n      message.error(error?.message || '归档源文件失败');\n    } finally {\n      setArchiveLoading(false);\n    }\n  };\n\n  const handlePreviewDedupe = async () => {\n    try {\n      setDedupeLoading(true);\n      const response = await previewTenderDedupe();\n      const result = response?.data;\n\n      if (!result?.groups_total) {\n        message.info('未发现可整理的重复数据');\n        return;\n      }\n\n      setDedupePreview(result);\n      setDedupeModalOpen(true);\n    } catch (error: any) {\n      message.error(error?.message || '扫描重复数据失败');\n    } finally {\n      setDedupeLoading(false);\n    }\n  };\n\n  const handleExecuteDedupe = async () => {\n    const groupKeys =\n      dedupePreview?.groups\n        ?.filter((group) => group.action === 'auto_delete')\n        .map((group) => group.group_key) || [];\n\n    if (groupKeys.length === 0) {\n      message.info('当前没有可自动整理的数据');\n      return;\n    }\n\n    try {\n      setDedupeExecuting(true);\n      const response = await executeTenderDedupe({\n        group_keys: groupKeys,\n      });\n      const result = response?.data;\n      message.success(\n        `整理完成：删除重复记录 ${result?.deleted_staging_count || 0} 条，清理检索结果 ${\n          result?.deleted_web_search_count || 0\n        } 条`\n      );\n      setDedupeModalOpen(false);\n      setDedupePreview(null);\n      actionRef.current?.reload();\n    } catch (error: any) {\n      message.error(error?.message || '整理数据失败');\n    } finally {\n      setDedupeExecuting(false);\n    }\n  };\n\n  const handlePush = async (record: API_OPPORTUNITY.TenderStagingRecord) => {\n    try {\n      setPushingId(record.id);\n      const response = await pushTenderStaging(record.id);\n      const result = response?.data;\n      if (result?.error) {\n        message.error(result.error);\n      } else {\n        message.success('推送成功，小程序端现在可以查看这条数据');\n      }\n      actionRef.current?.reload();\n    } catch (error: any) {\n      message.error(error?.message || '推送失败');\n    } finally {\n      setPushingId(null);\n    }\n  };\n\n  const handleParse = async (record: API_OPPORTUNITY.TenderStagingRecord) => {\n    if (!hasParseableContent(record)) {\n      message.info('当前记录无正文，不可解析');\n      return;\n    }\n\n    if (record.issuer && record.deadline_date) {\n      message.info('字段已完整，无需解析');\n      return;\n    }\n    setParseRecord(record);\n  };\n\n  const showErrorDetail = (record: API_OPPORTUNITY.TenderStagingRecord) => {\n    setErrorDetailRecord(record);\n  };\n\n  const autoDeleteGroupKeys =\n    dedupePreview?.groups\n      ?.filter((group) => group.action === 'auto_delete')\n      .map((group) => group.group_key) || [];\n\n  const columns: ProColumns<API_OPPORTUNITY.TenderStagingRecord>[] = [\n    {\n      title: '项目名称',\n      dataIndex: 'title',\n      ellipsis: true,\n      width: 260,\n    },\n    {\n      title: '发布日期',\n      dataIndex: 'published_date',\n      width: 120,\n      search: false,\n      renderText: (value) => value || '-',\n    },\n    {\n      title: '截止日期',\n      dataIndex: 'deadline_date',\n      width: 120,\n      search: false,\n      renderText: (value) => value || '-',\n    },\n    {\n      title: '招标单位',\n      dataIndex: 'issuer',\n      ellipsis: true,\n      width: 220,\n      renderText: (value) => value || '-',\n    },\n    {\n      title: '来源文件',\n      dataIndex: 'source_file',\n      width: 180,\n      ellipsis: true,\n    },\n    {\n      title: '推送状态',\n      dataIndex: 'push_status',\n      valueType: 'select',\n      width: 120,\n      align: 'center',\n      valueEnum: {\n        pending: { text: '待推送' },\n        pushed: { text: '已推送' },\n        failed: { text: '推送失败' },\n      },\n      render: (_, record) => {\n        const status = pushStatusMap[record.push_status];\n        return <Tag color={status.color}>{status.text}</Tag>;\n      },\n    },\n    {\n      title: '操作',\n      valueType: 'option',\n      width: 320,\n      render: (_, record) => {\n        const buttonLabel =\n          record.push_status === 'failed'\n            ? '重试'\n            : record.push_status === 'pushed'\n              ? '重新推送'\n              : '推送';\n        const parseDisabled = !hasParseableContent(record);\n\n        return [\n          <Link key=\"assess\" to=\"/assessment/new\">\n            评估\n          </Link>,\n          <Button\n            key=\"parse\"\n            type=\"link\"\n            disabled={parseDisabled}\n            onClick={() => handleParse(record)}\n          >\n            解析\n          </Button>,\n          <Button\n            key=\"web-search\"\n            type=\"link\"\n            onClick={() => setWebSearchRecord(record)}\n          >\n            全网检索\n          </Button>,\n          record.source_url ? (\n            <a\n              key=\"source\"\n              href={record.source_url}\n              target=\"_blank\"\n              rel=\"noreferrer\"\n            >\n              原文\n            </a>\n          ) : null,\n          record.push_error ? (\n            <Button key=\"error\" type=\"link\" onClick={() => showErrorDetail(record)}>\n              错误信息\n            </Button>\n          ) : null,\n          <Button\n            key=\"push\"\n            type=\"link\"\n            loading={pushingId === record.id}\n            onClick={() => handlePush(record)}\n          >\n            {buttonLabel}\n          </Button>,\n        ];\n      },\n    },\n  ];\n\n  return (\n    <PageContainer\n      header={{\n        title: '待推送招标',\n        subTitle: '以 spider/data 为当前真源全量同步到 staging，再单条推送到小程序',\n      }}\n    >\n      <Card\n        size=\"small\"\n        style={{ marginBottom: 16 }}\n        bodyStyle={{ padding: '10px 16px' }}\n      >\n        <Row gutter={[24, 8]}>\n          <Col xs={12} sm={12} md={6}>\n            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>\n              <span style={{ color: 'rgba(0, 0, 0, 0.65)' }}>总数</span>\n              <span style={{ fontSize: 20, fontWeight: 600 }}>{stats.total}</span>\n            </div>\n          </Col>\n          <Col xs={12} sm={12} md={6}>\n            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>\n              <span style={{ color: 'rgba(0, 0, 0, 0.65)' }}>待推送</span>\n              <span style={{ fontSize: 20, fontWeight: 600 }}>{stats.pending}</span>\n            </div>\n          </Col>\n          <Col xs={12} sm={12} md={6}>\n            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>\n              <span style={{ color: 'rgba(0, 0, 0, 0.65)' }}>已推送</span>\n              <span style={{ fontSize: 20, fontWeight: 600 }}>{stats.pushed}</span>\n            </div>\n          </Col>\n          <Col xs={12} sm={12} md={6}>\n            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>\n              <span style={{ color: 'rgba(0, 0, 0, 0.65)' }}>失败</span>\n              <span style={{ fontSize: 20, fontWeight: 600 }}>{stats.failed}</span>\n            </div>\n          </Col>\n        </Row>\n      </Card>\n\n      <ProTable<API_OPPORTUNITY.TenderStagingRecord>\n        actionRef={actionRef}\n        rowKey=\"id\"\n        columns={columns}\n        search={{\n          labelWidth: 100,\n        }}\n        toolBarRender={() => [\n          <Space key=\"actions\">\n            <Button type=\"primary\" loading={syncLoading} onClick={handleSync}>\n              同步本地数据\n            </Button>\n            <Button\n              loading={archiveLoading}\n              onClick={handleArchiveSourceFiles}\n            >\n              归档源文件\n            </Button>\n            <Button loading={dedupeLoading} onClick={handlePreviewDedupe}>\n              整理数据\n            </Button>\n          </Space>,\n        ]}\n        request={async (params) => {\n          const response = await listTenderStaging(params);\n          const result = response?.data;\n          setStats(result?.stats || defaultStats);\n          return {\n            data: result?.items || [],\n            success: response?.success,\n            total: result?.total || 0,\n          };\n        }}\n        pagination={{\n          defaultPageSize: 20,\n          showSizeChanger: true,\n          pageSizeOptions: [10, 20, 50, 100],\n        }}\n      />\n\n      <Modal\n        title=\"整理数据\"\n        open={dedupeModalOpen}\n        onCancel={() => {\n          setDedupeModalOpen(false);\n          setDedupePreview(null);\n        }}\n        onOk={handleExecuteDedupe}\n        okText={`确认硬删除 ${dedupePreview?.delete_candidate_count || 0} 条`}\n        okButtonProps={{\n          danger: true,\n          disabled: autoDeleteGroupKeys.length === 0,\n        }}\n        confirmLoading={dedupeExecuting}\n        cancelText=\"关闭\"\n        width={920}\n      >\n        <Space wrap size={[8, 8]} style={{ marginBottom: 16 }}>\n          <Tag color=\"processing\">扫描 {dedupePreview?.scanned_record_count || 0} 条</Tag>\n          <Tag color=\"error\">\n            可自动清理 {dedupePreview?.auto_deletable_groups || 0} 组\n          </Tag>\n          <Tag color=\"warning\">\n            可删除 {dedupePreview?.delete_candidate_count || 0} 条\n          </Tag>\n          <Tag>\n            疑似重复 {dedupePreview?.review_only_groups || 0} 组\n          </Tag>\n        </Space>\n\n        <div style={{ marginBottom: 16, color: 'rgba(0, 0, 0, 0.65)' }}>\n          只会自动删除高置信重复数据。仅命中标题或链接候选、但未达到强匹配条件的数据，会保留并标记为“已跳过”。\n        </div>\n\n        <div style={{ maxHeight: 520, overflowY: 'auto' }}>\n          {(dedupePreview?.groups || []).map((group) => (\n            <Card\n              key={group.group_key}\n              size=\"small\"\n              style={{ marginBottom: 12 }}\n              bodyStyle={{ padding: 12 }}\n            >\n              <Space wrap size={[8, 8]} style={{ marginBottom: 8 }}>\n                <Tag color={group.action === 'auto_delete' ? 'error' : 'default'}>\n                  {group.action === 'auto_delete' ? '可自动删除' : '已跳过'}\n                </Tag>\n                {group.reason_keys.map((reasonKey) => (\n                  <Tag key={reasonKey}>{dedupeReasonTextMap[reasonKey] || reasonKey}</Tag>\n                ))}\n              </Space>\n\n              <div style={{ marginBottom: 8 }}>\n                保留记录：#{group.keeper_id}，{group.keeper_reason}\n              </div>\n\n              {group.skipped_reason ? (\n                <div style={{ marginBottom: 8, color: '#a61d24' }}>\n                  {dedupeSkipReasonTextMap[group.skipped_reason] || group.skipped_reason}\n                </div>\n              ) : (\n                <div style={{ marginBottom: 8, color: '#a61d24' }}>\n                  将硬删除 {group.delete_ids.length} 条重复记录\n                </div>\n              )}\n\n              <div>\n                {group.records.map((record) => (\n                  <div\n                    key={record.id}\n                    style={{\n                      padding: '8px 0',\n                      borderTop: '1px solid #f0f0f0',\n                    }}\n                  >\n                    <Space wrap size={[8, 8]}>\n                      <Tag color={record.is_keeper ? 'success' : 'default'}>\n                        #{record.id}\n                      </Tag>\n                      {record.is_keeper ? <Tag color=\"success\">保留</Tag> : null}\n                      {record.has_push_trace ? <Tag color=\"blue\">推送痕迹</Tag> : null}\n                      {record.has_web_search_trace ? <Tag color=\"purple\">检索痕迹</Tag> : null}\n                      {record.has_parse_trace ? <Tag color=\"gold\">解析痕迹</Tag> : null}\n                    </Space>\n                    <div style={{ marginTop: 6 }}>{record.title}</div>\n                    <div style={{ marginTop: 4, color: 'rgba(0, 0, 0, 0.65)' }}>\n                      {[\n                        record.extracted_code ? `编号：${record.extracted_code}` : null,\n                        record.published_date ? `发布日期：${record.published_date}` : null,\n                        record.deadline_date ? `截止：${record.deadline_date}` : null,\n                        record.issuer ? `招标单位：${record.issuer}` : null,\n                        `正文长度：${record.text_length}`,\n                      ]\n                        .filter(Boolean)\n                        .join(' ｜ ')}\n                    </div>\n                    {record.source_url ? (\n                      <div\n                        style={{\n                          marginTop: 4,\n                          color: 'rgba(0, 0, 0, 0.45)',\n                          wordBreak: 'break-all',\n                        }}\n                      >\n                        {record.source_url}\n                      </div>\n                    ) : null}\n                  </div>\n                ))}\n              </div>\n            </Card>\n          ))}\n        </div>\n      </Modal>\n\n      <Modal\n        title={errorDetailRecord ? `错误信息 - ${errorDetailRecord.title}` : '错误信息'}\n        open={Boolean(errorDetailRecord)}\n        onCancel={() => setErrorDetailRecord(null)}\n        footer={null}\n        width={720}\n      >\n        <div\n          style={{\n            whiteSpace: 'pre-wrap',\n            wordBreak: 'break-word',\n            lineHeight: 1.7,\n          }}\n        >\n          {errorDetailRecord?.push_error || '暂无错误信息'}\n        </div>\n      </Modal>\n\n      <TenderWebSearchModal\n        open={Boolean(webSearchRecord)}\n        record={webSearchRecord}\n        draft={webSearchDraft}\n        onDraftChange={setWebSearchDraft}\n        onCancel={() => setWebSearchRecord(null)}\n      />\n\n      <TenderFieldParseModal\n        open={Boolean(parseRecord)}\n        record={parseRecord}\n        onCancel={() => setParseRecord(null)}\n        onSuccess={(result) => {\n          const updatedFields = result?.updated_fields || [];\n          const warnings = result?.warnings || [];\n\n          if (updatedFields.length > 0) {\n            const labels = updatedFields.map((field) =>\n              field === 'issuer' ? '招标单位' : field === 'deadline_date' ? '截止日期' : field,\n            );\n            message.success(`已补充：${labels.join('、')}`);\n          } else {\n            message.info(warnings[0] || '未识别到可补充字段');\n          }\n\n          setParseRecord(null);\n          actionRef.current?.reload();\n        }}\n      />\n    </PageContainer>\n  );\n};\n\nexport default TenderPushPage;\n",
+      "__content": "import {\n  archiveTenderSourceFiles,\n  executeTenderDedupe,\n  listTenderStaging,\n  previewTenderDedupe,\n  pushTenderStaging,\n  syncTenderStaging,\n} from '@/services/opportunity';\nimport TenderFieldParseModal from '@/pages/Opportunity/components/TenderFieldParseModal';\nimport TenderWebSearchModal from '@/pages/Opportunity/components/TenderWebSearchModal';\nimport { PageContainer, ProTable } from '@ant-design/pro-components';\nimport { Link } from '@umijs/max';\nimport { Button, Card, Col, message, Modal, Row, Space, Tag } from 'antd';\nimport type { ActionType, ProColumns } from '@ant-design/pro-components';\nimport React, { useRef, useState } from 'react';\n\nconst pushStatusMap: Record<\n  API_OPPORTUNITY.TenderPushStatus,\n  { text: string; color: string }\n> = {\n  pending: { text: '待推送', color: 'processing' },\n  pushed: { text: '已推送', color: 'success' },\n  failed: { text: '推送失败', color: 'error' },\n};\n\nconst defaultStats: API_OPPORTUNITY.TenderStagingStats = {\n  total: 0,\n  pending: 0,\n  pushed: 0,\n  failed: 0,\n};\n\nconst defaultWebSearchDraft: API_OPPORTUNITY.TenderWebSearchDraft = {\n  focus_keywords: '',\n  exclude_keywords: '',\n  max_results: 5,\n};\n\nconst dedupeReasonTextMap: Record<string, string> = {\n  same_code: '编号一致',\n  same_url: '链接一致',\n  same_title: '标题一致',\n  same_text_prefix: '正文前缀一致',\n  same_meta: '关键字段一致',\n};\n\nconst dedupeSkipReasonTextMap: Record<string, string> = {\n  multiple_traced_records: '组内存在多条有操作痕迹的数据，已跳过',\n  candidate_only: '仅命中候选条件，未达到自动硬删标准',\n};\n\nconst extractParseableText = (record: API_OPPORTUNITY.TenderStagingRecord) => {\n  const plainText = String(record.announcement_plain_text || '').trim();\n  if (plainText) {\n    return plainText;\n  }\n\n  return String(record.announcement_html || '')\n    .replace(/<style[\\s\\S]*?<\\/style>/gi, ' ')\n    .replace(/<script[\\s\\S]*?<\\/script>/gi, ' ')\n    .replace(/<[^>]+>/g, ' ')\n    .replace(/&nbsp;/gi, ' ')\n    .replace(/\\s+/g, ' ')\n    .trim();\n};\n\nconst hasParseableContent = (record: API_OPPORTUNITY.TenderStagingRecord) =>\n  Boolean(extractParseableText(record));\n\nconst TenderPushPage: React.FC = () => {\n  const actionRef = useRef<ActionType>();\n  const [stats, setStats] = useState<API_OPPORTUNITY.TenderStagingStats>(defaultStats);\n  const [syncLoading, setSyncLoading] = useState(false);\n  const [archiveLoading, setArchiveLoading] = useState(false);\n  const [dedupeLoading, setDedupeLoading] = useState(false);\n  const [dedupeExecuting, setDedupeExecuting] = useState(false);\n  const [pushingId, setPushingId] = useState<number | null>(null);\n  const [dedupePreview, setDedupePreview] =\n    useState<API_OPPORTUNITY.TenderDedupePreviewResult | null>(null);\n  const [dedupeModalOpen, setDedupeModalOpen] = useState(false);\n  const [errorDetailRecord, setErrorDetailRecord] =\n    useState<API_OPPORTUNITY.TenderStagingRecord | null>(null);\n  const [parseRecord, setParseRecord] =\n    useState<API_OPPORTUNITY.TenderStagingRecord | null>(null);\n  const [webSearchRecord, setWebSearchRecord] =\n    useState<API_OPPORTUNITY.TenderStagingRecord | null>(null);\n  const [webSearchDraft, setWebSearchDraft] = useState<API_OPPORTUNITY.TenderWebSearchDraft>(\n    defaultWebSearchDraft,\n  );\n\n  const handleSync = async () => {\n    try {\n      setSyncLoading(true);\n      const response = await syncTenderStaging();\n      const summary = response?.data;\n      const errorCount = summary?.errors?.length || 0;\n      message.success(\n        `同步完成：文件 ${summary?.fileCount || 0} 个，当前目录有效 ${\n          summary?.deduplicatedCount || 0\n        } 条，新增 ${summary?.created || 0}，更新 ${summary?.updated || 0}，清理 ${\n          summary?.pruned || 0\n        }，保留 ${summary?.preservedWithTrace || 0}`\n      );\n      if (errorCount > 0) {\n        message.warning(`同步过程中有 ${errorCount} 条告警，请查看服务端返回`);\n      }\n      actionRef.current?.reload();\n    } catch (error: any) {\n      message.error(error?.message || '同步本地数据失败');\n    } finally {\n      setSyncLoading(false);\n    }\n  };\n\n  const handleArchiveSourceFiles = async () => {\n    try {\n      setArchiveLoading(true);\n      const response = await archiveTenderSourceFiles();\n      const summary = response?.data;\n\n      if (!summary?.fileCount) {\n        message.info('当前没有可归档的 JSON 文件');\n        return;\n      }\n\n      message.success(\n        `已归档 ${summary.fileCount} 个文件到 ${summary.archiveDirectoryPath || '备份目录'}`\n      );\n    } catch (error: any) {\n      message.error(error?.message || '归档源文件失败');\n    } finally {\n      setArchiveLoading(false);\n    }\n  };\n\n  const handlePreviewDedupe = async () => {\n    try {\n      setDedupeLoading(true);\n      const response = await previewTenderDedupe();\n      const result = response?.data;\n\n      if (!result?.groups_total) {\n        message.info('未发现可整理的重复数据');\n        return;\n      }\n\n      setDedupePreview(result);\n      setDedupeModalOpen(true);\n    } catch (error: any) {\n      message.error(error?.message || '扫描重复数据失败');\n    } finally {\n      setDedupeLoading(false);\n    }\n  };\n\n  const handleExecuteDedupe = async () => {\n    const groupKeys =\n      dedupePreview?.groups\n        ?.filter((group) => group.action === 'auto_delete')\n        .map((group) => group.group_key) || [];\n\n    if (groupKeys.length === 0) {\n      message.info('当前没有可自动整理的数据');\n      return;\n    }\n\n    try {\n      setDedupeExecuting(true);\n      const response = await executeTenderDedupe({\n        group_keys: groupKeys,\n      });\n      const result = response?.data;\n      message.success(\n        `整理完成：删除重复记录 ${result?.deleted_staging_count || 0} 条，清理检索结果 ${\n          result?.deleted_web_search_count || 0\n        } 条`\n      );\n      setDedupeModalOpen(false);\n      setDedupePreview(null);\n      actionRef.current?.reload();\n    } catch (error: any) {\n      message.error(error?.message || '整理数据失败');\n    } finally {\n      setDedupeExecuting(false);\n    }\n  };\n\n  const handlePush = async (record: API_OPPORTUNITY.TenderStagingRecord) => {\n    try {\n      setPushingId(record.id);\n      const response = await pushTenderStaging(record.id);\n      const result = response?.data;\n      if (result?.error) {\n        message.error(result.error);\n      } else {\n        message.success('推送成功，小程序端现在可以查看这条数据');\n      }\n      actionRef.current?.reload();\n    } catch (error: any) {\n      message.error(error?.message || '推送失败');\n    } finally {\n      setPushingId(null);\n    }\n  };\n\n  const handleParse = async (record: API_OPPORTUNITY.TenderStagingRecord) => {\n    if (!hasParseableContent(record)) {\n      message.info('当前记录无正文，不可解析');\n      return;\n    }\n\n    if (record.issuer && record.deadline_date) {\n      message.info('字段已完整，无需解析');\n      return;\n    }\n    setParseRecord(record);\n  };\n\n  const showErrorDetail = (record: API_OPPORTUNITY.TenderStagingRecord) => {\n    setErrorDetailRecord(record);\n  };\n\n  const autoDeleteGroupKeys =\n    dedupePreview?.groups\n      ?.filter((group) => group.action === 'auto_delete')\n      .map((group) => group.group_key) || [];\n\n  const columns: ProColumns<API_OPPORTUNITY.TenderStagingRecord>[] = [\n    {\n      title: '项目名称',\n      dataIndex: 'title',\n      ellipsis: true,\n      width: 260,\n    },\n    {\n      title: '发布日期',\n      dataIndex: 'published_date',\n      width: 120,\n      search: false,\n      renderText: (value) => value || '-',\n    },\n    {\n      title: '截止日期',\n      dataIndex: 'deadline_date',\n      width: 120,\n      search: false,\n      renderText: (value) => value || '-',\n    },\n    {\n      title: '招标单位',\n      dataIndex: 'issuer',\n      ellipsis: true,\n      width: 220,\n      renderText: (value) => value || '-',\n    },\n    {\n      title: '来源文件',\n      dataIndex: 'source_file',\n      width: 180,\n      ellipsis: true,\n    },\n    {\n      title: '推送状态',\n      dataIndex: 'push_status',\n      valueType: 'select',\n      width: 120,\n      align: 'center',\n      valueEnum: {\n        pending: { text: '待推送' },\n        pushed: { text: '已推送' },\n        failed: { text: '推送失败' },\n      },\n      render: (_, record) => {\n        const status = pushStatusMap[record.push_status];\n        return <Tag color={status.color}>{status.text}</Tag>;\n      },\n    },\n    {\n      title: '操作',\n      valueType: 'option',\n      width: 320,\n      render: (_, record) => {\n        const buttonLabel =\n          record.push_status === 'failed'\n            ? '重试'\n            : record.push_status === 'pushed'\n              ? '重新推送'\n              : '推送';\n        const parseDisabled = !hasParseableContent(record);\n\n        return [\n          <Link key=\"assess\" to=\"/assessment/new\">\n            评估\n          </Link>,\n          <Button\n            key=\"parse\"\n            type=\"link\"\n            disabled={parseDisabled}\n            onClick={() => handleParse(record)}\n          >\n            解析\n          </Button>,\n          <Button\n            key=\"web-search\"\n            type=\"link\"\n            onClick={() => setWebSearchRecord(record)}\n          >\n            全网检索\n          </Button>,\n          record.source_url ? (\n            <a\n              key=\"source\"\n              href={record.source_url}\n              target=\"_blank\"\n              rel=\"noreferrer\"\n            >\n              原文\n            </a>\n          ) : null,\n          record.push_error ? (\n            <Button key=\"error\" type=\"link\" onClick={() => showErrorDetail(record)}>\n              错误信息\n            </Button>\n          ) : null,\n          <Button\n            key=\"push\"\n            type=\"link\"\n            loading={pushingId === record.id}\n            onClick={() => handlePush(record)}\n          >\n            {buttonLabel}\n          </Button>,\n        ];\n      },\n    },\n  ];\n\n  return (\n    <PageContainer\n      header={{\n        title: '待推送招标',\n        subTitle: '以 spider/data 为当前真源全量同步到 staging，再单条推送到小程序',\n      }}\n    >\n      <Card\n        size=\"small\"\n        style={{ marginBottom: 16 }}\n        bodyStyle={{ padding: '10px 16px' }}\n      >\n        <Row gutter={[24, 8]}>\n          <Col xs={12} sm={12} md={6}>\n            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>\n              <span style={{ color: 'rgba(0, 0, 0, 0.65)' }}>总数</span>\n              <span style={{ fontSize: 20, fontWeight: 600 }}>{stats.total}</span>\n            </div>\n          </Col>\n          <Col xs={12} sm={12} md={6}>\n            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>\n              <span style={{ color: 'rgba(0, 0, 0, 0.65)' }}>待推送</span>\n              <span style={{ fontSize: 20, fontWeight: 600 }}>{stats.pending}</span>\n            </div>\n          </Col>\n          <Col xs={12} sm={12} md={6}>\n            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>\n              <span style={{ color: 'rgba(0, 0, 0, 0.65)' }}>已推送</span>\n              <span style={{ fontSize: 20, fontWeight: 600 }}>{stats.pushed}</span>\n            </div>\n          </Col>\n          <Col xs={12} sm={12} md={6}>\n            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>\n              <span style={{ color: 'rgba(0, 0, 0, 0.65)' }}>失败</span>\n              <span style={{ fontSize: 20, fontWeight: 600 }}>{stats.failed}</span>\n            </div>\n          </Col>\n        </Row>\n      </Card>\n\n      <ProTable<API_OPPORTUNITY.TenderStagingRecord>\n        actionRef={actionRef}\n        rowKey=\"id\"\n        columns={columns}\n        search={{\n          labelWidth: 100,\n        }}\n        toolBarRender={() => [\n          <Space key=\"actions\">\n            <Button type=\"primary\" loading={syncLoading} onClick={handleSync}>\n              同步本地数据\n            </Button>\n            <Button\n              loading={archiveLoading}\n              onClick={handleArchiveSourceFiles}\n            >\n              归档源文件\n            </Button>\n            <Button loading={dedupeLoading} onClick={handlePreviewDedupe}>\n              整理数据\n            </Button>\n          </Space>,\n        ]}\n        request={async (params) => {\n          const response = await listTenderStaging(params);\n          const result = response?.data;\n          setStats(result?.stats || defaultStats);\n          return {\n            data: result?.items || [],\n            success: response?.success,\n            total: result?.total || 0,\n          };\n        }}\n        pagination={{\n          defaultPageSize: 20,\n          showSizeChanger: true,\n          pageSizeOptions: [10, 20, 50, 100],\n        }}\n      />\n\n      <Modal\n        title=\"整理数据\"\n        open={dedupeModalOpen}\n        onCancel={() => {\n          setDedupeModalOpen(false);\n          setDedupePreview(null);\n        }}\n        onOk={handleExecuteDedupe}\n        okText={`确认硬删除 ${dedupePreview?.delete_candidate_count || 0} 条`}\n        okButtonProps={{\n          danger: true,\n          disabled: autoDeleteGroupKeys.length === 0,\n        }}\n        confirmLoading={dedupeExecuting}\n        cancelText=\"关闭\"\n        width={920}\n      >\n        <Space wrap size={[8, 8]} style={{ marginBottom: 16 }}>\n          <Tag color=\"processing\">扫描 {dedupePreview?.scanned_record_count || 0} 条</Tag>\n          <Tag color=\"error\">\n            可自动清理 {dedupePreview?.auto_deletable_groups || 0} 组\n          </Tag>\n          <Tag color=\"warning\">\n            可删除 {dedupePreview?.delete_candidate_count || 0} 条\n          </Tag>\n          <Tag>\n            疑似重复 {dedupePreview?.review_only_groups || 0} 组\n          </Tag>\n        </Space>\n\n        <div style={{ marginBottom: 16, color: 'rgba(0, 0, 0, 0.65)' }}>\n          只会自动删除高置信重复数据。仅命中标题或链接候选、但未达到强匹配条件的数据，会保留并标记为“已跳过”。\n        </div>\n\n        <div style={{ maxHeight: 520, overflowY: 'auto' }}>\n          {(dedupePreview?.groups || []).map((group) => (\n            <Card\n              key={group.group_key}\n              size=\"small\"\n              style={{ marginBottom: 12 }}\n              bodyStyle={{ padding: 12 }}\n            >\n              <Space wrap size={[8, 8]} style={{ marginBottom: 8 }}>\n                <Tag color={group.action === 'auto_delete' ? 'error' : 'default'}>\n                  {group.action === 'auto_delete' ? '可自动删除' : '已跳过'}\n                </Tag>\n                {group.reason_keys.map((reasonKey) => (\n                  <Tag key={reasonKey}>{dedupeReasonTextMap[reasonKey] || reasonKey}</Tag>\n                ))}\n              </Space>\n\n              <div style={{ marginBottom: 8 }}>\n                保留记录：#{group.keeper_id}，{group.keeper_reason}\n              </div>\n\n              {group.skipped_reason ? (\n                <div style={{ marginBottom: 8, color: '#a61d24' }}>\n                  {dedupeSkipReasonTextMap[group.skipped_reason] || group.skipped_reason}\n                </div>\n              ) : (\n                <div style={{ marginBottom: 8, color: '#a61d24' }}>\n                  将硬删除 {group.delete_ids.length} 条重复记录\n                </div>\n              )}\n\n              <div>\n                {group.records.map((record) => (\n                  <div\n                    key={record.id}\n                    style={{\n                      padding: '8px 0',\n                      borderTop: '1px solid #f0f0f0',\n                    }}\n                  >\n                    <Space wrap size={[8, 8]}>\n                      <Tag color={record.is_keeper ? 'success' : 'default'}>\n                        #{record.id}\n                      </Tag>\n                      {record.is_keeper ? <Tag color=\"success\">保留</Tag> : null}\n                      {record.has_push_trace ? <Tag color=\"blue\">推送痕迹</Tag> : null}\n                      {record.has_web_search_trace ? <Tag color=\"purple\">检索痕迹</Tag> : null}\n                      {record.has_parse_trace ? <Tag color=\"gold\">解析痕迹</Tag> : null}\n                    </Space>\n                    <div style={{ marginTop: 6 }}>{record.title}</div>\n                    <div style={{ marginTop: 4, color: 'rgba(0, 0, 0, 0.65)' }}>\n                      {[\n                        record.extracted_code ? `编号：${record.extracted_code}` : null,\n                        record.published_date ? `发布日期：${record.published_date}` : null,\n                        record.deadline_date ? `截止：${record.deadline_date}` : null,\n                        record.issuer ? `招标单位：${record.issuer}` : null,\n                        `正文长度：${record.text_length}`,\n                      ]\n                        .filter(Boolean)\n                        .join(' ｜ ')}\n                    </div>\n                    {record.source_url ? (\n                      <div\n                        style={{\n                          marginTop: 4,\n                          color: 'rgba(0, 0, 0, 0.45)',\n                          wordBreak: 'break-all',\n                        }}\n                      >\n                        {record.source_url}\n                      </div>\n                    ) : null}\n                  </div>\n                ))}\n              </div>\n            </Card>\n          ))}\n        </div>\n      </Modal>\n\n      <Modal\n        title={errorDetailRecord ? `错误信息 - ${errorDetailRecord.title}` : '错误信息'}\n        open={Boolean(errorDetailRecord)}\n        onCancel={() => setErrorDetailRecord(null)}\n        footer={null}\n        width={720}\n      >\n        <div\n          style={{\n            whiteSpace: 'pre-wrap',\n            wordBreak: 'break-word',\n            lineHeight: 1.7,\n          }}\n        >\n          {errorDetailRecord?.push_error || '暂无错误信息'}\n        </div>\n      </Modal>\n\n      <TenderWebSearchModal\n        open={Boolean(webSearchRecord)}\n        record={webSearchRecord}\n        draft={webSearchDraft}\n        onDraftChange={setWebSearchDraft}\n        onCancel={() => setWebSearchRecord(null)}\n      />\n\n      <TenderFieldParseModal\n        open={Boolean(parseRecord)}\n        record={parseRecord}\n        onCancel={() => setParseRecord(null)}\n        onSuccess={(result) => {\n          const updatedFields = result?.updated_fields || [];\n          const warnings = result?.warnings || [];\n\n          if (updatedFields.length > 0) {\n            const labels = updatedFields.map((field) =>\n              field === 'issuer' ? '招标单位' : field === 'deadline_date' ? '截止日期' : field,\n            );\n            message.success(`已补充：${labels.join('、')}`);\n          } else {\n            message.info(warnings[0] || '未识别到可补充字段');\n          }\n\n          setParseRecord(null);\n          actionRef.current?.reload();\n        }}\n      />\n    </PageContainer>\n  );\n};\n\nexport default TenderPushPage;\n",
       "__isJSFile": true,
       "__absFile": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/src/pages/Opportunity/TenderPush.tsx"
     },
@@ -4100,7 +4095,7 @@
   "faviconFiles": [],
   "port": 8000,
   "host": "0.0.0.0",
-  "ip": "192.168.100.50",
+  "ip": "10.22.139.196",
   "antd": {
     "pkgPath": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/antd",
     "version": "5.28.0"
@@ -6717,7 +6712,7 @@
             "format": "esm"
           },
           "src/pages/Assessment/History.tsx": {
-            "bytes": 11477,
+            "bytes": 11563,
             "imports": [
               {
                 "path": "src/services/projects/index.ts",
@@ -6984,7 +6979,7 @@
             "format": "esm"
           },
           "src/pages/Web3D/History.tsx": {
-            "bytes": 3403,
+            "bytes": 3508,
             "imports": [
               {
                 "path": "src/services/web3d/index.ts",
@@ -10482,7 +10477,7 @@
                 "bytesInOutput": 8171
               },
               "src/pages/Assessment/History.tsx": {
-                "bytesInOutput": 13781
+                "bytesInOutput": 13875
               },
               "src/services/contracts/index.ts": {
                 "bytesInOutput": 687
@@ -10503,7 +10498,7 @@
                 "bytesInOutput": 36261
               },
               "src/pages/Web3D/History.tsx": {
-                "bytesInOutput": 4779
+                "bytesInOutput": 4907
               },
               "src/pages/Web3D/Detail.tsx": {
                 "bytesInOutput": 3788
@@ -10593,7 +10588,7 @@
                 "bytesInOutput": 2010
               }
             },
-            "bytes": 817091
+            "bytes": 817313
           }
         }
       }
