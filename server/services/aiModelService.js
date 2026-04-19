@@ -34,6 +34,10 @@ function isMinimaxProvider(provider) {
   return provider.toLowerCase().includes('minimax');
 }
 
+function isVisionCapableProvider(provider) {
+  return isGeminiProvider(provider) || isMinimaxProvider(provider);
+}
+
 function normalizeApiHost(provider, apiHost) {
   if (apiHost === undefined || apiHost === null || apiHost === '') {
     return apiHost;
@@ -145,6 +149,16 @@ function normalizePayload(payload, defaults = {}) {
 
     normalized.supports_web_search = 1;
     normalized.supports_vision = 0;
+  }
+
+  if (!isVisionCapableProvider(normalized.provider)) {
+    if (normalized.supports_vision === 1) {
+      throw validationError('当前 provider 暂不支持图片识别，仅 Gemini / MiniMax 可用');
+    }
+
+    if (normalized.is_current_vision === 1) {
+      throw validationError('当前 provider 不能设为视觉模型，仅 Gemini / MiniMax 可用');
+    }
   }
 
   if (normalized.is_current_vision === 1 && normalized.supports_vision !== 1) {
@@ -277,6 +291,9 @@ async function setCurrentVisionModel(id) {
   if (existing.is_active !== 1) {
     throw validationError('无法设置未启用的模型为当前视觉模型');
   }
+  if (!isVisionCapableProvider(existing.provider)) {
+    throw validationError('当前 provider 不能设为视觉模型，仅 Gemini / MiniMax 可用');
+  }
   if (existing.supports_vision !== 1) {
     throw validationError('该模型未启用图片识别能力');
   }
@@ -398,6 +415,8 @@ module.exports = {
   testTempConnection,
   isTavilyProvider,
   isCherryStudioProvider,
+  isGeminiProvider,
   isMinimaxProvider,
+  isVisionCapableProvider,
   normalizeApiHost,
 };

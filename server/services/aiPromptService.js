@@ -2,7 +2,7 @@ const promptTemplateModel = require('../models/promptTemplateModel');
 const aiModelModel = require('../models/aiModelModel');
 const logger = require('../utils/logger');
 const {
-  normalizePromptTemplateCategory,
+  normalizeModuleTag,
 } = require('../utils/promptTemplateCategories');
 
 /**
@@ -76,21 +76,20 @@ async function getAllPrompts() {
 }
 
 /**
- * 按类别获取提示词模板（例如：'module_analysis'）
+ * 按模块标签获取提示词模板（例如：'assessment'）
  */
-async function getPromptsByCategory(category) {
+async function getPromptsByModuleTag(moduleTag) {
   // 获取当前模型
   const currentModel = await aiModelModel.getCurrentModel();
   if (!currentModel) {
     throw new Error('当前没有设置使用的模型，请先配置并设置一个模型为当前使用');
   }
 
-  const normalizedCategory = normalizePromptTemplateCategory(category);
+  const normalized = normalizeModuleTag(moduleTag);
 
-  // 统一按规范分类读取，旧别名由迁移和归一逻辑收口
   const templatesResult = await promptTemplateModel.getAll({
     is_active: 1,
-    category: normalizedCategory,
+    module_tag: normalized,
     pageSize: 1000,
   });
 
@@ -129,6 +128,6 @@ async function getPromptById(promptId) {
 
 module.exports = {
   getAllPrompts,
-  getPromptsByCategory,
+  getPromptsByModuleTag,
   getPromptById,
 };

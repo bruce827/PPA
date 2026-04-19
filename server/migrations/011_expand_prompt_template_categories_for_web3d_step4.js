@@ -13,20 +13,22 @@ const CREATE_PROMPT_TEMPLATES_SQL = `
   CREATE TABLE IF NOT EXISTS prompt_templates (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     template_name TEXT NOT NULL,
-    category TEXT NOT NULL CHECK(category IN (${getPromptTemplateCategorySqlList()})),
+    module_tag TEXT NOT NULL DEFAULT 'general',
     description TEXT,
     system_prompt TEXT NOT NULL,
     user_prompt_template TEXT NOT NULL,
     variables_json TEXT,
-    is_system BOOLEAN NOT NULL DEFAULT 0,
-    is_active BOOLEAN NOT NULL DEFAULT 1,
+    is_system INTEGER NOT NULL DEFAULT 0,
+    is_active INTEGER NOT NULL DEFAULT 1,
+    is_current INTEGER DEFAULT 0,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
   );
 
-  CREATE INDEX IF NOT EXISTS idx_prompt_category ON prompt_templates(category);
+  CREATE INDEX IF NOT EXISTS idx_prompt_module_tag ON prompt_templates(module_tag);
   CREATE INDEX IF NOT EXISTS idx_prompt_active ON prompt_templates(is_active);
   CREATE INDEX IF NOT EXISTS idx_prompt_system ON prompt_templates(is_system);
+  CREATE INDEX IF NOT EXISTS idx_prompt_current ON prompt_templates(is_current);
 `;
 
 function run(db, sql, params = []) {
@@ -74,29 +76,55 @@ function exec(db, sql) {
 }
 
 async function recreatePromptTemplatesTable(db) {
-  const existingRows = await all(
-    db,
-    `
-      SELECT
-        id,
-        template_name,
-        category,
-        description,
-        system_prompt,
-        user_prompt_template,
-        variables_json,
-        is_system,
-        is_active,
-        created_at,
-        updated_at
-      FROM prompt_templates
-      ORDER BY id ASC
-    `
-  );
+  // 读取 module_tag（007 已迁移），兼容 category 列
+  let existingRows;
+  try {
+    existingRows = await all(
+      db,
+      `
+        SELECT
+          id,
+          template_name,
+          module_tag,
+          description,
+          system_prompt,
+          user_prompt_template,
+          variables_json,
+          is_system,
+          is_active,
+          is_current,
+          created_at,
+          updated_at
+        FROM prompt_templates
+        ORDER BY id ASC
+      `
+    );
+  } catch (_) {
+    existingRows = await all(
+      db,
+      `
+        SELECT
+          id,
+          template_name,
+          category AS module_tag,
+          description,
+          system_prompt,
+          user_prompt_template,
+          variables_json,
+          is_system,
+          is_active,
+          0 AS is_current,
+          created_at,
+          updated_at
+        FROM prompt_templates
+        ORDER BY id ASC
+      `
+    );
+  }
 
   const normalizedRows = existingRows.map((row) => ({
     ...row,
-    normalized_category: coercePromptTemplateCategoryForStorage(row.category),
+    normalized_module_tag: row.module_tag,
   }));
 
   await exec(db, 'BEGIN TRANSACTION;');
@@ -111,27 +139,29 @@ async function recreatePromptTemplatesTable(db) {
           INSERT INTO prompt_templates (
             id,
             template_name,
-            category,
+            module_tag,
             description,
             system_prompt,
             user_prompt_template,
             variables_json,
             is_system,
             is_active,
+            is_current,
             created_at,
             updated_at
-          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         `,
         [
           row.id,
           row.template_name,
-          row.normalized_category,
+          row.normalized_module_tag,
           row.description,
           row.system_prompt,
           row.user_prompt_template,
           row.variables_json,
           row.is_system,
           row.is_active,
+          row.is_current || 0,
           row.created_at,
           row.updated_at,
         ]

@@ -10,14 +10,14 @@ const { internalError } = require('../utils/errors');
 async function getPrompts(req, res, next) {
   const startedAt = Date.now();
   try {
-    // 仅获取“风险分析”类别的提示词模板，用于风险 AI 评估
-    const prompts = await aiPromptService.getPromptsByCategory('risk_analysis');
+    // 仅获取”风险分析”类别的提示词模板，用于风险 AI 评估
+    const prompts = await aiPromptService.getPromptsByModuleTag('risk');
 
     const durationMs = Date.now() - startedAt;
 
     logger.info('提示词查询成功', {
       route: 'GET /api/ai/prompts',
-      category: 'risk_analysis',
+      module_tag: 'risk',
       count: prompts.length,
       durationMs,
     });
@@ -36,7 +36,7 @@ async function getPrompts(req, res, next) {
 async function getModulePrompts(req, res, next) {
   const startedAt = Date.now();
   try {
-    const prompts = await aiPromptService.getPromptsByCategory('module_analysis');
+    const prompts = await aiPromptService.getPromptsByModuleTag('assessment');
     const durationMs = Date.now() - startedAt;
     logger.info('模块梳理提示词查询成功', {
       route: 'GET /api/ai/module-prompts',
@@ -57,7 +57,7 @@ async function getModulePrompts(req, res, next) {
 async function getWorkloadPrompts(req, res, next) {
   const startedAt = Date.now();
   try {
-    const prompts = await aiPromptService.getPromptsByCategory('workload_evaluation');
+    const prompts = await aiPromptService.getPromptsByModuleTag('assessment');
     const durationMs = Date.now() - startedAt;
     logger.info('工作量评估提示词查询成功', {
       route: 'GET /api/ai/workload-prompts',
@@ -78,11 +78,11 @@ async function getWorkloadPrompts(req, res, next) {
 async function getProjectTagPrompts(req, res, next) {
   const startedAt = Date.now();
   try {
-    const prompts = await aiPromptService.getPromptsByCategory('project_tagging');
+    const prompts = await aiPromptService.getPromptsByModuleTag('tender');
     const durationMs = Date.now() - startedAt;
     logger.info('项目标签提示词查询成功', {
       route: 'GET /api/ai/project-tag-prompts',
-      category: 'project_tagging',
+      module_tag: 'tender',
       count: prompts.length,
       durationMs,
     });

@@ -57,7 +57,13 @@
       "Bash(xargs kill:*)",
       "WebFetch(domain:github.com)",
       "WebSearch",
-      "Bash(mkdir:*)"
+      "Bash(mkdir:*)",
+      "Bash(gh pr *)",
+      "Bash(git checkout *)",
+      "Bash(git diff *)",
+      "Bash(npm test *)",
+      "Bash(yarn build *)",
+      "Bash(kill 20298 *)"
     ]
   }
 }

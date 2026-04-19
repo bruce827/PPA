@@ -5,7 +5,10 @@ import {
   AI_PROVIDER_LABELS,
   AI_PROVIDER_OPTIONS,
   isCherryStudioProvider,
+  isGeminiProvider,
+  isMinimaxProvider,
   isTavilyProvider,
+  isVisionCapableProvider,
 } from '@/constants';
 import { createAIModel, updateAIModel } from '@/services/aiModel';
 import {
@@ -51,14 +54,14 @@ const ModelForm: React.FC<ModelFormProps> = ({
     duration?: number;
   } | null>(null);
   const providerValue = Form.useWatch('provider', form);
+  const supportsVisionValue = Form.useWatch('supports_vision', form);
   const isTavilySelected = isTavilyProvider(providerValue);
   const isCherryStudioSelected = isCherryStudioProvider(providerValue);
-  const isGeminiSelected =
-    typeof providerValue === 'string' &&
-    /google|gemini/i.test(providerValue);
-  const isMinimaxSelected =
-    typeof providerValue === 'string' &&
-    /minimax/i.test(providerValue);
+  const isGeminiSelected = isGeminiProvider(providerValue);
+  const isMinimaxSelected = isMinimaxProvider(providerValue);
+  const isVisionCapableSelected = isVisionCapableProvider(providerValue);
+  const supportsVisionEnabled =
+    supportsVisionValue === 1 || supportsVisionValue === true;
   const apiHostPlaceholder = isTavilySelected
     ? '例如：https://api.tavily.com/search'
     : isCherryStudioSelected
@@ -75,9 +78,9 @@ const ModelForm: React.FC<ModelFormProps> = ({
     (record?.id === undefined || currentVisionModelId !== record.id);
 
   useEffect(() => {
-      if (visible) {
-        if (record) {
-          form.setFieldsValue(record);
+    if (visible) {
+      if (record) {
+        form.setFieldsValue(record);
       } else {
         form.resetFields();
       }
@@ -97,15 +100,26 @@ const ModelForm: React.FC<ModelFormProps> = ({
   }, [visible, isTavilySelected, form]);
 
   useEffect(() => {
-    if (!visible || !(isGeminiSelected || isMinimaxSelected)) {
+    if (!visible || isVisionCapableSelected) {
       return;
     }
 
-    const currentVision = form.getFieldValue('supports_vision');
-    if (currentVision !== 1 && currentVision !== true) {
-      form.setFieldValue('supports_vision', 1);
+    form.setFieldsValue({
+      supports_vision: 0,
+      is_current_vision: 0,
+    });
+  }, [visible, isVisionCapableSelected, form]);
+
+  useEffect(() => {
+    if (!visible || supportsVisionEnabled) {
+      return;
     }
-  }, [visible, isGeminiSelected, isMinimaxSelected, form]);
+
+    const isCurrentVision = form.getFieldValue('is_current_vision');
+    if (isCurrentVision === 1 || isCurrentVision === true) {
+      form.setFieldValue('is_current_vision', 0);
+    }
+  }, [visible, supportsVisionEnabled, form]);
 
   const handleSubmit = async (values: any) => {
     try {
@@ -405,10 +419,14 @@ const ModelForm: React.FC<ModelFormProps> = ({
       <ProFormSwitch
         name="supports_vision"
         label="支持图片识别"
-        tooltip="开启后，该模型可用于 Web3D Step4 的图片识别分析"
-        initialValue={isGeminiSelected || isMinimaxSelected}
+        tooltip={
+          isVisionCapableSelected
+            ? '开启后，该模型可用于 Web3D Step4 的图片识别分析'
+            : '仅 Gemini / MiniMax provider 支持图片识别'
+        }
+        initialValue={false}
         fieldProps={{
-          disabled: isTavilySelected,
+          disabled: isTavilySelected || !isVisionCapableSelected,
         }}
         transform={(value) => ({ supports_vision: value ? 1 : 0 })}
         convertValue={(value) => value === 1}
@@ -420,10 +438,18 @@ const ModelForm: React.FC<ModelFormProps> = ({
         tooltip={
           hasOtherCurrentVision
             ? '已有当前视觉模型，需先切换后再设'
-            : '将此配置设为当前 Web3D 图片识别模型'
+            : !isVisionCapableSelected
+              ? '仅 Gemini / MiniMax provider 可设为当前视觉模型'
+              : !supportsVisionEnabled
+                ? '请先开启图片识别能力'
+                : '将此配置设为当前 Web3D 图片识别模型'
         }
         fieldProps={{
-          disabled: hasOtherCurrentVision || isTavilySelected,
+          disabled:
+            hasOtherCurrentVision ||
+            isTavilySelected ||
+            !isVisionCapableSelected ||
+            !supportsVisionEnabled,
         }}
         transform={(value) => ({ is_current_vision: value ? 1 : 0 })}
         convertValue={(value) => value === 1}

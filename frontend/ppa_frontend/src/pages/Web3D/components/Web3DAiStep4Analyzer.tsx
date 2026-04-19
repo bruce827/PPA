@@ -249,6 +249,11 @@ const Web3DAiStep4Analyzer: React.FC<Web3DAiStep4AnalyzerProps> = ({
   };
 
   const handleAnalyze = async () => {
+    if (!currentVisionModel) {
+      message.warning('请先在模型管理中设置当前视觉模型');
+      return;
+    }
+
     if (!selectedPromptId) {
       message.warning('请先选择提示词模板');
       return;
@@ -474,7 +479,12 @@ const Web3DAiStep4Analyzer: React.FC<Web3DAiStep4AnalyzerProps> = ({
         />
 
         <Space>
-          <Button type="primary" loading={analyzing} onClick={handleAnalyze}>
+          <Button
+            type="primary"
+            loading={analyzing}
+            disabled={!currentVisionModel}
+            onClick={handleAnalyze}
+          >
             开始 AI 分析
           </Button>
           <Typography.Text type="secondary">

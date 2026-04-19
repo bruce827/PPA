@@ -577,7 +577,7 @@ async function getStep4Prompts() {
   const currentVisionModel = await aiModelModel.getCurrentVisionModel().catch(() => null);
   const templatesResult = await promptTemplateModel.getAll({
     is_active: 1,
-    category: 'web3d_step4_analysis',
+    module_tag: 'web3d',
     pageSize: 1000,
   });
 
@@ -648,8 +648,8 @@ async function analyzeStep4(payload) {
     throw validationError('所选提示词模板未启用');
   }
 
-  if (template.category !== 'web3d_step4_analysis') {
-    throw validationError('所选提示词模板不属于 Web3D Step4 分析分类');
+  if (template.module_tag !== 'web3d') {
+    throw validationError('所选提示词模板不属于 Web3D 模块');
   }
 
   if (!currentVisionModel) {
@@ -720,12 +720,20 @@ async function analyzeStep4(payload) {
     });
 
     const providerCall = providerImpl.createVisionCompletion(providerParams);
+    let serviceTimeoutHandle = null;
     const providerResult = await Promise.race([
       providerCall,
-      new Promise((_, reject) =>
-        setTimeout(() => reject(timeoutError('AI 调用超时')), serviceTimeoutMs)
-      ),
-    ]);
+      new Promise((_, reject) => {
+        serviceTimeoutHandle = setTimeout(
+          () => reject(timeoutError('AI 调用超时')),
+          serviceTimeoutMs
+        );
+      }),
+    ]).finally(() => {
+      if (serviceTimeoutHandle) {
+        clearTimeout(serviceTimeoutHandle);
+      }
+    });
 
     providerRaw = providerResult.data || providerResult;
     providerContent = extractContentFromProviderResponse(providerRaw);

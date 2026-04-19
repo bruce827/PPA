@@ -68,6 +68,14 @@ function mapInternalProject(item) {
   const diff = ourQuote - customerBudget;
   const riskScore = item.riskTotalScore != null ? Number(item.riskTotalScore) : 0;
   const pieData = parsePieChartData(item.costBreakdownJson);
+  const pushTime = item.pushTime || item.push_time;
+  const attachments = Array.isArray(item.attachmentFileIds)
+    ? item.attachmentFileIds.map((attachment) => ({
+        ...attachment,
+        originalname:
+          attachment.originalname || attachment.filename || '未命名附件',
+      }))
+    : [];
 
   return {
     _id: item._id,
@@ -84,9 +92,9 @@ function mapInternalProject(item) {
     newDevWorkloadText: formatDays(item.newDevWorkloadDays),
     travelCostText: formatWan(item.travelCostTotal),
     implementationCostText: formatWan(item.implementationCost),
-    pushTimeText: formatPushTime(item.pushTime),
+    pushTimeText: formatPushTime(pushTime),
     top3RiskScores: item.top3RiskScores || [],
-    attachments: item.attachmentFileIds || [],
+    attachments,
     expanded: false,
     ecId: `chart-${item._id}`,
     pieChartTitle: pieData ? pieData.title : '',

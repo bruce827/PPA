@@ -19,17 +19,20 @@ describe('AI Project Tagging API - Integration Tests', () => {
 
     await db.init(TEST_DB_PATH);
 
+    await db.run('DROP TABLE IF EXISTS prompt_templates');
+
     await db.run(`
       CREATE TABLE IF NOT EXISTS prompt_templates (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         template_name TEXT NOT NULL,
-        category TEXT NOT NULL,
+        module_tag TEXT NOT NULL DEFAULT 'general',
         description TEXT,
         system_prompt TEXT NOT NULL,
         user_prompt_template TEXT NOT NULL,
         variables_json TEXT,
-        is_system BOOLEAN DEFAULT 0,
-        is_active BOOLEAN DEFAULT 1,
+        is_system INTEGER DEFAULT 0,
+        is_active INTEGER DEFAULT 1,
+        is_current INTEGER DEFAULT 0,
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
         updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
       );
@@ -86,11 +89,11 @@ describe('AI Project Tagging API - Integration Tests', () => {
     );
 
     await db.run(
-      `INSERT INTO prompt_templates (template_name, category, description, system_prompt, user_prompt_template, variables_json, is_system, is_active)
+      `INSERT INTO prompt_templates (template_name, module_tag, description, system_prompt, user_prompt_template, variables_json, is_system, is_active)
        VALUES (?, ?, ?, ?, ?, ?, 0, 1)`,
       [
         'project tags',
-        'project_tagging',
+        'tender',
         'tagging',
         'Return JSON only',
         '{"tags": ["A", "B"]}\n\n{{project_snapshot}}',
@@ -99,11 +102,11 @@ describe('AI Project Tagging API - Integration Tests', () => {
     );
 
     await db.run(
-      `INSERT INTO prompt_templates (template_name, category, description, system_prompt, user_prompt_template, variables_json, is_system, is_active)
+      `INSERT INTO prompt_templates (template_name, module_tag, description, system_prompt, user_prompt_template, variables_json, is_system, is_active)
        VALUES (?, ?, ?, ?, ?, ?, 0, 1)`,
       [
         'risk',
-        'risk_analysis',
+        'assessment',
         'risk',
         'Return JSON only',
         '{"risk_scores": []}',

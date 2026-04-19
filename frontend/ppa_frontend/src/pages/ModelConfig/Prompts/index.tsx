@@ -3,23 +3,30 @@ import {
   copyPromptTemplate,
   deletePromptTemplate,
   getPromptTemplates,
-  PROMPT_TEMPLATE_CATEGORY_VALUE_ENUM,
 } from '@/services/promptTemplate';
 import { PlusOutlined } from '@ant-design/icons';
 import type { ActionType, ProColumns } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
 import { history, useLocation } from '@umijs/max';
 import { Button, Popconfirm, Tag, message } from 'antd';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { getPromptModuleTags, type PromptModuleTagOption } from '@/services/promptTemplate';
 
 const PromptTemplateListPage: React.FC = () => {
   const actionRef = useRef<ActionType>();
   const location = useLocation();
+  const [moduleTagOptions, setModuleTagOptions] = useState<PromptModuleTagOption[]>([]);
 
   useEffect(() => {
     if (location.state?.refresh) {
       actionRef.current?.reload();
     }
+    // 加载推荐模块标签
+    getPromptModuleTags().then((res) => {
+      if (res?.data) {
+        setModuleTagOptions(res.data);
+      }
+    });
   }, [location.state]);
 
   const columns: ProColumns<PromptTemplate>[] = [
@@ -39,12 +46,22 @@ const PromptTemplateListPage: React.FC = () => {
       ),
     },
     {
-      title: '分类',
-      dataIndex: 'category',
+      title: '模块',
+      dataIndex: 'module_tag',
       width: '15%',
       filters: true,
       onFilter: true,
-      valueEnum: PROMPT_TEMPLATE_CATEGORY_VALUE_ENUM,
+      valueType: 'select',
+      fieldProps: {
+        options: moduleTagOptions.map((t) => ({
+          value: t.value,
+          label: t.label,
+        })),
+      },
+      render: (_, record) => {
+        const tag = moduleTagOptions.find((t) => t.value === record.module_tag);
+        return <Tag>{tag?.label || record.module_tag}</Tag>;
+      },
     },
     {
       title: '类型',
@@ -128,8 +145,6 @@ const PromptTemplateListPage: React.FC = () => {
       cardBordered
       request={async (params = {}) => {
         const result = await getPromptTemplates(params);
-        // ProTable expects a specific object structure, but the API returns an array.
-        // We need to wrap the array into the format that ProTable understands.
         if (Array.isArray(result)) {
           return {
             data: result,
@@ -137,7 +152,6 @@ const PromptTemplateListPage: React.FC = () => {
             total: result.length,
           };
         }
-        // Handle cases where the API might return the object structure directly in the future.
         return {
           data: result.data || [],
           success: result.success !== false,

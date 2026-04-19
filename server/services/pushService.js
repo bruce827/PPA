@@ -289,6 +289,7 @@ async function executePush(projectId, customerBudget) {
     // 3. 构建快照
     const snapshot = buildPushSnapshot(project, customerBudget, attachmentFileIds);
     snapshot.pushTime = pushTime;
+    snapshot.push_time = pushTime;
 
     // 4. 调用云函数写入集合
     cloudResult = await callUpsertInternalProject(snapshot);

@@ -69,7 +69,7 @@ async function getProjectPushHistory(projectId) {
   const rows = await db.all(
     `SELECT id, project_id, project_name, our_quote, customer_budget,
             budget_difference, risk_total_score, risk_level,
-            attachment_file_ids, push_time, push_status, push_error,
+            top3_risk_scores, attachment_file_ids, push_time, push_status, push_error,
             created_at
      FROM project_push_records
      WHERE project_id = ?

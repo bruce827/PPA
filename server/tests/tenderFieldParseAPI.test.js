@@ -91,7 +91,7 @@ async function createTenderFieldParseTemplate(overrides = {}) {
   const result = await db.run(
     `INSERT INTO prompt_templates (
       template_name,
-      category,
+      module_tag,
       description,
       system_prompt,
       user_prompt_template,
@@ -101,7 +101,7 @@ async function createTenderFieldParseTemplate(overrides = {}) {
     ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
     [
       overrides.template_name || `招标字段解析模板-${Date.now()}`,
-      overrides.category || 'tender_field_parse',
+      overrides.module_tag || 'tender',
       overrides.description || null,
       overrides.system_prompt ||
         '你是招标公告字段提取助手。只根据输入内容提取 issuer 和 deadline_date。无法确认就返回空字符串。只返回 JSON。',
@@ -160,13 +160,14 @@ describe('Tender Field Parse API', () => {
       CREATE TABLE IF NOT EXISTS prompt_templates (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         template_name TEXT NOT NULL,
-        category TEXT NOT NULL,
+        module_tag TEXT NOT NULL DEFAULT 'general',
         description TEXT,
         system_prompt TEXT NOT NULL,
         user_prompt_template TEXT NOT NULL,
         variables_json TEXT,
-        is_system BOOLEAN NOT NULL DEFAULT 0,
-        is_active BOOLEAN NOT NULL DEFAULT 1,
+        is_system INTEGER NOT NULL DEFAULT 0,
+        is_active INTEGER NOT NULL DEFAULT 1,
+        is_current INTEGER DEFAULT 0,
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
         updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
       )
@@ -348,11 +349,11 @@ describe('Tender Field Parse API', () => {
     expect(response.body.message).toBe('缺少必填参数：promptTemplateId');
   });
 
-  test('POST /api/opportunity/tender-staging/:id/parse-fields should reject wrong prompt category', async () => {
+  test('POST /api/opportunity/tender-staging/:id/parse-fields should reject wrong prompt module_tag', async () => {
     const record = await createTenderRecord();
     await createCurrentModelConfig();
     const template = await createTenderFieldParseTemplate({
-      category: 'web_search',
+      module_tag: 'bidding_search',
     });
 
     const response = await request(app)
@@ -363,6 +364,6 @@ describe('Tender Field Parse API', () => {
 
     expect(response.status).toBe(400);
     expect(response.body.success).toBe(false);
-    expect(response.body.message).toBe('所选提示词模板不属于招标字段解析分类');
+    expect(response.body.message).toBe('所选提示词模板不属于招标字段解析分类（当前: bidding_search）');
   });
 });

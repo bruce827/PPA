@@ -86,7 +86,7 @@ const TenderFieldParseModal: React.FC<TenderFieldParseModalProps> = ({
 
       try {
         const response = await getPromptTemplates({
-          category: 'tender_field_parse',
+          module_tag: 'tender',
           is_active: 1,
           pageSize: 100,
         });

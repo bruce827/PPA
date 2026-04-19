@@ -57,6 +57,7 @@ async function listAttachments(req, res, next) {
     const attachments = await getProjectAttachments(projectId);
     const result = attachments.map((a) => ({
       filename: a.filename,
+      originalname: a.originalname,
       size: a.size,
       uploadedAt: a.uploadedAt,
     }));
@@ -74,7 +75,11 @@ async function downloadAttachment(req, res, next) {
     if (!file) {
       throw validationError('附件不存在');
     }
-    res.set('Content-Disposition', `attachment; filename="${encodeURIComponent(file.originalname)}"`);
+    const encodedFilename = encodeURIComponent(file.originalname);
+    res.set(
+      'Content-Disposition',
+      `attachment; filename="${encodedFilename}"; filename*=UTF-8''${encodedFilename}`
+    );
     res.set('Content-Type', file.mimetype);
     res.set('Content-Length', file.size.toString());
     res.send(file.buffer);

@@ -1,4 +1,8 @@
-import { AI_PROVIDER_VALUE_ENUM, isTavilyProvider } from '@/constants';
+import {
+  AI_PROVIDER_VALUE_ENUM,
+  isTavilyProvider,
+  isVisionCapableProvider,
+} from '@/constants';
 import {
   deleteAIModel,
   getAIModels,
@@ -192,6 +196,7 @@ const AIModelApplication: React.FC = () => {
       render: (_, record) => {
         const actions = [];
         const tavilyOnly = isTavilyProvider(record.provider);
+        const visionCapableProvider = isVisionCapableProvider(record.provider);
 
         // 设为当前按钮（当前模型禁用）
         if (record.is_current === 1) {
@@ -229,7 +234,7 @@ const AIModelApplication: React.FC = () => {
           );
         }
 
-        if (record.supports_vision === 1) {
+        if (record.supports_vision === 1 && visionCapableProvider) {
           if (record.is_current_vision === 1) {
             actions.push(
               <span

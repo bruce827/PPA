@@ -1,7 +1,4 @@
 const sqlite3 = require('sqlite3').verbose();
-const {
-  getPromptTemplateCategorySqlList,
-} = require('./utils/promptTemplateCategories');
 
 // SQL语句
 const CREATE_TABLES_SQL = `
@@ -72,20 +69,22 @@ const CREATE_TABLES_SQL = `
   CREATE TABLE IF NOT EXISTS prompt_templates (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     template_name TEXT NOT NULL,
-    category TEXT NOT NULL CHECK(category IN (${getPromptTemplateCategorySqlList()})),
+    module_tag TEXT NOT NULL DEFAULT 'general',
     description TEXT,
     system_prompt TEXT NOT NULL,
     user_prompt_template TEXT NOT NULL,
-    variables_json TEXT, -- Stored as JSON string, use JSON1 functions for querying
-    is_system BOOLEAN DEFAULT 0,
-    is_active BOOLEAN DEFAULT 1,
+    variables_json TEXT,
+    is_system INTEGER DEFAULT 0,
+    is_active INTEGER DEFAULT 1,
+    is_current INTEGER DEFAULT 0,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
   );
 
-  CREATE INDEX IF NOT EXISTS idx_prompt_category ON prompt_templates(category);
+  CREATE INDEX IF NOT EXISTS idx_prompt_module_tag ON prompt_templates(module_tag);
   CREATE INDEX IF NOT EXISTS idx_prompt_active ON prompt_templates(is_active);
   CREATE INDEX IF NOT EXISTS idx_prompt_system ON prompt_templates(is_system);
+  CREATE INDEX IF NOT EXISTS idx_prompt_current ON prompt_templates(is_current);
 
   CREATE TABLE IF NOT EXISTS ai_model_configs (
     id INTEGER PRIMARY KEY AUTOINCREMENT,

@@ -43,7 +43,7 @@ function run(db, sql, params = []) {
 }
 
 describe('prompt template category migration', () => {
-  test('should create prompt_templates with web_search support when table is missing', async () => {
+  test('should create prompt_templates table with module_tag column when table is missing', async () => {
     const dbPath = path.join(
       os.tmpdir(),
       `ppa.prompt-template.migration.create.${process.pid}.${Date.now()}.db`
@@ -57,21 +57,21 @@ describe('prompt template category migration', () => {
         db,
         "SELECT sql FROM sqlite_master WHERE type = 'table' AND name = 'prompt_templates'"
       );
-      expect(schema?.sql).toContain('web_search');
+      expect(schema?.sql).toContain('module_tag');
 
       await run(
         db,
-        `INSERT INTO prompt_templates (template_name, category, system_prompt, user_prompt_template)
+        `INSERT INTO prompt_templates (template_name, module_tag, system_prompt, user_prompt_template)
          VALUES (?, ?, ?, ?)`,
-        ['联网搜索模板', 'web_search', '只返回 JSON', '项目：{{project_title}}']
+        ['联网搜索模板', 'bidding_search', '只返回 JSON', '项目：{{project_title}}']
       );
 
       const row = await get(
         db,
-        'SELECT category FROM prompt_templates WHERE template_name = ?',
+        'SELECT module_tag FROM prompt_templates WHERE template_name = ?',
         ['联网搜索模板']
       );
-      expect(row?.category).toBe('web_search');
+      expect(row?.module_tag).toBe('bidding_search');
 
       await new Promise((resolve, reject) => {
         db.close((err) => (err ? reject(err) : resolve()));
@@ -116,7 +116,7 @@ describe('prompt template category migration', () => {
          VALUES (?, ?, ?, ?, ?, ?, 0, 1)`,
         [
           '标签模板',
-          '标签生成',
+          'project_tagging',
           '旧标签模板',
           '只返回 JSON',
           '项目：{{project_snapshot}}',
@@ -129,7 +129,7 @@ describe('prompt template category migration', () => {
          VALUES (?, ?, ?, ?, ?, ?, 0, 1)`,
         [
           '工作量模板',
-          '工作量评估',
+          'workload_evaluation',
           '旧工作量模板',
           '只返回 JSON',
           '角色：{{role_list}}',
@@ -148,27 +148,27 @@ describe('prompt template category migration', () => {
       const verifyDb = new sqlite3.Database(dbPath);
       const rows = await all(
         verifyDb,
-        'SELECT template_name, category FROM prompt_templates ORDER BY template_name ASC'
+        'SELECT template_name, module_tag FROM prompt_templates ORDER BY template_name ASC'
       );
 
       expect(rows).toEqual([
-        { template_name: '工作量模板', category: 'workload_evaluation' },
-        { template_name: '标签模板', category: 'project_tagging' },
+        { template_name: '工作量模板', module_tag: 'assessment' },
+        { template_name: '标签模板', module_tag: 'tender' },
       ]);
 
       await run(
         verifyDb,
-        `INSERT INTO prompt_templates (template_name, category, system_prompt, user_prompt_template)
+        `INSERT INTO prompt_templates (template_name, module_tag, system_prompt, user_prompt_template)
          VALUES (?, ?, ?, ?)`,
-        ['联网搜索模板', 'web_search', '只返回 JSON', '项目：{{project_title}}']
+        ['联网搜索模板', 'bidding_search', '只返回 JSON', '项目：{{project_title}}']
       );
 
       const inserted = await get(
         verifyDb,
-        'SELECT category FROM prompt_templates WHERE template_name = ?',
+        'SELECT module_tag FROM prompt_templates WHERE template_name = ?',
         ['联网搜索模板']
       );
-      expect(inserted?.category).toBe('web_search');
+      expect(inserted?.module_tag).toBe('bidding_search');
 
       await new Promise((resolve, reject) => {
         verifyDb.close((err) => (err ? reject(err) : resolve()));
@@ -180,10 +180,10 @@ describe('prompt template category migration', () => {
     }
   });
 
-  test('should fail loudly when legacy prompt_templates contain unknown categories', async () => {
+  test('should pass through unknown categories as-is (no CHECK constraint)', async () => {
     const dbPath = path.join(
       os.tmpdir(),
-      `ppa.prompt-template.migration.invalid.${process.pid}.${Date.now()}.db`
+      `ppa.prompt-template.migration.unknown.${process.pid}.${Date.now()}.db`
     );
 
     const db = new sqlite3.Database(dbPath);
@@ -227,17 +227,16 @@ describe('prompt template category migration', () => {
     }
 
     try {
-      await expect(runMigration(dbPath)).rejects.toThrow(
-        '存在无法迁移的分类值：mystery_category'
-      );
+      await runMigration(dbPath);
 
       const verifyDb = new sqlite3.Database(dbPath);
       const row = await get(
         verifyDb,
-        'SELECT category FROM prompt_templates WHERE template_name = ?',
+        'SELECT module_tag FROM prompt_templates WHERE template_name = ?',
         ['异常模板']
       );
-      expect(row?.category).toBe('mystery_category');
+      // Unknown categories pass through as-is (no validation in migration)
+      expect(row?.module_tag).toBe('mystery_category');
 
       await new Promise((resolve, reject) => {
         verifyDb.close((err) => (err ? reject(err) : resolve()));

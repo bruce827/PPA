@@ -33,6 +33,7 @@ export async function listAttachments(
     success: boolean;
     data: Array<{
       filename: string;
+      originalname: string;
       size: number;
       uploadedAt: string;
     }>;
@@ -51,7 +52,7 @@ export async function deleteAttachment(
   return request<{
     success: boolean;
     message: string;
-  }>(`/api/projects/${projectId}/attachments/${filename}`, {
+  }>(`/api/projects/${projectId}/attachments/${encodeURIComponent(filename)}`, {
     method: 'DELETE',
     ...(options || {}),
   });
@@ -62,7 +63,7 @@ export function getAttachmentDownloadUrl(
   projectId: number,
   filename: string,
 ): string {
-  return `/api/projects/${projectId}/attachments/download/${filename}`;
+  return `/api/projects/${projectId}/attachments/download/${encodeURIComponent(filename)}`;
 }
 
 /** 校验附件存在性 GET /api/projects/:id/attachments/check */

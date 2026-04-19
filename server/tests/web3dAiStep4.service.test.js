@@ -55,7 +55,7 @@ describe('web3dAiStep4Service', () => {
     });
     promptTemplateModel.getById.mockResolvedValue({
       id: 1,
-      category: 'web3d_step4_analysis',
+      module_tag: 'web3d',
       is_active: 1,
       system_prompt: '你是 Web3D 工作量专家',
       user_prompt_template: '请分析 {{project_name}}',
@@ -98,7 +98,7 @@ describe('web3dAiStep4Service', () => {
 
     expect(promptTemplateModel.getAll).toHaveBeenCalledWith(
       expect.objectContaining({
-        category: 'web3d_step4_analysis',
+        module_tag: 'web3d',
       })
     );
     expect(prompts).toHaveLength(1);

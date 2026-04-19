@@ -1,11 +1,12 @@
 import { getRiskItemList, getRoleList } from '@/services/config';
 import { translateRoleToSlug } from './utils/roleNaming';
 import { categoryToSlug, extractItemEnSlug, stripParen, toSafeVar } from './utils/riskNaming';
-import type { PromptTemplate, PromptVariable } from '@/services/promptTemplate';
+import type { PromptTemplate, PromptVariable, PromptModuleTagOption } from '@/services/promptTemplate';
 import {
   createPromptTemplate,
+  createPromptModuleTag,
   getPromptTemplateById,
-  PROMPT_TEMPLATE_CATEGORY_OPTIONS,
+  getPromptModuleTags,
   updatePromptTemplate,
 } from '@/services/promptTemplate';
 import { EyeOutlined } from '@ant-design/icons';
@@ -17,6 +18,7 @@ import {
   Card,
   Form,
   Input,
+  Modal,
   message,
   Select,
   Space,
@@ -31,36 +33,145 @@ import VariableList from './components/VariableList';
 
 const { TextArea } = Input;
 
+// autoSync 函数签名：接受当前变量列表和对应的 setter
+type SyncHandler = (
+  variables: PromptVariable[],
+  setVariables: React.Dispatch<React.SetStateAction<PromptVariable[]>>,
+  setAutoInjectedByTag: React.Dispatch<React.SetStateAction<Record<string, string[]>>>
+) => Promise<void>;
+
+const syncRiskVariables: SyncHandler = async (variables, setVariables, setAutoInjectedByTag) => {
+  try {
+    const res: any = await getRiskItemList();
+    const list: any[] = Array.isArray(res?.data) ? res.data : [];
+    if (!list.length) {
+      message.warning('风险评估项为空，请先到"参数配置 > 风险评估项管理"配置评估项');
+      return;
+    }
+
+    const existingNames = new Set((variables || []).map((v) => v.name));
+    const baseCount = new Map<string, number>();
+    const injected: PromptVariable[] = [];
+    const injectedNames: string[] = [];
+
+    list.forEach((it: any, idx: number) => {
+      const catSlug = categoryToSlug(it.category, idx + 1);
+      const enItem = extractItemEnSlug(it.item_name) || '';
+      const itemSlug =
+        toSafeVar(enItem) || toSafeVar(stripParen(it.item_name)) || `item_${idx + 1}`;
+      let base = toSafeVar(`${catSlug}_${itemSlug}`) || `var_${idx + 1}`;
+
+      const count = baseCount.get(base) || 0;
+      baseCount.set(base, count + 1);
+      const name = count === 0 ? base : toSafeVar(`${base}_${count + 1}`);
+
+      if (existingNames.has(name)) return;
+
+      injected.push({ name, description: `${it.category}-${stripParen(it.item_name)}`, example: '', required: false });
+      injectedNames.push(name);
+      existingNames.add(name);
+    });
+
+    if (!injected.length) {
+      message.info('未发现可新增的风险变量');
+      setAutoInjectedByTag((prev) => ({ ...prev, assessment: [] }));
+      return;
+    }
+
+    setVariables((prev) => [...prev, ...injected]);
+    setAutoInjectedByTag((prev) => ({
+      ...prev,
+      assessment: Array.from(new Set([...(prev?.assessment || []), ...injectedNames])),
+    }));
+    message.success(`已导入 ${injected.length} 个变量`);
+  } catch (e) {
+    message.error('获取风险评估项失败');
+  }
+};
+
+const syncCostVariables: SyncHandler = async (variables, setVariables) => {
+  try {
+    const res: any = await getRoleList();
+    const roles: any[] = Array.isArray(res?.data) ? res.data : [];
+    if (!roles.length) {
+      message.warning('角色配置为空，请先到"参数配置 > 角色与单价管理"配置角色');
+      return;
+    }
+
+    const existingNames = new Set((variables || []).map((v) => v.name));
+    const baseCount = new Map<string, number>();
+    const injected: PromptVariable[] = [];
+
+    roles.forEach((role, idx) => {
+      const rawName: string = String(role.role_name || '').trim();
+      let base = translateRoleToSlug(rawName);
+      if (!base) base = `member_${idx + 1}`;
+
+      const count = baseCount.get(base) || 0;
+      baseCount.set(base, count + 1);
+      const name = count === 0 ? base : toSafeVar(`${base}_${count + 1}`);
+
+      if (existingNames.has(name)) return;
+
+      injected.push({
+        name,
+        description: rawName || `角色${idx + 1}`,
+        help: `对应角色：${rawName}${role.unit_price ? `，单价：${role.unit_price} 元/天` : ''}`,
+        example: '1.0',
+        required: false,
+      });
+      existingNames.add(name);
+    });
+
+    if (!injected.length) {
+      message.info('未发现可新增的角色变量');
+      return;
+    }
+
+    setVariables((prev) => [...prev, ...injected]);
+    message.success(`已导入 ${injected.length} 个角色变量`);
+  } catch (e) {
+    message.error('获取角色配置失败');
+  }
+};
+
+// autoSync 配置：module_tag → 对应的同步函数
+const AUTO_SYNC_CONFIG: Record<string, SyncHandler> = {
+  assessment: syncRiskVariables,
+};
+
 const PromptTemplateForm: React.FC = () => {
   const [form] = Form.useForm();
   const { id } = useParams<{ id: string }>();
-  const categoryValue = Form.useWatch('category', form);
+  const moduleTagValue = Form.useWatch('module_tag', form);
   const isEdit = !!id;
   const [template, setTemplate] = useState<PromptTemplate | null>(null);
   const [variables, setVariables] = useState<PromptVariable[]>([]);
   const [variableEditorVisible, setVariableEditorVisible] = useState(false);
-  const [editingVariable, setEditingVariable] = useState<PromptVariable | null>(
-    null,
-  );
+  const [editingVariable, setEditingVariable] = useState<PromptVariable | null>(null);
   const [editingIndex, setEditingIndex] = useState<number>(-1);
   const [previewVisible, setPreviewVisible] = useState(false);
-  const [detectedUndefinedVars, setDetectedUndefinedVars] = useState<string[]>(
-    [],
-  );
+  const [detectedUndefinedVars, setDetectedUndefinedVars] = useState<string[]>([]);
+  const [moduleTagOptions, setModuleTagOptions] = useState<PromptModuleTagOption[]>([]);
+  const [addTagModalVisible, setAddTagModalVisible] = useState(false);
+  const [addTagForm] = Form.useForm();
   const userPromptRef = useRef<any>(null);
-  // 记录各分类自动灌入的变量名，用于分类切换时清理
-  const [autoInjectedByCategory, setAutoInjectedByCategory] = useState<
-    Record<string, string[]>
-  >({});
-  const prevCategoryRef = useRef<string | undefined>(undefined);
+
+  // 记录各 module_tag 自动灌入的变量名，用于切换时清理
+  const [autoInjectedByTag, setAutoInjectedByTag] = useState<Record<string, string[]>>({});
+  const prevModuleTagRef = useRef<string | undefined>(undefined);
 
   useEffect(() => {
+    getPromptModuleTags().then((res) => {
+      if (res?.data) {
+        setModuleTagOptions(res.data);
+      }
+    });
+
     if (isEdit) {
       getPromptTemplateById(Number(id)).then((res) => {
         setTemplate(res);
         form.setFieldsValue(res);
-
-        // 解析变量
         if (res.variables_json) {
           try {
             const parsed = JSON.parse(res.variables_json);
@@ -73,10 +184,9 @@ const PromptTemplateForm: React.FC = () => {
     }
   }, [id, isEdit, form]);
 
-  // 智能检测未定义的变量
-  const detectUndefinedVariables = (template: string) => {
+  const detectUndefinedVariables = (templateContent: string) => {
     const regex = /\{\{\s*(\w+)\s*\}\}/g;
-    const matches = template.matchAll(regex);
+    const matches = templateContent.matchAll(regex);
     const detected = new Set<string>();
 
     for (const match of matches) {
@@ -89,16 +199,12 @@ const PromptTemplateForm: React.FC = () => {
     setDetectedUndefinedVars(Array.from(detected));
   };
 
-  // 用户提示词模板变化时检测变量
-  const handleUserPromptChange = (
-    e: React.ChangeEvent<HTMLTextAreaElement>,
-  ) => {
+  const handleUserPromptChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const value = e.target.value;
     form.setFieldValue('user_prompt_template', value);
     detectUndefinedVariables(value);
   };
 
-  // 添加/编辑变量
   const handleAddVariable = () => {
     setEditingVariable(null);
     setEditingIndex(-1);
@@ -115,10 +221,8 @@ const PromptTemplateForm: React.FC = () => {
     let newVariables = [...variables];
 
     if (editingIndex >= 0) {
-      // 编辑
       newVariables[editingIndex] = values;
     } else {
-      // 新增 - 检查重复
       if (newVariables.find((v) => v.name === values.name)) {
         message.error('变量名已存在');
         return;
@@ -130,7 +234,6 @@ const PromptTemplateForm: React.FC = () => {
     setVariableEditorVisible(false);
     message.success(editingIndex >= 0 ? '变量已更新' : '变量已添加');
 
-    // 重新检测
     const userPrompt = form.getFieldValue('user_prompt_template');
     if (userPrompt) {
       detectUndefinedVariables(userPrompt);
@@ -143,22 +246,15 @@ const PromptTemplateForm: React.FC = () => {
     message.success('变量已删除');
   };
 
-  // 快速添加检测到的未定义变量
   const handleQuickAddUndefined = () => {
     if (detectedUndefinedVars.length === 0) return;
 
     const varName = detectedUndefinedVars[0];
-    setEditingVariable({
-      name: varName,
-      description: '',
-      example: '',
-      required: false,
-    });
+    setEditingVariable({ name: varName, description: '', example: '', required: false });
     setEditingIndex(-1);
     setVariableEditorVisible(true);
   };
 
-  // 插入变量到用户提示词
   const handleInsertVariable = (variableName: string) => {
     const textarea = userPromptRef.current?.resizableTextArea?.textArea;
     if (!textarea) return;
@@ -175,7 +271,6 @@ const PromptTemplateForm: React.FC = () => {
     form.setFieldValue('user_prompt_template', newValue);
     detectUndefinedVariables(newValue);
 
-    // 设置光标位置
     setTimeout(() => {
       const newPosition = start + variableName.length + 2;
       textarea.setSelectionRange(newPosition, newPosition);
@@ -183,134 +278,33 @@ const PromptTemplateForm: React.FC = () => {
     }, 0);
   };
 
-  // 从风险评估项自动灌入变量（评估类别 + 评估项）
-  const syncRiskVariables = async () => {
-    try {
-      const res: any = await getRiskItemList();
-      const list: any[] = Array.isArray(res?.data) ? res.data : [];
-      if (!list.length) {
-        message.warning(
-          '风险评估项为空，请先到“参数配置 > 风险评估项管理”配置评估项',
-        );
-        return;
-      }
-
-      // 现有变量名集合（以现有为主，存在则跳过自动灌入）
-      const existingNames = new Set((variables || []).map((v) => v.name));
-      const baseCount = new Map<string, number>();
-      const injected: PromptVariable[] = [];
-      const injectedNames: string[] = [];
-
-      list.forEach((it: any, idx: number) => {
-        const catSlug = categoryToSlug(it.category, idx + 1);
-        const enItem = extractItemEnSlug(it.item_name) || '';
-        const itemSlug =
-          toSafeVar(enItem) ||
-          toSafeVar(stripParen(it.item_name)) ||
-          `item_${idx + 1}`;
-        let base = toSafeVar(`${catSlug}_${itemSlug}`) || `var_${idx + 1}`;
-
-        // 自动变量内部去重：相同 base 追加 _2, _3...
-        const count = baseCount.get(base) || 0;
-        baseCount.set(base, count + 1);
-        const name = count === 0 ? base : toSafeVar(`${base}_${count + 1}`);
-
-        // 若与现有（用户手工）变量重名，则跳过（以用户变量为主）
-        if (existingNames.has(name)) {
-          return;
-        }
-
-        injected.push({
-          name,
-          description: `${it.category}-${stripParen(it.item_name)}`,
-          example: '',
-          required: false,
-        });
-        injectedNames.push(name);
-        existingNames.add(name);
-      });
-
-      if (!injected.length) {
-        message.info('未发现可新增的风险变量（可能已存在当前变量中）');
-        setAutoInjectedByCategory((prev) => ({ ...prev, risk_analysis: [] }));
-        return;
-      }
-
-      setVariables((prev) => [...prev, ...injected]);
-      setAutoInjectedByCategory((prev) => ({
-        ...prev,
-        risk_analysis: Array.from(
-          new Set([...(prev?.risk_analysis || []), ...injectedNames]),
-        ),
-      }));
-      message.success(`已导入 ${injected.length} 个变量`);
-    } catch (e) {
-      message.error('获取风险评估项失败');
-    }
+  const openAddTagModal = () => {
+    addTagForm.resetFields();
+    setAddTagModalVisible(true);
   };
 
-  // 从角色配置自动灌入变量（工作量评估）
-  const syncCostVariables = async () => {
+  const handleAddTag = async () => {
     try {
-      const res: any = await getRoleList();
-      const roles: any[] = Array.isArray(res?.data) ? res.data : [];
-      if (!roles.length) {
-        message.warning(
-          '角色配置为空，请先到“参数配置 > 角色与单价管理”配置角色',
-        );
-        return;
-      }
-
-      const existingNames = new Set((variables || []).map((v) => v.name));
-      const baseCount = new Map<string, number>();
-      const injected: PromptVariable[] = [];
-      const injectedNames: string[] = [];
-
-      roles.forEach((role, idx) => {
-        const rawName: string = String(role.role_name || '').trim();
-        // 基于翻译/拼音转写生成英文slug，尽量避免占位名
-        let base = translateRoleToSlug(rawName);
-        if (!base) base = `member_${idx + 1}`;
-
-        // 自动变量内部去重
-        const count = baseCount.get(base) || 0;
-        baseCount.set(base, count + 1);
-        const name = count === 0 ? base : toSafeVar(`${base}_${count + 1}`);
-
-        if (existingNames.has(name)) {
-          return;
-        }
-
-        injected.push({
-          name,
-          description: rawName || `角色${idx + 1}`,
-          help: `对应角色：${rawName}${role.unit_price ? `，单价：${role.unit_price} 元/天` : ''}`,
-          example: '1.0',
-          required: false,
-        });
-        injectedNames.push(name);
-        existingNames.add(name);
+      const values = await addTagForm.validateFields();
+      const res = await createPromptModuleTag({
+        value: values.tag_value.trim(),
+        label: values.tag_label.trim(),
+        description: values.tag_description || '',
       });
-
-      if (!injected.length) {
-        message.info('未发现可新增的角色变量（可能已存在当前变量中）');
-        setAutoInjectedByCategory((prev) => ({
-          ...prev,
-          workload_evaluation: [],
-        }));
-        return;
+      if (!res?.success) {
+        throw new Error(res?.error || '新增标签失败');
       }
-
-      setVariables((prev) => [...prev, ...injected]);
-      setAutoInjectedByCategory((prev) => ({
-        ...prev,
-        workload_evaluation: Array.from(
-          new Set([...(prev?.workload_evaluation || []), ...injectedNames]),
-        ),
-      }));
-      message.success(`已导入 ${injected.length} 个角色变量`);
-    } catch (e) {
-      message.error('获取角色配置失败');
+      const newTag = res.data;
+      // 刷新下拉列表
+      const refreshed = await getPromptModuleTags();
+      if (refreshed?.data) {
+        setModuleTagOptions(refreshed.data);
+      }
+      form.setFieldValue('module_tag', newTag.value);
+      setAddTagModalVisible(false);
+      message.success(`标签「${newTag.label}」已添加并选中`);
+    } catch (error: any) {
+      message.error(error?.message || '新增标签失败');
     }
   };
 
@@ -336,6 +330,9 @@ const PromptTemplateForm: React.FC = () => {
 
   const isSystemTemplate = template?.is_system || false;
 
+  const showRiskImport = moduleTagValue === 'assessment';
+  const showCostImport = moduleTagValue === 'assessment';
+
   return (
     <PageContainer>
       <Card>
@@ -343,34 +340,28 @@ const PromptTemplateForm: React.FC = () => {
           form={form}
           layout="vertical"
           onFinish={onFinish}
-          onValuesChange={async (changedValues, allValues) => {
-            if ('category' in changedValues) {
-              const newCat = changedValues.category;
-              const prevCat = prevCategoryRef.current;
-              prevCategoryRef.current = newCat;
+          onValuesChange={async (changedValues) => {
+            if ('module_tag' in changedValues) {
+              const newTag = changedValues.module_tag;
+              const prevTag = prevModuleTagRef.current;
+              prevModuleTagRef.current = newTag;
 
-              // 从某分类切换出去：移除该分类自动灌入变量
-              if (prevCat && prevCat !== newCat) {
-                const names = autoInjectedByCategory[prevCat] || [];
+              if (prevTag && prevTag !== newTag) {
+                const names = autoInjectedByTag[prevTag] || [];
                 if (names.length > 0) {
                   setVariables((prev) => prev.filter((v) => !names.includes(v.name)));
-                  setAutoInjectedByCategory((prev) => ({ ...prev, [prevCat]: [] }));
+                  setAutoInjectedByTag((prev) => ({ ...prev, [prevTag]: [] }));
                 }
               }
 
-              // 切换到 风险分析：自动同步变量
-              if (newCat === 'risk_analysis') {
-                await syncRiskVariables();
-              }
-
-              // 切换到 工作量评估：自动同步角色变量
-              if (newCat === 'workload_evaluation') {
-                await syncCostVariables();
+              const handler = AUTO_SYNC_CONFIG[newTag];
+              if (handler) {
+                await handler(variables, setVariables, setAutoInjectedByTag);
               }
             }
           }}
           initialValues={{
-            category: 'custom',
+            module_tag: 'general',
             is_active: true,
           }}
         >
@@ -386,17 +377,30 @@ const PromptTemplateForm: React.FC = () => {
           </Form.Item>
 
           <Form.Item
-            name="category"
-            label="分类"
-            rules={[{ required: true, message: '请选择分类' }]}
+            name="module_tag"
+            label={
+              <Space>
+                <span>模块标签</span>
+                <Button type="link" size="small" onClick={openAddTagModal} disabled={isSystemTemplate}>
+                  + 新增
+                </Button>
+              </Space>
+            }
+            rules={[{ required: true, message: '请选择模块标签' }]}
           >
-            <Select placeholder="请选择分类" disabled={isSystemTemplate}>
-              {PROMPT_TEMPLATE_CATEGORY_OPTIONS.map((option) => (
-                <Select.Option key={option.value} value={option.value}>
-                  {option.label}
-                </Select.Option>
-              ))}
-            </Select>
+            <Select
+              showSearch
+              allowClear
+              placeholder="请选择模块标签"
+              disabled={isSystemTemplate}
+              options={moduleTagOptions.map((t) => ({
+                value: t.value,
+                label: `${t.label} (${t.value})`,
+              }))}
+              filterOption={(input, option) =>
+                (option?.label as string)?.toLowerCase().includes(input.toLowerCase()) ?? false
+              }
+            />
           </Form.Item>
 
           <Form.Item
@@ -404,11 +408,7 @@ const PromptTemplateForm: React.FC = () => {
             label="描述"
             rules={[{ max: 500, message: '最多500个字符' }]}
           >
-            <TextArea
-              rows={3}
-              placeholder="请输入描述"
-              disabled={isSystemTemplate}
-            />
+            <TextArea rows={3} placeholder="请输入描述" disabled={isSystemTemplate} />
           </Form.Item>
 
           <Form.Item
@@ -424,14 +424,9 @@ const PromptTemplateForm: React.FC = () => {
             name="system_prompt"
             label="系统提示词"
             rules={[{ required: true, message: '请输入系统提示词' }]}
-            help="定义 AI 的角色、专业领域和任务目标"
+            help="定义 AI 的角色，专业领域和任务目标"
           >
-            <TextArea
-              rows={6}
-              placeholder="请输入系统提示词"
-              disabled={isSystemTemplate}
-              showCount
-            />
+            <TextArea rows={6} placeholder="请输入系统提示词" disabled={isSystemTemplate} showCount />
           </Form.Item>
 
           <Form.Item
@@ -461,25 +456,15 @@ const PromptTemplateForm: React.FC = () => {
               />
             </Form.Item>
 
-            {/* 未定义变量警告 */}
             {detectedUndefinedVars.length > 0 && (
               <Alert
                 message={
                   <Space wrap size="small">
-                    <span>
-                      检测到 {detectedUndefinedVars.length} 个未定义变量:
-                    </span>
+                    <span>检测到 {detectedUndefinedVars.length} 个未定义变量:</span>
                     {detectedUndefinedVars.map((v) => (
-                      <Tag key={v} color="warning">
-                        {v}
-                      </Tag>
+                      <Tag key={v} color="warning">{v}</Tag>
                     ))}
-                    <Button
-                      type="link"
-                      size="small"
-                      onClick={handleQuickAddUndefined}
-                      disabled={isSystemTemplate}
-                    >
+                    <Button type="link" size="small" onClick={handleQuickAddUndefined} disabled={isSystemTemplate}>
                       快速添加
                     </Button>
                   </Space>
@@ -491,19 +476,17 @@ const PromptTemplateForm: React.FC = () => {
             )}
           </Form.Item>
 
-          {/* 变量管理区域 */}
           <Form.Item
             label={
               <Space>
                 <span>变量定义</span>
-                {categoryValue === 'risk_analysis' && !isSystemTemplate && (
-                  <Button size="small" onClick={syncRiskVariables}>
+                {showRiskImport && !isSystemTemplate && (
+                  <Button size="small" onClick={() => syncRiskVariables(variables, setVariables, setAutoInjectedByTag)}>
                     从评估类别导入
                   </Button>
                 )}
-                {categoryValue === 'workload_evaluation' &&
-                  !isSystemTemplate && (
-                  <Button size="small" onClick={syncCostVariables}>
+                {showCostImport && !isSystemTemplate && (
+                  <Button size="small" onClick={() => syncCostVariables(variables, setVariables, setAutoInjectedByTag)}>
                     从角色配置导入
                   </Button>
                 )}
@@ -521,22 +504,11 @@ const PromptTemplateForm: React.FC = () => {
 
           <Form.Item>
             <Space>
-              <Button onClick={() => history.push('/model-config/prompts')}>
-                取消
-              </Button>
-              <Button
-                type="default"
-                icon={<EyeOutlined />}
-                onClick={() => setPreviewVisible(true)}
-                disabled={variables.length === 0}
-              >
+              <Button onClick={() => history.push('/model-config/prompts')}>取消</Button>
+              <Button type="default" icon={<EyeOutlined />} onClick={() => setPreviewVisible(true)} disabled={variables.length === 0}>
                 预览
               </Button>
-              <Button
-                type="primary"
-                htmlType="submit"
-                disabled={isSystemTemplate}
-              >
+              <Button type="primary" htmlType="submit" disabled={isSystemTemplate}>
                 保存
               </Button>
             </Space>
@@ -544,7 +516,44 @@ const PromptTemplateForm: React.FC = () => {
         </Form>
       </Card>
 
-      {/* 变量编辑对话框 */}
+      <Modal
+        title="新增模块标签"
+        open={addTagModalVisible}
+        onOk={handleAddTag}
+        onCancel={() => setAddTagModalVisible(false)}
+        okText="添加"
+        cancelText="取消"
+        destroyOnClose
+      >
+        <Form form={addTagForm} layout="vertical" style={{ marginTop: 16 }}>
+          <Form.Item
+            name="tag_value"
+            label="标签值"
+            rules={[
+              { required: true, message: '请输入标签值' },
+              { pattern: /^[a-z_0-9]+$/, message: '仅支持英文小写字母、数字和下划线，如 risk_simple' },
+            ]}
+            extra="存储到数据库的值，如 risk_simple"
+          >
+            <Input placeholder="如 risk_simple" />
+          </Form.Item>
+          <Form.Item
+            name="tag_label"
+            label="展示名称"
+            rules={[{ required: true, message: '请输入展示名称' }]}
+            extra="前端列表和下拉中显示的名称"
+          >
+            <Input placeholder="如 简易风险分析" />
+          </Form.Item>
+          <Form.Item
+            name="tag_description"
+            label="描述（可选）"
+          >
+            <Input placeholder="如 用于风险评估向导的简易模板" />
+          </Form.Item>
+        </Form>
+      </Modal>
+
       <VariableEditor
         visible={variableEditorVisible}
         variable={editingVariable}
@@ -552,7 +561,6 @@ const PromptTemplateForm: React.FC = () => {
         onCancel={() => setVariableEditorVisible(false)}
       />
 
-      {/* 预览对话框 */}
       {isEdit && (
         <PreviewModal
           visible={previewVisible}

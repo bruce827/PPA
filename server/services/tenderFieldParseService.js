@@ -487,9 +487,9 @@ async function executeTenderFieldParse(id, payload = {}) {
       throw validationError('缺少必填参数：promptTemplateId');
     }
 
-    template = await promptTemplateService.ensureActiveTemplateByCategory(
+    template = await promptTemplateService.ensureActiveTemplateByModuleTag(
       promptTemplateId,
-      'tender_field_parse',
+      'tender',
       '招标字段解析'
     );
     variableMap = buildVariableMap(record, contentExcerpt);
@@ -534,12 +534,20 @@ async function executeTenderFieldParse(id, payload = {}) {
     });
 
     const providerCall = providerImpl.createRiskAssessment(providerParams);
+    let serviceTimeoutHandle = null;
     const providerResult = await Promise.race([
       providerCall,
-      new Promise((_, reject) =>
-        setTimeout(() => reject(timeoutError('招标字段解析超时')), PARSE_SERVICE_TIMEOUT_MS)
-      ),
-    ]);
+      new Promise((_, reject) => {
+        serviceTimeoutHandle = setTimeout(
+          () => reject(timeoutError('招标字段解析超时')),
+          PARSE_SERVICE_TIMEOUT_MS
+        );
+      }),
+    ]).finally(() => {
+      if (serviceTimeoutHandle) {
+        clearTimeout(serviceTimeoutHandle);
+      }
+    });
 
     providerRaw = providerResult.data || providerResult;
     durationMs = providerResult.durationMs || 0;

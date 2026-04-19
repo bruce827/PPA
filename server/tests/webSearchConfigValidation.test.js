@@ -20,6 +20,8 @@ describe('web search config validation', () => {
 
     await db.init(TEST_DB_PATH);
 
+    await db.run('DROP TABLE IF EXISTS prompt_templates');
+
     await db.run(`
       CREATE TABLE IF NOT EXISTS ai_model_configs (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -46,13 +48,14 @@ describe('web search config validation', () => {
       CREATE TABLE IF NOT EXISTS prompt_templates (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         template_name TEXT NOT NULL,
-        category TEXT NOT NULL,
+        module_tag TEXT NOT NULL DEFAULT 'general',
         description TEXT,
         system_prompt TEXT NOT NULL,
         user_prompt_template TEXT NOT NULL,
         variables_json TEXT,
-        is_system BOOLEAN NOT NULL DEFAULT 0,
-        is_active BOOLEAN NOT NULL DEFAULT 1,
+        is_system INTEGER NOT NULL DEFAULT 0,
+        is_active INTEGER NOT NULL DEFAULT 1,
+        is_current INTEGER DEFAULT 0,
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
         updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
       )
@@ -88,9 +91,9 @@ describe('web search config validation', () => {
       ]
     );
     const promptInsert = await db.run(
-      `INSERT INTO prompt_templates (template_name, category, system_prompt, user_prompt_template, is_active)
+      `INSERT INTO prompt_templates (template_name, module_tag, system_prompt, user_prompt_template, is_active)
        VALUES (?, ?, ?, ?, ?)`,
-      ['联网搜索模板', 'web_search', '只返回 JSON', '项目：{{project_title}}', 1]
+      ['联网搜索模板', 'bidding_search', '只返回 JSON', '项目：{{project_title}}', 1]
     );
 
     const providerCall = jest.fn();
@@ -106,9 +109,9 @@ describe('web search config validation', () => {
 
   test('should reject missing models before provider call', async () => {
     const promptInsert = await db.run(
-      `INSERT INTO prompt_templates (template_name, category, system_prompt, user_prompt_template, is_active)
+      `INSERT INTO prompt_templates (template_name, module_tag, system_prompt, user_prompt_template, is_active)
        VALUES (?, ?, ?, ?, ?)`,
-      ['联网搜索模板', 'web_search', '只返回 JSON', '项目：{{project_title}}', 1]
+      ['联网搜索模板', 'bidding_search', '只返回 JSON', '项目：{{project_title}}', 1]
     );
 
     const providerCall = jest.fn();
@@ -137,9 +140,9 @@ describe('web search config validation', () => {
       ]
     );
     const promptInsert = await db.run(
-      `INSERT INTO prompt_templates (template_name, category, system_prompt, user_prompt_template, is_active)
+      `INSERT INTO prompt_templates (template_name, module_tag, system_prompt, user_prompt_template, is_active)
        VALUES (?, ?, ?, ?, ?)`,
-      ['禁用模板', 'web_search', '只返回 JSON', '项目：{{project_title}}', 0]
+      ['禁用模板', 'bidding_search', '只返回 JSON', '项目：{{project_title}}', 0]
     );
 
     const providerCall = jest.fn();
@@ -149,7 +152,7 @@ describe('web search config validation', () => {
         modelId: modelInsert.id,
         promptTemplateId: promptInsert.id,
       })
-    ).rejects.toThrow('所选提示词模板未启用，无法用于联网搜索');
+    ).rejects.toThrow('所选提示词模板未启用，无法用于全网招标检索');
     expect(providerCall).not.toHaveBeenCalled();
   });
 
@@ -168,9 +171,9 @@ describe('web search config validation', () => {
       ]
     );
     const promptInsert = await db.run(
-      `INSERT INTO prompt_templates (template_name, category, system_prompt, user_prompt_template, is_active)
+      `INSERT INTO prompt_templates (template_name, module_tag, system_prompt, user_prompt_template, is_active)
        VALUES (?, ?, ?, ?, ?)`,
-      ['风险模板', 'risk_analysis', '只返回 JSON', '项目：{{project_title}}', 1]
+      ['风险模板', 'assessment', '只返回 JSON', '项目：{{project_title}}', 1]
     );
 
     const providerCall = jest.fn();
@@ -180,7 +183,7 @@ describe('web search config validation', () => {
         modelId: modelInsert.id,
         promptTemplateId: promptInsert.id,
       })
-    ).rejects.toThrow('所选提示词模板不属于联网搜索分类');
+    ).rejects.toThrow('所选提示词模板不属于全网招标检索分类');
     expect(providerCall).not.toHaveBeenCalled();
   });
 
@@ -225,9 +228,9 @@ describe('web search config validation', () => {
       ]
     );
     const promptInsert = await db.run(
-      `INSERT INTO prompt_templates (template_name, category, system_prompt, user_prompt_template, is_active)
+      `INSERT INTO prompt_templates (template_name, module_tag, system_prompt, user_prompt_template, is_active)
        VALUES (?, ?, ?, ?, ?)`,
-      ['联网搜索模板', 'web_search', '只返回 JSON', '项目：{{project_title}}', 1]
+      ['联网搜索模板', 'bidding_search', '只返回 JSON', '项目：{{project_title}}', 1]
     );
 
     const result = await aiModelService.validateWebSearchRuntimeConfig({
@@ -236,6 +239,6 @@ describe('web search config validation', () => {
     });
 
     expect(result.model.supports_web_search).toBe(1);
-    expect(result.template.category).toBe('web_search');
+    expect(result.template.module_tag).toBe('bidding_search');
   });
 });

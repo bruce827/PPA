@@ -4,6 +4,10 @@ const configController = require('../controllers/configController');
 const aiModelController = require('../controllers/aiModelController');
 const promptTemplateController = require('../controllers/promptTemplateController');
 const {
+  getPromptModuleTags,
+} = require('../services/promptTemplateService');
+const promptModuleTagService = require('../services/promptModuleTagService');
+const {
   validateGetAIModels,
   handleAIModelValidation,
 } = require('../middleware/aiModelValidation');
@@ -76,6 +80,40 @@ router.post(
   handlePromptTemplateValidation,
   promptTemplateController.previewTemplate
 );
+
+// 推荐模块标签（用于前端下拉）
+router.get('/prompt-module-tags', async (req, res, next) => {
+  try {
+    const tags = await getPromptModuleTags();
+    res.json({ success: true, data: tags });
+  } catch (error) {
+    next(error);
+  }
+});
+router.post('/prompt-module-tags', async (req, res, next) => {
+  try {
+    const tag = await promptModuleTagService.createTag(req.body);
+    res.json({ success: true, data: tag });
+  } catch (error) {
+    next(error);
+  }
+});
+router.put('/prompt-module-tags/:id', async (req, res, next) => {
+  try {
+    const tag = await promptModuleTagService.updateTag(Number(req.params.id), req.body);
+    res.json({ success: true, data: tag });
+  } catch (error) {
+    next(error);
+  }
+});
+router.delete('/prompt-module-tags/:id', async (req, res, next) => {
+  try {
+    await promptModuleTagService.deleteTag(Number(req.params.id));
+    res.json({ success: true });
+  } catch (error) {
+    next(error);
+  }
+});
 
 // 角色配置路由
 router.get('/roles', configController.getAllRoles);

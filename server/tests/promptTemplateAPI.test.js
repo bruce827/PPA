@@ -27,19 +27,20 @@ describe('Prompt Template API', () => {
       CREATE TABLE IF NOT EXISTS prompt_templates (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         template_name TEXT NOT NULL,
-        category TEXT NOT NULL CHECK(category IN ('risk_analysis', 'cost_estimation', 'report_generation', 'custom')),
+        module_tag TEXT NOT NULL DEFAULT 'general',
         description TEXT,
         system_prompt TEXT NOT NULL,
         user_prompt_template TEXT NOT NULL,
         variables_json TEXT,
-        is_system BOOLEAN NOT NULL DEFAULT 0,
-        is_active BOOLEAN NOT NULL DEFAULT 1,
+        is_system INTEGER NOT NULL DEFAULT 0,
+        is_active INTEGER NOT NULL DEFAULT 1,
+        is_current INTEGER DEFAULT 0,
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
         updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
       )
     `);
     await db.run(
-      'CREATE INDEX IF NOT EXISTS idx_prompt_category ON prompt_templates(category)'
+      'CREATE INDEX IF NOT EXISTS idx_prompt_module_tag ON prompt_templates(module_tag)'
     );
     await db.run(
       'CREATE INDEX IF NOT EXISTS idx_prompt_active ON prompt_templates(is_active)'
@@ -64,7 +65,7 @@ describe('Prompt Template API', () => {
     await db.run('DELETE FROM prompt_templates');
   });
 
-  test('POST /api/config/prompts should create a web_search template and persist variables_json', async () => {
+  test('POST /api/config/prompts should create a bidding_search template and persist variables_json', async () => {
     const variables = [
       {
         name: 'project_title',
@@ -76,7 +77,7 @@ describe('Prompt Template API', () => {
 
     const response = await request(app).post('/api/config/prompts').send({
       template_name: '招标项目全网检索',
-      category: 'web_search',
+      module_tag: 'bidding_search',
       description: '联网搜索模板',
       system_prompt: '只返回 JSON',
       user_prompt_template: '项目：{{project_title}}',
@@ -86,21 +87,21 @@ describe('Prompt Template API', () => {
 
     expect(response.status).toBe(201);
     expect(response.body.template_name).toBe('招标项目全网检索');
-    expect(response.body.category).toBe('web_search');
+    expect(response.body.module_tag).toBe('bidding_search');
 
     const stored = await db.get(
-      'SELECT category, variables_json FROM prompt_templates WHERE template_name = ?',
+      'SELECT module_tag, variables_json FROM prompt_templates WHERE template_name = ?',
       ['招标项目全网检索']
     );
-    expect(stored.category).toBe('web_search');
+    expect(stored.module_tag).toBe('bidding_search');
     expect(JSON.parse(stored.variables_json)).toEqual(variables);
   });
 
-  test('PUT /api/config/prompts/:id should update a template to web_search and return the canonical category', async () => {
+  test('PUT /api/config/prompts/:id should update a template to bidding_search', async () => {
     const created = await request(app).post('/api/config/prompts').send({
       template_name: '可升级模板',
-      category: 'risk_analysis',
-      description: '旧分类模板',
+      module_tag: 'assessment',
+      description: '旧模块标签模板',
       system_prompt: '旧 system',
       user_prompt_template: '旧 user',
       variables_json: JSON.stringify([]),
@@ -111,7 +112,7 @@ describe('Prompt Template API', () => {
       .put(`/api/config/prompts/${created.body.id}`)
       .send({
         template_name: '可升级模板',
-        category: 'web_search',
+        module_tag: 'bidding_search',
         description: '升级为联网搜索',
         system_prompt: '新 system',
         user_prompt_template: '新 user',
@@ -127,22 +128,22 @@ describe('Prompt Template API', () => {
       });
 
     expect(response.status).toBe(200);
-    expect(response.body.category).toBe('web_search');
+    expect(response.body.module_tag).toBe('bidding_search');
 
     const stored = await db.get(
-      'SELECT category FROM prompt_templates WHERE id = ?',
+      'SELECT module_tag FROM prompt_templates WHERE id = ?',
       [created.body.id]
     );
-    expect(stored.category).toBe('web_search');
+    expect(stored.module_tag).toBe('bidding_search');
   });
 
-  test('GET /api/config/prompts should filter web_search templates only', async () => {
+  test('GET /api/config/prompts should filter bidding_search templates only', async () => {
     await db.run(
-      `INSERT INTO prompt_templates (template_name, category, description, system_prompt, user_prompt_template, variables_json, is_system, is_active)
+      `INSERT INTO prompt_templates (template_name, module_tag, description, system_prompt, user_prompt_template, variables_json, is_system, is_active)
        VALUES (?, ?, ?, ?, ?, ?, 0, 1)`,
       [
         '联网搜索模板',
-        'web_search',
+        'bidding_search',
         '联网搜索',
         '只返回 JSON',
         '项目：{{project_title}}',
@@ -150,11 +151,11 @@ describe('Prompt Template API', () => {
       ]
     );
     await db.run(
-      `INSERT INTO prompt_templates (template_name, category, description, system_prompt, user_prompt_template, variables_json, is_system, is_active)
+      `INSERT INTO prompt_templates (template_name, module_tag, description, system_prompt, user_prompt_template, variables_json, is_system, is_active)
        VALUES (?, ?, ?, ?, ?, ?, 0, 1)`,
       [
         '风险模板',
-        'risk_analysis',
+        'assessment',
         '风险',
         '只返回 JSON',
         '{}',
@@ -164,22 +165,22 @@ describe('Prompt Template API', () => {
 
     const response = await request(app)
       .get('/api/config/prompts')
-      .query({ category: 'web_search', is_active: 1 });
+      .query({ module_tag: 'bidding_search', is_active: 1 });
 
     expect(response.status).toBe(200);
     expect(Array.isArray(response.body.data)).toBe(true);
     expect(response.body.data).toHaveLength(1);
     expect(response.body.data[0].template_name).toBe('联网搜索模板');
-    expect(response.body.data[0].category).toBe('web_search');
+    expect(response.body.data[0].module_tag).toBe('bidding_search');
   });
 
-  test('GET /api/config/prompts should only return active web_search templates when is_active=1', async () => {
+  test('GET /api/config/prompts should only return active bidding_search templates when is_active=1', async () => {
     await db.run(
-      `INSERT INTO prompt_templates (template_name, category, description, system_prompt, user_prompt_template, variables_json, is_system, is_active)
+      `INSERT INTO prompt_templates (template_name, module_tag, description, system_prompt, user_prompt_template, variables_json, is_system, is_active)
        VALUES (?, ?, ?, ?, ?, ?, 0, 1)`,
       [
         '启用联网搜索模板',
-        'web_search',
+        'bidding_search',
         '启用',
         '只返回 JSON',
         '项目：{{project_title}}',
@@ -187,11 +188,11 @@ describe('Prompt Template API', () => {
       ]
     );
     await db.run(
-      `INSERT INTO prompt_templates (template_name, category, description, system_prompt, user_prompt_template, variables_json, is_system, is_active)
+      `INSERT INTO prompt_templates (template_name, module_tag, description, system_prompt, user_prompt_template, variables_json, is_system, is_active)
        VALUES (?, ?, ?, ?, ?, ?, 0, 0)`,
       [
         '禁用联网搜索模板',
-        'web_search',
+        'bidding_search',
         '禁用',
         '只返回 JSON',
         '项目：{{project_title}}',
@@ -201,42 +202,42 @@ describe('Prompt Template API', () => {
 
     const response = await request(app)
       .get('/api/config/prompts')
-      .query({ category: 'web_search', is_active: 1 });
+      .query({ module_tag: 'bidding_search', is_active: 1 });
 
     expect(response.status).toBe(200);
     expect(response.body.data).toHaveLength(1);
     expect(response.body.data[0].template_name).toBe('启用联网搜索模板');
-    expect(response.body.data[0].category).toBe('web_search');
+    expect(response.body.data[0].module_tag).toBe('bidding_search');
   });
 
-  test('POST /api/config/prompts should normalize legacy cost_estimation into workload_evaluation', async () => {
+  test('POST /api/config/prompts should accept arbitrary module_tag including non-recommended values', async () => {
     const response = await request(app).post('/api/config/prompts').send({
-      template_name: '旧成本模板',
-      category: 'cost_estimation',
-      description: '旧分类别名',
+      template_name: '自定义标签模板',
+      module_tag: 'custom_tag',
+      description: '自由输入的模块标签',
       system_prompt: '只返回 JSON',
-      user_prompt_template: '角色：{{roles}}',
+      user_prompt_template: '内容：{{value}}',
       variables_json: JSON.stringify([]),
       is_active: 1,
     });
 
     expect(response.status).toBe(201);
-    expect(response.body.category).toBe('workload_evaluation');
+    expect(response.body.module_tag).toBe('custom_tag');
 
     const stored = await db.get(
-      'SELECT category FROM prompt_templates WHERE template_name = ?',
-      ['旧成本模板']
+      'SELECT module_tag FROM prompt_templates WHERE template_name = ?',
+      ['自定义标签模板']
     );
-    expect(stored.category).toBe('workload_evaluation');
+    expect(stored.module_tag).toBe('custom_tag');
   });
 
-  test('GET /api/config/prompts should accept legacy cost_estimation filter and return canonical workload_evaluation templates', async () => {
+  test('GET /api/config/prompts should filter by exact module_tag value', async () => {
     await db.run(
-      `INSERT INTO prompt_templates (template_name, category, description, system_prompt, user_prompt_template, variables_json, is_system, is_active)
+      `INSERT INTO prompt_templates (template_name, module_tag, description, system_prompt, user_prompt_template, variables_json, is_system, is_active)
        VALUES (?, ?, ?, ?, ?, ?, 0, 1)`,
       [
         '工作量模板',
-        'workload_evaluation',
+        'assessment',
         '工作量评估',
         '只返回 JSON',
         '角色：{{roles}}',
@@ -246,18 +247,18 @@ describe('Prompt Template API', () => {
 
     const response = await request(app)
       .get('/api/config/prompts')
-      .query({ category: 'cost_estimation', is_active: 1 });
+      .query({ module_tag: 'assessment', is_active: 1 });
 
     expect(response.status).toBe(200);
     expect(response.body.data).toHaveLength(1);
-    expect(response.body.data[0].category).toBe('workload_evaluation');
+    expect(response.body.data[0].module_tag).toBe('assessment');
   });
 
-  test('POST /api/config/prompts should reject invalid categories', async () => {
+  test('POST /api/config/prompts should reject empty module_tag', async () => {
     const response = await request(app).post('/api/config/prompts').send({
-      template_name: '非法模板',
-      category: 'not_a_real_category',
-      description: '非法',
+      template_name: '空标签模板',
+      module_tag: '',
+      description: '空模块标签',
       system_prompt: '只返回 JSON',
       user_prompt_template: '内容',
       variables_json: JSON.stringify([]),
@@ -266,6 +267,6 @@ describe('Prompt Template API', () => {
 
     expect(response.status).toBe(400);
     expect(response.body.success).toBe(false);
-    expect(response.body.message).toContain('category');
+    expect(response.body.message).toContain('module_tag');
   });
 });

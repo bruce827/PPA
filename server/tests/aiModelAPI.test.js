@@ -126,6 +126,21 @@ describe('AI Model API', () => {
     expect(currentVisionRes.body.data.config_name).toBe('vision-model');
   });
 
+  test('POST /api/config/ai-models should reject unsupported providers when supports_vision is enabled', async () => {
+    const response = await request(app).post('/api/config/ai-models').send({
+      config_name: 'unsupported-vision-model',
+      provider: 'OpenAI',
+      api_key: 'secret-key',
+      api_host: 'https://example.com/v1/chat/completions',
+      model_name: 'gpt-test',
+      supports_vision: 1,
+    });
+
+    expect(response.status).toBe(400);
+    expect(response.body.success).toBe(false);
+    expect(response.body.message).toContain('仅 Gemini / MiniMax');
+  });
+
   test('POST /api/config/ai-models/:id/set-current-vision should reject non-vision models', async () => {
     const createRes = await request(app).post('/api/config/ai-models').send({
       config_name: 'non-vision-model',
@@ -142,7 +157,67 @@ describe('AI Model API', () => {
 
     expect(response.status).toBe(400);
     expect(response.body.success).toBe(false);
-    expect(response.body.message).toContain('图片识别');
+    expect(response.body.message).toContain('仅 Gemini / MiniMax');
+  });
+
+  test('POST /api/config/ai-models/:id/set-current-vision should reject dirty unsupported vision models', async () => {
+    await db.run(
+      `INSERT INTO ai_model_configs (
+        config_name, description, provider, api_key, api_host, model_name,
+        temperature, max_tokens, timeout, is_current, is_current_vision, is_active,
+        supports_web_search, supports_vision
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      [
+        'dirty-openai-vision',
+        null,
+        'OpenAI',
+        'secret-key',
+        'https://example.com/v1/chat/completions',
+        'gpt-test',
+        0.7,
+        2000,
+        30,
+        0,
+        0,
+        1,
+        0,
+        1,
+      ],
+    );
+    const stored = await db.get(
+      'SELECT id FROM ai_model_configs WHERE config_name = ?',
+      ['dirty-openai-vision'],
+    );
+
+    const response = await request(app).post(
+      `/api/config/ai-models/${stored.id}/set-current-vision`
+    );
+
+    expect(response.status).toBe(400);
+    expect(response.body.success).toBe(false);
+    expect(response.body.message).toContain('仅 Gemini / MiniMax');
+  });
+
+  test('PUT /api/config/ai-models/:id should reject switching a vision model to unsupported provider without clearing vision flags', async () => {
+    const createRes = await request(app).post('/api/config/ai-models').send({
+      config_name: 'switch-away-from-vision',
+      provider: 'Google',
+      api_key: 'secret-key',
+      api_host: 'https://generativelanguage.googleapis.com',
+      model_name: 'gemini-2.5-pro',
+      supports_vision: 1,
+    });
+
+    const response = await request(app)
+      .put(`/api/config/ai-models/${createRes.body.data.id}`)
+      .send({
+        provider: 'OpenAI',
+        api_host: 'https://example.com/v1/chat/completions',
+      });
+
+    expect(response.status).toBe(400);
+    expect(response.body.success).toBe(false);
+    expect(response.body.message).toContain('仅 Gemini / MiniMax');
   });
 
   test('POST /api/config/ai-models should reject root host for OpenAI compatible providers', async () => {

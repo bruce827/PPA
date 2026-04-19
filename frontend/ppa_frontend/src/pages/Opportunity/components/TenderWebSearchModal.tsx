@@ -129,7 +129,7 @@ const TenderWebSearchModal: React.FC<TenderWebSearchModalProps> = ({
         const [contextResponse, modelResponse, templateResponse] = await Promise.all([
           getTenderWebSearch(record.id),
           getAIModels({ supports_web_search: 1, is_active: 1 }),
-          getPromptTemplates({ category: 'web_search', is_active: 1 }),
+          getPromptTemplates({ module_tag: 'bidding_search', is_active: 1 }),
         ]);
 
         if (!active) {

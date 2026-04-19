@@ -25,6 +25,9 @@ const {
 const {
   runMigration: runPromptTemplateWeb3dStep4Migration,
 } = require('./migrations/011_expand_prompt_template_categories_for_web3d_step4');
+const {
+  runMigration: runCleanupInvalidVisionModelFlagsMigration,
+} = require('./migrations/012_cleanup_invalid_vision_model_flags');
 
 loadEnvFile();
 
@@ -44,6 +47,7 @@ async function startServer() {
     await runProjectPushRecordsMigration();
     await runAIModelVisionFlagsMigration();
     await runPromptTemplateWeb3dStep4Migration();
+    await runCleanupInvalidVisionModelFlagsMigration();
     await db.init(); // Initialize database connection
     await biddingSiteModel.ensureSchema();
     await tenderStagingModel.ensureSchema();

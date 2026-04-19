@@ -12,7 +12,7 @@ exports.main = async (event, context) => {
 
   try {
     const res = await db.collection('internal_projects')
-      .orderBy('push_time', 'desc')
+      .orderBy('pushTime', 'desc')
       .skip((pageNo - 1) * pageSize)
       .limit(pageSize)
       .get();

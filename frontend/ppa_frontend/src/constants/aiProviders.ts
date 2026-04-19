@@ -87,3 +87,24 @@ export function isCherryStudioProvider(
   if (!provider) return false;
   return String(provider).toLowerCase().includes('cherry');
 }
+
+export function isGeminiProvider(
+  provider?: string | null | undefined,
+): boolean {
+  if (!provider) return false;
+  const normalized = String(provider).toLowerCase();
+  return normalized.includes('google') || normalized.includes('gemini');
+}
+
+export function isMinimaxProvider(
+  provider?: string | null | undefined,
+): boolean {
+  if (!provider) return false;
+  return String(provider).toLowerCase().includes('minimax');
+}
+
+export function isVisionCapableProvider(
+  provider?: string | null | undefined,
+): boolean {
+  return isGeminiProvider(provider) || isMinimaxProvider(provider);
+}

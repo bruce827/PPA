@@ -30,6 +30,8 @@ exports.main = async (event, context) => {
     const result = await db.collection('internal_projects').add({
       data: {
         ...data,
+        pushTime: data.pushTime || data.push_time || null,
+        push_time: data.pushTime || data.push_time || null,
         createdAt: db.serverDate(),
       },
     });

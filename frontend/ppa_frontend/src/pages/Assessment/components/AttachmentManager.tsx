@@ -19,6 +19,7 @@ const { Dragger } = Upload;
 
 interface AttachmentRecord {
   filename: string;
+  originalname: string;
   size: number;
   uploadedAt: string;
 }
@@ -64,16 +65,17 @@ export default function AttachmentManager({ projectId }: AttachmentManagerProps)
     loadAttachments();
   }, [loadAttachments]);
 
-  const handleDelete = (filename: string) => {
+  const handleDelete = (record: AttachmentRecord) => {
+    const displayName = record.originalname || record.filename;
     Modal.confirm({
       title: '确认删除',
-      content: `确定要删除附件「${filename}」吗？此操作不可恢复。`,
+      content: `确定要删除附件「${displayName}」吗？此操作不可恢复。`,
       okText: '删除',
       okType: 'danger',
       cancelText: '取消',
       onOk: async () => {
         try {
-          const res = await deleteAttachment(projectId, filename);
+          const res = await deleteAttachment(projectId, record.filename);
           if (res?.success) {
             message.success('附件已删除');
             loadAttachments();
@@ -116,13 +118,13 @@ export default function AttachmentManager({ projectId }: AttachmentManagerProps)
   const columns = [
     {
       title: '文件名',
-      dataIndex: 'filename',
+      dataIndex: 'originalname',
       key: 'filename',
       ellipsis: true,
-      render: (val: string) => (
+      render: (_: string, record: AttachmentRecord) => (
         <Space>
           <FileOutlined />
-          <span>{val}</span>
+          <span>{record.originalname || record.filename}</span>
         </Space>
       ),
     },
@@ -159,7 +161,7 @@ export default function AttachmentManager({ projectId }: AttachmentManagerProps)
             size="small"
             danger
             icon={<DeleteOutlined />}
-            onClick={() => handleDelete(record.filename)}
+            onClick={() => handleDelete(record)}
           >
             删除
           </Button>

@@ -1,6 +1,5 @@
 import { request } from '@umijs/max';
 
-// 定义变量接口
 export interface PromptVariable {
   name: string;
   description: string;
@@ -9,58 +8,63 @@ export interface PromptVariable {
   required: boolean;
 }
 
-export type PromptTemplateCategory =
-  | 'risk_analysis'
-  | 'workload_evaluation'
-  | 'module_analysis'
-  | 'web3d_step4_analysis'
-  | 'project_tagging'
-  | 'report_generation'
-  | 'web_search'
-  | 'tender_field_parse'
-  | 'custom';
-
-export const PROMPT_TEMPLATE_CATEGORY_OPTIONS: Array<{
+export interface PromptModuleTagOption {
+  value: string;
   label: string;
-  value: PromptTemplateCategory;
-}> = [
-  { value: 'risk_analysis', label: '风险分析' },
-  { value: 'workload_evaluation', label: '工作量评估' },
-  { value: 'module_analysis', label: '模块梳理' },
-  { value: 'web3d_step4_analysis', label: 'Web3D Step4 分析' },
-  { value: 'project_tagging', label: '标签生成' },
-  { value: 'report_generation', label: '报告生成' },
-  { value: 'web_search', label: '联网搜索' },
-  { value: 'tender_field_parse', label: '招标字段解析' },
-  { value: 'custom', label: '自定义' },
-];
+  description?: string;
+  is_recommended?: number;
+}
 
-export const PROMPT_TEMPLATE_CATEGORY_VALUE_ENUM = {
-  risk_analysis: { text: '风险分析' },
-  workload_evaluation: { text: '工作量评估' },
-  module_analysis: { text: '模块梳理' },
-  web3d_step4_analysis: { text: 'Web3D Step4 分析' },
-  project_tagging: { text: '标签生成' },
-  report_generation: { text: '报告生成' },
-  web_search: { text: '联网搜索' },
-  tender_field_parse: { text: '招标字段解析' },
-  custom: { text: '自定义' },
-} as const;
+// 查询推荐模块标签（用于前端下拉）
+export async function getPromptModuleTags() {
+  return request<{ success: boolean; data: PromptModuleTagOption[] }>(
+    '/api/config/prompt-module-tags',
+    { method: 'GET' }
+  );
+}
 
 // 定义提示词模板接口
 export interface PromptTemplate {
   id: number;
   template_name: string;
-  category: PromptTemplateCategory;
+  module_tag: string;
   description?: string;
   system_prompt: string;
   user_prompt_template: string;
-  variables_json?: string; // 存储变量定义的 JSON 字符串
-  variables?: PromptVariable[]; // 解析后的变量数组
+  variables_json?: string;
+  variables?: PromptVariable[];
   is_system: boolean;
   is_active: boolean;
   created_at: string;
   updated_at: string;
+}
+
+// 模块标签 CRUD
+export async function createPromptModuleTag(data: {
+  value: string;
+  label: string;
+  description?: string;
+}) {
+  return request<PromptModuleTagOption>('/api/config/prompt-module-tags', {
+    method: 'POST',
+    data,
+  });
+}
+
+export async function updatePromptModuleTag(
+  id: number,
+  data: { label?: string; description?: string; sort_order?: number },
+) {
+  return request<PromptModuleTagOption>(`/api/config/prompt-module-tags/${id}`, {
+    method: 'PUT',
+    data,
+  });
+}
+
+export async function deletePromptModuleTag(id: number) {
+  return request(`/api/config/prompt-module-tags/${id}`, {
+    method: 'DELETE',
+  });
 }
 
 // 查询提示词模板列表
@@ -89,7 +93,7 @@ export async function createPromptTemplate(data: Partial<PromptTemplate>) {
 // 更新提示词模板
 export async function updatePromptTemplate(
   id: number,
-  data: Partial<PromptTemplate>,
+  data: Partial<PromptTemplate>
 ) {
   return request<PromptTemplate>(`/api/config/prompts/${id}`, {
     method: 'PUT',

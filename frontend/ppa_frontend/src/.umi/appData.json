@@ -51,7 +51,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 12
+        "register": 11
       },
       "enableBy": "register",
       "type": "preset",
@@ -64,7 +64,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 3
+        "register": 2
       },
       "enableBy": "register",
       "type": "preset",
@@ -81,7 +81,7 @@
             0
           ]
         },
-        "register": 2
+        "register": 3
       },
       "enableBy": "register",
       "type": "plugin",
@@ -98,7 +98,7 @@
             2
           ]
         },
-        "register": 3
+        "register": 2
       },
       "enableBy": "register",
       "type": "plugin",
@@ -113,10 +113,21 @@
         "hooks": {
           "modifyRoutes": [
             0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
             0
           ]
         },
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -130,12 +141,25 @@
       "time": {
         "hooks": {
           "onDevCompileDone": [
-            194,
-            44,
-            33
+            110,
+            34,
+            31,
+            29,
+            30,
+            31,
+            33,
+            28,
+            28,
+            26,
+            34,
+            30,
+            26,
+            29,
+            29,
+            29
           ]
         },
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -149,14 +173,25 @@
       "time": {
         "hooks": {
           "modifyAppData": [
-            27
+            26
           ],
           "onGenerateFiles": [
-            2,
-            19
+            3,
+            9,
+            12,
+            16,
+            14,
+            17,
+            12,
+            21,
+            12,
+            8,
+            15,
+            8,
+            11
           ]
         },
-        "register": 14
+        "register": 15
       },
       "enableBy": "register",
       "type": "plugin",
@@ -170,6 +205,17 @@
       "time": {
         "hooks": {
           "addEntryCode": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
             0,
             0
           ]
@@ -191,9 +237,22 @@
             0
           ],
           "onCheck": [
-            0
+            1
           ],
           "onPrepareBuildSuccess": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
             0,
             0,
             0,
@@ -202,13 +261,26 @@
           "onCheckCode": [
             0,
             0,
-            0,
             1,
             0,
             0,
             0,
             0,
-            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
             0,
             0,
             0,
@@ -237,7 +309,7 @@
             0
           ]
         },
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -254,7 +326,7 @@
             0
           ]
         },
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -267,7 +339,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1136,7 +1208,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1170,7 +1242,7 @@
             7
           ]
         },
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1183,7 +1255,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 50
+        "register": 51
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1196,7 +1268,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 26
+        "register": 28
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1209,7 +1281,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 14
+        "register": 15
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1231,6 +1303,21 @@
           "modifyHTMLFavicon": [
             0,
             0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
             0
           ]
         },
@@ -1249,9 +1336,31 @@
         "hooks": {
           "onGenerateFiles": [
             1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            1,
+            0,
+            1,
+            0,
+            0,
+            1,
             0
           ],
           "addRuntimePlugin": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
             0,
             0
           ]
@@ -1283,13 +1392,13 @@
       "time": {
         "hooks": {
           "onStart": [
-            1
+            0
           ],
           "addBeforeMiddlewares": [
             2
           ]
         },
-        "register": 21
+        "register": 23
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/preset-umi/dist/features/mock/mock.js",
@@ -1328,9 +1437,42 @@
         "hooks": {
           "onGenerateFiles": [
             0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
             0
           ],
           "addEntryImports": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
             0,
             0,
             0,
@@ -1364,13 +1506,46 @@
       "time": {
         "hooks": {
           "modifyConfig": [
-            1
+            0
           ],
           "onGenerateFiles": [
-            53,
-            32
+            55,
+            16,
+            13,
+            11,
+            11,
+            12,
+            17,
+            12,
+            14,
+            10,
+            12,
+            13,
+            17
           ],
           "addPolyfillImports": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
             0,
             0,
             0,
@@ -1393,6 +1568,28 @@
             0,
             0,
             0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
             0
           ]
         },
@@ -1410,7 +1607,18 @@
       "time": {
         "hooks": {
           "onGenerateFiles": [
-            102,
+            93,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
             0
           ]
         },
@@ -1427,7 +1635,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1440,7 +1648,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1455,7 +1663,18 @@
         "hooks": {
           "onGenerateFiles": [
             0,
-            0
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1
           ],
           "addBeforeMiddlewares": [
             0
@@ -1475,10 +1694,32 @@
       "time": {
         "hooks": {
           "onGenerateFiles": [
+            9,
+            6,
             10,
-            5,
-            19,
-            4
+            3,
+            9,
+            3,
+            9,
+            3,
+            10,
+            3,
+            9,
+            3,
+            10,
+            3,
+            8,
+            3,
+            11,
+            2,
+            8,
+            3,
+            8,
+            2,
+            8,
+            3,
+            8,
+            2
           ]
         },
         "register": 3
@@ -1533,8 +1774,19 @@
       "time": {
         "hooks": {
           "onGenerateFiles": [
-            258,
-            37
+            261,
+            9,
+            9,
+            9,
+            8,
+            5,
+            9,
+            8,
+            6,
+            5,
+            9,
+            8,
+            9
           ]
         },
         "register": 2
@@ -1554,7 +1806,7 @@
             0
           ]
         },
-        "register": 1
+        "register": 2
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1605,7 +1857,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 14
+        "register": 15
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1620,7 +1872,18 @@
         "hooks": {
           "onGenerateFiles": [
             1,
-            1
+            0,
+            0,
+            0,
+            1,
+            1,
+            1,
+            0,
+            0,
+            1,
+            0,
+            1,
+            0
           ]
         },
         "register": 1
@@ -1728,7 +1991,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/preset-umi/dist/features/utoopack/utoopack.js",
@@ -1740,7 +2003,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 2
+        "register": 1
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/preset-umi/dist/features/hmrGuardian/hmrGuardian.js",
@@ -1752,7 +2015,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 16
+        "register": 18
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/preset-umi/dist/features/routePreloadOnLoad/routePreloadOnLoad.js",
@@ -1778,7 +2041,7 @@
       "time": {
         "hooks": {
           "modifyUniBundler": [
-            333
+            343
           ]
         },
         "register": 1
@@ -1794,7 +2057,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 2
+        "register": 3
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1824,7 +2087,7 @@
             8
           ]
         },
-        "register": 29
+        "register": 28
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/preset-umi/dist/commands/dev/dev.js",
@@ -1940,7 +2203,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1953,7 +2216,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1979,7 +2242,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1992,7 +2255,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -2018,7 +2281,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -2031,7 +2294,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -2070,7 +2333,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 13
+        "register": 14
       },
       "enableBy": "register",
       "type": "plugin",
@@ -2111,11 +2374,33 @@
         "hooks": {
           "addRuntimePlugin": [
             0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
             0
           ],
           "onGenerateFiles": [
             1,
-            1
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0
           ],
           "addTmpGenerateWatcherPaths": [
             0
@@ -2149,7 +2434,7 @@
       "time": {
         "hooks": {
           "modifyConfig": [
-            3
+            4
           ],
           "modifyAppData": [
             0
@@ -2158,18 +2443,73 @@
             0,
             0,
             0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
             0
           ],
           "addRuntimePlugin": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
             0,
             0
           ],
           "addRuntimePluginKey": [
             0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
             0
           ],
           "onGenerateFiles": [
             2,
+            0,
+            1,
+            1,
+            1,
+            0,
+            1,
+            0,
+            0,
+            0,
+            1,
+            1,
             1
           ],
           "addExtraBabelPlugins": [
@@ -2179,7 +2519,7 @@
             0
           ]
         },
-        "register": 4
+        "register": 5
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/plugins/dist/antd.js",
@@ -2206,17 +2546,61 @@
         "hooks": {
           "addRuntimePlugin": [
             0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
             0
           ],
           "addRuntimePluginKey": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
             0,
             0
           ],
           "onGenerateFiles": [
             0,
+            1,
+            1,
+            0,
+            0,
+            0,
+            1,
+            0,
+            1,
+            0,
+            0,
+            0,
             0
           ],
           "addExtraModels": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
             0,
             0
           ]
@@ -2241,21 +2625,65 @@
           ],
           "addLayouts": [
             0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
             0
           ],
           "modifyAppData": [
-            1
+            0
           ],
           "addRuntimePlugin": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
             0,
             0
           ],
           "addRuntimePluginKey": [
             0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
             0
           ],
           "onGenerateFiles": [
             6,
+            2,
+            2,
+            1,
+            3,
+            1,
+            2,
+            1,
+            3,
+            2,
+            1,
+            2,
             2
           ]
         },
@@ -2300,17 +2728,39 @@
         "hooks": {
           "addRuntimePlugin": [
             0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
             0
           ],
           "onGenerateFiles": [
-            24,
-            29
+            25,
+            17,
+            17,
+            20,
+            18,
+            18,
+            18,
+            18,
+            17,
+            18,
+            19,
+            17,
+            18
           ],
           "addTmpGenerateWatcherPaths": [
-            0
+            1
           ]
         },
-        "register": 3
+        "register": 2
       },
       "enableBy": "config",
       "type": "plugin",
@@ -2323,7 +2773,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "config",
       "type": "plugin",
@@ -2338,10 +2788,21 @@
         "hooks": {
           "addRuntimePluginKey": [
             0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
             0
           ]
         },
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -2354,7 +2815,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/plugins/dist/qiankun/master.js",
@@ -2378,7 +2839,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "config",
       "type": "plugin",
@@ -2393,14 +2854,36 @@
         "hooks": {
           "addRuntimePluginKey": [
             0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
             0
           ],
           "onGenerateFiles": [
-            3,
-            1
+            2,
+            1,
+            1,
+            0,
+            1,
+            0,
+            1,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0
           ]
         },
-        "register": 1
+        "register": 0
       },
       "enableBy": "config",
       "type": "plugin",
@@ -2426,7 +2909,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "config",
       "type": "plugin",
@@ -2439,7 +2922,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "config",
       "type": "plugin",
@@ -2456,7 +2939,7 @@
             0
           ]
         },
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -2490,7 +2973,7 @@
             0
           ]
         },
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -2503,7 +2986,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -3881,7 +4364,7 @@
       "parentId": "8",
       "id": "10",
       "absPath": "/web3d/history",
-      "__content": "import {\n  deleteWeb3dProject,\n  getWeb3dProjects,\n} from '@/services/web3d';\nimport { DeleteOutlined, ExportOutlined, EyeOutlined, ReloadOutlined } from '@ant-design/icons';\nimport { PageContainer } from '@ant-design/pro-components';\nimport { history } from '@umijs/max';\nimport { App, Button, Popconfirm, Space, Table, Tag } from 'antd';\nimport React, { useEffect, useState } from 'react';\n\nconst HistoryWeb3D: React.FC = () => {\n  const { message } = App.useApp();\n  const [loading, setLoading] = useState(false);\n  const [data, setData] = useState<API_WEB3D.Project[]>([]);\n\n  const load = async () => {\n    setLoading(true);\n    try {\n      const res = await getWeb3dProjects();\n      setData(res?.data || []);\n    } catch (err: any) {\n      message.error(err?.message || '加载项目失败');\n    } finally {\n      setLoading(false);\n    }\n  };\n\n  useEffect(() => {\n    load();\n  }, []);\n\n  const handleDelete = async (record: API_WEB3D.Project) => {\n    try {\n      await deleteWeb3dProject(record.id);\n      message.success('已删除');\n      load();\n    } catch (err: any) {\n      message.error(err?.message || '删除失败');\n    }\n  };\n\n  return (\n    <PageContainer\n      loading={loading}\n      title=\"Web3D 历史项目\"\n      extra={\n        <Space>\n          <Button onClick={load} icon={<ReloadOutlined />}>\n            刷新\n          </Button>\n          <Button type=\"primary\" onClick={() => history.push('/web3d/new')}>\n            新建评估\n          </Button>\n        </Space>\n      }\n    >\n      <Table\n        rowKey=\"id\"\n        dataSource={data}\n        pagination={{ pageSize: 10 }}\n        columns={[\n          { title: 'ID', dataIndex: 'id', width: 80 },\n          { title: '名称', dataIndex: 'name' },\n          {\n            title: '成本(万元)',\n            dataIndex: 'final_total_cost',\n            render: (v) => Number(v || 0).toFixed(2),\n          },\n          {\n            title: '风险总分',\n            dataIndex: 'final_risk_score',\n          },\n          {\n            title: '类型',\n            dataIndex: 'project_type',\n            render: (v) => <Tag color=\"blue\">{v}</Tag>,\n          },\n          {\n            title: '创建时间',\n            dataIndex: 'created_at',\n          },\n          {\n            title: '操作',\n            render: (_, record) => (\n              <Space>\n                <Button\n                  icon={<EyeOutlined />}\n                  type=\"link\"\n                  onClick={() => history.push(`/web3d/detail/${record.id}`)}\n                >\n                  详情\n                </Button>\n                <Button\n                  icon={<ExportOutlined />}\n                  type=\"link\"\n                  onClick={() =>\n                    window.open(\n                      `/api/web3d/projects/${record.id}/export`,\n                      '_blank',\n                    )\n                  }\n                >\n                  导出\n                </Button>\n                <Popconfirm\n                  title=\"确定删除该项目？\"\n                  onConfirm={() => handleDelete(record)}\n                >\n                  <Button danger icon={<DeleteOutlined />} type=\"link\">\n                    删除\n                  </Button>\n                </Popconfirm>\n              </Space>\n            ),\n          },\n        ]}\n      />\n    </PageContainer>\n  );\n};\n\nexport default HistoryWeb3D;\n",
+      "__content": "import {\n  deleteWeb3dProject,\n  getWeb3dProjects,\n} from '@/services/web3d';\nimport { DeleteOutlined, ExportOutlined, EyeOutlined, ReloadOutlined } from '@ant-design/icons';\nimport { PageContainer } from '@ant-design/pro-components';\nimport { history } from '@umijs/max';\nimport { App, Button, Popconfirm, Space, Table, Tag } from 'antd';\nimport React, { useEffect, useState } from 'react';\n\nconst HistoryWeb3D: React.FC = () => {\n  const { message } = App.useApp();\n  const [loading, setLoading] = useState(false);\n  const [data, setData] = useState<API_WEB3D.Project[]>([]);\n\n  const load = async () => {\n    setLoading(true);\n    try {\n      const res = await getWeb3dProjects();\n      setData(res?.data || []);\n    } catch (err: any) {\n      message.error(err?.message || '加载项目失败');\n    } finally {\n      setLoading(false);\n    }\n  };\n\n  useEffect(() => {\n    load();\n  }, []);\n\n  const handleDelete = async (record: API_WEB3D.Project) => {\n    try {\n      await deleteWeb3dProject(record.id);\n      message.success('已删除');\n      load();\n    } catch (err: any) {\n      message.error(err?.message || '删除失败');\n    }\n  };\n\n  return (\n    <PageContainer\n      loading={loading}\n      title=\"Web3D 历史项目\"\n      extra={\n        <Space>\n          <Button onClick={load} icon={<ReloadOutlined />}>\n            刷新\n          </Button>\n          <Button type=\"primary\" onClick={() => history.push('/web3d/new')}>\n            新建评估\n          </Button>\n        </Space>\n      }\n    >\n      <Table\n        rowKey=\"id\"\n        dataSource={data}\n        pagination={{\n          defaultPageSize: 10,\n          showSizeChanger: true,\n          pageSizeOptions: [10, 20, 50, 100],\n        }}\n        columns={[\n          { title: 'ID', dataIndex: 'id', width: 80 },\n          { title: '名称', dataIndex: 'name' },\n          {\n            title: '成本(万元)',\n            dataIndex: 'final_total_cost',\n            render: (v) => Number(v || 0).toFixed(2),\n          },\n          {\n            title: '风险总分',\n            dataIndex: 'final_risk_score',\n          },\n          {\n            title: '类型',\n            dataIndex: 'project_type',\n            render: (v) => <Tag color=\"blue\">{v}</Tag>,\n          },\n          {\n            title: '创建时间',\n            dataIndex: 'created_at',\n          },\n          {\n            title: '操作',\n            render: (_, record) => (\n              <Space>\n                <Button\n                  icon={<EyeOutlined />}\n                  type=\"link\"\n                  onClick={() => history.push(`/web3d/detail/${record.id}`)}\n                >\n                  详情\n                </Button>\n                <Button\n                  icon={<ExportOutlined />}\n                  type=\"link\"\n                  onClick={() =>\n                    window.open(\n                      `/api/web3d/projects/${record.id}/export`,\n                      '_blank',\n                    )\n                  }\n                >\n                  导出\n                </Button>\n                <Popconfirm\n                  title=\"确定删除该项目？\"\n                  onConfirm={() => handleDelete(record)}\n                >\n                  <Button danger icon={<DeleteOutlined />} type=\"link\">\n                    删除\n                  </Button>\n                </Popconfirm>\n              </Space>\n            ),\n          },\n        ]}\n      />\n    </PageContainer>\n  );\n};\n\nexport default HistoryWeb3D;\n",
       "__isJSFile": true,
       "__absFile": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/src/pages/Web3D/History.tsx"
     },
@@ -3936,7 +4419,7 @@
       "parentId": "14",
       "id": "15",
       "absPath": "/model-config/application",
-      "__content": "import { AI_PROVIDER_VALUE_ENUM, isTavilyProvider } from '@/constants';\nimport {\n  deleteAIModel,\n  getAIModels,\n  setCurrentModel,\n  setCurrentVisionModel,\n  testAIModel,\n} from '@/services/aiModel';\nimport {\n  EyeOutlined,\n  PlusOutlined,\n  StarOutlined,\n  ThunderboltOutlined,\n} from '@ant-design/icons';\nimport type { ActionType, ProColumns } from '@ant-design/pro-components';\nimport { PageContainer, ProTable } from '@ant-design/pro-components';\nimport { Button, message, Popconfirm, Tag } from 'antd';\nimport { useRef, useState } from 'react';\nimport ModelForm from './components/ModelForm';\n\nconst AIModelApplication: React.FC = () => {\n  const [modalVisible, setModalVisible] = useState(false);\n  const [currentRecord, setCurrentRecord] = useState<\n    API.AIModelConfig | undefined\n  >();\n  const [currentModelId, setCurrentModelId] = useState<number | undefined>(\n    undefined,\n  );\n  const [currentVisionModelId, setCurrentVisionModelId] = useState<number | undefined>(\n    undefined,\n  );\n  const actionRef = useRef<ActionType>();\n\n  const handleDelete = async (id: number) => {\n    try {\n      const response = await deleteAIModel(id);\n      if (response.success) {\n        message.success('删除成功');\n        actionRef.current?.reload();\n      } else {\n        message.error(response.message || '删除失败');\n      }\n    } catch (error: any) {\n      message.error(error.message || '删除失败');\n    }\n  };\n\n  const handleTest = async (id: number, configName: string) => {\n    const hide = message.loading(`正在测试 ${configName}...`, 0);\n    try {\n      const response = await testAIModel(id);\n      hide();\n      if (response.success) {\n        message.success(response.message || '测试成功');\n        actionRef.current?.reload();\n      } else {\n        message.error(response.message || '测试失败');\n      }\n    } catch (error: any) {\n      hide();\n      message.error(error.message || '测试失败');\n    }\n  };\n\n  const handleSetCurrent = async (id: number, configName: string) => {\n    try {\n      const response = await setCurrentModel(id);\n      if (response.success) {\n        message.success(response.message || `已将 ${configName} 设为当前模型`);\n        actionRef.current?.reload();\n      } else {\n        message.error(response.message || '设置失败');\n      }\n    } catch (error: any) {\n      message.error(error.message || '设置失败');\n    }\n  };\n\n  const handleSetCurrentVision = async (id: number, configName: string) => {\n    try {\n      const response = await setCurrentVisionModel(id);\n      if (response.success) {\n        message.success(response.message || `已将 ${configName} 设为当前视觉模型`);\n        actionRef.current?.reload();\n      } else {\n        message.error(response.message || '设置失败');\n      }\n    } catch (error: any) {\n      message.error(error.message || '设置失败');\n    }\n  };\n\n  const columns: ProColumns<API.AIModelConfig>[] = [\n    {\n      title: '配置名称',\n      dataIndex: 'config_name',\n      sorter: true,\n      render: (_, record) => (\n        <>\n          {record.is_current === 1 && (\n            <span style={{ color: '#faad14', marginRight: 4 }}>⭐</span>\n          )}\n          {record.is_current_vision === 1 && (\n            <span style={{ color: '#722ed1', marginRight: 4 }}>\n              <EyeOutlined />\n            </span>\n          )}\n          {record.config_name}\n        </>\n      ),\n    },\n    {\n      title: '服务商',\n      dataIndex: 'provider',\n      sorter: true,\n      filters: true,\n      valueEnum: AI_PROVIDER_VALUE_ENUM,\n    },\n    {\n      title: '模型',\n      dataIndex: 'model_name',\n    },\n    {\n      title: '能力',\n      dataIndex: 'supports_web_search',\n      render: (_, record) => (\n        <>\n          <Tag color={record.supports_web_search === 1 ? 'cyan' : 'default'}>\n            {record.supports_web_search === 1 ? '联网搜索' : '普通模型'}\n          </Tag>\n          {record.supports_vision === 1 && <Tag color=\"purple\">图片识别</Tag>}\n        </>\n      ),\n    },\n    {\n      title: '状态',\n      dataIndex: 'is_active',\n      render: (_, record) => {\n        const tags = [];\n\n        // 当前使用标识（绿色 Tag）\n        if (record.is_current === 1) {\n          tags.push(\n            <Tag key=\"current\" color=\"green\">\n              当前使用\n            </Tag>,\n          );\n        }\n\n        if (record.is_current_vision === 1) {\n          tags.push(\n            <Tag key=\"current-vision\" color=\"purple\">\n              当前视觉模型\n            </Tag>,\n          );\n        }\n\n        // 启用/禁用状态\n        tags.push(\n          <Tag key=\"active\" color={record.is_active === 1 ? 'blue' : 'default'}>\n            {record.is_active === 1 ? '启用' : '禁用'}\n          </Tag>,\n        );\n\n        // 测试状态\n        if (record.test_status === 'success') {\n          tags.push(\n            <Tag key=\"test\" color=\"success\">\n              测试通过\n            </Tag>,\n          );\n        } else if (record.test_status === 'failed') {\n          tags.push(\n            <Tag key=\"test\" color=\"error\">\n              测试失败\n            </Tag>,\n          );\n        }\n\n        return <>{tags}</>;\n      },\n    },\n    {\n      title: '最后测试',\n      dataIndex: 'last_test_time',\n      valueType: 'dateTime',\n      sorter: true,\n    },\n    {\n      title: '操作',\n      valueType: 'option',\n      render: (_, record) => {\n        const actions = [];\n        const tavilyOnly = isTavilyProvider(record.provider);\n\n        // 设为当前按钮（当前模型禁用）\n        if (record.is_current === 1) {\n          actions.push(\n            <span\n              key=\"current\"\n              style={{ color: '#999', cursor: 'not-allowed' }}\n            >\n              <StarOutlined /> 当前模型\n            </span>,\n          );\n        } else if (tavilyOnly) {\n          actions.push(\n            <span\n              key=\"search-only\"\n              style={{ color: '#999', cursor: 'not-allowed' }}\n            >\n              <StarOutlined /> 仅联网搜索\n            </span>,\n          );\n        } else {\n          actions.push(\n            <Popconfirm\n              key=\"set-current\"\n              title={`切换当前模型为 ${record.config_name}？`}\n              description=\"将使用此模型配置进行 AI 功能调用。\"\n              onConfirm={() => handleSetCurrent(record.id, record.config_name)}\n              okText=\"确定\"\n              cancelText=\"取消\"\n            >\n              <a>\n                <StarOutlined /> 设为当前\n              </a>\n            </Popconfirm>,\n          );\n        }\n\n        if (record.supports_vision === 1) {\n          if (record.is_current_vision === 1) {\n            actions.push(\n              <span\n                key=\"current-vision\"\n                style={{ color: '#999', cursor: 'not-allowed' }}\n              >\n                当前视觉\n              </span>,\n            );\n          } else {\n            actions.push(\n              <Popconfirm\n                key=\"set-current-vision\"\n                title={`切换当前视觉模型为 ${record.config_name}？`}\n                description=\"Web3D Step4 图片识别将使用此模型。\"\n                onConfirm={() => handleSetCurrentVision(record.id, record.config_name)}\n                okText=\"确定\"\n                cancelText=\"取消\"\n              >\n                <a>设为视觉模型</a>\n              </Popconfirm>,\n            );\n          }\n        }\n\n        // 测试按钮\n        actions.push(\n          <a\n            key=\"test\"\n            onClick={() => handleTest(record.id, record.config_name)}\n          >\n            <ThunderboltOutlined /> 测试\n          </a>,\n        );\n\n        // 编辑按钮\n        actions.push(\n          <a\n            key=\"edit\"\n            onClick={() => {\n              setCurrentRecord(record);\n              setModalVisible(true);\n            }}\n          >\n            编辑\n          </a>,\n        );\n\n        // 删除按钮（当前模型禁用）\n        if (record.is_current === 1) {\n          actions.push(\n            <span key=\"delete\" style={{ color: '#999', cursor: 'not-allowed' }}>\n              删除\n            </span>,\n          );\n        } else {\n          actions.push(\n            <Popconfirm\n              key=\"delete\"\n              title={`确定删除 ${record.config_name}？`}\n              description=\"删除后无法恢复。\"\n              onConfirm={() => handleDelete(record.id)}\n              okText=\"确定\"\n              cancelText=\"取消\"\n            >\n              <a style={{ color: 'red' }}>删除</a>\n            </Popconfirm>,\n          );\n        }\n\n        return actions;\n      },\n    },\n  ];\n\n  return (\n    <PageContainer>\n      <ProTable<API.AIModelConfig>\n        headerTitle=\"AI 模型配置列表\"\n        actionRef={actionRef}\n        rowKey=\"id\"\n        toolBarRender={() => [\n          <Button\n            key=\"button\"\n            icon={<PlusOutlined />}\n            onClick={() => {\n              setCurrentRecord(undefined);\n              setModalVisible(true);\n            }}\n            type=\"primary\"\n          >\n            新建模型配置\n          </Button>,\n        ]}\n        request={async (params, sort) => {\n          try {\n            const response = await getAIModels();\n            if (response.success) {\n              const current = (response.data || []).find(\n                (item) => item.is_current === 1,\n              );\n              const currentVision = (response.data || []).find(\n                (item) => item.is_current_vision === 1,\n              );\n              setCurrentModelId(current?.id);\n              setCurrentVisionModelId(currentVision?.id);\n              return {\n                data: response.data || [],\n                success: true,\n              };\n            }\n            return {\n              data: [],\n              success: false,\n            };\n          } catch (error) {\n            return {\n              data: [],\n              success: false,\n            };\n          }\n        }}\n        columns={columns}\n        pagination={{\n          defaultPageSize: 10,\n          showSizeChanger: true,\n        }}\n      />\n      <ModelForm\n        visible={modalVisible}\n        record={currentRecord}\n        currentModelId={currentModelId}\n        currentVisionModelId={currentVisionModelId}\n        onCancel={() => {\n          setModalVisible(false);\n          setCurrentRecord(undefined);\n        }}\n        onSuccess={() => {\n          setModalVisible(false);\n          setCurrentRecord(undefined);\n          actionRef.current?.reload();\n        }}\n      />\n    </PageContainer>\n  );\n};\n\nexport default AIModelApplication;\n",
+      "__content": "import {\n  AI_PROVIDER_VALUE_ENUM,\n  isTavilyProvider,\n  isVisionCapableProvider,\n} from '@/constants';\nimport {\n  deleteAIModel,\n  getAIModels,\n  setCurrentModel,\n  setCurrentVisionModel,\n  testAIModel,\n} from '@/services/aiModel';\nimport {\n  EyeOutlined,\n  PlusOutlined,\n  StarOutlined,\n  ThunderboltOutlined,\n} from '@ant-design/icons';\nimport type { ActionType, ProColumns } from '@ant-design/pro-components';\nimport { PageContainer, ProTable } from '@ant-design/pro-components';\nimport { Button, message, Popconfirm, Tag } from 'antd';\nimport { useRef, useState } from 'react';\nimport ModelForm from './components/ModelForm';\n\nconst AIModelApplication: React.FC = () => {\n  const [modalVisible, setModalVisible] = useState(false);\n  const [currentRecord, setCurrentRecord] = useState<\n    API.AIModelConfig | undefined\n  >();\n  const [currentModelId, setCurrentModelId] = useState<number | undefined>(\n    undefined,\n  );\n  const [currentVisionModelId, setCurrentVisionModelId] = useState<number | undefined>(\n    undefined,\n  );\n  const actionRef = useRef<ActionType>();\n\n  const handleDelete = async (id: number) => {\n    try {\n      const response = await deleteAIModel(id);\n      if (response.success) {\n        message.success('删除成功');\n        actionRef.current?.reload();\n      } else {\n        message.error(response.message || '删除失败');\n      }\n    } catch (error: any) {\n      message.error(error.message || '删除失败');\n    }\n  };\n\n  const handleTest = async (id: number, configName: string) => {\n    const hide = message.loading(`正在测试 ${configName}...`, 0);\n    try {\n      const response = await testAIModel(id);\n      hide();\n      if (response.success) {\n        message.success(response.message || '测试成功');\n        actionRef.current?.reload();\n      } else {\n        message.error(response.message || '测试失败');\n      }\n    } catch (error: any) {\n      hide();\n      message.error(error.message || '测试失败');\n    }\n  };\n\n  const handleSetCurrent = async (id: number, configName: string) => {\n    try {\n      const response = await setCurrentModel(id);\n      if (response.success) {\n        message.success(response.message || `已将 ${configName} 设为当前模型`);\n        actionRef.current?.reload();\n      } else {\n        message.error(response.message || '设置失败');\n      }\n    } catch (error: any) {\n      message.error(error.message || '设置失败');\n    }\n  };\n\n  const handleSetCurrentVision = async (id: number, configName: string) => {\n    try {\n      const response = await setCurrentVisionModel(id);\n      if (response.success) {\n        message.success(response.message || `已将 ${configName} 设为当前视觉模型`);\n        actionRef.current?.reload();\n      } else {\n        message.error(response.message || '设置失败');\n      }\n    } catch (error: any) {\n      message.error(error.message || '设置失败');\n    }\n  };\n\n  const columns: ProColumns<API.AIModelConfig>[] = [\n    {\n      title: '配置名称',\n      dataIndex: 'config_name',\n      sorter: true,\n      render: (_, record) => (\n        <>\n          {record.is_current === 1 && (\n            <span style={{ color: '#faad14', marginRight: 4 }}>⭐</span>\n          )}\n          {record.is_current_vision === 1 && (\n            <span style={{ color: '#722ed1', marginRight: 4 }}>\n              <EyeOutlined />\n            </span>\n          )}\n          {record.config_name}\n        </>\n      ),\n    },\n    {\n      title: '服务商',\n      dataIndex: 'provider',\n      sorter: true,\n      filters: true,\n      valueEnum: AI_PROVIDER_VALUE_ENUM,\n    },\n    {\n      title: '模型',\n      dataIndex: 'model_name',\n    },\n    {\n      title: '能力',\n      dataIndex: 'supports_web_search',\n      render: (_, record) => (\n        <>\n          <Tag color={record.supports_web_search === 1 ? 'cyan' : 'default'}>\n            {record.supports_web_search === 1 ? '联网搜索' : '普通模型'}\n          </Tag>\n          {record.supports_vision === 1 && <Tag color=\"purple\">图片识别</Tag>}\n        </>\n      ),\n    },\n    {\n      title: '状态',\n      dataIndex: 'is_active',\n      render: (_, record) => {\n        const tags = [];\n\n        // 当前使用标识（绿色 Tag）\n        if (record.is_current === 1) {\n          tags.push(\n            <Tag key=\"current\" color=\"green\">\n              当前使用\n            </Tag>,\n          );\n        }\n\n        if (record.is_current_vision === 1) {\n          tags.push(\n            <Tag key=\"current-vision\" color=\"purple\">\n              当前视觉模型\n            </Tag>,\n          );\n        }\n\n        // 启用/禁用状态\n        tags.push(\n          <Tag key=\"active\" color={record.is_active === 1 ? 'blue' : 'default'}>\n            {record.is_active === 1 ? '启用' : '禁用'}\n          </Tag>,\n        );\n\n        // 测试状态\n        if (record.test_status === 'success') {\n          tags.push(\n            <Tag key=\"test\" color=\"success\">\n              测试通过\n            </Tag>,\n          );\n        } else if (record.test_status === 'failed') {\n          tags.push(\n            <Tag key=\"test\" color=\"error\">\n              测试失败\n            </Tag>,\n          );\n        }\n\n        return <>{tags}</>;\n      },\n    },\n    {\n      title: '最后测试',\n      dataIndex: 'last_test_time',\n      valueType: 'dateTime',\n      sorter: true,\n    },\n    {\n      title: '操作',\n      valueType: 'option',\n      render: (_, record) => {\n        const actions = [];\n        const tavilyOnly = isTavilyProvider(record.provider);\n        const visionCapableProvider = isVisionCapableProvider(record.provider);\n\n        // 设为当前按钮（当前模型禁用）\n        if (record.is_current === 1) {\n          actions.push(\n            <span\n              key=\"current\"\n              style={{ color: '#999', cursor: 'not-allowed' }}\n            >\n              <StarOutlined /> 当前模型\n            </span>,\n          );\n        } else if (tavilyOnly) {\n          actions.push(\n            <span\n              key=\"search-only\"\n              style={{ color: '#999', cursor: 'not-allowed' }}\n            >\n              <StarOutlined /> 仅联网搜索\n            </span>,\n          );\n        } else {\n          actions.push(\n            <Popconfirm\n              key=\"set-current\"\n              title={`切换当前模型为 ${record.config_name}？`}\n              description=\"将使用此模型配置进行 AI 功能调用。\"\n              onConfirm={() => handleSetCurrent(record.id, record.config_name)}\n              okText=\"确定\"\n              cancelText=\"取消\"\n            >\n              <a>\n                <StarOutlined /> 设为当前\n              </a>\n            </Popconfirm>,\n          );\n        }\n\n        if (record.supports_vision === 1 && visionCapableProvider) {\n          if (record.is_current_vision === 1) {\n            actions.push(\n              <span\n                key=\"current-vision\"\n                style={{ color: '#999', cursor: 'not-allowed' }}\n              >\n                当前视觉\n              </span>,\n            );\n          } else {\n            actions.push(\n              <Popconfirm\n                key=\"set-current-vision\"\n                title={`切换当前视觉模型为 ${record.config_name}？`}\n                description=\"Web3D Step4 图片识别将使用此模型。\"\n                onConfirm={() => handleSetCurrentVision(record.id, record.config_name)}\n                okText=\"确定\"\n                cancelText=\"取消\"\n              >\n                <a>设为视觉模型</a>\n              </Popconfirm>,\n            );\n          }\n        }\n\n        // 测试按钮\n        actions.push(\n          <a\n            key=\"test\"\n            onClick={() => handleTest(record.id, record.config_name)}\n          >\n            <ThunderboltOutlined /> 测试\n          </a>,\n        );\n\n        // 编辑按钮\n        actions.push(\n          <a\n            key=\"edit\"\n            onClick={() => {\n              setCurrentRecord(record);\n              setModalVisible(true);\n            }}\n          >\n            编辑\n          </a>,\n        );\n\n        // 删除按钮（当前模型禁用）\n        if (record.is_current === 1) {\n          actions.push(\n            <span key=\"delete\" style={{ color: '#999', cursor: 'not-allowed' }}>\n              删除\n            </span>,\n          );\n        } else {\n          actions.push(\n            <Popconfirm\n              key=\"delete\"\n              title={`确定删除 ${record.config_name}？`}\n              description=\"删除后无法恢复。\"\n              onConfirm={() => handleDelete(record.id)}\n              okText=\"确定\"\n              cancelText=\"取消\"\n            >\n              <a style={{ color: 'red' }}>删除</a>\n            </Popconfirm>,\n          );\n        }\n\n        return actions;\n      },\n    },\n  ];\n\n  return (\n    <PageContainer>\n      <ProTable<API.AIModelConfig>\n        headerTitle=\"AI 模型配置列表\"\n        actionRef={actionRef}\n        rowKey=\"id\"\n        toolBarRender={() => [\n          <Button\n            key=\"button\"\n            icon={<PlusOutlined />}\n            onClick={() => {\n              setCurrentRecord(undefined);\n              setModalVisible(true);\n            }}\n            type=\"primary\"\n          >\n            新建模型配置\n          </Button>,\n        ]}\n        request={async (params, sort) => {\n          try {\n            const response = await getAIModels();\n            if (response.success) {\n              const current = (response.data || []).find(\n                (item) => item.is_current === 1,\n              );\n              const currentVision = (response.data || []).find(\n                (item) => item.is_current_vision === 1,\n              );\n              setCurrentModelId(current?.id);\n              setCurrentVisionModelId(currentVision?.id);\n              return {\n                data: response.data || [],\n                success: true,\n              };\n            }\n            return {\n              data: [],\n              success: false,\n            };\n          } catch (error) {\n            return {\n              data: [],\n              success: false,\n            };\n          }\n        }}\n        columns={columns}\n        pagination={{\n          defaultPageSize: 10,\n          showSizeChanger: true,\n        }}\n      />\n      <ModelForm\n        visible={modalVisible}\n        record={currentRecord}\n        currentModelId={currentModelId}\n        currentVisionModelId={currentVisionModelId}\n        onCancel={() => {\n          setModalVisible(false);\n          setCurrentRecord(undefined);\n        }}\n        onSuccess={() => {\n          setModalVisible(false);\n          setCurrentRecord(undefined);\n          actionRef.current?.reload();\n        }}\n      />\n    </PageContainer>\n  );\n};\n\nexport default AIModelApplication;\n",
       "__isJSFile": true,
       "__absFile": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/src/pages/ModelConfig/Application/index.tsx"
     },
@@ -3947,7 +4430,7 @@
       "parentId": "14",
       "id": "16",
       "absPath": "/model-config/prompts",
-      "__content": "import type { PromptTemplate } from '@/services/promptTemplate';\nimport {\n  copyPromptTemplate,\n  deletePromptTemplate,\n  getPromptTemplates,\n  PROMPT_TEMPLATE_CATEGORY_VALUE_ENUM,\n} from '@/services/promptTemplate';\nimport { PlusOutlined } from '@ant-design/icons';\nimport type { ActionType, ProColumns } from '@ant-design/pro-table';\nimport ProTable from '@ant-design/pro-table';\nimport { history, useLocation } from '@umijs/max';\nimport { Button, Popconfirm, Tag, message } from 'antd';\nimport React, { useEffect, useRef } from 'react';\n\nconst PromptTemplateListPage: React.FC = () => {\n  const actionRef = useRef<ActionType>();\n  const location = useLocation();\n\n  useEffect(() => {\n    if (location.state?.refresh) {\n      actionRef.current?.reload();\n    }\n  }, [location.state]);\n\n  const columns: ProColumns<PromptTemplate>[] = [\n    {\n      title: '模板名称',\n      dataIndex: 'template_name',\n      width: '25%',\n      sorter: true,\n      render: (_, record) => (\n        <a\n          onClick={() =>\n            history.push(`/model-config/prompts/${record.id}/edit`)\n          }\n        >\n          {record.template_name}\n        </a>\n      ),\n    },\n    {\n      title: '分类',\n      dataIndex: 'category',\n      width: '15%',\n      filters: true,\n      onFilter: true,\n      valueEnum: PROMPT_TEMPLATE_CATEGORY_VALUE_ENUM,\n    },\n    {\n      title: '类型',\n      dataIndex: 'is_system',\n      width: '10%',\n      render: (_, record) => (\n        <Tag color={record.is_system ? 'blue' : 'green'}>\n          {record.is_system ? '系统' : '用户'}\n        </Tag>\n      ),\n    },\n    {\n      title: '变量数',\n      dataIndex: 'variable_count',\n      width: '8%',\n      search: false,\n    },\n    {\n      title: '状态',\n      dataIndex: 'is_active',\n      width: '10%',\n      render: (_, record) => (\n        <Tag color={record.is_active ? 'green' : 'red'}>\n          {record.is_active ? '启用' : '禁用'}\n        </Tag>\n      ),\n    },\n    {\n      title: '创建时间',\n      dataIndex: 'created_at',\n      width: '17%',\n      sorter: true,\n      search: false,\n      valueType: 'dateTime',\n    },\n    {\n      title: '操作',\n      valueType: 'option',\n      width: '15%',\n      render: (text, record, _, action) => [\n        <a\n          key=\"view\"\n          onClick={() =>\n            history.push(`/model-config/prompts/${record.id}/edit`)\n          }\n        >\n          {record.is_system ? '查看' : '编辑'}\n        </a>,\n        <a\n          key=\"copy\"\n          onClick={async () => {\n            const newTemplate = await copyPromptTemplate(record.id);\n            message.success('复制成功');\n            history.push(`/model-config/prompts/${newTemplate.id}/edit`);\n          }}\n        >\n          复制\n        </a>,\n        <Popconfirm\n          key=\"delete\"\n          title={`确定删除 \"${record.template_name}\"?`}\n          onConfirm={async () => {\n            await deletePromptTemplate(record.id);\n            message.success('删除成功');\n            actionRef.current?.reload();\n          }}\n          disabled={record.is_system}\n        >\n          <a style={{ color: record.is_system ? 'grey' : 'red' }}>\n            删除\n          </a>\n        </Popconfirm>,\n      ],\n    },\n  ];\n\n  return (\n    <ProTable<PromptTemplate>\n      columns={columns}\n      actionRef={actionRef}\n      cardBordered\n      request={async (params = {}) => {\n        const result = await getPromptTemplates(params);\n        // ProTable expects a specific object structure, but the API returns an array.\n        // We need to wrap the array into the format that ProTable understands.\n        if (Array.isArray(result)) {\n          return {\n            data: result,\n            success: true,\n            total: result.length,\n          };\n        }\n        // Handle cases where the API might return the object structure directly in the future.\n        return {\n          data: result.data || [],\n          success: result.success !== false,\n          total: result.total || 0,\n        };\n      }}\n      rowKey=\"id\"\n      search={{\n        labelWidth: 'auto',\n      }}\n      pagination={{\n        pageSize: 10,\n      }}\n      dateFormatter=\"string\"\n      headerTitle=\"提示词模板列表\"\n      toolBarRender={() => [\n        <Button\n          key=\"button\"\n          icon={<PlusOutlined />}\n          type=\"primary\"\n          onClick={() => history.push('/model-config/prompts/create')}\n        >\n          新建模板\n        </Button>,\n      ]}\n    />\n  );\n};\n\nexport default PromptTemplateListPage;\n",
+      "__content": "import type { PromptTemplate } from '@/services/promptTemplate';\nimport {\n  copyPromptTemplate,\n  deletePromptTemplate,\n  getPromptTemplates,\n} from '@/services/promptTemplate';\nimport { PlusOutlined } from '@ant-design/icons';\nimport type { ActionType, ProColumns } from '@ant-design/pro-table';\nimport ProTable from '@ant-design/pro-table';\nimport { history, useLocation } from '@umijs/max';\nimport { Button, Popconfirm, Tag, message } from 'antd';\nimport React, { useEffect, useRef, useState } from 'react';\nimport { getPromptModuleTags, type PromptModuleTagOption } from '@/services/promptTemplate';\n\nconst PromptTemplateListPage: React.FC = () => {\n  const actionRef = useRef<ActionType>();\n  const location = useLocation();\n  const [moduleTagOptions, setModuleTagOptions] = useState<PromptModuleTagOption[]>([]);\n\n  useEffect(() => {\n    if (location.state?.refresh) {\n      actionRef.current?.reload();\n    }\n    // 加载推荐模块标签\n    getPromptModuleTags().then((res) => {\n      if (res?.data) {\n        setModuleTagOptions(res.data);\n      }\n    });\n  }, [location.state]);\n\n  const columns: ProColumns<PromptTemplate>[] = [\n    {\n      title: '模板名称',\n      dataIndex: 'template_name',\n      width: '25%',\n      sorter: true,\n      render: (_, record) => (\n        <a\n          onClick={() =>\n            history.push(`/model-config/prompts/${record.id}/edit`)\n          }\n        >\n          {record.template_name}\n        </a>\n      ),\n    },\n    {\n      title: '模块',\n      dataIndex: 'module_tag',\n      width: '15%',\n      filters: true,\n      onFilter: true,\n      valueType: 'select',\n      fieldProps: {\n        options: moduleTagOptions.map((t) => ({\n          value: t.value,\n          label: t.label,\n        })),\n      },\n      render: (_, record) => {\n        const tag = moduleTagOptions.find((t) => t.value === record.module_tag);\n        return <Tag>{tag?.label || record.module_tag}</Tag>;\n      },\n    },\n    {\n      title: '类型',\n      dataIndex: 'is_system',\n      width: '10%',\n      render: (_, record) => (\n        <Tag color={record.is_system ? 'blue' : 'green'}>\n          {record.is_system ? '系统' : '用户'}\n        </Tag>\n      ),\n    },\n    {\n      title: '变量数',\n      dataIndex: 'variable_count',\n      width: '8%',\n      search: false,\n    },\n    {\n      title: '状态',\n      dataIndex: 'is_active',\n      width: '10%',\n      render: (_, record) => (\n        <Tag color={record.is_active ? 'green' : 'red'}>\n          {record.is_active ? '启用' : '禁用'}\n        </Tag>\n      ),\n    },\n    {\n      title: '创建时间',\n      dataIndex: 'created_at',\n      width: '17%',\n      sorter: true,\n      search: false,\n      valueType: 'dateTime',\n    },\n    {\n      title: '操作',\n      valueType: 'option',\n      width: '15%',\n      render: (text, record, _, action) => [\n        <a\n          key=\"view\"\n          onClick={() =>\n            history.push(`/model-config/prompts/${record.id}/edit`)\n          }\n        >\n          {record.is_system ? '查看' : '编辑'}\n        </a>,\n        <a\n          key=\"copy\"\n          onClick={async () => {\n            const newTemplate = await copyPromptTemplate(record.id);\n            message.success('复制成功');\n            history.push(`/model-config/prompts/${newTemplate.id}/edit`);\n          }}\n        >\n          复制\n        </a>,\n        <Popconfirm\n          key=\"delete\"\n          title={`确定删除 \"${record.template_name}\"?`}\n          onConfirm={async () => {\n            await deletePromptTemplate(record.id);\n            message.success('删除成功');\n            actionRef.current?.reload();\n          }}\n          disabled={record.is_system}\n        >\n          <a style={{ color: record.is_system ? 'grey' : 'red' }}>\n            删除\n          </a>\n        </Popconfirm>,\n      ],\n    },\n  ];\n\n  return (\n    <ProTable<PromptTemplate>\n      columns={columns}\n      actionRef={actionRef}\n      cardBordered\n      request={async (params = {}) => {\n        const result = await getPromptTemplates(params);\n        if (Array.isArray(result)) {\n          return {\n            data: result,\n            success: true,\n            total: result.length,\n          };\n        }\n        return {\n          data: result.data || [],\n          success: result.success !== false,\n          total: result.total || 0,\n        };\n      }}\n      rowKey=\"id\"\n      search={{\n        labelWidth: 'auto',\n      }}\n      pagination={{\n        pageSize: 10,\n      }}\n      dateFormatter=\"string\"\n      headerTitle=\"提示词模板列表\"\n      toolBarRender={() => [\n        <Button\n          key=\"button\"\n          icon={<PlusOutlined />}\n          type=\"primary\"\n          onClick={() => history.push('/model-config/prompts/create')}\n        >\n          新建模板\n        </Button>,\n      ]}\n    />\n  );\n};\n\nexport default PromptTemplateListPage;\n",
       "__isJSFile": true,
       "__absFile": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/src/pages/ModelConfig/Prompts/index.tsx"
     },
@@ -3959,7 +4442,7 @@
       "parentId": "14",
       "id": "17",
       "absPath": "/model-config/prompts/create",
-      "__content": "import { getRiskItemList, getRoleList } from '@/services/config';\nimport { translateRoleToSlug } from './utils/roleNaming';\nimport { categoryToSlug, extractItemEnSlug, stripParen, toSafeVar } from './utils/riskNaming';\nimport type { PromptTemplate, PromptVariable } from '@/services/promptTemplate';\nimport {\n  createPromptTemplate,\n  getPromptTemplateById,\n  PROMPT_TEMPLATE_CATEGORY_OPTIONS,\n  updatePromptTemplate,\n} from '@/services/promptTemplate';\nimport { EyeOutlined } from '@ant-design/icons';\nimport { PageContainer } from '@ant-design/pro-layout';\nimport { history, useParams } from '@umijs/max';\nimport {\n  Alert,\n  Button,\n  Card,\n  Form,\n  Input,\n  message,\n  Select,\n  Space,\n  Switch,\n  Tag,\n} from 'antd';\nimport React, { useEffect, useRef, useState } from 'react';\nimport PreviewModal from './components/PreviewModal';\nimport VariableEditor from './components/VariableEditor';\nimport VariableInsertButton from './components/VariableInsertButton';\nimport VariableList from './components/VariableList';\n\nconst { TextArea } = Input;\n\nconst PromptTemplateForm: React.FC = () => {\n  const [form] = Form.useForm();\n  const { id } = useParams<{ id: string }>();\n  const categoryValue = Form.useWatch('category', form);\n  const isEdit = !!id;\n  const [template, setTemplate] = useState<PromptTemplate | null>(null);\n  const [variables, setVariables] = useState<PromptVariable[]>([]);\n  const [variableEditorVisible, setVariableEditorVisible] = useState(false);\n  const [editingVariable, setEditingVariable] = useState<PromptVariable | null>(\n    null,\n  );\n  const [editingIndex, setEditingIndex] = useState<number>(-1);\n  const [previewVisible, setPreviewVisible] = useState(false);\n  const [detectedUndefinedVars, setDetectedUndefinedVars] = useState<string[]>(\n    [],\n  );\n  const userPromptRef = useRef<any>(null);\n  // 记录各分类自动灌入的变量名，用于分类切换时清理\n  const [autoInjectedByCategory, setAutoInjectedByCategory] = useState<\n    Record<string, string[]>\n  >({});\n  const prevCategoryRef = useRef<string | undefined>(undefined);\n\n  useEffect(() => {\n    if (isEdit) {\n      getPromptTemplateById(Number(id)).then((res) => {\n        setTemplate(res);\n        form.setFieldsValue(res);\n\n        // 解析变量\n        if (res.variables_json) {\n          try {\n            const parsed = JSON.parse(res.variables_json);\n            setVariables(Array.isArray(parsed) ? parsed : []);\n          } catch (error) {\n            console.error('Failed to parse variables:', error);\n          }\n        }\n      });\n    }\n  }, [id, isEdit, form]);\n\n  // 智能检测未定义的变量\n  const detectUndefinedVariables = (template: string) => {\n    const regex = /\\{\\{\\s*(\\w+)\\s*\\}\\}/g;\n    const matches = template.matchAll(regex);\n    const detected = new Set<string>();\n\n    for (const match of matches) {\n      const varName = match[1];\n      if (!variables.find((v) => v.name === varName)) {\n        detected.add(varName);\n      }\n    }\n\n    setDetectedUndefinedVars(Array.from(detected));\n  };\n\n  // 用户提示词模板变化时检测变量\n  const handleUserPromptChange = (\n    e: React.ChangeEvent<HTMLTextAreaElement>,\n  ) => {\n    const value = e.target.value;\n    form.setFieldValue('user_prompt_template', value);\n    detectUndefinedVariables(value);\n  };\n\n  // 添加/编辑变量\n  const handleAddVariable = () => {\n    setEditingVariable(null);\n    setEditingIndex(-1);\n    setVariableEditorVisible(true);\n  };\n\n  const handleEditVariable = (variable: PromptVariable, index: number) => {\n    setEditingVariable(variable);\n    setEditingIndex(index);\n    setVariableEditorVisible(true);\n  };\n\n  const handleVariableSave = (values: PromptVariable) => {\n    let newVariables = [...variables];\n\n    if (editingIndex >= 0) {\n      // 编辑\n      newVariables[editingIndex] = values;\n    } else {\n      // 新增 - 检查重复\n      if (newVariables.find((v) => v.name === values.name)) {\n        message.error('变量名已存在');\n        return;\n      }\n      newVariables.push(values);\n    }\n\n    setVariables(newVariables);\n    setVariableEditorVisible(false);\n    message.success(editingIndex >= 0 ? '变量已更新' : '变量已添加');\n\n    // 重新检测\n    const userPrompt = form.getFieldValue('user_prompt_template');\n    if (userPrompt) {\n      detectUndefinedVariables(userPrompt);\n    }\n  };\n\n  const handleVariableDelete = (index: number) => {\n    const newVariables = variables.filter((_, i) => i !== index);\n    setVariables(newVariables);\n    message.success('变量已删除');\n  };\n\n  // 快速添加检测到的未定义变量\n  const handleQuickAddUndefined = () => {\n    if (detectedUndefinedVars.length === 0) return;\n\n    const varName = detectedUndefinedVars[0];\n    setEditingVariable({\n      name: varName,\n      description: '',\n      example: '',\n      required: false,\n    });\n    setEditingIndex(-1);\n    setVariableEditorVisible(true);\n  };\n\n  // 插入变量到用户提示词\n  const handleInsertVariable = (variableName: string) => {\n    const textarea = userPromptRef.current?.resizableTextArea?.textArea;\n    if (!textarea) return;\n\n    const start = textarea.selectionStart;\n    const end = textarea.selectionEnd;\n    const currentValue = form.getFieldValue('user_prompt_template') || '';\n\n    const newValue =\n      currentValue.substring(0, start) +\n      `{{${variableName}}}` +\n      currentValue.substring(end);\n\n    form.setFieldValue('user_prompt_template', newValue);\n    detectUndefinedVariables(newValue);\n\n    // 设置光标位置\n    setTimeout(() => {\n      const newPosition = start + variableName.length + 2;\n      textarea.setSelectionRange(newPosition, newPosition);\n      textarea.focus();\n    }, 0);\n  };\n\n  // 从风险评估项自动灌入变量（评估类别 + 评估项）\n  const syncRiskVariables = async () => {\n    try {\n      const res: any = await getRiskItemList();\n      const list: any[] = Array.isArray(res?.data) ? res.data : [];\n      if (!list.length) {\n        message.warning(\n          '风险评估项为空，请先到“参数配置 > 风险评估项管理”配置评估项',\n        );\n        return;\n      }\n\n      // 现有变量名集合（以现有为主，存在则跳过自动灌入）\n      const existingNames = new Set((variables || []).map((v) => v.name));\n      const baseCount = new Map<string, number>();\n      const injected: PromptVariable[] = [];\n      const injectedNames: string[] = [];\n\n      list.forEach((it: any, idx: number) => {\n        const catSlug = categoryToSlug(it.category, idx + 1);\n        const enItem = extractItemEnSlug(it.item_name) || '';\n        const itemSlug =\n          toSafeVar(enItem) ||\n          toSafeVar(stripParen(it.item_name)) ||\n          `item_${idx + 1}`;\n        let base = toSafeVar(`${catSlug}_${itemSlug}`) || `var_${idx + 1}`;\n\n        // 自动变量内部去重：相同 base 追加 _2, _3...\n        const count = baseCount.get(base) || 0;\n        baseCount.set(base, count + 1);\n        const name = count === 0 ? base : toSafeVar(`${base}_${count + 1}`);\n\n        // 若与现有（用户手工）变量重名，则跳过（以用户变量为主）\n        if (existingNames.has(name)) {\n          return;\n        }\n\n        injected.push({\n          name,\n          description: `${it.category}-${stripParen(it.item_name)}`,\n          example: '',\n          required: false,\n        });\n        injectedNames.push(name);\n        existingNames.add(name);\n      });\n\n      if (!injected.length) {\n        message.info('未发现可新增的风险变量（可能已存在当前变量中）');\n        setAutoInjectedByCategory((prev) => ({ ...prev, risk_analysis: [] }));\n        return;\n      }\n\n      setVariables((prev) => [...prev, ...injected]);\n      setAutoInjectedByCategory((prev) => ({\n        ...prev,\n        risk_analysis: Array.from(\n          new Set([...(prev?.risk_analysis || []), ...injectedNames]),\n        ),\n      }));\n      message.success(`已导入 ${injected.length} 个变量`);\n    } catch (e) {\n      message.error('获取风险评估项失败');\n    }\n  };\n\n  // 从角色配置自动灌入变量（工作量评估）\n  const syncCostVariables = async () => {\n    try {\n      const res: any = await getRoleList();\n      const roles: any[] = Array.isArray(res?.data) ? res.data : [];\n      if (!roles.length) {\n        message.warning(\n          '角色配置为空，请先到“参数配置 > 角色与单价管理”配置角色',\n        );\n        return;\n      }\n\n      const existingNames = new Set((variables || []).map((v) => v.name));\n      const baseCount = new Map<string, number>();\n      const injected: PromptVariable[] = [];\n      const injectedNames: string[] = [];\n\n      roles.forEach((role, idx) => {\n        const rawName: string = String(role.role_name || '').trim();\n        // 基于翻译/拼音转写生成英文slug，尽量避免占位名\n        let base = translateRoleToSlug(rawName);\n        if (!base) base = `member_${idx + 1}`;\n\n        // 自动变量内部去重\n        const count = baseCount.get(base) || 0;\n        baseCount.set(base, count + 1);\n        const name = count === 0 ? base : toSafeVar(`${base}_${count + 1}`);\n\n        if (existingNames.has(name)) {\n          return;\n        }\n\n        injected.push({\n          name,\n          description: rawName || `角色${idx + 1}`,\n          help: `对应角色：${rawName}${role.unit_price ? `，单价：${role.unit_price} 元/天` : ''}`,\n          example: '1.0',\n          required: false,\n        });\n        injectedNames.push(name);\n        existingNames.add(name);\n      });\n\n      if (!injected.length) {\n        message.info('未发现可新增的角色变量（可能已存在当前变量中）');\n        setAutoInjectedByCategory((prev) => ({\n          ...prev,\n          workload_evaluation: [],\n        }));\n        return;\n      }\n\n      setVariables((prev) => [...prev, ...injected]);\n      setAutoInjectedByCategory((prev) => ({\n        ...prev,\n        workload_evaluation: Array.from(\n          new Set([...(prev?.workload_evaluation || []), ...injectedNames]),\n        ),\n      }));\n      message.success(`已导入 ${injected.length} 个角色变量`);\n    } catch (e) {\n      message.error('获取角色配置失败');\n    }\n  };\n\n  const onFinish = async (values: any) => {\n    try {\n      const data = {\n        ...values,\n        variables_json: JSON.stringify(variables),\n      };\n\n      if (isEdit) {\n        await updatePromptTemplate(Number(id), data);\n        message.success('更新成功');\n      } else {\n        await createPromptTemplate(data);\n        message.success('创建成功');\n      }\n      history.push('/model-config/prompts', { refresh: true });\n    } catch (error) {\n      message.error('操作失败');\n    }\n  };\n\n  const isSystemTemplate = template?.is_system || false;\n\n  return (\n    <PageContainer>\n      <Card>\n        <Form\n          form={form}\n          layout=\"vertical\"\n          onFinish={onFinish}\n          onValuesChange={async (changedValues, allValues) => {\n            if ('category' in changedValues) {\n              const newCat = changedValues.category;\n              const prevCat = prevCategoryRef.current;\n              prevCategoryRef.current = newCat;\n\n              // 从某分类切换出去：移除该分类自动灌入变量\n              if (prevCat && prevCat !== newCat) {\n                const names = autoInjectedByCategory[prevCat] || [];\n                if (names.length > 0) {\n                  setVariables((prev) => prev.filter((v) => !names.includes(v.name)));\n                  setAutoInjectedByCategory((prev) => ({ ...prev, [prevCat]: [] }));\n                }\n              }\n\n              // 切换到 风险分析：自动同步变量\n              if (newCat === 'risk_analysis') {\n                await syncRiskVariables();\n              }\n\n              // 切换到 工作量评估：自动同步角色变量\n              if (newCat === 'workload_evaluation') {\n                await syncCostVariables();\n              }\n            }\n          }}\n          initialValues={{\n            category: 'custom',\n            is_active: true,\n          }}\n        >\n          <Form.Item\n            name=\"template_name\"\n            label=\"模板名称\"\n            rules={[\n              { required: true, message: '请输入模板名称' },\n              { max: 100, message: '最多100个字符' },\n            ]}\n          >\n            <Input placeholder=\"请输入模板名称\" disabled={isSystemTemplate} />\n          </Form.Item>\n\n          <Form.Item\n            name=\"category\"\n            label=\"分类\"\n            rules={[{ required: true, message: '请选择分类' }]}\n          >\n            <Select placeholder=\"请选择分类\" disabled={isSystemTemplate}>\n              {PROMPT_TEMPLATE_CATEGORY_OPTIONS.map((option) => (\n                <Select.Option key={option.value} value={option.value}>\n                  {option.label}\n                </Select.Option>\n              ))}\n            </Select>\n          </Form.Item>\n\n          <Form.Item\n            name=\"description\"\n            label=\"描述\"\n            rules={[{ max: 500, message: '最多500个字符' }]}\n          >\n            <TextArea\n              rows={3}\n              placeholder=\"请输入描述\"\n              disabled={isSystemTemplate}\n            />\n          </Form.Item>\n\n          <Form.Item\n            name=\"is_active\"\n            label=\"是否激活\"\n            valuePropName=\"checked\"\n            help=\"禁用后，该模板将无法在评估中使用。\"\n          >\n            <Switch disabled={isSystemTemplate} />\n          </Form.Item>\n\n          <Form.Item\n            name=\"system_prompt\"\n            label=\"系统提示词\"\n            rules={[{ required: true, message: '请输入系统提示词' }]}\n            help=\"定义 AI 的角色、专业领域和任务目标\"\n          >\n            <TextArea\n              rows={6}\n              placeholder=\"请输入系统提示词\"\n              disabled={isSystemTemplate}\n              showCount\n            />\n          </Form.Item>\n\n          <Form.Item\n            label={\n              <Space>\n                <span>用户提示词模板</span>\n                <VariableInsertButton\n                  variables={variables}\n                  onInsert={handleInsertVariable}\n                  disabled={isSystemTemplate}\n                />\n              </Space>\n            }\n          >\n            <Form.Item\n              name=\"user_prompt_template\"\n              rules={[{ required: true, message: '请输入用户提示词模板' }]}\n              noStyle\n            >\n              <TextArea\n                ref={userPromptRef}\n                rows={8}\n                placeholder=\"使用 {{变量名}} 格式插入变量\"\n                disabled={isSystemTemplate}\n                onChange={handleUserPromptChange}\n                showCount\n              />\n            </Form.Item>\n\n            {/* 未定义变量警告 */}\n            {detectedUndefinedVars.length > 0 && (\n              <Alert\n                message={\n                  <Space wrap size=\"small\">\n                    <span>\n                      检测到 {detectedUndefinedVars.length} 个未定义变量:\n                    </span>\n                    {detectedUndefinedVars.map((v) => (\n                      <Tag key={v} color=\"warning\">\n                        {v}\n                      </Tag>\n                    ))}\n                    <Button\n                      type=\"link\"\n                      size=\"small\"\n                      onClick={handleQuickAddUndefined}\n                      disabled={isSystemTemplate}\n                    >\n                      快速添加\n                    </Button>\n                  </Space>\n                }\n                type=\"warning\"\n                style={{ marginTop: 8 }}\n                closable\n              />\n            )}\n          </Form.Item>\n\n          {/* 变量管理区域 */}\n          <Form.Item\n            label={\n              <Space>\n                <span>变量定义</span>\n                {categoryValue === 'risk_analysis' && !isSystemTemplate && (\n                  <Button size=\"small\" onClick={syncRiskVariables}>\n                    从评估类别导入\n                  </Button>\n                )}\n                {categoryValue === 'workload_evaluation' &&\n                  !isSystemTemplate && (\n                  <Button size=\"small\" onClick={syncCostVariables}>\n                    从角色配置导入\n                  </Button>\n                )}\n              </Space>\n            }\n          >\n            <VariableList\n              variables={variables}\n              onAdd={handleAddVariable}\n              onEdit={handleEditVariable}\n              onDelete={handleVariableDelete}\n              disabled={isSystemTemplate}\n            />\n          </Form.Item>\n\n          <Form.Item>\n            <Space>\n              <Button onClick={() => history.push('/model-config/prompts')}>\n                取消\n              </Button>\n              <Button\n                type=\"default\"\n                icon={<EyeOutlined />}\n                onClick={() => setPreviewVisible(true)}\n                disabled={variables.length === 0}\n              >\n                预览\n              </Button>\n              <Button\n                type=\"primary\"\n                htmlType=\"submit\"\n                disabled={isSystemTemplate}\n              >\n                保存\n              </Button>\n            </Space>\n          </Form.Item>\n        </Form>\n      </Card>\n\n      {/* 变量编辑对话框 */}\n      <VariableEditor\n        visible={variableEditorVisible}\n        variable={editingVariable}\n        onOk={handleVariableSave}\n        onCancel={() => setVariableEditorVisible(false)}\n      />\n\n      {/* 预览对话框 */}\n      {isEdit && (\n        <PreviewModal\n          visible={previewVisible}\n          templateId={Number(id)}\n          variables={variables}\n          onCancel={() => setPreviewVisible(false)}\n        />\n      )}\n    </PageContainer>\n  );\n};\n\nexport default PromptTemplateForm;\n",
+      "__content": "import { getRiskItemList, getRoleList } from '@/services/config';\nimport { translateRoleToSlug } from './utils/roleNaming';\nimport { categoryToSlug, extractItemEnSlug, stripParen, toSafeVar } from './utils/riskNaming';\nimport type { PromptTemplate, PromptVariable, PromptModuleTagOption } from '@/services/promptTemplate';\nimport {\n  createPromptTemplate,\n  createPromptModuleTag,\n  getPromptTemplateById,\n  getPromptModuleTags,\n  updatePromptTemplate,\n} from '@/services/promptTemplate';\nimport { EyeOutlined } from '@ant-design/icons';\nimport { PageContainer } from '@ant-design/pro-layout';\nimport { history, useParams } from '@umijs/max';\nimport {\n  Alert,\n  Button,\n  Card,\n  Form,\n  Input,\n  Modal,\n  message,\n  Select,\n  Space,\n  Switch,\n  Tag,\n} from 'antd';\nimport React, { useEffect, useRef, useState } from 'react';\nimport PreviewModal from './components/PreviewModal';\nimport VariableEditor from './components/VariableEditor';\nimport VariableInsertButton from './components/VariableInsertButton';\nimport VariableList from './components/VariableList';\n\nconst { TextArea } = Input;\n\n// autoSync 函数签名：接受当前变量列表和对应的 setter\ntype SyncHandler = (\n  variables: PromptVariable[],\n  setVariables: React.Dispatch<React.SetStateAction<PromptVariable[]>>,\n  setAutoInjectedByTag: React.Dispatch<React.SetStateAction<Record<string, string[]>>>\n) => Promise<void>;\n\nconst syncRiskVariables: SyncHandler = async (variables, setVariables, setAutoInjectedByTag) => {\n  try {\n    const res: any = await getRiskItemList();\n    const list: any[] = Array.isArray(res?.data) ? res.data : [];\n    if (!list.length) {\n      message.warning('风险评估项为空，请先到\"参数配置 > 风险评估项管理\"配置评估项');\n      return;\n    }\n\n    const existingNames = new Set((variables || []).map((v) => v.name));\n    const baseCount = new Map<string, number>();\n    const injected: PromptVariable[] = [];\n    const injectedNames: string[] = [];\n\n    list.forEach((it: any, idx: number) => {\n      const catSlug = categoryToSlug(it.category, idx + 1);\n      const enItem = extractItemEnSlug(it.item_name) || '';\n      const itemSlug =\n        toSafeVar(enItem) || toSafeVar(stripParen(it.item_name)) || `item_${idx + 1}`;\n      let base = toSafeVar(`${catSlug}_${itemSlug}`) || `var_${idx + 1}`;\n\n      const count = baseCount.get(base) || 0;\n      baseCount.set(base, count + 1);\n      const name = count === 0 ? base : toSafeVar(`${base}_${count + 1}`);\n\n      if (existingNames.has(name)) return;\n\n      injected.push({ name, description: `${it.category}-${stripParen(it.item_name)}`, example: '', required: false });\n      injectedNames.push(name);\n      existingNames.add(name);\n    });\n\n    if (!injected.length) {\n      message.info('未发现可新增的风险变量');\n      setAutoInjectedByTag((prev) => ({ ...prev, assessment: [] }));\n      return;\n    }\n\n    setVariables((prev) => [...prev, ...injected]);\n    setAutoInjectedByTag((prev) => ({\n      ...prev,\n      assessment: Array.from(new Set([...(prev?.assessment || []), ...injectedNames])),\n    }));\n    message.success(`已导入 ${injected.length} 个变量`);\n  } catch (e) {\n    message.error('获取风险评估项失败');\n  }\n};\n\nconst syncCostVariables: SyncHandler = async (variables, setVariables) => {\n  try {\n    const res: any = await getRoleList();\n    const roles: any[] = Array.isArray(res?.data) ? res.data : [];\n    if (!roles.length) {\n      message.warning('角色配置为空，请先到\"参数配置 > 角色与单价管理\"配置角色');\n      return;\n    }\n\n    const existingNames = new Set((variables || []).map((v) => v.name));\n    const baseCount = new Map<string, number>();\n    const injected: PromptVariable[] = [];\n\n    roles.forEach((role, idx) => {\n      const rawName: string = String(role.role_name || '').trim();\n      let base = translateRoleToSlug(rawName);\n      if (!base) base = `member_${idx + 1}`;\n\n      const count = baseCount.get(base) || 0;\n      baseCount.set(base, count + 1);\n      const name = count === 0 ? base : toSafeVar(`${base}_${count + 1}`);\n\n      if (existingNames.has(name)) return;\n\n      injected.push({\n        name,\n        description: rawName || `角色${idx + 1}`,\n        help: `对应角色：${rawName}${role.unit_price ? `，单价：${role.unit_price} 元/天` : ''}`,\n        example: '1.0',\n        required: false,\n      });\n      existingNames.add(name);\n    });\n\n    if (!injected.length) {\n      message.info('未发现可新增的角色变量');\n      return;\n    }\n\n    setVariables((prev) => [...prev, ...injected]);\n    message.success(`已导入 ${injected.length} 个角色变量`);\n  } catch (e) {\n    message.error('获取角色配置失败');\n  }\n};\n\n// autoSync 配置：module_tag → 对应的同步函数\nconst AUTO_SYNC_CONFIG: Record<string, SyncHandler> = {\n  assessment: syncRiskVariables,\n};\n\nconst PromptTemplateForm: React.FC = () => {\n  const [form] = Form.useForm();\n  const { id } = useParams<{ id: string }>();\n  const moduleTagValue = Form.useWatch('module_tag', form);\n  const isEdit = !!id;\n  const [template, setTemplate] = useState<PromptTemplate | null>(null);\n  const [variables, setVariables] = useState<PromptVariable[]>([]);\n  const [variableEditorVisible, setVariableEditorVisible] = useState(false);\n  const [editingVariable, setEditingVariable] = useState<PromptVariable | null>(null);\n  const [editingIndex, setEditingIndex] = useState<number>(-1);\n  const [previewVisible, setPreviewVisible] = useState(false);\n  const [detectedUndefinedVars, setDetectedUndefinedVars] = useState<string[]>([]);\n  const [moduleTagOptions, setModuleTagOptions] = useState<PromptModuleTagOption[]>([]);\n  const [addTagModalVisible, setAddTagModalVisible] = useState(false);\n  const [addTagForm] = Form.useForm();\n  const userPromptRef = useRef<any>(null);\n\n  // 记录各 module_tag 自动灌入的变量名，用于切换时清理\n  const [autoInjectedByTag, setAutoInjectedByTag] = useState<Record<string, string[]>>({});\n  const prevModuleTagRef = useRef<string | undefined>(undefined);\n\n  useEffect(() => {\n    getPromptModuleTags().then((res) => {\n      if (res?.data) {\n        setModuleTagOptions(res.data);\n      }\n    });\n\n    if (isEdit) {\n      getPromptTemplateById(Number(id)).then((res) => {\n        setTemplate(res);\n        form.setFieldsValue(res);\n        if (res.variables_json) {\n          try {\n            const parsed = JSON.parse(res.variables_json);\n            setVariables(Array.isArray(parsed) ? parsed : []);\n          } catch (error) {\n            console.error('Failed to parse variables:', error);\n          }\n        }\n      });\n    }\n  }, [id, isEdit, form]);\n\n  const detectUndefinedVariables = (templateContent: string) => {\n    const regex = /\\{\\{\\s*(\\w+)\\s*\\}\\}/g;\n    const matches = templateContent.matchAll(regex);\n    const detected = new Set<string>();\n\n    for (const match of matches) {\n      const varName = match[1];\n      if (!variables.find((v) => v.name === varName)) {\n        detected.add(varName);\n      }\n    }\n\n    setDetectedUndefinedVars(Array.from(detected));\n  };\n\n  const handleUserPromptChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {\n    const value = e.target.value;\n    form.setFieldValue('user_prompt_template', value);\n    detectUndefinedVariables(value);\n  };\n\n  const handleAddVariable = () => {\n    setEditingVariable(null);\n    setEditingIndex(-1);\n    setVariableEditorVisible(true);\n  };\n\n  const handleEditVariable = (variable: PromptVariable, index: number) => {\n    setEditingVariable(variable);\n    setEditingIndex(index);\n    setVariableEditorVisible(true);\n  };\n\n  const handleVariableSave = (values: PromptVariable) => {\n    let newVariables = [...variables];\n\n    if (editingIndex >= 0) {\n      newVariables[editingIndex] = values;\n    } else {\n      if (newVariables.find((v) => v.name === values.name)) {\n        message.error('变量名已存在');\n        return;\n      }\n      newVariables.push(values);\n    }\n\n    setVariables(newVariables);\n    setVariableEditorVisible(false);\n    message.success(editingIndex >= 0 ? '变量已更新' : '变量已添加');\n\n    const userPrompt = form.getFieldValue('user_prompt_template');\n    if (userPrompt) {\n      detectUndefinedVariables(userPrompt);\n    }\n  };\n\n  const handleVariableDelete = (index: number) => {\n    const newVariables = variables.filter((_, i) => i !== index);\n    setVariables(newVariables);\n    message.success('变量已删除');\n  };\n\n  const handleQuickAddUndefined = () => {\n    if (detectedUndefinedVars.length === 0) return;\n\n    const varName = detectedUndefinedVars[0];\n    setEditingVariable({ name: varName, description: '', example: '', required: false });\n    setEditingIndex(-1);\n    setVariableEditorVisible(true);\n  };\n\n  const handleInsertVariable = (variableName: string) => {\n    const textarea = userPromptRef.current?.resizableTextArea?.textArea;\n    if (!textarea) return;\n\n    const start = textarea.selectionStart;\n    const end = textarea.selectionEnd;\n    const currentValue = form.getFieldValue('user_prompt_template') || '';\n\n    const newValue =\n      currentValue.substring(0, start) +\n      `{{${variableName}}}` +\n      currentValue.substring(end);\n\n    form.setFieldValue('user_prompt_template', newValue);\n    detectUndefinedVariables(newValue);\n\n    setTimeout(() => {\n      const newPosition = start + variableName.length + 2;\n      textarea.setSelectionRange(newPosition, newPosition);\n      textarea.focus();\n    }, 0);\n  };\n\n  const openAddTagModal = () => {\n    addTagForm.resetFields();\n    setAddTagModalVisible(true);\n  };\n\n  const handleAddTag = async () => {\n    try {\n      const values = await addTagForm.validateFields();\n      const res = await createPromptModuleTag({\n        value: values.tag_value.trim(),\n        label: values.tag_label.trim(),\n        description: values.tag_description || '',\n      });\n      if (!res?.success) {\n        throw new Error(res?.error || '新增标签失败');\n      }\n      const newTag = res.data;\n      // 刷新下拉列表\n      const refreshed = await getPromptModuleTags();\n      if (refreshed?.data) {\n        setModuleTagOptions(refreshed.data);\n      }\n      form.setFieldValue('module_tag', newTag.value);\n      setAddTagModalVisible(false);\n      message.success(`标签「${newTag.label}」已添加并选中`);\n    } catch (error: any) {\n      message.error(error?.message || '新增标签失败');\n    }\n  };\n\n  const onFinish = async (values: any) => {\n    try {\n      const data = {\n        ...values,\n        variables_json: JSON.stringify(variables),\n      };\n\n      if (isEdit) {\n        await updatePromptTemplate(Number(id), data);\n        message.success('更新成功');\n      } else {\n        await createPromptTemplate(data);\n        message.success('创建成功');\n      }\n      history.push('/model-config/prompts', { refresh: true });\n    } catch (error) {\n      message.error('操作失败');\n    }\n  };\n\n  const isSystemTemplate = template?.is_system || false;\n\n  const showRiskImport = moduleTagValue === 'assessment';\n  const showCostImport = moduleTagValue === 'assessment';\n\n  return (\n    <PageContainer>\n      <Card>\n        <Form\n          form={form}\n          layout=\"vertical\"\n          onFinish={onFinish}\n          onValuesChange={async (changedValues) => {\n            if ('module_tag' in changedValues) {\n              const newTag = changedValues.module_tag;\n              const prevTag = prevModuleTagRef.current;\n              prevModuleTagRef.current = newTag;\n\n              if (prevTag && prevTag !== newTag) {\n                const names = autoInjectedByTag[prevTag] || [];\n                if (names.length > 0) {\n                  setVariables((prev) => prev.filter((v) => !names.includes(v.name)));\n                  setAutoInjectedByTag((prev) => ({ ...prev, [prevTag]: [] }));\n                }\n              }\n\n              const handler = AUTO_SYNC_CONFIG[newTag];\n              if (handler) {\n                await handler(variables, setVariables, setAutoInjectedByTag);\n              }\n            }\n          }}\n          initialValues={{\n            module_tag: 'general',\n            is_active: true,\n          }}\n        >\n          <Form.Item\n            name=\"template_name\"\n            label=\"模板名称\"\n            rules={[\n              { required: true, message: '请输入模板名称' },\n              { max: 100, message: '最多100个字符' },\n            ]}\n          >\n            <Input placeholder=\"请输入模板名称\" disabled={isSystemTemplate} />\n          </Form.Item>\n\n          <Form.Item\n            name=\"module_tag\"\n            label={\n              <Space>\n                <span>模块标签</span>\n                <Button type=\"link\" size=\"small\" onClick={openAddTagModal} disabled={isSystemTemplate}>\n                  + 新增\n                </Button>\n              </Space>\n            }\n            rules={[{ required: true, message: '请选择模块标签' }]}\n          >\n            <Select\n              showSearch\n              allowClear\n              placeholder=\"请选择模块标签\"\n              disabled={isSystemTemplate}\n              options={moduleTagOptions.map((t) => ({\n                value: t.value,\n                label: `${t.label} (${t.value})`,\n              }))}\n              filterOption={(input, option) =>\n                (option?.label as string)?.toLowerCase().includes(input.toLowerCase()) ?? false\n              }\n            />\n          </Form.Item>\n\n          <Form.Item\n            name=\"description\"\n            label=\"描述\"\n            rules={[{ max: 500, message: '最多500个字符' }]}\n          >\n            <TextArea rows={3} placeholder=\"请输入描述\" disabled={isSystemTemplate} />\n          </Form.Item>\n\n          <Form.Item\n            name=\"is_active\"\n            label=\"是否激活\"\n            valuePropName=\"checked\"\n            help=\"禁用后，该模板将无法在评估中使用。\"\n          >\n            <Switch disabled={isSystemTemplate} />\n          </Form.Item>\n\n          <Form.Item\n            name=\"system_prompt\"\n            label=\"系统提示词\"\n            rules={[{ required: true, message: '请输入系统提示词' }]}\n            help=\"定义 AI 的角色，专业领域和任务目标\"\n          >\n            <TextArea rows={6} placeholder=\"请输入系统提示词\" disabled={isSystemTemplate} showCount />\n          </Form.Item>\n\n          <Form.Item\n            label={\n              <Space>\n                <span>用户提示词模板</span>\n                <VariableInsertButton\n                  variables={variables}\n                  onInsert={handleInsertVariable}\n                  disabled={isSystemTemplate}\n                />\n              </Space>\n            }\n          >\n            <Form.Item\n              name=\"user_prompt_template\"\n              rules={[{ required: true, message: '请输入用户提示词模板' }]}\n              noStyle\n            >\n              <TextArea\n                ref={userPromptRef}\n                rows={8}\n                placeholder=\"使用 {{变量名}} 格式插入变量\"\n                disabled={isSystemTemplate}\n                onChange={handleUserPromptChange}\n                showCount\n              />\n            </Form.Item>\n\n            {detectedUndefinedVars.length > 0 && (\n              <Alert\n                message={\n                  <Space wrap size=\"small\">\n                    <span>检测到 {detectedUndefinedVars.length} 个未定义变量:</span>\n                    {detectedUndefinedVars.map((v) => (\n                      <Tag key={v} color=\"warning\">{v}</Tag>\n                    ))}\n                    <Button type=\"link\" size=\"small\" onClick={handleQuickAddUndefined} disabled={isSystemTemplate}>\n                      快速添加\n                    </Button>\n                  </Space>\n                }\n                type=\"warning\"\n                style={{ marginTop: 8 }}\n                closable\n              />\n            )}\n          </Form.Item>\n\n          <Form.Item\n            label={\n              <Space>\n                <span>变量定义</span>\n                {showRiskImport && !isSystemTemplate && (\n                  <Button size=\"small\" onClick={() => syncRiskVariables(variables, setVariables, setAutoInjectedByTag)}>\n                    从评估类别导入\n                  </Button>\n                )}\n                {showCostImport && !isSystemTemplate && (\n                  <Button size=\"small\" onClick={() => syncCostVariables(variables, setVariables, setAutoInjectedByTag)}>\n                    从角色配置导入\n                  </Button>\n                )}\n              </Space>\n            }\n          >\n            <VariableList\n              variables={variables}\n              onAdd={handleAddVariable}\n              onEdit={handleEditVariable}\n              onDelete={handleVariableDelete}\n              disabled={isSystemTemplate}\n            />\n          </Form.Item>\n\n          <Form.Item>\n            <Space>\n              <Button onClick={() => history.push('/model-config/prompts')}>取消</Button>\n              <Button type=\"default\" icon={<EyeOutlined />} onClick={() => setPreviewVisible(true)} disabled={variables.length === 0}>\n                预览\n              </Button>\n              <Button type=\"primary\" htmlType=\"submit\" disabled={isSystemTemplate}>\n                保存\n              </Button>\n            </Space>\n          </Form.Item>\n        </Form>\n      </Card>\n\n      <Modal\n        title=\"新增模块标签\"\n        open={addTagModalVisible}\n        onOk={handleAddTag}\n        onCancel={() => setAddTagModalVisible(false)}\n        okText=\"添加\"\n        cancelText=\"取消\"\n        destroyOnClose\n      >\n        <Form form={addTagForm} layout=\"vertical\" style={{ marginTop: 16 }}>\n          <Form.Item\n            name=\"tag_value\"\n            label=\"标签值\"\n            rules={[\n              { required: true, message: '请输入标签值' },\n              { pattern: /^[a-z_0-9]+$/, message: '仅支持英文小写字母、数字和下划线，如 risk_simple' },\n            ]}\n            extra=\"存储到数据库的值，如 risk_simple\"\n          >\n            <Input placeholder=\"如 risk_simple\" />\n          </Form.Item>\n          <Form.Item\n            name=\"tag_label\"\n            label=\"展示名称\"\n            rules={[{ required: true, message: '请输入展示名称' }]}\n            extra=\"前端列表和下拉中显示的名称\"\n          >\n            <Input placeholder=\"如 简易风险分析\" />\n          </Form.Item>\n        </Form>\n      </Modal>\n\n      <VariableEditor\n        visible={variableEditorVisible}\n        variable={editingVariable}\n        onOk={handleVariableSave}\n        onCancel={() => setVariableEditorVisible(false)}\n      />\n\n      {isEdit && (\n        <PreviewModal\n          visible={previewVisible}\n          templateId={Number(id)}\n          variables={variables}\n          onCancel={() => setPreviewVisible(false)}\n        />\n      )}\n    </PageContainer>\n  );\n};\n\nexport default PromptTemplateForm;\n",
       "__isJSFile": true,
       "__absFile": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/src/pages/ModelConfig/Prompts/Form.tsx"
     },
@@ -3971,7 +4454,7 @@
       "parentId": "14",
       "id": "18",
       "absPath": "/model-config/prompts/:id/edit",
-      "__content": "import { getRiskItemList, getRoleList } from '@/services/config';\nimport { translateRoleToSlug } from './utils/roleNaming';\nimport { categoryToSlug, extractItemEnSlug, stripParen, toSafeVar } from './utils/riskNaming';\nimport type { PromptTemplate, PromptVariable } from '@/services/promptTemplate';\nimport {\n  createPromptTemplate,\n  getPromptTemplateById,\n  PROMPT_TEMPLATE_CATEGORY_OPTIONS,\n  updatePromptTemplate,\n} from '@/services/promptTemplate';\nimport { EyeOutlined } from '@ant-design/icons';\nimport { PageContainer } from '@ant-design/pro-layout';\nimport { history, useParams } from '@umijs/max';\nimport {\n  Alert,\n  Button,\n  Card,\n  Form,\n  Input,\n  message,\n  Select,\n  Space,\n  Switch,\n  Tag,\n} from 'antd';\nimport React, { useEffect, useRef, useState } from 'react';\nimport PreviewModal from './components/PreviewModal';\nimport VariableEditor from './components/VariableEditor';\nimport VariableInsertButton from './components/VariableInsertButton';\nimport VariableList from './components/VariableList';\n\nconst { TextArea } = Input;\n\nconst PromptTemplateForm: React.FC = () => {\n  const [form] = Form.useForm();\n  const { id } = useParams<{ id: string }>();\n  const categoryValue = Form.useWatch('category', form);\n  const isEdit = !!id;\n  const [template, setTemplate] = useState<PromptTemplate | null>(null);\n  const [variables, setVariables] = useState<PromptVariable[]>([]);\n  const [variableEditorVisible, setVariableEditorVisible] = useState(false);\n  const [editingVariable, setEditingVariable] = useState<PromptVariable | null>(\n    null,\n  );\n  const [editingIndex, setEditingIndex] = useState<number>(-1);\n  const [previewVisible, setPreviewVisible] = useState(false);\n  const [detectedUndefinedVars, setDetectedUndefinedVars] = useState<string[]>(\n    [],\n  );\n  const userPromptRef = useRef<any>(null);\n  // 记录各分类自动灌入的变量名，用于分类切换时清理\n  const [autoInjectedByCategory, setAutoInjectedByCategory] = useState<\n    Record<string, string[]>\n  >({});\n  const prevCategoryRef = useRef<string | undefined>(undefined);\n\n  useEffect(() => {\n    if (isEdit) {\n      getPromptTemplateById(Number(id)).then((res) => {\n        setTemplate(res);\n        form.setFieldsValue(res);\n\n        // 解析变量\n        if (res.variables_json) {\n          try {\n            const parsed = JSON.parse(res.variables_json);\n            setVariables(Array.isArray(parsed) ? parsed : []);\n          } catch (error) {\n            console.error('Failed to parse variables:', error);\n          }\n        }\n      });\n    }\n  }, [id, isEdit, form]);\n\n  // 智能检测未定义的变量\n  const detectUndefinedVariables = (template: string) => {\n    const regex = /\\{\\{\\s*(\\w+)\\s*\\}\\}/g;\n    const matches = template.matchAll(regex);\n    const detected = new Set<string>();\n\n    for (const match of matches) {\n      const varName = match[1];\n      if (!variables.find((v) => v.name === varName)) {\n        detected.add(varName);\n      }\n    }\n\n    setDetectedUndefinedVars(Array.from(detected));\n  };\n\n  // 用户提示词模板变化时检测变量\n  const handleUserPromptChange = (\n    e: React.ChangeEvent<HTMLTextAreaElement>,\n  ) => {\n    const value = e.target.value;\n    form.setFieldValue('user_prompt_template', value);\n    detectUndefinedVariables(value);\n  };\n\n  // 添加/编辑变量\n  const handleAddVariable = () => {\n    setEditingVariable(null);\n    setEditingIndex(-1);\n    setVariableEditorVisible(true);\n  };\n\n  const handleEditVariable = (variable: PromptVariable, index: number) => {\n    setEditingVariable(variable);\n    setEditingIndex(index);\n    setVariableEditorVisible(true);\n  };\n\n  const handleVariableSave = (values: PromptVariable) => {\n    let newVariables = [...variables];\n\n    if (editingIndex >= 0) {\n      // 编辑\n      newVariables[editingIndex] = values;\n    } else {\n      // 新增 - 检查重复\n      if (newVariables.find((v) => v.name === values.name)) {\n        message.error('变量名已存在');\n        return;\n      }\n      newVariables.push(values);\n    }\n\n    setVariables(newVariables);\n    setVariableEditorVisible(false);\n    message.success(editingIndex >= 0 ? '变量已更新' : '变量已添加');\n\n    // 重新检测\n    const userPrompt = form.getFieldValue('user_prompt_template');\n    if (userPrompt) {\n      detectUndefinedVariables(userPrompt);\n    }\n  };\n\n  const handleVariableDelete = (index: number) => {\n    const newVariables = variables.filter((_, i) => i !== index);\n    setVariables(newVariables);\n    message.success('变量已删除');\n  };\n\n  // 快速添加检测到的未定义变量\n  const handleQuickAddUndefined = () => {\n    if (detectedUndefinedVars.length === 0) return;\n\n    const varName = detectedUndefinedVars[0];\n    setEditingVariable({\n      name: varName,\n      description: '',\n      example: '',\n      required: false,\n    });\n    setEditingIndex(-1);\n    setVariableEditorVisible(true);\n  };\n\n  // 插入变量到用户提示词\n  const handleInsertVariable = (variableName: string) => {\n    const textarea = userPromptRef.current?.resizableTextArea?.textArea;\n    if (!textarea) return;\n\n    const start = textarea.selectionStart;\n    const end = textarea.selectionEnd;\n    const currentValue = form.getFieldValue('user_prompt_template') || '';\n\n    const newValue =\n      currentValue.substring(0, start) +\n      `{{${variableName}}}` +\n      currentValue.substring(end);\n\n    form.setFieldValue('user_prompt_template', newValue);\n    detectUndefinedVariables(newValue);\n\n    // 设置光标位置\n    setTimeout(() => {\n      const newPosition = start + variableName.length + 2;\n      textarea.setSelectionRange(newPosition, newPosition);\n      textarea.focus();\n    }, 0);\n  };\n\n  // 从风险评估项自动灌入变量（评估类别 + 评估项）\n  const syncRiskVariables = async () => {\n    try {\n      const res: any = await getRiskItemList();\n      const list: any[] = Array.isArray(res?.data) ? res.data : [];\n      if (!list.length) {\n        message.warning(\n          '风险评估项为空，请先到“参数配置 > 风险评估项管理”配置评估项',\n        );\n        return;\n      }\n\n      // 现有变量名集合（以现有为主，存在则跳过自动灌入）\n      const existingNames = new Set((variables || []).map((v) => v.name));\n      const baseCount = new Map<string, number>();\n      const injected: PromptVariable[] = [];\n      const injectedNames: string[] = [];\n\n      list.forEach((it: any, idx: number) => {\n        const catSlug = categoryToSlug(it.category, idx + 1);\n        const enItem = extractItemEnSlug(it.item_name) || '';\n        const itemSlug =\n          toSafeVar(enItem) ||\n          toSafeVar(stripParen(it.item_name)) ||\n          `item_${idx + 1}`;\n        let base = toSafeVar(`${catSlug}_${itemSlug}`) || `var_${idx + 1}`;\n\n        // 自动变量内部去重：相同 base 追加 _2, _3...\n        const count = baseCount.get(base) || 0;\n        baseCount.set(base, count + 1);\n        const name = count === 0 ? base : toSafeVar(`${base}_${count + 1}`);\n\n        // 若与现有（用户手工）变量重名，则跳过（以用户变量为主）\n        if (existingNames.has(name)) {\n          return;\n        }\n\n        injected.push({\n          name,\n          description: `${it.category}-${stripParen(it.item_name)}`,\n          example: '',\n          required: false,\n        });\n        injectedNames.push(name);\n        existingNames.add(name);\n      });\n\n      if (!injected.length) {\n        message.info('未发现可新增的风险变量（可能已存在当前变量中）');\n        setAutoInjectedByCategory((prev) => ({ ...prev, risk_analysis: [] }));\n        return;\n      }\n\n      setVariables((prev) => [...prev, ...injected]);\n      setAutoInjectedByCategory((prev) => ({\n        ...prev,\n        risk_analysis: Array.from(\n          new Set([...(prev?.risk_analysis || []), ...injectedNames]),\n        ),\n      }));\n      message.success(`已导入 ${injected.length} 个变量`);\n    } catch (e) {\n      message.error('获取风险评估项失败');\n    }\n  };\n\n  // 从角色配置自动灌入变量（工作量评估）\n  const syncCostVariables = async () => {\n    try {\n      const res: any = await getRoleList();\n      const roles: any[] = Array.isArray(res?.data) ? res.data : [];\n      if (!roles.length) {\n        message.warning(\n          '角色配置为空，请先到“参数配置 > 角色与单价管理”配置角色',\n        );\n        return;\n      }\n\n      const existingNames = new Set((variables || []).map((v) => v.name));\n      const baseCount = new Map<string, number>();\n      const injected: PromptVariable[] = [];\n      const injectedNames: string[] = [];\n\n      roles.forEach((role, idx) => {\n        const rawName: string = String(role.role_name || '').trim();\n        // 基于翻译/拼音转写生成英文slug，尽量避免占位名\n        let base = translateRoleToSlug(rawName);\n        if (!base) base = `member_${idx + 1}`;\n\n        // 自动变量内部去重\n        const count = baseCount.get(base) || 0;\n        baseCount.set(base, count + 1);\n        const name = count === 0 ? base : toSafeVar(`${base}_${count + 1}`);\n\n        if (existingNames.has(name)) {\n          return;\n        }\n\n        injected.push({\n          name,\n          description: rawName || `角色${idx + 1}`,\n          help: `对应角色：${rawName}${role.unit_price ? `，单价：${role.unit_price} 元/天` : ''}`,\n          example: '1.0',\n          required: false,\n        });\n        injectedNames.push(name);\n        existingNames.add(name);\n      });\n\n      if (!injected.length) {\n        message.info('未发现可新增的角色变量（可能已存在当前变量中）');\n        setAutoInjectedByCategory((prev) => ({\n          ...prev,\n          workload_evaluation: [],\n        }));\n        return;\n      }\n\n      setVariables((prev) => [...prev, ...injected]);\n      setAutoInjectedByCategory((prev) => ({\n        ...prev,\n        workload_evaluation: Array.from(\n          new Set([...(prev?.workload_evaluation || []), ...injectedNames]),\n        ),\n      }));\n      message.success(`已导入 ${injected.length} 个角色变量`);\n    } catch (e) {\n      message.error('获取角色配置失败');\n    }\n  };\n\n  const onFinish = async (values: any) => {\n    try {\n      const data = {\n        ...values,\n        variables_json: JSON.stringify(variables),\n      };\n\n      if (isEdit) {\n        await updatePromptTemplate(Number(id), data);\n        message.success('更新成功');\n      } else {\n        await createPromptTemplate(data);\n        message.success('创建成功');\n      }\n      history.push('/model-config/prompts', { refresh: true });\n    } catch (error) {\n      message.error('操作失败');\n    }\n  };\n\n  const isSystemTemplate = template?.is_system || false;\n\n  return (\n    <PageContainer>\n      <Card>\n        <Form\n          form={form}\n          layout=\"vertical\"\n          onFinish={onFinish}\n          onValuesChange={async (changedValues, allValues) => {\n            if ('category' in changedValues) {\n              const newCat = changedValues.category;\n              const prevCat = prevCategoryRef.current;\n              prevCategoryRef.current = newCat;\n\n              // 从某分类切换出去：移除该分类自动灌入变量\n              if (prevCat && prevCat !== newCat) {\n                const names = autoInjectedByCategory[prevCat] || [];\n                if (names.length > 0) {\n                  setVariables((prev) => prev.filter((v) => !names.includes(v.name)));\n                  setAutoInjectedByCategory((prev) => ({ ...prev, [prevCat]: [] }));\n                }\n              }\n\n              // 切换到 风险分析：自动同步变量\n              if (newCat === 'risk_analysis') {\n                await syncRiskVariables();\n              }\n\n              // 切换到 工作量评估：自动同步角色变量\n              if (newCat === 'workload_evaluation') {\n                await syncCostVariables();\n              }\n            }\n          }}\n          initialValues={{\n            category: 'custom',\n            is_active: true,\n          }}\n        >\n          <Form.Item\n            name=\"template_name\"\n            label=\"模板名称\"\n            rules={[\n              { required: true, message: '请输入模板名称' },\n              { max: 100, message: '最多100个字符' },\n            ]}\n          >\n            <Input placeholder=\"请输入模板名称\" disabled={isSystemTemplate} />\n          </Form.Item>\n\n          <Form.Item\n            name=\"category\"\n            label=\"分类\"\n            rules={[{ required: true, message: '请选择分类' }]}\n          >\n            <Select placeholder=\"请选择分类\" disabled={isSystemTemplate}>\n              {PROMPT_TEMPLATE_CATEGORY_OPTIONS.map((option) => (\n                <Select.Option key={option.value} value={option.value}>\n                  {option.label}\n                </Select.Option>\n              ))}\n            </Select>\n          </Form.Item>\n\n          <Form.Item\n            name=\"description\"\n            label=\"描述\"\n            rules={[{ max: 500, message: '最多500个字符' }]}\n          >\n            <TextArea\n              rows={3}\n              placeholder=\"请输入描述\"\n              disabled={isSystemTemplate}\n            />\n          </Form.Item>\n\n          <Form.Item\n            name=\"is_active\"\n            label=\"是否激活\"\n            valuePropName=\"checked\"\n            help=\"禁用后，该模板将无法在评估中使用。\"\n          >\n            <Switch disabled={isSystemTemplate} />\n          </Form.Item>\n\n          <Form.Item\n            name=\"system_prompt\"\n            label=\"系统提示词\"\n            rules={[{ required: true, message: '请输入系统提示词' }]}\n            help=\"定义 AI 的角色、专业领域和任务目标\"\n          >\n            <TextArea\n              rows={6}\n              placeholder=\"请输入系统提示词\"\n              disabled={isSystemTemplate}\n              showCount\n            />\n          </Form.Item>\n\n          <Form.Item\n            label={\n              <Space>\n                <span>用户提示词模板</span>\n                <VariableInsertButton\n                  variables={variables}\n                  onInsert={handleInsertVariable}\n                  disabled={isSystemTemplate}\n                />\n              </Space>\n            }\n          >\n            <Form.Item\n              name=\"user_prompt_template\"\n              rules={[{ required: true, message: '请输入用户提示词模板' }]}\n              noStyle\n            >\n              <TextArea\n                ref={userPromptRef}\n                rows={8}\n                placeholder=\"使用 {{变量名}} 格式插入变量\"\n                disabled={isSystemTemplate}\n                onChange={handleUserPromptChange}\n                showCount\n              />\n            </Form.Item>\n\n            {/* 未定义变量警告 */}\n            {detectedUndefinedVars.length > 0 && (\n              <Alert\n                message={\n                  <Space wrap size=\"small\">\n                    <span>\n                      检测到 {detectedUndefinedVars.length} 个未定义变量:\n                    </span>\n                    {detectedUndefinedVars.map((v) => (\n                      <Tag key={v} color=\"warning\">\n                        {v}\n                      </Tag>\n                    ))}\n                    <Button\n                      type=\"link\"\n                      size=\"small\"\n                      onClick={handleQuickAddUndefined}\n                      disabled={isSystemTemplate}\n                    >\n                      快速添加\n                    </Button>\n                  </Space>\n                }\n                type=\"warning\"\n                style={{ marginTop: 8 }}\n                closable\n              />\n            )}\n          </Form.Item>\n\n          {/* 变量管理区域 */}\n          <Form.Item\n            label={\n              <Space>\n                <span>变量定义</span>\n                {categoryValue === 'risk_analysis' && !isSystemTemplate && (\n                  <Button size=\"small\" onClick={syncRiskVariables}>\n                    从评估类别导入\n                  </Button>\n                )}\n                {categoryValue === 'workload_evaluation' &&\n                  !isSystemTemplate && (\n                  <Button size=\"small\" onClick={syncCostVariables}>\n                    从角色配置导入\n                  </Button>\n                )}\n              </Space>\n            }\n          >\n            <VariableList\n              variables={variables}\n              onAdd={handleAddVariable}\n              onEdit={handleEditVariable}\n              onDelete={handleVariableDelete}\n              disabled={isSystemTemplate}\n            />\n          </Form.Item>\n\n          <Form.Item>\n            <Space>\n              <Button onClick={() => history.push('/model-config/prompts')}>\n                取消\n              </Button>\n              <Button\n                type=\"default\"\n                icon={<EyeOutlined />}\n                onClick={() => setPreviewVisible(true)}\n                disabled={variables.length === 0}\n              >\n                预览\n              </Button>\n              <Button\n                type=\"primary\"\n                htmlType=\"submit\"\n                disabled={isSystemTemplate}\n              >\n                保存\n              </Button>\n            </Space>\n          </Form.Item>\n        </Form>\n      </Card>\n\n      {/* 变量编辑对话框 */}\n      <VariableEditor\n        visible={variableEditorVisible}\n        variable={editingVariable}\n        onOk={handleVariableSave}\n        onCancel={() => setVariableEditorVisible(false)}\n      />\n\n      {/* 预览对话框 */}\n      {isEdit && (\n        <PreviewModal\n          visible={previewVisible}\n          templateId={Number(id)}\n          variables={variables}\n          onCancel={() => setPreviewVisible(false)}\n        />\n      )}\n    </PageContainer>\n  );\n};\n\nexport default PromptTemplateForm;\n",
+      "__content": "import { getRiskItemList, getRoleList } from '@/services/config';\nimport { translateRoleToSlug } from './utils/roleNaming';\nimport { categoryToSlug, extractItemEnSlug, stripParen, toSafeVar } from './utils/riskNaming';\nimport type { PromptTemplate, PromptVariable, PromptModuleTagOption } from '@/services/promptTemplate';\nimport {\n  createPromptTemplate,\n  createPromptModuleTag,\n  getPromptTemplateById,\n  getPromptModuleTags,\n  updatePromptTemplate,\n} from '@/services/promptTemplate';\nimport { EyeOutlined } from '@ant-design/icons';\nimport { PageContainer } from '@ant-design/pro-layout';\nimport { history, useParams } from '@umijs/max';\nimport {\n  Alert,\n  Button,\n  Card,\n  Form,\n  Input,\n  Modal,\n  message,\n  Select,\n  Space,\n  Switch,\n  Tag,\n} from 'antd';\nimport React, { useEffect, useRef, useState } from 'react';\nimport PreviewModal from './components/PreviewModal';\nimport VariableEditor from './components/VariableEditor';\nimport VariableInsertButton from './components/VariableInsertButton';\nimport VariableList from './components/VariableList';\n\nconst { TextArea } = Input;\n\n// autoSync 函数签名：接受当前变量列表和对应的 setter\ntype SyncHandler = (\n  variables: PromptVariable[],\n  setVariables: React.Dispatch<React.SetStateAction<PromptVariable[]>>,\n  setAutoInjectedByTag: React.Dispatch<React.SetStateAction<Record<string, string[]>>>\n) => Promise<void>;\n\nconst syncRiskVariables: SyncHandler = async (variables, setVariables, setAutoInjectedByTag) => {\n  try {\n    const res: any = await getRiskItemList();\n    const list: any[] = Array.isArray(res?.data) ? res.data : [];\n    if (!list.length) {\n      message.warning('风险评估项为空，请先到\"参数配置 > 风险评估项管理\"配置评估项');\n      return;\n    }\n\n    const existingNames = new Set((variables || []).map((v) => v.name));\n    const baseCount = new Map<string, number>();\n    const injected: PromptVariable[] = [];\n    const injectedNames: string[] = [];\n\n    list.forEach((it: any, idx: number) => {\n      const catSlug = categoryToSlug(it.category, idx + 1);\n      const enItem = extractItemEnSlug(it.item_name) || '';\n      const itemSlug =\n        toSafeVar(enItem) || toSafeVar(stripParen(it.item_name)) || `item_${idx + 1}`;\n      let base = toSafeVar(`${catSlug}_${itemSlug}`) || `var_${idx + 1}`;\n\n      const count = baseCount.get(base) || 0;\n      baseCount.set(base, count + 1);\n      const name = count === 0 ? base : toSafeVar(`${base}_${count + 1}`);\n\n      if (existingNames.has(name)) return;\n\n      injected.push({ name, description: `${it.category}-${stripParen(it.item_name)}`, example: '', required: false });\n      injectedNames.push(name);\n      existingNames.add(name);\n    });\n\n    if (!injected.length) {\n      message.info('未发现可新增的风险变量');\n      setAutoInjectedByTag((prev) => ({ ...prev, assessment: [] }));\n      return;\n    }\n\n    setVariables((prev) => [...prev, ...injected]);\n    setAutoInjectedByTag((prev) => ({\n      ...prev,\n      assessment: Array.from(new Set([...(prev?.assessment || []), ...injectedNames])),\n    }));\n    message.success(`已导入 ${injected.length} 个变量`);\n  } catch (e) {\n    message.error('获取风险评估项失败');\n  }\n};\n\nconst syncCostVariables: SyncHandler = async (variables, setVariables) => {\n  try {\n    const res: any = await getRoleList();\n    const roles: any[] = Array.isArray(res?.data) ? res.data : [];\n    if (!roles.length) {\n      message.warning('角色配置为空，请先到\"参数配置 > 角色与单价管理\"配置角色');\n      return;\n    }\n\n    const existingNames = new Set((variables || []).map((v) => v.name));\n    const baseCount = new Map<string, number>();\n    const injected: PromptVariable[] = [];\n\n    roles.forEach((role, idx) => {\n      const rawName: string = String(role.role_name || '').trim();\n      let base = translateRoleToSlug(rawName);\n      if (!base) base = `member_${idx + 1}`;\n\n      const count = baseCount.get(base) || 0;\n      baseCount.set(base, count + 1);\n      const name = count === 0 ? base : toSafeVar(`${base}_${count + 1}`);\n\n      if (existingNames.has(name)) return;\n\n      injected.push({\n        name,\n        description: rawName || `角色${idx + 1}`,\n        help: `对应角色：${rawName}${role.unit_price ? `，单价：${role.unit_price} 元/天` : ''}`,\n        example: '1.0',\n        required: false,\n      });\n      existingNames.add(name);\n    });\n\n    if (!injected.length) {\n      message.info('未发现可新增的角色变量');\n      return;\n    }\n\n    setVariables((prev) => [...prev, ...injected]);\n    message.success(`已导入 ${injected.length} 个角色变量`);\n  } catch (e) {\n    message.error('获取角色配置失败');\n  }\n};\n\n// autoSync 配置：module_tag → 对应的同步函数\nconst AUTO_SYNC_CONFIG: Record<string, SyncHandler> = {\n  assessment: syncRiskVariables,\n};\n\nconst PromptTemplateForm: React.FC = () => {\n  const [form] = Form.useForm();\n  const { id } = useParams<{ id: string }>();\n  const moduleTagValue = Form.useWatch('module_tag', form);\n  const isEdit = !!id;\n  const [template, setTemplate] = useState<PromptTemplate | null>(null);\n  const [variables, setVariables] = useState<PromptVariable[]>([]);\n  const [variableEditorVisible, setVariableEditorVisible] = useState(false);\n  const [editingVariable, setEditingVariable] = useState<PromptVariable | null>(null);\n  const [editingIndex, setEditingIndex] = useState<number>(-1);\n  const [previewVisible, setPreviewVisible] = useState(false);\n  const [detectedUndefinedVars, setDetectedUndefinedVars] = useState<string[]>([]);\n  const [moduleTagOptions, setModuleTagOptions] = useState<PromptModuleTagOption[]>([]);\n  const [addTagModalVisible, setAddTagModalVisible] = useState(false);\n  const [addTagForm] = Form.useForm();\n  const userPromptRef = useRef<any>(null);\n\n  // 记录各 module_tag 自动灌入的变量名，用于切换时清理\n  const [autoInjectedByTag, setAutoInjectedByTag] = useState<Record<string, string[]>>({});\n  const prevModuleTagRef = useRef<string | undefined>(undefined);\n\n  useEffect(() => {\n    getPromptModuleTags().then((res) => {\n      if (res?.data) {\n        setModuleTagOptions(res.data);\n      }\n    });\n\n    if (isEdit) {\n      getPromptTemplateById(Number(id)).then((res) => {\n        setTemplate(res);\n        form.setFieldsValue(res);\n        if (res.variables_json) {\n          try {\n            const parsed = JSON.parse(res.variables_json);\n            setVariables(Array.isArray(parsed) ? parsed : []);\n          } catch (error) {\n            console.error('Failed to parse variables:', error);\n          }\n        }\n      });\n    }\n  }, [id, isEdit, form]);\n\n  const detectUndefinedVariables = (templateContent: string) => {\n    const regex = /\\{\\{\\s*(\\w+)\\s*\\}\\}/g;\n    const matches = templateContent.matchAll(regex);\n    const detected = new Set<string>();\n\n    for (const match of matches) {\n      const varName = match[1];\n      if (!variables.find((v) => v.name === varName)) {\n        detected.add(varName);\n      }\n    }\n\n    setDetectedUndefinedVars(Array.from(detected));\n  };\n\n  const handleUserPromptChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {\n    const value = e.target.value;\n    form.setFieldValue('user_prompt_template', value);\n    detectUndefinedVariables(value);\n  };\n\n  const handleAddVariable = () => {\n    setEditingVariable(null);\n    setEditingIndex(-1);\n    setVariableEditorVisible(true);\n  };\n\n  const handleEditVariable = (variable: PromptVariable, index: number) => {\n    setEditingVariable(variable);\n    setEditingIndex(index);\n    setVariableEditorVisible(true);\n  };\n\n  const handleVariableSave = (values: PromptVariable) => {\n    let newVariables = [...variables];\n\n    if (editingIndex >= 0) {\n      newVariables[editingIndex] = values;\n    } else {\n      if (newVariables.find((v) => v.name === values.name)) {\n        message.error('变量名已存在');\n        return;\n      }\n      newVariables.push(values);\n    }\n\n    setVariables(newVariables);\n    setVariableEditorVisible(false);\n    message.success(editingIndex >= 0 ? '变量已更新' : '变量已添加');\n\n    const userPrompt = form.getFieldValue('user_prompt_template');\n    if (userPrompt) {\n      detectUndefinedVariables(userPrompt);\n    }\n  };\n\n  const handleVariableDelete = (index: number) => {\n    const newVariables = variables.filter((_, i) => i !== index);\n    setVariables(newVariables);\n    message.success('变量已删除');\n  };\n\n  const handleQuickAddUndefined = () => {\n    if (detectedUndefinedVars.length === 0) return;\n\n    const varName = detectedUndefinedVars[0];\n    setEditingVariable({ name: varName, description: '', example: '', required: false });\n    setEditingIndex(-1);\n    setVariableEditorVisible(true);\n  };\n\n  const handleInsertVariable = (variableName: string) => {\n    const textarea = userPromptRef.current?.resizableTextArea?.textArea;\n    if (!textarea) return;\n\n    const start = textarea.selectionStart;\n    const end = textarea.selectionEnd;\n    const currentValue = form.getFieldValue('user_prompt_template') || '';\n\n    const newValue =\n      currentValue.substring(0, start) +\n      `{{${variableName}}}` +\n      currentValue.substring(end);\n\n    form.setFieldValue('user_prompt_template', newValue);\n    detectUndefinedVariables(newValue);\n\n    setTimeout(() => {\n      const newPosition = start + variableName.length + 2;\n      textarea.setSelectionRange(newPosition, newPosition);\n      textarea.focus();\n    }, 0);\n  };\n\n  const openAddTagModal = () => {\n    addTagForm.resetFields();\n    setAddTagModalVisible(true);\n  };\n\n  const handleAddTag = async () => {\n    try {\n      const values = await addTagForm.validateFields();\n      const res = await createPromptModuleTag({\n        value: values.tag_value.trim(),\n        label: values.tag_label.trim(),\n        description: values.tag_description || '',\n      });\n      if (!res?.success) {\n        throw new Error(res?.error || '新增标签失败');\n      }\n      const newTag = res.data;\n      // 刷新下拉列表\n      const refreshed = await getPromptModuleTags();\n      if (refreshed?.data) {\n        setModuleTagOptions(refreshed.data);\n      }\n      form.setFieldValue('module_tag', newTag.value);\n      setAddTagModalVisible(false);\n      message.success(`标签「${newTag.label}」已添加并选中`);\n    } catch (error: any) {\n      message.error(error?.message || '新增标签失败');\n    }\n  };\n\n  const onFinish = async (values: any) => {\n    try {\n      const data = {\n        ...values,\n        variables_json: JSON.stringify(variables),\n      };\n\n      if (isEdit) {\n        await updatePromptTemplate(Number(id), data);\n        message.success('更新成功');\n      } else {\n        await createPromptTemplate(data);\n        message.success('创建成功');\n      }\n      history.push('/model-config/prompts', { refresh: true });\n    } catch (error) {\n      message.error('操作失败');\n    }\n  };\n\n  const isSystemTemplate = template?.is_system || false;\n\n  const showRiskImport = moduleTagValue === 'assessment';\n  const showCostImport = moduleTagValue === 'assessment';\n\n  return (\n    <PageContainer>\n      <Card>\n        <Form\n          form={form}\n          layout=\"vertical\"\n          onFinish={onFinish}\n          onValuesChange={async (changedValues) => {\n            if ('module_tag' in changedValues) {\n              const newTag = changedValues.module_tag;\n              const prevTag = prevModuleTagRef.current;\n              prevModuleTagRef.current = newTag;\n\n              if (prevTag && prevTag !== newTag) {\n                const names = autoInjectedByTag[prevTag] || [];\n                if (names.length > 0) {\n                  setVariables((prev) => prev.filter((v) => !names.includes(v.name)));\n                  setAutoInjectedByTag((prev) => ({ ...prev, [prevTag]: [] }));\n                }\n              }\n\n              const handler = AUTO_SYNC_CONFIG[newTag];\n              if (handler) {\n                await handler(variables, setVariables, setAutoInjectedByTag);\n              }\n            }\n          }}\n          initialValues={{\n            module_tag: 'general',\n            is_active: true,\n          }}\n        >\n          <Form.Item\n            name=\"template_name\"\n            label=\"模板名称\"\n            rules={[\n              { required: true, message: '请输入模板名称' },\n              { max: 100, message: '最多100个字符' },\n            ]}\n          >\n            <Input placeholder=\"请输入模板名称\" disabled={isSystemTemplate} />\n          </Form.Item>\n\n          <Form.Item\n            name=\"module_tag\"\n            label={\n              <Space>\n                <span>模块标签</span>\n                <Button type=\"link\" size=\"small\" onClick={openAddTagModal} disabled={isSystemTemplate}>\n                  + 新增\n                </Button>\n              </Space>\n            }\n            rules={[{ required: true, message: '请选择模块标签' }]}\n          >\n            <Select\n              showSearch\n              allowClear\n              placeholder=\"请选择模块标签\"\n              disabled={isSystemTemplate}\n              options={moduleTagOptions.map((t) => ({\n                value: t.value,\n                label: `${t.label} (${t.value})`,\n              }))}\n              filterOption={(input, option) =>\n                (option?.label as string)?.toLowerCase().includes(input.toLowerCase()) ?? false\n              }\n            />\n          </Form.Item>\n\n          <Form.Item\n            name=\"description\"\n            label=\"描述\"\n            rules={[{ max: 500, message: '最多500个字符' }]}\n          >\n            <TextArea rows={3} placeholder=\"请输入描述\" disabled={isSystemTemplate} />\n          </Form.Item>\n\n          <Form.Item\n            name=\"is_active\"\n            label=\"是否激活\"\n            valuePropName=\"checked\"\n            help=\"禁用后，该模板将无法在评估中使用。\"\n          >\n            <Switch disabled={isSystemTemplate} />\n          </Form.Item>\n\n          <Form.Item\n            name=\"system_prompt\"\n            label=\"系统提示词\"\n            rules={[{ required: true, message: '请输入系统提示词' }]}\n            help=\"定义 AI 的角色，专业领域和任务目标\"\n          >\n            <TextArea rows={6} placeholder=\"请输入系统提示词\" disabled={isSystemTemplate} showCount />\n          </Form.Item>\n\n          <Form.Item\n            label={\n              <Space>\n                <span>用户提示词模板</span>\n                <VariableInsertButton\n                  variables={variables}\n                  onInsert={handleInsertVariable}\n                  disabled={isSystemTemplate}\n                />\n              </Space>\n            }\n          >\n            <Form.Item\n              name=\"user_prompt_template\"\n              rules={[{ required: true, message: '请输入用户提示词模板' }]}\n              noStyle\n            >\n              <TextArea\n                ref={userPromptRef}\n                rows={8}\n                placeholder=\"使用 {{变量名}} 格式插入变量\"\n                disabled={isSystemTemplate}\n                onChange={handleUserPromptChange}\n                showCount\n              />\n            </Form.Item>\n\n            {detectedUndefinedVars.length > 0 && (\n              <Alert\n                message={\n                  <Space wrap size=\"small\">\n                    <span>检测到 {detectedUndefinedVars.length} 个未定义变量:</span>\n                    {detectedUndefinedVars.map((v) => (\n                      <Tag key={v} color=\"warning\">{v}</Tag>\n                    ))}\n                    <Button type=\"link\" size=\"small\" onClick={handleQuickAddUndefined} disabled={isSystemTemplate}>\n                      快速添加\n                    </Button>\n                  </Space>\n                }\n                type=\"warning\"\n                style={{ marginTop: 8 }}\n                closable\n              />\n            )}\n          </Form.Item>\n\n          <Form.Item\n            label={\n              <Space>\n                <span>变量定义</span>\n                {showRiskImport && !isSystemTemplate && (\n                  <Button size=\"small\" onClick={() => syncRiskVariables(variables, setVariables, setAutoInjectedByTag)}>\n                    从评估类别导入\n                  </Button>\n                )}\n                {showCostImport && !isSystemTemplate && (\n                  <Button size=\"small\" onClick={() => syncCostVariables(variables, setVariables, setAutoInjectedByTag)}>\n                    从角色配置导入\n                  </Button>\n                )}\n              </Space>\n            }\n          >\n            <VariableList\n              variables={variables}\n              onAdd={handleAddVariable}\n              onEdit={handleEditVariable}\n              onDelete={handleVariableDelete}\n              disabled={isSystemTemplate}\n            />\n          </Form.Item>\n\n          <Form.Item>\n            <Space>\n              <Button onClick={() => history.push('/model-config/prompts')}>取消</Button>\n              <Button type=\"default\" icon={<EyeOutlined />} onClick={() => setPreviewVisible(true)} disabled={variables.length === 0}>\n                预览\n              </Button>\n              <Button type=\"primary\" htmlType=\"submit\" disabled={isSystemTemplate}>\n                保存\n              </Button>\n            </Space>\n          </Form.Item>\n        </Form>\n      </Card>\n\n      <Modal\n        title=\"新增模块标签\"\n        open={addTagModalVisible}\n        onOk={handleAddTag}\n        onCancel={() => setAddTagModalVisible(false)}\n        okText=\"添加\"\n        cancelText=\"取消\"\n        destroyOnClose\n      >\n        <Form form={addTagForm} layout=\"vertical\" style={{ marginTop: 16 }}>\n          <Form.Item\n            name=\"tag_value\"\n            label=\"标签值\"\n            rules={[\n              { required: true, message: '请输入标签值' },\n              { pattern: /^[a-z_0-9]+$/, message: '仅支持英文小写字母、数字和下划线，如 risk_simple' },\n            ]}\n            extra=\"存储到数据库的值，如 risk_simple\"\n          >\n            <Input placeholder=\"如 risk_simple\" />\n          </Form.Item>\n          <Form.Item\n            name=\"tag_label\"\n            label=\"展示名称\"\n            rules={[{ required: true, message: '请输入展示名称' }]}\n            extra=\"前端列表和下拉中显示的名称\"\n          >\n            <Input placeholder=\"如 简易风险分析\" />\n          </Form.Item>\n        </Form>\n      </Modal>\n\n      <VariableEditor\n        visible={variableEditorVisible}\n        variable={editingVariable}\n        onOk={handleVariableSave}\n        onCancel={() => setVariableEditorVisible(false)}\n      />\n\n      {isEdit && (\n        <PreviewModal\n          visible={previewVisible}\n          templateId={Number(id)}\n          variables={variables}\n          onCancel={() => setPreviewVisible(false)}\n        />\n      )}\n    </PageContainer>\n  );\n};\n\nexport default PromptTemplateForm;\n",
       "__isJSFile": true,
       "__absFile": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/src/pages/ModelConfig/Prompts/Form.tsx"
     },
@@ -5483,7 +5966,7 @@
             "format": "esm"
           },
           "src/constants/aiProviders.ts": {
-            "bytes": 2982,
+            "bytes": 3577,
             "imports": [],
             "format": "esm"
           },
@@ -6670,7 +7153,7 @@
             "format": "esm"
           },
           "src/services/assessment/pushApi.ts": {
-            "bytes": 3401,
+            "bytes": 3469,
             "imports": [
               {
                 "path": "src/.umi/exports.ts",
@@ -6800,7 +7283,7 @@
             "format": "esm"
           },
           "src/pages/Assessment/components/AttachmentManager.tsx": {
-            "bytes": 5377,
+            "bytes": 5537,
             "imports": [
               {
                 "path": "src/services/assessment/pushApi.ts",
@@ -6897,7 +7380,7 @@
             "format": "esm"
           },
           "src/pages/Web3D/components/Web3DAiStep4Analyzer.tsx": {
-            "bytes": 18140,
+            "bytes": 18357,
             "imports": [
               {
                 "path": "src/services/aiModel/index.ts",
@@ -7138,7 +7621,7 @@
             "format": "esm"
           },
           "src/pages/ModelConfig/Application/components/ModelForm.tsx": {
-            "bytes": 14941,
+            "bytes": 15783,
             "imports": [
               {
                 "path": "src/constants/index.ts",
@@ -7184,7 +7667,7 @@
             "format": "esm"
           },
           "src/pages/ModelConfig/Application/index.tsx": {
-            "bytes": 10774,
+            "bytes": 10911,
             "imports": [
               {
                 "path": "src/constants/index.ts",
@@ -7230,7 +7713,7 @@
             "format": "esm"
           },
           "src/services/promptTemplate.ts": {
-            "bytes": 3578,
+            "bytes": 3155,
             "imports": [
               {
                 "path": "src/.umi/exports.ts",
@@ -7241,7 +7724,7 @@
             "format": "esm"
           },
           "src/pages/ModelConfig/Prompts/index.tsx": {
-            "bytes": 4544,
+            "bytes": 4885,
             "imports": [
               {
                 "path": "src/services/promptTemplate.ts",
@@ -7272,6 +7755,11 @@
                 "path": "react",
                 "kind": "import-statement",
                 "external": true
+              },
+              {
+                "path": "src/services/promptTemplate.ts",
+                "kind": "import-statement",
+                "original": "@/services/promptTemplate"
               },
               {
                 "path": "react/jsx-runtime",
@@ -7396,7 +7884,7 @@
             "format": "esm"
           },
           "src/pages/ModelConfig/Prompts/Form.tsx": {
-            "bytes": 18184,
+            "bytes": 19382,
             "imports": [
               {
                 "path": "src/services/config/index.ts",
@@ -7519,7 +8007,7 @@
             "format": "esm"
           },
           "src/pages/Opportunity/components/TenderFieldParseModal.tsx": {
-            "bytes": 7479,
+            "bytes": 7469,
             "imports": [
               {
                 "path": "src/services/opportunity/index.ts",
@@ -7550,7 +8038,7 @@
             "format": "esm"
           },
           "src/pages/Opportunity/components/TenderWebSearchModal.tsx": {
-            "bytes": 22007,
+            "bytes": 22013,
             "imports": [
               {
                 "path": "src/services/aiModel/index.ts",
@@ -10336,7 +10824,7 @@
                 "bytesInOutput": 813
               },
               "src/constants/aiProviders.ts": {
-                "bytesInOutput": 2751
+                "bytesInOutput": 3196
               },
               "src/constants/businessRules.ts": {
                 "bytesInOutput": 154
@@ -10471,7 +10959,7 @@
                 "bytesInOutput": 14651
               },
               "src/services/assessment/pushApi.ts": {
-                "bytesInOutput": 1437
+                "bytesInOutput": 1477
               },
               "src/pages/Assessment/components/PushModal.tsx": {
                 "bytesInOutput": 8171
@@ -10486,13 +10974,13 @@
                 "bytesInOutput": 6491
               },
               "src/pages/Assessment/components/AttachmentManager.tsx": {
-                "bytesInOutput": 6089
+                "bytesInOutput": 6197
               },
               "src/pages/Assessment/Detail.tsx": {
                 "bytesInOutput": 52264
               },
               "src/pages/Web3D/components/Web3DAiStep4Analyzer.tsx": {
-                "bytesInOutput": 22360
+                "bytesInOutput": 22737
               },
               "src/pages/Web3D/New.tsx": {
                 "bytesInOutput": 36261
@@ -10510,16 +10998,16 @@
                 "bytesInOutput": 29626
               },
               "src/pages/ModelConfig/Application/components/ModelForm.tsx": {
-                "bytesInOutput": 19752
+                "bytesInOutput": 20520
               },
               "src/pages/ModelConfig/Application/index.tsx": {
-                "bytesInOutput": 13798
+                "bytesInOutput": 13907
               },
               "src/services/promptTemplate.ts": {
-                "bytesInOutput": 2376
+                "bytesInOutput": 1255
               },
               "src/pages/ModelConfig/Prompts/index.tsx": {
-                "bytesInOutput": 5296
+                "bytesInOutput": 5925
               },
               "src/pages/ModelConfig/Prompts/utils/roleNaming.ts": {
                 "bytesInOutput": 4095
@@ -10540,7 +11028,7 @@
                 "bytesInOutput": 4118
               },
               "src/pages/ModelConfig/Prompts/Form.tsx": {
-                "bytesInOutput": 20975
+                "bytesInOutput": 23633
               },
               "src/services/opportunity/index.ts": {
                 "bytesInOutput": 3630
@@ -10549,10 +11037,10 @@
                 "bytesInOutput": 27790
               },
               "src/pages/Opportunity/components/TenderFieldParseModal.tsx": {
-                "bytesInOutput": 8958
+                "bytesInOutput": 8948
               },
               "src/pages/Opportunity/components/TenderWebSearchModal.tsx": {
-                "bytesInOutput": 27959
+                "bytesInOutput": 27965
               },
               "src/pages/Opportunity/TenderPush.tsx": {
                 "bytesInOutput": 25213
@@ -10588,7 +11076,7 @@
                 "bytesInOutput": 2010
               }
             },
-            "bytes": 817313
+            "bytes": 821322
           }
         }
       }
@@ -18392,7 +18880,7 @@
       ],
       "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/src/pages/ModelConfig/Application/components/ModelForm.tsx": [
         {
-          "end": 210,
+          "end": 278,
           "importKind": "value",
           "source": "@/constants",
           "specifiers": [
@@ -18427,8 +18915,23 @@
               "type": "ImportSpecifier"
             },
             {
+              "imported": "isGeminiProvider",
+              "local": "isGeminiProvider",
+              "type": "ImportSpecifier"
+            },
+            {
+              "imported": "isMinimaxProvider",
+              "local": "isMinimaxProvider",
+              "type": "ImportSpecifier"
+            },
+            {
               "imported": "isTavilyProvider",
               "local": "isTavilyProvider",
+              "type": "ImportSpecifier"
+            },
+            {
+              "imported": "isVisionCapableProvider",
+              "local": "isVisionCapableProvider",
               "type": "ImportSpecifier"
             }
           ],
@@ -18436,7 +18939,7 @@
           "type": "ImportDeclaration"
         },
         {
-          "end": 277,
+          "end": 345,
           "importKind": "value",
           "source": "@/services/aiModel",
           "specifiers": [
@@ -18451,11 +18954,11 @@
               "type": "ImportSpecifier"
             }
           ],
-          "start": 211,
+          "start": 279,
           "type": "ImportDeclaration"
         },
         {
-          "end": 383,
+          "end": 451,
           "importKind": "value",
           "source": "@ant-design/icons",
           "specifiers": [
@@ -18475,11 +18978,11 @@
               "type": "ImportSpecifier"
             }
           ],
-          "start": 278,
+          "start": 346,
           "type": "ImportDeclaration"
         },
         {
-          "end": 543,
+          "end": 611,
           "importKind": "value",
           "source": "@ant-design/pro-components",
           "specifiers": [
@@ -18519,11 +19022,11 @@
               "type": "ImportSpecifier"
             }
           ],
-          "start": 384,
+          "start": 452,
           "type": "ImportDeclaration"
         },
         {
-          "end": 581,
+          "end": 649,
           "importKind": "value",
           "source": "@umijs/max",
           "specifiers": [
@@ -18533,11 +19036,11 @@
               "type": "ImportSpecifier"
             }
           ],
-          "start": 544,
+          "start": 612,
           "type": "ImportDeclaration"
         },
         {
-          "end": 647,
+          "end": 715,
           "importKind": "value",
           "source": "antd",
           "specifiers": [
@@ -18572,11 +19075,11 @@
               "type": "ImportSpecifier"
             }
           ],
-          "start": 582,
+          "start": 650,
           "type": "ImportDeclaration"
         },
         {
-          "end": 692,
+          "end": 760,
           "importKind": "value",
           "source": "react",
           "specifiers": [
@@ -18591,13 +19094,13 @@
               "type": "ImportSpecifier"
             }
           ],
-          "start": 648,
+          "start": 716,
           "type": "ImportDeclaration"
         }
       ],
       "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/src/pages/ModelConfig/Application/index.tsx": [
         {
-          "end": 72,
+          "end": 104,
           "importKind": "value",
           "source": "@/constants",
           "specifiers": [
@@ -18610,13 +19113,18 @@
               "imported": "isTavilyProvider",
               "local": "isTavilyProvider",
               "type": "ImportSpecifier"
+            },
+            {
+              "imported": "isVisionCapableProvider",
+              "local": "isVisionCapableProvider",
+              "type": "ImportSpecifier"
             }
           ],
           "start": 1,
           "type": "ImportDeclaration"
         },
         {
-          "end": 201,
+          "end": 233,
           "importKind": "value",
           "source": "@/services/aiModel",
           "specifiers": [
@@ -18646,11 +19154,11 @@
               "type": "ImportSpecifier"
             }
           ],
-          "start": 73,
+          "start": 105,
           "type": "ImportDeclaration"
         },
         {
-          "end": 308,
+          "end": 340,
           "importKind": "value",
           "source": "@ant-design/icons",
           "specifiers": [
@@ -18675,11 +19183,11 @@
               "type": "ImportSpecifier"
             }
           ],
-          "start": 202,
+          "start": 234,
           "type": "ImportDeclaration"
         },
         {
-          "end": 382,
+          "end": 414,
           "importKind": "type",
           "source": "@ant-design/pro-components",
           "specifiers": [
@@ -18694,11 +19202,11 @@
               "type": "ImportSpecifier"
             }
           ],
-          "start": 309,
+          "start": 341,
           "type": "ImportDeclaration"
         },
         {
-          "end": 452,
+          "end": 484,
           "importKind": "value",
           "source": "@ant-design/pro-components",
           "specifiers": [
@@ -18713,11 +19221,11 @@
               "type": "ImportSpecifier"
             }
           ],
-          "start": 383,
+          "start": 415,
           "type": "ImportDeclaration"
         },
         {
-          "end": 509,
+          "end": 541,
           "importKind": "value",
           "source": "antd",
           "specifiers": [
@@ -18742,11 +19250,11 @@
               "type": "ImportSpecifier"
             }
           ],
-          "start": 453,
+          "start": 485,
           "type": "ImportDeclaration"
         },
         {
-          "end": 551,
+          "end": 583,
           "importKind": "value",
           "source": "react",
           "specifiers": [
@@ -18761,11 +19269,11 @@
               "type": "ImportSpecifier"
             }
           ],
-          "start": 510,
+          "start": 542,
           "type": "ImportDeclaration"
         },
         {
-          "end": 599,
+          "end": 631,
           "importKind": "value",
           "source": "./components/ModelForm",
           "specifiers": [
@@ -18774,7 +19282,7 @@
               "type": "ImportDefaultSpecifier"
             }
           ],
-          "start": 552,
+          "start": 584,
           "type": "ImportDeclaration"
         }
       ],
@@ -18842,7 +19350,7 @@
           "type": "ImportDeclaration"
         },
         {
-          "end": 300,
+          "end": 323,
           "importKind": "type",
           "source": "@/services/promptTemplate",
           "specifiers": [
@@ -18855,13 +19363,18 @@
               "imported": "PromptVariable",
               "local": "PromptVariable",
               "type": "ImportSpecifier"
+            },
+            {
+              "imported": "PromptModuleTagOption",
+              "local": "PromptModuleTagOption",
+              "type": "ImportSpecifier"
             }
           ],
           "start": 220,
           "type": "ImportDeclaration"
         },
         {
-          "end": 454,
+          "end": 489,
           "importKind": "value",
           "source": "@/services/promptTemplate",
           "specifiers": [
@@ -18871,13 +19384,18 @@
               "type": "ImportSpecifier"
             },
             {
+              "imported": "createPromptModuleTag",
+              "local": "createPromptModuleTag",
+              "type": "ImportSpecifier"
+            },
+            {
               "imported": "getPromptTemplateById",
               "local": "getPromptTemplateById",
               "type": "ImportSpecifier"
             },
             {
-              "imported": "PROMPT_TEMPLATE_CATEGORY_OPTIONS",
-              "local": "PROMPT_TEMPLATE_CATEGORY_OPTIONS",
+              "imported": "getPromptModuleTags",
+              "local": "getPromptModuleTags",
               "type": "ImportSpecifier"
             },
             {
@@ -18886,11 +19404,11 @@
               "type": "ImportSpecifier"
             }
           ],
-          "start": 301,
+          "start": 324,
           "type": "ImportDeclaration"
         },
         {
-          "end": 503,
+          "end": 538,
           "importKind": "value",
           "source": "@ant-design/icons",
           "specifiers": [
@@ -18900,11 +19418,11 @@
               "type": "ImportSpecifier"
             }
           ],
-          "start": 455,
+          "start": 490,
           "type": "ImportDeclaration"
         },
         {
-          "end": 559,
+          "end": 594,
           "importKind": "value",
           "source": "@ant-design/pro-layout",
           "specifiers": [
@@ -18914,11 +19432,11 @@
               "type": "ImportSpecifier"
             }
           ],
-          "start": 504,
+          "start": 539,
           "type": "ImportDeclaration"
         },
         {
-          "end": 608,
+          "end": 643,
           "importKind": "value",
           "source": "@umijs/max",
           "specifiers": [
@@ -18933,11 +19451,11 @@
               "type": "ImportSpecifier"
             }
           ],
-          "start": 560,
+          "start": 595,
           "type": "ImportDeclaration"
         },
         {
-          "end": 723,
+          "end": 767,
           "importKind": "value",
           "source": "antd",
           "specifiers": [
@@ -18967,6 +19485,11 @@
               "type": "ImportSpecifier"
             },
             {
+              "imported": "Modal",
+              "local": "Modal",
+              "type": "ImportSpecifier"
+            },
+            {
               "imported": "message",
               "local": "message",
               "type": "ImportSpecifier"
@@ -18992,11 +19515,11 @@
               "type": "ImportSpecifier"
             }
           ],
-          "start": 609,
+          "start": 644,
           "type": "ImportDeclaration"
         },
         {
-          "end": 783,
+          "end": 827,
           "importKind": "value",
           "source": "react",
           "specifiers": [
@@ -19020,11 +19543,11 @@
               "type": "ImportSpecifier"
             }
           ],
-          "start": 724,
+          "start": 768,
           "type": "ImportDeclaration"
         },
         {
-          "end": 837,
+          "end": 881,
           "importKind": "value",
           "source": "./components/PreviewModal",
           "specifiers": [
@@ -19033,11 +19556,11 @@
               "type": "ImportDefaultSpecifier"
             }
           ],
-          "start": 784,
+          "start": 828,
           "type": "ImportDeclaration"
         },
         {
-          "end": 895,
+          "end": 939,
           "importKind": "value",
           "source": "./components/VariableEditor",
           "specifiers": [
@@ -19046,11 +19569,11 @@
               "type": "ImportDefaultSpecifier"
             }
           ],
-          "start": 838,
+          "start": 882,
           "type": "ImportDeclaration"
         },
         {
-          "end": 965,
+          "end": 1009,
           "importKind": "value",
           "source": "./components/VariableInsertButton",
           "specifiers": [
@@ -19059,11 +19582,11 @@
               "type": "ImportDefaultSpecifier"
             }
           ],
-          "start": 896,
+          "start": 940,
           "type": "ImportDeclaration"
         },
         {
-          "end": 1019,
+          "end": 1063,
           "importKind": "value",
           "source": "./components/VariableList",
           "specifiers": [
@@ -19072,7 +19595,7 @@
               "type": "ImportDefaultSpecifier"
             }
           ],
-          "start": 966,
+          "start": 1010,
           "type": "ImportDeclaration"
         }
       ],
@@ -19459,7 +19982,7 @@
           "type": "ImportDeclaration"
         },
         {
-          "end": 217,
+          "end": 178,
           "importKind": "value",
           "source": "@/services/promptTemplate",
           "specifiers": [
@@ -19477,18 +20000,13 @@
               "imported": "getPromptTemplates",
               "local": "getPromptTemplates",
               "type": "ImportSpecifier"
-            },
-            {
-              "imported": "PROMPT_TEMPLATE_CATEGORY_VALUE_ENUM",
-              "local": "PROMPT_TEMPLATE_CATEGORY_VALUE_ENUM",
-              "type": "ImportSpecifier"
             }
           ],
           "start": 66,
           "type": "ImportDeclaration"
         },
         {
-          "end": 267,
+          "end": 228,
           "importKind": "value",
           "source": "@ant-design/icons",
           "specifiers": [
@@ -19498,11 +20016,11 @@
               "type": "ImportSpecifier"
             }
           ],
-          "start": 218,
+          "start": 179,
           "type": "ImportDeclaration"
         },
         {
-          "end": 336,
+          "end": 297,
           "importKind": "type",
           "source": "@ant-design/pro-table",
           "specifiers": [
@@ -19517,11 +20035,11 @@
               "type": "ImportSpecifier"
             }
           ],
-          "start": 268,
+          "start": 229,
           "type": "ImportDeclaration"
         },
         {
-          "end": 382,
+          "end": 343,
           "importKind": "value",
           "source": "@ant-design/pro-table",
           "specifiers": [
@@ -19530,11 +20048,11 @@
               "type": "ImportDefaultSpecifier"
             }
           ],
-          "start": 337,
+          "start": 298,
           "type": "ImportDeclaration"
         },
         {
-          "end": 433,
+          "end": 394,
           "importKind": "value",
           "source": "@umijs/max",
           "specifiers": [
@@ -19549,11 +20067,11 @@
               "type": "ImportSpecifier"
             }
           ],
-          "start": 383,
+          "start": 344,
           "type": "ImportDeclaration"
         },
         {
-          "end": 490,
+          "end": 451,
           "importKind": "value",
           "source": "antd",
           "specifiers": [
@@ -19578,11 +20096,11 @@
               "type": "ImportSpecifier"
             }
           ],
-          "start": 434,
+          "start": 395,
           "type": "ImportDeclaration"
         },
         {
-          "end": 540,
+          "end": 511,
           "importKind": "value",
           "source": "react",
           "specifiers": [
@@ -19599,9 +20117,33 @@
               "imported": "useRef",
               "local": "useRef",
               "type": "ImportSpecifier"
+            },
+            {
+              "imported": "useState",
+              "local": "useState",
+              "type": "ImportSpecifier"
             }
           ],
-          "start": 491,
+          "start": 452,
+          "type": "ImportDeclaration"
+        },
+        {
+          "end": 604,
+          "importKind": "value",
+          "source": "@/services/promptTemplate",
+          "specifiers": [
+            {
+              "imported": "getPromptModuleTags",
+              "local": "getPromptModuleTags",
+              "type": "ImportSpecifier"
+            },
+            {
+              "imported": "PromptModuleTagOption",
+              "local": "PromptModuleTagOption",
+              "type": "ImportSpecifier"
+            }
+          ],
+          "start": 512,
           "type": "ImportDeclaration"
         }
       ],
