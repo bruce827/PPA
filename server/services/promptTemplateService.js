@@ -120,7 +120,7 @@ async function deletePromptTemplate(id) {
   ensureTemplateExists(template);
 
   if (template.is_system) {
-    throw new HttpError(403, 'System templates cannot be modified', 'ForbiddenError');
+    throw new HttpError(403, 'System templates cannot be deleted', 'ForbiddenError');
   }
 
   await promptTemplateModel.delete(id);

@@ -28,12 +28,20 @@ async function createTag({ value, label, description, is_recommended = 0, sort_o
     throw new Error('value 不能为空');
   }
 
-  const existing = await db.get(
+  const existingByValue = await db.get(
     'SELECT id FROM prompt_module_tags WHERE value = ?',
     [normalized]
   );
-  if (existing) {
+  if (existingByValue) {
     throw new Error(`标签值 ${normalized} 已存在`);
+  }
+
+  const existingByLabel = await db.get(
+    'SELECT id FROM prompt_module_tags WHERE label = ?',
+    [label.trim()]
+  );
+  if (existingByLabel) {
+    throw new Error(`标签名「${label.trim()}」已存在，请使用其他名称`);
   }
 
   const result = await db.run(

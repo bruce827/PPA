@@ -63,7 +63,9 @@
       "Bash(git diff *)",
       "Bash(npm test *)",
       "Bash(yarn build *)",
-      "Bash(kill 20298 *)"
+      "Bash(kill 20298 *)",
+      "Bash(brew list *)",
+      "Bash(brew install *)"
     ]
   }
 }
