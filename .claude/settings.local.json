@@ -65,7 +65,13 @@
       "Bash(yarn build *)",
       "Bash(kill 20298 *)",
       "Bash(brew list *)",
-      "Bash(brew install *)"
+      "Bash(brew install *)",
+      "Bash(pip install *)",
+      "Bash(python *)",
+      "Bash(xargs -I{} dirname {})",
+      "Bash(awk '{sum+=$1} END {print \"总大小: \" sum \"K\"}')",
+      "Bash(find /Users/maylis/Desktop/github上的项目/项目评估系统/PPA/spider -maxdepth 1 -type d -name \"output_*\" -exec rm -rf {} +)",
+      "Bash(find /Users/maylis/Desktop/github上的项目/项目评估系统/PPA/spider -maxdepth 1 -type d -name \"sgcc_ecp_*\" -exec rm -rf {} +)"
     ]
   }
 }

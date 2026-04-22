@@ -203,3 +203,58 @@ def save_output_with_attachments(
                 time.sleep(random.uniform(0.3, 0.8))
 
     return json_file, csv_file
+
+
+def save_json_only(
+    records: list[dict],
+    site_key: str,
+    output_dir: str = "data",
+    attachments_field: str = "attachments",
+    record_id_field: str = "id",
+    record_name_field: str = None,
+    referer_field: str = None,
+) -> str:
+    """
+    保存 JSON 到 data/ 目录，不生成 CSV，不创建时间戳子文件夹。
+    site_key: 站点标识，如 "cnpc", "pipechina"
+    """
+    data_dir = output_dir
+    os.makedirs(data_dir, exist_ok=True)
+
+    ts = datetime.now().strftime("%Y-%m-%d")
+    json_file = os.path.join(data_dir, f"{ts}_{site_key}.json")
+
+    with open(json_file, "w", encoding="utf-8") as f:
+        json.dump(records, f, ensure_ascii=False, indent=2)
+
+    attachments_dir = os.path.join(data_dir, "attachments")
+    for rec in records:
+        rid = str(rec.get(record_id_field) or "unknown")
+        rname = str(rec.get(record_name_field, "")) if record_name_field else ""
+        record_dir = os.path.join(attachments_dir, safe_filename(f"{rid}_{rname}"))
+
+        raw_attach = rec.get(attachments_field)
+        attach_items = _normalize_attachment_list(raw_attach)
+
+        for attach in attach_items:
+            url = attach.get("url")
+            if not url:
+                continue
+            name = attach.get("name") or os.path.basename(urlparse(url).path)
+            ext = attach.get("ext") or os.path.splitext(name)[1]
+
+            base_name = safe_filename(name) or "attachment"
+            if ext:
+                ext_clean = ext.lstrip(".")
+                if ext_clean and not base_name.lower().endswith(f".{ext_clean.lower()}"):
+                    base_name = f"{base_name}.{ext_clean}"
+            filename = base_name
+
+            dest = os.path.join(record_dir, filename)
+            if not os.path.exists(dest):
+                referer = rec.get(referer_field) if referer_field else None
+                download_file(url, dest, referer=referer)
+                time.sleep(random.uniform(0.3, 0.8))
+
+    return json_file
+

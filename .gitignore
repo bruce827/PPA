@@ -174,3 +174,6 @@ frontend/ppa_frontend/src/.umi/appData.json
 /_bmad
 /.playwright-cli
 /notion
+/spider/__pycache__
+/spider/data
+/spider
