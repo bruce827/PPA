@@ -1,4 +1,12 @@
-[{
+[
+    {
+    "version": "V1.7.0",
+    "date": "2026-4-22",
+    "changes": [
+      { "type": "feat", "content": "增加招标网站运行服务" },
+      { "type": "opt", "content": "重构提示词管理功能" }
+    ]
+  },{
     "version": "V1.6.3",
     "date": "2026-4-10",
     "changes": [
