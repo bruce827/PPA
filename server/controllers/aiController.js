@@ -36,10 +36,11 @@ async function getPrompts(req, res, next) {
 async function getModulePrompts(req, res, next) {
   const startedAt = Date.now();
   try {
-    const prompts = await aiPromptService.getPromptsByModuleTag('assessment');
+    const prompts = await aiPromptService.getPromptsByModuleTag('preliminary_design');
     const durationMs = Date.now() - startedAt;
     logger.info('模块梳理提示词查询成功', {
       route: 'GET /api/ai/module-prompts',
+      module_tag: 'preliminary_design',
       count: prompts.length,
       durationMs,
     });

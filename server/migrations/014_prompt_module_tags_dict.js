@@ -1,3 +1,16 @@
+/**
+ * ⚠️ [已废弃] Migration 014: 创建 prompt_module_tags 字典表
+ *
+ * 废弃原因: 本文件从未被 server/index.js 中的 migration 启动序列引用，
+ *          属于孤立死代码（dead code）。保留作为历史参考，请勿执行。
+ *
+ * 替代方案: prompt_module_tags 表的定义和初始化已迁移至：
+ * - server/services/promptModuleTagService.js 中的 createTag/getAllTags 等方法
+ * - 前端通过 GET /api/config/prompt-module-tags 获取推荐标签列表
+ *
+ * 如需在已有数据库上创建 prompt_module_tags 表，请参考本文件逻辑自行手动执行。
+ */
+
 const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
 

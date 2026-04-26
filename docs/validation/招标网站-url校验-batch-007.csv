@@ -1,6 +1,0 @@
-id,name,source_level,platform_type,url,status,http_status,final_url,redirect_count,auth_required,is_bidding_site,issue_type,severity,obvious_problem,issue_summary
-302,广西政采云,地方,政府采购,https://www.gcy.zfcg.gxzf.gov.cn/,heuristic_only,200,https://www.gcy.zfcg.gxzf.gov.cn/,0,true,,auth_gate,medium,yes,页面存在登录或身份认证特征
-303,中国航发电子招投标平台,行业垂直,企业招投标平台,http://ebid.aecc-mall.com,heuristic_only,200,https://ebidding.aecc-mall.com/,2,false,false,cross_host_redirect,medium,yes,跳转到不同主机: ebidding.aecc-mall.com
-304,中铁建电子招标平台,行业垂直,企业招投标平台,http://ebid.crccmall.com/,validated_failed,,http://ebid.crccmall.com/,0,,,network_error,high,yes,socket hang up
-305,国资优采云平台,第三方综合,聚合平台,http://www.gzycy.com,heuristic_only,200,http://www.gzycy.com,0,true,true,auth_gate,medium,yes,命中关键词: 招标、采购、公共资源、交易中心、招投标、电子交易平台、中标、竞价、政府采购、招采；页面存在登录或身份认证特征
-306,政采云电子招投标系统,第三方综合,聚合平台,http://www.zhengcaiyun.cn,heuristic_only,200,https://www.zhengcaiyun.cn/,1,true,true,auth_gate,medium,yes,命中关键词: 采购、招投标；页面存在登录或身份认证特征；发生 1 次跳转

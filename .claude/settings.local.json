@@ -71,7 +71,19 @@
       "Bash(xargs -I{} dirname {})",
       "Bash(awk '{sum+=$1} END {print \"总大小: \" sum \"K\"}')",
       "Bash(find /Users/maylis/Desktop/github上的项目/项目评估系统/PPA/spider -maxdepth 1 -type d -name \"output_*\" -exec rm -rf {} +)",
-      "Bash(find /Users/maylis/Desktop/github上的项目/项目评估系统/PPA/spider -maxdepth 1 -type d -name \"sgcc_ecp_*\" -exec rm -rf {} +)"
+      "Bash(find /Users/maylis/Desktop/github上的项目/项目评估系统/PPA/spider -maxdepth 1 -type d -name \"sgcc_ecp_*\" -exec rm -rf {} +)",
+      "Bash(git *)",
+      "Bash(find '/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/docs' \\\\\\( -name \".DS_Store\" -o -name \".obsidian\" -o -path \"*/sprint-artifacts\" -type d \\\\\\) -exec rm -rf {} +)",
+      "Bash(xargs -I{} ls -l {})",
+      "Bash(awk '{print $6, $7, $8, $9}')",
+      "Bash(rm -f plan-model-config-refactor.md plan-server-orm-migration.md roadmap-features.md test/regression-test-plan.md test/ui-automation-approach-comparison.md test/ui-automation-mcp-test-plan.md test/web3d-export-api-smoke.md todo/web3d-assessment-implementation-plan.md analysis/brainstorming-session-20251205T031135Z.md analysis/smb-archetypes.md analysis/smb-data-sources.md analysis/小微企业调研报告.md analysis/沈阳.md 前端缓存方案设计.md Dashboard_Refactor_PRD.md promote/dashboard_legacy_api_callsites.md)",
+      "Bash(rm -rf demo csv validation sprint-artifacts promote)",
+      "Bash(rm -f 报价评估表-内部v2.0.xlsx 工作量评估提示词模板.md '招标发布网站 .md' 招标网站.xml)",
+      "Bash(rm -f todo/招标网站-xml-数据补充与清洗执行计划.md todo/知识库评估.html todo/知识库评估流程.html)",
+      "Bash(rm -f analysis/招标网站-url校验结果汇总-2026-03-12.md analysis/招标网站-xml-同名归并建议说明.md analysis/招标网站-xml-差异分析与二轮审查建议.md analysis/招标网站-xml-数据整理说明.md analysis/招标网站-xml-最终dry-run执行包说明.md analysis/招标网站-xml-直接补充-dry-run说明.md analysis/招标网站-xml-补库结果汇总-2026-03-12.md analysis/brainstorming-session-20251205T031135Z.md analysis/smb-archetypes.md analysis/smb-data-sources.md analysis/小微企业调研报告.md analysis/沈阳.md)",
+      "Bash(rm -f roadmap-features.md 前端缓存方案设计.md Dashboard_Refactor_PRD.md plan-model-config-refactor.md plan-server-orm-migration.md)",
+      "Bash(rm -f 项目机会-招标网站模块-会话记录-2026-03-11.md 项目机会-招标网站模块-会话记录-2026-03-12-补库校验与前端修复.md)",
+      "Bash(awk '{add+=$1; del+=$2} END {print add, del}')"
     ]
   }
 }

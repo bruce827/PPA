@@ -1,10 +1,15 @@
 /**
- * Migration 013: 将 prompt_templates.category 从 CHECK 枚举约束改为自由 module_tag
+ * ⚠️ [已废弃] Migration 013: 将 prompt_templates.category 从 CHECK 枚举约束改为自由 module_tag
  *
- * - 删除旧的 CHECK 约束
- * - 将 category 列改名为 module_tag
- * - 设置 DEFAULT 'general'
- * - 迁移历史数据到新值（LEGACY_CATEGORY_MAP）
+ * 废弃原因: 本文件从未被 server/index.js 中的 migration 启动序列引用，
+ *          属于孤立死代码（dead code）。保留作为历史参考，请勿执行。
+ *
+ * 替代方案: 提示词模板的 category → module_tag 改造已通过以下方式实现：
+ * - server/init-db.js 中的 CREATE TABLE 语句（表定义直接使用 module_tag）
+ * - server/migrations/007 和 011 的重建表逻辑（已同步修改为 module_tag 列）
+ * - server/models/promptTemplateModel.js 中的数据访问层
+ *
+ * 如需在已有数据库上执行等效迁移，请参考本文件逻辑自行手动执行。
  */
 
 const db = require('../utils/db');

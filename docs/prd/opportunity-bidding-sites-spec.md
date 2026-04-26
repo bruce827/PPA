@@ -405,3 +405,70 @@ And 服务端尝试删除对应本地脚本文件
 3. 脚本内容预览
 4. 多脚本 / 版本管理
 5. 与未来采集项目、调度任务或爬虫工程正式挂接
+
+---
+
+## 12. 爬虫方案实现（已实现）
+
+### 12.1 爬虫文件结构
+
+```
+spider/
+├── spider_service.py     # 调度入口，支持手动触发和定时任务
+├── site_*.py             # 各平台采集脚本（按平台 ID 命名）
+├── data/                  # 采集数据输出目录
+├── report/                # 采集报告输出目录
+└── README.md             # 爬虫使用说明
+```
+
+### 12.2 支持的平台
+
+| 平台 | 脚本 | 说明 |
+|---|---|---|
+| CNOOC（中国海洋石油集团） | `site_*.py` | 招标公告抓取 |
+| CNPC（中国石油天然气集团） | `site_*.py` | 招标公告抓取 |
+| PipeChina（国家管网集团） | `site_*.py` | 招标公告抓取 |
+
+### 12.3 数据落地
+
+采集结果写入 SQLite 表（`tenders` 表），字段包括：
+
+- `source_item_id`：来源平台唯一标识
+- `title`：项目标题
+- `issuer`：招标单位
+- `budget_amount`：预算金额
+- `region`：地区
+- `deadline_at`：截止时间
+- `source_platform`：来源平台
+- `announcement_html`：原始 HTML
+- `announcement_plain_text`：降级展示用纯文本
+
+### 12.4 调度策略
+
+- 默认每日执行一次（定时任务）
+- 支持手动触发（`python spider_service.py`）
+- 异常时记录日志并重试
+
+---
+
+## 13. 全网检索（ Tavily AI）
+
+### 13.1 功能定位
+
+在招标网站维护能力之外，新增"全网检索"入口，基于 Tavily AI 搜索 API 实时抓取互联网招标信息，作为招标数据来源的补充。
+
+### 13.2 核心流程
+
+1. 用户在 `TenderWebSearchModal` 输入关键词
+2. 前端调用 `POST /api/ai/tender-web-search`
+3. 后端调用 Tavily Search API（通过 `tavilyProvider`）
+4. 返回结构化搜索结果（标题、摘要、来源链接、发布时间）
+5. 搜索结果与本地 `tenders` 表匹配，匹配成功条目标记"已入库"
+6. 用户可一键将未匹配条目入库
+
+### 13.3 核心文件
+
+- 前端：`TenderWebSearchModal.tsx`
+- 后端：`tenderWebSearchController.js`、`services/tavilyProvider.js`
+- 迁移：数据表扩展字段（`source_url`、`announcement_plain_text`）
+- 测试：`tenderWebSearchAPI.test.js`

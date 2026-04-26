@@ -1,5 +1,13 @@
 [
-    {
+  {
+    "version": "V1.7.1",
+    "date": "2026-4-26",
+    "changes": [
+      { "type": "feat", "content": "提示词模板分类改为模块标签，支持自定义标签和API管理" },
+      { "type": "opt", "content": "清理废弃爬虫文件，保留通用工具模块" },
+      { "type": "opt", "content": "增强附件推送服务逻辑" }
+    ]
+  },{
     "version": "V1.7.0",
     "date": "2026-4-22",
     "changes": [
