@@ -3,11 +3,15 @@ process.env.NODE_ENV = 'test';
 const request = require('supertest');
 const path = require('path');
 const fs = require('fs');
+const os = require('os');
 const { app } = require('../index');
 const db = require('../utils/db');
 
 describe('Dashboard API - Integration Tests', () => {
-  const TEST_DB_PATH = path.join(__dirname, '../ppa.test.db');
+  const TEST_DB_PATH = path.join(
+    os.tmpdir(),
+    `ppa.dashboard.${process.pid}.${Date.now()}.db`
+  );
 
   beforeAll(async () => {
     // Initialize test database

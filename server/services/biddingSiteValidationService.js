@@ -465,6 +465,7 @@ async function runAiValidation(site, probeResult, heuristicResult) {
     .update(`${site.id || ''}:${site.normalized_url}:${truncateText(prompt, 1000)}`)
     .digest('hex');
   const startedAt = Date.now();
+  let serviceTimeoutHandle = null;
 
   try {
     const providerResult = await Promise.race([
@@ -478,7 +479,10 @@ async function runAiValidation(site, probeResult, heuristicResult) {
         timeoutMs: Math.max(5000, (parseInt(currentModel.timeout, 10) || 20) * 1000),
       }),
       new Promise((_, reject) => {
-        setTimeout(() => reject(new Error(`AI 调用超时 (${AI_TIMEOUT_MS}ms)`)), AI_TIMEOUT_MS);
+        serviceTimeoutHandle = setTimeout(
+          () => reject(new Error(`AI 调用超时 (${AI_TIMEOUT_MS}ms)`)),
+          AI_TIMEOUT_MS
+        );
       }),
     ]);
 
@@ -517,6 +521,10 @@ async function runAiValidation(site, probeResult, heuristicResult) {
       state: 'failed',
       error_message: error.message,
     };
+  } finally {
+    if (serviceTimeoutHandle) {
+      clearTimeout(serviceTimeoutHandle);
+    }
   }
 }
 

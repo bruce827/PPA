@@ -83,7 +83,14 @@
       "Bash(rm -f analysis/招标网站-url校验结果汇总-2026-03-12.md analysis/招标网站-xml-同名归并建议说明.md analysis/招标网站-xml-差异分析与二轮审查建议.md analysis/招标网站-xml-数据整理说明.md analysis/招标网站-xml-最终dry-run执行包说明.md analysis/招标网站-xml-直接补充-dry-run说明.md analysis/招标网站-xml-补库结果汇总-2026-03-12.md analysis/brainstorming-session-20251205T031135Z.md analysis/smb-archetypes.md analysis/smb-data-sources.md analysis/小微企业调研报告.md analysis/沈阳.md)",
       "Bash(rm -f roadmap-features.md 前端缓存方案设计.md Dashboard_Refactor_PRD.md plan-model-config-refactor.md plan-server-orm-migration.md)",
       "Bash(rm -f 项目机会-招标网站模块-会话记录-2026-03-11.md 项目机会-招标网站模块-会话记录-2026-03-12-补库校验与前端修复.md)",
-      "Bash(awk '{add+=$1; del+=$2} END {print add, del}')"
+      "Bash(awk '{add+=$1; del+=$2} END {print add, del}')",
+      "Bash(npm list *)",
+      "Bash(yarn global *)",
+      "WebFetch(domain:minimax-algeng-chat-tts.oss-cn-wulanchabu.aliyuncs.com)",
+      "Bash(mmx speech *)",
+      "Bash(mmx quota *)",
+      "Bash(mmx auth *)",
+      "WebFetch(domain:platform.minimaxi.com)"
     ]
   }
 }

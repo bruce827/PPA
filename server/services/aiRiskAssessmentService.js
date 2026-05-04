@@ -436,6 +436,7 @@ async function assessRisk(payload) {
   let providerRaw = null;
   let providerContent = null;
   let providerModelUsed = null;
+  let serviceTimeoutHandle = null;
 
   try {
     const providerCall = providerImpl.createRiskAssessment({
@@ -446,7 +447,10 @@ async function assessRisk(payload) {
     const providerResult = await Promise.race([
       providerCall,
       new Promise((_, reject) => {
-        setTimeout(() => reject(timeoutError('AI 调用超时')), serviceTimeoutMs);
+        serviceTimeoutHandle = setTimeout(
+          () => reject(timeoutError('AI 调用超时')),
+          serviceTimeoutMs
+        );
       }),
     ]);
     providerModelUsed = providerResult.model || providerParams.model;
@@ -589,6 +593,10 @@ async function assessRisk(payload) {
     }
 
     throw internalError(error.message || 'AI 评估失败');
+  } finally {
+    if (serviceTimeoutHandle) {
+      clearTimeout(serviceTimeoutHandle);
+    }
   }
 }
 
@@ -683,6 +691,7 @@ async function normalizeRiskNames(payload) {
   let providerRaw = null;
   let providerContent = null;
   let providerModelUsed = null;
+  let serviceTimeoutHandle = null;
 
   try {
     const providerCall = providerImpl.createRiskAssessment({
@@ -693,7 +702,10 @@ async function normalizeRiskNames(payload) {
     const providerResult = await Promise.race([
       providerCall,
       new Promise((_, reject) => {
-        setTimeout(() => reject(timeoutError('AI 调用超时')), serviceTimeoutMs);
+        serviceTimeoutHandle = setTimeout(
+          () => reject(timeoutError('AI 调用超时')),
+          serviceTimeoutMs
+        );
       }),
     ]);
 
@@ -813,6 +825,10 @@ async function normalizeRiskNames(payload) {
     } catch (e) {}
     if (error.statusCode) throw error;
     throw internalError(error.message || 'AI 名称归一失败');
+  } finally {
+    if (serviceTimeoutHandle) {
+      clearTimeout(serviceTimeoutHandle);
+    }
   }
 }
 

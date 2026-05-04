@@ -1,3 +1,4 @@
+const path = require('path');
 const sqlite3 = require('sqlite3').verbose();
 
 // SQL语句
@@ -288,27 +289,53 @@ const CREATE_TABLES_SQL = `
     ON tender_staging_web_search_results(searched_at);
 `;
 
-// 连接数据库并执行
-const db = new sqlite3.Database('./ppa.db', sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE, (err) => {
-  if (err) {
-    return console.error(err.message);
-  }
-  console.log('Connected to the in-memory SQLite database.');
-});
+function initDatabase(databasePath = process.env.DB_PATH || './ppa.db') {
+  const resolvedPath = path.resolve(databasePath);
 
-db.serialize(() => {
-  db.exec(CREATE_TABLES_SQL, (err) => {
-    if (err) {
-      return console.error('Error creating tables:', err.message);
-    }
-    console.log('Tables created successfully.');
+  return new Promise((resolve, reject) => {
+    const db = new sqlite3.Database(
+      resolvedPath,
+      sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE,
+      (err) => {
+        if (err) {
+          reject(err);
+          return;
+        }
+        console.log(`Connected to SQLite database: ${resolvedPath}`);
+      }
+    );
+
+    db.serialize(() => {
+      db.exec(CREATE_TABLES_SQL, (err) => {
+        if (err) {
+          reject(err);
+          return;
+        }
+        console.log('Tables created successfully.');
+      });
+    });
+
+    db.close((err) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      console.log('Closed the database connection.');
+      resolve();
+    });
   });
-});
+}
 
-// 关闭数据库连接
-db.close((err) => {
-  if (err) {
-    return console.error(err.message);
-  }
-  console.log('Closed the database connection.');
-});
+if (require.main === module) {
+  initDatabase().catch((err) => {
+    if (err) {
+      console.error(err.message);
+      process.exit(1);
+    }
+  });
+}
+
+module.exports = {
+  CREATE_TABLES_SQL,
+  initDatabase,
+};

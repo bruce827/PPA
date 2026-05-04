@@ -280,6 +280,7 @@ async function generateProjectTags(payload) {
   let providerRaw = null;
   let providerContent = null;
   let providerModelUsed = null;
+  let serviceTimeoutHandle = null;
 
   try {
     const providerCall = providerImpl.createRiskAssessment({
@@ -289,9 +290,12 @@ async function generateProjectTags(payload) {
 
     const providerResult = await Promise.race([
       providerCall,
-      new Promise((_, reject) =>
-        setTimeout(() => reject(timeoutError('AI 调用超时')), serviceTimeoutMs)
-      ),
+      new Promise((_, reject) => {
+        serviceTimeoutHandle = setTimeout(
+          () => reject(timeoutError('AI 调用超时')),
+          serviceTimeoutMs
+        );
+      }),
     ]);
 
     providerModelUsed = providerResult.model || providerParams.model;
@@ -418,6 +422,10 @@ async function generateProjectTags(payload) {
 
     if (error.statusCode) throw error;
     throw internalError(error.message || 'AI 项目标签生成失败');
+  } finally {
+    if (serviceTimeoutHandle) {
+      clearTimeout(serviceTimeoutHandle);
+    }
   }
 }
 

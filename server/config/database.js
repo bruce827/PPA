@@ -13,7 +13,9 @@ const getDatabase = () => {
     return db;
   }
 
-  const dbPath = path.join(__dirname, '..', 'ppa.db');
+  const dbPath = process.env.DB_PATH
+    ? path.resolve(process.env.DB_PATH)
+    : path.join(__dirname, '..', 'ppa.db');
   
   db = new sqlite3.Database(dbPath, (err) => {
     if (err) {

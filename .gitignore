@@ -177,3 +177,6 @@ frontend/ppa_frontend/src/.umi/appData.json
 /spider/__pycache__
 /spider/data
 /spider
+frontend/ppa_frontend/.tmp/
+frontend/ppa_frontend/playwright-report/
+frontend/ppa_frontend/test-results/

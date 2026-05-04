@@ -3,6 +3,7 @@ const loadEnvFile = require('./config/loadEnv');
 const app = express();
 const allRoutes = require('./routes');
 const db = require('./utils/db'); // Import db utility
+const serverConfig = require('./config/server');
 const errorHandler = require('./middleware/errorHandler'); // Global error handler
 const logger = require('./utils/logger');
 const biddingSiteModel = require('./models/biddingSiteModel');
@@ -41,19 +42,20 @@ let server;
 
 async function startServer() {
   try {
-    await runAIModelSupportsWebSearchMigration();
-    await runPromptTemplateCategoryMigration();
-    await runTenderWebSearchResultsMigration();
-    await runProjectPushRecordsMigration();
-    await runAIModelVisionFlagsMigration();
-    await runPromptTemplateWeb3dStep4Migration();
-    await runCleanupInvalidVisionModelFlagsMigration();
-    await db.init(); // Initialize database connection
+    const databasePath = db.getDefaultDatabasePath();
+    await runAIModelSupportsWebSearchMigration(databasePath);
+    await runPromptTemplateCategoryMigration(databasePath);
+    await runTenderWebSearchResultsMigration(databasePath);
+    await runProjectPushRecordsMigration(databasePath);
+    await runAIModelVisionFlagsMigration(databasePath);
+    await runPromptTemplateWeb3dStep4Migration(databasePath);
+    await runCleanupInvalidVisionModelFlagsMigration(databasePath);
+    await db.init(databasePath); // Initialize database connection
     await biddingSiteModel.ensureSchema();
     await tenderStagingModel.ensureSchema();
     if (process.env.NODE_ENV !== 'test') {
-      server = app.listen(3001, () => {
-        logger.info('Server is running on port 3001');
+      server = app.listen(serverConfig.port, () => {
+        logger.info(`Server is running on port ${serverConfig.port}`);
         try {
           const monitoringWsService = require('./services/monitoringWsService');
           monitoringWsService.init(server);

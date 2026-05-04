@@ -83,7 +83,7 @@ async function createPromptTemplate(overrides = {}) {
   const result = await db.run(
     `INSERT INTO prompt_templates (
       template_name,
-      category,
+      module_tag,
       description,
       system_prompt,
       user_prompt_template,
@@ -93,7 +93,7 @@ async function createPromptTemplate(overrides = {}) {
     ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
     [
       overrides.template_name || `联网搜索模板-${Date.now()}`,
-      overrides.category || 'web_search',
+      overrides.module_tag || overrides.category || 'bidding_search',
       overrides.description || null,
       overrides.system_prompt || '你是一个联网搜索助手，请返回 JSON。',
       overrides.user_prompt_template ||
@@ -149,7 +149,7 @@ describe('Tender Web Search API', () => {
       CREATE TABLE IF NOT EXISTS prompt_templates (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         template_name TEXT NOT NULL,
-        category TEXT NOT NULL,
+        module_tag TEXT NOT NULL,
         description TEXT,
         system_prompt TEXT NOT NULL,
         user_prompt_template TEXT NOT NULL,

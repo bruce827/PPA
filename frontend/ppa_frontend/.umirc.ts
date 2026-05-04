@@ -1,6 +1,8 @@
 import { defineConfig } from '@umijs/max';
 import pkg from './package.json';
 
+const apiProxyTarget = process.env.API_PROXY_TARGET || 'http://localhost:3001';
+
 export default defineConfig({
   antd: {},
   access: {},
@@ -148,7 +150,7 @@ export default defineConfig({
   npmClient: 'yarn',
   proxy: {
     '/api': {
-      target: 'http://localhost:3001',
+      target: apiProxyTarget,
       changeOrigin: true,
       ws: true,
     },

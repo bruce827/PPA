@@ -130,23 +130,36 @@ const buildFilterClauses = (options = {}) => {
 };
 
 let ensuredConnectionId = null;
+let ensureSchemaPromise = null;
 
 const ensureSchema = async () => {
   const currentConnectionId = db.getConnectionId();
   if (ensuredConnectionId === currentConnectionId) return;
-
-  const columns = await db.all('PRAGMA table_info(projects);');
-  const hasTagsJson = Array.isArray(columns) && columns.some((col) => col.name === 'tags_json');
-  const hasBusinessQuoteJson =
-    Array.isArray(columns) && columns.some((col) => col.name === 'business_quote_json');
-  if (!hasTagsJson) {
-    await db.run('ALTER TABLE projects ADD COLUMN tags_json TEXT;');
-  }
-  if (!hasBusinessQuoteJson) {
-    await db.run('ALTER TABLE projects ADD COLUMN business_quote_json TEXT;');
+  if (ensureSchemaPromise) {
+    await ensureSchemaPromise;
+    if (ensuredConnectionId === currentConnectionId) return;
   }
 
-  ensuredConnectionId = currentConnectionId;
+  ensureSchemaPromise = (async () => {
+    const columns = await db.all('PRAGMA table_info(projects);');
+    const hasTagsJson = Array.isArray(columns) && columns.some((col) => col.name === 'tags_json');
+    const hasBusinessQuoteJson =
+      Array.isArray(columns) && columns.some((col) => col.name === 'business_quote_json');
+    if (!hasTagsJson) {
+      await db.run('ALTER TABLE projects ADD COLUMN tags_json TEXT;');
+    }
+    if (!hasBusinessQuoteJson) {
+      await db.run('ALTER TABLE projects ADD COLUMN business_quote_json TEXT;');
+    }
+
+    ensuredConnectionId = currentConnectionId;
+  })();
+
+  try {
+    await ensureSchemaPromise;
+  } finally {
+    ensureSchemaPromise = null;
+  }
 };
 
 const createProject = async (projectData) => {

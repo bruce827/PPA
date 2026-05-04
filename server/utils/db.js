@@ -6,7 +6,11 @@ let connectionId = 0;
 
 const DB_PATH = path.resolve(__dirname, '../ppa.db'); // Adjust path as needed
 
-exports.init = async (databasePath = DB_PATH) => {
+const getDefaultDatabasePath = () => (
+  process.env.DB_PATH ? path.resolve(process.env.DB_PATH) : DB_PATH
+);
+
+exports.init = async (databasePath = getDefaultDatabasePath()) => {
   if (db) {
     await exports.close();
   }
@@ -26,6 +30,8 @@ exports.init = async (databasePath = DB_PATH) => {
 };
 
 exports.getConnectionId = () => connectionId;
+
+exports.getDefaultDatabasePath = getDefaultDatabasePath;
 
 // Promisify db operations for async/await
 exports.get = (sql, params = []) => {

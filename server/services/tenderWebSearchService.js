@@ -460,14 +460,18 @@ async function executeTenderWebSearch(id, payload = {}) {
   let providerRaw = null;
   let durationMs = 0;
   let modelUsed = providerParams.model;
+  let serviceTimeoutHandle = null;
 
   try {
     const providerCall = providerImpl.createRiskAssessment(providerParams);
     const providerResult = await Promise.race([
       providerCall,
-      new Promise((_, reject) =>
-        setTimeout(() => reject(timeoutError('联网搜索超时')), WEB_SEARCH_SERVICE_TIMEOUT_MS)
-      ),
+      new Promise((_, reject) => {
+        serviceTimeoutHandle = setTimeout(
+          () => reject(timeoutError('联网搜索超时')),
+          WEB_SEARCH_SERVICE_TIMEOUT_MS
+        );
+      }),
     ]);
 
     providerRaw = providerResult.data || providerResult;
@@ -542,6 +546,10 @@ async function executeTenderWebSearch(id, payload = {}) {
     });
 
     throw error;
+  } finally {
+    if (serviceTimeoutHandle) {
+      clearTimeout(serviceTimeoutHandle);
+    }
   }
 }
 

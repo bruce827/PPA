@@ -1,7 +1,7 @@
 const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
 
-const dbPath = path.join(__dirname, '..', 'ppa.db');
+const DEFAULT_DB_PATH = path.join(__dirname, '..', 'ppa.db');
 
 const CREATE_PUSH_RECORDS_TABLE_SQL = `
   CREATE TABLE IF NOT EXISTS project_push_records (
@@ -41,11 +41,11 @@ function execSql(db, sql) {
   });
 }
 
-async function runMigration() {
+async function runMigration(databasePath = DEFAULT_DB_PATH) {
   console.log('开始执行推送记录表迁移...');
-  console.log('数据库路径:', dbPath);
+  console.log('数据库路径:', databasePath);
 
-  const db = new sqlite3.Database(dbPath, (err) => {
+  const db = new sqlite3.Database(databasePath, (err) => {
     if (err) {
       console.error('数据库连接失败:', err.message);
       process.exit(1);
