@@ -12,6 +12,15 @@ type CreatedProject = {
   name: string;
 };
 
+type TenderStagingSyncSummary = {
+  fileCount: number;
+  rawRecordCount: number;
+  deduplicatedCount: number;
+  created: number;
+  updated: number;
+  errors: string[];
+};
+
 const parseJson = async (response: Awaited<ReturnType<APIRequestContext['post']>>) => {
   try {
     return await response.json();
@@ -73,4 +82,28 @@ export async function deleteStandardProject(
 
 export async function deleteWeb3dProject(request: APIRequestContext, id: number) {
   await request.delete(`${backendBaseURL}/api/web3d/projects/${id}`);
+}
+
+export async function syncTenderStagingFromDirectory(
+  request: APIRequestContext,
+  directoryPath: string,
+): Promise<TenderStagingSyncSummary> {
+  const response = await request.post(
+    `${backendBaseURL}/api/opportunity/tender-staging/sync`,
+    {
+      data: {
+        directoryPath,
+        pruneMissing: false,
+      },
+    },
+  );
+  const body = await parseJson(response);
+
+  if (!response.ok() || body?.success !== true) {
+    throw new Error(
+      `Failed to sync tender staging: ${response.status()} ${JSON.stringify(body)}`,
+    );
+  }
+
+  return body.data;
 }

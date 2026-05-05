@@ -14,16 +14,50 @@ const KNOWN_FIELDS = new Set([
   'id',
   'rowGuid',
   'goodsId',
+  'tender_id',
+  'tenderId',
+  'noticeId',
   'businessId',
+  'list_id',
+  'listId',
+  'list_uuid',
+  'listUuid',
+  'detail_query_publishId',
+  'detailQueryPublishId',
+  'detail_query_publishUuid',
+  'detailQueryPublishUuid',
+  'list_notice_id',
+  'listNoticeId',
+  'detail_notice_id',
+  'detailNoticeId',
+  'ggGuid',
+  'gcGuid',
   'title',
+  '标题',
   'project_name',
   'projectName',
+  'project_code',
+  'projectCode',
   'name',
   'goodsName',
+  'info_class',
+  'infoClass',
+  'info_class_name',
+  'infoClassName',
   'notice_type',
   'noticeType',
   'list_notice_type',
   'listNoticeType',
+  'publish_type',
+  'publishType',
+  'publish_one_type',
+  'publishOneType',
+  'publish_one_type_text',
+  'publishOneTypeText',
+  'procurement_method',
+  'procurementMethod',
+  'tender_method',
+  'tenderMethod',
   'published_at',
   'publishedAt',
   'published_date',
@@ -32,6 +66,7 @@ const KNOWN_FIELDS = new Set([
   'publishDate',
   'publish_time',
   'publishTime',
+  '发布时间',
   'infodate',
   'detail_publish_date',
   'detailPublishDate',
@@ -39,6 +74,8 @@ const KNOWN_FIELDS = new Set([
   'createTime',
   'releaseTime',
   'startTime',
+  'file_start_time',
+  'fileStartTime',
   'deadline_at',
   'deadlineAt',
   'deadline_date',
@@ -47,18 +84,34 @@ const KNOWN_FIELDS = new Set([
   'end_date',
   'endDate',
   'bidSaleEndDateTime',
+  'tender_sale_deadline',
+  'tenderSaleDeadline',
+  'publicity_end_time',
+  'publicityEndTime',
+  'file_end_time',
+  'fileEndTime',
+  'bid_deadline',
+  'bidDeadline',
+  'bid_open_time',
+  'bidOpenTime',
   'openBidDateTime',
+  '投标截止时间',
   'issuer',
+  '招标人',
   'tender_unit',
   'tenderUnit',
+  'tenderer',
   'purchaser',
   'tenantName',
+  'publish_org_name',
+  'publishOrgName',
   'budget_amount',
   'budgetAmount',
   'budget',
   'goodsPrice',
   'region',
   'area',
+  '项目地点',
   'province',
   'city',
   'goodsAddress',
@@ -66,15 +119,22 @@ const KNOWN_FIELDS = new Set([
   'sourcePlatform',
   'platform',
   'site_name',
+  '来源',
   'source_url',
   'sourceUrl',
   'url',
   'detail_url',
   'detailUrl',
+  '详情链接',
+  'entry_url',
+  'entryUrl',
   'list_href',
   'summary',
   'description',
   'strcomment',
+  '招标范围',
+  'scope',
+  'requirements',
   'announcement_html',
   'announcementHtml',
   'html',
@@ -85,6 +145,8 @@ const KNOWN_FIELDS = new Set([
   'plain_text',
   'content_text',
   'detail_text',
+  'content',
+  '内容',
   'detail_excerpt',
   'detailExcerpt',
   'detail_payload',
@@ -96,6 +158,23 @@ const KNOWN_FIELDS = new Set([
   'last_pushed_at',
   'lastPushedAt',
   'crawl_time',
+  'attachments',
+  'attachment_urls',
+  'attachmentUrls',
+  'attachment_contents',
+  'attachmentContents',
+  'content_type',
+  'contentType',
+  'content_parse_method',
+  'contentParseMethod',
+  'content_base64_prefix',
+  'contentBase64Prefix',
+  'content_base64_len',
+  'contentBase64Len',
+  'content_pdf_size',
+  'contentPdfSize',
+  'content_pdf_file',
+  'contentPdfFile',
 ]);
 
 const SOURCE_ID_AS_PRIMARY_SOURCES = new Set(['cnpc', 'cnooc', 'pipechina']);
@@ -124,8 +203,11 @@ function normalizeText(value, maxLength = null) {
 function inferDate(value) {
   const text = normalizeText(value, 64);
   if (!text) return null;
-  const matched = text.match(/^(\d{4}-\d{2}-\d{2})/);
-  return matched ? matched[1] : null;
+  const matched = text.match(/(\d{4})[年/-](\d{1,2})[月/-](\d{1,2})/);
+  if (!matched) return null;
+
+  const [, year, month, day] = matched;
+  return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
 }
 
 function normalizeDateTime(value) {
@@ -285,8 +367,28 @@ function normalizeSourceCode(value) {
     return 'eavic';
   }
 
-  if (/sdicc|国投集团电子采购平台/i.test(text)) {
+  if (/chnenergy|中国能源建设|国家能源|能源建设集团/i.test(text)) {
+    return 'chnenergy';
+  }
+
+  if (/cmcc|中国移动采购与招标网|中国移动/i.test(text)) {
+    return 'cmcc';
+  }
+
+  if (/snbid|山东能源集团电子招标投标交易平台/i.test(text)) {
+    return 'snbid';
+  }
+
+  if (/ykjtzb|山东能源集团电子招标采购平台/i.test(text)) {
+    return 'ykjtzb';
+  }
+
+  if (/sdicc/i.test(text)) {
     return 'sdicc';
+  }
+
+  if (/^sdi$/i.test(text) || /国投集团电子采购平台|国投集团/i.test(text)) {
+    return 'sdi';
   }
 
   if (/liaoning|辽宁政府采购网/i.test(text)) {
@@ -349,6 +451,52 @@ function resolveSourceItemId(record, embeddedRawPayload, sourceCode) {
   );
   if (explicitSourceItemId) {
     return explicitSourceItemId;
+  }
+
+  const siteSpecificId = pickFirst(
+    record['招标编号'],
+    embeddedRawPayload?.['招标编号'],
+    record.tender_id,
+    record.tenderId,
+    record.noticeId,
+    embeddedRawPayload?.tender_id,
+    embeddedRawPayload?.tenderId,
+    embeddedRawPayload?.noticeId,
+    record.list_id,
+    record.listId,
+    record.list_uuid,
+    record.listUuid,
+    record.detail_query_publishId,
+    record.detailQueryPublishId,
+    record.detail_query_publishUuid,
+    record.detailQueryPublishUuid,
+    embeddedRawPayload?.list_id,
+    embeddedRawPayload?.listId,
+    embeddedRawPayload?.list_uuid,
+    embeddedRawPayload?.listUuid,
+    embeddedRawPayload?.detail_query_publishId,
+    embeddedRawPayload?.detailQueryPublishId,
+    embeddedRawPayload?.detail_query_publishUuid,
+    embeddedRawPayload?.detailQueryPublishUuid,
+    record.list_notice_id,
+    record.listNoticeId,
+    record.detail_notice_id,
+    record.detailNoticeId,
+    embeddedRawPayload?.list_notice_id,
+    embeddedRawPayload?.listNoticeId,
+    embeddedRawPayload?.detail_notice_id,
+    embeddedRawPayload?.detailNoticeId,
+    record.ggGuid,
+    record.gcGuid,
+    embeddedRawPayload?.ggGuid,
+    embeddedRawPayload?.gcGuid,
+    record.project_code,
+    record.projectCode,
+    embeddedRawPayload?.project_code,
+    embeddedRawPayload?.projectCode
+  );
+  if (siteSpecificId) {
+    return buildScopedIdentifier(sourceCode, siteSpecificId) || siteSpecificId;
   }
 
   const directLegacyId = pickFirst(record.rowGuid, record.goodsId);
@@ -430,7 +578,29 @@ function normalizeSingleRecord(record, sourceFile, fileMeta = {}) {
     record.source_id,
     record.sourceId,
     embeddedRawPayload?.source_id,
-    embeddedRawPayload?.sourceId
+    embeddedRawPayload?.sourceId,
+    record['招标编号'],
+    embeddedRawPayload?.['招标编号'],
+    record.tender_id,
+    record.tenderId,
+    embeddedRawPayload?.tender_id,
+    embeddedRawPayload?.tenderId,
+    record.list_id,
+    record.listId,
+    record.list_notice_id,
+    record.listNoticeId,
+    record.detail_notice_id,
+    record.detailNoticeId,
+    embeddedRawPayload?.list_id,
+    embeddedRawPayload?.listId,
+    embeddedRawPayload?.list_notice_id,
+    embeddedRawPayload?.listNoticeId,
+    embeddedRawPayload?.detail_notice_id,
+    embeddedRawPayload?.detailNoticeId,
+    record.ggGuid,
+    record.gcGuid,
+    embeddedRawPayload?.ggGuid,
+    embeddedRawPayload?.gcGuid
   );
   const sourceRecordId = pickFirst(
     record.id,
@@ -440,15 +610,37 @@ function normalizeSingleRecord(record, sourceFile, fileMeta = {}) {
     record.goodsId,
     embeddedRawPayload?.goodsId,
     record.rowGuid,
-    embeddedRawPayload?.rowGuid
+    embeddedRawPayload?.rowGuid,
+    record.tender_id,
+    record.tenderId,
+    embeddedRawPayload?.tender_id,
+    embeddedRawPayload?.tenderId,
+    record.list_id,
+    record.listId,
+    record.list_notice_id,
+    record.listNoticeId,
+    record.detail_notice_id,
+    record.detailNoticeId,
+    embeddedRawPayload?.list_id,
+    embeddedRawPayload?.listId,
+    embeddedRawPayload?.list_notice_id,
+    embeddedRawPayload?.listNoticeId,
+    embeddedRawPayload?.detail_notice_id,
+    embeddedRawPayload?.detailNoticeId,
+    record.ggGuid,
+    record.gcGuid,
+    embeddedRawPayload?.ggGuid,
+    embeddedRawPayload?.gcGuid
   );
   const title = pickFirst(
     record.title,
+    record['标题'],
     record.project_name,
     record.projectName,
     record.goodsName,
     record.name,
     embeddedRawPayload?.title,
+    embeddedRawPayload?.['标题'],
     embeddedRawPayload?.project_name,
     embeddedRawPayload?.projectName,
     embeddedRawPayload?.goodsName,
@@ -468,6 +660,7 @@ function normalizeSingleRecord(record, sourceFile, fileMeta = {}) {
       record.publishDate ||
       record.publish_time ||
       record.publishTime ||
+      record['发布时间'] ||
       record.infodate ||
       record.detail_publish_date ||
       record.detailPublishDate ||
@@ -476,6 +669,8 @@ function normalizeSingleRecord(record, sourceFile, fileMeta = {}) {
       record.createTime ||
       getNestedTimeValue(record, 'bidSectionList', 'releaseTime') ||
       record.startTime ||
+      record.file_start_time ||
+      record.fileStartTime ||
       embeddedRawPayload?.published_at ||
       embeddedRawPayload?.publishedAt ||
       embeddedRawPayload?.published_date ||
@@ -484,6 +679,7 @@ function normalizeSingleRecord(record, sourceFile, fileMeta = {}) {
       embeddedRawPayload?.publishDate ||
       embeddedRawPayload?.publish_time ||
       embeddedRawPayload?.publishTime ||
+      embeddedRawPayload?.['发布时间'] ||
       embeddedRawPayload?.infodate ||
       embeddedRawPayload?.detail_publish_date ||
       embeddedRawPayload?.detailPublishDate ||
@@ -491,7 +687,9 @@ function normalizeSingleRecord(record, sourceFile, fileMeta = {}) {
       embeddedRawPayload?.releaseTime ||
       embeddedRawPayload?.createTime ||
       getNestedTimeValue(embeddedRawPayload, 'bidSectionList', 'releaseTime') ||
-      embeddedRawPayload?.startTime
+      embeddedRawPayload?.startTime ||
+      embeddedRawPayload?.file_start_time ||
+      embeddedRawPayload?.fileStartTime
   );
   const deadlineAt = normalizeDateTime(
     record.deadline_at ||
@@ -503,6 +701,17 @@ function normalizeSingleRecord(record, sourceFile, fileMeta = {}) {
       record.endDate ||
       record.bidSaleEndDateTime ||
       record.openBidDateTime ||
+      record.tender_sale_deadline ||
+      record.tenderSaleDeadline ||
+      record.publicity_end_time ||
+      record.publicityEndTime ||
+      record.file_end_time ||
+      record.fileEndTime ||
+      record.bid_deadline ||
+      record.bidDeadline ||
+      record.bid_open_time ||
+      record.bidOpenTime ||
+      record['投标截止时间'] ||
       embeddedRawPayload?.deadline_at ||
       embeddedRawPayload?.deadlineAt ||
       embeddedRawPayload?.deadline_date ||
@@ -511,7 +720,18 @@ function normalizeSingleRecord(record, sourceFile, fileMeta = {}) {
       embeddedRawPayload?.end_date ||
       embeddedRawPayload?.endDate ||
       embeddedRawPayload?.bidSaleEndDateTime ||
-      embeddedRawPayload?.openBidDateTime
+      embeddedRawPayload?.openBidDateTime ||
+      embeddedRawPayload?.tender_sale_deadline ||
+      embeddedRawPayload?.tenderSaleDeadline ||
+      embeddedRawPayload?.publicity_end_time ||
+      embeddedRawPayload?.publicityEndTime ||
+      embeddedRawPayload?.file_end_time ||
+      embeddedRawPayload?.fileEndTime ||
+      embeddedRawPayload?.bid_deadline ||
+      embeddedRawPayload?.bidDeadline ||
+      embeddedRawPayload?.bid_open_time ||
+      embeddedRawPayload?.bidOpenTime ||
+      embeddedRawPayload?.['投标截止时间']
   );
 
   const announcementHtml = normalizeText(
@@ -539,21 +759,31 @@ function normalizeSingleRecord(record, sourceFile, fileMeta = {}) {
         record.plain_text ||
         record.content_text ||
         record.detail_text ||
+        record.content ||
+        record['内容'] ||
         detailExcerpt ||
         embeddedRawPayload?.announcement_plain_text ||
         embeddedRawPayload?.announcementPlainText ||
         embeddedRawPayload?.plain_text ||
         embeddedRawPayload?.content_text ||
-        embeddedRawPayload?.detail_text
+        embeddedRawPayload?.detail_text ||
+        embeddedRawPayload?.content ||
+        embeddedRawPayload?.['内容']
     ) || stripHtmlTags(announcementHtml);
   const summary =
     normalizeText(
       record.summary ||
         record.description ||
         record.strcomment ||
+        record['招标范围'] ||
+        record.scope ||
+        record.requirements ||
         embeddedRawPayload?.summary ||
         embeddedRawPayload?.description ||
-        embeddedRawPayload?.strcomment,
+        embeddedRawPayload?.strcomment ||
+        embeddedRawPayload?.['招标范围'] ||
+        embeddedRawPayload?.scope ||
+        embeddedRawPayload?.requirements,
       500
     ) ||
     (announcementPlainText ? announcementPlainText.slice(0, 120) : null);
@@ -563,9 +793,11 @@ function normalizeSingleRecord(record, sourceFile, fileMeta = {}) {
     pickFirst(
       record.region,
       record.area,
+      record['项目地点'],
       record.goodsAddress,
       embeddedRawPayload?.region,
       embeddedRawPayload?.area,
+      embeddedRawPayload?.['项目地点'],
       embeddedRawPayload?.goodsAddress
     ) ||
     [
@@ -590,10 +822,30 @@ function normalizeSingleRecord(record, sourceFile, fileMeta = {}) {
       record.noticeType,
       record.list_notice_type,
       record.listNoticeType,
+      record.info_class_name,
+      record.infoClassName,
+      record.info_class,
+      record.infoClass,
+      record.publish_one_type_text,
+      record.publishOneTypeText,
+      record.procurement_method,
+      record.procurementMethod,
+      record.tender_method,
+      record.tenderMethod,
       embeddedRawPayload?.notice_type,
       embeddedRawPayload?.noticeType,
       embeddedRawPayload?.list_notice_type,
-      embeddedRawPayload?.listNoticeType
+      embeddedRawPayload?.listNoticeType,
+      embeddedRawPayload?.info_class_name,
+      embeddedRawPayload?.infoClassName,
+      embeddedRawPayload?.info_class,
+      embeddedRawPayload?.infoClass,
+      embeddedRawPayload?.publish_one_type_text,
+      embeddedRawPayload?.publishOneTypeText,
+      embeddedRawPayload?.procurement_method,
+      embeddedRawPayload?.procurementMethod,
+      embeddedRawPayload?.tender_method,
+      embeddedRawPayload?.tenderMethod
     ),
     published_at: publishedAt,
     published_date:
@@ -601,8 +853,14 @@ function normalizeSingleRecord(record, sourceFile, fileMeta = {}) {
       inferDate(
         record.published_date ||
           record.publish_date ||
+          record.publish_time ||
+          record['发布时间'] ||
+          record.file_start_time ||
           embeddedRawPayload?.published_date ||
-          embeddedRawPayload?.publish_date
+          embeddedRawPayload?.publish_date ||
+          embeddedRawPayload?.publish_time ||
+          embeddedRawPayload?.['发布时间'] ||
+          embeddedRawPayload?.file_start_time
       ),
     deadline_at: deadlineAt,
     deadline_date:
@@ -610,20 +868,38 @@ function normalizeSingleRecord(record, sourceFile, fileMeta = {}) {
       inferDate(
         record.deadline_date ||
           record.end_date ||
+          record.tender_sale_deadline ||
+          record.file_end_time ||
+          record.bid_deadline ||
+          record.bid_open_time ||
+          record['投标截止时间'] ||
           embeddedRawPayload?.deadline_date ||
-          embeddedRawPayload?.end_date
+          embeddedRawPayload?.end_date ||
+          embeddedRawPayload?.tender_sale_deadline ||
+          embeddedRawPayload?.file_end_time ||
+          embeddedRawPayload?.bid_deadline ||
+          embeddedRawPayload?.bid_open_time ||
+          embeddedRawPayload?.['投标截止时间']
       ),
     issuer: pickFirst(
       record.issuer,
+      record['招标人'],
       record.tender_unit,
       record.tenderUnit,
+      record.tenderer,
       record.purchaser,
       record.tenantName,
+      record.publish_org_name,
+      record.publishOrgName,
       embeddedRawPayload?.issuer,
+      embeddedRawPayload?.['招标人'],
       embeddedRawPayload?.tender_unit,
       embeddedRawPayload?.tenderUnit,
+      embeddedRawPayload?.tenderer,
       embeddedRawPayload?.purchaser,
-      embeddedRawPayload?.tenantName
+      embeddedRawPayload?.tenantName,
+      embeddedRawPayload?.publish_org_name,
+      embeddedRawPayload?.publishOrgName
     ),
     budget_amount: normalizeBudgetAmount(
       record.budget_amount ||
@@ -641,10 +917,12 @@ function normalizeSingleRecord(record, sourceFile, fileMeta = {}) {
       record.sourcePlatform,
       record.platform,
       record.site_name,
+      record['来源'],
       embeddedRawPayload?.source_platform,
       embeddedRawPayload?.sourcePlatform,
       embeddedRawPayload?.platform,
       embeddedRawPayload?.site_name,
+      embeddedRawPayload?.['来源'],
       sourceCode
     ),
     source_url: pickFirst(
@@ -653,13 +931,19 @@ function normalizeSingleRecord(record, sourceFile, fileMeta = {}) {
       record.url,
       record.detail_url,
       record.detailUrl,
+      record['详情链接'],
       record.list_href,
+      record.entry_url,
+      record.entryUrl,
       embeddedRawPayload?.source_url,
       embeddedRawPayload?.sourceUrl,
       embeddedRawPayload?.url,
       embeddedRawPayload?.detail_url,
       embeddedRawPayload?.detailUrl,
-      embeddedRawPayload?.list_href
+      embeddedRawPayload?.['详情链接'],
+      embeddedRawPayload?.list_href,
+      embeddedRawPayload?.entry_url,
+      embeddedRawPayload?.entryUrl
     ),
     summary,
     detail_excerpt: detailExcerpt,
@@ -979,6 +1263,37 @@ function normalizeListQuery(query = {}) {
     Math.max(parseInt(query.pageSize || '20', 10) || 20, 1),
     200
   );
+  const allowedDataQualityFilters = new Set([
+    'missing_issuer',
+    'missing_deadline',
+    'missing_content',
+  ]);
+  const allowedSortFields = new Set([
+    'published_date',
+    'deadline_date',
+    'updated_at',
+    'push_status',
+  ]);
+  const rawDataQuality = Array.isArray(query.data_quality)
+    ? query.data_quality
+    : String(query.data_quality || '')
+        .split(',')
+        .map((item) => item.trim())
+        .filter(Boolean);
+  const dataQuality = rawDataQuality.filter((item) =>
+    allowedDataQualityFilters.has(item)
+  );
+  const sortBy =
+    typeof query.sort_by === 'string' && allowedSortFields.has(query.sort_by)
+      ? query.sort_by
+      : null;
+  const normalizedSortOrder = normalizeText(query.sort_order, 20)?.toLowerCase();
+  const sortOrder =
+    normalizedSortOrder === 'asc' || normalizedSortOrder === 'ascend'
+      ? 'asc'
+      : normalizedSortOrder === 'desc' || normalizedSortOrder === 'descend'
+        ? 'desc'
+        : null;
 
   return {
     page,
@@ -988,6 +1303,9 @@ function normalizeListQuery(query = {}) {
     issuer: normalizeText(query.issuer, 200),
     push_status: normalizeText(query.push_status, 20),
     source_file: normalizeText(query.source_file, 200),
+    data_quality: dataQuality,
+    sort_by: sortBy,
+    sort_order: sortOrder,
   };
 }
 

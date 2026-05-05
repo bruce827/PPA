@@ -1,6 +1,6 @@
 ---
 name: bidding-scraper
-description: 招投标网站爬虫生成指南。给定目标网站 URL，用 MCP 工具自动分析页面结构，生成可直接运行的 Python 爬虫脚本，数据输出为本地 JSON/CSV 文件。
+description: 招投标网站爬虫生成指南。给定目标网站 URL，用 MCP 工具自动分析页面结构，生成可直接运行的 Python 爬虫脚本，数据输出到 spider/data/YYYY-MM-DD_{site_key}.json。
 ---
 
 # 招投标爬虫生成指南
@@ -10,9 +10,82 @@ description: 招投标网站爬虫生成指南。给定目标网站 URL，用 MC
 用户给一个招投标网站 URL，AI 完成以下工作：
 1. 用 MCP 工具分析网站结构
 2. 输出一个**可直接运行**的 Python 爬虫脚本
-3. 脚本运行后数据保存到本地 JSON 和 CSV 文件
+3. 脚本运行后数据保存到 `spider/data/YYYY-MM-DD_{site_key}.json`
 
 不需要数据库，不需要 Webhook，不需要任何外部服务。
+
+---
+
+## 项目落地规则（必须遵守）
+
+本项目的爬虫脚本不是一次性导出工具，输出会被 PPA 后端的“同步本地数据”功能读取。生成新脚本时，以下规则优先级高于后面模板里的示例保存逻辑：
+
+1. 只输出 JSON，不生成 CSV。
+2. 使用 `spider_utils.save_json_only()` 保存到 `data/YYYY-MM-DD_{site_key}.json`。
+3. 不创建时间戳子目录。
+4. 每条记录必须提供稳定唯一 ID 和标题，优先使用标准字段 `source_id`、`title`。
+5. 保留站点原始字段可以，但必须额外映射出标准字段，避免后端同步告警。
+
+### 标准记录字段
+
+每条记录建议至少包含：
+
+```python
+{
+    "source": "new_site_key",
+    "source_id": "站点内稳定唯一ID",
+    "title": "公告标题",
+    "publish_time": "2026-05-05 10:00:00",
+    "deadline_date": "2026-05-20",
+    "tender_unit": "招标人/采购人",
+    "detail_url": "原文详情页URL",
+    "content_text": "正文纯文本",
+    "attachments": [],
+}
+```
+
+字段要求：
+- `source`：站点标识，必须和 `save_json_only(site_key=...)`、`spider_service.py` 中的 `site_key` 一致。
+- `source_id`：站点内稳定唯一 ID，必填；来自公告 ID、项目编号、详情页 ID 均可。不要只靠标题去重。
+- `title`：公告标题，必填；如果原站字段叫“标题”，也要映射为 `title`。
+- `publish_time` / `published_date`：发布日期，优先标准化为 `YYYY-MM-DD HH:mm:ss` 或 `YYYY-MM-DD`。
+- `deadline_date` / `deadline_at`：投标截止日期、报名截止日期或开标时间，能拿到就填。
+- `tender_unit` / `issuer`：招标人、采购人、发布单位。
+- `detail_url`：详情页 URL。
+- `content_text`：详情正文纯文本；HTML 可额外放到 `content_html`。
+- `attachments` / `attachment_urls`：附件列表或附件 URL。
+
+### 保存输出模板
+
+所有模板最终都要使用以下保存方式：
+
+```python
+import os
+import spider_utils
+
+os.makedirs("data", exist_ok=True)
+json_file = spider_utils.save_json_only(
+    records,
+    site_key="new_site_key",
+    output_dir="data",
+    attachments_field="attachments",
+    record_id_field="source_id",
+    record_name_field="title",
+    referer_field="detail_url",
+)
+print(f"[new_site_key] 完成，共 {len(records)} 条 -> {json_file}")
+```
+
+如果站点只能拿到专属 ID 字段，也要在记录中补一份 `source_id`：
+
+```python
+record = {
+    "source": SITE_KEY,
+    "source_id": raw_item.get("noticeId"),
+    "notice_id": raw_item.get("noticeId"),
+    "title": raw_item.get("noticeTitle", "").strip(),
+}
+```
 
 ---
 
@@ -123,8 +196,10 @@ firecrawl_scrape(detail_url)  # 获取干净文本，确认字段位置
 ### 交付标准
 
 生成的脚本必须满足：
-- **单文件**，直接 `python spider.py` 运行，无需额外配置
-- 运行后在当前目录生成 `output.json` 和 `output.csv`
+- **单文件脚本**，放在 `spider/` 目录后可直接 `python site_xxx.py` 运行，可引用同目录的 `spider_utils.py`
+- 运行后在 `data/` 目录生成 `YYYY-MM-DD_{site_key}.json`
+- 使用 `spider_utils.save_json_only()`，不生成 CSV，不创建时间戳子目录
+- 每条记录至少映射出 `source`、`source_id`、`title`、`detail_url`
 - 脚本顶部注释说明：目标网站、抓取字段、运行方式
 - 所有选择器、接口地址、翻页参数都填入实际值，不留占位符
 
@@ -139,17 +214,20 @@ firecrawl_scrape(detail_url)  # 获取干净文本，确认字段位置
 目标网站：{网站名称} - {URL}
 抓取字段：标题、预算、发布日期、截止日期、地区、资质要求、原文链接
 运行方式：pip install requests && python spider.py
-输出文件：output.json / output.csv
+输出文件：data/YYYY-MM-DD_{site_key}.json
 """
 
 import requests
 import json
-import csv
+import os
 import time
 import random
 from datetime import datetime
 
+import spider_utils
+
 # ── 配置 ──────────────────────────────────────────
+SITE_KEY   = "new_site_key"
 API_URL    = "实际接口地址"
 MAX_PAGES  = 50
 DELAY      = (2, 4)   # 随机延迟范围（秒）
@@ -177,16 +255,20 @@ def fetch_page(page: int) -> list[dict]:
 
     result = []
     for item in raw_list:
+        detail_url = item.get("url", "")
         result.append({
+            "source":        SITE_KEY,
+            "source_id":     str(item.get("id") or item.get("noticeId") or detail_url).strip(),
             "title":         item.get("title", "").strip(),
-            "budget":        parse_budget(item.get("budget", "")),
-            "publish_date":  item.get("publishDate", "")[:10],
-            "deadline":      item.get("deadline", "")[:10] or None,
+            "budget_amount": parse_budget(item.get("budget", "")),
+            "publish_time":  item.get("publishDate", ""),
+            "deadline_date": item.get("deadline", "")[:10] or None,
             "region":        item.get("region", "").strip(),
-            "category":      item.get("category", "").strip(),
+            "notice_type":   item.get("category", "").strip(),
             "qualification": item.get("qualification", "").strip(),
-            "source_url":    item.get("url", ""),
-            "platform":      "平台名称",
+            "detail_url":    detail_url,
+            "source_platform": "平台名称",
+            "content_text":  item.get("content", ""),
             "crawled_at":    datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
         })
     return result
@@ -210,16 +292,17 @@ def parse_budget(text: str) -> float | None:
 
 
 def save_output(records: list[dict]) -> None:
-    with open("output.json", "w", encoding="utf-8") as f:
-        json.dump(records, f, ensure_ascii=False, indent=2)
-
-    if records:
-        with open("output.csv", "w", newline="", encoding="utf-8-sig") as f:
-            writer = csv.DictWriter(f, fieldnames=records[0].keys())
-            writer.writeheader()
-            writer.writerows(records)
-
-    print(f"已保存 {len(records)} 条数据 → output.json / output.csv")
+    os.makedirs("data", exist_ok=True)
+    json_file = spider_utils.save_json_only(
+        records,
+        site_key=SITE_KEY,
+        output_dir="data",
+        attachments_field="attachments",
+        record_id_field="source_id",
+        record_name_field="title",
+        referer_field="detail_url",
+    )
+    print(f"[{SITE_KEY}] 完成，共 {len(records)} 条 -> {json_file}")
 
 
 def main():
@@ -238,8 +321,8 @@ def main():
             print(f"第 {page} 页无数据，停止")
             break
 
-        new = [r for r in records if r["source_url"] not in seen_urls]
-        seen_urls.update(r["source_url"] for r in new)
+        new = [r for r in records if r["detail_url"] not in seen_urls]
+        seen_urls.update(r["detail_url"] for r in new)
         all_records.extend(new)
         print(f"  新增 {len(new)} 条，累计 {len(all_records)} 条")
 
@@ -267,20 +350,23 @@ if __name__ == "__main__":
 目标网站：{网站名称} - {URL}
 抓取字段：标题、预算、发布日期、截止日期、地区、资质要求、原文链接
 运行方式：pip install requests beautifulsoup4 lxml && python spider.py
-输出文件：output.json / output.csv
+输出文件：data/YYYY-MM-DD_{site_key}.json
 """
 
 import requests
 from bs4 import BeautifulSoup
 import json
-import csv
+import os
 import time
 import random
 import re
 from datetime import datetime
 from urllib.parse import urljoin
 
+import spider_utils
+
 # ── 配置 ──────────────────────────────────────────
+SITE_KEY   = "new_site_key"
 START_URL  = "列表页URL"
 BASE_URL   = "https://网站域名"
 MAX_PAGES  = 50
@@ -333,14 +419,14 @@ def parse_detail(url: str) -> dict:
     try:
         soup = get_soup(url)
         return {
-            "raw_content": soup.select_one(SEL_DETAIL_BODY).get_text(" ", strip=True) if soup.select_one(SEL_DETAIL_BODY) else "",
-            "deadline":    soup.select_one(SEL_DETAIL_DEADLINE).get_text(strip=True) if soup.select_one(SEL_DETAIL_DEADLINE) else None,
+            "content_text": soup.select_one(SEL_DETAIL_BODY).get_text(" ", strip=True) if soup.select_one(SEL_DETAIL_BODY) else "",
+            "deadline_date": soup.select_one(SEL_DETAIL_DEADLINE).get_text(strip=True) if soup.select_one(SEL_DETAIL_DEADLINE) else None,
             "region":      soup.select_one(SEL_DETAIL_REGION).get_text(strip=True) if soup.select_one(SEL_DETAIL_REGION) else "",
             "qualification": soup.select_one(SEL_DETAIL_QUALIFY).get_text(strip=True) if soup.select_one(SEL_DETAIL_QUALIFY) else "",
         }
     except Exception as e:
         print(f"  详情页失败 {url}: {e}")
-        return {"raw_content": "", "deadline": None, "region": "", "qualification": ""}
+        return {"content_text": "", "deadline_date": None, "region": "", "qualification": ""}
 
 
 def parse_list_page(soup: BeautifulSoup, base_url: str) -> list[dict]:
@@ -356,11 +442,13 @@ def parse_list_page(soup: BeautifulSoup, base_url: str) -> list[dict]:
             continue
 
         record = {
+            "source":       SITE_KEY,
+            "source_id":    url,
             "title":        title.get_text(strip=True) if title else "",
-            "budget":       parse_budget(budget.get_text(strip=True) if budget else ""),
-            "publish_date": date.get_text(strip=True) if date else "",
-            "source_url":   url,
-            "platform":     "平台名称",
+            "budget_amount": parse_budget(budget.get_text(strip=True) if budget else ""),
+            "publish_time": date.get_text(strip=True) if date else "",
+            "detail_url":   url,
+            "source_platform": "平台名称",
             "crawled_at":   datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
         }
         records.append(record)
@@ -368,14 +456,17 @@ def parse_list_page(soup: BeautifulSoup, base_url: str) -> list[dict]:
 
 
 def save_output(records: list[dict]) -> None:
-    with open("output.json", "w", encoding="utf-8") as f:
-        json.dump(records, f, ensure_ascii=False, indent=2)
-    if records:
-        with open("output.csv", "w", newline="", encoding="utf-8-sig") as f:
-            writer = csv.DictWriter(f, fieldnames=records[0].keys())
-            writer.writeheader()
-            writer.writerows(records)
-    print(f"已保存 {len(records)} 条 → output.json / output.csv")
+    os.makedirs("data", exist_ok=True)
+    json_file = spider_utils.save_json_only(
+        records,
+        site_key=SITE_KEY,
+        output_dir="data",
+        attachments_field="attachments",
+        record_id_field="source_id",
+        record_name_field="title",
+        referer_field="detail_url",
+    )
+    print(f"[{SITE_KEY}] 完成，共 {len(records)} 条 -> {json_file}")
 
 
 def main():
@@ -392,13 +483,13 @@ def main():
             break
 
         records = parse_list_page(soup, BASE_URL)
-        new = [r for r in records if r["source_url"] not in seen_urls]
-        seen_urls.update(r["source_url"] for r in new)
+        new = [r for r in records if r["detail_url"] not in seen_urls]
+        seen_urls.update(r["detail_url"] for r in new)
 
         # 抓取详情页
         for i, r in enumerate(new):
-            print(f"  详情页 {i+1}/{len(new)}: {r['source_url']}")
-            detail = parse_detail(r["source_url"])
+            print(f"  详情页 {i+1}/{len(new)}: {r['detail_url']}")
+            detail = parse_detail(r["detail_url"])
             r.update(detail)
             time.sleep(random.uniform(1, 2))
 
@@ -431,20 +522,23 @@ if __name__ == "__main__":
 目标网站：{网站名称} - {URL}
 抓取字段：标题、预算、发布日期、截止日期、地区、资质要求、原文链接
 运行方式：pip install playwright beautifulsoup4 lxml && playwright install chromium && python spider.py
-输出文件：output.json / output.csv
+输出文件：data/YYYY-MM-DD_{site_key}.json
 """
 
 from playwright.sync_api import sync_playwright
 from bs4 import BeautifulSoup
 import json
-import csv
+import os
 import time
 import random
 import re
 from datetime import datetime
 from urllib.parse import urljoin
 
+import spider_utils
+
 # ── 配置 ──────────────────────────────────────────
+SITE_KEY  = "new_site_key"
 START_URL = "列表页URL"
 BASE_URL  = "https://网站域名"
 MAX_PAGES = 50
@@ -479,14 +573,17 @@ def parse_budget(text: str) -> float | None:
 
 
 def save_output(records: list[dict]) -> None:
-    with open("output.json", "w", encoding="utf-8") as f:
-        json.dump(records, f, ensure_ascii=False, indent=2)
-    if records:
-        with open("output.csv", "w", newline="", encoding="utf-8-sig") as f:
-            writer = csv.DictWriter(f, fieldnames=records[0].keys())
-            writer.writeheader()
-            writer.writerows(records)
-    print(f"已保存 {len(records)} 条 → output.json / output.csv")
+    os.makedirs("data", exist_ok=True)
+    json_file = spider_utils.save_json_only(
+        records,
+        site_key=SITE_KEY,
+        output_dir="data",
+        attachments_field="attachments",
+        record_id_field="source_id",
+        record_name_field="title",
+        referer_field="detail_url",
+    )
+    print(f"[{SITE_KEY}] 完成，共 {len(records)} 条 -> {json_file}")
 
 
 def main():
@@ -521,11 +618,13 @@ def main():
                     continue
                 seen_urls.add(url)
                 new_urls.append({
+                    "source":       SITE_KEY,
+                    "source_id":    url,
                     "title":        title.get_text(strip=True) if title else "",
-                    "budget":       parse_budget(budget.get_text(strip=True) if budget else ""),
-                    "publish_date": date.get_text(strip=True) if date else "",
-                    "source_url":   url,
-                    "platform":     "平台名称",
+                    "budget_amount": parse_budget(budget.get_text(strip=True) if budget else ""),
+                    "publish_time": date.get_text(strip=True) if date else "",
+                    "detail_url":   url,
+                    "source_platform": "平台名称",
                     "crawled_at":   datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
                 })
 
@@ -533,14 +632,14 @@ def main():
             for i, r in enumerate(new_urls):
                 print(f"  详情 {i+1}/{len(new_urls)}")
                 try:
-                    page.goto(r["source_url"])
+                    page.goto(r["detail_url"])
                     page.wait_for_selector(SEL_DETAIL_BODY, timeout=10000)
                     detail_soup = BeautifulSoup(page.content(), "lxml")
-                    r["raw_content"]   = detail_soup.select_one(SEL_DETAIL_BODY).get_text(" ", strip=True) if detail_soup.select_one(SEL_DETAIL_BODY) else ""
+                    r["content_text"]  = detail_soup.select_one(SEL_DETAIL_BODY).get_text(" ", strip=True) if detail_soup.select_one(SEL_DETAIL_BODY) else ""
                     r["qualification"] = detail_soup.select_one(SEL_DETAIL_QUALIFY).get_text(strip=True) if detail_soup.select_one(SEL_DETAIL_QUALIFY) else ""
                 except Exception as e:
                     print(f"    详情失败: {e}")
-                    r["raw_content"] = ""
+                    r["content_text"] = ""
                     r["qualification"] = ""
                 time.sleep(random.uniform(1, 2))
 
@@ -580,7 +679,7 @@ if __name__ == "__main__":
 - [ ] 所有选择器/接口地址已替换为实际值，无占位符
 - [ ] `pip install` 命令列出了所有依赖
 - [ ] 直接 `python spider.py` 能运行，无需额外配置
-- [ ] 运行完成后生成 `output.json` 和 `output.csv`
+- [ ] 运行完成后生成 `data/YYYY-MM-DD_{site_key}.json`
 - [ ] 有随机延迟，并发友好
 - [ ] 有基础错误处理，单页失败不中断整体
 

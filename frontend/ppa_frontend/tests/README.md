@@ -38,6 +38,7 @@ Playwright 会自动启动：
 tests/
   e2e/
     dashboard.smoke.spec.ts
+    tender-push.smoke.spec.ts
     assessment.smoke.spec.ts
     web3d.smoke.spec.ts
     config.smoke.spec.ts

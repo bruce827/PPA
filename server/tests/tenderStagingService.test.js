@@ -91,6 +91,140 @@ describe('tenderStagingService', () => {
     expect(bySourceFile.items[0].source_item_id).toBe('B-001');
   });
 
+  test('should filter staging records by data quality issues', async () => {
+    await tenderStagingModel.createTenderStaging({
+      source_item_id: 'MISSING-ISSUER',
+      title: '缺招标单位项目',
+      issuer: null,
+      deadline_date: '2026-05-20',
+      announcement_plain_text: '公告正文',
+      push_status: 'pending',
+    });
+    await tenderStagingModel.createTenderStaging({
+      source_item_id: 'MISSING-DEADLINE',
+      title: '缺截止日期项目',
+      issuer: '采购单位',
+      deadline_date: null,
+      announcement_plain_text: '公告正文',
+      push_status: 'pending',
+    });
+    await tenderStagingModel.createTenderStaging({
+      source_item_id: 'MISSING-CONTENT',
+      title: '缺正文项目',
+      issuer: '采购单位',
+      deadline_date: '2026-05-21',
+      announcement_plain_text: null,
+      announcement_html: null,
+      detail_excerpt: null,
+      push_status: 'pending',
+    });
+    await tenderStagingModel.createTenderStaging({
+      source_item_id: 'COMPLETE',
+      title: '完整项目',
+      issuer: '采购单位',
+      deadline_date: '2026-05-22',
+      announcement_plain_text: '公告正文',
+      push_status: 'pending',
+    });
+    await tenderStagingModel.createTenderStaging({
+      source_item_id: 'HTML-EMPTY',
+      title: '空 HTML 正文项目',
+      issuer: '采购单位',
+      deadline_date: '2026-05-23',
+      announcement_plain_text: null,
+      announcement_html: '<p>&nbsp;</p>',
+      detail_excerpt: null,
+      push_status: 'pending',
+    });
+    await tenderStagingModel.createTenderStaging({
+      source_item_id: 'HTML-CONTENT',
+      title: 'HTML 正文项目',
+      issuer: '采购单位',
+      deadline_date: '2026-05-24',
+      announcement_plain_text: null,
+      announcement_html: '<div><p>公告正文</p></div>',
+      detail_excerpt: null,
+      push_status: 'pending',
+    });
+
+    const missingIssuer = await tenderStagingService.listTenderStaging({
+      data_quality: 'missing_issuer',
+      pageSize: 20,
+    });
+    expect(missingIssuer.items.map((item) => item.source_item_id)).toEqual([
+      'MISSING-ISSUER',
+    ]);
+
+    const missingDeadlineOrContent = await tenderStagingService.listTenderStaging({
+      data_quality: ['missing_deadline', 'missing_content'],
+      pageSize: 20,
+    });
+    expect(
+      missingDeadlineOrContent.items.map((item) => item.source_item_id).sort()
+    ).toEqual(['HTML-EMPTY', 'MISSING-CONTENT', 'MISSING-DEADLINE']);
+  });
+
+  test('should apply default status sorting and explicit date sorting', async () => {
+    await tenderStagingModel.createTenderStaging({
+      source_item_id: 'PENDING-EARLY',
+      title: '待推送早期项目',
+      issuer: '采购单位',
+      published_date: '2026-05-01',
+      deadline_date: '2026-05-20',
+      announcement_plain_text: '公告正文',
+      push_status: 'pending',
+    });
+    await tenderStagingModel.createTenderStaging({
+      source_item_id: 'FAILED-LATEST',
+      title: '失败最新项目',
+      issuer: '采购单位',
+      published_date: '2026-05-10',
+      deadline_date: '2026-05-20',
+      announcement_plain_text: '公告正文',
+      push_status: 'failed',
+    });
+    await tenderStagingModel.createTenderStaging({
+      source_item_id: 'PUSHED-LATEST',
+      title: '已推送最新项目',
+      issuer: '采购单位',
+      published_date: '2026-05-11',
+      deadline_date: '2026-05-20',
+      announcement_plain_text: '公告正文',
+      push_status: 'pushed',
+    });
+    await tenderStagingModel.createTenderStaging({
+      source_item_id: 'PENDING-LATE',
+      title: '待推送较新项目',
+      issuer: '采购单位',
+      published_date: '2026-05-03',
+      deadline_date: '2026-05-20',
+      announcement_plain_text: '公告正文',
+      push_status: 'pending',
+    });
+
+    const defaultSorted = await tenderStagingService.listTenderStaging({
+      pageSize: 20,
+    });
+    expect(defaultSorted.items.map((item) => item.source_item_id)).toEqual([
+      'PENDING-LATE',
+      'PENDING-EARLY',
+      'FAILED-LATEST',
+      'PUSHED-LATEST',
+    ]);
+
+    const publishedAsc = await tenderStagingService.listTenderStaging({
+      sort_by: 'published_date',
+      sort_order: 'asc',
+      pageSize: 20,
+    });
+    expect(publishedAsc.items.map((item) => item.source_item_id)).toEqual([
+      'PENDING-EARLY',
+      'PENDING-LATE',
+      'FAILED-LATEST',
+      'PUSHED-LATEST',
+    ]);
+  });
+
   test('should normalize aggregate records and keep stable source ids', async () => {
     const directoryPath = createTempSyncDir('ppa.tender.sync.aggregate');
 
@@ -172,6 +306,126 @@ describe('tenderStagingService', () => {
       const eavicRecord = list.items.find((item) => item.source_item_id === 'eavic:1');
       expect(eavicRecord?.source_platform).toBe('中航工业电子采购平台');
       expect(eavicRecord?.announcement_plain_text).toBe('招标公告正文');
+    } finally {
+      fs.rmSync(directoryPath, { recursive: true, force: true });
+    }
+  });
+
+  test('should normalize site-specific spider output fields', async () => {
+    const directoryPath = createTempSyncDir('ppa.tender.sync.site-fields');
+
+    try {
+      writeJsonFile(directoryPath, '2026-05-05_chnenergy.json', [
+        {
+          招标编号: 'CEZB260300016',
+          标题: '煤制油公司高压加热器采购公开招标项目招标公告',
+          发布时间: '2026-05-02 12:29:17',
+          招标人: '国家能源集团',
+          项目地点: '内蒙古鄂尔多斯',
+          投标截止时间: '2026-05-22 09:00:00',
+          详情链接: 'https://www.chnenergybidding.com.cn/example.html',
+          来源: '中国能源建设集团招标网',
+          内容: '招标公告正文',
+        },
+      ]);
+
+      writeJsonFile(directoryPath, '2026-05-05_cmcc.json', [
+        {
+          site_name: '中国移动采购与招标网',
+          list_id: '2051217773225414658',
+          list_uuid: '09143af4a9c54440b740f7cc310de2f8',
+          title: '2026年山西移动中部RDC库房租赁的采购项目_谈判采购公告',
+          publish_date: '2026-05-04 16:25:28',
+          tender_sale_deadline: '2026-05-09 20:00:00',
+          detail_url: 'https://b2b.10086.cn/#/noticeDetail?publishId=2051217773225414658',
+          content_text: '中国移动采购公告正文',
+        },
+      ]);
+
+      writeJsonFile(directoryPath, '2026-05-05_eavic.json', [
+        {
+          tender_id: '87431',
+          title: '引信调制组件招标公告',
+          info_class_name: '招标公告',
+          publish_date: '2026-05-01',
+          content: '中航工业电子采购平台公告正文',
+          detail_url: 'https://www.eavic.com/rest/article/getTenderInfo?id=87431',
+        },
+      ]);
+
+      writeJsonFile(directoryPath, '2026-05-05_sdi.json', [
+        {
+          source_platform: '国投集团电子采购平台',
+          ggGuid: 'c8f674cb-469b-4d35-81a5-3925d04f7087',
+          gcGuid: '36aa66f9-17e6-4ddd-9a4f-37599bc2838a',
+          title: '四川雅砻江盐源抽水蓄能电站模型研发公开招标公告',
+          publish_date: '(发布时间：2026-04-30)',
+          bid_deadline: '2026-05-31 09:30',
+          tenderer: '雅砻江流域水电开发有限公司',
+          detail_url: 'https://www.sdicc.com.cn/cgxx/ggDetail?ggGuid=c8f674cb',
+          detail_text: '国投集团电子采购平台公告正文',
+        },
+      ]);
+
+      writeJsonFile(directoryPath, '2026-05-05_snbid.json', [
+        {
+          site_name: '山东能源集团电子招标投标交易平台',
+          list_notice_id: '10257',
+          detail_notice_id: '10257',
+          title: '山东端信供应链车辆营运中心运输业务公开招标公告',
+          publish_time: '2026-05-03T06:59:54.665+0000',
+          tender_unit: '山东端信供应链管理有限公司车辆营运中心',
+          detail_url: 'https://snbid.minegoods.com/bulletinDetail?id=10257',
+          content_text: '山东能源招标公告正文',
+        },
+      ]);
+
+      writeJsonFile(directoryPath, '2026-05-05_sdicc.json', [
+        {
+          source: 'sdicc',
+          source_id: 'legacy-sdicc-001',
+          title: '国投历史脚本来源项目',
+          detail_text: '国投历史脚本公告正文',
+        },
+      ]);
+
+      const result = await tenderStagingService.syncTenderFiles({
+        directoryPath,
+      });
+
+      expect(result.rawRecordCount).toBe(6);
+      expect(result.deduplicatedCount).toBe(6);
+      expect(result.created).toBe(6);
+      expect(result.errors).toHaveLength(0);
+
+      const list = await tenderStagingService.listTenderStaging({
+        pageSize: 10,
+      });
+      const bySourceItemId = new Map(
+        list.items.map((item) => [item.source_item_id, item])
+      );
+
+      expect(Array.from(bySourceItemId.keys()).sort()).toEqual([
+        'chnenergy:CEZB260300016',
+        'cmcc:2051217773225414658',
+        'eavic:87431',
+        'sdi:c8f674cb-469b-4d35-81a5-3925d04f7087',
+        'sdicc:legacy-sdicc-001',
+        'snbid:10257',
+      ]);
+      expect(bySourceItemId.get('chnenergy:CEZB260300016')?.title).toContain(
+        '高压加热器'
+      );
+      expect(bySourceItemId.get('cmcc:2051217773225414658')?.deadline_date).toBe(
+        '2026-05-09'
+      );
+      const sdiRecord = bySourceItemId.get(
+        'sdi:c8f674cb-469b-4d35-81a5-3925d04f7087'
+      );
+      expect(sdiRecord?.published_date).toBe('2026-04-30');
+      expect(bySourceItemId.get('snbid:10257')?.issuer).toBe(
+        '山东端信供应链管理有限公司车辆营运中心'
+      );
     } finally {
       fs.rmSync(directoryPath, { recursive: true, force: true });
     }

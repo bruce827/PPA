@@ -49,10 +49,21 @@ const dedupeSkipReasonTextMap: Record<string, string> = {
   candidate_only: '仅命中候选条件，未达到自动硬删标准',
 };
 
+const dataQualityMap = {
+  missing_issuer: { text: '缺招标单位', color: 'warning' },
+  missing_deadline: { text: '缺截止日期', color: 'orange' },
+  missing_content: { text: '缺正文', color: 'error' },
+} as const;
+
 const extractParseableText = (record: API_OPPORTUNITY.TenderStagingRecord) => {
   const plainText = String(record.announcement_plain_text || '').trim();
   if (plainText) {
     return plainText;
+  }
+
+  const detailExcerpt = String(record.detail_excerpt || '').trim();
+  if (detailExcerpt) {
+    return detailExcerpt;
   }
 
   return String(record.announcement_html || '')
@@ -66,6 +77,24 @@ const extractParseableText = (record: API_OPPORTUNITY.TenderStagingRecord) => {
 
 const hasParseableContent = (record: API_OPPORTUNITY.TenderStagingRecord) =>
   Boolean(extractParseableText(record));
+
+const getDataQualityIssues = (record: API_OPPORTUNITY.TenderStagingRecord) => {
+  const issues: Array<keyof typeof dataQualityMap> = [];
+
+  if (!String(record.issuer || '').trim()) {
+    issues.push('missing_issuer');
+  }
+
+  if (!String(record.deadline_date || '').trim()) {
+    issues.push('missing_deadline');
+  }
+
+  if (!hasParseableContent(record)) {
+    issues.push('missing_content');
+  }
+
+  return issues;
+};
 
 const TenderPushPage: React.FC = () => {
   const actionRef = useRef<ActionType>();
@@ -237,6 +266,7 @@ const TenderPushPage: React.FC = () => {
       dataIndex: 'published_date',
       width: 120,
       search: false,
+      sorter: true,
       renderText: (value) => value || '-',
     },
     {
@@ -244,6 +274,7 @@ const TenderPushPage: React.FC = () => {
       dataIndex: 'deadline_date',
       width: 120,
       search: false,
+      sorter: true,
       renderText: (value) => value || '-',
     },
     {
@@ -252,6 +283,38 @@ const TenderPushPage: React.FC = () => {
       ellipsis: true,
       width: 220,
       renderText: (value) => value || '-',
+    },
+    {
+      title: '数据完整性',
+      dataIndex: 'data_quality',
+      valueType: 'select',
+      width: 180,
+      valueEnum: {
+        missing_issuer: { text: dataQualityMap.missing_issuer.text },
+        missing_deadline: { text: dataQualityMap.missing_deadline.text },
+        missing_content: { text: dataQualityMap.missing_content.text },
+      },
+      fieldProps: {
+        mode: 'multiple',
+        placeholder: '全部',
+      },
+      render: (_, record) => {
+        const issues = getDataQualityIssues(record);
+
+        if (issues.length === 0) {
+          return <Tag color="success">完整</Tag>;
+        }
+
+        return (
+          <Space size={[0, 4]} wrap>
+            {issues.map((issue) => (
+              <Tag key={issue} color={dataQualityMap[issue].color}>
+                {dataQualityMap[issue].text}
+              </Tag>
+            ))}
+          </Space>
+        );
+      },
     },
     {
       title: '来源文件',
@@ -265,6 +328,7 @@ const TenderPushPage: React.FC = () => {
       valueType: 'select',
       width: 120,
       align: 'center',
+      sorter: true,
       valueEnum: {
         pending: { text: '待推送' },
         pushed: { text: '已推送' },
@@ -379,6 +443,7 @@ const TenderPushPage: React.FC = () => {
         actionRef={actionRef}
         rowKey="id"
         columns={columns}
+        scroll={{ x: 1540 }}
         search={{
           labelWidth: 100,
         }}
@@ -398,8 +463,28 @@ const TenderPushPage: React.FC = () => {
             </Button>
           </Space>,
         ]}
-        request={async (params) => {
-          const response = await listTenderStaging(params);
+        request={async (params, sorter) => {
+          const [sortBy, sortOrderRaw] =
+            Object.entries(sorter || {}).find(([, order]) => !!order) || [];
+          const sortOrder =
+            sortOrderRaw === 'ascend'
+              ? 'asc'
+              : sortOrderRaw === 'descend'
+                ? 'desc'
+                : undefined;
+          const queryParams = { ...params };
+          if (Array.isArray(queryParams.data_quality)) {
+            queryParams.data_quality = queryParams.data_quality.join(',');
+          }
+          const response = await listTenderStaging(
+            sortBy && sortOrder
+              ? {
+                  ...queryParams,
+                  sort_by: sortBy,
+                  sort_order: sortOrder,
+                }
+              : queryParams,
+          );
           const result = response?.data;
           setStats(result?.stats || defaultStats);
           return {

@@ -1,5 +1,14 @@
 [
   {
+    "version": "V1.7.2",
+    "date": "2026-5-05",
+    "changes": [
+      { "type": "feat", "content": "待推送招标增加数据完整性筛选与日期排序功能" },
+      { "type": "feat", "content": "新增 Playwright E2E 测试框架与 tender-push 冒烟测试" },
+      { "type": "opt", "content": "优化招标数据去重字段映射，支持更多来源格式" },
+      { "type": "opt", "content": "更新招标暂存功能 PRD 规格文档" }
+    ]
+  },{
     "version": "V1.7.1",
     "date": "2026-4-26",
     "changes": [

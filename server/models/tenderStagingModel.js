@@ -150,6 +150,61 @@ function mapRow(row) {
   };
 }
 
+function normalizeReadableText(value) {
+  if (value === null || typeof value === 'undefined') return '';
+  return String(value).replace(/\s+/g, ' ').trim();
+}
+
+function stripHtmlTags(value) {
+  const text = normalizeReadableText(value);
+  if (!text) return '';
+  return text
+    .replace(/<style[\s\S]*?<\/style>/gi, ' ')
+    .replace(/<script[\s\S]*?<\/script>/gi, ' ')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/&nbsp;/gi, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function hasParseableContent(row) {
+  return Boolean(
+    normalizeReadableText(row.announcement_plain_text) ||
+      normalizeReadableText(row.detail_excerpt) ||
+      stripHtmlTags(row.announcement_html)
+  );
+}
+
+function getDataQualityIssues(row) {
+  const issues = [];
+
+  if (!normalizeReadableText(row.issuer)) {
+    issues.push('missing_issuer');
+  }
+
+  if (!normalizeReadableText(row.deadline_date)) {
+    issues.push('missing_deadline');
+  }
+
+  if (!hasParseableContent(row)) {
+    issues.push('missing_content');
+  }
+
+  return issues;
+}
+
+function matchesDataQualityFilters(row, filters = {}) {
+  const dataQualityFilters = Array.isArray(filters.data_quality)
+    ? filters.data_quality
+    : [];
+  if (dataQualityFilters.length === 0) {
+    return true;
+  }
+
+  const issues = getDataQualityIssues(row);
+  return dataQualityFilters.some((issue) => issues.includes(issue));
+}
+
 function buildFilters(filters = {}) {
   const conditions = [];
   const params = [];
@@ -193,12 +248,71 @@ function buildFilters(filters = {}) {
   };
 }
 
+function getStatusRankExpression() {
+  return `CASE push_status
+    WHEN 'pending' THEN 0
+    WHEN 'failed' THEN 1
+    ELSE 2
+  END`;
+}
+
+function getDateSortExpression(columnName, sortOrder) {
+  return `CASE WHEN ${columnName} IS NULL OR TRIM(${columnName}) = '' THEN 1 ELSE 0 END ASC,
+    ${columnName} ${sortOrder},
+    updated_at DESC,
+    id DESC`;
+}
+
+function buildOrderByClause(filters = {}) {
+  const sortOrder = filters.sort_order === 'asc' ? 'ASC' : 'DESC';
+
+  if (filters.sort_by === 'published_date') {
+    return getDateSortExpression('published_date', sortOrder);
+  }
+
+  if (filters.sort_by === 'deadline_date') {
+    return getDateSortExpression('deadline_date', sortOrder);
+  }
+
+  if (filters.sort_by === 'updated_at') {
+    return `updated_at ${sortOrder}, id DESC`;
+  }
+
+  if (filters.sort_by === 'push_status') {
+    return `${getStatusRankExpression()} ${sortOrder}, published_date DESC, updated_at DESC, id DESC`;
+  }
+
+  return `${getStatusRankExpression()} ASC,
+    COALESCE(published_date, '') DESC,
+    updated_at DESC,
+    id DESC`;
+}
+
 async function listTenderStaging(filters = {}) {
   await ensureSchema();
   const page = Number(filters.page) > 0 ? Number(filters.page) : 1;
   const pageSize = Number(filters.pageSize) > 0 ? Number(filters.pageSize) : 20;
   const offset = (page - 1) * pageSize;
   const { whereClause, params } = buildFilters(filters);
+  const orderByClause = buildOrderByClause(filters);
+
+  if (Array.isArray(filters.data_quality) && filters.data_quality.length > 0) {
+    const rows = await db.all(
+      `SELECT *
+       FROM ${TABLE_NAME}
+       ${whereClause}
+       ORDER BY ${orderByClause}`,
+      params
+    );
+    const filteredRows = rows.filter((row) => matchesDataQualityFilters(row, filters));
+
+    return {
+      items: filteredRows.slice(offset, offset + pageSize).map(mapRow),
+      total: filteredRows.length,
+      page,
+      pageSize,
+    };
+  }
 
   const totalRow = await db.get(
     `SELECT COUNT(1) AS total FROM ${TABLE_NAME} ${whereClause}`,
@@ -208,15 +322,7 @@ async function listTenderStaging(filters = {}) {
     `SELECT *
      FROM ${TABLE_NAME}
      ${whereClause}
-     ORDER BY
-       CASE push_status
-         WHEN 'pending' THEN 0
-         WHEN 'failed' THEN 1
-         ELSE 2
-       END,
-       COALESCE(published_date, '') DESC,
-       updated_at DESC,
-       id DESC
+     ORDER BY ${orderByClause}
      LIMIT ? OFFSET ?`,
     [...params, pageSize, offset]
   );
