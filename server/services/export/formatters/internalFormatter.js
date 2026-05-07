@@ -6,6 +6,12 @@
 const { HttpError } = require('../../../utils/errors');
 const { DEFAULTS } = require('../../../utils/constants');
 const { computeRatingFactor } = require('../../../utils/rating');
+const {
+  buildIotWorkloadItems,
+  calculateIotPointIntegrationTotals,
+  hasIotPointIntegrationItems,
+  isIotWorkloadItem
+} = require('../../../utils/iotPointIntegration');
 
 /**
  * 描述：根据项目的更新时间/创建时间生成“评估完成时间”字段。
@@ -74,16 +80,9 @@ function buildLegacyRiskCosts(details) {
     list.forEach((entry) => {
       if (!entry || typeof entry !== 'object') return;
       const description =
-        entry.description ||
-        entry.content ||
-        entry.title ||
-        entry.name ||
-        '';
+        entry.description || entry.content || entry.title || entry.name || '';
       const rawCost =
-        entry.cost ??
-        entry.estimated_cost ??
-        entry.value ??
-        entry.amount;
+        entry.cost ?? entry.estimated_cost ?? entry.value ?? entry.amount;
       const cost = Number(rawCost);
       if (!description || !Number.isFinite(cost) || cost <= 0) return;
       result.push({
@@ -152,10 +151,20 @@ function buildLegacyRoleCosts(details) {
   const devItems = Array.isArray(details.development_workload)
     ? details.development_workload
     : [];
-  const integrationItems = Array.isArray(details.integration_workload)
+  const hasIndependentIot = hasIotPointIntegrationItems(
+    details.iot_point_integration
+  );
+  const rawIntegrationItems = Array.isArray(details.integration_workload)
     ? details.integration_workload
     : [];
-  const items = [...devItems, ...integrationItems];
+  const integrationItems = hasIndependentIot
+    ? rawIntegrationItems.filter((item) => !isIotWorkloadItem(item))
+    : rawIntegrationItems;
+  const iotItems = buildIotWorkloadItems(
+    details.iot_point_integration,
+    roles
+  );
+  const items = [...devItems, ...integrationItems, ...iotItems];
 
   const rows = [];
 
@@ -268,6 +277,67 @@ function buildArrayRiskItems(list, sourceLabel) {
   }));
 }
 
+function buildIotPointIntegration(details, calculationContext = {}) {
+  const raw = details?.iot_point_integration;
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) {
+    return null;
+  }
+  if (!hasIotPointIntegrationItems(raw)) {
+    return null;
+  }
+
+  const generatedItems = Array.isArray(raw.generated_items)
+    ? raw.generated_items
+        .map((item) => ({
+          key: item?.key || '',
+          packageName: item?.package_name || '',
+          estimateBasis: item?.estimate_basis || '',
+          suggestedDays: Number(item?.suggested_days || 0),
+          adjustedDays: Number(item?.adjusted_days || 0),
+          roleName: item?.role_name || '',
+          adjustmentNote: item?.adjustment_note || ''
+        }))
+        .filter((item) => item.packageName)
+    : [];
+
+  if (!generatedItems.length) {
+    return null;
+  }
+
+  const roles = Array.isArray(calculationContext.roles)
+    ? calculationContext.roles
+    : [];
+  const ratingFactor = Number.isFinite(Number(calculationContext.ratingFactor))
+    ? Number(calculationContext.ratingFactor)
+    : 1;
+  const totals = calculateIotPointIntegrationTotals(raw, roles, ratingFactor);
+
+  return {
+    assumptions:
+      raw.assumptions && typeof raw.assumptions === 'object'
+        ? raw.assumptions
+        : {},
+    scaleParams:
+      raw.scale_params && typeof raw.scale_params === 'object'
+        ? raw.scale_params
+        : {},
+    generatedItems,
+    estimatedPointCount: Number(raw.estimated_point_count || 0),
+    estimatedByDeviceCount: Boolean(raw.estimated_by_device_count),
+    appliedAt: raw.applied_at || null,
+    workloadDays:
+      calculationContext.workloadDays != null
+        ? Number(calculationContext.workloadDays)
+        : totals.totalWorkload,
+    baseCostWan: totals.totalBaseCost,
+    costWan:
+      calculationContext.costWan != null
+        ? Number(calculationContext.costWan)
+        : totals.totalCost,
+    ratingFactor
+  };
+}
+
 /**
  * 描述：根据项目记录生成内部版导出所需的标准化数据结构，
  *       同时兼容新旧两种 assessment_details_json 结构。
@@ -320,6 +390,14 @@ exports.formatForExport = async (project) => {
           snapshot.final_workload_days != null
             ? snapshot.final_workload_days
             : project.final_workload_days,
+        softwareDevCost: snapshot.software_dev_cost,
+        systemIntegrationCost: snapshot.system_integration_cost,
+        iotPointIntegrationCost: snapshot.iot_point_integration_cost,
+        travelCost: snapshot.travel_cost,
+        maintenanceCost: snapshot.maintenance_cost,
+        riskCost: snapshot.risk_cost,
+        iotPointIntegrationWorkloadDays:
+          snapshot.iot_point_integration_workload_days,
         ratingFactor: snapshot.rating_factor,
         completedAt,
         exportedAt: exportedAtDisplay,
@@ -349,8 +427,7 @@ exports.formatForExport = async (project) => {
           maintenance.monthly_cost != null
             ? maintenance.monthly_cost / 10000
             : 0,
-        totalWan:
-          maintenance.total != null ? maintenance.total / 10000 : 0
+        totalWan: maintenance.total != null ? maintenance.total / 10000 : 0
       },
       riskItems: [
         ...rawRiskItems.map((ri) => {
@@ -359,7 +436,11 @@ exports.formatForExport = async (project) => {
 
           // 如果 category 为空，尝试从 itemName 中提取中文前缀作为“评估类别”
           // 例如："项目阶段 (project_phase)" -> "项目阶段"
-          if (!category && typeof itemName === 'string' && itemName.includes('(')) {
+          if (
+            !category &&
+            typeof itemName === 'string' &&
+            itemName.includes('(')
+          ) {
             category = itemName.split('(')[0].trim();
           }
 
@@ -392,9 +473,17 @@ exports.formatForExport = async (project) => {
             }))
             .filter(
               (item) =>
-                item.description && Number.isFinite(item.costWan) && item.costWan > 0
+                item.description &&
+                Number.isFinite(item.costWan) &&
+                item.costWan > 0
             )
         : [],
+      iotPointIntegration: buildIotPointIntegration(details, {
+        roles: Array.isArray(details.roles) ? details.roles : [],
+        ratingFactor: snapshot.rating_factor,
+        costWan: snapshot.iot_point_integration_cost,
+        workloadDays: snapshot.iot_point_integration_workload_days
+      }),
       riskCalculation
     };
   }
@@ -408,7 +497,9 @@ exports.formatForExport = async (project) => {
 
   let resolvedRatingFactor = null;
   const finalRiskScore =
-    project.final_risk_score != null ? project.final_risk_score : riskScoreFromDetails;
+    project.final_risk_score != null
+      ? project.final_risk_score
+      : riskScoreFromDetails;
   const normalizedRiskScore = Number(finalRiskScore);
 
   let ratingRatio = null;
@@ -433,15 +524,18 @@ exports.formatForExport = async (project) => {
             ((resolvedRatingFactor - 1) / ratingRatio).toFixed(4)
           );
         } else {
-          amplificationFactor = Number(
-            (resolvedRatingFactor - 1).toFixed(4)
-          );
+          amplificationFactor = Number((resolvedRatingFactor - 1).toFixed(4));
         }
       }
     } catch (_error) {
       // 评分因子计算失败时保持为 null，导出流程不因此中断
     }
   }
+
+  const legacyIotPointIntegration = buildIotPointIntegration(details, {
+    roles: Array.isArray(details.roles) ? details.roles : [],
+    ratingFactor: resolvedRatingFactor
+  });
 
   const summary = {
     snapshotId: project.id,
@@ -453,6 +547,8 @@ exports.formatForExport = async (project) => {
         ? project.final_risk_score
         : riskScoreFromDetails,
     workloadDays: project.final_workload_days,
+    iotPointIntegrationCost: legacyIotPointIntegration?.costWan,
+    iotPointIntegrationWorkloadDays: legacyIotPointIntegration?.workloadDays,
     ratingFactor: resolvedRatingFactor,
     completedAt,
     exportedAt: exportedAtDisplay,
@@ -485,11 +581,15 @@ exports.formatForExport = async (project) => {
     travelCosts: travelCostsLegacy,
     maintenance: maintenanceLegacy,
     riskItems: [
-      ...riskItemsLegacy.map((ri) => ({ ...ri, category: ri.category || '其它' })),
+      ...riskItemsLegacy.map((ri) => ({
+        ...ri,
+        category: ri.category || '其它'
+      })),
       ...aiUnmatchedLegacy,
       ...customRiskLegacy
     ],
     riskCosts: riskCostsLegacy,
+    iotPointIntegration: legacyIotPointIntegration,
     riskCalculation: legacyRiskCalculation
   };
 };

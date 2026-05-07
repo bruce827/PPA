@@ -87,8 +87,35 @@ function renderInternal(formatted) {
   const summary = formatted.summary || {};
   summarySheet.addRow(['项目名称', summary.projectName || '']);
   summarySheet.addRow(['项目描述', summary.description || '']);
-  summarySheet.addRow(['报价总计（万元）', summary.totalCost != null ? summary.totalCost : '']);
-  summarySheet.addRow(['风险总分', summary.riskScore != null ? summary.riskScore : '']);
+  summarySheet.addRow([
+    '报价总计（万元）',
+    summary.totalCost != null ? summary.totalCost : ''
+  ]);
+  if (summary.softwareDevCost != null) {
+    summarySheet.addRow(['软件研发成本（万元）', summary.softwareDevCost]);
+  }
+  if (summary.systemIntegrationCost != null) {
+    summarySheet.addRow(['系统对接成本（万元）', summary.systemIntegrationCost]);
+  }
+  if (summary.iotPointIntegrationCost != null) {
+    summarySheet.addRow([
+      'IoT点位对接成本（万元）',
+      summary.iotPointIntegrationCost
+    ]);
+  }
+  if (summary.travelCost != null) {
+    summarySheet.addRow(['差旅成本（万元）', summary.travelCost]);
+  }
+  if (summary.maintenanceCost != null) {
+    summarySheet.addRow(['运维成本（万元）', summary.maintenanceCost]);
+  }
+  if (summary.riskCost != null) {
+    summarySheet.addRow(['风险成本（万元）', summary.riskCost]);
+  }
+  summarySheet.addRow([
+    '风险总分',
+    summary.riskScore != null ? summary.riskScore : ''
+  ]);
   summarySheet.addRow([
     '总工作量（人天）',
     summary.workloadDays != null ? summary.workloadDays : ''
@@ -114,7 +141,9 @@ function renderInternal(formatted) {
   ];
   styleHeaderRow(roleSheet.getRow(1));
 
-  const roleCosts = Array.isArray(formatted.roleCosts) ? formatted.roleCosts : [];
+  const roleCosts = Array.isArray(formatted.roleCosts)
+    ? formatted.roleCosts
+    : [];
   let totalWorkload = 0;
   let totalSubtotal = 0;
   let totalSubtotalWan = 0;
@@ -158,6 +187,108 @@ function renderInternal(formatted) {
   roleSheet.getColumn('subtotalWan').numFmt = '0.00';
   autoWidth(roleSheet);
 
+  const iot = formatted.iotPointIntegration;
+  if (iot && Array.isArray(iot.generatedItems) && iot.generatedItems.length) {
+    const iotSheet = workbook.addWorksheet('IoT点位对接');
+    iotSheet.columns = [
+      { header: '项目', key: 'label', width: 28 },
+      { header: '值', key: 'value', width: 40 }
+    ];
+    styleHeaderRow(iotSheet.getRow(1));
+
+    const scaleParams = iot.scaleParams || {};
+    iotSheet.addRow([
+      '评估前提',
+      '已有 IoT 平台/网关能力，不包含 IoT 平台建设成本'
+    ]);
+    iotSheet.addRow(['估算点位数', iot.estimatedPointCount || 0]);
+    iotSheet.addRow([
+      '点位估算方式',
+      iot.estimatedByDeviceCount ? '按设备台数折算' : '按点位总数'
+    ]);
+    iotSheet.addRow(['IoT点位对接成本（万元）', iot.costWan || 0]);
+    iotSheet.addRow(['IoT点位对接工作量（人天）', iot.workloadDays || 0]);
+    iotSheet.addRow(['风险评分因子', iot.ratingFactor || '']);
+    iotSheet.addRow(['点位总数', scaleParams.point_count || '']);
+    iotSheet.addRow(['设备台数', scaleParams.device_count || '']);
+    iotSheet.addRow(['站点/区域数', scaleParams.site_count || '']);
+    iotSheet.addRow(['网关数量', scaleParams.gateway_count || '']);
+    iotSheet.addRow(['协议类型数', scaleParams.protocol_type_count || '']);
+    iotSheet.addRow([
+      '存在私有协议',
+      scaleParams.has_private_protocol ? '是' : '否'
+    ]);
+    iotSheet.addRow(['控制点数量', scaleParams.control_point_count || 0]);
+    iotSheet.addRow(['告警点数量', scaleParams.alarm_point_count || 0]);
+    iotSheet.addRow(['告警规则数量', scaleParams.alarm_rule_count || 0]);
+    iotSheet.addRow([
+      '高频采集点数量',
+      scaleParams.high_frequency_point_count || 0
+    ]);
+    iotSheet.addRow([
+      '清洗/换算点数量',
+      scaleParams.data_cleaning_point_count || 0
+    ]);
+    iotSheet.addRow(['计算/衍生点数量', scaleParams.computed_point_count || 0]);
+    iotSheet.addRow([
+      '历史存储点数量',
+      scaleParams.historical_storage_point_count || 0
+    ]);
+    iotSheet.addRow([
+      '需要现场联调',
+      scaleParams.need_onsite_debug ? '是' : '否'
+    ]);
+    iotSheet.addRow(['现场联调次数', scaleParams.onsite_debug_times || 0]);
+    iotSheet.addRow([
+      '验收抽检比例',
+      `${scaleParams.acceptance_sample_ratio || 0}%`
+    ]);
+    iotSheet.addRow(['场地规模说明', scaleParams.site_scale_note || '']);
+    iotSheet.addRow(['最近应用时间', iot.appliedAt || '']);
+    autoWidth(iotSheet);
+
+    const iotDetailSheet = workbook.addWorksheet('IoT工作包明细');
+    iotDetailSheet.columns = [
+      { header: '工作包', key: 'packageName', width: 20 },
+      { header: '估算依据', key: 'estimateBasis', width: 50 },
+      { header: '建议人天', key: 'suggestedDays', width: 14 },
+      { header: '调整后人天', key: 'adjustedDays', width: 14 },
+      { header: '角色', key: 'roleName', width: 18 },
+      { header: '调整说明', key: 'adjustmentNote', width: 30 }
+    ];
+    styleHeaderRow(iotDetailSheet.getRow(1));
+
+    let iotSuggestedTotal = 0;
+    let iotAdjustedTotal = 0;
+    iot.generatedItems.forEach((item) => {
+      const suggestedDays = Number(item.suggestedDays || 0);
+      const adjustedDays = Number(item.adjustedDays || 0);
+      iotSuggestedTotal += suggestedDays;
+      iotAdjustedTotal += adjustedDays;
+      iotDetailSheet.addRow({
+        packageName: item.packageName || '',
+        estimateBasis: item.estimateBasis || '',
+        suggestedDays,
+        adjustedDays,
+        roleName: item.roleName || '',
+        adjustmentNote: item.adjustmentNote || ''
+      });
+    });
+
+    const iotTotalRow = iotDetailSheet.addRow({
+      packageName: '总计',
+      estimateBasis: '',
+      suggestedDays: iotSuggestedTotal,
+      adjustedDays: iotAdjustedTotal,
+      roleName: '',
+      adjustmentNote: ''
+    });
+    styleTotalRow(iotTotalRow);
+    iotDetailSheet.getColumn('suggestedDays').numFmt = '0.0';
+    iotDetailSheet.getColumn('adjustedDays').numFmt = '0.0';
+    autoWidth(iotDetailSheet);
+  }
+
   const travelSheet = workbook.addWorksheet('差旅成本明细');
   travelSheet.columns = [
     { header: '项目', key: 'item', width: 30 },
@@ -168,7 +299,9 @@ function renderInternal(formatted) {
   ];
   styleHeaderRow(travelSheet.getRow(1));
 
-  const travelCosts = Array.isArray(formatted.travelCosts) ? formatted.travelCosts : [];
+  const travelCosts = Array.isArray(formatted.travelCosts)
+    ? formatted.travelCosts
+    : [];
   let travelTotalMonthly = 0;
   let travelTotalSubtotal = 0;
   let travelTotalSubtotalWan = 0;
@@ -214,7 +347,10 @@ function renderInternal(formatted) {
   styleHeaderRow(maintenanceSheet.getRow(1));
 
   const maintenance = formatted.maintenance || {};
-  maintenanceSheet.addRow(['维护月数', maintenance.months != null ? maintenance.months : '']);
+  maintenanceSheet.addRow([
+    '维护月数',
+    maintenance.months != null ? maintenance.months : ''
+  ]);
   maintenanceSheet.addRow([
     '月度维护成本（万元）',
     maintenance.monthlyCostWan != null ? maintenance.monthlyCostWan : ''
@@ -234,7 +370,9 @@ function renderInternal(formatted) {
   ];
   styleHeaderRow(riskSheet.getRow(1));
 
-  const riskItems = Array.isArray(formatted.riskItems) ? formatted.riskItems : [];
+  const riskItems = Array.isArray(formatted.riskItems)
+    ? formatted.riskItems
+    : [];
   let totalRiskScore = 0;
 
   riskItems.forEach((ri) => {
@@ -265,7 +403,9 @@ function renderInternal(formatted) {
   ];
   styleHeaderRow(riskCostSheet.getRow(1));
 
-  const riskCosts = Array.isArray(formatted.riskCosts) ? formatted.riskCosts : [];
+  const riskCosts = Array.isArray(formatted.riskCosts)
+    ? formatted.riskCosts
+    : [];
   let riskCostTotal = 0;
 
   riskCosts.forEach((rc) => {
@@ -423,28 +563,49 @@ function renderBusiness(formatted) {
   if (summary.pricingMode === 'enterprise_product') {
     overviewSheet.addRow(['研发成本（R&D）占比（%）', summary.rdRate || 0]);
     overviewSheet.addRow(['研发成本（万元）', summary.rdCostWan || 0]);
-    overviewSheet.addRow(['营销与获客成本（CAC）占比（%）', summary.cacRate || 0]);
+    overviewSheet.addRow([
+      '营销与获客成本（CAC）占比（%）',
+      summary.cacRate || 0
+    ]);
     overviewSheet.addRow(['营销与获客成本（万元）', summary.cacCostWan || 0]);
-    overviewSheet.addRow(['基础设施成本（COGS）占比（%）', summary.cogsRate || 0]);
+    overviewSheet.addRow([
+      '基础设施成本（COGS）占比（%）',
+      summary.cogsRate || 0
+    ]);
     overviewSheet.addRow(['基础设施成本（万元）', summary.cogsCostWan || 0]);
-    overviewSheet.addRow(['客户成功与运维（CSM）占比（%）', summary.csmRate || 0]);
+    overviewSheet.addRow([
+      '客户成功与运维（CSM）占比（%）',
+      summary.csmRate || 0
+    ]);
     overviewSheet.addRow(['客户成功与运维（万元）', summary.csmCostWan || 0]);
-    overviewSheet.addRow(['非可变成本合计（万元）', summary.nonVariableCostWan || 0]);
-    overviewSheet.addRow(['可变成本占比（COGS+CSM）（%）', summary.variableCostShareRate || 0]);
+    overviewSheet.addRow([
+      '非可变成本合计（万元）',
+      summary.nonVariableCostWan || 0
+    ]);
+    overviewSheet.addRow([
+      '可变成本占比（COGS+CSM）（%）',
+      summary.variableCostShareRate || 0
+    ]);
     overviewSheet.addRow([
       '口径说明',
       '按 COGS + CSM 占比反推单客户总商业成本池'
     ]);
   } else {
     overviewSheet.addRow(['管理分摊率（%）', summary.managementRate || 0]);
-    overviewSheet.addRow(['管理分摊金额（万元）', summary.managementFeeWan || 0]);
+    overviewSheet.addRow([
+      '管理分摊金额（万元）',
+      summary.managementFeeWan || 0
+    ]);
     overviewSheet.addRow(['销售商务率（%）', summary.salesRate || 0]);
     overviewSheet.addRow(['销售商务金额（万元）', summary.salesFeeWan || 0]);
     overviewSheet.addRow(['利润率（%）', summary.profitRate || 0]);
     overviewSheet.addRow(['利润金额（万元）', summary.profitFeeWan || 0]);
     overviewSheet.addRow(['税率（%）', summary.taxRate || 0]);
     overviewSheet.addRow(['税费金额（万元）', summary.taxFeeWan || 0]);
-    overviewSheet.addRow(['税前小计（万元）', summary.subtotalBeforeTaxWan || 0]);
+    overviewSheet.addRow([
+      '税前小计（万元）',
+      summary.subtotalBeforeTaxWan || 0
+    ]);
   }
   overviewSheet.addRow(['商务报价总计（万元）', summary.totalCost || 0]);
   if (summary.pricingMode !== 'enterprise_product') {
@@ -492,7 +653,7 @@ function renderBusiness(formatted) {
       module3: module.module3 || module.moduleName || '',
       workloadDays,
       costRatio,
-      quoteCostWan,
+      quoteCostWan
     });
   });
 
@@ -502,7 +663,7 @@ function renderBusiness(formatted) {
     module3: '',
     workloadDays: totalWorkload,
     costRatio: totalRatio,
-    quoteCostWan: totalQuote,
+    quoteCostWan: totalQuote
   });
   styleTotalRow(totalRow);
   moduleSheet.getColumn('workloadDays').numFmt = '0.0';

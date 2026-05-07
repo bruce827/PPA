@@ -1,18 +1,32 @@
 import { NEUTRAL_TEXT_COLOR, RISK_LEVEL_COLORS } from '@/constants';
-import { getAllProjects, getConfigAll, getProjectDetail } from '@/services/assessment';
-import { deduceRiskLevel, summarizeRisk, parseRiskOptions } from '@/utils/rating';
 import { useAssessmentCache } from '@/hooks/useAssessmentCache';
-import { ImportOutlined, InfoCircleOutlined, SaveOutlined, FolderOpenOutlined } from '@ant-design/icons';
+import {
+  getAllProjects,
+  getConfigAll,
+  getProjectDetail,
+} from '@/services/assessment';
+import type { AssessmentCacheData } from '@/types/cache';
+import {
+  deduceRiskLevel,
+  parseRiskOptions,
+  summarizeRisk,
+} from '@/utils/rating';
+import {
+  FolderOpenOutlined,
+  ImportOutlined,
+  InfoCircleOutlined,
+  SaveOutlined,
+} from '@ant-design/icons';
 import { PageContainer } from '@ant-design/pro-components';
 import { useSearchParams } from '@umijs/max';
 import {
+  App,
   Button,
   Card,
   Col,
   Divider,
   Drawer,
   Form,
-  App,
   Modal,
   Row,
   Space,
@@ -24,12 +38,12 @@ import {
   Tooltip,
   Typography,
 } from 'antd';
-import { useEffect, useMemo, useState, useCallback } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import { LoadDraftModal } from './components/LoadDraftModal';
 import OtherCostsForm from './components/OtherCostsForm';
 import Overview from './components/Overview';
 import RiskScoringForm from './components/RiskScoringForm';
 import WorkloadEstimation from './components/WorkloadEstimation';
-import { LoadDraftModal } from './components/LoadDraftModal';
 
 // ====================================================================
 // 类型定义
@@ -114,7 +128,9 @@ const NewAssessmentPage = () => {
                 ...EMPTY_ASSESSMENT,
                 ...parsedData,
                 risk_scores: parsedData?.risk_scores ?? {},
-                ai_unmatched_risks: Array.isArray(parsedData?.ai_unmatched_risks)
+                ai_unmatched_risks: Array.isArray(
+                  parsedData?.ai_unmatched_risks,
+                )
                   ? parsedData.ai_unmatched_risks
                   : [],
                 custom_risk_items: Array.isArray(parsedData?.custom_risk_items)
@@ -130,6 +146,11 @@ const NewAssessmentPage = () => {
                 )
                   ? parsedData.integration_workload
                   : [],
+                iot_point_integration:
+                  parsedData?.iot_point_integration &&
+                  typeof parsedData.iot_point_integration === 'object'
+                    ? parsedData.iot_point_integration
+                    : undefined,
                 travel_months: Number(parsedData?.travel_months ?? 0),
                 travel_headcount: Number(parsedData?.travel_headcount ?? 0),
                 maintenance_months: Number(parsedData?.maintenance_months ?? 0),
@@ -188,6 +209,7 @@ const NewAssessmentPage = () => {
         custom_risk_items: assessmentData.custom_risk_items,
         development_workload: assessmentData.development_workload,
         integration_workload: assessmentData.integration_workload,
+        iot_point_integration: assessmentData.iot_point_integration,
         travel_months: assessmentData.travel_months,
         travel_headcount: assessmentData.travel_headcount,
         maintenance_months: assessmentData.maintenance_months,
@@ -218,15 +240,21 @@ const NewAssessmentPage = () => {
       });
 
       // 宽松匹配：归一化名称、去掉括号内容、按分词求重合度
-      const stripParens = (s: string) => s.replace(/[()（）【】\[\]<>《》]/g, ' ').replace(/\s+/g, ' ').trim();
-      const removeParensContent = (s: string) => s.replace(/\(.*?\)|（.*?）|【.*?】|\[.*?\]|<.*?>|《.*?》/g, '').trim();
+      const stripParens = (s: string) =>
+        s
+          .replace(/[()（）【】\[\]<>《》]/g, ' ')
+          .replace(/\s+/g, ' ')
+          .trim();
+      const removeParensContent = (s: string) =>
+        s.replace(/\(.*?\)|（.*?）|【.*?】|\[.*?\]|<.*?>|《.*?》/g, '').trim();
       const normalize = (s: string) =>
         s
           .toLowerCase()
           .replace(/[_\-—·•.,;:，。；：/\\|'"“”‘’!@#$%^&*+=?~]/g, ' ')
           .replace(/\s+/g, ' ')
           .trim();
-      const tokens = (s: string) => normalize(stripParens(s)).split(' ').filter(Boolean);
+      const tokens = (s: string) =>
+        normalize(stripParens(s)).split(' ').filter(Boolean);
 
       const allConfigs = (configData?.risk_items ?? []).map((cfg) => {
         const name = cfg.item_name;
@@ -236,12 +264,15 @@ const NewAssessmentPage = () => {
         return { cfg, name, norm, noPar, toks };
       });
 
-      const matchRiskItem = (rawName: string): API.RiskItemConfig | undefined => {
+      const matchRiskItem = (
+        rawName: string,
+      ): API.RiskItemConfig | undefined => {
         const inName = String(rawName || '').trim();
         if (!inName) return undefined;
 
         // 1) 先尝试严格匹配（原样、小写）
-        let hit = riskItemMap.get(inName) || riskItemLowerMap.get(inName.toLowerCase());
+        let hit =
+          riskItemMap.get(inName) || riskItemLowerMap.get(inName.toLowerCase());
         if (hit) return hit;
 
         // 2) 归一化与包含关系
@@ -249,7 +280,7 @@ const NewAssessmentPage = () => {
         const inNoPar = normalize(removeParensContent(inName));
         let best: { cfg: API.RiskItemConfig; score: number } | null = null;
 
-        const scoreCandidate = (cand: typeof allConfigs[number]) => {
+        const scoreCandidate = (cand: (typeof allConfigs)[number]) => {
           // 完全相等优先
           if (cand.norm === inNorm || cand.noPar === inNoPar) return 1;
           // 包含关系
@@ -267,7 +298,10 @@ const NewAssessmentPage = () => {
           inToks.forEach((t) => {
             if (cand.toks.has(t)) inter += 1;
           });
-          const union = new Set<string>([...Array.from(inToks), ...Array.from(cand.toks)]).size;
+          const union = new Set<string>([
+            ...Array.from(inToks),
+            ...Array.from(cand.toks),
+          ]).size;
           return inter / union; // 0~1
         };
 
@@ -351,7 +385,11 @@ const NewAssessmentPage = () => {
               (m) => (m?.description || '').trim() === key,
             );
             if (idx >= 0) {
-              merged[idx] = { ...merged[idx], score: item.score, description: key };
+              merged[idx] = {
+                ...merged[idx],
+                score: item.score,
+                description: key,
+              };
             } else {
               merged.push({ description: key, score: item.score });
             }
@@ -372,9 +410,13 @@ const NewAssessmentPage = () => {
       });
 
       if (applied === 0) {
-        message.warning('未找到可应用的风险项，请检查提示词是否使用了配置中的“风险项名称”。');
+        message.warning(
+          '未找到可应用的风险项，请检查提示词是否使用了配置中的“风险项名称”。',
+        );
       } else if (skipped > 0) {
-        message.success(`已应用 ${applied} 项，跳过 ${skipped} 项（名称不匹配或分值无效）`);
+        message.success(
+          `已应用 ${applied} 项，跳过 ${skipped} 项（名称不匹配或分值无效）`,
+        );
       } else {
         message.success(`已应用 ${applied} 项评估结果`);
       }
@@ -425,6 +467,11 @@ const NewAssessmentPage = () => {
           integration_workload: Array.isArray(parsedData?.integration_workload)
             ? parsedData.integration_workload
             : [],
+          iot_point_integration:
+            parsedData?.iot_point_integration &&
+            typeof parsedData.iot_point_integration === 'object'
+              ? parsedData.iot_point_integration
+              : undefined,
           travel_months: Number(parsedData?.travel_months ?? 0),
           travel_headcount: Number(parsedData?.travel_headcount ?? 0),
           maintenance_months: Number(parsedData?.maintenance_months ?? 0),
@@ -597,11 +644,13 @@ const NewAssessmentPage = () => {
           initialValues={{
             dev: assessmentData.development_workload,
             integration: assessmentData.integration_workload,
+            iot: assessmentData.iot_point_integration,
           }}
-          onWorkloadChange={(dev, integration) =>
+          onWorkloadChange={(dev, integration, iot) =>
             handleValuesChange({
               development_workload: dev,
               integration_workload: integration,
+              iot_point_integration: iot,
             })
           }
           onPrev={() => setCurrent(0)}
@@ -649,279 +698,288 @@ const NewAssessmentPage = () => {
     <PageContainer>
       {/* 提供一个无 DOM 的表单上下文，避免在子表单未挂载时调用 form.setFieldsValue 触发警告 */}
       <Form form={form} component={false}>
-      <Card style={{ marginBottom: 24 }}>
-        <Row gutter={[16, 16]} align="middle">
-          <Col xs={24} sm={24} md={20} lg={20} xl={20}>
-            <Row gutter={[16, 16]}>
-              <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={4}>
-                <Statistic
-                  title="风险总分"
-                  value={riskScoreSummary.total}
-                  precision={2}
-                />
-              </Col>
-              <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={4}>
-                <Statistic
-                  title={factorTitleNode}
-                  value={riskScoreSummary.factor}
-                  precision={2}
-                />
-              </Col>
-              <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={4}>
-                <Statistic
-                  title="风险等级"
-                  value={riskScoreSummary.level}
-                  valueStyle={{
-                    color: getRiskLevelColor(riskScoreSummary.level),
-                    fontWeight: 'bold',
+        <Card style={{ marginBottom: 24 }}>
+          <Row gutter={[16, 16]} align="middle">
+            <Col xs={24} sm={24} md={20} lg={20} xl={20}>
+              <Row gutter={[16, 16]}>
+                <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={4}>
+                  <Statistic
+                    title="风险总分"
+                    value={riskScoreSummary.total}
+                    precision={2}
+                  />
+                </Col>
+                <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={4}>
+                  <Statistic
+                    title={factorTitleNode}
+                    value={riskScoreSummary.factor}
+                    precision={2}
+                  />
+                </Col>
+                <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={4}>
+                  <Statistic
+                    title="风险等级"
+                    value={riskScoreSummary.level}
+                    valueStyle={{
+                      color: getRiskLevelColor(riskScoreSummary.level),
+                      fontWeight: 'bold',
+                    }}
+                  />
+                </Col>
+                <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={4}>
+                  <Statistic
+                    title={
+                      <span>
+                        功能模块
+                        <Tooltip title="新功能开发和系统对接的模块总数">
+                          <InfoCircleOutlined
+                            style={{ marginLeft: 4, color: '#1890ff' }}
+                          />
+                        </Tooltip>
+                      </span>
+                    }
+                    value={moduleCount}
+                    suffix="个"
+                    valueStyle={{ color: '#1890ff' }}
+                  />
+                </Col>
+                <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={4}>
+                  <Statistic
+                    title={
+                      <span>
+                        其他成本
+                        <Tooltip title="差旅、运维、风险成本估算总和（未含开发和对接成本）">
+                          <InfoCircleOutlined
+                            style={{ marginLeft: 4, color: '#1890ff' }}
+                          />
+                        </Tooltip>
+                      </span>
+                    }
+                    value={otherCostsEstimate}
+                    suffix="万"
+                    precision={2}
+                    valueStyle={{ color: '#52c41a' }}
+                    prefix="≈"
+                  />
+                </Col>
+              </Row>
+            </Col>
+            <Col
+              xs={24}
+              sm={24}
+              md={4}
+              lg={4}
+              xl={4}
+              style={{ textAlign: 'right' }}
+            >
+              <Space direction="vertical" style={{ width: '100%' }}>
+                <Button
+                  type="primary"
+                  icon={<SaveOutlined />}
+                  onClick={async () => {
+                    const cacheData = {
+                      risk_scores: assessmentData.risk_scores,
+                      ai_unmatched_risks: assessmentData.ai_unmatched_risks,
+                      custom_risk_items: assessmentData.custom_risk_items,
+                      development_workload: assessmentData.development_workload,
+                      integration_workload: assessmentData.integration_workload,
+                      iot_point_integration:
+                        assessmentData.iot_point_integration,
+                      travel_months: assessmentData.travel_months,
+                      travel_headcount: assessmentData.travel_headcount,
+                      maintenance_months: assessmentData.maintenance_months,
+                      maintenance_headcount:
+                        assessmentData.maintenance_headcount,
+                      maintenance_daily_cost:
+                        assessmentData.maintenance_daily_cost,
+                      risk_cost_items: assessmentData.risk_cost_items,
+                      formValues: form.getFieldsValue(true),
+                    };
+                    await cache.saveImmediate(cacheData, current, true);
+                    message.success('草稿已保存');
                   }}
-                />
-              </Col>
-              <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={4}>
-                <Statistic
-                  title={
-                    <span>
-                      功能模块
-                      <Tooltip title="新功能开发和系统对接的模块总数">
-                        <InfoCircleOutlined
-                          style={{ marginLeft: 4, color: '#1890ff' }}
-                        />
-                      </Tooltip>
-                    </span>
-                  }
-                  value={moduleCount}
-                  suffix="个"
-                  valueStyle={{ color: '#1890ff' }}
-                />
-              </Col>
-              <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={4}>
-                <Statistic
-                  title={
-                    <span>
-                      其他成本
-                      <Tooltip title="差旅、运维、风险成本估算总和（未含开发和对接成本）">
-                        <InfoCircleOutlined
-                          style={{ marginLeft: 4, color: '#1890ff' }}
-                        />
-                      </Tooltip>
-                    </span>
-                  }
-                  value={otherCostsEstimate}
-                  suffix="万"
-                  precision={2}
-                  valueStyle={{ color: '#52c41a' }}
-                  prefix="≈"
-                />
-              </Col>
-            </Row>
-          </Col>
-          <Col
-            xs={24}
-            sm={24}
-            md={4}
-            lg={4}
-            xl={4}
-            style={{ textAlign: 'right' }}
-          >
-            <Space direction="vertical" style={{ width: '100%' }}>
-              <Button
-                type="primary"
-                icon={<SaveOutlined />}
-                onClick={async () => {
-                  const cacheData = {
-                    risk_scores: assessmentData.risk_scores,
-                    ai_unmatched_risks: assessmentData.ai_unmatched_risks,
-                    custom_risk_items: assessmentData.custom_risk_items,
-                    development_workload: assessmentData.development_workload,
-                    integration_workload: assessmentData.integration_workload,
-                    travel_months: assessmentData.travel_months,
-                    travel_headcount: assessmentData.travel_headcount,
-                    maintenance_months: assessmentData.maintenance_months,
-                    maintenance_headcount: assessmentData.maintenance_headcount,
-                    maintenance_daily_cost: assessmentData.maintenance_daily_cost,
-                    risk_cost_items: assessmentData.risk_cost_items,
-                    formValues: form.getFieldsValue(true),
-                  };
-                  await cache.saveImmediate(cacheData, current, true);
-                  message.success('草稿已保存');
-                }}
-                size="large"
-                block
-              >
-                保存草稿
-              </Button>
-              <Button
-                icon={<FolderOpenOutlined />}
-                onClick={() => setDraftModalOpen(true)}
-                size="large"
-                block
-              >
-                加载草稿
-              </Button>
-              <Button
-                icon={<ImportOutlined />}
-                onClick={handleOpenTemplateModal}
-                size="large"
-                block
-              >
-                从模板导入
-              </Button>
-            </Space>
-          </Col>
-        </Row>
-      </Card>
-      <Card>
-        <Steps current={current} items={items} />
-        <div style={{ marginTop: 24 }}>{steps[current].content}</div>
-      </Card>
-      <Drawer
-        title="评分因子参与计算说明"
-        open={factorDrawerOpen}
-        onClose={() => setFactorDrawerOpen(false)}
-        width={480}
-        destroyOnHidden
-      >
-        <Paragraph>
-          当前风险总分为 <Text strong>{riskScoreSummary.total.toFixed(2)}</Text>
-          {riskScoreSummary.maxScore ? (
-            <span>
-              ，配置允许的最高得分为{' '}
-              <Text strong>{riskScoreSummary.maxScore}</Text>
-              ，风险占比约 <Text strong>{riskRatioText}</Text>
-            </span>
-          ) : null}
-          。
-        </Paragraph>
-        <Paragraph>
-          基于动态阈值映射，当前评分因子为{' '}
-          <Text strong>{riskScoreSummary.factor.toFixed(2)}</Text>。
-          报价计算时，每一项成本都会乘以该因子：
-        </Paragraph>
-        <Paragraph>
-          <Text code>最终报价 = 基准成本 × 评分因子</Text>
-        </Paragraph>
-        <Divider />
-        <Paragraph strong>分段规则</Paragraph>
-        <ul style={{ paddingLeft: 20 }}>
-          <li>风险占比 ≤ 70% → 系数 1.00（基准价）</li>
-          <li>70% &lt; 风险占比 ≤ 100% → 系数在 1.00~1.20 之间线性上浮</li>
-          <li>100% &lt; 风险占比 ≤ 120% → 系数在 1.20~1.50 之间线性上浮</li>
-          <li>风险占比 &gt; 120% → 系数封顶 1.50</li>
-        </ul>
-        <Divider />
-        <Paragraph strong>对报价的影响</Paragraph>
-        <Paragraph>
-          软件研发、系统对接、差旅、运维及风险成本都会同步乘以当前评分因子，确保风险高的项目获得更高的报价补偿。
-          可在“生成总览”步骤中点击“计算最新报价”查看具体数值变化。
-        </Paragraph>
-        <Paragraph type="secondary">
-          若配置中调整了风险项的分值或新增条目，最大得分会自动更新，评分因子和提示内容也会同步刷新。
-        </Paragraph>
-      </Drawer>
+                  size="large"
+                  block
+                >
+                  保存草稿
+                </Button>
+                <Button
+                  icon={<FolderOpenOutlined />}
+                  onClick={() => setDraftModalOpen(true)}
+                  size="large"
+                  block
+                >
+                  加载草稿
+                </Button>
+                <Button
+                  icon={<ImportOutlined />}
+                  onClick={handleOpenTemplateModal}
+                  size="large"
+                  block
+                >
+                  从模板导入
+                </Button>
+              </Space>
+            </Col>
+          </Row>
+        </Card>
+        <Card>
+          <Steps current={current} items={items} />
+          <div style={{ marginTop: 24 }}>{steps[current].content}</div>
+        </Card>
+        <Drawer
+          title="评分因子参与计算说明"
+          open={factorDrawerOpen}
+          onClose={() => setFactorDrawerOpen(false)}
+          width={480}
+          destroyOnHidden
+        >
+          <Paragraph>
+            当前风险总分为{' '}
+            <Text strong>{riskScoreSummary.total.toFixed(2)}</Text>
+            {riskScoreSummary.maxScore ? (
+              <span>
+                ，配置允许的最高得分为{' '}
+                <Text strong>{riskScoreSummary.maxScore}</Text>
+                ，风险占比约 <Text strong>{riskRatioText}</Text>
+              </span>
+            ) : null}
+            。
+          </Paragraph>
+          <Paragraph>
+            基于动态阈值映射，当前评分因子为{' '}
+            <Text strong>{riskScoreSummary.factor.toFixed(2)}</Text>。
+            报价计算时，每一项成本都会乘以该因子：
+          </Paragraph>
+          <Paragraph>
+            <Text code>最终报价 = 基准成本 × 评分因子</Text>
+          </Paragraph>
+          <Divider />
+          <Paragraph strong>分段规则</Paragraph>
+          <ul style={{ paddingLeft: 20 }}>
+            <li>风险占比 ≤ 70% → 系数 1.00（基准价）</li>
+            <li>70% &lt; 风险占比 ≤ 100% → 系数在 1.00~1.20 之间线性上浮</li>
+            <li>100% &lt; 风险占比 ≤ 120% → 系数在 1.20~1.50 之间线性上浮</li>
+            <li>风险占比 &gt; 120% → 系数封顶 1.50</li>
+          </ul>
+          <Divider />
+          <Paragraph strong>对报价的影响</Paragraph>
+          <Paragraph>
+            软件研发、系统对接、差旅、运维及风险成本都会同步乘以当前评分因子，确保风险高的项目获得更高的报价补偿。
+            可在“生成总览”步骤中点击“计算最新报价”查看具体数值变化。
+          </Paragraph>
+          <Paragraph type="secondary">
+            若配置中调整了风险项的分值或新增条目，最大得分会自动更新，评分因子和提示内容也会同步刷新。
+          </Paragraph>
+        </Drawer>
 
-      {/* 从模板导入弹窗 */}
-      <Modal
-        title="选择历史项目作为模板"
-        open={templateModalOpen}
-        onCancel={() => setTemplateModalOpen(false)}
-        footer={null}
-        width={1000}
-        destroyOnHidden
-      >
-        <Table<API.ProjectInfo>
-          loading={loadingTemplates}
-          dataSource={templateList}
-          rowKey="id"
-          pagination={{
-            pageSize: 10,
-            showSizeChanger: true,
-            showTotal: (total) => `共 ${total} 个项目`,
+        {/* 从模板导入弹窗 */}
+        <Modal
+          title="选择历史项目作为模板"
+          open={templateModalOpen}
+          onCancel={() => setTemplateModalOpen(false)}
+          footer={null}
+          width={1000}
+          destroyOnHidden
+        >
+          <Table<API.ProjectInfo>
+            loading={loadingTemplates}
+            dataSource={templateList}
+            rowKey="id"
+            pagination={{
+              pageSize: 10,
+              showSizeChanger: true,
+              showTotal: (total) => `共 ${total} 个项目`,
+            }}
+            columns={[
+              {
+                title: '项目名称',
+                dataIndex: 'name',
+                key: 'name',
+                width: 200,
+                ellipsis: true,
+              },
+              {
+                title: '描述',
+                dataIndex: 'description',
+                key: 'description',
+                ellipsis: true,
+              },
+              {
+                title: '是否模板',
+                dataIndex: 'is_template',
+                key: 'is_template',
+                width: 100,
+                align: 'center',
+                render: (val: number) =>
+                  val === 1 ? <Tag color="blue">模板</Tag> : <Tag>项目</Tag>,
+              },
+              {
+                title: '风险得分',
+                dataIndex: 'final_risk_score',
+                key: 'final_risk_score',
+                width: 100,
+                align: 'right',
+                render: (val: number) => val?.toFixed(2) || '—',
+              },
+              {
+                title: '总成本(万元)',
+                dataIndex: 'final_total_cost',
+                key: 'final_total_cost',
+                width: 120,
+                align: 'right',
+                render: (val: number) => (val ? (val / 10000).toFixed(2) : '—'),
+              },
+              {
+                title: '创建时间',
+                dataIndex: 'created_at',
+                key: 'created_at',
+                width: 180,
+                render: (val: string) =>
+                  val ? new Date(val).toLocaleString('zh-CN') : '—',
+              },
+              {
+                title: '操作',
+                key: 'action',
+                width: 100,
+                align: 'center',
+                fixed: 'right',
+                render: (_, record) => (
+                  <Space>
+                    <Button
+                      type="link"
+                      size="small"
+                      onClick={() => handleImportFromTemplate(record.id)}
+                    >
+                      导入
+                    </Button>
+                  </Space>
+                ),
+              },
+            ]}
+          />
+        </Modal>
+
+        {/* 加载草稿弹窗 */}
+        <LoadDraftModal
+          visible={draftModalOpen}
+          onClose={() => setDraftModalOpen(false)}
+          onLoadDraft={async (sessionId) => {
+            const record = await cache.loadSession(sessionId);
+            if (record) {
+              setAssessmentData(record.data);
+              setCurrent(record.currentStep);
+              form.setFieldsValue(record.data.formValues);
+              message.success(
+                `草稿已加载（${new Date(
+                  record.metadata.updatedAt,
+                ).toLocaleString('zh-CN')}）`,
+              );
+            } else {
+              message.error('加载草稿失败');
+            }
           }}
-          columns={[
-            {
-              title: '项目名称',
-              dataIndex: 'name',
-              key: 'name',
-              width: 200,
-              ellipsis: true,
-            },
-            {
-              title: '描述',
-              dataIndex: 'description',
-              key: 'description',
-              ellipsis: true,
-            },
-            {
-              title: '是否模板',
-              dataIndex: 'is_template',
-              key: 'is_template',
-              width: 100,
-              align: 'center',
-              render: (val: number) =>
-                val === 1 ? <Tag color="blue">模板</Tag> : <Tag>项目</Tag>,
-            },
-            {
-              title: '风险得分',
-              dataIndex: 'final_risk_score',
-              key: 'final_risk_score',
-              width: 100,
-              align: 'right',
-              render: (val: number) => val?.toFixed(2) || '—',
-            },
-            {
-              title: '总成本(万元)',
-              dataIndex: 'final_total_cost',
-              key: 'final_total_cost',
-              width: 120,
-              align: 'right',
-              render: (val: number) => (val ? (val / 10000).toFixed(2) : '—'),
-            },
-            {
-              title: '创建时间',
-              dataIndex: 'created_at',
-              key: 'created_at',
-              width: 180,
-              render: (val: string) =>
-                val ? new Date(val).toLocaleString('zh-CN') : '—',
-            },
-            {
-              title: '操作',
-              key: 'action',
-              width: 100,
-              align: 'center',
-              fixed: 'right',
-              render: (_, record) => (
-                <Space>
-                  <Button
-                    type="link"
-                    size="small"
-                    onClick={() => handleImportFromTemplate(record.id)}
-                  >
-                    导入
-                  </Button>
-                </Space>
-              ),
-            },
-          ]}
         />
-      </Modal>
-
-      {/* 加载草稿弹窗 */}
-      <LoadDraftModal
-        visible={draftModalOpen}
-        onClose={() => setDraftModalOpen(false)}
-        onLoadDraft={async (sessionId) => {
-          const record = await cache.loadSession(sessionId);
-          if (record) {
-            setAssessmentData(record.data);
-            setCurrent(record.currentStep);
-            form.setFieldsValue(record.data.formValues);
-            message.success(`草稿已加载（${new Date(record.metadata.updatedAt).toLocaleString('zh-CN')}）`);
-          } else {
-            message.error('加载草稿失败');
-          }
-        }}
-      />
       </Form>
     </PageContainer>
   );

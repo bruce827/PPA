@@ -2,6 +2,11 @@ const configModel = require('../models/configModel');
 const { DEFAULTS } = require('../utils/constants');
 const { computeRatingFactor } = require('../utils/rating');
 const { HttpError } = require('../utils/errors');
+const {
+  calculateIotPointIntegrationTotals,
+  hasIotPointIntegrationItems,
+  isIotWorkloadItem
+} = require('../utils/iotPointIntegration');
 
 /**
  * 计算工作量和费用
@@ -169,9 +174,24 @@ const calculateProjectCost = async (assessmentData) => {
     ratingFactor
   );
   
+  const rawIntegrationWorkload = Array.isArray(assessmentData.integration_workload)
+    ? assessmentData.integration_workload
+    : [];
+  const hasIndependentIot = hasIotPointIntegrationItems(
+    assessmentData.iot_point_integration
+  );
+  const integrationWorkloadItems = hasIndependentIot
+    ? rawIntegrationWorkload.filter((item) => !isIotWorkloadItem(item))
+    : rawIntegrationWorkload;
   const integration = calculateWorkloadCost(
-    assessmentData.integration_workload || [], 
+    integrationWorkloadItems, 
     assessmentData.roles || [], 
+    ratingFactor
+  );
+
+  const iotPointIntegration = calculateIotPointIntegrationTotals(
+    assessmentData.iot_point_integration,
+    assessmentData.roles || [],
     ratingFactor
   );
 
@@ -194,15 +214,27 @@ const calculateProjectCost = async (assessmentData) => {
     .reduce((sum, item) => sum + Number(item.costWan || 0), 0);
 
   // 4. 汇总
-  const totalExactCost = dev.totalCost + integration.totalCost + travelCost + maintenanceCost + riskCost;
+  const totalExactCost =
+    dev.totalCost +
+    integration.totalCost +
+    iotPointIntegration.totalCost +
+    travelCost +
+    maintenanceCost +
+    riskCost;
 
   const softwareDevWorkload = dev.totalWorkload;
   const systemIntegrationWorkload = integration.totalWorkload;
+  const iotPointIntegrationWorkload = iotPointIntegration.totalWorkload;
   const maintenanceWorkloadDays = maintenanceWorkload;
-  const totalWorkload = softwareDevWorkload + systemIntegrationWorkload + maintenanceWorkloadDays;
+  const totalWorkload =
+    softwareDevWorkload +
+    systemIntegrationWorkload +
+    iotPointIntegrationWorkload +
+    maintenanceWorkloadDays;
 
   const softwareDevCost = roundToDecimals(dev.totalCost);
   const systemIntegrationCost = roundToDecimals(integration.totalCost);
+  const iotPointIntegrationCost = roundToDecimals(iotPointIntegration.totalCost);
   const travelCostRounded = roundToDecimals(travelCost);
   const maintenanceCostRounded = roundToDecimals(maintenanceCost);
   const riskCostRounded = roundToDecimals(riskCost);
@@ -211,6 +243,7 @@ const calculateProjectCost = async (assessmentData) => {
   return {
     software_dev_cost: softwareDevCost,
     system_integration_cost: systemIntegrationCost,
+    iot_point_integration_cost: iotPointIntegrationCost,
     travel_cost: travelCostRounded,
     maintenance_cost: maintenanceCostRounded,
     risk_cost: riskCostRounded,
@@ -219,6 +252,9 @@ const calculateProjectCost = async (assessmentData) => {
     // 额外返回工作量数据（用于项目保存）
     software_dev_workload_days: Math.round(softwareDevWorkload),
     system_integration_workload_days: Math.round(systemIntegrationWorkload),
+    iot_point_integration_workload_days: Math.round(
+      iotPointIntegrationWorkload
+    ),
     maintenance_workload_days: Math.round(maintenanceWorkloadDays),
     total_workload_days: Math.round(totalWorkload),
     risk_score: riskScore,

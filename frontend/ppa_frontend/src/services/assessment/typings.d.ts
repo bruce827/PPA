@@ -40,6 +40,49 @@ declare namespace API {
     [roleName: string]: string | number | undefined;
   };
 
+  type IotPointIntegrationScaleParams = {
+    point_count?: number;
+    device_count?: number;
+    site_count: number;
+    gateway_count: number;
+    protocol_type_count: number;
+    has_private_protocol: boolean;
+    control_point_count: number;
+    alarm_point_count: number;
+    alarm_rule_count: number;
+    high_frequency_point_count: number;
+    data_cleaning_point_count: number;
+    computed_point_count: number;
+    historical_storage_point_count: number;
+    need_onsite_debug: boolean;
+    onsite_debug_times: number;
+    acceptance_sample_ratio: number;
+    site_scale_note?: string;
+  };
+
+  type IotPointIntegrationItem = {
+    key: string;
+    package_name: string;
+    estimate_basis: string;
+    suggested_days: number;
+    adjusted_days: number;
+    role_name: string;
+    adjustment_note?: string;
+  };
+
+  type IotPointIntegration = {
+    assumptions: {
+      has_iot_platform: boolean;
+      includes_platform_build: boolean;
+      risk_factor_source: 'standard_assessment';
+    };
+    scale_params: IotPointIntegrationScaleParams;
+    generated_items: IotPointIntegrationItem[];
+    estimated_point_count?: number;
+    estimated_by_device_count?: boolean;
+    applied_at?: string;
+  };
+
   type ExtraRiskItem = {
     description: string;
     score: number;
@@ -58,6 +101,7 @@ declare namespace API {
     maintenance_headcount: number;
     maintenance_daily_cost?: number;
     risk_cost_items: AssessmentRiskCostItem[];
+    iot_point_integration?: IotPointIntegration;
     roles?: RoleConfig[];
   };
 
@@ -86,6 +130,7 @@ declare namespace API {
   type CalculationResult = {
     software_dev_cost: number;
     system_integration_cost: number;
+    iot_point_integration_cost: number;
     travel_cost: number;
     maintenance_cost: number;
     risk_cost: number;
@@ -93,6 +138,7 @@ declare namespace API {
     total_cost: number;
     software_dev_workload_days: number;
     system_integration_workload_days: number;
+    iot_point_integration_workload_days: number;
     maintenance_workload_days: number;
     total_workload_days: number;
     risk_score: number;

@@ -12,7 +12,9 @@ const normalizeTags = (raw) => {
     .filter(Boolean);
 
   const unique = Array.from(new Set(normalized));
-  const sliced = unique.slice(0, 30).map((t) => (t.length > 30 ? t.slice(0, 30) : t));
+  const sliced = unique
+    .slice(0, 30)
+    .map((t) => (t.length > 30 ? t.slice(0, 30) : t));
   return sliced;
 };
 
@@ -20,7 +22,8 @@ const safeParseJsonObject = (raw) => {
   if (!raw || typeof raw !== 'string') return {};
   try {
     const parsed = JSON.parse(raw);
-    if (parsed && typeof parsed === 'object' && !Array.isArray(parsed)) return parsed;
+    if (parsed && typeof parsed === 'object' && !Array.isArray(parsed))
+      return parsed;
     return {};
   } catch (_e) {
     return {};
@@ -48,6 +51,37 @@ const normalizeAssessmentData = (assessmentData) => {
     throw new HttpError(400, '自定义风险项必须为数组', 'ValidationError');
   }
 
+  if (
+    normalized.iot_point_integration !== undefined &&
+    (normalized.iot_point_integration === null ||
+      typeof normalized.iot_point_integration !== 'object' ||
+      Array.isArray(normalized.iot_point_integration))
+  ) {
+    throw new HttpError(
+      400,
+      'IoT 点位对接评估数据必须为对象',
+      'ValidationError'
+    );
+  }
+
+  if (normalized.iot_point_integration) {
+    const iot = normalized.iot_point_integration;
+    normalized.iot_point_integration = {
+      ...iot,
+      assumptions:
+        iot.assumptions && typeof iot.assumptions === 'object'
+          ? iot.assumptions
+          : {},
+      scale_params:
+        iot.scale_params && typeof iot.scale_params === 'object'
+          ? iot.scale_params
+          : {},
+      generated_items: Array.isArray(iot.generated_items)
+        ? iot.generated_items
+        : []
+    };
+  }
+
   return normalized;
 };
 
@@ -70,7 +104,9 @@ const createProject = async (projectData) => {
   }
 
   // 执行完整计算
-  const calculation = await calculationService.calculateProjectCost(normalizedAssessment);
+  const calculation = await calculationService.calculateProjectCost(
+    normalizedAssessment
+  );
 
   // 准备数据库数据
   const dbData = {
@@ -84,7 +120,7 @@ const createProject = async (projectData) => {
     tags_json:
       typeof tags === 'undefined'
         ? undefined
-        : JSON.stringify(normalizedAssessment.tags || normalizeTags(tags)),
+        : JSON.stringify(normalizedAssessment.tags || normalizeTags(tags))
   };
 
   // 保存到数据库
@@ -117,7 +153,7 @@ const updateProject = async (id, projectData) => {
 
     const updateFields = {
       tags_json: JSON.stringify(normalizedTags),
-      assessment_details_json: JSON.stringify(details),
+      assessment_details_json: JSON.stringify(details)
     };
     if (typeof is_template !== 'undefined') {
       updateFields.is_template = is_template || 0;
@@ -134,7 +170,9 @@ const updateProject = async (id, projectData) => {
   }
 
   // 执行完整计算
-  const calculation = await calculationService.calculateProjectCost(normalizedAssessment);
+  const calculation = await calculationService.calculateProjectCost(
+    normalizedAssessment
+  );
 
   // 准备数据库数据
   const dbData = {
@@ -148,7 +186,7 @@ const updateProject = async (id, projectData) => {
     tags_json:
       typeof tags === 'undefined'
         ? undefined
-        : JSON.stringify(normalizeTags(tags)),
+        : JSON.stringify(normalizeTags(tags))
   };
 
   // 更新数据库
