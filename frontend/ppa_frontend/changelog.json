@@ -1,5 +1,15 @@
 [
   {
+    "version": "V1.8.0",
+    "date": "2026-6-02",
+    "changes": [
+      { "type": "feat", "content": "新增 IoT 点位对接评估模块，支持按平台/网关能力手动规模评估并独立输出成本与人天" },
+      { "type": "feat", "content": "内部版 Excel 导出增加 IoT 点位对接概要与工作包明细 Sheet" },
+      { "type": "opt", "content": "废弃 PDF 导出功能，全面标准化为 Excel 导出" },
+      { "type": "opt", "content": "新增 IoT 算法研究资料库" }
+    ]
+  },
+  {
     "version": "V1.7.2",
     "date": "2026-5-05",
     "changes": [
