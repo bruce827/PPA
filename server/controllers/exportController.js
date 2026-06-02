@@ -16,6 +16,13 @@ function formatTimestampForFilename(isoString) {
 }
 
 /**
+ * @deprecated PDF 导出功能已被废弃。
+ * 调用链: GET /api/projects/:id/export/pdf → exportService.generatePDF(project, res)
+ * 现状: PDF 内容极度简化，仅含项目名+描述+三个汇总数字，无实际业务数据。
+ * 前端状态: exportProjectToPDF() 已定义但从未被调用，无导出入口。
+ * PRD: FR-6 导出能力中 PDF 相关需求已从 PRD 中移除。
+ * 如需恢复，参见 server/services/exportService.js generatePDF 的 TODO。
+ *
  * 导出项目为 PDF
  */
 exports.exportPDF = async (req, res, next) => {

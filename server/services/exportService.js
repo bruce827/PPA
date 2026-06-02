@@ -106,7 +106,25 @@ async function enrichRiskItemsFromConfig(formatted, version) {
 }
 
 /**
- * 描述：根据项目顶层聚合结果生成简要 PDF 报告，并通过 HTTP 响应流输出。
+ * @deprecated PDF 导出功能已被废弃。
+ *
+ * 调用链:
+ *   routes/projects.js:router.get('/:id/export/pdf')
+ *     → controllers/exportController.js:exportPDF()
+ *       → services/exportService.js:generatePDF()
+ *         → PDFKit:new PDFDocument()
+ *
+ * 现状: 仅生成 4 行基础文本，无 formatter、无样式、无业务数据明细。
+ * 前端: 无导出入口（exportProjectToPDF 已定义但从未使用）。
+ * PRD: FR-6.2 要求的"封面/成本拆解/配置摘要/Rating Factor 标注"未实现，
+ *       相关 PDF 需求已从 PRD 中移除。
+ *
+ * 如需恢复，需要:
+ *   1. 创建 services/export/export/formatters/pdfFormatter.js
+ *   2. 参考 Excel formatter 模式实现 PDF 内容结构化
+ *   3. 前端 src/pages/Assessment/Detail.tsx 添加 PDF 导出按钮
+ *   4. 补充 docs/prd/export-spec.md 规格文档
+ *
  * @param {Object} project - 项目记录，包含名称、描述以及最终报价/风险/工作量等聚合字段。
  * @param {import('express').Response} res - Express 响应对象，用于写入 PDF 二进制流。
  * @returns {void} 无返回值，PDF 内容通过响应流直接输出给客户端。

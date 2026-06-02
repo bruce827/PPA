@@ -206,7 +206,7 @@
     - 若读取时发现 `assessment_details_json.tags` 与 `tags_json` 不一致：以前者为过期快照处理，展示与推荐均以 `tags_json` 为准。
 - **FR-2.2（P0）读取**：项目历史详情接口应返回标签字段。
 - **FR-2.3（P0）更新**：复用项目更新接口，允许仅更新标签（见 API Specification）。
-- **FR-2.4（P0）导出一致性**：PDF/Excel 导出使用标签时：
+- **FR-2.4（P0）导出一致性**：Excel 导出使用标签时：
   - 必须优先使用 `projects.tags_json`。
   - `assessment_details_json.tags` 仅作为缺省/兜底（例如历史数据尚未迁移）。
 

@@ -80,7 +80,15 @@ export async function saveProjectBusinessQuote(
   );
 }
 
-/** 导出项目为 PDF GET /api/projects/${id}/export/pdf */
+/**
+ * @deprecated PDF 导出功能已被废弃。
+ * 调用链: 定义但从未被调用 — 前端无任何组件使用此函数。
+ * 后端状态: server/services/exportService.js generatePDF() 内容极简，非正式实现。
+ * PRD: FR-6 导出能力中 PDF 相关需求已从 PRD 中移除。
+ * 如需恢复，需同步实现后端 PDF formatter + 前端导出入口。
+ *
+ * 导出项目为 PDF GET /api/projects/${id}/export/pdf
+ */
 export function exportProjectToPDF(id: string | number) {
   return `/api/projects/${id}/export/pdf`;
 }
