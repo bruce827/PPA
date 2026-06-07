@@ -14,6 +14,7 @@
 
 | 文档 | 功能模块 | 状态 |
 |------|---------|------|
+| [wiki-generation-spec.md](./wiki-generation-spec.md) | Wiki 生成（文档转换+脱敏+知识库） | ✅ V1.9 脚本已完成 |
 | [web3d-assessment-spec.md](./web3d-assessment-spec.md) | Web3D 项目评估 | ✅ |
 | [model-config-spec.md](./model-config-spec.md) | AI 模型与提示词管理 | ✅ 含 v1.2 update |
 | [business-pricing-spec.md](./business-pricing-spec.md) | 商务报价 | ✅ |

@@ -1,5 +1,15 @@
 [
   {
+    "version": "V1.8.1",
+    "date": "2026-6-07",
+    "changes": [
+      { "type": "feat", "content": "新增表单设计模块，支持可视化编辑字段属性、实时校验（R1-R9 硬规则 + W1-W7 软规则）和表单预览" },
+      { "type": "feat", "content": "表单设计支持 Excel 模板导入和 AI Agent 辅助生成字段定义" },
+      { "type": "feat", "content": "新增表单设计相关 API（项目/应用/表单/字段 CRUD 共 20 个端点）" },
+      { "type": "opt", "content": "表单字段编辑支持行内编辑、批量更新（事务保护）和表单级校验" }
+    ]
+  },
+  {
     "version": "V1.8.0",
     "date": "2026-6-02",
     "changes": [

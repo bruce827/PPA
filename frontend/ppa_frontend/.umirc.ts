@@ -127,6 +127,18 @@ export default defineConfig({
       ],
     },
     {
+      name: '项目详细设计',
+      path: '/form-design',
+      icon: 'FileTextOutlined',
+      routes: [
+        {
+          name: '表单设计',
+          path: 'forms',
+          component: './FormDesign',
+        },
+      ],
+    },
+    {
       name: '系统监控',
       path: '/monitoring',
       icon: 'MonitorOutlined',

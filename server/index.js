@@ -29,6 +29,7 @@ const {
 const {
   runMigration: runCleanupInvalidVisionModelFlagsMigration,
 } = require('./migrations/012_cleanup_invalid_vision_model_flags');
+const formDesignMigration = require('./migrations/015_create_form_design_tables');
 
 loadEnvFile();
 
@@ -51,6 +52,7 @@ async function startServer() {
     await runPromptTemplateWeb3dStep4Migration(databasePath);
     await runCleanupInvalidVisionModelFlagsMigration(databasePath);
     await db.init(databasePath); // Initialize database connection
+    await formDesignMigration.up(); // Create form design tables
     await biddingSiteModel.ensureSchema();
     await tenderStagingModel.ensureSchema();
     if (process.env.NODE_ENV !== 'test') {

@@ -13,6 +13,7 @@ const contractsRoutes = require('./contracts');
 const opportunityRoutes = require('./opportunity');
 const attachmentRoutes = require('./attachment');
 const pushRoutes = require('./push');
+const formDesignRoutes = require('./formDesign');
 
 // 挂载各模块路由
 router.use('/api', healthRoutes);
@@ -28,5 +29,6 @@ router.use('/api/web3d', web3dRoutes);
 router.use('/api/monitoring', monitoringRoutes);
 router.use('/api/contracts', contractsRoutes);
 router.use('/api/opportunity', opportunityRoutes);
+router.use('/api/form-design', formDesignRoutes); // 表单设计
 
 module.exports = router;

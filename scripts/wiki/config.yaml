@@ -1,0 +1,95 @@
+# ============================================================
+# Wiki 数据准备脚本 — 全局配置
+# ============================================================
+
+# === Pandoc 配置 ===
+pandoc:
+  # 输入目录（相对于本文件所在目录）
+  input_dir: "./input"
+  # Pandoc 输出格式
+  # markdown_github: GitHub 风格 Markdown，保留表格
+  # markdown: 标准 Markdown
+  output_format: "markdown_github"
+  # 是否提取 Word 中的内嵌图片
+  extract_media: true
+
+# === AI 脱敏配置 ===
+anonymize:
+  # DeepSeek API 地址（兼容 OpenAI 格式的 API 均可）
+  api_base: "https://api.deepseek.com"
+  # API Key（必填）
+  api_key: ""
+  # 模型名称
+  model: "deepseek-chat"
+  # 最大输出 token 数
+  max_tokens: 4096
+  # 温度（越低越稳定，0.1 适合脱敏任务）
+  temperature: 0.1
+  # 每次发送的章节段落数（1 = 逐段发送，更安全）
+  batch_size: 1
+  # API 调用失败重试次数
+  retry_count: 3
+  # 重试间隔（秒）
+  retry_delay: 2
+  # 超时时间（秒）
+  timeout: 60
+
+# === Frontmatter 配置 ===
+frontmatter:
+  # COS 文件下载链接前缀（替换为实际值）
+  # 最终链接格式: {download_base_url}/{project_folder}/{filename}.zip
+  download_base_url: "https://your-cos-bucket.cos.ap-region.myqcloud.com"
+  # 默认标签（所有文档都会添加）
+  default_tags:
+    - "油田数字化"
+    - "项目交付"
+
+# === VitePress 输出配置 ===
+vitepress:
+  # 输出目录
+  output_dir: "./output/03_vitepress"
+  # Wiki 站点标题
+  title: "油田数字化项目全生命周期知识库"
+  # Wiki 站点描述
+  description: "真实油田信息化项目交付物与全套设计模板"
+
+# === 文件类型检测 ===
+# 根据文件名关键词自动分类文档类型
+file_type_keywords:
+  需求文档:
+    - "需求"
+    - "需求规格"
+    - "用户需求"
+    - "业务需求"
+    - "需求分析"
+  设计文档:
+    - "设计"
+    - "概要设计"
+    - "详细设计"
+    - "架构设计"
+    - "数据库设计"
+    - "技术方案"
+  测试文档:
+    - "测试"
+    - "测试用例"
+    - "测试报告"
+    - "测试计划"
+    - "验证"
+  实施文档:
+    - "实施方案"
+    - "部署方案"
+    - "部署文档"
+    - "安装手册"
+    - "验收"
+  用户手册:
+    - "用户手册"
+    - "操作手册"
+    - "使用说明"
+    - "操作指南"
+  项目管理:
+    - "项目计划"
+    - "进度报告"
+    - "会议纪要"
+    - "周报"
+    - "月报"
+    - "总结"
