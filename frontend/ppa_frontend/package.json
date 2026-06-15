@@ -20,7 +20,8 @@
     "@ant-design/pro-components": "^2.8.10",
     "@umijs/max": "^4.5.2",
     "antd": "^5.28.0",
-    "dexie": "^4.2.1"
+    "dexie": "^4.2.1",
+    "marked": "^18.0.5"
   },
   "devDependencies": {
     "@playwright/test": "^1.56.1",

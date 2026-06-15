@@ -15,6 +15,7 @@ import { recommendContracts } from '@/services/contracts';
 import { exportProjectToExcel, updateProject } from '@/services/projects';
 import AttachmentManager from './components/AttachmentManager';
 import { PageContainer } from '@ant-design/pro-components';
+import { getWikiTree, getWikiRelations, saveWikiRelations } from '@/services/wiki';
 import { history, useParams } from '@umijs/max';
 import {
   Button,
@@ -517,6 +518,56 @@ const AssessmentDetailPage = () => {
   const [loading, setLoading] = useState(true);
   const params = useParams();
 
+  const [wikiOptions, setWikiOptions] = useState<{ label: string; value: string }[]>([]);
+  const [editingWikis, setEditingWikis] = useState<string[]>([]);
+  const [loadingWikiList, setLoadingWikiList] = useState(false);
+  const [savingWikis, setSavingWikis] = useState(false);
+
+  // 加载 Wiki 列表及项目关联
+  const loadWikiData = useCallback(async () => {
+    if (!params.id) return;
+    setLoadingWikiList(true);
+    try {
+      const treeRes = await getWikiTree();
+      if (treeRes.success) {
+        setWikiOptions(
+          (treeRes.data || []).map((item) => ({
+            label: `${item.title} (${item.wiki_key})`,
+            value: item.wiki_key,
+          }))
+        );
+      }
+      const relationsRes = await getWikiRelations({ project_id: Number(params.id) });
+      if (relationsRes.success) {
+        setEditingWikis((relationsRes.data as string[]) || []);
+      }
+    } catch (e) {
+      console.error('获取 Wiki 绑定失败', e);
+    } finally {
+      setLoadingWikiList(false);
+    }
+  }, [params.id]);
+
+  const handleSaveWikis = async () => {
+    if (!params.id) return;
+    setSavingWikis(true);
+    try {
+      const res = await saveWikiRelations({
+        project_id: Number(params.id),
+        wiki_keys: editingWikis,
+      });
+      if (res.success) {
+        messageApi.success('关联 Wiki 文档保存成功');
+      } else {
+        messageApi.error('保存关联失败');
+      }
+    } catch (e: any) {
+      messageApi.error(e?.message || '保存关联异常');
+    } finally {
+      setSavingWikis(false);
+    }
+  };
+
   const loadRecommendations = useCallback(async (tags: string[]) => {
     const nextTags = normalizeTags(tags);
     if (!nextTags.length) {
@@ -592,13 +643,14 @@ const AssessmentDetailPage = () => {
       setConfigData({ roles: configRes.data.roles || [] });
 
       await loadRecommendations(initialTags);
+      await loadWikiData();
     } catch (error: any) {
       messageApi.error('加载项目详情失败');
       console.error(error);
     } finally {
       setLoading(false);
     }
-  }, [params.id, messageApi, loadRecommendations]);
+  }, [params.id, messageApi, loadRecommendations, loadWikiData]);
 
   useEffect(() => {
     loadData();
@@ -886,6 +938,36 @@ const AssessmentDetailPage = () => {
                     setEditingTags(savedTags);
                   }}
                   disabled={savingTags}
+                >
+                  放弃修改
+                </Button>
+              </Space>
+            </Space>
+          </Card>
+
+          <Card title="关联 Wiki 文档" style={{ marginBottom: 16 }}>
+            <Space direction="vertical" style={{ width: '100%' }}>
+              <Select
+                mode="multiple"
+                placeholder="请选择要绑定的 Wiki 文档..."
+                value={editingWikis}
+                onChange={(vals) => setEditingWikis(vals)}
+                style={{ width: '100%' }}
+                options={wikiOptions}
+                loading={loadingWikiList}
+              />
+              <Space>
+                <Button
+                  type="primary"
+                  loading={savingWikis}
+                  disabled={!project?.id}
+                  onClick={handleSaveWikis}
+                >
+                  保存关联关系
+                </Button>
+                <Button
+                  onClick={loadWikiData}
+                  disabled={loadingWikiList || savingWikis}
                 >
                   放弃修改
                 </Button>

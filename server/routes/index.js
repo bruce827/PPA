@@ -14,6 +14,7 @@ const opportunityRoutes = require('./opportunity');
 const attachmentRoutes = require('./attachment');
 const pushRoutes = require('./push');
 const formDesignRoutes = require('./formDesign');
+const wikiRoutes = require('./wiki');
 
 // 挂载各模块路由
 router.use('/api', healthRoutes);
@@ -30,5 +31,6 @@ router.use('/api/monitoring', monitoringRoutes);
 router.use('/api/contracts', contractsRoutes);
 router.use('/api/opportunity', opportunityRoutes);
 router.use('/api/form-design', formDesignRoutes); // 表单设计
+router.use('/api/wiki', wikiRoutes);
 
 module.exports = router;

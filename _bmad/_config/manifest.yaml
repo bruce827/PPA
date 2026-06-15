@@ -1,54 +1,63 @@
 installation:
-  version: 6.6.0
+  version: 6.8.0
   installDate: 2026-03-11T02:31:26.283Z
-  lastUpdated: 2026-05-05T07:21:34.413Z
+  lastUpdated: 2026-06-08T01:19:49.723Z
 modules:
   - name: core
-    version: 6.6.0
+    version: 6.8.0
     installDate: 2026-03-11T02:31:25.810Z
-    lastUpdated: 2026-05-05T07:21:33.037Z
+    lastUpdated: 2026-06-08T01:19:49.717Z
     source: built-in
     npmPackage: null
     repoUrl: null
   - name: bmm
-    version: 6.6.0
+    version: 6.8.0
     installDate: 2026-03-11T02:31:18.778Z
-    lastUpdated: 2026-05-05T07:21:33.038Z
+    lastUpdated: 2026-06-08T01:19:49.717Z
     source: built-in
     npmPackage: null
     repoUrl: null
   - name: tea
-    version: v1.15.1
+    version: main
     installDate: 2026-03-11T02:31:22.901Z
-    lastUpdated: 2026-05-05T07:21:33.147Z
+    lastUpdated: 2026-06-08T01:19:49.719Z
     source: external
     npmPackage: bmad-method-test-architecture-enterprise
     repoUrl: https://github.com/bmad-code-org/bmad-method-test-architecture-enterprise
-    channel: stable
-    sha: 7c94bdc6e3d2c8c3cad09eb0a32a42fade0e9079
+    channel: next
+    sha: 8734d51f24071ddbcb3617390b5fcddb4128ef77
   - name: bmb
-    version: v1.7.0
+    version: main
     installDate: 2026-04-05T13:06:16.556Z
-    lastUpdated: 2026-05-05T07:21:33.261Z
+    lastUpdated: 2026-06-08T01:19:49.720Z
     source: external
     npmPackage: bmad-builder
     repoUrl: https://github.com/bmad-code-org/bmad-builder
-    channel: stable
-    sha: 86033fc9aeae2ca6d52c7cdb675c1f4bf17fc1c1
+    channel: next
+    sha: 7cfa7711778f04c5df56f7ae895fabc942fd920c
   - name: wds
-    version: v0.1.0
+    version: main
     installDate: 2026-04-05T13:06:20.944Z
-    lastUpdated: 2026-05-05T07:21:33.846Z
-    source: community
-    npmPackage: bmad-method-wds-expansion
+    lastUpdated: 2026-06-08T01:19:49.721Z
+    source: external
+    npmPackage: bmad-wds
     repoUrl: https://github.com/bmad-code-org/bmad-method-wds-expansion
-    channel: stable
-    sha: 50312755ca93d6667f9a9087cfe72cfd378b5329
+    channel: next
+    sha: cc16f09fcfab26d35635af1491f36a38a8431c8d
     registryApprovedTag: v0.1.0
+  - name: automator
+    version: main
+    installDate: 2026-06-08T01:19:49.662Z
+    lastUpdated: 2026-06-08T01:19:49.722Z
+    source: external
+    npmPackage: bmad-story-automator
+    repoUrl: https://github.com/bmad-code-org/bmad-automator
+    channel: next
+    sha: f332173a692ffbabb24734c31dedadfcf78b9ed1
   - name: skills
     version: null
     installDate: 2026-04-22T01:22:24.249Z
-    lastUpdated: 2026-05-05T07:21:34.413Z
+    lastUpdated: 2026-06-08T01:19:49.723Z
     source: unknown
     npmPackage: null
     repoUrl: null
@@ -56,3 +65,10 @@ ides:
   - claude-code
   - codex
   - windsurf
+  - antigravity
+  - github-copilot
+  - cline
+  - kimi-code
+  - opencode
+  - pi
+  - warp

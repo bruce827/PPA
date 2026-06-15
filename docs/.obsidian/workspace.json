@@ -4,21 +4,17 @@
     "type": "split",
     "children": [
       {
-        "id": "158130e69afbd03d",
+        "id": "fd944a5baa961a99",
         "type": "tabs",
         "children": [
           {
-            "id": "66240fa4080b9b8d",
+            "id": "5da6045128169f19",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "wiki Roadmap.md",
-                "mode": "source",
-                "source": false
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "wiki Roadmap"
+              "title": "新标签页"
             }
           }
         ]
@@ -156,21 +152,30 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "wiki Roadmap.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "wiki Roadmap 的大纲"
+              "title": "大纲"
+            }
+          },
+          {
+            "id": "51f5ebf99a28f1d2",
+            "type": "leaf",
+            "state": {
+              "type": "claudian-view",
+              "state": {},
+              "icon": "bot",
+              "title": "Claudian"
             }
           }
         ],
-        "currentTab": 4
+        "currentTab": 5
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 603.5
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -180,16 +185,25 @@
       "daily-notes:打开/创建今天的日记": false,
       "templates:插入模板": false,
       "command-palette:打开命令面板": false,
-      "bases:新建数据库": false
+      "bases:新建数据库": false,
+      "obsidian-excalidraw-plugin:新建绘图文件": false,
+      "realclaudian:Open Claudian": false
     }
   },
-  "active": "66240fa4080b9b8d",
+  "active": "5da6045128169f19",
   "lastOpenFiles": [
-    "excel填写规范.md",
+    "未命名.base",
+    "未命名 1.base",
+    "未命名.canvas",
+    "Excalidraw/Drawing 2026-06-08 13.58.27.excalidraw.md",
+    "Excalidraw",
+    "2026-06-08.md",
+    "原型绘制.md",
+    "抽油机.pdf",
     "wiki Roadmap.md",
+    "excel填写规范.md",
     "字典导入模版_监督管理_20260528_v1.xlsx",
     "表单导入模版_监督管理-20260528_v1.xlsx",
-    "原型绘制.md",
     "prd/iot-point-integration-assessment-spec.md",
     "deep-research-report.md",
     "DR gemini.md",

@@ -136,6 +136,11 @@ export default defineConfig({
           path: 'forms',
           component: './FormDesign',
         },
+        {
+          name: '项目Wiki',
+          path: 'wiki',
+          component: './ProjectWiki',
+        },
       ],
     },
     {
@@ -169,6 +174,7 @@ export default defineConfig({
   },
   // 禁用严格模式和 MFSU 以避免 findDOMNode 警告
   mfsu: false,
+  esbuildMinifyIIFE: true,
   // reactStrictMode: false,
   // 平台版本
   define: {

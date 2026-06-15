@@ -287,6 +287,18 @@ const CREATE_TABLES_SQL = `
     ON tender_staging_web_search_results(tender_staging_id);
   CREATE INDEX IF NOT EXISTS idx_tender_web_search_results_searched_at
     ON tender_staging_web_search_results(searched_at);
+
+  CREATE TABLE IF NOT EXISTS wiki_project_relations (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    wiki_key TEXT NOT NULL,
+    project_id INTEGER NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (project_id) REFERENCES projects(id) ON DELETE CASCADE,
+    UNIQUE(wiki_key, project_id)
+  );
+
+  CREATE INDEX IF NOT EXISTS idx_wiki_relations_wiki_key ON wiki_project_relations(wiki_key);
+  CREATE INDEX IF NOT EXISTS idx_wiki_relations_project_id ON wiki_project_relations(project_id);
 `;
 
 function initDatabase(databasePath = process.env.DB_PATH || './ppa.db') {

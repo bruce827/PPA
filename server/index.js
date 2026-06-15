@@ -30,6 +30,7 @@ const {
   runMigration: runCleanupInvalidVisionModelFlagsMigration,
 } = require('./migrations/012_cleanup_invalid_vision_model_flags');
 const formDesignMigration = require('./migrations/015_create_form_design_tables');
+const wikiMigration = require('./migrations/016_create_wiki_project_relations');
 
 loadEnvFile();
 
@@ -53,6 +54,7 @@ async function startServer() {
     await runCleanupInvalidVisionModelFlagsMigration(databasePath);
     await db.init(databasePath); // Initialize database connection
     await formDesignMigration.up(); // Create form design tables
+    await wikiMigration.up(); // Create wiki relations table
     await biddingSiteModel.ensureSchema();
     await tenderStagingModel.ensureSchema();
     if (process.env.NODE_ENV !== 'test') {
