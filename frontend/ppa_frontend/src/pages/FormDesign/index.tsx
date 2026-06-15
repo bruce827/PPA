@@ -12,6 +12,8 @@ import {
   Tabs,
   Tag,
   Tooltip,
+  Row,
+  Col,
 } from 'antd';
 import {
   DeleteOutlined,
@@ -31,6 +33,11 @@ import ProForm, {
   ProFormSwitch,
   ProFormText,
   ProFormTextArea,
+  ProFormTimePicker,
+  ProFormRadio,
+  ProFormCheckbox,
+  ProFormTreeSelect,
+  ProFormDateRangePicker,
 } from '@ant-design/pro-form';
 import {
   createForm,
@@ -135,6 +142,7 @@ const FormDesign: React.FC = () => {
   const [createFormVisible, setCreateFormVisible] = useState(false);
   const [previewVisible, setPreviewVisible] = useState(false);
   const [previewField, setPreviewField] = useState<FormField | null>(null);
+  const [formPreviewVisible, setFormPreviewVisible] = useState(false);
   const [historyProjects, setHistoryProjects] = useState<any[]>([]);
 
   // 表单实例
@@ -458,24 +466,30 @@ const FormDesign: React.FC = () => {
       }
     }
 
+    const options = Array.isArray(parsedParams?.options) ? parsedParams.options : [];
+
     switch (component) {
       case 'Input':
         return <ProFormText {...commonProps} />;
       case 'Input.TextArea':
+      case 'JsonEditor':
         return <ProFormTextArea {...commonProps} />;
       case 'InputNumber':
         return <ProFormDigit {...commonProps} />;
       case 'Select':
-        return (
-          <ProFormSelect
-            {...commonProps}
-            options={parsedParams?.options || []}
-          />
-        );
+        return <ProFormSelect {...commonProps} options={options} />;
+      case 'TreeSelect':
+        return <ProFormTreeSelect {...commonProps} fieldProps={{ treeData: options }} />;
       case 'DatePicker':
         return <ProFormDatePicker {...commonProps} />;
       case 'TimePicker':
-        return <ProFormDatePicker.TimePicker {...commonProps} />;
+        return <ProFormTimePicker {...commonProps} />;
+      case 'DatePicker.RangePicker':
+        return <ProFormDateRangePicker {...commonProps} />;
+      case 'Radio.Group':
+        return <ProFormRadio.Group {...commonProps} options={options} />;
+      case 'Checkbox.Group':
+        return <ProFormCheckbox.Group {...commonProps} options={options} />;
       case 'Switch':
         return <ProFormSwitch {...commonProps} />;
       default:
@@ -614,7 +628,13 @@ const FormDesign: React.FC = () => {
           return (
             <Select
               value={editingField.card_width}
-              onChange={(val) => handleEditChange('card_width', val)}
+              onChange={(val) => {
+                handleEditChange('card_width', val);
+                const spanOption = CARD_WIDTH_OPTIONS.find((item) => item.value === val);
+                if (spanOption) {
+                  handleEditChange('card_width_span', spanOption.span);
+                }
+              }}
               size="small"
               style={{ width: '100%' }}
             >
@@ -895,6 +915,17 @@ const FormDesign: React.FC = () => {
                   校验表单
                 </Button>
                 <Button
+                  type="default"
+                  size="small"
+                  icon={<EyeOutlined />}
+                  onClick={() => {
+                    if (!selectedFormId) return;
+                    setFormPreviewVisible(true);
+                  }}
+                >
+                  预览表单
+                </Button>
+                <Button
                   type="primary"
                   size="small"
                   icon={<PlusOutlined />}
@@ -904,29 +935,26 @@ const FormDesign: React.FC = () => {
                 </Button>
               </Space>
             }
-          >
-            {forms.map((form) => (
-              <Tabs.TabPane
-                key={form.id}
-                tab={
-                  <span>
-                    {form.form_name}
-                    <Tag style={{ marginLeft: 8 }}>{form.form_code}</Tag>
-                    <Button
-                      type="link"
-                      size="small"
-                      danger
-                      icon={<DeleteOutlined />}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleDeleteForm(form.id);
-                      }}
-                    />
-                  </span>
-                }
-              />
-            ))}
-          </Tabs>
+            items={forms.map((form) => ({
+              key: form.id.toString(),
+              label: (
+                <span>
+                  {form.form_name}
+                  <Tag style={{ marginLeft: 8 }}>{form.form_code}</Tag>
+                  <Button
+                    type="link"
+                    size="small"
+                    danger
+                    icon={<DeleteOutlined />}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleDeleteForm(form.id);
+                    }}
+                  />
+                </span>
+              ),
+            }))}
+          />
         )}
 
         {/* 字段表格 */}
@@ -1049,6 +1077,78 @@ const FormDesign: React.FC = () => {
           </ProForm>
         )}
       </Drawer>
+
+      {/* 整个表单预览弹窗 */}
+      {formPreviewVisible && (
+        <Modal
+          title={`表单整个预览 - ${forms.find((f) => f.id === selectedFormId)?.form_name || ''}`}
+          open={formPreviewVisible}
+          onCancel={() => setFormPreviewVisible(false)}
+          width={1000}
+          destroyOnHidden
+          footer={[
+            <Button key="close" type="primary" onClick={() => setFormPreviewVisible(false)}>
+              关闭
+            </Button>,
+          ]}
+        >
+          <ProForm layout="vertical" submitter={false}>
+            {(() => {
+              // 按 card_group 分组
+              const groups: { [key: string]: FormField[] } = {};
+              fields.forEach((field) => {
+                const groupName = field.card_group || '默认分组';
+                if (!groups[groupName]) {
+                  groups[groupName] = [];
+                }
+                groups[groupName].push(field);
+              });
+
+              // 组内根据 card_sort 排序
+              Object.keys(groups).forEach((groupName) => {
+                groups[groupName].sort((a, b) => (a.card_sort || 0) - (b.card_sort || 0));
+              });
+
+              const getFieldSpan = (field: FormField) => {
+                if (field.card_width_span) return field.card_width_span;
+                switch (field.card_width) {
+                  case '四分之一行':
+                    return 6;
+                  case '三分之一行':
+                    return 8;
+                  case '半行':
+                    return 12;
+                  case '整行':
+                    return 24;
+                  default:
+                    return 8;
+                }
+              };
+
+              return Object.entries(groups).map(([groupName, groupFields]) => (
+                <Card
+                  key={groupName}
+                  title={groupName}
+                  style={{ marginBottom: 16 }}
+                  size="small"
+                  styles={{ body: { padding: '16px 24px 8px 24px' } }}
+                >
+                  <Row gutter={16}>
+                    {groupFields.map((field) => {
+                      const span = getFieldSpan(field);
+                      return (
+                        <Col span={span} key={field.id}>
+                          {renderFormControl(field)}
+                        </Col>
+                      );
+                    })}
+                  </Row>
+                </Card>
+              ));
+            })()}
+          </ProForm>
+        </Modal>
+      )}
     </PageContainer>
   );
 };
