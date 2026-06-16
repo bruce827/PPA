@@ -299,6 +299,62 @@ const CREATE_TABLES_SQL = `
 
   CREATE INDEX IF NOT EXISTS idx_wiki_relations_wiki_key ON wiki_project_relations(wiki_key);
   CREATE INDEX IF NOT EXISTS idx_wiki_relations_project_id ON wiki_project_relations(project_id);
+
+  -- 数据指标设计模块
+  CREATE TABLE IF NOT EXISTS data_metrics_project (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    project_name TEXT NOT NULL,
+    project_desc TEXT,
+    linked_project_id INTEGER,
+    metric_count INTEGER DEFAULT 0,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (linked_project_id) REFERENCES projects(id) ON DELETE SET NULL
+  );
+
+  CREATE INDEX IF NOT EXISTS idx_data_metrics_project_linked ON data_metrics_project(linked_project_id);
+
+  CREATE TABLE IF NOT EXISTS data_metrics (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    dm_project_id INTEGER,
+    application TEXT,
+    module_name TEXT NOT NULL,
+    scene_l1 TEXT NOT NULL,
+    scene_l2 TEXT NOT NULL,
+    metric_name TEXT NOT NULL,
+    display_type TEXT NOT NULL,
+    data_source_logic TEXT,
+    algorithm TEXT,
+    collection_cycle TEXT,
+    source_system TEXT,
+    source_module TEXT,
+    integration_method TEXT,
+    remark TEXT,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (dm_project_id) REFERENCES data_metrics_project(id) ON DELETE CASCADE
+  );
+
+  CREATE INDEX IF NOT EXISTS idx_data_metrics_dm_project_id ON data_metrics(dm_project_id);
+  CREATE INDEX IF NOT EXISTS idx_data_metrics_module_name ON data_metrics(module_name);
+  CREATE INDEX IF NOT EXISTS idx_data_metrics_scene_l1 ON data_metrics(scene_l1);
+  CREATE INDEX IF NOT EXISTS idx_data_metrics_display_type ON data_metrics(display_type);
+
+  CREATE TABLE IF NOT EXISTS data_metric_categories (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    dm_project_id INTEGER,
+    type TEXT NOT NULL,
+    name TEXT NOT NULL,
+    parent_id INTEGER,
+    sort_order INTEGER DEFAULT 0,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (dm_project_id) REFERENCES data_metrics_project(id) ON DELETE CASCADE,
+    UNIQUE(dm_project_id, type, name, parent_id)
+  );
+
+  CREATE INDEX IF NOT EXISTS idx_data_metric_categories_project ON data_metric_categories(dm_project_id);
+  CREATE INDEX IF NOT EXISTS idx_data_metric_categories_parent ON data_metric_categories(parent_id);
+  CREATE INDEX IF NOT EXISTS idx_data_metric_categories_type ON data_metric_categories(type);
 `;
 
 function initDatabase(databasePath = process.env.DB_PATH || './ppa.db') {

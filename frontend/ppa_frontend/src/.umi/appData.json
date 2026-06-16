@@ -69,7 +69,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 2
+        "register": 3
       },
       "enableBy": "register",
       "type": "preset",
@@ -120,6 +120,10 @@
             0,
             0,
             0,
+            0,
+            0,
+            0,
+            0,
             0
           ]
         },
@@ -137,11 +141,15 @@
       "time": {
         "hooks": {
           "onDevCompileDone": [
-            109,
-            29,
-            28,
+            148,
+            30,
+            34,
+            44,
+            23,
             27,
-            27
+            29,
+            25,
+            40
           ]
         },
         "register": 1
@@ -158,13 +166,17 @@
       "time": {
         "hooks": {
           "modifyAppData": [
-            15
+            11
           ],
           "onGenerateFiles": [
-            3,
-            9,
-            18,
-            21
+            2,
+            14,
+            16,
+            12,
+            14,
+            14,
+            10,
+            16
           ]
         },
         "register": 15
@@ -181,6 +193,10 @@
       "time": {
         "hooks": {
           "addEntryCode": [
+            0,
+            0,
+            0,
+            0,
             0,
             0,
             0,
@@ -212,6 +228,10 @@
             0,
             0,
             0,
+            0,
+            0,
+            0,
+            0,
             0
           ],
           "onCheckCode": [
@@ -231,7 +251,90 @@
             0,
             0,
             0,
-            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
             0,
             0,
             0,
@@ -1200,7 +1303,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 55
+        "register": 53
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1213,7 +1316,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 25
+        "register": 26
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1226,7 +1329,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 12
+        "register": 13
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1252,6 +1355,8 @@
             0,
             0,
             0,
+            0,
+            0,
             0
           ]
         },
@@ -1270,13 +1375,21 @@
         "hooks": {
           "onGenerateFiles": [
             1,
-            1,
             0,
-            0
+            0,
+            0,
+            0,
+            0,
+            0,
+            1
           ],
           "addRuntimePlugin": [
             0,
-            1,
+            0,
+            0,
+            0,
+            0,
+            0,
             0,
             0
           ]
@@ -1308,13 +1421,13 @@
       "time": {
         "hooks": {
           "onStart": [
-            0
+            1
           ],
           "addBeforeMiddlewares": [
-            3
+            2
           ]
         },
-        "register": 21
+        "register": 23
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/preset-umi/dist/features/mock/mock.js",
@@ -1339,7 +1452,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/preset-umi/dist/features/okam/okam.js",
@@ -1355,6 +1468,10 @@
             0,
             0,
             0,
+            0,
+            0,
+            0,
+            0,
             0
           ],
           "addEntryImports": [
@@ -1365,10 +1482,18 @@
             0,
             0,
             0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
             0
           ]
         },
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1395,15 +1520,27 @@
       "time": {
         "hooks": {
           "modifyConfig": [
-            1
+            0
           ],
           "onGenerateFiles": [
             54,
-            11,
+            17,
+            22,
             13,
-            13
+            11,
+            11,
+            8,
+            11
           ],
           "addPolyfillImports": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
             0,
             0,
             0,
@@ -1434,6 +1571,14 @@
             0,
             0,
             0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
             0
           ]
         },
@@ -1451,7 +1596,11 @@
       "time": {
         "hooks": {
           "onGenerateFiles": [
-            101,
+            92,
+            0,
+            0,
+            0,
+            0,
             0,
             0,
             0
@@ -1500,6 +1649,10 @@
             0,
             0,
             0,
+            0,
+            0,
+            0,
+            0,
             0
           ],
           "addBeforeMiddlewares": [
@@ -1522,12 +1675,20 @@
           "onGenerateFiles": [
             10,
             5,
-            10,
-            4,
-            14,
-            4,
             12,
-            3
+            3,
+            10,
+            3,
+            10,
+            3,
+            13,
+            3,
+            8,
+            2,
+            7,
+            2,
+            8,
+            2
           ]
         },
         "register": 2
@@ -1568,7 +1729,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 2
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1582,13 +1743,17 @@
       "time": {
         "hooks": {
           "onGenerateFiles": [
-            249,
-            12,
-            7,
-            7
+            240,
+            14,
+            10,
+            10,
+            6,
+            6,
+            5,
+            6
           ]
         },
-        "register": 2
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1605,7 +1770,7 @@
             0
           ]
         },
-        "register": 1
+        "register": 2
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1656,7 +1821,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 14
+        "register": 15
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1670,7 +1835,11 @@
       "time": {
         "hooks": {
           "onGenerateFiles": [
-            4,
+            3,
+            0,
+            1,
+            0,
+            0,
             0,
             0,
             0
@@ -1688,7 +1857,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1701,7 +1870,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1768,7 +1937,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1781,7 +1950,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/preset-umi/dist/features/utoopack/utoopack.js",
@@ -1793,7 +1962,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 2
+        "register": 1
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/preset-umi/dist/features/hmrGuardian/hmrGuardian.js",
@@ -1805,7 +1974,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 16
+        "register": 18
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/preset-umi/dist/features/routePreloadOnLoad/routePreloadOnLoad.js",
@@ -1831,7 +2000,7 @@
       "time": {
         "hooks": {
           "modifyUniBundler": [
-            313
+            324
           ]
         },
         "register": 1
@@ -1874,10 +2043,10 @@
       "time": {
         "hooks": {
           "modifyAppData": [
-            8
+            7
           ]
         },
-        "register": 25
+        "register": 23
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/preset-umi/dist/commands/dev/dev.js",
@@ -1889,7 +2058,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1954,7 +2123,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 2
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1967,7 +2136,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1993,7 +2162,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -2006,7 +2175,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -2045,7 +2214,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -2058,7 +2227,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -2097,7 +2266,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -2110,7 +2279,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -2123,7 +2292,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 13
+        "register": 15
       },
       "enableBy": "register",
       "type": "plugin",
@@ -2166,13 +2335,21 @@
             0,
             0,
             0,
+            0,
+            0,
+            0,
+            0,
             0
           ],
           "onGenerateFiles": [
+            1,
+            1,
             0,
             1,
             0,
-            0
+            0,
+            0,
+            1
           ],
           "addTmpGenerateWatcherPaths": [
             0
@@ -2219,9 +2396,21 @@
             0,
             0,
             0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
             0
           ],
           "addRuntimePlugin": [
+            0,
+            0,
+            0,
+            0,
             0,
             0,
             0,
@@ -2231,22 +2420,30 @@
             0,
             0,
             0,
+            0,
+            0,
+            0,
+            0,
             0
           ],
           "onGenerateFiles": [
             2,
+            0,
             1,
             0,
-            1
+            1,
+            1,
+            0,
+            0
           ],
           "addExtraBabelPlugins": [
-            1
+            0
           ],
           "chainWebpack": [
             0
           ]
         },
-        "register": 3
+        "register": 4
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/plugins/dist/antd.js",
@@ -2258,7 +2455,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 7
+        "register": 5
       },
       "enableBy": "config",
       "type": "plugin",
@@ -2275,9 +2472,17 @@
             0,
             0,
             0,
+            0,
+            0,
+            0,
+            0,
             0
           ],
           "addRuntimePluginKey": [
+            0,
+            0,
+            0,
+            0,
             0,
             0,
             0,
@@ -2286,17 +2491,25 @@
           "onGenerateFiles": [
             0,
             0,
-            1,
+            0,
+            0,
+            0,
+            0,
+            0,
             0
           ],
           "addExtraModels": [
             0,
             0,
             0,
+            0,
+            0,
+            0,
+            0,
             0
           ]
         },
-        "register": 0
+        "register": 1
       },
       "enableBy": "config",
       "type": "plugin",
@@ -2318,6 +2531,10 @@
             0,
             0,
             0,
+            0,
+            0,
+            0,
+            0,
             0
           ],
           "modifyAppData": [
@@ -2327,22 +2544,34 @@
             0,
             0,
             0,
+            0,
+            0,
+            0,
+            0,
             0
           ],
           "addRuntimePluginKey": [
             0,
             0,
             0,
+            0,
+            0,
+            0,
+            0,
             0
           ],
           "onGenerateFiles": [
-            4,
+            3,
             2,
             2,
-            2
+            2,
+            1,
+            1,
+            1,
+            1
           ]
         },
-        "register": 3
+        "register": 2
       },
       "enableBy": "config",
       "type": "plugin",
@@ -2368,7 +2597,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 2
       },
       "enableBy": "config",
       "type": "plugin",
@@ -2385,19 +2614,27 @@
             0,
             0,
             0,
+            0,
+            0,
+            0,
+            0,
             0
           ],
           "onGenerateFiles": [
-            25,
+            24,
+            20,
             19,
             19,
-            19
+            19,
+            23,
+            21,
+            25
           ],
           "addTmpGenerateWatcherPaths": [
             0
           ]
         },
-        "register": 1
+        "register": 0
       },
       "enableBy": "config",
       "type": "plugin",
@@ -2410,7 +2647,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "config",
       "type": "plugin",
@@ -2427,10 +2664,14 @@
             0,
             0,
             0,
+            0,
+            0,
+            0,
+            0,
             0
           ]
         },
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -2443,7 +2684,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "type": "plugin",
       "path": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/@umijs/plugins/dist/qiankun/master.js",
@@ -2467,7 +2708,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "config",
       "type": "plugin",
@@ -2484,16 +2725,24 @@
             0,
             0,
             0,
+            0,
+            0,
+            0,
+            0,
             0
           ],
           "onGenerateFiles": [
             3,
+            1,
+            3,
+            0,
+            0,
             0,
             0,
             0
           ]
         },
-        "register": 0
+        "register": 1
       },
       "enableBy": "config",
       "type": "plugin",
@@ -2519,7 +2768,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "config",
       "type": "plugin",
@@ -2532,7 +2781,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "config",
       "type": "plugin",
@@ -2566,7 +2815,7 @@
             0
           ]
         },
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -2596,7 +2845,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -2749,6 +2998,11 @@
             "name": "表单设计",
             "path": "forms",
             "component": "./FormDesign"
+          },
+          {
+            "name": "数据指标设计",
+            "path": "data-metrics",
+            "component": "./DataMetrics"
           },
           {
             "name": "项目Wiki",
@@ -2955,6 +3209,11 @@
             "name": "表单设计",
             "path": "forms",
             "component": "./FormDesign"
+          },
+          {
+            "name": "数据指标设计",
+            "path": "data-metrics",
+            "component": "./DataMetrics"
           },
           {
             "name": "项目Wiki",
@@ -4149,47 +4408,58 @@
       "parentId": "22",
       "id": "23",
       "absPath": "/form-design/forms",
-      "__content": "import { PageContainer } from '@ant-design/pro-components';\nimport {\n  Button,\n  Card,\n  Drawer,\n  Form,\n  Input,\n  message,\n  Modal,\n  Select,\n  Space,\n  Tabs,\n  Tag,\n  Tooltip,\n  Row,\n  Col,\n} from 'antd';\nimport {\n  DeleteOutlined,\n  EditOutlined,\n  EyeOutlined,\n  PlusOutlined,\n  ReloadOutlined,\n  SaveOutlined,\n} from '@ant-design/icons';\nimport React, { useCallback, useEffect, useState } from 'react';\nimport ProTable from '@ant-design/pro-table';\nimport type { ProColumns } from '@ant-design/pro-table';\nimport ProForm, {\n  ProFormDatePicker,\n  ProFormDigit,\n  ProFormSelect,\n  ProFormSwitch,\n  ProFormText,\n  ProFormTextArea,\n  ProFormTimePicker,\n  ProFormRadio,\n  ProFormCheckbox,\n  ProFormTreeSelect,\n  ProFormDateRangePicker,\n} from '@ant-design/pro-form';\nimport {\n  createForm,\n  createFormDesignProject,\n  deleteField,\n  deleteForm,\n  deleteFormDesignProject,\n  getAppsByProjectId,\n  getFieldsByFormId,\n  getFormDesignProjects,\n  getFormsByAppId,\n  getProjects,\n  updateField,\n  validateField,\n  validateForm,\n} from '@/services/formDesign';\nimport {\n  FIELD_TYPE_OPTIONS,\n  INPUT_TYPE_OPTIONS,\n  CARD_WIDTH_OPTIONS,\n  CONTROL_OPTIONS,\n  YES_NO_OPTIONS,\n} from './constants';\n\n// 类型定义\ninterface FormProject {\n  id: number;\n  project_name: string;\n  project_desc: string;\n  linked_project_id: number | null;\n  app_count: number;\n  form_count: number;\n}\n\ninterface FormApp {\n  id: number;\n  app_name: string;\n  app_code: string;\n  project_id: number;\n  form_count: number;\n}\n\ninterface FormDefinition {\n  id: number;\n  app_id: number;\n  form_name: string;\n  form_code: string;\n  filter_condition: string;\n  description: string;\n}\n\ninterface FormField {\n  id: number;\n  form_id: number;\n  field_name: string;\n  field_code: string;\n  is_primary_key: number;\n  is_virtual: number;\n  field_type: string;\n  field_length: number;\n  field_precision: number;\n  default_value: string;\n  input_type: string;\n  input_type_code: string;\n  input_component: string;\n  input_params: string;\n  is_required: number;\n  is_unique: number;\n  placeholder: string;\n  remark: string;\n  card_group: string;\n  card_sort: number;\n  card_width: string;\n  card_width_span: number;\n  add_control: string;\n  update_control: string;\n  detail_control: string;\n  list_width: number;\n  list_control: string;\n  list_sort: number;\n  list_formatter: string;\n  is_filter: number;\n  filter_mode: string;\n  filter_default: string;\n  filter_placeholder: string;\n  source_system: string;\n}\n\n// 组件\nconst FormDesign: React.FC = () => {\n  // 状态\n  const [loading, setLoading] = useState(false);\n  const [projects, setProjects] = useState<FormProject[]>([]);\n  const [selectedProjectId, setSelectedProjectId] = useState<number | undefined>();\n  const [apps, setApps] = useState<FormApp[]>([]);\n  const [forms, setForms] = useState<FormDefinition[]>([]);\n  const [selectedFormId, setSelectedFormId] = useState<number | undefined>();\n  const [fields, setFields] = useState<FormField[]>([]);\n  const [editingFieldId, setEditingFieldId] = useState<number | null>(null);\n  const [editingField, setEditingField] = useState<Partial<FormField>>({});\n  const [createProjectVisible, setCreateProjectVisible] = useState(false);\n  const [createFormVisible, setCreateFormVisible] = useState(false);\n  const [previewVisible, setPreviewVisible] = useState(false);\n  const [previewField, setPreviewField] = useState<FormField | null>(null);\n  const [formPreviewVisible, setFormPreviewVisible] = useState(false);\n  const [historyProjects, setHistoryProjects] = useState<any[]>([]);\n\n  // 表单实例\n  const [createProjectForm] = Form.useForm();\n  const [createFormForm] = Form.useForm();\n\n  // 加载设计项目列表\n  const loadProjects = useCallback(async () => {\n    setLoading(true);\n    try {\n      const res = await getFormDesignProjects();\n      if (res.code === 200) {\n        setProjects(res.data);\n        if (res.data.length > 0 && !selectedProjectId) {\n          setSelectedProjectId(res.data[0].id);\n        }\n      }\n    } catch (error) {\n      message.error('加载项目列表失败');\n    } finally {\n      setLoading(false);\n    }\n  }, [selectedProjectId]);\n\n  // 加载应用列表\n  const loadApps = useCallback(async (projectId: number) => {\n    try {\n      const res = await getAppsByProjectId(projectId);\n      if (res.code === 200) {\n        setApps(res.data);\n      }\n    } catch (error) {\n      message.error('加载应用列表失败');\n    }\n  }, []);\n\n  // 加载表单列表\n  const loadForms = useCallback(async (appId: number) => {\n    try {\n      const res = await getFormsByAppId(appId);\n      if (res.code === 200) {\n        setForms(res.data);\n        if (res.data.length > 0 && !selectedFormId) {\n          setSelectedFormId(res.data[0].id);\n        }\n      }\n    } catch (error) {\n      message.error('加载表单列表失败');\n    }\n  }, [selectedFormId]);\n\n  // 加载字段列表\n  const loadFields = useCallback(async (formId: number) => {\n    setLoading(true);\n    try {\n      const res = await getFieldsByFormId(formId);\n      if (res.code === 200) {\n        setFields(res.data);\n      }\n    } catch (error) {\n      message.error('加载字段列表失败');\n    } finally {\n      setLoading(false);\n    }\n  }, []);\n\n  // 加载历史项目\n  const loadHistoryProjects = useCallback(async () => {\n    try {\n      const res = await getProjects();\n      if (res.data) {\n        setHistoryProjects(res.data);\n      }\n    } catch (error) {\n      console.error('加载历史项目失败', error);\n    }\n  }, []);\n\n  // 初始化\n  useEffect(() => {\n    loadProjects();\n    loadHistoryProjects();\n  }, [loadProjects, loadHistoryProjects]);\n\n  // 项目选择变化\n  useEffect(() => {\n    if (selectedProjectId) {\n      loadApps(selectedProjectId);\n    }\n  }, [selectedProjectId, loadApps]);\n\n  // 应用加载后，选择第一个\n  useEffect(() => {\n    if (apps.length > 0) {\n      loadForms(apps[0].id);\n    }\n  }, [apps, loadForms]);\n\n  // 表单选择变化\n  useEffect(() => {\n    if (selectedFormId) {\n      loadFields(selectedFormId);\n    }\n  }, [selectedFormId, loadFields]);\n\n  // 创建项目\n  const handleCreateProject = async (values: any) => {\n    try {\n      const res = await createFormDesignProject(values);\n      if (res.code === 200) {\n        message.success('创建成功');\n        setCreateProjectVisible(false);\n        createProjectForm.resetFields();\n        loadProjects();\n      }\n    } catch (error) {\n      message.error('创建失败');\n    }\n  };\n\n  // 关联历史项目\n  const handleLinkHistoryProject = (projectId: number) => {\n    const project = historyProjects.find((p) => p.id === projectId);\n    if (project) {\n      createProjectForm.setFieldsValue({\n        project_name: project.name || project.project_name,\n        project_desc: project.description || project.project_desc,\n        linked_project_id: project.id,\n      });\n    }\n  };\n\n  // 删除项目\n  const handleDeleteProject = (id: number) => {\n    Modal.confirm({\n      title: '确认删除',\n      content: '删除项目将同时删除其下的所有应用、表单和字段，确定要删除吗？',\n      okText: '确定',\n      cancelText: '取消',\n      okType: 'danger',\n      onOk: async () => {\n        try {\n          await deleteFormDesignProject(id);\n          message.success('删除成功');\n          loadProjects();\n        } catch (error) {\n          message.error('删除失败');\n        }\n      },\n    });\n  };\n\n  // 创建表单\n  const handleCreateForm = async (values: any) => {\n    if (!apps.length) {\n      message.error('请先创建应用');\n      return;\n    }\n    try {\n      const res = await createForm({\n        ...values,\n        app_id: apps[0].id,\n      });\n      if (res.code === 200) {\n        message.success('创建成功');\n        setCreateFormVisible(false);\n        createFormForm.resetFields();\n        if (selectedProjectId) {\n          loadForms(apps[0].id);\n        }\n      }\n    } catch (error) {\n      message.error('创建失败');\n    }\n  };\n\n  // 删除表单\n  const handleDeleteForm = (id: number) => {\n    Modal.confirm({\n      title: '确认删除',\n      content: '删除表单将同时删除其下的所有字段，确定要删除吗？',\n      okText: '确定',\n      cancelText: '取消',\n      okType: 'danger',\n      onOk: async () => {\n        try {\n          await deleteForm(id);\n          message.success('删除成功');\n          if (apps.length > 0) {\n            loadForms(apps[0].id);\n          }\n        } catch (error) {\n          message.error('删除失败');\n        }\n      },\n    });\n  };\n\n  // 开始编辑字段\n  const handleStartEdit = (record: FormField) => {\n    setEditingFieldId(record.id);\n    setEditingField({ ...record });\n  };\n\n  // 取消编辑\n  const handleCancelEdit = () => {\n    setEditingFieldId(null);\n    setEditingField({});\n  };\n\n  // 保存字段\n  const handleSaveField = async () => {\n    if (!editingFieldId) return;\n\n    // 先调用校验接口\n    try {\n      const validateRes = await validateField(editingField);\n      if (validateRes.code === 200) {\n        const { errors, warnings } = validateRes.data;\n\n        // 显示警告\n        if (warnings.length > 0) {\n          message.warning(`警告：${warnings.join('；')}`, 5);\n        }\n\n        // 如果有错误，阻止保存\n        if (errors.length > 0) {\n          Modal.error({\n            title: '数据校验失败',\n            content: (\n              <div>\n                <p>以下校验规则未通过：</p>\n                <ul>\n                  {errors.map((err: string, index: number) => (\n                    <li key={index}>{err}</li>\n                  ))}\n                </ul>\n              </div>\n            ),\n          });\n          return;\n        }\n      }\n    } catch (error) {\n      console.error('校验接口调用失败', error);\n    }\n\n    // 校验通过，保存数据\n    try {\n      const res = await updateField(editingFieldId, editingField);\n      if (res.code === 200) {\n        message.success('保存成功');\n        setEditingFieldId(null);\n        setEditingField({});\n        if (selectedFormId) {\n          loadFields(selectedFormId);\n        }\n      }\n    } catch (error) {\n      message.error('保存失败');\n    }\n  };\n\n  // 编辑字段值变化\n  const handleEditChange = (key: string, value: any) => {\n    setEditingField((prev) => ({ ...prev, [key]: value }));\n  };\n\n  // 删除字段\n  const handleDeleteField = (id: number) => {\n    Modal.confirm({\n      title: '确认删除',\n      content: '确定要删除这个字段吗？',\n      okText: '确定',\n      cancelText: '取消',\n      okType: 'danger',\n      onOk: async () => {\n        try {\n          await deleteField(id);\n          message.success('删除成功');\n          if (selectedFormId) {\n            loadFields(selectedFormId);\n          }\n        } catch (error) {\n          message.error('删除失败');\n        }\n      },\n    });\n  };\n\n  // 预览表单\n  const handlePreview = (field: FormField) => {\n    setPreviewField(field);\n    setPreviewVisible(true);\n  };\n\n  // 渲染表单控件\n  const renderFormControl = (field: FormField) => {\n    const component = field.input_component;\n    const required = field.is_required === 1;\n    const disabled =\n      field.add_control === '隐藏' ||\n      field.update_control === '隐藏' ||\n      field.detail_control === '隐藏';\n\n    const commonProps = {\n      name: field.field_code,\n      label: field.field_name,\n      placeholder: field.placeholder || `请输入${field.field_name}`,\n      rules: required ? [{ required: true, message: `请输入${field.field_name}` }] : [],\n      disabled,\n    };\n\n    // 安全解析 input_params\n    let parsedParams: any = null;\n    if (field.input_params) {\n      try {\n        parsedParams = JSON.parse(field.input_params);\n      } catch (e) {\n        console.warn('input_params 解析失败:', field.input_params, e);\n      }\n    }\n\n    const options = Array.isArray(parsedParams?.options) ? parsedParams.options : [];\n\n    switch (component) {\n      case 'Input':\n        return <ProFormText {...commonProps} />;\n      case 'Input.TextArea':\n      case 'JsonEditor':\n        return <ProFormTextArea {...commonProps} />;\n      case 'InputNumber':\n        return <ProFormDigit {...commonProps} />;\n      case 'Select':\n        return <ProFormSelect {...commonProps} options={options} />;\n      case 'TreeSelect':\n        return <ProFormTreeSelect {...commonProps} fieldProps={{ treeData: options }} />;\n      case 'DatePicker':\n        return <ProFormDatePicker {...commonProps} />;\n      case 'TimePicker':\n        return <ProFormTimePicker {...commonProps} />;\n      case 'DatePicker.RangePicker':\n        return <ProFormDateRangePicker {...commonProps} />;\n      case 'Radio.Group':\n        return <ProFormRadio.Group {...commonProps} options={options} />;\n      case 'Checkbox.Group':\n        return <ProFormCheckbox.Group {...commonProps} options={options} />;\n      case 'Switch':\n        return <ProFormSwitch {...commonProps} />;\n      default:\n        return <ProFormText {...commonProps} />;\n    }\n  };\n\n  // 表格列定义\n  const columns: ProColumns<FormField>[] = [\n    {\n      title: '字段名称',\n      dataIndex: 'field_name',\n      width: 150,\n      fixed: 'left',\n      render: (_, record) => {\n        if (editingFieldId === record.id) {\n          return (\n            <Input\n              value={editingField.field_name}\n              onChange={(e) => handleEditChange('field_name', e.target.value)}\n              size=\"small\"\n            />\n          );\n        }\n        return record.field_name;\n      },\n    },\n    {\n      title: '字段编码',\n      dataIndex: 'field_code',\n      width: 150,\n      render: (_, record) => {\n        if (editingFieldId === record.id) {\n          return (\n            <Input\n              value={editingField.field_code}\n              onChange={(e) => handleEditChange('field_code', e.target.value)}\n              size=\"small\"\n            />\n          );\n        }\n        return record.field_code;\n      },\n    },\n    {\n      title: '字段类型',\n      dataIndex: 'field_type',\n      width: 100,\n      render: (_, record) => {\n        if (editingFieldId === record.id) {\n          return (\n            <Select\n              value={editingField.field_type}\n              onChange={(val) => handleEditChange('field_type', val)}\n              size=\"small\"\n              style={{ width: '100%' }}\n            >\n              {FIELD_TYPE_OPTIONS.map((option) => (\n                <Select.Option key={option.value} value={option.value}>\n                  {option.label}\n                </Select.Option>\n              ))}\n            </Select>\n          );\n        }\n        return record.field_type;\n      },\n    },\n    {\n      title: '输入类型',\n      dataIndex: 'input_type',\n      width: 120,\n      render: (_, record) => {\n        if (editingFieldId === record.id) {\n          return (\n            <Select\n              value={editingField.input_type}\n              onChange={(val) => {\n                handleEditChange('input_type', val);\n                // 自动更新 input_type_code 和 input_component\n                const option = INPUT_TYPE_OPTIONS.find((item) => item.value === val);\n                if (option) {\n                  handleEditChange('input_type_code', option.code);\n                  handleEditChange('input_component', option.component);\n                }\n              }}\n              size=\"small\"\n              style={{ width: '100%' }}\n            >\n              {INPUT_TYPE_OPTIONS.map((option) => (\n                <Select.Option key={option.value} value={option.value}>\n                  {option.label}\n                </Select.Option>\n              ))}\n            </Select>\n          );\n        }\n        return record.input_type;\n      },\n    },\n    {\n      title: '控件',\n      dataIndex: 'input_component',\n      width: 120,\n      render: (_, record) => {\n        if (editingFieldId === record.id) {\n          return editingField.input_component || record.input_component;\n        }\n        return record.input_component;\n      },\n    },\n    {\n      title: '卡片分组',\n      dataIndex: 'card_group',\n      width: 120,\n      render: (_, record) => {\n        if (editingFieldId === record.id) {\n          return (\n            <Input\n              value={editingField.card_group}\n              onChange={(e) => handleEditChange('card_group', e.target.value)}\n              size=\"small\"\n              placeholder=\"如：基本信息\"\n            />\n          );\n        }\n        return record.card_group;\n      },\n    },\n    {\n      title: '卡片宽度',\n      dataIndex: 'card_width',\n      width: 100,\n      render: (_, record) => {\n        if (editingFieldId === record.id) {\n          return (\n            <Select\n              value={editingField.card_width}\n              onChange={(val) => {\n                handleEditChange('card_width', val);\n                const spanOption = CARD_WIDTH_OPTIONS.find((item) => item.value === val);\n                if (spanOption) {\n                  handleEditChange('card_width_span', spanOption.span);\n                }\n              }}\n              size=\"small\"\n              style={{ width: '100%' }}\n            >\n              {CARD_WIDTH_OPTIONS.map((option) => (\n                <Select.Option key={option.value} value={option.value}>\n                  {option.label}\n                </Select.Option>\n              ))}\n            </Select>\n          );\n        }\n        return record.card_width;\n      },\n    },\n    {\n      title: '必填',\n      dataIndex: 'is_required',\n      width: 80,\n      render: (_, record) => {\n        if (editingFieldId === record.id) {\n          return (\n            <Select\n              value={editingField.is_required}\n              onChange={(val) => handleEditChange('is_required', val)}\n              size=\"small\"\n              style={{ width: '100%' }}\n            >\n              {YES_NO_OPTIONS.map((option) => (\n                <Select.Option key={option.value} value={option.value}>\n                  {option.label}\n                </Select.Option>\n              ))}\n            </Select>\n          );\n        }\n        return record.is_required ? <Tag color=\"red\">是</Tag> : <Tag>否</Tag>;\n      },\n    },\n    {\n      title: '主键',\n      dataIndex: 'is_primary_key',\n      width: 80,\n      render: (_, record) => {\n        if (editingFieldId === record.id) {\n          return (\n            <Select\n              value={editingField.is_primary_key}\n              onChange={(val) => handleEditChange('is_primary_key', val)}\n              size=\"small\"\n              style={{ width: '100%' }}\n            >\n              {YES_NO_OPTIONS.map((option) => (\n                <Select.Option key={option.value} value={option.value}>\n                  {option.label}\n                </Select.Option>\n              ))}\n            </Select>\n          );\n        }\n        return record.is_primary_key ? <Tag color=\"blue\">是</Tag> : <Tag>否</Tag>;\n      },\n    },\n    {\n      title: '新增控制',\n      dataIndex: 'add_control',\n      width: 100,\n      render: (_, record) => {\n        if (editingFieldId === record.id) {\n          return (\n            <Select\n              value={editingField.add_control}\n              onChange={(val) => handleEditChange('add_control', val)}\n              size=\"small\"\n              style={{ width: '100%' }}\n            >\n              {CONTROL_OPTIONS.map((option) => (\n                <Select.Option key={option.value} value={option.value}>\n                  {option.label}\n                </Select.Option>\n              ))}\n            </Select>\n          );\n        }\n        return record.add_control;\n      },\n    },\n    {\n      title: '更新控制',\n      dataIndex: 'update_control',\n      width: 100,\n      render: (_, record) => {\n        if (editingFieldId === record.id) {\n          return (\n            <Select\n              value={editingField.update_control}\n              onChange={(val) => handleEditChange('update_control', val)}\n              size=\"small\"\n              style={{ width: '100%' }}\n            >\n              {CONTROL_OPTIONS.map((option) => (\n                <Select.Option key={option.value} value={option.value}>\n                  {option.label}\n                </Select.Option>\n              ))}\n            </Select>\n          );\n        }\n        return record.update_control;\n      },\n    },\n    {\n      title: '操作',\n      dataIndex: 'action',\n      width: 120,\n      fixed: 'right',\n      render: (_, record) => {\n        if (editingFieldId === record.id) {\n          return (\n            <Space>\n              <Tooltip title=\"保存\">\n                <Button\n                  type=\"link\"\n                  icon={<SaveOutlined />}\n                  onClick={handleSaveField}\n                />\n              </Tooltip>\n              <Tooltip title=\"取消\">\n                <Button type=\"link\" onClick={handleCancelEdit}>\n                  取消\n                </Button>\n              </Tooltip>\n            </Space>\n          );\n        }\n        return (\n          <Space>\n            <Tooltip title=\"编辑\">\n              <Button\n                type=\"link\"\n                icon={<EditOutlined />}\n                onClick={() => handleStartEdit(record)}\n              />\n            </Tooltip>\n            <Tooltip title=\"预览\">\n              <Button\n                type=\"link\"\n                icon={<EyeOutlined />}\n                onClick={() => handlePreview(record)}\n              />\n            </Tooltip>\n            <Tooltip title=\"删除\">\n              <Button\n                type=\"link\"\n                danger\n                icon={<DeleteOutlined />}\n                onClick={() => handleDeleteField(record.id)}\n              />\n            </Tooltip>\n          </Space>\n        );\n      },\n    },\n  ];\n\n  return (\n    <PageContainer\n      header={{\n        title: '表单设计',\n        breadcrumb: {\n          items: [\n            { title: '项目详细设计' },\n            { title: '表单设计' },\n          ],\n        },\n      }}\n    >\n      <Card>\n        {/* 顶部：项目选择 + 新建按钮 */}\n        <div style={{ marginBottom: 16, display: 'flex', justifyContent: 'space-between' }}>\n          <Space>\n            <span>选择项目：</span>\n            <Select\n              style={{ width: 300 }}\n              placeholder=\"请选择项目\"\n              value={selectedProjectId}\n              onChange={setSelectedProjectId}\n              loading={loading}\n            >\n              {projects.map((p) => (\n                <Select.Option key={p.id} value={p.id}>\n                  {p.project_name} ({p.form_count} 个表单)\n                </Select.Option>\n              ))}\n            </Select>\n            <Button icon={<ReloadOutlined />} onClick={loadProjects}>\n              刷新\n            </Button>\n          </Space>\n          <Space>\n            <Button\n              type=\"primary\"\n              icon={<PlusOutlined />}\n              onClick={() => setCreateProjectVisible(true)}\n            >\n              新建项目\n            </Button>\n            {selectedProjectId && (\n              <Button\n                danger\n                icon={<DeleteOutlined />}\n                onClick={() => handleDeleteProject(selectedProjectId)}\n              >\n                删除项目\n              </Button>\n            )}\n          </Space>\n        </div>\n\n        {/* Tab 页：表单列表 */}\n        {apps.length > 0 && (\n          <Tabs\n            type=\"card\"\n            activeKey={selectedFormId?.toString()}\n            onChange={(key) => setSelectedFormId(Number(key))}\n            tabBarExtraContent={\n              <Space>\n                <Button\n                  type=\"default\"\n                  size=\"small\"\n                  icon={<EyeOutlined />}\n                  onClick={async () => {\n                    if (!selectedFormId) return;\n                    try {\n                      const res = await validateForm(selectedFormId);\n                      if (res.code === 200) {\n                        const { total_fields, passed_fields, failed_fields, details } = res.data;\n                        if (failed_fields === 0) {\n                          message.success(`校验通过！共 ${total_fields} 个字段`);\n                        } else {\n                          Modal.warning({\n                            title: '表单校验结果',\n                            width: 600,\n                            content: (\n                              <div>\n                                <p>总字段数：{total_fields}</p>\n                                <p>通过：{passed_fields}</p>\n                                <p>失败：{failed_fields}</p>\n                                <hr />\n                                {details.map((item: any, index: number) => (\n                                  <div key={index} style={{ marginBottom: 8 }}>\n                                    <strong>{item.field_name} ({item.field_code})</strong>\n                                    {item.errors.length > 0 && (\n                                      <ul style={{ color: 'red', margin: '4px 0' }}>\n                                        {item.errors.map((err: string, i: number) => (\n                                          <li key={i}>{err}</li>\n                                        ))}\n                                      </ul>\n                                    )}\n                                    {item.warnings.length > 0 && (\n                                      <ul style={{ color: 'orange', margin: '4px 0' }}>\n                                        {item.warnings.map((warn: string, i: number) => (\n                                          <li key={i}>{warn}</li>\n                                        ))}\n                                      </ul>\n                                    )}\n                                  </div>\n                                ))}\n                              </div>\n                            ),\n                          });\n                        }\n                      }\n                    } catch (error) {\n                      message.error('校验失败');\n                    }\n                  }}\n                >\n                  校验表单\n                </Button>\n                <Button\n                  type=\"default\"\n                  size=\"small\"\n                  icon={<EyeOutlined />}\n                  onClick={() => {\n                    if (!selectedFormId) return;\n                    setFormPreviewVisible(true);\n                  }}\n                >\n                  预览表单\n                </Button>\n                <Button\n                  type=\"primary\"\n                  size=\"small\"\n                  icon={<PlusOutlined />}\n                  onClick={() => setCreateFormVisible(true)}\n                >\n                  新建表单\n                </Button>\n              </Space>\n            }\n          >\n            {forms.map((form) => (\n              <Tabs.TabPane\n                key={form.id}\n                tab={\n                  <span>\n                    {form.form_name}\n                    <Tag style={{ marginLeft: 8 }}>{form.form_code}</Tag>\n                    <Button\n                      type=\"link\"\n                      size=\"small\"\n                      danger\n                      icon={<DeleteOutlined />}\n                      onClick={(e) => {\n                        e.stopPropagation();\n                        handleDeleteForm(form.id);\n                      }}\n                    />\n                  </span>\n                }\n              />\n            ))}\n          </Tabs>\n        )}\n\n        {/* 字段表格 */}\n        {selectedFormId && (\n          <ProTable\n            columns={columns}\n            dataSource={fields}\n            rowKey=\"id\"\n            loading={loading}\n            search={false}\n            options={false}\n            pagination={false}\n            scroll={{ x: 1800 }}\n            toolBarRender={false}\n          />\n        )}\n\n        {apps.length === 0 && !loading && (\n          <div style={{ textAlign: 'center', padding: '50px 0' }}>\n            <p>暂无数据，请先选择或创建项目</p>\n          </div>\n        )}\n      </Card>\n\n      {/* 新建项目弹窗 */}\n      <Modal\n        title=\"新建项目\"\n        open={createProjectVisible}\n        onCancel={() => {\n          setCreateProjectVisible(false);\n          createProjectForm.resetFields();\n        }}\n        footer={null}\n      >\n        <Form form={createProjectForm} onFinish={handleCreateProject} layout=\"vertical\">\n          <Form.Item\n            name=\"project_name\"\n            label=\"项目名称\"\n            rules={[{ required: true, message: '请输入项目名称' }]}\n          >\n            <Input placeholder=\"请输入项目名称\" />\n          </Form.Item>\n          <Form.Item name=\"project_desc\" label=\"项目描述\">\n            <Input.TextArea placeholder=\"请输入项目描述\" />\n          </Form.Item>\n          <Form.Item name=\"linked_project_id\" label=\"关联历史项目\">\n            <Select\n              placeholder=\"选择历史项目（可选）\"\n              allowClear\n              onChange={handleLinkHistoryProject}\n            >\n              {historyProjects.map((p: any) => (\n                <Select.Option key={p.id} value={p.id}>\n                  {p.name}\n                </Select.Option>\n              ))}\n            </Select>\n          </Form.Item>\n          <Form.Item>\n            <Space>\n              <Button type=\"primary\" htmlType=\"submit\">\n                确定\n              </Button>\n              <Button onClick={() => setCreateProjectVisible(false)}>取消</Button>\n            </Space>\n          </Form.Item>\n        </Form>\n      </Modal>\n\n      {/* 新建表单弹窗 */}\n      <Modal\n        title=\"新建表单\"\n        open={createFormVisible}\n        onCancel={() => {\n          setCreateFormVisible(false);\n          createFormForm.resetFields();\n        }}\n        footer={null}\n      >\n        <Form form={createFormForm} onFinish={handleCreateForm} layout=\"vertical\">\n          <Form.Item\n            name=\"form_name\"\n            label=\"表单名称\"\n            rules={[{ required: true, message: '请输入表单名称' }]}\n          >\n            <Input placeholder=\"请输入表单名称\" />\n          </Form.Item>\n          <Form.Item\n            name=\"form_code\"\n            label=\"表单编码\"\n            rules={[{ required: true, message: '请输入表单编码' }]}\n          >\n            <Input placeholder=\"请输入表单编码（英文）\" />\n          </Form.Item>\n          <Form.Item name=\"description\" label=\"描述\">\n            <Input.TextArea placeholder=\"请输入描述\" />\n          </Form.Item>\n          <Form.Item>\n            <Space>\n              <Button type=\"primary\" htmlType=\"submit\">\n                确定\n              </Button>\n              <Button onClick={() => setCreateFormVisible(false)}>取消</Button>\n            </Space>\n          </Form.Item>\n        </Form>\n      </Modal>\n\n      {/* 表单预览抽屉 */}\n      <Drawer\n        title=\"表单预览\"\n        placement=\"right\"\n        width={600}\n        open={previewVisible}\n        onClose={() => setPreviewVisible(false)}\n      >\n        {previewField && (\n          <ProForm layout=\"vertical\" submitter={false}>\n            {renderFormControl(previewField)}\n          </ProForm>\n        )}\n      </Drawer>\n\n      {/* 整个表单预览弹窗 */}\n      {formPreviewVisible && (\n        <Modal\n          title={`表单整个预览 - ${forms.find((f) => f.id === selectedFormId)?.form_name || ''}`}\n          open={formPreviewVisible}\n          onCancel={() => setFormPreviewVisible(false)}\n          width={1000}\n          destroyOnClose\n          footer={[\n            <Button key=\"close\" type=\"primary\" onClick={() => setFormPreviewVisible(false)}>\n              关闭\n            </Button>,\n          ]}\n        >\n          <ProForm layout=\"vertical\" submitter={false}>\n            {(() => {\n              // 按 card_group 分组\n              const groups: { [key: string]: FormField[] } = {};\n              fields.forEach((field) => {\n                const groupName = field.card_group || '默认分组';\n                if (!groups[groupName]) {\n                  groups[groupName] = [];\n                }\n                groups[groupName].push(field);\n              });\n\n              // 组内根据 card_sort 排序\n              Object.keys(groups).forEach((groupName) => {\n                groups[groupName].sort((a, b) => (a.card_sort || 0) - (b.card_sort || 0));\n              });\n\n              const getFieldSpan = (field: FormField) => {\n                if (field.card_width_span) return field.card_width_span;\n                switch (field.card_width) {\n                  case '四分之一行':\n                    return 6;\n                  case '三分之一行':\n                    return 8;\n                  case '半行':\n                    return 12;\n                  case '整行':\n                    return 24;\n                  default:\n                    return 8;\n                }\n              };\n\n              return Object.entries(groups).map(([groupName, groupFields]) => (\n                <Card\n                  key={groupName}\n                  title={groupName}\n                  style={{ marginBottom: 16 }}\n                  size=\"small\"\n                  bodyStyle={{ padding: '16px 24px 8px 24px' }}\n                >\n                  <Row gutter={16}>\n                    {groupFields.map((field) => {\n                      const span = getFieldSpan(field);\n                      return (\n                        <Col span={span} key={field.id}>\n                          {renderFormControl(field)}\n                        </Col>\n                      );\n                    })}\n                  </Row>\n                </Card>\n              ));\n            })()}\n          </ProForm>\n        </Modal>\n      )}\n    </PageContainer>\n  );\n};\n\nexport default FormDesign;\n",
+      "__content": "import { PageContainer } from '@ant-design/pro-components';\nimport {\n  Button,\n  Card,\n  Drawer,\n  Form,\n  Input,\n  message,\n  Modal,\n  Select,\n  Space,\n  Tabs,\n  Tag,\n  Tooltip,\n  Row,\n  Col,\n} from 'antd';\nimport {\n  DeleteOutlined,\n  EditOutlined,\n  EyeOutlined,\n  PlusOutlined,\n  ReloadOutlined,\n  SaveOutlined,\n} from '@ant-design/icons';\nimport React, { useCallback, useEffect, useState } from 'react';\nimport ProTable from '@ant-design/pro-table';\nimport type { ProColumns } from '@ant-design/pro-table';\nimport ProForm, {\n  ProFormDatePicker,\n  ProFormDigit,\n  ProFormSelect,\n  ProFormSwitch,\n  ProFormText,\n  ProFormTextArea,\n  ProFormTimePicker,\n  ProFormRadio,\n  ProFormCheckbox,\n  ProFormTreeSelect,\n  ProFormDateRangePicker,\n} from '@ant-design/pro-form';\nimport {\n  createForm,\n  createFormDesignProject,\n  deleteField,\n  deleteForm,\n  deleteFormDesignProject,\n  getAppsByProjectId,\n  getFieldsByFormId,\n  getFormDesignProjects,\n  getFormsByAppId,\n  getProjects,\n  updateField,\n  validateField,\n  validateForm,\n} from '@/services/formDesign';\nimport {\n  FIELD_TYPE_OPTIONS,\n  INPUT_TYPE_OPTIONS,\n  CARD_WIDTH_OPTIONS,\n  CONTROL_OPTIONS,\n  YES_NO_OPTIONS,\n} from './constants';\n\n// 类型定义\ninterface FormProject {\n  id: number;\n  project_name: string;\n  project_desc: string;\n  linked_project_id: number | null;\n  app_count: number;\n  form_count: number;\n}\n\ninterface FormApp {\n  id: number;\n  app_name: string;\n  app_code: string;\n  project_id: number;\n  form_count: number;\n}\n\ninterface FormDefinition {\n  id: number;\n  app_id: number;\n  form_name: string;\n  form_code: string;\n  filter_condition: string;\n  description: string;\n}\n\ninterface FormField {\n  id: number;\n  form_id: number;\n  field_name: string;\n  field_code: string;\n  is_primary_key: number;\n  is_virtual: number;\n  field_type: string;\n  field_length: number;\n  field_precision: number;\n  default_value: string;\n  input_type: string;\n  input_type_code: string;\n  input_component: string;\n  input_params: string;\n  is_required: number;\n  is_unique: number;\n  placeholder: string;\n  remark: string;\n  card_group: string;\n  card_sort: number;\n  card_width: string;\n  card_width_span: number;\n  add_control: string;\n  update_control: string;\n  detail_control: string;\n  list_width: number;\n  list_control: string;\n  list_sort: number;\n  list_formatter: string;\n  is_filter: number;\n  filter_mode: string;\n  filter_default: string;\n  filter_placeholder: string;\n  source_system: string;\n}\n\n// 组件\nconst FormDesign: React.FC = () => {\n  // 状态\n  const [loading, setLoading] = useState(false);\n  const [projects, setProjects] = useState<FormProject[]>([]);\n  const [selectedProjectId, setSelectedProjectId] = useState<number | undefined>();\n  const [apps, setApps] = useState<FormApp[]>([]);\n  const [forms, setForms] = useState<FormDefinition[]>([]);\n  const [selectedFormId, setSelectedFormId] = useState<number | undefined>();\n  const [fields, setFields] = useState<FormField[]>([]);\n  const [editingFieldId, setEditingFieldId] = useState<number | null>(null);\n  const [editingField, setEditingField] = useState<Partial<FormField>>({});\n  const [createProjectVisible, setCreateProjectVisible] = useState(false);\n  const [createFormVisible, setCreateFormVisible] = useState(false);\n  const [previewVisible, setPreviewVisible] = useState(false);\n  const [previewField, setPreviewField] = useState<FormField | null>(null);\n  const [formPreviewVisible, setFormPreviewVisible] = useState(false);\n  const [historyProjects, setHistoryProjects] = useState<any[]>([]);\n\n  // 表单实例\n  const [createProjectForm] = Form.useForm();\n  const [createFormForm] = Form.useForm();\n\n  // 加载设计项目列表\n  const loadProjects = useCallback(async () => {\n    setLoading(true);\n    try {\n      const res = await getFormDesignProjects();\n      if (res.code === 200) {\n        setProjects(res.data);\n        if (res.data.length > 0 && !selectedProjectId) {\n          setSelectedProjectId(res.data[0].id);\n        }\n      }\n    } catch (error) {\n      message.error('加载项目列表失败');\n    } finally {\n      setLoading(false);\n    }\n  }, [selectedProjectId]);\n\n  // 加载应用列表\n  const loadApps = useCallback(async (projectId: number) => {\n    try {\n      const res = await getAppsByProjectId(projectId);\n      if (res.code === 200) {\n        setApps(res.data);\n      }\n    } catch (error) {\n      message.error('加载应用列表失败');\n    }\n  }, []);\n\n  // 加载表单列表\n  const loadForms = useCallback(async (appId: number) => {\n    try {\n      const res = await getFormsByAppId(appId);\n      if (res.code === 200) {\n        setForms(res.data);\n        if (res.data.length > 0 && !selectedFormId) {\n          setSelectedFormId(res.data[0].id);\n        }\n      }\n    } catch (error) {\n      message.error('加载表单列表失败');\n    }\n  }, [selectedFormId]);\n\n  // 加载字段列表\n  const loadFields = useCallback(async (formId: number) => {\n    setLoading(true);\n    try {\n      const res = await getFieldsByFormId(formId);\n      if (res.code === 200) {\n        setFields(res.data);\n      }\n    } catch (error) {\n      message.error('加载字段列表失败');\n    } finally {\n      setLoading(false);\n    }\n  }, []);\n\n  // 加载历史项目\n  const loadHistoryProjects = useCallback(async () => {\n    try {\n      const res = await getProjects();\n      if (res.data) {\n        setHistoryProjects(res.data);\n      }\n    } catch (error) {\n      console.error('加载历史项目失败', error);\n    }\n  }, []);\n\n  // 初始化\n  useEffect(() => {\n    loadProjects();\n    loadHistoryProjects();\n  }, [loadProjects, loadHistoryProjects]);\n\n  // 项目选择变化\n  useEffect(() => {\n    if (selectedProjectId) {\n      loadApps(selectedProjectId);\n    }\n  }, [selectedProjectId, loadApps]);\n\n  // 应用加载后，选择第一个\n  useEffect(() => {\n    if (apps.length > 0) {\n      loadForms(apps[0].id);\n    }\n  }, [apps, loadForms]);\n\n  // 表单选择变化\n  useEffect(() => {\n    if (selectedFormId) {\n      loadFields(selectedFormId);\n    }\n  }, [selectedFormId, loadFields]);\n\n  // 创建项目\n  const handleCreateProject = async (values: any) => {\n    try {\n      const res = await createFormDesignProject(values);\n      if (res.code === 200) {\n        message.success('创建成功');\n        setCreateProjectVisible(false);\n        createProjectForm.resetFields();\n        loadProjects();\n      }\n    } catch (error) {\n      message.error('创建失败');\n    }\n  };\n\n  // 关联历史项目\n  const handleLinkHistoryProject = (projectId: number) => {\n    const project = historyProjects.find((p) => p.id === projectId);\n    if (project) {\n      createProjectForm.setFieldsValue({\n        project_name: project.name || project.project_name,\n        project_desc: project.description || project.project_desc,\n        linked_project_id: project.id,\n      });\n    }\n  };\n\n  // 删除项目\n  const handleDeleteProject = (id: number) => {\n    Modal.confirm({\n      title: '确认删除',\n      content: '删除项目将同时删除其下的所有应用、表单和字段，确定要删除吗？',\n      okText: '确定',\n      cancelText: '取消',\n      okType: 'danger',\n      onOk: async () => {\n        try {\n          await deleteFormDesignProject(id);\n          message.success('删除成功');\n          loadProjects();\n        } catch (error) {\n          message.error('删除失败');\n        }\n      },\n    });\n  };\n\n  // 创建表单\n  const handleCreateForm = async (values: any) => {\n    if (!apps.length) {\n      message.error('请先创建应用');\n      return;\n    }\n    try {\n      const res = await createForm({\n        ...values,\n        app_id: apps[0].id,\n      });\n      if (res.code === 200) {\n        message.success('创建成功');\n        setCreateFormVisible(false);\n        createFormForm.resetFields();\n        if (selectedProjectId) {\n          loadForms(apps[0].id);\n        }\n      }\n    } catch (error) {\n      message.error('创建失败');\n    }\n  };\n\n  // 删除表单\n  const handleDeleteForm = (id: number) => {\n    Modal.confirm({\n      title: '确认删除',\n      content: '删除表单将同时删除其下的所有字段，确定要删除吗？',\n      okText: '确定',\n      cancelText: '取消',\n      okType: 'danger',\n      onOk: async () => {\n        try {\n          await deleteForm(id);\n          message.success('删除成功');\n          if (apps.length > 0) {\n            loadForms(apps[0].id);\n          }\n        } catch (error) {\n          message.error('删除失败');\n        }\n      },\n    });\n  };\n\n  // 开始编辑字段\n  const handleStartEdit = (record: FormField) => {\n    setEditingFieldId(record.id);\n    setEditingField({ ...record });\n  };\n\n  // 取消编辑\n  const handleCancelEdit = () => {\n    setEditingFieldId(null);\n    setEditingField({});\n  };\n\n  // 保存字段\n  const handleSaveField = async () => {\n    if (!editingFieldId) return;\n\n    // 先调用校验接口\n    try {\n      const validateRes = await validateField(editingField);\n      if (validateRes.code === 200) {\n        const { errors, warnings } = validateRes.data;\n\n        // 显示警告\n        if (warnings.length > 0) {\n          message.warning(`警告：${warnings.join('；')}`, 5);\n        }\n\n        // 如果有错误，阻止保存\n        if (errors.length > 0) {\n          Modal.error({\n            title: '数据校验失败',\n            content: (\n              <div>\n                <p>以下校验规则未通过：</p>\n                <ul>\n                  {errors.map((err: string, index: number) => (\n                    <li key={index}>{err}</li>\n                  ))}\n                </ul>\n              </div>\n            ),\n          });\n          return;\n        }\n      }\n    } catch (error) {\n      console.error('校验接口调用失败', error);\n    }\n\n    // 校验通过，保存数据\n    try {\n      const res = await updateField(editingFieldId, editingField);\n      if (res.code === 200) {\n        message.success('保存成功');\n        setEditingFieldId(null);\n        setEditingField({});\n        if (selectedFormId) {\n          loadFields(selectedFormId);\n        }\n      }\n    } catch (error) {\n      message.error('保存失败');\n    }\n  };\n\n  // 编辑字段值变化\n  const handleEditChange = (key: string, value: any) => {\n    setEditingField((prev) => ({ ...prev, [key]: value }));\n  };\n\n  // 删除字段\n  const handleDeleteField = (id: number) => {\n    Modal.confirm({\n      title: '确认删除',\n      content: '确定要删除这个字段吗？',\n      okText: '确定',\n      cancelText: '取消',\n      okType: 'danger',\n      onOk: async () => {\n        try {\n          await deleteField(id);\n          message.success('删除成功');\n          if (selectedFormId) {\n            loadFields(selectedFormId);\n          }\n        } catch (error) {\n          message.error('删除失败');\n        }\n      },\n    });\n  };\n\n  // 预览表单\n  const handlePreview = (field: FormField) => {\n    setPreviewField(field);\n    setPreviewVisible(true);\n  };\n\n  // 渲染表单控件\n  const renderFormControl = (field: FormField) => {\n    const component = field.input_component;\n    const required = field.is_required === 1;\n    const disabled =\n      field.add_control === '隐藏' ||\n      field.update_control === '隐藏' ||\n      field.detail_control === '隐藏';\n\n    const commonProps = {\n      name: field.field_code,\n      label: field.field_name,\n      placeholder: field.placeholder || `请输入${field.field_name}`,\n      rules: required ? [{ required: true, message: `请输入${field.field_name}` }] : [],\n      disabled,\n    };\n\n    // 安全解析 input_params\n    let parsedParams: any = null;\n    if (field.input_params) {\n      try {\n        parsedParams = JSON.parse(field.input_params);\n      } catch (e) {\n        console.warn('input_params 解析失败:', field.input_params, e);\n      }\n    }\n\n    const options = Array.isArray(parsedParams?.options) ? parsedParams.options : [];\n\n    switch (component) {\n      case 'Input':\n        return <ProFormText {...commonProps} />;\n      case 'Input.TextArea':\n      case 'JsonEditor':\n        return <ProFormTextArea {...commonProps} />;\n      case 'InputNumber':\n        return <ProFormDigit {...commonProps} />;\n      case 'Select':\n        return <ProFormSelect {...commonProps} options={options} />;\n      case 'TreeSelect':\n        return <ProFormTreeSelect {...commonProps} fieldProps={{ treeData: options }} />;\n      case 'DatePicker':\n        return <ProFormDatePicker {...commonProps} />;\n      case 'TimePicker':\n        return <ProFormTimePicker {...commonProps} />;\n      case 'DatePicker.RangePicker':\n        return <ProFormDateRangePicker {...commonProps} />;\n      case 'Radio.Group':\n        return <ProFormRadio.Group {...commonProps} options={options} />;\n      case 'Checkbox.Group':\n        return <ProFormCheckbox.Group {...commonProps} options={options} />;\n      case 'Switch':\n        return <ProFormSwitch {...commonProps} />;\n      default:\n        return <ProFormText {...commonProps} />;\n    }\n  };\n\n  // 表格列定义\n  const columns: ProColumns<FormField>[] = [\n    {\n      title: '字段名称',\n      dataIndex: 'field_name',\n      width: 150,\n      fixed: 'left',\n      render: (_, record) => {\n        if (editingFieldId === record.id) {\n          return (\n            <Input\n              value={editingField.field_name}\n              onChange={(e) => handleEditChange('field_name', e.target.value)}\n              size=\"small\"\n            />\n          );\n        }\n        return record.field_name;\n      },\n    },\n    {\n      title: '字段编码',\n      dataIndex: 'field_code',\n      width: 150,\n      render: (_, record) => {\n        if (editingFieldId === record.id) {\n          return (\n            <Input\n              value={editingField.field_code}\n              onChange={(e) => handleEditChange('field_code', e.target.value)}\n              size=\"small\"\n            />\n          );\n        }\n        return record.field_code;\n      },\n    },\n    {\n      title: '字段类型',\n      dataIndex: 'field_type',\n      width: 100,\n      render: (_, record) => {\n        if (editingFieldId === record.id) {\n          return (\n            <Select\n              value={editingField.field_type}\n              onChange={(val) => handleEditChange('field_type', val)}\n              size=\"small\"\n              style={{ width: '100%' }}\n            >\n              {FIELD_TYPE_OPTIONS.map((option) => (\n                <Select.Option key={option.value} value={option.value}>\n                  {option.label}\n                </Select.Option>\n              ))}\n            </Select>\n          );\n        }\n        return record.field_type;\n      },\n    },\n    {\n      title: '输入类型',\n      dataIndex: 'input_type',\n      width: 120,\n      render: (_, record) => {\n        if (editingFieldId === record.id) {\n          return (\n            <Select\n              value={editingField.input_type}\n              onChange={(val) => {\n                handleEditChange('input_type', val);\n                // 自动更新 input_type_code 和 input_component\n                const option = INPUT_TYPE_OPTIONS.find((item) => item.value === val);\n                if (option) {\n                  handleEditChange('input_type_code', option.code);\n                  handleEditChange('input_component', option.component);\n                }\n              }}\n              size=\"small\"\n              style={{ width: '100%' }}\n            >\n              {INPUT_TYPE_OPTIONS.map((option) => (\n                <Select.Option key={option.value} value={option.value}>\n                  {option.label}\n                </Select.Option>\n              ))}\n            </Select>\n          );\n        }\n        return record.input_type;\n      },\n    },\n    {\n      title: '控件',\n      dataIndex: 'input_component',\n      width: 120,\n      render: (_, record) => {\n        if (editingFieldId === record.id) {\n          return editingField.input_component || record.input_component;\n        }\n        return record.input_component;\n      },\n    },\n    {\n      title: '卡片分组',\n      dataIndex: 'card_group',\n      width: 120,\n      render: (_, record) => {\n        if (editingFieldId === record.id) {\n          return (\n            <Input\n              value={editingField.card_group}\n              onChange={(e) => handleEditChange('card_group', e.target.value)}\n              size=\"small\"\n              placeholder=\"如：基本信息\"\n            />\n          );\n        }\n        return record.card_group;\n      },\n    },\n    {\n      title: '卡片宽度',\n      dataIndex: 'card_width',\n      width: 100,\n      render: (_, record) => {\n        if (editingFieldId === record.id) {\n          return (\n            <Select\n              value={editingField.card_width}\n              onChange={(val) => {\n                handleEditChange('card_width', val);\n                const spanOption = CARD_WIDTH_OPTIONS.find((item) => item.value === val);\n                if (spanOption) {\n                  handleEditChange('card_width_span', spanOption.span);\n                }\n              }}\n              size=\"small\"\n              style={{ width: '100%' }}\n            >\n              {CARD_WIDTH_OPTIONS.map((option) => (\n                <Select.Option key={option.value} value={option.value}>\n                  {option.label}\n                </Select.Option>\n              ))}\n            </Select>\n          );\n        }\n        return record.card_width;\n      },\n    },\n    {\n      title: '必填',\n      dataIndex: 'is_required',\n      width: 80,\n      render: (_, record) => {\n        if (editingFieldId === record.id) {\n          return (\n            <Select\n              value={editingField.is_required}\n              onChange={(val) => handleEditChange('is_required', val)}\n              size=\"small\"\n              style={{ width: '100%' }}\n            >\n              {YES_NO_OPTIONS.map((option) => (\n                <Select.Option key={option.value} value={option.value}>\n                  {option.label}\n                </Select.Option>\n              ))}\n            </Select>\n          );\n        }\n        return record.is_required ? <Tag color=\"red\">是</Tag> : <Tag>否</Tag>;\n      },\n    },\n    {\n      title: '主键',\n      dataIndex: 'is_primary_key',\n      width: 80,\n      render: (_, record) => {\n        if (editingFieldId === record.id) {\n          return (\n            <Select\n              value={editingField.is_primary_key}\n              onChange={(val) => handleEditChange('is_primary_key', val)}\n              size=\"small\"\n              style={{ width: '100%' }}\n            >\n              {YES_NO_OPTIONS.map((option) => (\n                <Select.Option key={option.value} value={option.value}>\n                  {option.label}\n                </Select.Option>\n              ))}\n            </Select>\n          );\n        }\n        return record.is_primary_key ? <Tag color=\"blue\">是</Tag> : <Tag>否</Tag>;\n      },\n    },\n    {\n      title: '新增控制',\n      dataIndex: 'add_control',\n      width: 100,\n      render: (_, record) => {\n        if (editingFieldId === record.id) {\n          return (\n            <Select\n              value={editingField.add_control}\n              onChange={(val) => handleEditChange('add_control', val)}\n              size=\"small\"\n              style={{ width: '100%' }}\n            >\n              {CONTROL_OPTIONS.map((option) => (\n                <Select.Option key={option.value} value={option.value}>\n                  {option.label}\n                </Select.Option>\n              ))}\n            </Select>\n          );\n        }\n        return record.add_control;\n      },\n    },\n    {\n      title: '更新控制',\n      dataIndex: 'update_control',\n      width: 100,\n      render: (_, record) => {\n        if (editingFieldId === record.id) {\n          return (\n            <Select\n              value={editingField.update_control}\n              onChange={(val) => handleEditChange('update_control', val)}\n              size=\"small\"\n              style={{ width: '100%' }}\n            >\n              {CONTROL_OPTIONS.map((option) => (\n                <Select.Option key={option.value} value={option.value}>\n                  {option.label}\n                </Select.Option>\n              ))}\n            </Select>\n          );\n        }\n        return record.update_control;\n      },\n    },\n    {\n      title: '操作',\n      dataIndex: 'action',\n      width: 120,\n      fixed: 'right',\n      render: (_, record) => {\n        if (editingFieldId === record.id) {\n          return (\n            <Space>\n              <Tooltip title=\"保存\">\n                <Button\n                  type=\"link\"\n                  icon={<SaveOutlined />}\n                  onClick={handleSaveField}\n                />\n              </Tooltip>\n              <Tooltip title=\"取消\">\n                <Button type=\"link\" onClick={handleCancelEdit}>\n                  取消\n                </Button>\n              </Tooltip>\n            </Space>\n          );\n        }\n        return (\n          <Space>\n            <Tooltip title=\"编辑\">\n              <Button\n                type=\"link\"\n                icon={<EditOutlined />}\n                onClick={() => handleStartEdit(record)}\n              />\n            </Tooltip>\n            <Tooltip title=\"预览\">\n              <Button\n                type=\"link\"\n                icon={<EyeOutlined />}\n                onClick={() => handlePreview(record)}\n              />\n            </Tooltip>\n            <Tooltip title=\"删除\">\n              <Button\n                type=\"link\"\n                danger\n                icon={<DeleteOutlined />}\n                onClick={() => handleDeleteField(record.id)}\n              />\n            </Tooltip>\n          </Space>\n        );\n      },\n    },\n  ];\n\n  return (\n    <PageContainer\n      header={{\n        title: '表单设计',\n        breadcrumb: {\n          items: [\n            { title: '项目详细设计' },\n            { title: '表单设计' },\n          ],\n        },\n      }}\n    >\n      <Card>\n        {/* 顶部：项目选择 + 新建按钮 */}\n        <div style={{ marginBottom: 16, display: 'flex', justifyContent: 'space-between' }}>\n          <Space>\n            <span>选择项目：</span>\n            <Select\n              style={{ width: 300 }}\n              placeholder=\"请选择项目\"\n              value={selectedProjectId}\n              onChange={setSelectedProjectId}\n              loading={loading}\n            >\n              {projects.map((p) => (\n                <Select.Option key={p.id} value={p.id}>\n                  {p.project_name} ({p.form_count} 个表单)\n                </Select.Option>\n              ))}\n            </Select>\n            <Button icon={<ReloadOutlined />} onClick={loadProjects}>\n              刷新\n            </Button>\n          </Space>\n          <Space>\n            <Button\n              type=\"primary\"\n              icon={<PlusOutlined />}\n              onClick={() => setCreateProjectVisible(true)}\n            >\n              新建项目\n            </Button>\n            {selectedProjectId && (\n              <Button\n                danger\n                icon={<DeleteOutlined />}\n                onClick={() => handleDeleteProject(selectedProjectId)}\n              >\n                删除项目\n              </Button>\n            )}\n          </Space>\n        </div>\n\n        {/* Tab 页：表单列表 */}\n        {apps.length > 0 && (\n          <Tabs\n            type=\"card\"\n            activeKey={selectedFormId?.toString()}\n            onChange={(key) => setSelectedFormId(Number(key))}\n            tabBarExtraContent={\n              <Space>\n                <Button\n                  type=\"default\"\n                  size=\"small\"\n                  icon={<EyeOutlined />}\n                  onClick={async () => {\n                    if (!selectedFormId) return;\n                    try {\n                      const res = await validateForm(selectedFormId);\n                      if (res.code === 200) {\n                        const { total_fields, passed_fields, failed_fields, details } = res.data;\n                        if (failed_fields === 0) {\n                          message.success(`校验通过！共 ${total_fields} 个字段`);\n                        } else {\n                          Modal.warning({\n                            title: '表单校验结果',\n                            width: 600,\n                            content: (\n                              <div>\n                                <p>总字段数：{total_fields}</p>\n                                <p>通过：{passed_fields}</p>\n                                <p>失败：{failed_fields}</p>\n                                <hr />\n                                {details.map((item: any, index: number) => (\n                                  <div key={index} style={{ marginBottom: 8 }}>\n                                    <strong>{item.field_name} ({item.field_code})</strong>\n                                    {item.errors.length > 0 && (\n                                      <ul style={{ color: 'red', margin: '4px 0' }}>\n                                        {item.errors.map((err: string, i: number) => (\n                                          <li key={i}>{err}</li>\n                                        ))}\n                                      </ul>\n                                    )}\n                                    {item.warnings.length > 0 && (\n                                      <ul style={{ color: 'orange', margin: '4px 0' }}>\n                                        {item.warnings.map((warn: string, i: number) => (\n                                          <li key={i}>{warn}</li>\n                                        ))}\n                                      </ul>\n                                    )}\n                                  </div>\n                                ))}\n                              </div>\n                            ),\n                          });\n                        }\n                      }\n                    } catch (error) {\n                      message.error('校验失败');\n                    }\n                  }}\n                >\n                  校验表单\n                </Button>\n                <Button\n                  type=\"default\"\n                  size=\"small\"\n                  icon={<EyeOutlined />}\n                  onClick={() => {\n                    if (!selectedFormId) return;\n                    setFormPreviewVisible(true);\n                  }}\n                >\n                  预览表单\n                </Button>\n                <Button\n                  type=\"primary\"\n                  size=\"small\"\n                  icon={<PlusOutlined />}\n                  onClick={() => setCreateFormVisible(true)}\n                >\n                  新建表单\n                </Button>\n              </Space>\n            }\n            items={forms.map((form) => ({\n              key: form.id.toString(),\n              label: (\n                <span>\n                  {form.form_name}\n                  <Tag style={{ marginLeft: 8 }}>{form.form_code}</Tag>\n                  <Button\n                    type=\"link\"\n                    size=\"small\"\n                    danger\n                    icon={<DeleteOutlined />}\n                    onClick={(e) => {\n                      e.stopPropagation();\n                      handleDeleteForm(form.id);\n                    }}\n                  />\n                </span>\n              ),\n            }))}\n          />\n        )}\n\n        {/* 字段表格 */}\n        {selectedFormId && (\n          <ProTable\n            columns={columns}\n            dataSource={fields}\n            rowKey=\"id\"\n            loading={loading}\n            search={false}\n            options={false}\n            pagination={false}\n            scroll={{ x: 1800 }}\n            toolBarRender={false}\n          />\n        )}\n\n        {apps.length === 0 && !loading && (\n          <div style={{ textAlign: 'center', padding: '50px 0' }}>\n            <p>暂无数据，请先选择或创建项目</p>\n          </div>\n        )}\n      </Card>\n\n      {/* 新建项目弹窗 */}\n      <Modal\n        title=\"新建项目\"\n        open={createProjectVisible}\n        onCancel={() => {\n          setCreateProjectVisible(false);\n          createProjectForm.resetFields();\n        }}\n        footer={null}\n      >\n        <Form form={createProjectForm} onFinish={handleCreateProject} layout=\"vertical\">\n          <Form.Item\n            name=\"project_name\"\n            label=\"项目名称\"\n            rules={[{ required: true, message: '请输入项目名称' }]}\n          >\n            <Input placeholder=\"请输入项目名称\" />\n          </Form.Item>\n          <Form.Item name=\"project_desc\" label=\"项目描述\">\n            <Input.TextArea placeholder=\"请输入项目描述\" />\n          </Form.Item>\n          <Form.Item name=\"linked_project_id\" label=\"关联历史项目\">\n            <Select\n              placeholder=\"选择历史项目（可选）\"\n              allowClear\n              onChange={handleLinkHistoryProject}\n            >\n              {historyProjects.map((p: any) => (\n                <Select.Option key={p.id} value={p.id}>\n                  {p.name}\n                </Select.Option>\n              ))}\n            </Select>\n          </Form.Item>\n          <Form.Item>\n            <Space>\n              <Button type=\"primary\" htmlType=\"submit\">\n                确定\n              </Button>\n              <Button onClick={() => setCreateProjectVisible(false)}>取消</Button>\n            </Space>\n          </Form.Item>\n        </Form>\n      </Modal>\n\n      {/* 新建表单弹窗 */}\n      <Modal\n        title=\"新建表单\"\n        open={createFormVisible}\n        onCancel={() => {\n          setCreateFormVisible(false);\n          createFormForm.resetFields();\n        }}\n        footer={null}\n      >\n        <Form form={createFormForm} onFinish={handleCreateForm} layout=\"vertical\">\n          <Form.Item\n            name=\"form_name\"\n            label=\"表单名称\"\n            rules={[{ required: true, message: '请输入表单名称' }]}\n          >\n            <Input placeholder=\"请输入表单名称\" />\n          </Form.Item>\n          <Form.Item\n            name=\"form_code\"\n            label=\"表单编码\"\n            rules={[{ required: true, message: '请输入表单编码' }]}\n          >\n            <Input placeholder=\"请输入表单编码（英文）\" />\n          </Form.Item>\n          <Form.Item name=\"description\" label=\"描述\">\n            <Input.TextArea placeholder=\"请输入描述\" />\n          </Form.Item>\n          <Form.Item>\n            <Space>\n              <Button type=\"primary\" htmlType=\"submit\">\n                确定\n              </Button>\n              <Button onClick={() => setCreateFormVisible(false)}>取消</Button>\n            </Space>\n          </Form.Item>\n        </Form>\n      </Modal>\n\n      {/* 表单预览抽屉 */}\n      <Drawer\n        title=\"表单预览\"\n        placement=\"right\"\n        width={600}\n        open={previewVisible}\n        onClose={() => setPreviewVisible(false)}\n      >\n        {previewField && (\n          <ProForm layout=\"vertical\" submitter={false}>\n            {renderFormControl(previewField)}\n          </ProForm>\n        )}\n      </Drawer>\n\n      {/* 整个表单预览弹窗 */}\n      {formPreviewVisible && (\n        <Modal\n          title={`表单整个预览 - ${forms.find((f) => f.id === selectedFormId)?.form_name || ''}`}\n          open={formPreviewVisible}\n          onCancel={() => setFormPreviewVisible(false)}\n          width={1000}\n          destroyOnHidden\n          footer={[\n            <Button key=\"close\" type=\"primary\" onClick={() => setFormPreviewVisible(false)}>\n              关闭\n            </Button>,\n          ]}\n        >\n          <ProForm layout=\"vertical\" submitter={false}>\n            {(() => {\n              // 按 card_group 分组\n              const groups: { [key: string]: FormField[] } = {};\n              fields.forEach((field) => {\n                const groupName = field.card_group || '默认分组';\n                if (!groups[groupName]) {\n                  groups[groupName] = [];\n                }\n                groups[groupName].push(field);\n              });\n\n              // 组内根据 card_sort 排序\n              Object.keys(groups).forEach((groupName) => {\n                groups[groupName].sort((a, b) => (a.card_sort || 0) - (b.card_sort || 0));\n              });\n\n              const getFieldSpan = (field: FormField) => {\n                if (field.card_width_span) return field.card_width_span;\n                switch (field.card_width) {\n                  case '四分之一行':\n                    return 6;\n                  case '三分之一行':\n                    return 8;\n                  case '半行':\n                    return 12;\n                  case '整行':\n                    return 24;\n                  default:\n                    return 8;\n                }\n              };\n\n              return Object.entries(groups).map(([groupName, groupFields]) => (\n                <Card\n                  key={groupName}\n                  title={groupName}\n                  style={{ marginBottom: 16 }}\n                  size=\"small\"\n                  styles={{ body: { padding: '16px 24px 8px 24px' } }}\n                >\n                  <Row gutter={16}>\n                    {groupFields.map((field) => {\n                      const span = getFieldSpan(field);\n                      return (\n                        <Col span={span} key={field.id}>\n                          {renderFormControl(field)}\n                        </Col>\n                      );\n                    })}\n                  </Row>\n                </Card>\n              ));\n            })()}\n          </ProForm>\n        </Modal>\n      )}\n    </PageContainer>\n  );\n};\n\nexport default FormDesign;\n",
       "__isJSFile": true,
       "__absFile": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/src/pages/FormDesign/index.tsx"
     },
     "24": {
+      "name": "数据指标设计",
+      "path": "data-metrics",
+      "file": "@/pages/DataMetrics/index.tsx",
+      "parentId": "22",
+      "id": "24",
+      "absPath": "/form-design/data-metrics",
+      "__content": "import React, { useState, useEffect, useCallback } from 'react';\nimport { PageContainer } from '@ant-design/pro-components';\nimport {\n  Button,\n  Card,\n  Form,\n  Input,\n  message,\n  Modal,\n  Select,\n  Space,\n  Tag,\n  Tooltip,\n} from 'antd';\nimport {\n  DeleteOutlined,\n  ExportOutlined,\n  ImportOutlined,\n  PlusOutlined,\n  ReloadOutlined,\n  SaveOutlined,\n  CloseOutlined,\n} from '@ant-design/icons';\nimport ProTable from '@ant-design/pro-table';\nimport type { ProColumns } from '@ant-design/pro-table';\n\nimport {\n  getDataMetricsProjects,\n  createDataMetricsProject,\n  deleteDataMetricsProject,\n  getLinkedProjects,\n  getDataMetrics,\n  createDataMetric,\n  updateDataMetric,\n  deleteDataMetric,\n  batchDataMetrics,\n  exportDataMetrics,\n  type DataMetricsProject,\n  type DataMetric,\n  type LinkedProject,\n} from '@/services/dataMetrics';\nimport { DISPLAY_TYPE_OPTIONS, DISPLAY_TYPE_COLORS, COLLECTION_CYCLE_OPTIONS, DEFAULT_DISPLAY_TYPE } from './constants';\nimport ImportModal from './ImportModal';\n\nconst DataMetrics: React.FC = () => {\n  // 项目相关状态\n  const [projects, setProjects] = useState<DataMetricsProject[]>([]);\n  const [selectedProjectId, setSelectedProjectId] = useState<number | undefined>();\n  const [loading, setLoading] = useState(false);\n  const [historyProjects, setHistoryProjects] = useState<LinkedProject[]>([]);\n  const [createProjectVisible, setCreateProjectVisible] = useState(false);\n  const [createProjectForm] = Form.useForm();\n\n  // 指标相关状态\n  const [metrics, setMetrics] = useState<DataMetric[]>([]);\n  const [loadingMetrics, setLoadingMetrics] = useState(false);\n  const [selectedRowKeys, setSelectedRowKeys] = useState<number[]>([]);\n  const [importVisible, setImportVisible] = useState(false);\n\n  // 行内编辑状态\n  const [editingId, setEditingId] = useState<number | null>(null);\n  const [editingRecord, setEditingRecord] = useState<Partial<DataMetric>>({});\n  const [saving, setSaving] = useState(false);\n\n  // ========== 数据加载 ==========\n\n  // 加载项目列表\n  const loadProjects = useCallback(async () => {\n    setLoading(true);\n    try {\n      const res = await getDataMetricsProjects();\n      if (res.success) {\n        setProjects(res.data);\n        if (res.data.length > 0 && !selectedProjectId) {\n          setSelectedProjectId(res.data[0].id);\n        }\n      }\n    } catch (error) {\n      message.error('加载项目列表失败');\n    } finally {\n      setLoading(false);\n    }\n  }, [selectedProjectId]);\n\n  // 加载历史项目\n  const loadHistoryProjects = useCallback(async () => {\n    try {\n      const res = await getLinkedProjects();\n      if (res.success) {\n        setHistoryProjects(res.data);\n      }\n    } catch (error) {\n      console.error('加载历史项目失败', error);\n    }\n  }, []);\n\n  // 加载指标列表\n  const loadMetrics = useCallback(async (projectId: number) => {\n    setLoadingMetrics(true);\n    try {\n      const res = await getDataMetrics({\n        dm_project_id: projectId,\n        page: 1,\n        pageSize: 1000, // 一次性加载所有\n      });\n      if (res.success) {\n        setMetrics(res.data.items);\n      }\n    } catch (error) {\n      message.error('加载指标列表失败');\n    } finally {\n      setLoadingMetrics(false);\n    }\n  }, []);\n\n  // 初始化\n  useEffect(() => {\n    loadProjects();\n    loadHistoryProjects();\n  }, [loadProjects, loadHistoryProjects]);\n\n  // 项目选择变化\n  useEffect(() => {\n    if (selectedProjectId) {\n      loadMetrics(selectedProjectId);\n    }\n  }, [selectedProjectId, loadMetrics]);\n\n  // ========== 项目操作 ==========\n\n  // 创建项目\n  const handleCreateProject = async (values: any) => {\n    try {\n      const res = await createDataMetricsProject(values);\n      if (res.success) {\n        message.success('创建成功');\n        setCreateProjectVisible(false);\n        createProjectForm.resetFields();\n        loadProjects();\n      }\n    } catch (error) {\n      message.error('创建失败');\n    }\n  };\n\n  // 关联历史项目\n  const handleLinkHistoryProject = (projectId: number) => {\n    const project = historyProjects.find((p) => p.id === projectId);\n    if (project) {\n      createProjectForm.setFieldsValue({\n        project_name: project.name,\n        linked_project_id: project.id,\n      });\n    }\n  };\n\n  // 删除项目\n  const handleDeleteProject = (id: number) => {\n    Modal.confirm({\n      title: '确认删除',\n      content: '删除项目将同时删除其下的所有数据指标，确定要删除吗？',\n      okText: '确定',\n      cancelText: '取消',\n      okType: 'danger',\n      onOk: async () => {\n        try {\n          await deleteDataMetricsProject(id);\n          message.success('删除成功');\n          setSelectedProjectId(undefined);\n          loadProjects();\n        } catch (error) {\n          message.error('删除失败');\n        }\n      },\n    });\n  };\n\n  // ========== 指标操作 ==========\n\n  // 新增指标\n  const handleAddMetric = async () => {\n    if (!selectedProjectId) {\n      message.warning('请先选择项目');\n      return;\n    }\n\n    const newMetric = {\n      dm_project_id: selectedProjectId,\n      module_name: '',\n      scene_l1: '',\n      scene_l2: '',\n      metric_name: '',\n      display_type: '统计数据',\n    };\n\n    try {\n      const res = await createDataMetric(newMetric);\n      if (res.success) {\n        message.success('新增成功');\n        loadMetrics(selectedProjectId);\n        // 开始编辑新记录\n        setEditingId(res.data.id);\n        setEditingRecord(res.data);\n      }\n    } catch (error) {\n      message.error('新增失败');\n    }\n  };\n\n  // 删除指标\n  const handleDeleteMetric = async (id: number) => {\n    try {\n      await deleteDataMetric(id);\n      message.success('删除成功');\n      if (selectedProjectId) {\n        loadMetrics(selectedProjectId);\n      }\n    } catch (error) {\n      message.error('删除失败');\n    }\n  };\n\n  // 批量删除\n  const handleBatchDelete = async () => {\n    if (selectedRowKeys.length === 0) {\n      message.warning('请选择要删除的数据');\n      return;\n    }\n    Modal.confirm({\n      title: '确认批量删除',\n      content: `确定要删除选中的 ${selectedRowKeys.length} 条数据吗？`,\n      okText: '确认',\n      cancelText: '取消',\n      onOk: async () => {\n        try {\n          await batchDataMetrics('delete', selectedRowKeys);\n          message.success('删除成功');\n          setSelectedRowKeys([]);\n          if (selectedProjectId) {\n            loadMetrics(selectedProjectId);\n          }\n        } catch (error) {\n          message.error('删除失败');\n        }\n      },\n    });\n  };\n\n  // 导出Excel\n  const handleExport = async () => {\n    if (!selectedProjectId) {\n      message.warning('请先选择项目');\n      return;\n    }\n    try {\n      const blob = await exportDataMetrics({ dm_project_id: selectedProjectId });\n      const url = window.URL.createObjectURL(blob as Blob);\n      const a = document.createElement('a');\n      a.href = url;\n      a.download = `数据指标清单_${new Date().toISOString().slice(0, 10)}.xlsx`;\n      document.body.appendChild(a);\n      a.click();\n      document.body.removeChild(a);\n      window.URL.revokeObjectURL(url);\n      message.success('导出成功');\n    } catch (error: any) {\n      message.error(error.message || '导出失败');\n    }\n  };\n\n  // ========== 行内编辑 ==========\n\n  // 开始编辑\n  const handleStartEdit = (record: DataMetric) => {\n    setEditingId(record.id);\n    setEditingRecord({ ...record });\n  };\n\n  // 取消编辑\n  const handleCancelEdit = () => {\n    setEditingId(null);\n    setEditingRecord({});\n  };\n\n  // 保存编辑\n  const handleSaveEdit = async () => {\n    if (!editingId || saving) return;\n\n    setSaving(true);\n    try {\n      await updateDataMetric(editingId, editingRecord);\n      message.success('保存成功');\n      setEditingId(null);\n      setEditingRecord({});\n      if (selectedProjectId) {\n        loadMetrics(selectedProjectId);\n      }\n    } catch (error: any) {\n      message.error(error.message || '保存失败');\n    } finally {\n      setSaving(false);\n    }\n  };\n\n  // 编辑字段变化\n  const handleEditChange = (field: string, value: any) => {\n    setEditingRecord((prev) => ({ ...prev, [field]: value }));\n  };\n\n  // ========== 表格列定义 ==========\n\n  const columns: ProColumns<DataMetric>[] = [\n    {\n      title: '功能模块',\n      dataIndex: 'module_name',\n      width: 120,\n      render: (_, record) => {\n        if (editingId === record.id) {\n          return (\n            <Input\n              value={editingRecord.module_name}\n              onChange={(e) => handleEditChange('module_name', e.target.value)}\n              size=\"small\"\n              placeholder=\"如：产销动态\"\n            />\n          );\n        }\n        return record.module_name;\n      },\n    },\n    {\n      title: '一级场景',\n      dataIndex: 'scene_l1',\n      width: 120,\n      render: (_, record) => {\n        if (editingId === record.id) {\n          return (\n            <Input\n              value={editingRecord.scene_l1}\n              onChange={(e) => handleEditChange('scene_l1', e.target.value)}\n              size=\"small\"\n              placeholder=\"如：油气产量\"\n            />\n          );\n        }\n        return record.scene_l1;\n      },\n    },\n    {\n      title: '二级场景',\n      dataIndex: 'scene_l2',\n      width: 120,\n      render: (_, record) => {\n        if (editingId === record.id) {\n          return (\n            <Input\n              value={editingRecord.scene_l2}\n              onChange={(e) => handleEditChange('scene_l2', e.target.value)}\n              size=\"small\"\n              placeholder=\"如：原油产量\"\n            />\n          );\n        }\n        return record.scene_l2;\n      },\n    },\n    {\n      title: '指标/数据项',\n      dataIndex: 'metric_name',\n      width: 150,\n      render: (_, record) => {\n        if (editingId === record.id) {\n          return (\n            <Input\n              value={editingRecord.metric_name}\n              onChange={(e) => handleEditChange('metric_name', e.target.value)}\n              size=\"small\"\n              placeholder=\"如：日完成\"\n            />\n          );\n        }\n        return record.metric_name;\n      },\n    },\n    {\n      title: '展示方式',\n      dataIndex: 'display_type',\n      width: 100,\n      render: (_, record) => {\n        if (editingId === record.id) {\n          return (\n            <Select\n              value={editingRecord.display_type}\n              onChange={(val) => handleEditChange('display_type', val)}\n              size=\"small\"\n              style={{ width: '100%' }}\n            >\n              {DISPLAY_TYPE_OPTIONS.map((option) => (\n                <Select.Option key={option.value} value={option.value}>\n                  {option.label}\n                </Select.Option>\n              ))}\n            </Select>\n          );\n        }\n        const color = DISPLAY_TYPE_COLORS[record.display_type] || 'default';\n        return <Tag color={color}>{record.display_type}</Tag>;\n      },\n    },\n    {\n      title: '取数逻辑',\n      dataIndex: 'data_source_logic',\n      width: 200,\n      ellipsis: true,\n      render: (_, record) => {\n        if (editingId === record.id) {\n          return (\n            <Input\n              value={editingRecord.data_source_logic}\n              onChange={(e) => handleEditChange('data_source_logic', e.target.value)}\n              size=\"small\"\n              placeholder=\"接口调用、计算等\"\n            />\n          );\n        }\n        return record.data_source_logic;\n      },\n    },\n    {\n      title: '算法',\n      dataIndex: 'algorithm',\n      width: 200,\n      ellipsis: true,\n      render: (_, record) => {\n        if (editingId === record.id) {\n          return (\n            <Input\n              value={editingRecord.algorithm}\n              onChange={(e) => handleEditChange('algorithm', e.target.value)}\n              size=\"small\"\n              placeholder=\"计算公式\"\n            />\n          );\n        }\n        return record.algorithm;\n      },\n    },\n    {\n      title: '采集周期',\n      dataIndex: 'collection_cycle',\n      width: 80,\n      render: (_, record) => {\n        if (editingId === record.id) {\n          return (\n            <Select\n              value={editingRecord.collection_cycle}\n              onChange={(val) => handleEditChange('collection_cycle', val)}\n              size=\"small\"\n              style={{ width: '100%' }}\n              allowClear\n              placeholder=\"选择\"\n            >\n              {COLLECTION_CYCLE_OPTIONS.map((option) => (\n                <Select.Option key={option.value} value={option.value}>\n                  {option.label}\n                </Select.Option>\n              ))}\n            </Select>\n          );\n        }\n        return record.collection_cycle;\n      },\n    },\n    {\n      title: '数据来源系统',\n      dataIndex: 'source_system',\n      width: 150,\n      ellipsis: true,\n      render: (_, record) => {\n        if (editingId === record.id) {\n          return (\n            <Input\n              value={editingRecord.source_system}\n              onChange={(e) => handleEditChange('source_system', e.target.value)}\n              size=\"small\"\n              placeholder=\"来源系统名称\"\n            />\n          );\n        }\n        return record.source_system;\n      },\n    },\n    {\n      title: '数据来源功能模块',\n      dataIndex: 'source_module',\n      width: 150,\n      ellipsis: true,\n      render: (_, record) => {\n        if (editingId === record.id) {\n          return (\n            <Input\n              value={editingRecord.source_module}\n              onChange={(e) => handleEditChange('source_module', e.target.value)}\n              size=\"small\"\n              placeholder=\"功能模块路径\"\n            />\n          );\n        }\n        return record.source_module;\n      },\n    },\n    {\n      title: '对接方式',\n      dataIndex: 'integration_method',\n      width: 100,\n      render: (_, record) => {\n        if (editingId === record.id) {\n          return (\n            <Input\n              value={editingRecord.integration_method}\n              onChange={(e) => handleEditChange('integration_method', e.target.value)}\n              size=\"small\"\n              placeholder=\"如：数据中台\"\n            />\n          );\n        }\n        return record.integration_method;\n      },\n    },\n    {\n      title: '备注',\n      dataIndex: 'remark',\n      width: 150,\n      ellipsis: true,\n      render: (_, record) => {\n        if (editingId === record.id) {\n          return (\n            <Input\n              value={editingRecord.remark}\n              onChange={(e) => handleEditChange('remark', e.target.value)}\n              size=\"small\"\n              placeholder=\"补充说明\"\n            />\n          );\n        }\n        return record.remark;\n      },\n    },\n    {\n      title: '操作',\n      valueType: 'option',\n      width: 100,\n      fixed: 'right',\n      render: (_, record) => {\n        if (editingId === record.id) {\n          return [\n            <Tooltip title=\"保存\" key=\"save\">\n              <Button\n                type=\"link\"\n                size=\"small\"\n                icon={<SaveOutlined />}\n                loading={saving}\n                onClick={handleSaveEdit}\n              />\n            </Tooltip>,\n            <Tooltip title=\"取消\" key=\"cancel\">\n              <Button\n                type=\"link\"\n                size=\"small\"\n                icon={<CloseOutlined />}\n                onClick={handleCancelEdit}\n              />\n            </Tooltip>,\n          ];\n        }\n        return [\n          <Tooltip title=\"编辑\" key=\"edit\">\n            <Button\n              type=\"link\"\n              size=\"small\"\n              onClick={() => handleStartEdit(record)}\n            >\n              编辑\n            </Button>\n          </Tooltip>,\n          <Tooltip title=\"删除\" key=\"delete\">\n            <Button\n              type=\"link\"\n              size=\"small\"\n              danger\n              icon={<DeleteOutlined />}\n              onClick={() => handleDeleteMetric(record.id)}\n            />\n          </Tooltip>,\n        ];\n      },\n    },\n  ];\n\n  // ========== 渲染 ==========\n\n  return (\n    <PageContainer\n      header={{\n        title: '数据指标设计',\n        breadcrumb: {\n          items: [\n            { title: '项目详细设计' },\n            { title: '数据指标设计' },\n          ],\n        },\n      }}\n    >\n      <Card>\n        {/* 顶部：项目选择 + 操作按钮 */}\n        <div style={{ marginBottom: 16, display: 'flex', justifyContent: 'space-between' }}>\n          <Space>\n            <span>选择项目：</span>\n            <Select\n              style={{ width: 300 }}\n              placeholder=\"请选择项目\"\n              value={selectedProjectId}\n              onChange={setSelectedProjectId}\n              loading={loading}\n            >\n              {projects.map((p) => (\n                <Select.Option key={p.id} value={p.id}>\n                  {p.project_name} ({p.metric_count} 个指标)\n                </Select.Option>\n              ))}\n            </Select>\n            <Button icon={<ReloadOutlined />} onClick={loadProjects}>\n              刷新\n            </Button>\n          </Space>\n          <Space>\n            <Button\n              icon={<ImportOutlined />}\n              onClick={() => {\n                if (!selectedProjectId) {\n                  message.warning('请先选择项目');\n                  return;\n                }\n                setImportVisible(true);\n              }}\n            >\n              Excel导入\n            </Button>\n            <Button\n              icon={<ExportOutlined />}\n              onClick={handleExport}\n            >\n              Excel导出\n            </Button>\n            <Button\n              type=\"primary\"\n              icon={<PlusOutlined />}\n              onClick={() => setCreateProjectVisible(true)}\n            >\n              新建项目\n            </Button>\n            {selectedProjectId && (\n              <Button\n                danger\n                icon={<DeleteOutlined />}\n                onClick={() => handleDeleteProject(selectedProjectId)}\n              >\n                删除项目\n              </Button>\n            )}\n          </Space>\n        </div>\n\n        {/* 指标表格 */}\n        {selectedProjectId && (\n          <ProTable<DataMetric>\n            headerTitle=\"数据指标列表\"\n            columns={columns}\n            dataSource={metrics}\n            rowKey=\"id\"\n            loading={loadingMetrics}\n            search={false}\n            options={false}\n            pagination={false}\n            scroll={{ x: 1800 }}\n            rowSelection={{\n              selectedRowKeys,\n              onChange: (keys) => setSelectedRowKeys(keys as number[]),\n            }}\n            toolBarRender={() => [\n              <Button\n                key=\"add\"\n                type=\"primary\"\n                size=\"small\"\n                icon={<PlusOutlined />}\n                onClick={handleAddMetric}\n              >\n                新增指标\n              </Button>,\n              selectedRowKeys.length > 0 && (\n                <Button\n                  key=\"batchDelete\"\n                  danger\n                  size=\"small\"\n                  icon={<DeleteOutlined />}\n                  onClick={handleBatchDelete}\n                >\n                  批量删除 ({selectedRowKeys.length})\n                </Button>\n              ),\n            ]}\n          />\n        )}\n\n        {!selectedProjectId && !loading && (\n          <div style={{ textAlign: 'center', padding: '50px 0' }}>\n            <p>暂无数据，请先选择或创建项目</p>\n          </div>\n        )}\n      </Card>\n\n      {/* 新建项目弹窗 */}\n      <Modal\n        title=\"新建项目\"\n        open={createProjectVisible}\n        onCancel={() => {\n          setCreateProjectVisible(false);\n          createProjectForm.resetFields();\n        }}\n        footer={null}\n      >\n        <Form form={createProjectForm} onFinish={handleCreateProject} layout=\"vertical\">\n          <Form.Item\n            name=\"project_name\"\n            label=\"项目名称\"\n            rules={[{ required: true, message: '请输入项目名称' }]}\n          >\n            <Input placeholder=\"请输入项目名称\" />\n          </Form.Item>\n          <Form.Item name=\"project_desc\" label=\"项目描述\">\n            <Input.TextArea placeholder=\"请输入项目描述\" rows={3} />\n          </Form.Item>\n          <Form.Item name=\"linked_project_id\" label=\"关联历史项目\">\n            <Select\n              placeholder=\"可选择关联的历史项目\"\n              allowClear\n              showSearch\n              optionFilterProp=\"children\"\n              onChange={handleLinkHistoryProject}\n            >\n              {historyProjects.map((p) => (\n                <Select.Option key={p.id} value={p.id}>\n                  {p.name}\n                </Select.Option>\n              ))}\n            </Select>\n          </Form.Item>\n          <Form.Item>\n            <Space>\n              <Button type=\"primary\" htmlType=\"submit\">\n                创建\n              </Button>\n              <Button onClick={() => {\n                setCreateProjectVisible(false);\n                createProjectForm.resetFields();\n              }}>\n                取消\n              </Button>\n            </Space>\n          </Form.Item>\n        </Form>\n      </Modal>\n\n      {/* Excel导入弹窗 */}\n      <ImportModal\n        visible={importVisible}\n        dmProjectId={selectedProjectId!}\n        onClose={() => setImportVisible(false)}\n        onSuccess={() => {\n          setImportVisible(false);\n          if (selectedProjectId) {\n            loadMetrics(selectedProjectId);\n          }\n        }}\n      />\n    </PageContainer>\n  );\n};\n\nexport default DataMetrics;\n",
+      "__isJSFile": true,
+      "__absFile": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/src/pages/DataMetrics/index.tsx"
+    },
+    "25": {
       "name": "项目Wiki",
       "path": "wiki",
       "file": "@/pages/ProjectWiki/index.tsx",
       "parentId": "22",
-      "id": "24",
+      "id": "25",
       "absPath": "/form-design/wiki",
       "__content": "import React, { useEffect, useState } from 'react';\nimport { PageContainer, ProCard } from '@ant-design/pro-components';\nimport { Spin, Result, Button, message, Select, Space, Input, List, Empty, Tooltip } from 'antd';\nimport { useSearchParams } from '@umijs/max';\nimport { SearchOutlined, ReloadOutlined, SaveOutlined, FileTextOutlined, LinkOutlined } from '@ant-design/icons';\nimport { marked } from 'marked';\nimport { getWikiTree, getWikiContent, getWikiRelations, saveWikiRelations } from '@/services/wiki';\nimport { getProjects } from '@/services/formDesign';\nimport styles from './index.less';\n\nexport default function ProjectWiki() {\n  const [searchParams, setSearchParams] = useSearchParams();\n  const currentKey = searchParams.get('key') || '';\n  const currentProjectParam = searchParams.get('project') || '';\n  \n  // 状态管理\n  const [wikiTree, setWikiTree] = useState<any[]>([]);\n  const [allProjects, setAllProjects] = useState<any[]>([]);\n  const [loadingTree, setLoadingTree] = useState(true);\n  const [content, setContent] = useState('');\n  const [loadingContent, setLoadingContent] = useState(false);\n  const [error404, setError404] = useState(false);\n  const [filterText, setFilterText] = useState('');\n  const [projects, setProjects] = useState<string[]>([]);\n  const [currentProject, setCurrentProject] = useState<string>('');\n  \n  // 关联项目状态\n  const [relatedProjects, setRelatedProjects] = useState<number[]>([]);\n  const [loadingRelations, setLoadingRelations] = useState(false);\n  const [savingRelations, setSavingRelations] = useState(false);\n\n  // 1. 初始化拉取目录树与项目列表\n  const initTreeAndProjects = async (isRefresh = false) => {\n    setLoadingTree(true);\n    try {\n      const treeRes = await getWikiTree(currentProjectParam || undefined, isRefresh);\n      if (treeRes.success) {\n        setWikiTree(treeRes.data || []);\n        const projectsList = treeRes.projects || [];\n        const resolvedProject = treeRes.currentProject || '';\n        setProjects(projectsList);\n        setCurrentProject(resolvedProject);\n        \n        // 同步默认或确定的 project 到 URL query\n        if (currentProjectParam !== resolvedProject && resolvedProject) {\n          setSearchParams({\n            project: resolvedProject,\n            key: currentKey || undefined\n          });\n        }\n      } else {\n        message.error('获取 Wiki 目录失败');\n      }\n      \n      const projRes = await getProjects();\n      if (projRes.success) {\n        setAllProjects(projRes.data || []);\n      }\n    } catch (err) {\n      console.error('初始化数据发生异常', err);\n      message.error('拉取数据服务异常');\n    } finally {\n      setLoadingTree(false);\n    }\n  };\n\n  useEffect(() => {\n    initTreeAndProjects();\n  }, [currentProjectParam]);\n\n  // 2. 监听 URL 的 key 变化，自动拉取 Wiki 文档内容\n  useEffect(() => {\n    if (wikiTree.length === 0) return;\n\n    // 检查当前 URL 里的 key 是否属于当前的树\n    const keyExists = wikiTree.some(item => item.wiki_key === currentKey);\n\n    // 如果当前没有 key，或者 key 在当前目录树中不存在，就默认选中树的第一项\n    if (!currentKey || !keyExists) {\n      setSearchParams({\n        project: currentProject,\n        key: wikiTree[0].wiki_key\n      });\n      return;\n    }\n\n    const fetchContent = async () => {\n      setLoadingContent(true);\n      setError404(false);\n      try {\n        const res = await getWikiContent(currentKey);\n        if (res.success) {\n          setContent(res.data.content);\n        } else {\n          setError404(true);\n        }\n      } catch (err: any) {\n        // 捕获 404 异常\n        if (err.response?.status === 404 || err.statusCode === 404 || err.message?.includes('WIKI_FILE_NOT_FOUND')) {\n          setError404(true);\n        } else {\n          message.error('加载 Wiki 正文失败');\n        }\n      } finally {\n        setLoadingContent(false);\n      }\n    };\n\n    fetchContent();\n  }, [currentKey, wikiTree, currentProject]);\n\n  // 3. 监听当前选中的 Wiki 变化，拉取它对应的项目关联关系\n  useEffect(() => {\n    if (!currentKey) return;\n    const fetchRelations = async () => {\n      setLoadingRelations(true);\n      try {\n        const res = await getWikiRelations({ wiki_key: currentKey });\n        if (res.success) {\n          setRelatedProjects((res.data as number[]) || []);\n        }\n      } catch (err) {\n        console.error('拉取关联关系出错', err);\n      } finally {\n        setLoadingRelations(false);\n      }\n    };\n    fetchRelations();\n  }, [currentKey]);\n\n  // 4. 保存多对多关联关系\n  const handleSaveRelations = async () => {\n    if (!currentKey) return;\n    setSavingRelations(true);\n    try {\n      const res = await saveWikiRelations({\n        wiki_key: currentKey,\n        project_ids: relatedProjects,\n      });\n      if (res.success) {\n        message.success('双向关联项目配置已更新保存');\n      } else {\n        message.error('保存关联关系失败');\n      }\n    } catch (err) {\n      console.error('保存关联异常', err);\n      message.error('保存关联服务异常');\n    } finally {\n      setSavingRelations(false);\n    }\n  };\n\n  // 5. 过滤左侧目录\n  const filteredTree = wikiTree.filter(item => {\n    const text = filterText.toLowerCase();\n    return (\n      item.title.toLowerCase().includes(text) ||\n      (item.desc && item.desc.toLowerCase().includes(text))\n    );\n  });\n\n  // 6. 处理 Markdown 内链接点击事件，实现页面内平滑跳转\n  const handleMarkdownClick = (e: React.MouseEvent<HTMLDivElement>) => {\n    const target = e.target as HTMLElement;\n    const anchor = target.closest('a');\n    if (anchor) {\n      const href = anchor.getAttribute('href');\n      if (href && href.startsWith('/form-design/wiki?key=')) {\n        e.preventDefault();\n        const url = new URL(href, window.location.origin);\n        const key = url.searchParams.get('key');\n        if (key) {\n          // 根据去后缀匹配，在目录树中还原完整的带有 .md 后缀的物理 wiki_key\n          const matched = wikiTree.find(item => {\n            const keyWithoutMd = item.wiki_key.endsWith('.md')\n              ? item.wiki_key.slice(0, -3)\n              : item.wiki_key;\n            return keyWithoutMd === key;\n          });\n          setSearchParams({ key: matched ? matched.wiki_key : key + '.md' });\n        }\n      }\n    }\n  };\n\n  // 将 Markdown 正文解析为 HTML\n  const getHtmlContent = () => {\n    try {\n      return { __html: marked.parse(content) };\n    } catch (e) {\n      console.error('Markdown 编译错误', e);\n      return { __html: `<p style=\"color:red\">Markdown 渲染失败</p><pre>${content}</pre>` };\n    }\n  };\n\n  const selectedItem = wikiTree.find(item => item.wiki_key === currentKey);\n\n  return (\n    <PageContainer\n      title=\"项目Wiki知识库\"\n      subTitle=\"直接映射与多对多关联评估项目的 Obsidian 文档阅读系统\"\n      extra={[\n        <Tooltip key=\"refresh\" title=\"强制物理扫描及解析并清除缓存\">\n          <Button\n            icon={<ReloadOutlined />}\n            onClick={() => initTreeAndProjects(true)}\n            loading={loadingTree}\n          >\n            强制刷新\n          </Button>\n        </Tooltip>\n      ]}\n    >\n      <div className={styles['wiki-container']}>\n        <ProCard split=\"vertical\" bordered headerBordered style={{ borderRadius: '8px', overflow: 'hidden' }}>\n          {/* 左栏：菜单树与检索 */}\n          <ProCard colSpan=\"320px\" ghost style={{ padding: '8px' }}>\n            <div style={{ padding: '0 8px 12px 8px' }}>\n              <div style={{ marginBottom: '6px', fontWeight: 500, fontSize: '13px', color: '#595959' }}>知识库项目：</div>\n              <Select\n                style={{ width: '100%', marginBottom: '12px' }}\n                value={currentProject}\n                onChange={(value) => {\n                  // 切换项目时，更新 URL 参数，清除文档选中 key 触发自动载入新项目首篇\n                  setSearchParams({ project: value });\n                }}\n                options={projects.map(p => ({ label: p, value: p }))}\n              />\n              <Input\n                placeholder=\"搜索标题或简要描述...\"\n                prefix={<SearchOutlined style={{ color: '#bfbfbf' }} />}\n                allowClear\n                value={filterText}\n                onChange={e => setFilterText(e.target.value)}\n                style={{ borderRadius: '6px' }}\n              />\n            </div>\n            \n            <div style={{ height: 'calc(100vh - 250px)', overflowY: 'auto', padding: '0 8px' }}>\n              {loadingTree ? (\n                <div style={{ textAlign: 'center', marginTop: '40px' }}>\n                  <Spin size=\"default\" tip=\"扫描知识库...\" />\n                </div>\n              ) : filteredTree.length > 0 ? (\n                filteredTree.map(item => (\n                  <div\n                    key={item.wiki_key}\n                    onClick={() => setSearchParams({ key: item.wiki_key })}\n                    className={currentKey === item.wiki_key ? styles['wiki-menu-item-active'] : styles['wiki-menu-item']}\n                  >\n                    <div style={{ display: 'flex', alignItems: 'center' }}>\n                      <FileTextOutlined style={{ marginRight: '8px', color: currentKey === item.wiki_key ? '#1677ff' : '#8c8c8c' }} />\n                      <span style={{ fontWeight: 500, fontSize: '14px' }}>{item.title}</span>\n                      {!item.inIndex && (\n                        <span style={{\n                          fontSize: '10px',\n                          color: '#faad14',\n                          backgroundColor: '#fffbe6',\n                          border: '1px solid #ffe58f',\n                          padding: '0 4px',\n                          borderRadius: '4px',\n                          marginLeft: '8px'\n                        }}>\n                          未索引\n                        </span>\n                      )}\n                    </div>\n                    {item.desc && (\n                      <div style={{ fontSize: '12px', color: currentKey === item.wiki_key ? 'rgba(0, 0, 0, 0.65)' : '#8c8c8c', marginTop: '6px', lineHeight: 1.4 }}>\n                        {item.desc}\n                      </div>\n                    )}\n                  </div>\n                ))\n              ) : (\n                <Empty description=\"没有匹配的知识文档\" style={{ marginTop: '40px' }} />\n              )}\n            </div>\n          </ProCard>\n\n          {/* 右栏：富文本查阅及双向关联 */}\n          <ProCard ghost style={{ height: 'calc(100vh - 200px)', overflowY: 'auto' }}>\n            {loadingContent ? (\n              <div style={{ textAlign: 'center', marginTop: '100px' }}>\n                <Spin size=\"large\" tip=\"高精解析 Markdown 渲染中...\" />\n              </div>\n            ) : error404 ? (\n              <Result\n                status=\"404\"\n                title=\"WIKI_FILE_NOT_FOUND\"\n                subTitle=\"您访问的 Markdown 文档不存在，或者可能已被删除、重命名。\"\n                extra={\n                  <Button type=\"primary\" onClick={() => initTreeAndProjects(true)}>\n                    刷新列表并重试\n                  </Button>\n                }\n              />\n            ) : selectedItem ? (\n              <div style={{ padding: '8px 24px 24px 24px' }}>\n                {/* 顶层关联配置区 */}\n                <div style={{\n                  display: 'flex',\n                  justifyContent: 'space-between',\n                  alignItems: 'center',\n                  paddingBottom: '16px',\n                  marginBottom: '20px',\n                  borderBottom: '1px solid #f0f0f0'\n                }}>\n                  <div>\n                    <h2 style={{ margin: 0, fontSize: '22px', fontWeight: 600 }}>{selectedItem.title}</h2>\n                    <span style={{ fontSize: '12px', color: '#bfbfbf' }}>路径: {selectedItem.wiki_key}</span>\n                  </div>\n                  \n                  <div style={{ display: 'flex', alignItems: 'center' }}>\n                    <span style={{ marginRight: '8px', fontSize: '13px', color: '#595959' }}>\n                      <LinkOutlined style={{ marginRight: '4px' }} /> 关联项目评估:\n                    </span>\n                    <Space size=\"small\">\n                      <Select\n                        mode=\"multiple\"\n                        placeholder=\"绑定项目评估记录...\"\n                        style={{ minWidth: '220px', maxWidth: '360px' }}\n                        value={relatedProjects}\n                        onChange={value => setRelatedProjects(value)}\n                        loading={loadingRelations}\n                        options={allProjects.map(p => ({ label: p.name, value: p.id }))}\n                        maxTagCount=\"responsive\"\n                      />\n                      <Button\n                        type=\"primary\"\n                        icon={<SaveOutlined />}\n                        loading={savingRelations}\n                        onClick={handleSaveRelations}\n                      >\n                        保存关联\n                      </Button>\n                    </Space>\n                  </div>\n                </div>\n\n                {/* Markdown 渲染正文 */}\n                <div\n                  className={styles['markdown-body']}\n                  dangerouslySetInnerHTML={getHtmlContent()}\n                  onClick={handleMarkdownClick}\n                />\n              </div>\n            ) : (\n              <div style={{ textAlign: 'center', marginTop: '100px' }}>\n                <Empty description=\"请从左侧选择需要查阅的文档\" />\n              </div>\n            )}\n          </ProCard>\n        </ProCard>\n      </div>\n    </PageContainer>\n  );\n}\n",
       "__isJSFile": true,
       "__absFile": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/src/pages/ProjectWiki/index.tsx"
     },
-    "25": {
+    "26": {
       "name": "系统监控",
       "path": "/monitoring",
       "icon": "MonitorOutlined",
       "parentId": "ant-design-pro-layout",
-      "id": "25",
+      "id": "26",
       "absPath": "/monitoring"
     },
-    "26": {
+    "27": {
       "name": "AI日志监控",
       "path": "ai-logs",
       "file": "@/pages/Monitoring/AiLogs.tsx",
-      "parentId": "25",
-      "id": "26",
+      "parentId": "26",
+      "id": "27",
       "absPath": "/monitoring/ai-logs",
       "__content": "import { getMonitoringLogs, getMonitoringStats } from '@/services/monitoring';\nimport {\n  ActionType,\n  PageContainer,\n  ProColumns,\n  ProFormInstance,\n  ProTable,\n} from '@ant-design/pro-components';\nimport { Link } from '@umijs/max';\nimport { App, Button, Card, Col, Row, Space, Statistic, Tag, Typography } from 'antd';\nimport { useEffect, useMemo, useRef, useState } from 'react';\n\nconst AiLogs = () => {\n  const { message } = App.useApp();\n\n  const actionRef = useRef<ActionType>();\n  const formRef = useRef<ProFormInstance>();\n  const debounceTimerRef = useRef<NodeJS.Timeout | null>(null);\n  const desiredStatsKeyRef = useRef<string>('');\n  const lastSuccessStatsKeyRef = useRef<string>('');\n  const currentQueryRef = useRef<Record<string, any>>({});\n  const currentPageRef = useRef<number>(1);\n  const lastSubscribedKeyRef = useRef<string>('');\n  const wsRef = useRef<WebSocket | null>(null);\n  const wsReconnectTimerRef = useRef<NodeJS.Timeout | null>(null);\n  const wsRetryRef = useRef<number>(0);\n  const wsStoppedRef = useRef<boolean>(false);\n  const wsSeenHashesRef = useRef<string[]>([]);\n\n  const [stats, setStats] = useState<API.MonitoringStatsData | null>(null);\n  const [statsLoading, setStatsLoading] = useState(false);\n\n  const [wsStatus, setWsStatus] = useState<'connecting' | 'connected' | 'disconnected' | 'disabled'>(\n    'connecting',\n  );\n  const [wsInjectedRows, setWsInjectedRows] = useState<API.MonitoringLogItem[]>([]);\n  const [highlightMap, setHighlightMap] = useState<Record<string, number>>({});\n\n  const stepEnum = useMemo(\n    () => ({\n      risk: { text: 'risk' },\n      'risk-normalize': { text: 'risk-normalize' },\n      modules: { text: 'modules' },\n      workload: { text: 'workload' },\n      'model-test': { text: 'model-test' },\n    }),\n    [],\n  );\n\n  const statusEnum = useMemo(\n    () => ({\n      success: { text: 'success' },\n      fail: { text: 'fail' },\n      timeout: { text: 'timeout' },\n    }),\n    [],\n  );\n\n  const formatDuration = (value: any) => {\n    const ms = Number(value);\n    if (!Number.isFinite(ms)) return '-';\n    if (ms < 1000) return `${Math.round(ms)} ms`;\n    return `${(ms / 1000).toFixed(2)} s`;\n  };\n\n  const formatHash = (hash?: string | null) => {\n    const v = String(hash || '');\n    if (!v) return '-';\n    if (v.length <= 18) return v;\n    return `${v.slice(0, 10)}...${v.slice(-6)}`;\n  };\n\n  const buildStableKey = (obj: Record<string, any>) => {\n    const keys = Object.keys(obj || {}).sort();\n    const picked: Record<string, any> = {};\n    keys.forEach((k) => {\n      picked[k] = obj[k];\n    });\n    return JSON.stringify(picked);\n  };\n\n  const highlightRow = (hash: string) => {\n    if (!hash) return;\n    const expiresAt = Date.now() + 3000;\n    setHighlightMap((prev) => ({ ...prev, [hash]: expiresAt }));\n    setTimeout(() => {\n      setHighlightMap((prev) => {\n        if (!prev[hash]) return prev;\n        const next = { ...prev };\n        delete next[hash];\n        return next;\n      });\n    }, 3100);\n  };\n\n  const getSubscribeSteps = () => {\n    const q = currentQueryRef.current || {};\n    const steps = Array.isArray(q.steps) ? q.steps.map((s: any) => String(s)).filter(Boolean) : [];\n    if (steps.length > 0) return steps;\n    return Object.keys(stepEnum);\n  };\n\n  const sendSubscribe = () => {\n    const ws = wsRef.current;\n    if (!ws || ws.readyState !== WebSocket.OPEN) return;\n    const steps = getSubscribeSteps();\n    const key = JSON.stringify([...steps].sort());\n    if (key === lastSubscribedKeyRef.current) return;\n    lastSubscribedKeyRef.current = key;\n    try {\n      ws.send(JSON.stringify({ type: 'subscribe', steps }));\n    } catch (e) {}\n  };\n\n  const markSeen = (hash: string) => {\n    if (!hash) return false;\n    const arr = wsSeenHashesRef.current;\n    if (arr.includes(hash)) return true;\n    arr.unshift(hash);\n    if (arr.length > 500) arr.length = 500;\n    return false;\n  };\n\n  const columns: ProColumns<API.MonitoringLogItem>[] = [\n    {\n      title: '时间',\n      dataIndex: 'created_at',\n      valueType: 'dateTime',\n      width: 170,\n      hideInSearch: true,\n    },\n    {\n      title: '时间',\n      dataIndex: 'created_at_range',\n      valueType: 'dateRange',\n      hideInTable: true,\n      fieldProps: {\n        format: 'YYYY-MM-DD',\n      },\n      search: {\n        transform: (value) => {\n          const [start, end] = Array.isArray(value) ? value : [];\n          const next: Record<string, any> = {};\n          if (typeof start !== 'undefined') next.startDate = start;\n          if (typeof end !== 'undefined') next.endDate = end;\n          return next;\n        },\n      },\n    },\n    {\n      title: '状态',\n      dataIndex: 'status',\n      width: 90,\n      hideInSearch: true,\n      render: (_, record) => {\n        const v = record.status;\n        const color = v === 'success' ? 'green' : v === 'timeout' ? 'orange' : 'red';\n        return <Tag color={color}>{String(v)}</Tag>;\n      },\n    },\n    {\n      title: '状态',\n      dataIndex: 'statuses',\n      valueType: 'select',\n      valueEnum: statusEnum,\n      hideInTable: true,\n      fieldProps: {\n        mode: 'multiple',\n        allowClear: true,\n      },\n    },\n    {\n      title: '耗时',\n      dataIndex: 'duration_ms',\n      width: 110,\n      align: 'right',\n      hideInSearch: true,\n      render: (_, record) => {\n        const ms = Number(record.duration_ms);\n        const isHigh = Number.isFinite(ms) && ms >= 10000;\n        return (\n          <Typography.Text style={isHigh ? { color: '#cf1322' } : undefined}>\n            {formatDuration(record.duration_ms)}\n          </Typography.Text>\n        );\n      },\n    },\n    {\n      title: 'Step',\n      dataIndex: 'step',\n      width: 120,\n      hideInSearch: true,\n      render: (_, record) => (record.step ? String(record.step) : '-'),\n    },\n    {\n      title: 'Step',\n      dataIndex: 'steps',\n      valueType: 'select',\n      valueEnum: stepEnum,\n      hideInTable: true,\n      fieldProps: {\n        mode: 'multiple',\n        allowClear: true,\n      },\n    },\n    {\n      title: '模型',\n      dataIndex: 'model_used',\n      width: 180,\n      ellipsis: true,\n      hideInSearch: true,\n      responsive: ['md'],\n      render: (_, record) => (record.model_used ? String(record.model_used) : '-'),\n    },\n    {\n      title: '模型',\n      dataIndex: 'models',\n      valueType: 'select',\n      hideInTable: true,\n      fieldProps: {\n        mode: 'tags',\n        tokenSeparators: [','],\n        allowClear: true,\n        placeholder: '输入模型名，回车确认，可多个',\n      },\n    },\n    {\n      title: 'PromptId',\n      dataIndex: 'prompt_id',\n      width: 100,\n      hideInSearch: true,\n      render: (_, record) => (record.prompt_id ? String(record.prompt_id) : '-'),\n    },\n    {\n      title: 'PromptId',\n      dataIndex: 'promptId',\n      hideInTable: true,\n    },\n    {\n      title: 'Route',\n      dataIndex: 'route',\n      width: 180,\n      ellipsis: true,\n      hideInSearch: true,\n      responsive: ['lg'],\n      render: (_, record) => (record.route ? String(record.route) : '-'),\n    },\n    {\n      title: 'Hash',\n      dataIndex: 'request_hash',\n      width: 160,\n      ellipsis: true,\n      hideInSearch: true,\n      render: (_, record) => (\n        <Typography.Text\n          ellipsis\n          copyable={{ text: String(record.request_hash || '') }}\n          style={{ maxWidth: 150 }}\n        >\n          {formatHash(record.request_hash)}\n        </Typography.Text>\n      ),\n    },\n    {\n      title: 'Hash',\n      dataIndex: 'searchHash',\n      hideInTable: true,\n      fieldProps: {\n        placeholder: '支持部分匹配',\n      },\n    },\n    {\n      title: '错误',\n      dataIndex: 'error_message',\n      ellipsis: true,\n      hideInSearch: true,\n      render: (_, record) => (record.error_message ? String(record.error_message) : '-'),\n    },\n    {\n      title: '操作',\n      valueType: 'option',\n      width: 80,\n      render: (_, record) => [\n        <Link key=\"detail\" to={`/monitoring/ai-logs/${record.request_hash}`}>\n          详情\n        </Link>,\n      ],\n    },\n  ];\n\n  useEffect(() => {\n    return () => {\n      if (debounceTimerRef.current) {\n        clearTimeout(debounceTimerRef.current);\n        debounceTimerRef.current = null;\n      }\n    };\n  }, []);\n\n  useEffect(() => {\n    wsStoppedRef.current = false;\n\n    const connect = () => {\n      if (wsStoppedRef.current) return;\n      if (wsRef.current && (wsRef.current.readyState === WebSocket.OPEN || wsRef.current.readyState === WebSocket.CONNECTING)) {\n        return;\n      }\n\n      setWsStatus('connecting');\n      const proto = window.location.protocol === 'https:' ? 'wss' : 'ws';\n      const url = `${proto}://${window.location.host}/api/monitoring/ws`;\n\n      let ws: WebSocket;\n      try {\n        ws = new WebSocket(url);\n      } catch (e) {\n        setWsStatus('disabled');\n        return;\n      }\n\n      wsRef.current = ws;\n\n      ws.onopen = () => {\n        wsRetryRef.current = 0;\n        setWsStatus('connected');\n        sendSubscribe();\n      };\n\n      ws.onmessage = (evt) => {\n        try {\n          const msg = JSON.parse(String(evt.data || ''));\n          if (msg?.type !== 'ai_log_created') return;\n          const row = msg?.data as API.MonitoringLogItem;\n          const hash = String(row?.request_hash || '');\n          if (!hash) return;\n          if (markSeen(hash)) return;\n\n          setWsInjectedRows((prev) => {\n            const next = [row, ...(prev || [])].filter((x) => x && x.request_hash);\n            const seen = new Set<string>();\n            const deduped: API.MonitoringLogItem[] = [];\n            for (const r of next) {\n              const h = String(r.request_hash);\n              if (seen.has(h)) continue;\n              seen.add(h);\n              deduped.push(r);\n              if (deduped.length >= 50) break;\n            }\n            return deduped;\n          });\n          highlightRow(hash);\n\n          if (currentPageRef.current === 1) {\n            actionRef.current?.reload?.();\n          }\n        } catch (e) {}\n      };\n\n      ws.onclose = () => {\n        wsRef.current = null;\n        if (wsStoppedRef.current) return;\n        setWsStatus('disconnected');\n\n        const retry = wsRetryRef.current + 1;\n        wsRetryRef.current = retry;\n\n        if (retry >= 10) {\n          setWsStatus('disabled');\n          message.warning('WS 连接失败次数过多，已降级为手动刷新');\n          return;\n        }\n\n        const delay = Math.min(30000, 500 * Math.pow(2, retry));\n        if (wsReconnectTimerRef.current) {\n          clearTimeout(wsReconnectTimerRef.current);\n        }\n        wsReconnectTimerRef.current = setTimeout(() => {\n          connect();\n        }, delay);\n      };\n\n      ws.onerror = () => {\n        try {\n          ws.close();\n        } catch (e) {}\n      };\n    };\n\n    connect();\n    return () => {\n      wsStoppedRef.current = true;\n      if (wsReconnectTimerRef.current) {\n        clearTimeout(wsReconnectTimerRef.current);\n        wsReconnectTimerRef.current = null;\n      }\n      if (wsRef.current) {\n        try {\n          wsRef.current.close();\n        } catch (e) {}\n        wsRef.current = null;\n      }\n    };\n  }, []);\n\n  return (\n    <PageContainer header={{ title: 'AI日志监控' }}>\n      <Space direction=\"vertical\" size={16} style={{ width: '100%' }}>\n        <Row gutter={16}>\n          <Col xs={24} sm={12} md={6}>\n            <Card loading={statsLoading}>\n              <Statistic title=\"调用次数\" value={stats?.totalCalls ?? 0} />\n            </Card>\n          </Col>\n          <Col xs={24} sm={12} md={6}>\n            <Card loading={statsLoading}>\n              <Statistic\n                title=\"成功率\"\n                value={Number(stats?.successRate ?? 0)}\n                precision={2}\n                suffix=\"%\"\n              />\n            </Card>\n          </Col>\n          <Col xs={24} sm={12} md={6}>\n            <Card loading={statsLoading}>\n              <Statistic\n                title=\"平均耗时\"\n                value={formatDuration(stats?.avgDuration ?? 0)}\n              />\n            </Card>\n          </Col>\n          <Col xs={24} sm={12} md={6}>\n            <Card loading={statsLoading}>\n              <Statistic\n                title=\"错误（timeout/parse/network/other）\"\n                value={`${stats?.errorDistribution?.timeout ?? 0}/${stats?.errorDistribution?.parse ?? 0}/${stats?.errorDistribution?.network ?? 0}/${stats?.errorDistribution?.other ?? 0}`}\n              />\n            </Card>\n          </Col>\n        </Row>\n\n        <ProTable<API.MonitoringLogItem>\n          actionRef={actionRef}\n          formRef={formRef}\n          cardBordered\n          rowKey=\"id\"\n          columns={columns}\n          tableLayout=\"fixed\"\n          headerTitle=\"日志列表\"\n          dateFormatter=\"string\"\n          onRow={(record) => {\n            const exp = highlightMap[String(record.request_hash || '')];\n            if (exp && exp > Date.now()) {\n              return { style: { background: '#fffbe6' } };\n            }\n            return {};\n          }}\n          search={{\n            labelWidth: 'auto',\n            optionRender: () => [],\n          }}\n          toolBarRender={() => [\n            <Tag\n              key=\"ws\"\n              color={\n                wsStatus === 'connected'\n                  ? 'green'\n                  : wsStatus === 'connecting'\n                    ? 'blue'\n                    : wsStatus === 'disconnected'\n                      ? 'orange'\n                      : 'default'\n              }\n            >\n              WS: {wsStatus}\n            </Tag>,\n            currentPageRef.current !== 1 && wsInjectedRows.length > 0 ? (\n              <Button\n                key=\"new\"\n                onClick={() => {\n                  actionRef.current?.reloadAndRest?.();\n                }}\n              >\n                查看新日志（{wsInjectedRows.length}）\n              </Button>\n            ) : null,\n            <Button\n              key=\"reset\"\n              onClick={() => {\n                if (debounceTimerRef.current) {\n                  clearTimeout(debounceTimerRef.current);\n                  debounceTimerRef.current = null;\n                }\n                desiredStatsKeyRef.current = '';\n                lastSuccessStatsKeyRef.current = '';\n                setStats(null);\n                setWsInjectedRows([]);\n                setHighlightMap({});\n                formRef.current?.resetFields();\n                actionRef.current?.reloadAndRest?.();\n                sendSubscribe();\n              }}\n            >\n              重置\n            </Button>,\n            <Button\n              key=\"refresh\"\n              type=\"primary\"\n              onClick={() => {\n                lastSuccessStatsKeyRef.current = '';\n                actionRef.current?.reload();\n                sendSubscribe();\n              }}\n            >\n              刷新\n            </Button>,\n          ]}\n          postData={(rows) => {\n            if (!Array.isArray(rows)) return rows as any;\n            if (currentPageRef.current !== 1) return rows;\n            if (!wsInjectedRows || wsInjectedRows.length === 0) return rows;\n            const merged = [...wsInjectedRows, ...rows];\n            const seen = new Set<string>();\n            const out: API.MonitoringLogItem[] = [];\n            for (const r of merged) {\n              const h = String(r?.request_hash || '');\n              if (!h) continue;\n              if (seen.has(h)) continue;\n              seen.add(h);\n              out.push(r);\n              if (out.length >= rows.length) break;\n            }\n            return out;\n          }}\n          form={{\n            onValuesChange: () => {\n              if (debounceTimerRef.current) {\n                clearTimeout(debounceTimerRef.current);\n              }\n              debounceTimerRef.current = setTimeout(() => {\n                actionRef.current?.reloadAndRest?.();\n              }, 500);\n            },\n          }}\n          request={async (params) => {\n            const page = Number(params.current || 1);\n            const pageSize = Number(params.pageSize || 20);\n\n            const queryParams = { ...params } as Record<string, any>;\n            delete queryParams.current;\n            delete queryParams.pageSize;\n\n            currentQueryRef.current = queryParams;\n            currentPageRef.current = page;\n            sendSubscribe();\n\n            const statsKey = buildStableKey(queryParams);\n            desiredStatsKeyRef.current = statsKey;\n            const shouldFetchStats =\n              !stats ||\n              statsKey !== lastSuccessStatsKeyRef.current ||\n              lastSuccessStatsKeyRef.current === '';\n\n            if (shouldFetchStats) {\n              setStatsLoading(true);\n            }\n\n            try {\n              const logsPromise = getMonitoringLogs({ page, pageSize, ...queryParams });\n              const statsPromise = shouldFetchStats\n                ? getMonitoringStats(queryParams)\n                : Promise.resolve(null as any);\n\n              const [logsRes, statsRes] = await Promise.all([logsPromise, statsPromise]);\n\n              if (shouldFetchStats && statsRes) {\n                if (desiredStatsKeyRef.current === statsKey) {\n                  if (statsRes?.success) {\n                    setStats(statsRes.data);\n                    lastSuccessStatsKeyRef.current = statsKey;\n                  } else {\n                    setStats(null);\n                    message.error(statsRes?.error || '加载统计失败');\n                  }\n                }\n              }\n\n              if (!logsRes?.success) {\n                message.error(logsRes?.error || '加载日志列表失败');\n                return {\n                  data: [],\n                  success: false,\n                  total: 0,\n                };\n              }\n\n              if (page === 1 && wsInjectedRows.length > 0) {\n                const hashes = new Set<string>(\n                  (logsRes.data.list || []).map((x) => String(x?.request_hash || '')).filter(Boolean),\n                );\n                setWsInjectedRows((prev) => (prev || []).filter((r) => !hashes.has(String(r.request_hash || ''))));\n              }\n\n              return {\n                data: logsRes.data.list,\n                success: true,\n                total: logsRes.data.total,\n              };\n            } catch (_e) {\n              message.error('加载日志列表失败');\n              return {\n                data: [],\n                success: false,\n                total: 0,\n              };\n            } finally {\n              if (shouldFetchStats && desiredStatsKeyRef.current === statsKey) {\n                setStatsLoading(false);\n              }\n            }\n          }}\n          locale={{\n            emptyText: '暂无数据',\n          }}\n          pagination={{\n            pageSize: 20,\n          }}\n        />\n      </Space>\n    </PageContainer>\n  );\n};\n\nexport default AiLogs;\n",
       "__isJSFile": true,
       "__absFile": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/src/pages/Monitoring/AiLogs.tsx"
     },
-    "27": {
+    "28": {
       "name": "日志详情",
       "path": "ai-logs/:requestHash",
       "hideInMenu": true,
       "file": "@/pages/Monitoring/AiLogDetail.tsx",
-      "parentId": "25",
-      "id": "27",
+      "parentId": "26",
+      "id": "28",
       "absPath": "/monitoring/ai-logs/:requestHash",
       "__content": "import { getMonitoringLogDetail } from '@/services/monitoring';\nimport { PageContainer } from '@ant-design/pro-components';\nimport { Link, useParams } from '@umijs/max';\nimport {\n  Alert,\n  App,\n  Button,\n  Card,\n  Descriptions,\n  Empty,\n  Input,\n  Space,\n  Spin,\n  Tabs,\n  Tag,\n  Typography,\n} from 'antd';\nimport { useEffect, useMemo, useState } from 'react';\n\nconst escapeHtml = (raw: string) => {\n  return raw.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');\n};\n\nconst highlightJson = (raw: string) => {\n  const escaped = escapeHtml(raw);\n  const re =\n    /(\\x22(?:\\\\u[a-zA-Z0-9]{4}|\\\\[^u]|[^\\\\\\x22])*\\x22\\s*:)|(\\x22(?:\\\\u[a-zA-Z0-9]{4}|\\\\[^u]|[^\\\\\\x22])*\\x22)|\\b(true|false|null)\\b|-?\\d+(?:\\.\\d*)?(?:[eE][+\\-]?\\d+)?/g;\n  return escaped.replace(re, (m) => {\n    let color = '#096dd9';\n    if (/^\\s*\\x22/.test(m)) {\n      color = /:\\s*$/.test(m) ? '#0050b3' : '#237804';\n    } else if (/true|false/.test(m)) {\n      color = '#722ed1';\n    } else if (/null/.test(m)) {\n      color = '#8c8c8c';\n    } else {\n      color = '#d46b08';\n    }\n    return `<span style='color:${color}'>${m}</span>`;\n  });\n};\n\nconst ExpandablePre = ({\n  text,\n  highlight,\n}: {\n  text: string;\n  highlight?: 'json';\n}) => {\n  const [expanded, setExpanded] = useState(false);\n  const tooLong = text.length > 1000;\n  const shown = !tooLong || expanded ? text : `${text.slice(0, 1000)}...`;\n  return (\n    <Space direction=\"vertical\" size={8} style={{ width: '100%' }}>\n      <Typography.Paragraph copyable={{ text }} style={{ marginBottom: 0 }}>\n        {highlight === 'json' ? (\n          <pre\n            style={{\n              margin: 0,\n              padding: 12,\n              background: '#fafafa',\n              border: '1px solid #f0f0f0',\n              borderRadius: 6,\n              whiteSpace: 'pre-wrap',\n              wordBreak: 'break-word',\n              fontFamily:\n                \"ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace\",\n            }}\n            dangerouslySetInnerHTML={{ __html: highlightJson(shown) }}\n          />\n        ) : (\n          <pre\n            style={{\n              margin: 0,\n              padding: 12,\n              background: '#fafafa',\n              border: '1px solid #f0f0f0',\n              borderRadius: 6,\n              whiteSpace: 'pre-wrap',\n              wordBreak: 'break-word',\n            }}\n          >\n            {shown}\n          </pre>\n        )}\n      </Typography.Paragraph>\n      {tooLong && (\n        <Button type=\"link\" style={{ padding: 0 }} onClick={() => setExpanded((v) => !v)}>\n          {expanded ? '收起' : '展开'}\n        </Button>\n      )}\n    </Space>\n  );\n};\n\nconst HighlightedText = ({ text, keyword }: { text: string; keyword: string }) => {\n  const k = keyword.trim();\n  if (!k) {\n    return <>{text}</>;\n  }\n  const lower = text.toLowerCase();\n  const lk = k.toLowerCase();\n  const parts: Array<{ t: string; hit: boolean }> = [];\n  let i = 0;\n  while (true) {\n    const idx = lower.indexOf(lk, i);\n    if (idx < 0) {\n      parts.push({ t: text.slice(i), hit: false });\n      break;\n    }\n    parts.push({ t: text.slice(i, idx), hit: false });\n    parts.push({ t: text.slice(idx, idx + k.length), hit: true });\n    i = idx + k.length;\n  }\n  return (\n    <>\n      {parts\n        .filter((p) => p.t)\n        .map((p, idx) =>\n          p.hit ? (\n            <mark key={idx} style={{ background: '#ffe58f', padding: 0 }}>\n              {p.t}\n            </mark>\n          ) : (\n            <span key={idx}>{p.t}</span>\n          ),\n        )}\n    </>\n  );\n};\n\nconst AiLogDetail = () => {\n  const { message } = App.useApp();\n  const params = useParams<{ requestHash: string }>();\n  const requestHash = String(params.requestHash || '').trim();\n\n  const [loading, setLoading] = useState(false);\n  const [data, setData] = useState<API.MonitoringLogDetailData | null>(null);\n  const [rawSearch, setRawSearch] = useState('');\n\n  const formatDuration = (value: any) => {\n    const ms = Number(value);\n    if (!Number.isFinite(ms)) return '-';\n    if (ms < 1000) return `${Math.round(ms)} ms`;\n    return `${(ms / 1000).toFixed(2)} s`;\n  };\n\n  const statusTag = (status?: string | null) => {\n    const v = String(status || '');\n    if (!v) return <Tag>-</Tag>;\n    const color = v === 'success' ? 'green' : v === 'timeout' ? 'orange' : 'red';\n    return <Tag color={color}>{v}</Tag>;\n  };\n\n  const buildErrorAdvice = (meta: API.MonitoringLogDetailMeta | null) => {\n    const status = String(meta?.status || '').toLowerCase();\n    const err = String(meta?.errorMessage || '').toLowerCase();\n\n    if (!status || status === 'success') return null;\n\n    if (status === 'timeout') {\n      return {\n        title: '调用超时',\n        tips: ['检查模型服务是否可用/响应慢', '适当增大 timeout', '减少输入文本长度或拆分请求'],\n      };\n    }\n\n    if (err.includes('json') || err.includes('parse') || err.includes('解析')) {\n      return {\n        title: '响应解析失败',\n        tips: ['检查提示词是否要求严格 JSON 输出', '尝试在提示词中增加 JSON schema/示例', '查看“原始响应”确认模型实际输出'],\n      };\n    }\n\n    if (err.includes('econn') || err.includes('enotfound') || err.includes('etimedout') || err.includes('network') || err.includes('连接')) {\n      return {\n        title: '网络/连接异常',\n        tips: ['检查 API Host/网络连通性', '确认代理或防火墙设置', '重试或切换模型提供商'],\n      };\n    }\n\n    return {\n      title: '调用失败',\n      tips: ['查看错误信息与“原始响应”', '确认提示词与输入参数是否合理', '必要时重试'],\n    };\n  };\n\n  useEffect(() => {\n    if (!requestHash) return;\n    setLoading(true);\n    getMonitoringLogDetail(requestHash)\n      .then((res) => {\n        if (!res?.success) {\n          message.error(res?.error || '加载详情失败');\n          setData(null);\n          return;\n        }\n        setData(res.data);\n      })\n      .catch(() => {\n        message.error('加载详情失败');\n        setData(null);\n      })\n      .finally(() => setLoading(false));\n  }, [message, requestHash]);\n\n  const meta = data?.meta || null;\n  const indexAny: any = data?.index || null;\n\n  const statusDisplay = (meta?.status || indexAny?.status) ?? null;\n  const durationMsDisplay =\n    (typeof meta?.durationMs === 'number' ? meta.durationMs : undefined) ??\n    (Number.isFinite(Number(indexAny?.duration_ms)) ? Number(indexAny?.duration_ms) : null);\n  const stepDisplay = (meta?.step || indexAny?.step) ?? null;\n  const routeDisplay = (meta?.route || indexAny?.route) ?? null;\n  const createdAtDisplay = (meta?.createdAt || indexAny?.timestamp) ?? null;\n\n  const modelDisplay = (() => {\n    if (meta?.modelUsed) return String(meta.modelUsed);\n    const provider = indexAny?.model_provider ? String(indexAny.model_provider) : '';\n    const name = indexAny?.model_name ? String(indexAny.model_name) : '';\n    const joined = [provider, name].filter(Boolean).join('/');\n    return joined || null;\n  })();\n\n  const promptIdDisplay = (() => {\n    if (meta?.promptId) return String(meta.promptId);\n    if (indexAny?.prompt_template_id) return String(indexAny.prompt_template_id);\n    if (indexAny?.prompt_id) return String(indexAny.prompt_id);\n    return null;\n  })();\n\n  const timeoutMsDisplay = (() => {\n    const candidates = [\n      indexAny?.service_timeout_ms,\n      indexAny?.provider_timeout_ms,\n      indexAny?.timeout_ms,\n    ];\n    const v = candidates.map((x) => Number(x)).find((x) => Number.isFinite(x));\n    return typeof v === 'number' ? String(Math.round(v)) : null;\n  })();\n\n  const errorMessageDisplay = useMemo(() => {\n    if (meta?.errorMessage) return String(meta.errorMessage);\n    if (typeof data?.notes !== 'string') return null;\n    const firstLine = data.notes.split('\\n').find((s) => String(s || '').trim());\n    return firstLine ? String(firstLine) : null;\n  }, [data?.notes, meta?.errorMessage]);\n\n  const errorAdvice = useMemo(() => {\n    const merged: any = {\n      ...(meta || {}),\n      status: statusDisplay,\n      errorMessage: meta?.errorMessage || errorMessageDisplay,\n    };\n    return buildErrorAdvice(merged);\n  }, [errorMessageDisplay, meta, meta?.errorMessage, statusDisplay]);\n\n  const stringifyPretty = (value: any) => {\n    if (value === null || typeof value === 'undefined') return null;\n    try {\n      return JSON.stringify(value, null, 2);\n    } catch (_e) {\n      return String(value);\n    }\n  };\n\n  return (\n    <PageContainer\n      header={{ title: '日志详情', subTitle: params.requestHash || '' }}\n    >\n      <Space direction=\"vertical\" size={16} style={{ width: '100%' }}>\n        {!requestHash && (\n          <Alert type=\"error\" showIcon message=\"requestHash 为空\" />\n        )}\n\n        <Card>\n          {loading ? (\n            <div style={{ padding: 24, textAlign: 'center' }}>\n              <Spin />\n            </div>\n          ) : (\n            <Descriptions column={2} size=\"small\" bordered>\n              <Descriptions.Item label=\"时间\">\n                {createdAtDisplay ? String(createdAtDisplay) : '-'}\n              </Descriptions.Item>\n              <Descriptions.Item label=\"状态\">\n                {statusTag(statusDisplay)}\n              </Descriptions.Item>\n              <Descriptions.Item label=\"耗时\">\n                {formatDuration(durationMsDisplay)}\n              </Descriptions.Item>\n              <Descriptions.Item label=\"Timeout(ms)\">\n                {timeoutMsDisplay ? String(timeoutMsDisplay) : '-'}\n              </Descriptions.Item>\n              <Descriptions.Item label=\"Step\">\n                {stepDisplay ? String(stepDisplay) : '-'}\n              </Descriptions.Item>\n              <Descriptions.Item label=\"Route\">\n                {routeDisplay ? String(routeDisplay) : '-'}\n              </Descriptions.Item>\n              <Descriptions.Item label=\"模型\">\n                {modelDisplay ? String(modelDisplay) : '-'}\n              </Descriptions.Item>\n              <Descriptions.Item label=\"Prompt\">\n                {promptIdDisplay ? (\n                  <Link to={`/model-config/prompts/${promptIdDisplay}/edit`}>\n                    {String(promptIdDisplay)}\n                  </Link>\n                ) : (\n                  '-'\n                )}\n              </Descriptions.Item>\n              <Descriptions.Item label=\"Hash\">\n                <Typography.Text\n                  code\n                  copyable={{ text: requestHash }}\n                >\n                  {requestHash}\n                </Typography.Text>\n              </Descriptions.Item>\n              <Descriptions.Item label=\"日志路径\" span={2}>\n                {meta?.logDir ? (\n                  <Typography.Text copyable={{ text: String(meta.logDir) }}>\n                    {String(meta.logDir)}\n                  </Typography.Text>\n                ) : (\n                  '-'\n                )}\n              </Descriptions.Item>\n            </Descriptions>\n          )}\n        </Card>\n\n        {errorAdvice && (\n          <Alert\n            type=\"warning\"\n            showIcon\n            message={errorAdvice.title}\n            description={\n              <Space direction=\"vertical\" size={8} style={{ width: '100%' }}>\n                {errorMessageDisplay && (\n                  <Typography.Text>\n                    {String(errorMessageDisplay)}\n                  </Typography.Text>\n                )}\n                <div>\n                  {errorAdvice.tips.map((t) => (\n                    <div key={t}>{t}</div>\n                  ))}\n                </div>\n              </Space>\n            }\n          />\n        )}\n\n        <Card>\n          <Tabs\n            items={[\n              {\n                key: 'index',\n                label: 'Index',\n                children: data?.index ? (\n                  <ExpandablePre text={stringifyPretty(data.index) || ''} highlight=\"json\" />\n                ) : (\n                  <Empty description=\"暂无内容\" />\n                ),\n              },\n              {\n                key: 'request',\n                label: 'Request',\n                children: data?.request ? (\n                  <ExpandablePre text={stringifyPretty(data.request) || ''} highlight=\"json\" />\n                ) : (\n                  <Empty description=\"暂无内容\" />\n                ),\n              },\n              {\n                key: 'parsed',\n                label: 'Response Parsed',\n                children: data?.responseParsed ? (\n                  <ExpandablePre\n                    text={stringifyPretty(data.responseParsed) || ''}\n                    highlight=\"json\"\n                  />\n                ) : (\n                  <Empty description=\"暂无内容\" />\n                ),\n              },\n              {\n                key: 'raw',\n                label: 'Response Raw',\n                children: (\n                  <Space direction=\"vertical\" size={12} style={{ width: '100%' }}>\n                    <Input\n                      value={rawSearch}\n                      onChange={(e) => setRawSearch(e.target.value)}\n                      placeholder=\"搜索原始响应\"\n                      allowClear\n                    />\n                    {data?.responseRaw ? (\n                      <Typography.Paragraph\n                        copyable={{ text: String(data.responseRaw) }}\n                        style={{ marginBottom: 0 }}\n                      >\n                        <pre\n                          style={{\n                            margin: 0,\n                            padding: 12,\n                            background: '#fafafa',\n                            border: '1px solid #f0f0f0',\n                            borderRadius: 6,\n                            whiteSpace: 'pre-wrap',\n                            wordBreak: 'break-word',\n                          }}\n                        >\n                          <HighlightedText\n                            text={String(data.responseRaw)}\n                            keyword={rawSearch}\n                          />\n                        </pre>\n                      </Typography.Paragraph>\n                    ) : (\n                      <Empty description=\"暂无内容\" />\n                    )}\n                  </Space>\n                ),\n              },\n              {\n                key: 'notes',\n                label: 'Notes',\n                children: data?.notes ? (\n                  <ExpandablePre text={String(data.notes)} />\n                ) : (\n                  <Empty description=\"暂无内容\" />\n                ),\n              },\n            ]}\n          />\n        </Card>\n      </Space>\n    </PageContainer>\n  );\n};\n\nexport default AiLogDetail;\n",
       "__isJSFile": true,
@@ -4254,7 +4524,7 @@
   "faviconFiles": [],
   "port": 8000,
   "host": "0.0.0.0",
-  "ip": "192.168.124.188",
+  "ip": "192.168.2.108",
   "antd": {
     "pkgPath": "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/node_modules/antd",
     "version": "5.28.0"
@@ -7904,6 +8174,109 @@
             ],
             "format": "esm"
           },
+          "src/services/dataMetrics.ts": {
+            "bytes": 6737,
+            "imports": [
+              {
+                "path": "src/.umi/exports.ts",
+                "kind": "import-statement",
+                "original": "@umijs/max"
+              }
+            ],
+            "format": "esm"
+          },
+          "src/pages/DataMetrics/constants.ts": {
+            "bytes": 1393,
+            "imports": [],
+            "format": "esm"
+          },
+          "src/pages/DataMetrics/ImportModal.tsx": {
+            "bytes": 7949,
+            "imports": [
+              {
+                "path": "react",
+                "kind": "import-statement",
+                "external": true
+              },
+              {
+                "path": "antd",
+                "kind": "import-statement",
+                "external": true
+              },
+              {
+                "path": "@ant-design/icons",
+                "kind": "import-statement",
+                "external": true
+              },
+              {
+                "path": "src/services/dataMetrics.ts",
+                "kind": "import-statement",
+                "original": "@/services/dataMetrics"
+              },
+              {
+                "path": "src/pages/DataMetrics/constants.ts",
+                "kind": "import-statement",
+                "original": "./constants"
+              },
+              {
+                "path": "react/jsx-runtime",
+                "kind": "import-statement",
+                "external": true
+              }
+            ],
+            "format": "esm"
+          },
+          "src/pages/DataMetrics/index.tsx": {
+            "bytes": 22015,
+            "imports": [
+              {
+                "path": "react",
+                "kind": "import-statement",
+                "external": true
+              },
+              {
+                "path": "@ant-design/pro-components",
+                "kind": "import-statement",
+                "external": true
+              },
+              {
+                "path": "antd",
+                "kind": "import-statement",
+                "external": true
+              },
+              {
+                "path": "@ant-design/icons",
+                "kind": "import-statement",
+                "external": true
+              },
+              {
+                "path": "@ant-design/pro-table",
+                "kind": "import-statement",
+                "external": true
+              },
+              {
+                "path": "src/services/dataMetrics.ts",
+                "kind": "import-statement",
+                "original": "@/services/dataMetrics"
+              },
+              {
+                "path": "src/pages/DataMetrics/constants.ts",
+                "kind": "import-statement",
+                "original": "./constants"
+              },
+              {
+                "path": "src/pages/DataMetrics/ImportModal.tsx",
+                "kind": "import-statement",
+                "original": "./ImportModal"
+              },
+              {
+                "path": "react/jsx-runtime",
+                "kind": "import-statement",
+                "external": true
+              }
+            ],
+            "format": "esm"
+          },
           "src/pages/ProjectWiki/index.tsx": {
             "bytes": 13990,
             "imports": [
@@ -8168,7 +8541,7 @@
             "format": "esm"
           },
           "src/.umi/core/route.tsx": {
-            "bytes": 5698,
+            "bytes": 5893,
             "imports": [
               {
                 "path": "react",
@@ -8289,6 +8662,11 @@
                 "path": "src/pages/FormDesign/index.tsx",
                 "kind": "dynamic-import",
                 "original": "@/pages/FormDesign/index.tsx"
+              },
+              {
+                "path": "src/pages/DataMetrics/index.tsx",
+                "kind": "dynamic-import",
+                "original": "@/pages/DataMetrics/index.tsx"
               },
               {
                 "path": "src/pages/ProjectWiki/index.tsx",
@@ -9495,6 +9873,56 @@
               },
               {
                 "path": "@ant-design/pro-form",
+                "kind": "import-statement",
+                "external": true
+              },
+              {
+                "path": "react/jsx-runtime",
+                "kind": "import-statement",
+                "external": true
+              },
+              {
+                "path": "react",
+                "kind": "import-statement",
+                "external": true
+              },
+              {
+                "path": "antd",
+                "kind": "import-statement",
+                "external": true
+              },
+              {
+                "path": "@ant-design/icons",
+                "kind": "import-statement",
+                "external": true
+              },
+              {
+                "path": "react/jsx-runtime",
+                "kind": "import-statement",
+                "external": true
+              },
+              {
+                "path": "react",
+                "kind": "import-statement",
+                "external": true
+              },
+              {
+                "path": "@ant-design/pro-components",
+                "kind": "import-statement",
+                "external": true
+              },
+              {
+                "path": "antd",
+                "kind": "import-statement",
+                "external": true
+              },
+              {
+                "path": "@ant-design/icons",
+                "kind": "import-statement",
+                "external": true
+              },
+              {
+                "path": "@ant-design/pro-table",
                 "kind": "import-statement",
                 "external": true
               },
@@ -11006,6 +11434,18 @@
               "src/pages/FormDesign/index.tsx": {
                 "bytesInOutput": 39933
               },
+              "src/services/dataMetrics.ts": {
+                "bytesInOutput": 1722
+              },
+              "src/pages/DataMetrics/constants.ts": {
+                "bytesInOutput": 1566
+              },
+              "src/pages/DataMetrics/ImportModal.tsx": {
+                "bytesInOutput": 10733
+              },
+              "src/pages/DataMetrics/index.tsx": {
+                "bytesInOutput": 27576
+              },
               "src/pages/ProjectWiki/index.tsx": {
                 "bytesInOutput": 14343
               },
@@ -11031,7 +11471,7 @@
                 "bytesInOutput": 5893
               },
               "src/.umi/core/route.tsx": {
-                "bytesInOutput": 6314
+                "bytesInOutput": 6531
               },
               "src/.umi/core/polyfill.ts": {
                 "bytesInOutput": 39297
@@ -11040,7 +11480,7 @@
                 "bytesInOutput": 2010
               }
             },
-            "bytes": 926643
+            "bytes": 968606
           }
         }
       }
@@ -19020,6 +19460,446 @@
           "type": "ImportDeclaration"
         }
       ],
+      "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/src/pages/DataMetrics/ImportModal.tsx": [
+        {
+          "end": 41,
+          "importKind": "value",
+          "source": "react",
+          "specifiers": [
+            {
+              "local": "React",
+              "type": "ImportDefaultSpecifier"
+            },
+            {
+              "imported": "useState",
+              "local": "useState",
+              "type": "ImportSpecifier"
+            }
+          ],
+          "start": 1,
+          "type": "ImportDeclaration"
+        },
+        {
+          "end": 136,
+          "importKind": "value",
+          "source": "antd",
+          "specifiers": [
+            {
+              "imported": "Modal",
+              "local": "Modal",
+              "type": "ImportSpecifier"
+            },
+            {
+              "imported": "Button",
+              "local": "Button",
+              "type": "ImportSpecifier"
+            },
+            {
+              "imported": "message",
+              "local": "message",
+              "type": "ImportSpecifier"
+            },
+            {
+              "imported": "Space",
+              "local": "Space",
+              "type": "ImportSpecifier"
+            },
+            {
+              "imported": "Radio",
+              "local": "Radio",
+              "type": "ImportSpecifier"
+            },
+            {
+              "imported": "Table",
+              "local": "Table",
+              "type": "ImportSpecifier"
+            },
+            {
+              "imported": "Alert",
+              "local": "Alert",
+              "type": "ImportSpecifier"
+            },
+            {
+              "imported": "Typography",
+              "local": "Typography",
+              "type": "ImportSpecifier"
+            },
+            {
+              "imported": "Upload",
+              "local": "Upload",
+              "type": "ImportSpecifier"
+            }
+          ],
+          "start": 42,
+          "type": "ImportDeclaration"
+        },
+        {
+          "end": 187,
+          "importKind": "value",
+          "source": "@ant-design/icons",
+          "specifiers": [
+            {
+              "imported": "InboxOutlined",
+              "local": "InboxOutlined",
+              "type": "ImportSpecifier"
+            }
+          ],
+          "start": 137,
+          "type": "ImportDeclaration"
+        },
+        {
+          "end": 247,
+          "importKind": "type",
+          "source": "antd/es/upload/interface",
+          "specifiers": [
+            {
+              "imported": "UploadFile",
+              "local": "UploadFile",
+              "type": "ImportSpecifier"
+            }
+          ],
+          "start": 188,
+          "type": "ImportDeclaration"
+        },
+        {
+          "end": 293,
+          "importKind": "type",
+          "source": "antd/es/upload",
+          "specifiers": [
+            {
+              "imported": "RcFile",
+              "local": "RcFile",
+              "type": "ImportSpecifier"
+            }
+          ],
+          "start": 248,
+          "type": "ImportDeclaration"
+        },
+        {
+          "end": 365,
+          "importKind": "value",
+          "source": "@/services/dataMetrics",
+          "specifiers": [
+            {
+              "imported": "previewImport",
+              "local": "previewImport",
+              "type": "ImportSpecifier"
+            },
+            {
+              "imported": "confirmImport",
+              "local": "confirmImport",
+              "type": "ImportSpecifier"
+            }
+          ],
+          "start": 295,
+          "type": "ImportDeclaration"
+        },
+        {
+          "end": 416,
+          "importKind": "value",
+          "source": "./constants",
+          "specifiers": [
+            {
+              "imported": "IMPORT_MODE_OPTIONS",
+              "local": "IMPORT_MODE_OPTIONS",
+              "type": "ImportSpecifier"
+            }
+          ],
+          "start": 366,
+          "type": "ImportDeclaration"
+        }
+      ],
+      "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/src/pages/DataMetrics/constants.ts": [],
+      "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/src/pages/DataMetrics/index.tsx": [
+        {
+          "end": 65,
+          "importKind": "value",
+          "source": "react",
+          "specifiers": [
+            {
+              "local": "React",
+              "type": "ImportDefaultSpecifier"
+            },
+            {
+              "imported": "useState",
+              "local": "useState",
+              "type": "ImportSpecifier"
+            },
+            {
+              "imported": "useEffect",
+              "local": "useEffect",
+              "type": "ImportSpecifier"
+            },
+            {
+              "imported": "useCallback",
+              "local": "useCallback",
+              "type": "ImportSpecifier"
+            }
+          ],
+          "start": 1,
+          "type": "ImportDeclaration"
+        },
+        {
+          "end": 125,
+          "importKind": "value",
+          "source": "@ant-design/pro-components",
+          "specifiers": [
+            {
+              "imported": "PageContainer",
+              "local": "PageContainer",
+              "type": "ImportSpecifier"
+            }
+          ],
+          "start": 66,
+          "type": "ImportDeclaration"
+        },
+        {
+          "end": 241,
+          "importKind": "value",
+          "source": "antd",
+          "specifiers": [
+            {
+              "imported": "Button",
+              "local": "Button",
+              "type": "ImportSpecifier"
+            },
+            {
+              "imported": "Card",
+              "local": "Card",
+              "type": "ImportSpecifier"
+            },
+            {
+              "imported": "Form",
+              "local": "Form",
+              "type": "ImportSpecifier"
+            },
+            {
+              "imported": "Input",
+              "local": "Input",
+              "type": "ImportSpecifier"
+            },
+            {
+              "imported": "message",
+              "local": "message",
+              "type": "ImportSpecifier"
+            },
+            {
+              "imported": "Modal",
+              "local": "Modal",
+              "type": "ImportSpecifier"
+            },
+            {
+              "imported": "Select",
+              "local": "Select",
+              "type": "ImportSpecifier"
+            },
+            {
+              "imported": "Space",
+              "local": "Space",
+              "type": "ImportSpecifier"
+            },
+            {
+              "imported": "Tag",
+              "local": "Tag",
+              "type": "ImportSpecifier"
+            },
+            {
+              "imported": "Tooltip",
+              "local": "Tooltip",
+              "type": "ImportSpecifier"
+            }
+          ],
+          "start": 126,
+          "type": "ImportDeclaration"
+        },
+        {
+          "end": 399,
+          "importKind": "value",
+          "source": "@ant-design/icons",
+          "specifiers": [
+            {
+              "imported": "DeleteOutlined",
+              "local": "DeleteOutlined",
+              "type": "ImportSpecifier"
+            },
+            {
+              "imported": "ExportOutlined",
+              "local": "ExportOutlined",
+              "type": "ImportSpecifier"
+            },
+            {
+              "imported": "ImportOutlined",
+              "local": "ImportOutlined",
+              "type": "ImportSpecifier"
+            },
+            {
+              "imported": "PlusOutlined",
+              "local": "PlusOutlined",
+              "type": "ImportSpecifier"
+            },
+            {
+              "imported": "ReloadOutlined",
+              "local": "ReloadOutlined",
+              "type": "ImportSpecifier"
+            },
+            {
+              "imported": "SaveOutlined",
+              "local": "SaveOutlined",
+              "type": "ImportSpecifier"
+            },
+            {
+              "imported": "CloseOutlined",
+              "local": "CloseOutlined",
+              "type": "ImportSpecifier"
+            }
+          ],
+          "start": 242,
+          "type": "ImportDeclaration"
+        },
+        {
+          "end": 445,
+          "importKind": "value",
+          "source": "@ant-design/pro-table",
+          "specifiers": [
+            {
+              "local": "ProTable",
+              "type": "ImportDefaultSpecifier"
+            }
+          ],
+          "start": 400,
+          "type": "ImportDeclaration"
+        },
+        {
+          "end": 502,
+          "importKind": "type",
+          "source": "@ant-design/pro-table",
+          "specifiers": [
+            {
+              "imported": "ProColumns",
+              "local": "ProColumns",
+              "type": "ImportSpecifier"
+            }
+          ],
+          "start": 446,
+          "type": "ImportDeclaration"
+        },
+        {
+          "end": 835,
+          "importKind": "value",
+          "source": "@/services/dataMetrics",
+          "specifiers": [
+            {
+              "imported": "getDataMetricsProjects",
+              "local": "getDataMetricsProjects",
+              "type": "ImportSpecifier"
+            },
+            {
+              "imported": "createDataMetricsProject",
+              "local": "createDataMetricsProject",
+              "type": "ImportSpecifier"
+            },
+            {
+              "imported": "deleteDataMetricsProject",
+              "local": "deleteDataMetricsProject",
+              "type": "ImportSpecifier"
+            },
+            {
+              "imported": "getLinkedProjects",
+              "local": "getLinkedProjects",
+              "type": "ImportSpecifier"
+            },
+            {
+              "imported": "getDataMetrics",
+              "local": "getDataMetrics",
+              "type": "ImportSpecifier"
+            },
+            {
+              "imported": "createDataMetric",
+              "local": "createDataMetric",
+              "type": "ImportSpecifier"
+            },
+            {
+              "imported": "updateDataMetric",
+              "local": "updateDataMetric",
+              "type": "ImportSpecifier"
+            },
+            {
+              "imported": "deleteDataMetric",
+              "local": "deleteDataMetric",
+              "type": "ImportSpecifier"
+            },
+            {
+              "imported": "batchDataMetrics",
+              "local": "batchDataMetrics",
+              "type": "ImportSpecifier"
+            },
+            {
+              "imported": "exportDataMetrics",
+              "local": "exportDataMetrics",
+              "type": "ImportSpecifier"
+            },
+            {
+              "imported": "DataMetricsProject",
+              "local": "DataMetricsProject",
+              "type": "ImportSpecifier"
+            },
+            {
+              "imported": "DataMetric",
+              "local": "DataMetric",
+              "type": "ImportSpecifier"
+            },
+            {
+              "imported": "LinkedProject",
+              "local": "LinkedProject",
+              "type": "ImportSpecifier"
+            }
+          ],
+          "start": 504,
+          "type": "ImportDeclaration"
+        },
+        {
+          "end": 956,
+          "importKind": "value",
+          "source": "./constants",
+          "specifiers": [
+            {
+              "imported": "DISPLAY_TYPE_OPTIONS",
+              "local": "DISPLAY_TYPE_OPTIONS",
+              "type": "ImportSpecifier"
+            },
+            {
+              "imported": "DISPLAY_TYPE_COLORS",
+              "local": "DISPLAY_TYPE_COLORS",
+              "type": "ImportSpecifier"
+            },
+            {
+              "imported": "COLLECTION_CYCLE_OPTIONS",
+              "local": "COLLECTION_CYCLE_OPTIONS",
+              "type": "ImportSpecifier"
+            },
+            {
+              "imported": "DEFAULT_DISPLAY_TYPE",
+              "local": "DEFAULT_DISPLAY_TYPE",
+              "type": "ImportSpecifier"
+            }
+          ],
+          "start": 836,
+          "type": "ImportDeclaration"
+        },
+        {
+          "end": 997,
+          "importKind": "value",
+          "source": "./ImportModal",
+          "specifiers": [
+            {
+              "local": "ImportModal",
+              "type": "ImportDefaultSpecifier"
+            }
+          ],
+          "start": 957,
+          "type": "ImportDeclaration"
+        }
+      ],
       "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/src/pages/FormDesign/constants.ts": [],
       "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/src/pages/FormDesign/index.tsx": [
         {
@@ -22714,6 +23594,22 @@
             }
           ],
           "start": 45,
+          "type": "ImportDeclaration"
+        }
+      ],
+      "/Users/maylis/Desktop/github上的项目/项目评估系统/PPA/frontend/ppa_frontend/src/services/dataMetrics.ts": [
+        {
+          "end": 38,
+          "importKind": "value",
+          "source": "@umijs/max",
+          "specifiers": [
+            {
+              "imported": "request",
+              "local": "request",
+              "type": "ImportSpecifier"
+            }
+          ],
+          "start": 1,
           "type": "ImportDeclaration"
         }
       ],

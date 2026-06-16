@@ -15,6 +15,8 @@ const scripts = [
   'seed-ai-prompts.js',
   'seed-web3d.js',
   'seed-bidding-sites.js',
+  'seed-data-metrics-categories.js', // 数据指标分类
+  'seed-data-metrics-sample.js', // 数据指标样例项目
   // 'seed-risk-items.js', // 暂时注释，等待创建
 ];
 

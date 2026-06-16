@@ -137,6 +137,11 @@ export default defineConfig({
           component: './FormDesign',
         },
         {
+          name: '数据指标设计',
+          path: 'data-metrics',
+          component: './DataMetrics',
+        },
+        {
           name: '项目Wiki',
           path: 'wiki',
           component: './ProjectWiki',
