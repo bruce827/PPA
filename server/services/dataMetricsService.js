@@ -242,6 +242,21 @@ exports.previewImport = async (buffer) => {
     throw err;
   }
 
+  // 动态读取展示方式白名单（来自"展示方式选项" sheet）
+  const optionsSheet = workbook.getWorksheet("展示方式选项");
+  const validDisplayTypes = [];
+  if (optionsSheet) {
+    optionsSheet.eachRow({ includeEmpty: false }, (row, rowNumber) => {
+      const val = row.getCell(1).value?.toString().trim();
+      if (val && rowNumber > 0) {
+        validDisplayTypes.push(val);
+      }
+    });
+  }
+
+  // 如果没有找到或为空，使用内置的 DISPLAY_TYPES 作为降级备份
+  const finalDisplayTypes = validDisplayTypes.length > 0 ? validDisplayTypes : DISPLAY_TYPES;
+
   // 解析表头
   const headerRow = targetSheet.getRow(1);
   const headers = {};
@@ -263,10 +278,18 @@ exports.previewImport = async (buffer) => {
     throw err;
   }
 
-  // 解析数据行
+  // 解析数据行与状态机填补 (ffill平替)
   const items = [];
   const errors = [];
   let rowCount = 0;
+
+  // 状态机，用于合并单元格的向下前向填补 (ffill)
+  let currentApplication = '';
+  let currentModuleName = '';
+  let currentSceneL1 = '';
+  let currentSceneL2 = '';
+
+  const seenCombos = new Set(); // 用于四元组跨行唯一性校验 (D01)
 
   targetSheet.eachRow((row, rowNumber) => {
     if (rowNumber === 1) return; // 跳过表头
@@ -285,6 +308,7 @@ exports.previewImport = async (buffer) => {
     const item = {};
     let hasError = false;
 
+    // a. 提取这一行已填的物理格数据
     row.eachCell((cell, colNumber) => {
       const fieldName = headers[colNumber];
       if (fieldName) {
@@ -292,31 +316,64 @@ exports.previewImport = async (buffer) => {
       }
     });
 
-    // 跳过空行
-    if (!item.module_name && !item.metric_name) {
+    // 过滤全空行
+    const hasValues = Object.keys(item).some(k => item[k] !== '');
+    if (!hasValues) {
       return;
     }
 
-    // 校验必填字段
+    // b. 状态机合并单元格值前向继承 (ffill平替)与空格彻底去噪
+    if (item.application) currentApplication = item.application;
+    if (item.module_name) currentModuleName = item.module_name;
+    if (item.scene_l1) currentSceneL1 = item.scene_l1;
+    if (item.scene_l2) currentSceneL2 = item.scene_l2;
+
+    // 填补
+    item.application = currentApplication;
+    item.module_name = currentModuleName;
+    item.scene_l1 = currentSceneL1;
+    item.scene_l2 = currentSceneL2;
+
+    // c. 校验必填字段
     for (const field of requiredFields) {
       if (!item[field]) {
         errors.push({
           row: rowNumber,
           field,
-          message: `${field} 不能为空`,
+          message: `${field} (经单元格填补后) 不能为空`,
         });
         hasError = true;
       }
     }
 
-    // 校验展示方式
-    if (item.display_type && !DISPLAY_TYPES.includes(item.display_type)) {
+    // d. 校验展示方式
+    if (item.display_type && !finalDisplayTypes.includes(item.display_type)) {
       errors.push({
         row: rowNumber,
         field: 'display_type',
-        message: `无效的展示方式: ${item.display_type}，有效值: ${DISPLAY_TYPES.join(', ')}`,
+        message: `无效的展示方式: "${item.display_type}"，可选范围为: [${finalDisplayTypes.join(', ')}]`,
       });
       hasError = true;
+    }
+
+    // e. 跨行唯一性校验 (D01) - 如果必填项都没问题，检查是否四元组重复
+    if (!hasError) {
+      const comboKey = `${item.module_name}-${item.scene_l1}-${item.scene_l2}-${item.metric_name}`;
+      if (seenCombos.has(comboKey)) {
+        errors.push({
+          row: rowNumber,
+          field: 'metric_name',
+          message: `指标节点四元组组合产生重复，可能导致大屏原型ID冲突: "${comboKey}"`,
+        });
+        hasError = true;
+      } else {
+        seenCombos.add(comboKey);
+      }
+    }
+
+    // f. 采集周期缺失的弱填补与警告（在此不阻断，自动处理）
+    if (!item.collection_cycle) {
+      item.collection_cycle = '日';
     }
 
     if (!hasError) {
@@ -597,4 +654,333 @@ exports.getFilterOptions = async (dmProjectId) => {
 
 exports.getLinkedProjects = async () => {
   return dataMetricsModel.getLinkedProjects();
+};
+
+// =========================================================================
+// ========== Agent 专享 & 模板双向转化业务扩展 (Antigravity 改造版) ==========
+// =========================================================================
+
+/**
+ * 获取极简紧凑的 Agent 友好型指标树大纲 (支持 Markdown/JSON 两种格式)
+ */
+exports.getAgentContext = async (projectId, format = 'json') => {
+  const project = await dataMetricsModel.getProjectById(projectId);
+  if (!project) {
+    const err = new Error('数据指标项目不存在');
+    err.statusCode = 404;
+    throw err;
+  }
+
+  // 1. 获取该项目下的所有扁平指标
+  const metrics = await dataMetricsModel.getAll({ dmProjectId: projectId });
+  
+  // 2. 如果请求格式为 Markdown，则生成极低 Token、超强语义树
+  if (format === 'markdown') {
+    let md = `# 项目大屏指标大纲: ${project.project_name} (ID: ${projectId})\n\n`;
+    const moduleMap = new Map();
+
+    metrics.forEach(m => {
+      const modName = m.module_name || '未定义模块';
+      const s1Name = m.scene_l1 || '未定义一级场景';
+      const s2Name = m.scene_l2 || '';
+      
+      const renderTypeMap = {
+        '统计数据': 'KPI_CARD', '柱状图': 'BAR_CHART', '条形图': 'HORIZONTAL_BAR',
+        '折线图': 'LINE_CHART', '饼图': 'PIE_CHART', '表格': 'TABLE', '地图': 'MAP', '视频': 'VIDEO'
+      };
+      const displayType = renderTypeMap[m.display_type] || 'KPI_CARD';
+      const colorAlert = /红|绿|警|差|异|超限|超压/.test((m.algorithm || '') + (m.data_source_logic || '')) ? '有预警警示' : '无';
+
+      if (!moduleMap.has(modName)) moduleMap.set(modName, new Map());
+      const sceneMap = moduleMap.get(modName);
+      const comboKey = `${s1Name}##${s2Name}`;
+
+      if (!sceneMap.has(comboKey)) sceneMap.set(comboKey, []);
+      sceneMap.get(comboKey).push(`- 指标: ${m.metric_name} | 展示: ${displayType} | 周期: ${m.collection_cycle || '日'} | 预警: ${colorAlert}`);
+    });
+
+    for (const [modName, sceneMap] of moduleMap.entries()) {
+      md += `## 模块: ${modName}\n`;
+      for (const [comboKey, metricsList] of sceneMap.entries()) {
+        const [s1Name, s2Name] = comboKey.split('##');
+        md += `### 一级场景: ${s1Name} ${s2Name ? '| 二级场景: ' + s2Name : ''}\n`;
+        md += metricsList.join('\n') + '\n\n';
+      }
+    }
+    return md;
+  }
+
+  // 3. 否则默认组装极简树状 JSON
+  const moduleMap = new Map();
+  metrics.forEach(m => {
+    const modName = m.module_name || '未定义模块';
+    const s1Name = m.scene_l1 || '未定义一级场景';
+    const s2Name = m.scene_l2 || '';
+    
+    const renderTypeMap = {
+      '统计数据': 'KPI_CARD', '柱状图': 'BAR_CHART', '条形图': 'HORIZONTAL_BAR',
+      '折线图': 'LINE_CHART', '饼图': 'PIE_CHART', '表格': 'TABLE', '地图': 'MAP', '视频': 'VIDEO'
+    };
+    const displayType = renderTypeMap[m.display_type] || 'KPI_CARD';
+    const colorAlert = /红|绿|警|差|异|超限|超压/.test((m.algorithm || '') + (m.data_source_logic || ''));
+
+    if (!moduleMap.has(modName)) moduleMap.set(modName, new Map());
+    const sceneMap = moduleMap.get(modName);
+    const comboKey = `${s1Name}##${s2Name}`;
+
+    if (!sceneMap.has(comboKey)) sceneMap.set(comboKey, []);
+    sceneMap.get(comboKey).push({
+      name: m.metric_name,
+      type: displayType,
+      cycle: m.collection_cycle || '日',
+      colorAlert
+    });
+  });
+
+  const tree = [];
+  for (const [modName, sceneMap] of moduleMap.entries()) {
+    const scenes = [];
+    for (const [comboKey, metricsList] of sceneMap.entries()) {
+      const [s1Name, s2Name] = comboKey.split('##');
+      scenes.push({ sceneL1: s1Name, sceneL2: s2Name, metrics: metricsList });
+    }
+    tree.push({ module: modName, scenes });
+  }
+
+  return { projectId, projectName: project.project_name, tree };
+};
+
+/**
+ * 自动计算并生成 12 栅格 Canvas 推荐组件排版布局 (Grid Layout Generator DSL)
+ */
+exports.generateAgentLayout = async (projectId) => {
+  const project = await dataMetricsModel.getProjectById(projectId);
+  if (!project) {
+    const err = new Error('数据指标项目不存在');
+    err.statusCode = 404;
+    throw err;
+  }
+
+  const metrics = await dataMetricsModel.getAll({ dmProjectId: projectId });
+  const layout = [];
+  
+  // 按照模块进行栅格自适应布局分配
+  const moduleGroups = {};
+  metrics.forEach(m => {
+    const mod = m.module_name || '公共大屏';
+    if (!moduleGroups[mod]) moduleGroups[mod] = [];
+    moduleGroups[mod].push(m);
+  });
+
+  const gridSizes = {
+    '统计数据': { w: 3, h: 2 }, // 小型卡片
+    '视频': { w: 3, h: 2 },
+    '柱状图': { w: 6, h: 4 },   // 中型图表
+    '条形图': { w: 6, h: 4 },
+    '折线图': { w: 6, h: 4 },
+    '饼图': { w: 4, h: 4 },
+    '表格': { w: 12, h: 5 },   // 大型容器
+    '地图': { w: 12, h: 6 }
+  };
+
+  const componentHints = {
+    '统计数据': 'ECharts翻牌器',
+    '柱状图': 'ECharts柱状图',
+    '条形图': 'ECharts条形图',
+    '折线图': 'ECharts折线图',
+    '饼图': 'ECharts饼图',
+    '表格': 'AntD自适应表格',
+    '地图': 'Web3D/GeoJSON三维地图',
+    '视频': '流媒体播放组件'
+  };
+
+  Object.keys(moduleGroups).forEach(modName => {
+    const groupMetrics = moduleGroups[modName];
+    let currentX = 0;
+    let currentY = 0;
+    let maxHeightInRow = 0;
+
+    groupMetrics.forEach(m => {
+      const size = gridSizes[m.display_type] || { w: 4, h: 4 };
+      
+      // 换行控制：在 12 栅格中，如果当前行放不下了
+      if (currentX + size.w > 12) {
+        currentX = 0;
+        currentY += maxHeightInRow;
+        maxHeightInRow = 0;
+      }
+
+      layout.push({
+        metric_id: m.id,
+        metric_name: m.metric_name,
+        module_name: modName,
+        scene_l1: m.scene_l1,
+        display_type: m.display_type,
+        grid: {
+          x: currentX,
+          y: currentY,
+          w: size.w,
+          h: size.h
+        },
+        component_hint: componentHints[m.display_type] || '通用图表容器'
+      });
+
+      currentX += size.w;
+      if (size.h > maxHeightInRow) {
+        maxHeightInRow = size.h;
+      }
+    });
+  });
+
+  return { projectId, projectName: project.project_name, layout };
+};
+
+/**
+ * 外部 Agent 反馈与布局坐标双向写入回写
+ */
+exports.saveAgentFeedback = async (projectId, layoutArray, web3dSettings) => {
+  const project = await dataMetricsModel.getProjectById(projectId);
+  if (!project) {
+    const err = new Error('数据指标项目不存在');
+    err.statusCode = 404;
+    throw err;
+  }
+
+  // 1. 如果有 3D 参数，更新大屏项目配置表的 3D 属性 (安全写进 project_desc，防止无 remark 列报错并保持完整性)
+  if (web3dSettings) {
+    const updatedSettings = JSON.stringify(web3dSettings);
+    const originalDesc = project.project_desc || '';
+    const cleanedDesc = originalDesc.replace(/\[Agent-3D-Synced\].*?$/g, '').trim();
+    
+    await dataMetricsModel.updateProject(projectId, {
+      project_name: project.project_name,
+      linked_project_id: project.linked_project_id,
+      project_desc: `${cleanedDesc}\n[Agent-3D-Synced] ${new Date().toISOString().slice(0,10)} 3D模型参数已同步。配置：${updatedSettings}`.trim()
+    });
+  }
+
+  // 2. 批量将组件布局网格坐标更新回具体的 data_metrics 表中 (存入备注中)
+  let updatedCount = 0;
+  if (Array.isArray(layoutArray)) {
+    for (const item of layoutArray) {
+      if (item.metric_name && item.grid) {
+        // 更新 data_metrics 对应指标的备注或自定义布局列
+        const metrics = await dataMetricsModel.getAll({ dmProjectId: projectId });
+        const target = metrics.find(m => m.metric_name === item.metric_name);
+        if (target) {
+          const layoutStr = `[Grid: x=${item.grid.x}, y=${item.grid.y}, w=${item.grid.w}, h=${item.grid.h}]`;
+          const originalRemark = target.remark || '';
+          const cleanedRemark = originalRemark.replace(/\[Grid:.*?\]/g, '').trim();
+          
+          await dataMetricsModel.update(target.id, {
+            remark: `${cleanedRemark} ${layoutStr}`.trim()
+          });
+          updatedCount++;
+        }
+      }
+    }
+  }
+
+  return {
+    projectId,
+    updatedCount,
+    web3dSynced: !!web3dSettings
+  };
+};
+
+/**
+ * 将大屏指标项目一键自动转化为 PPA 成本估算模板 (业务闭环)
+ */
+exports.convertToPpaTemplate = async (projectId) => {
+  const project = await dataMetricsModel.getProjectById(projectId);
+  if (!project) {
+    const err = new Error('数据指标项目不存在');
+    err.statusCode = 404;
+    throw err;
+  }
+
+  const metrics = await dataMetricsModel.getAll({ dmProjectId: projectId });
+  if (metrics.length === 0) {
+    const err = new Error('该大屏指标项目内无任何指标，无法生成估算底座');
+    err.statusCode = 400;
+    throw err;
+  }
+
+  // 1. 核心映射逻辑：根据不同大图展示方式自动折算其所需要的前后端研发人天
+  const defaultWorkloads = {
+    '统计数据': { '前端工程师': 0.5, '后端工程师': 0.5 },
+    '视频': { '前端工程师': 0.5, '后端工程师': 0.5 },
+    '柱状图': { '前端工程师': 1.0, '后端工程师': 1.0 },
+    '条形图': { '前端工程师': 1.0, '后端工程师': 1.0 },
+    '折线图': { '前端工程师': 1.0, '后端工程师': 1.0 },
+    '饼图': { '前端工程师': 1.0, '后端工程师': 1.0 },
+    '表格': { '前端工程师': 2.0, '后端工程师': 2.0 },
+    '地图': { '前端工程师': 2.5, '后端工程师': 2.0 }
+  };
+
+  // 2. 统计各角色累计工作量
+  const roleWorkloadSummary = { '前端工程师': 0, '后端工程师': 0 };
+  metrics.forEach(m => {
+    const rules = defaultWorkloads[m.display_type] || { '前端工程师': 1.0, '后端工程师': 1.0 };
+    Object.keys(rules).forEach(role => {
+      roleWorkloadSummary[role] += rules[role];
+    });
+  });
+
+  const developmentWorkloadRows = [];
+  Object.keys(roleWorkloadSummary).forEach(role => {
+    developmentWorkloadRows.push({
+      role_name: role,
+      workload_days: roleWorkloadSummary[role],
+      delivery_factor: 1.0
+    });
+  });
+
+  // 3. 构造 PPA 统一的 assessment_details_json 快照
+  const rolesWithPrice = [
+    { role_name: '前端工程师', unit_price: 1800 },
+    { role_name: '后端工程师', unit_price: 2000 }
+  ];
+
+  const assessmentDetails = {
+    project_info: {
+      name: `【大屏导入模板】${project.project_name}`,
+      description: `导入自大屏数据指标清单: ${project.project_name}，内含 ${metrics.length} 项图元指标`
+    },
+    risk_scores: {}, 
+    roles: rolesWithPrice,
+    development_workload: developmentWorkloadRows,
+    travel_cost: { cities: [] },
+    maintenance_cost: { duration_months: 12, cost_per_month: 0 },
+    iot_point_integration: null
+  };
+
+  // 4. 调用 PPA 原生 projectModel 写入数据库，并置 is_template = 1
+  const projectModel = require('../models/projectModel');
+  const ppaTemplate = await projectModel.createProject({
+    name: `【大屏导入】${project.project_name}`,
+    description: `由大屏数据指标项目 (ID: ${projectId}) 自动重构转化，内含 ${metrics.length} 条指标开发工作。`,
+    is_template: 1, 
+    assessment_details_json: JSON.stringify(assessmentDetails)
+  });
+
+  return {
+    ppaTemplateId: ppaTemplate.id,
+    ppaTemplateName: ppaTemplate.name,
+    mappedMetricsCount: metrics.length,
+    initialEstimatedWorkload: `${roleWorkloadSummary['前端工程师'] + roleWorkloadSummary['后端工程师']} 人天`
+  };
+};
+
+/**
+ * 完整 indicators 扁平 JSON 列表无状态获取
+ */
+exports.exportToJson = async (projectId) => {
+  const project = await dataMetricsModel.getProjectById(projectId);
+  if (!project) {
+    const err = new Error('数据指标项目不存在');
+    err.statusCode = 404;
+    throw err;
+  }
+  return dataMetricsModel.getAll({ dmProjectId: projectId });
 };

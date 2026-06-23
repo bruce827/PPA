@@ -29,12 +29,12 @@
 | [ai-risk-assessment-backend-step1.md](./ai-risk-assessment-backend-step1.md) | AI 风险评估后端 | ✅ |
 | [workload-one-click-evaluation-prd.md](./workload-one-click-evaluation-prd.md) | 一键工作量评估 | ✅ |
 | [AI-log-monitoring-prd.md](./AI-log-monitoring-prd.md) | AI 日志监控系统 | ✅ |
+| [ai-project-tags-and-contract-recommendation-prd.md](./ai-project-tags-and-contract-recommendation-prd.md) | AI 项目标签与业绩推荐 | ✅ |
+| [agent-data-metrics-api-spec.md](./agent-data-metrics-api-spec.md) | 大屏原型 Agent 协作 OpenAPI 规范 V2.0 | ✅ |
 
 ### 未来功能（规划中）
 
-| 文档 | 功能模块 |
-|------|---------|
-| [ai-project-tags-and-contract-recommendation-prd.md](./ai-project-tags-and-contract-recommendation-prd.md) | AI 项目标签与业绩推荐 | ✅ 已完成 |
+暂无。
 
 ### 已废弃
 
@@ -52,7 +52,7 @@
 1. 先阅读 `PRD.md` 了解产品总览与功能索引
 2. 根据需要查阅对应功能规格文档
 3. 参考 `project-overview.md` 了解技术架构
-4. 参考 `../PRD_AI_LOG_MONITORING_v2.md` 了解 AI 日志监控
+4. 参考 [AI-log-monitoring-prd.md](./AI-log-monitoring-prd.md) 了解 AI 日志监控
 
 ---
 

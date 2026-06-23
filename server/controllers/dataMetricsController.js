@@ -341,3 +341,91 @@ exports.getLinkedProjects = async (req, res, next) => {
     next(error);
   }
 };
+
+// =========================================================================
+// ========== Agent 专享 & 模板双向转化控制器扩展 (Antigravity 改造版) ==========
+// =========================================================================
+
+exports.getAgentContext = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const { format = 'json' } = req.query;
+    const result = await dataMetricsService.getAgentContext(parseInt(id), format);
+    
+    if (format === 'markdown') {
+      res.setHeader('Content-Type', 'text/markdown; charset=utf-8');
+      return res.send(result);
+    }
+    
+    res.json({ success: true, data: result });
+  } catch (error) {
+    console.error('[Agent Context] Failed:', error.message);
+    res.status(error.statusCode || 500).json({
+      success: false,
+      error_code: 'AGENT_CONTEXT_ERROR',
+      error: error.message,
+      hint: '请确保该大屏指标项目ID存在且内含有效指标。可以使用 ?format=markdown 重新请求极简文本。'
+    });
+  }
+};
+
+exports.getAgentLayout = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const result = await dataMetricsService.generateAgentLayout(parseInt(id));
+    res.json({ success: true, data: result });
+  } catch (error) {
+    console.error('[Agent Layout] Failed:', error.message);
+    res.status(error.statusCode || 500).json({
+      success: false,
+      error_code: 'GRID_LAYOUT_ERROR',
+      error: error.message,
+      hint: '生成栅格推荐布局失败。请检查该大屏项目下是否有可用指标数据。'
+    });
+  }
+};
+
+exports.saveAgentFeedback = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const { layout_json, web3d_settings } = req.body;
+    
+    const result = await dataMetricsService.saveAgentFeedback(parseInt(id), layout_json, web3d_settings);
+    res.json({ success: true, data: result });
+  } catch (error) {
+    console.error('[Agent Feedback] Failed:', error.message);
+    res.status(error.statusCode || 500).json({
+      success: false,
+      error_code: 'FEEDBACK_SAVE_ERROR',
+      error: error.message,
+      hint: '布局数据回写失败。layout_json应为[{metric_name, grid: {x,y,w,h}}]结构，请Agent重新校准数据。'
+    });
+  }
+};
+
+exports.convertToPpaTemplate = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const result = await dataMetricsService.convertToPpaTemplate(parseInt(id));
+    res.json({ success: true, data: result });
+  } catch (error) {
+    console.error('[Convert Template] Failed:', error.message);
+    res.status(error.statusCode || 500).json({
+      success: false,
+      error_code: 'PPA_CONVERT_ERROR',
+      error: error.message,
+      hint: '一键转换为PPA成本模板发生错误。请确保该项目下有属于[统计数据/折线/柱状/饼图/表格/地图]等有效展示类型的指标。'
+    });
+  }
+};
+
+exports.exportToJson = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const result = await dataMetricsService.exportToJson(parseInt(id));
+    res.json({ success: true, data: result });
+  } catch (error) {
+    console.error('[Export JSON] Failed:', error.message);
+    next(error);
+  }
+};

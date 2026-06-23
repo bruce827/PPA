@@ -377,9 +377,6 @@ inputs:
 
 本 PRD 之后，建议继续产出：
 
-- `docs/prd2.0/architecture.md`
-- `docs/prd2.0/epics-and-stories.md`
-
 其中架构文档需要重点回答：
 
 - 如何在低预算下做平台化

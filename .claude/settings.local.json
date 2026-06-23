@@ -93,7 +93,8 @@
       "WebFetch(domain:platform.minimaxi.com)",
       "Bash(timeout 30 yarn start)",
       "Bash(mkdir -p /Users/maylis/Desktop/github上的项目/项目评估系统/PPA/.claude/skills/form-design-assistant/_memory)",
-      "Bash(cp /Users/maylis/Desktop/github上的项目/项目评估系统/PPA/.claude/skills/form-design-preview/_memory/learnings.md /Users/maylis/Desktop/github上的项目/项目评估系统/PPA/.claude/skills/form-design-assistant/_memory/learnings.md)"
+      "Bash(cp /Users/maylis/Desktop/github上的项目/项目评估系统/PPA/.claude/skills/form-design-preview/_memory/learnings.md /Users/maylis/Desktop/github上的项目/项目评估系统/PPA/.claude/skills/form-design-assistant/_memory/learnings.md)",
+      "Bash(gh repo *)"
     ]
   }
 }

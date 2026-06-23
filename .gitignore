@@ -180,3 +180,4 @@ frontend/ppa_frontend/src/.umi/appData.json
 frontend/ppa_frontend/.tmp/
 frontend/ppa_frontend/playwright-report/
 frontend/ppa_frontend/test-results/
+docs/.claudian/claudian-settings.json

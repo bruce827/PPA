@@ -163,4 +163,42 @@ router.delete('/categories/:id', [
   param('id').isInt().withMessage('id必须是整数'),
 ], validate, dataMetricsController.removeCategory);
 
+// =========================================================================
+// ========== Agent 接口安全网关与路由注册 (Antigravity 改造版) ==========
+// =========================================================================
+
+/**
+ * 专供外部 Agent 的轻量级 API-Key 安全校验中间件
+ */
+const agentAuthMiddleware = (req, res, next) => {
+  const agentApiKey = req.headers['x-agent-api-key'];
+  const expectedKey = process.env.PPA_AGENT_SECRET_KEY || 'ppa_agent_secret_token_2026';
+  
+  if (!agentApiKey || agentApiKey !== expectedKey) {
+    console.warn(`[Agent Gateway] Authorization Blocked! Remote: ${req.ip}`);
+    return res.status(401).json({
+      success: false,
+      error_code: 'UNAUTHORIZED_AGENT_ACCESS',
+      error: '外部 Agent 未授权。',
+      hint: '请确保在 Request Headers 中正确配置 "X-Agent-API-Key" 参数。'
+    });
+  }
+  next();
+};
+
+// 1. 获取极简紧凑的 Agent 绘制大纲 (支持 format=markdown/json，免分页)
+router.get('/projects/:id/agent-context', agentAuthMiddleware, dataMetricsController.getAgentContext);
+
+// 2. 获取推荐的大屏 12 栅格 Canvas 坐标 DSL
+router.get('/projects/:id/agent-layout', agentAuthMiddleware, dataMetricsController.getAgentLayout);
+
+// 3. 外部 Agent 回写排版布局与 3D 关联参数
+router.post('/projects/:id/agent-feedback', agentAuthMiddleware, dataMetricsController.saveAgentFeedback);
+
+// 4. 一键转化为 PPA 项目成本估算模板 (工时同步)
+router.post('/projects/:id/convert-to-ppa-template', agentAuthMiddleware, dataMetricsController.convertToPpaTemplate);
+
+// 5. 导出完整平铺指标的 JSON
+router.get('/projects/:id/export/json', agentAuthMiddleware, dataMetricsController.exportToJson);
+
 module.exports = router;
