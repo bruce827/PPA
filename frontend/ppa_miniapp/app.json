@@ -1,0 +1,36 @@
+{
+  "pages": [
+    "pages/login/index",
+    "pages/tender-list/index",
+    "pages/membership-status/index",
+    "pages/tender-detail/index",
+    "pages/internal-channel/index",
+    "pages/ops-membership-diagnostics/index",
+    "pages/membership-insights/index"
+  ],
+  "window": {
+    "navigationBarTitleText": "PPA 招标快报",
+    "navigationBarBackgroundColor": "#ffffff",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#f5f7fb",
+    "backgroundTextStyle": "light"
+  },
+  "tabBar": {
+    "color": "#94a3b8",
+    "selectedColor": "#3b82f6",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/tender-list/index",
+        "text": "公开渠道"
+      },
+      {
+        "pagePath": "pages/internal-channel/index",
+        "text": "内部渠道"
+      }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

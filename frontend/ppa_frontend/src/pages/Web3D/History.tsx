@@ -57,7 +57,11 @@ const HistoryWeb3D: React.FC = () => {
       <Table
         rowKey="id"
         dataSource={data}
-        pagination={{ pageSize: 10 }}
+        pagination={{
+          defaultPageSize: 10,
+          showSizeChanger: true,
+          pageSizeOptions: [10, 20, 50, 100],
+        }}
         columns={[
           { title: 'ID', dataIndex: 'id', width: 80 },
           { title: '名称', dataIndex: 'name' },

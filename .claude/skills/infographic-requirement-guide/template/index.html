@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Table Engine Demos</title>
+  <style>
+    :root {
+      --bg: #f3f7ff;
+      --card: #ffffff;
+      --text: #0f172a;
+      --sub: #475569;
+      --line: #dbe3f4;
+      --brand: #155eef;
+      --shadow: 0 10px 30px rgba(21, 94, 239, 0.12);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, -apple-system, Segoe UI, PingFang SC, Microsoft YaHei, sans-serif;
+      background: radial-gradient(circle at 20% 0%, #dbeafe, #f3f7ff 40%), var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+    .wrap {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 40px 20px 60px;
+    }
+    h1 {
+      margin: 0;
+      font-size: 32px;
+      line-height: 1.2;
+    }
+    p.desc {
+      margin: 10px 0 0;
+      color: var(--sub);
+      font-size: 16px;
+    }
+    .grid {
+      margin-top: 28px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 16px;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .tag {
+      width: fit-content;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: #dbeafe;
+      color: #1e40af;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .card h2 {
+      margin: 0;
+      font-size: 18px;
+    }
+    .card p {
+      margin: 0;
+      color: var(--sub);
+      line-height: 1.5;
+      min-height: 44px;
+    }
+    .card a {
+      margin-top: auto;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 36px;
+      border-radius: 9px;
+      background: var(--brand);
+      color: white;
+      font-weight: 600;
+    }
+    .hint {
+      margin-top: 20px;
+      color: #334155;
+      font-size: 13px;
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-radius: 10px;
+      padding: 10px 12px;
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <h1>Table 选型方向 Demo</h1>
+    <p class="desc">对应 TG 的四个方向：强编辑、后台范式、高定制、透视分析。</p>
+
+    <section class="grid">
+      <article class="card">
+        <span class="tag">VXE 方向</span>
+        <h2>vxe-table 强编辑</h2>
+        <p>模拟 Excel 风格编辑、批量修改和即时汇总。</p>
+        <a href="demo-vxe-table.html">打开 Demo</a>
+      </article>
+
+      <article class="card">
+        <span class="tag">PRO 方向</span>
+        <h2>ProTable 后台范式</h2>
+        <p>模拟查询表单 + 表格 + 操作列 + 分页。</p>
+        <a href="demo-pro-table.html">打开 Demo</a>
+      </article>
+
+      <article class="card">
+        <span class="tag">TanStack 方向</span>
+        <h2>TanStack 高定制</h2>
+        <p>模拟列显隐、排序、选择、单元格自定义渲染。</p>
+        <a href="demo-tanstack-table.html">打开 Demo</a>
+      </article>
+
+      <article class="card">
+        <span class="tag">S2 方向</span>
+        <h2>AntV S2 透视分析</h2>
+        <p>模拟交叉透视矩阵与热力强度表达。</p>
+        <a href="demo-antv-s2.html">打开 Demo</a>
+      </article>
+
+      <article class="card">
+        <span class="tag">Dual View</span>
+        <h2>移动端 Pitch + 证据表格</h2>
+        <p>模拟手机结论视图与完整表格下钻，适配电梯演讲场景。</p>
+        <a href="demo-dual-view.html">打开 Demo</a>
+      </article>
+    </section>
+
+    <div class="hint">说明：当前为“方向 demo”，用于快速比较交互风格与信息组织，再进入模板细化。</div>
+  </main>
+</body>
+</html>

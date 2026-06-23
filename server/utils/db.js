@@ -6,7 +6,11 @@ let connectionId = 0;
 
 const DB_PATH = path.resolve(__dirname, '../ppa.db'); // Adjust path as needed
 
-exports.init = async (databasePath = DB_PATH) => {
+const getDefaultDatabasePath = () => (
+  process.env.DB_PATH ? path.resolve(process.env.DB_PATH) : DB_PATH
+);
+
+exports.init = async (databasePath = getDefaultDatabasePath()) => {
   if (db) {
     await exports.close();
   }
@@ -17,15 +21,24 @@ exports.init = async (databasePath = DB_PATH) => {
         console.error('Error connecting to database:', err.message);
         reject(err);
       } else {
-        console.log('Connected to the SQLite database.');
-        connectionId += 1;
-        resolve();
+        db.run('PRAGMA foreign_keys = ON;', (pragmaErr) => {
+          if (pragmaErr) {
+            console.error('Failed to enable foreign keys:', pragmaErr.message);
+            reject(pragmaErr);
+          } else {
+            console.log('Connected to the SQLite database and enabled foreign keys.');
+            connectionId += 1;
+            resolve();
+          }
+        });
       }
     });
   });
 };
 
 exports.getConnectionId = () => connectionId;
+
+exports.getDefaultDatabasePath = getDefaultDatabasePath;
 
 // Promisify db operations for async/await
 exports.get = (sql, params = []) => {

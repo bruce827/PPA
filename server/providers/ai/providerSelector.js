@@ -1,5 +1,7 @@
 const openaiProvider = require('./openaiProvider');
+const cherryStudioProvider = require('./cherryStudioProvider');
 const geminiProvider = require('./geminiProvider');
+const tavilyProvider = require('./tavilyProvider');
 
 function normalizeProviderName(raw) {
   if (!raw) return '';
@@ -13,6 +15,20 @@ function selectProvider(providerLabel) {
     return {
       key: 'gemini',
       impl: geminiProvider,
+    };
+  }
+
+  if (name.includes('cherry')) {
+    return {
+      key: 'cherry-studio',
+      impl: cherryStudioProvider,
+    };
+  }
+
+  if (name.includes('tavily')) {
+    return {
+      key: 'tavily',
+      impl: tavilyProvider,
     };
   }
 

@@ -119,6 +119,7 @@ const formatWeb3dExport = async (project) => {
     return {
       category: item.category || (tpl && tpl.category) || '',
       item_name: item.item_name || (tpl && tpl.item_name) || '',
+      reason: item.reason || '',
       base_days: baseDays,
       quantity,
       role_name: item.role_name || '',

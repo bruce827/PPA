@@ -5,7 +5,7 @@ const aiModelService = require('../services/aiModelService');
  */
 exports.getAIModels = async (req, res, next) => {
   try {
-    const models = await aiModelService.getAllModels();
+    const models = await aiModelService.getAllModels(req.query || {});
     res.json({
       success: true,
       data: models,
@@ -99,6 +99,31 @@ exports.setCurrentModel = async (req, res, next) => {
 exports.getCurrentModel = async (req, res, next) => {
   try {
     const currentModel = await aiModelService.getCurrentModel();
+    res.json({
+      success: true,
+      data: currentModel,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.setCurrentVisionModel = async (req, res, next) => {
+  try {
+    const updatedModel = await aiModelService.setCurrentVisionModel(req.params.id);
+    res.json({
+      success: true,
+      data: updatedModel,
+      message: `已成功将 "${updatedModel.config_name}" 设置为当前视觉模型`,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.getCurrentVisionModel = async (req, res, next) => {
+  try {
+    const currentModel = await aiModelService.getCurrentVisionModel();
     res.json({
       success: true,
       data: currentModel,

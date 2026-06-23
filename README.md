@@ -66,6 +66,48 @@ yarn
 yarn start
 ```
 
+## 🛠 自定义 Skills
+
+本项目包含两个基于 BMad 方法构建的自定义 Skill，为 PPA 业务场景定制：
+
+### ppa-research-focus（项目调研重点生成）
+
+根据已完成的项目评估数据，结合 Personal Knowledge Base，自动生成针对性的调研建议清单。
+
+**功能：**
+- 读取 ppa.db 中的项目评估数据（风险评分、模块工作量、商务报价等）
+- 结合 Personal Knowledge Base（个人能力、团队能力、公司偏好）
+- 生成个性化调研建议（必查项/建议查/可选）
+
+**调用方式：** `/ppa-research-focus`
+
+**输入：** 项目 ID（如 `19`、`94`）
+
+**示例场景：** 评估完成后，想知道"这个项目还需要调研什么"→ AI 结合你的历史案例和能力给出建议
+
+**文件位置：** `.claude/skills/ppa-research-focus/`
+
+---
+
+### infographic-requirement-guide（图表需求引导）
+
+将模糊的数据可视化需求转化为可执行的图表需求文档，支持意图驱动、数据驱动、DB 引导、Owner 引导四种模式。
+
+**功能：**
+- 自然语言查询项目数据库（ppa.db）
+- 生成统计报告和图表方案
+- 支持多轮追问深入分析
+
+**调用方式：** `/infographic-requirement-guide`
+
+**示例场景：**
+- "招标文件一共推送了多少？"
+- "最近三个月项目评分趋势如何？"
+
+**文件位置：** `.claude/skills/infographic-requirement-guide/`
+
+---
+
 ## 📚 文档导航
 
 - **产品需求与设计**: `docs/PRD.md`、`docs/prd/` 下的详细特性说明（含 AI 风险评估、工作量一键评估等扩展能力）。

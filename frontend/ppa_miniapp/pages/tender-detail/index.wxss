@@ -1,0 +1,183 @@
+.detail-page {
+  display: flex;
+  flex-direction: column;
+  gap: 24rpx;
+}
+
+.hero-card,
+.section-card {
+  padding: 32rpx;
+}
+
+.hero-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 16rpx;
+  margin-bottom: 20rpx;
+}
+
+.detail-title {
+  flex: 1;
+  line-height: 1.5;
+}
+
+.detail-summary {
+  line-height: 1.7;
+}
+
+.membership-card {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+  padding: 32rpx;
+  background: #fff7ed;
+  border: 1px solid #fdba74;
+}
+
+.membership-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16rpx;
+}
+
+.membership-card__title {
+  font-size: 30rpx;
+  font-weight: 700;
+  color: #9a3412;
+}
+
+.membership-card__badge {
+  padding: 6rpx 16rpx;
+  border-radius: 999rpx;
+  background: #ffedd5;
+  color: #c2410c;
+  font-size: 22rpx;
+}
+
+.membership-card__description {
+  line-height: 1.7;
+  color: #7c2d12;
+}
+
+.membership-card__button {
+  margin-top: 8rpx;
+}
+
+.service-entry-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12rpx;
+  padding: 24rpx;
+  border-radius: 20rpx;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+}
+
+.service-entry-card--embedded {
+  margin-top: 0;
+}
+
+.service-entry-card__title {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #1d4ed8;
+}
+
+.service-entry-card__description {
+  line-height: 1.7;
+  color: #1e3a8a;
+}
+
+.service-entry-card__button {
+  margin-top: 8rpx;
+}
+
+.section-title {
+  margin-bottom: 24rpx;
+  font-size: 30rpx;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.detail-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20rpx 16rpx;
+}
+
+.detail-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8rpx;
+}
+
+.extra-block {
+  display: flex;
+  flex-direction: column;
+  gap: 10rpx;
+  margin-top: 20rpx;
+}
+
+.bullet-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8rpx;
+}
+
+.bullet-item {
+  line-height: 1.7;
+}
+
+.detail-label {
+  font-size: 24rpx;
+}
+
+.multiline {
+  white-space: pre-wrap;
+  line-height: 1.7;
+}
+
+.plain-announcement {
+  display: block;
+  white-space: pre-wrap;
+  line-height: 1.8;
+}
+
+.source-link {
+  display: block;
+  margin-bottom: 20rpx;
+  word-break: break-all;
+  color: #0f766e;
+}
+
+.artifact-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20rpx;
+  padding: 24rpx;
+  border-radius: 20rpx;
+  background: #f8fafc;
+}
+
+.artifact-item__main {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 8rpx;
+}
+
+.artifact-item__title {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.artifact-item__button {
+  min-width: 180rpx;
+}
+
+.action-row {
+  padding-bottom: 32rpx;
+}

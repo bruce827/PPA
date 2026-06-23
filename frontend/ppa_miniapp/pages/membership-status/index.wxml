@@ -1,0 +1,98 @@
+<view class="page membership-page">
+  <view class="card membership-hero">
+    <view class="membership-hero__header">
+      <text class="membership-hero__badge membership-hero__badge--{{membershipStatus}}">{{statusLabel}}</text>
+      <text class="membership-hero__price">{{selectedPlanPriceText}}</text>
+    </view>
+    <text class="title membership-hero__title">{{title}}</text>
+    <text class="membership-hero__description">{{description}}</text>
+  </view>
+
+  <view wx:if="{{pageMode === 'overview'}}" class="card membership-section">
+    <view class="membership-section__title">当前状态</view>
+    <view class="membership-plan-row">
+      <text>会员状态</text>
+      <text class="membership-plan-row__value">{{statusLabel}}</text>
+    </view>
+    <view class="membership-plan-row">
+      <text>到期时间</text>
+      <text class="membership-plan-row__value">{{expiresText || '未开通'}}</text>
+    </view>
+    <view wx:if="{{startsText}}" class="membership-plan-row">
+      <text>开通时间</text>
+      <text class="membership-plan-row__value">{{startsText}}</text>
+    </view>
+    <text class="subtle membership-plan-note">{{statusSummary}}</text>
+  </view>
+
+  <view wx:if="{{pageMode === 'overview' && membershipReminder}}" class="card membership-section membership-reminder">
+    <view class="membership-section__title">{{membershipReminder.title}}</view>
+    <text class="membership-reminder__description">{{membershipReminder.description}}</text>
+    <button
+      wx:if="{{membershipReminder.actionText}}"
+      class="secondary-button membership-reminder__action"
+      bindtap="handleMembershipReminderAction"
+      disabled="{{submitting}}"
+    >
+      {{membershipReminder.actionText}}
+    </button>
+  </view>
+
+  <view class="card membership-section">
+    <view class="membership-section__title">会员权益</view>
+    <view class="membership-benefit">查看完整招标公告与结构化详情</view>
+    <view class="membership-benefit">继续访问当前项目，不必重新搜索</view>
+    <view class="membership-benefit">后续接入人工评估与成果物下载权益</view>
+  </view>
+
+  <view class="card membership-section">
+    <view class="membership-section__title">当前方案</view>
+    <view
+      wx:for="{{planOptions}}"
+      wx:key="code"
+      class="membership-plan-card {{item.code === selectedPlanCode ? 'membership-plan-card--selected' : ''}} {{item.enabled ? '' : 'membership-plan-card--disabled'}}"
+      data-code="{{item.code}}"
+      bindtap="handlePlanSelect"
+    >
+      <view class="membership-plan-card__header">
+        <view>
+          <text class="membership-plan-card__title">{{item.title}}</text>
+          <text class="membership-plan-card__subtitle">{{item.subtitle}}</text>
+        </view>
+        <text class="membership-plan-card__price">{{item.priceText}}</text>
+      </view>
+      <text class="subtle membership-plan-card__description">{{item.description}}</text>
+    </view>
+    <text class="subtle membership-plan-note">当前先开放月会员；后续若启用季卡或年卡，只需更新套餐配置即可复用现有下单、支付和会员生效链路。</text>
+  </view>
+
+  <view wx:if="{{pageMode === 'overview'}}" class="card membership-section">
+    <view class="membership-section__title">会员相关记录</view>
+    <text class="subtle membership-plan-note">{{recordHint}}</text>
+  </view>
+
+  <view wx:if="{{pageMode === 'overview'}}" class="card membership-section">
+    <view class="membership-section__title">提醒设置</view>
+    <view class="membership-plan-row">
+      <text>站内新招标提醒</text>
+      <switch checked="{{tenderSubscriptionEnabled}}" color="#0f766e" bindchange="handleTenderReminderToggle" />
+    </view>
+    <text class="subtle membership-plan-note">开启后，返回列表页时会优先展示新招标提醒入口。当前仅提供站内提醒，不发送微信订阅消息。</text>
+  </view>
+
+  <view wx:if="{{submitMessage}}" class="card membership-section membership-status-feedback">
+    <view class="membership-section__title">当前进度</view>
+    <text class="membership-status-feedback__message">{{submitMessage}}</text>
+    <text wx:if="{{latestOrderNo}}" class="subtle membership-status-feedback__order">订单号：{{latestOrderNo}}</text>
+    <text wx:if="{{awaitingSync}}" class="subtle membership-status-feedback__hint">如果你已经完成支付但还未解锁，点击下方“刷新会员状态”继续确认。</text>
+  </view>
+
+  <view class="membership-actions">
+    <button class="primary-button" bindtap="handlePrimaryAction" loading="{{submitting}}" disabled="{{submitting}}">
+      {{primaryText}}
+    </button>
+    <button class="secondary-button" bindtap="handleSecondaryAction" disabled="{{submitting}}">
+      {{secondaryText}}
+    </button>
+  </view>
+</view>

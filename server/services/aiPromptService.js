@@ -1,6 +1,9 @@
 const promptTemplateModel = require('../models/promptTemplateModel');
 const aiModelModel = require('../models/aiModelModel');
 const logger = require('../utils/logger');
+const {
+  normalizeModuleTag,
+} = require('../utils/promptTemplateCategories');
 
 /**
  * 转换 PromptTemplate 为 AiPrompt 格式
@@ -73,28 +76,20 @@ async function getAllPrompts() {
 }
 
 /**
- * 按类别获取提示词模板（例如：'module_analysis'）
+ * 按模块标签获取提示词模板（例如：'assessment'）
  */
-async function getPromptsByCategory(category) {
+async function getPromptsByModuleTag(moduleTag) {
   // 获取当前模型
   const currentModel = await aiModelModel.getCurrentModel();
   if (!currentModel) {
     throw new Error('当前没有设置使用的模型，请先配置并设置一个模型为当前使用');
   }
 
-  // 分类别名兼容（例如：'成本估算' / '工作量评估' 视为 'workload_evaluation' 的等价分类）
-  let categories = category;
-  if (category === 'workload_evaluation') {
-    categories = ['workload_evaluation', 'cost_estimation', '成本估算', '工作量评估'];
-  }
-  if (category === 'project_tagging') {
-    categories = ['project_tagging', 'project_tags', '项目标签', '标签生成'];
-  }
+  const normalized = normalizeModuleTag(moduleTag);
 
-  // 仅拉取分类下的活跃模板（支持多分类 IN 查询）
   const templatesResult = await promptTemplateModel.getAll({
     is_active: 1,
-    category: categories,
+    module_tag: normalized,
     pageSize: 1000,
   });
 
@@ -133,6 +128,6 @@ async function getPromptById(promptId) {
 
 module.exports = {
   getAllPrompts,
-  getPromptsByCategory,
+  getPromptsByModuleTag,
   getPromptById,
 };

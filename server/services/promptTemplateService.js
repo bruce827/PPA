@@ -1,5 +1,11 @@
 const promptTemplateModel = require('../models/promptTemplateModel');
 const { HttpError, validationError } = require('../utils/errors');
+const {
+  normalizeModuleTag,
+  validateModuleTag,
+  RECOMMENDED_MODULE_TAGS,
+} = require('../utils/promptTemplateCategories');
+const db = require('../utils/db');
 
 function ensureTemplateExists(template, notFoundMessage = 'Template not found') {
   if (!template) {
@@ -16,7 +22,6 @@ function parseVariablesJson(variablesJson) {
     const parsed = JSON.parse(variablesJson);
     return Array.isArray(parsed) ? parsed : [];
   } catch (error) {
-    // 保持兼容：解析失败时仅记录日志，不中断预览
     console.error('Failed to parse variables_json:', error);
     return [];
   }
@@ -32,22 +37,66 @@ function createPlaceholderRegex(varName, flags = 'g') {
 }
 
 async function createPromptTemplate(payload) {
-  const { template_name, category, system_prompt, user_prompt_template } = payload || {};
+  const { template_name, module_tag, system_prompt, user_prompt_template } = payload || {};
 
-  if (!template_name || !category || !system_prompt || !user_prompt_template) {
-    throw validationError('Missing required fields.');
+  if (!template_name || !module_tag || !system_prompt || !user_prompt_template) {
+    throw validationError('template_name, module_tag, system_prompt, user_prompt_template 为必填字段');
   }
 
-  return promptTemplateModel.create(payload);
+  return promptTemplateModel.create({
+    ...payload,
+    module_tag: validateModuleTag(module_tag),
+  });
 }
 
 async function getPromptTemplates(filters = {}) {
-  return promptTemplateModel.getAll(filters);
+  const normalizedFilters = { ...filters };
+  if (filters.module_tag) {
+    normalizedFilters.module_tag = normalizeModuleTag(filters.module_tag);
+  }
+
+  return promptTemplateModel.getAll(normalizedFilters);
 }
 
 async function getPromptTemplateById(id) {
-  const template = await promptTemplateModel.getById(id);
-  return ensureTemplateExists(template);
+  return ensureTemplateExists(await promptTemplateModel.getById(id));
+}
+
+async function ensureActiveWebSearchTemplate(id) {
+  return ensureActiveTemplateByModuleTag(id, 'bidding_search', '全网招标检索');
+}
+
+async function ensureActiveTemplateByModuleTag(id, moduleTag, usageLabel = '当前操作') {
+  const template = await getPromptTemplateById(id);
+
+  if (template.is_active !== 1) {
+    throw validationError(`所选提示词模板未启用，无法用于${usageLabel}`);
+  }
+
+  if (template.module_tag !== moduleTag) {
+    throw validationError(`所选提示词模板不属于${usageLabel}分类（当前: ${template.module_tag}）`);
+  }
+
+  return template;
+}
+
+async function getLatestActiveTemplateByModuleTag(moduleTag) {
+  const normalized = normalizeModuleTag(moduleTag);
+  const result = await promptTemplateModel.getAll({
+    module_tag: normalized,
+    is_active: 1,
+    pageSize: 1,
+  });
+
+  const latest = Array.isArray(result?.data) ? result.data[0] : null;
+  if (!latest?.id) {
+    throw validationError(`未找到已启用的 ${normalized} 模块的提示词模板`);
+  }
+
+  return ensureTemplateExists(
+    await promptTemplateModel.getById(latest.id),
+    'Template not found'
+  );
 }
 
 async function updatePromptTemplate(id, payload) {
@@ -55,14 +104,15 @@ async function updatePromptTemplate(id, payload) {
   ensureTemplateExists(template);
 
   if (template.is_system) {
-    throw new HttpError(
-      403,
-      'System templates cannot be modified',
-      'ForbiddenError'
-    );
+    throw new HttpError(403, 'System templates cannot be modified', 'ForbiddenError');
   }
 
-  return promptTemplateModel.update(id, payload);
+  const nextPayload = { ...payload };
+  if (payload && Object.prototype.hasOwnProperty.call(payload, 'module_tag')) {
+    nextPayload.module_tag = validateModuleTag(payload.module_tag);
+  }
+
+  return promptTemplateModel.update(id, nextPayload);
 }
 
 async function deletePromptTemplate(id) {
@@ -70,11 +120,7 @@ async function deletePromptTemplate(id) {
   ensureTemplateExists(template);
 
   if (template.is_system) {
-    throw new HttpError(
-      403,
-      'System templates cannot be deleted',
-      'ForbiddenError'
-    );
+    throw new HttpError(403, 'System templates cannot be deleted', 'ForbiddenError');
   }
 
   await promptTemplateModel.delete(id);
@@ -101,14 +147,12 @@ async function previewTemplate(id, variableValues = {}) {
   const unused_variables = [];
   const provided_variables = Object.keys(variableValues || {});
 
-  // 检查必填变量是否提供
   variables.forEach((variable) => {
     if (variable.required && !variableValues[variable.name]) {
       missing_required.push(variable.name);
     }
   });
 
-  // 检查提供的变量是否被使用
   provided_variables.forEach((varName) => {
     const regex = createPlaceholderRegex(varName);
     if (!regex.test(userPrompt)) {
@@ -116,7 +160,6 @@ async function previewTemplate(id, variableValues = {}) {
     }
   });
 
-  // 替换所有变量
   Object.keys(variableValues || {}).forEach((varName) => {
     const regex = createPlaceholderRegex(varName, 'g');
     userPrompt = userPrompt.replace(regex, variableValues[varName]);
@@ -130,12 +173,24 @@ async function previewTemplate(id, variableValues = {}) {
   };
 }
 
+async function getPromptModuleTags() {
+  const rows = await db.all(
+    'SELECT value, label, description, is_recommended FROM prompt_module_tags ORDER BY sort_order ASC, id ASC'
+  );
+  return rows;
+}
+
 module.exports = {
   createPromptTemplate,
   getPromptTemplates,
   getPromptTemplateById,
+  getPromptModuleTags,
+  ensureActiveTemplateByModuleTag,
+  ensureActiveWebSearchTemplate,
+  getLatestActiveTemplateByModuleTag,
   updatePromptTemplate,
   deletePromptTemplate,
   copyTemplate,
   previewTemplate,
+  RECOMMENDED_MODULE_TAGS,
 };

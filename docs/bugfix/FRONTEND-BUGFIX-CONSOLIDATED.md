@@ -2,7 +2,7 @@
 
 # 前端 Bug 修复记录（整合版）
 
-> **最后更新**: 2025-11-06  
+> **最后更新**: 2026-04-03  
 > **适用范围**: PPA 项目前端 (frontend/ppa_frontend/)  
 > **框架版本**: UMI Max v4+ + Ant Design Pro + React 18
 
@@ -23,7 +23,10 @@
 11. [重新评估功能实现](#11-重新评估功能实现)
 12. [actionRef 无限循环问题修复](#12-actionref-无限循环问题修复)
 13. [工作量评估提示词弹窗两项修复](#13-工作量评估提示词弹窗两项修复)
-14. [模型配置“设为当前”开关异常修复](#14-模型配置设为当前开关异常修复)
+14. [模型配置”设为当前”开关异常修复](#14-模型配置设为当前开关异常修复)
+15. [小程序内部渠道：实施成本显示为 —](#15-小程序内部渠道实施成本显示为-)
+16. [小程序内部渠道：wx.cloud 模块加载时序问题](#16-小程序内部渠道wxcloud-模块加载时序问题)
+17. [路由模块：downloadAttachment 未导入](#17-路由模块downloadattachment-未导入)
 
 ---
 
@@ -915,3 +918,73 @@ actionRef.current?.reset();          // 重置表格
 ### 相关改动
 - `frontend/ppa_frontend/src/pages/ModelConfig/Application/index.tsx`：请求列表后存储当前模型 ID，并传入表单。
 - `frontend/ppa_frontend/src/pages/ModelConfig/Application/components/ModelForm.tsx`：基于当前模型 ID 控制开关禁用状态与提示。
+
+---
+
+## 15. 小程序内部渠道：实施成本显示为 "—"
+
+### 问题
+在小程序内部渠道详情页中，"实施成本"字段始终显示 "— 万元"，即使后端已推送了 `base_cost_wan` 数据。
+
+### 根本原因
+小程序 `internal-channel/index.js` 的 `mapInternalProject` 函数中，`implementationCostText` 被硬编码为 `'—'`，未从云端数据中取值：
+```javascript
+// ❌ 错误：硬编码
+implementationCostText: '—',
+```
+
+### 修复方案
+改为从云端返回的 `implementationCost` 字段格式化取值：
+```javascript
+// ✅ 正确：使用 formatWan 格式化
+implementationCostText: formatWan(item.implementationCost),
+```
+
+### 涉及文件
+- `frontend/ppa_miniapp/pages/internal-channel/index.js` — `mapInternalProject` 函数
+
+---
+
+## 16. 小程序内部渠道：wx.cloud 模块加载时序问题
+
+### 问题
+小程序直接调用 `wx.cloud.database()` 查询 `internal_projects` 集合，返回列表为空，但数据实际存在。
+
+### 根本原因
+1. `wx.cloud.database()` 在模块加载时被调用，此时 `wx.cloud.init()` 尚未执行
+2. CloudBase 新建集合默认无读取权限，小程序端无权访问
+
+### 修复方案
+创建云函数 `getInternalProjectList` 通过服务端权限查询数据，小程序端改用 `callFunction` 调用：
+```javascript
+// ❌ 错误：小程序端直连数据库
+const db = wx.cloud.database();
+db.collection('internal_projects').get();
+
+// ✅ 正确：通过云函数
+const { callFunction } = require('../../utils/request');
+const data = await callFunction('getInternalProjectList', { pageNo: 1, pageSize: 50 });
+```
+
+### 涉及文件
+- `frontend/ppa_miniapp/cloudfunctions/getInternalProjectList/index.js` — 新增云函数
+- `frontend/ppa_miniapp/pages/internal-channel/index.js` — 改用 callFunction
+
+---
+
+## 17. 路由模块：downloadAttachment 未导入
+
+### 问题
+调用附件下载接口报 `ReferenceError: downloadAttachment is not defined`。
+
+### 根本原因
+`server/routes/attachment.js` 中使用了 `downloadAttachment` 但未从 controller 中导入。
+
+### 修复方案
+在 `require` 解构中加入 `downloadAttachment`：
+```javascript
+const { uploadAttachments, listAttachments, deleteAttachment, downloadAttachment } = require('../controllers/attachmentController');
+```
+
+### 涉及文件
+- `server/routes/attachment.js`

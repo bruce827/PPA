@@ -1,0 +1,9 @@
+{
+  "name": "upsertInternalProject",
+  "version": "1.0.0",
+  "description": "云函数：将推送数据写入 internal_projects 集合",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3"
+  }
+}

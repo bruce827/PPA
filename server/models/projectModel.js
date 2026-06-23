@@ -54,6 +54,20 @@ const parseFiniteNumber = (value) => {
   return undefined;
 };
 
+const parseBooleanFlag = (value) => {
+  if (typeof value === 'boolean') return value;
+  if (typeof value === 'number') {
+    if (value === 1) return true;
+    if (value === 0) return false;
+    return undefined;
+  }
+  if (typeof value !== 'string') return undefined;
+  const normalized = value.trim().toLowerCase();
+  if (['1', 'true', 'yes'].includes(normalized)) return true;
+  if (['0', 'false', 'no'].includes(normalized)) return false;
+  return undefined;
+};
+
 const extractDatePrefix = (value) => {
   if (typeof value !== 'string') return undefined;
   const trimmed = value.trim();
@@ -91,6 +105,15 @@ const buildFilterClauses = (options = {}) => {
     params.push(riskScore);
   }
 
+  const hasBusinessQuote = parseBooleanFlag(options.has_business_quote);
+  if (typeof hasBusinessQuote !== 'undefined') {
+    clauses.push(
+      hasBusinessQuote
+        ? "business_quote_json IS NOT NULL AND business_quote_json != ''"
+        : "(business_quote_json IS NULL OR business_quote_json = '')"
+    );
+  }
+
   const createdStart = extractDatePrefix(options.created_at_start);
   if (createdStart) {
     clauses.push('date(created_at) >= date(?)');
@@ -107,18 +130,36 @@ const buildFilterClauses = (options = {}) => {
 };
 
 let ensuredConnectionId = null;
+let ensureSchemaPromise = null;
 
 const ensureSchema = async () => {
   const currentConnectionId = db.getConnectionId();
   if (ensuredConnectionId === currentConnectionId) return;
-
-  const columns = await db.all('PRAGMA table_info(projects);');
-  const hasTagsJson = Array.isArray(columns) && columns.some((col) => col.name === 'tags_json');
-  if (!hasTagsJson) {
-    await db.run('ALTER TABLE projects ADD COLUMN tags_json TEXT;');
+  if (ensureSchemaPromise) {
+    await ensureSchemaPromise;
+    if (ensuredConnectionId === currentConnectionId) return;
   }
 
-  ensuredConnectionId = currentConnectionId;
+  ensureSchemaPromise = (async () => {
+    const columns = await db.all('PRAGMA table_info(projects);');
+    const hasTagsJson = Array.isArray(columns) && columns.some((col) => col.name === 'tags_json');
+    const hasBusinessQuoteJson =
+      Array.isArray(columns) && columns.some((col) => col.name === 'business_quote_json');
+    if (!hasTagsJson) {
+      await db.run('ALTER TABLE projects ADD COLUMN tags_json TEXT;');
+    }
+    if (!hasBusinessQuoteJson) {
+      await db.run('ALTER TABLE projects ADD COLUMN business_quote_json TEXT;');
+    }
+
+    ensuredConnectionId = currentConnectionId;
+  })();
+
+  try {
+    await ensureSchemaPromise;
+  } finally {
+    ensureSchemaPromise = null;
+  }
 };
 
 const createProject = async (projectData) => {
@@ -171,7 +212,8 @@ const getAllProjects = async (options = {}) => {
     ...clauses,
   ];
   return await db.all(
-    `SELECT id, name, final_total_cost, final_risk_score, created_at
+    `SELECT id, name, final_total_cost, final_risk_score, business_quote_json, created_at,
+            CASE WHEN business_quote_json IS NOT NULL AND business_quote_json != '' THEN 1 ELSE 0 END AS has_business_quote
      FROM projects
      WHERE ${whereParts.join(' AND ')}
      ORDER BY ${orderBy}`,
@@ -189,7 +231,8 @@ const getAllProjectsIncludingTemplates = async (options = {}) => {
     ...clauses,
   ];
   return await db.all(
-    `SELECT id, name, description, is_template, final_total_cost, final_risk_score, final_workload_days, created_at
+    `SELECT id, name, description, is_template, final_total_cost, final_risk_score, final_workload_days, business_quote_json, created_at,
+            CASE WHEN business_quote_json IS NOT NULL AND business_quote_json != '' THEN 1 ELSE 0 END AS has_business_quote
      FROM projects
      WHERE ${whereParts.join(' AND ')}
      ORDER BY ${orderBy}`,
@@ -207,7 +250,8 @@ const getAllTemplates = async (options = {}) => {
     ...clauses,
   ];
   return await db.all(
-    `SELECT id, name, description, is_template, final_total_cost, final_risk_score, final_workload_days, created_at
+    `SELECT id, name, description, is_template, final_total_cost, final_risk_score, final_workload_days, business_quote_json, created_at,
+            CASE WHEN business_quote_json IS NOT NULL AND business_quote_json != '' THEN 1 ELSE 0 END AS has_business_quote
      FROM projects
      WHERE ${whereParts.join(' AND ')}
      ORDER BY ${orderBy}`,
@@ -236,6 +280,7 @@ const updateProjectFields = async (id, fields) => {
     'final_workload_days',
     'assessment_details_json',
     'tags_json',
+    'business_quote_json',
   ];
 
   const setParts = [];

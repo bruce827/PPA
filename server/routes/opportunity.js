@@ -1,0 +1,46 @@
+const express = require('express');
+
+const opportunityController = require('../controllers/opportunityController');
+const tenderFieldParseController = require('../controllers/tenderFieldParseController');
+const tenderStagingController = require('../controllers/tenderStagingController');
+const tenderWebSearchController = require('../controllers/tenderWebSearchController');
+
+const router = express.Router();
+
+router.get('/bidding-sites', opportunityController.getBiddingSites);
+router.get('/bidding-sites/:id', opportunityController.getBiddingSiteById);
+router.post('/bidding-sites', opportunityController.createBiddingSite);
+router.put('/bidding-sites/:id', opportunityController.updateBiddingSite);
+router.delete('/bidding-sites/:id', opportunityController.deleteBiddingSite);
+router.post(
+  '/bidding-sites/:id/script',
+  express.text({
+    type: ['text/plain', 'text/x-python', 'application/x-python-code'],
+    limit: '1mb',
+  }),
+  opportunityController.uploadBiddingSiteScript
+);
+router.post('/bidding-sites/:id/validate', opportunityController.validateBiddingSite);
+router.get('/tender-staging', tenderStagingController.listTenderStaging);
+router.post(
+  '/tender-staging/dedupe/preview',
+  tenderStagingController.previewTenderDedupe
+);
+router.post(
+  '/tender-staging/dedupe/execute',
+  tenderStagingController.executeTenderDedupe
+);
+router.post(
+  '/tender-staging/archive-source-files',
+  tenderStagingController.archiveTenderSourceFiles
+);
+router.post(
+  '/tender-staging/:id/parse-fields',
+  tenderFieldParseController.parseTenderFields
+);
+router.get('/tender-staging/:id/web-search', tenderWebSearchController.getTenderWebSearch);
+router.post('/tender-staging/:id/web-search', tenderWebSearchController.searchTenderWebSearch);
+router.post('/tender-staging/sync', tenderStagingController.syncTenderStaging);
+router.post('/tender-staging/:id/push', tenderStagingController.pushTenderStaging);
+
+module.exports = router;

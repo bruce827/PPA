@@ -1,0 +1,71 @@
+page {
+  min-height: 100%;
+  background: #f5f7fb;
+  color: #1f2937;
+  font-size: 28rpx;
+}
+
+.page {
+  min-height: 100vh;
+  padding: 32rpx;
+  box-sizing: border-box;
+}
+
+.card {
+  background: #ffffff;
+  border-radius: 24rpx;
+  box-shadow: 0 12rpx 40rpx rgba(15, 23, 42, 0.06);
+}
+
+.title {
+  font-size: 36rpx;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.subtle {
+  color: #64748b;
+}
+
+.primary-button {
+  height: 88rpx;
+  border-radius: 999rpx;
+  background: #0f766e;
+  color: #ffffff;
+  font-size: 30rpx;
+  line-height: 88rpx;
+}
+
+.secondary-button {
+  height: 88rpx;
+  border-radius: 999rpx;
+  border: 2rpx solid #cbd5e1;
+  background: #ffffff;
+  color: #0f172a;
+  font-size: 30rpx;
+  line-height: 88rpx;
+}
+
+.status-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 10rpx 20rpx;
+  border-radius: 999rpx;
+  font-size: 24rpx;
+}
+
+.status-chip--open {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.status-chip--locked {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.empty {
+  padding: 120rpx 0;
+  text-align: center;
+  color: #94a3b8;
+}

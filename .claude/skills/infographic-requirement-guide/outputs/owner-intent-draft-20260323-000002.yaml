@@ -1,0 +1,24 @@
+draft_id: "draft-20260323-000002"
+generated_at: "2026-03-23T12:00:00+08:00"
+
+original_question: "现在评估的项目中，有多少是国家电网的？在业绩库中有多少能匹配上"
+
+extracted_elements:
+  entity: "评估项目、业绩库（招标表）"
+  metric: "数量、匹配数"
+  time_range: null
+  dimension: null
+  intent_type: "count"
+
+clarification_needed: false
+clarification_log: []
+
+final_intent:
+  entity: "评估项目、招标表"
+  metric: "项目数量、招标匹配数"
+  filters:
+    project_filter: "name LIKE '%国网%' OR name LIKE '%电网%'"
+    tender_filter: "issuer LIKE '%国网%' OR issuer LIKE '%电网%' OR title LIKE '%国网%' OR title LIKE '%电网%'"
+    match_rule: "按项目名称模糊匹配"
+
+next_step: "QUERY_BUILD"

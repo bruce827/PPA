@@ -1,5 +1,7 @@
 export type AIProviderValue =
   | 'OpenAI'
+  | 'Cherry Studio'
+  | 'tavily'
   | 'Google'
   | 'Minimax'
   | 'doubao'
@@ -13,6 +15,8 @@ export type AIProviderValue =
 
 export const AI_PROVIDER_LABELS = {
   OPENAI: 'OpenAI',
+  CHERRY_STUDIO: 'Cherry Studio',
+  TAVILY: 'Tavily（联网搜索）',
   GOOGLE: 'Google',
   MINIMAX: 'Minimax',
   DOU_BAO: 'Doubao（火山方舟 Ark）',
@@ -27,6 +31,8 @@ export const AI_PROVIDER_LABELS = {
 
 export const AI_PROVIDER_OPTIONS: { label: string; value: AIProviderValue }[] = [
   { label: AI_PROVIDER_LABELS.OPENAI, value: 'OpenAI' },
+  { label: AI_PROVIDER_LABELS.CHERRY_STUDIO, value: 'Cherry Studio' },
+  { label: AI_PROVIDER_LABELS.TAVILY, value: 'tavily' },
   { label: AI_PROVIDER_LABELS.GOOGLE, value: 'Google' },
   { label: AI_PROVIDER_LABELS.MINIMAX, value: 'Minimax' },
   { label: AI_PROVIDER_LABELS.DOU_BAO, value: 'doubao' },
@@ -44,6 +50,8 @@ export const AI_PROVIDER_VALUE_ENUM: Record<
   { text: string }
 > = {
   OpenAI: { text: AI_PROVIDER_LABELS.OPENAI },
+  'Cherry Studio': { text: AI_PROVIDER_LABELS.CHERRY_STUDIO },
+  tavily: { text: AI_PROVIDER_LABELS.TAVILY },
   Google: { text: AI_PROVIDER_LABELS.GOOGLE },
   Minimax: { text: AI_PROVIDER_LABELS.MINIMAX },
   doubao: { text: AI_PROVIDER_LABELS.DOU_BAO },
@@ -57,10 +65,46 @@ export const AI_PROVIDER_VALUE_ENUM: Record<
 };
 
 export const DOU_BAO_PROVIDER_VALUE: AIProviderValue = 'doubao';
+export const TAVILY_PROVIDER_VALUE: AIProviderValue = 'tavily';
 
 export function isDoubaoProvider(
   provider?: string | null | undefined,
 ): boolean {
   if (!provider) return false;
   return String(provider).toLowerCase().includes('doubao');
+}
+
+export function isTavilyProvider(
+  provider?: string | null | undefined,
+): boolean {
+  if (!provider) return false;
+  return String(provider).toLowerCase().includes('tavily');
+}
+
+export function isCherryStudioProvider(
+  provider?: string | null | undefined,
+): boolean {
+  if (!provider) return false;
+  return String(provider).toLowerCase().includes('cherry');
+}
+
+export function isGeminiProvider(
+  provider?: string | null | undefined,
+): boolean {
+  if (!provider) return false;
+  const normalized = String(provider).toLowerCase();
+  return normalized.includes('google') || normalized.includes('gemini');
+}
+
+export function isMinimaxProvider(
+  provider?: string | null | undefined,
+): boolean {
+  if (!provider) return false;
+  return String(provider).toLowerCase().includes('minimax');
+}
+
+export function isVisionCapableProvider(
+  provider?: string | null | undefined,
+): boolean {
+  return isGeminiProvider(provider) || isMinimaxProvider(provider);
 }

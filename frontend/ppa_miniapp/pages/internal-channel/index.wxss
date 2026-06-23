@@ -1,0 +1,191 @@
+@import '../tender-list/index.wxss';
+
+.push-card {
+  padding: 28rpx;
+}
+
+.push-title {
+  flex: 1;
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #0f172a;
+  line-height: 1.5;
+}
+
+.status-chip {
+  padding: 4rpx 12rpx;
+  border-radius: 8rpx;
+  font-size: 22rpx;
+  font-weight: 500;
+}
+
+.chip-high {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.chip-medium {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.chip-low {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.summary-row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16rpx;
+  margin-top: 16rpx;
+}
+
+.summary-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6rpx;
+}
+
+.summary-label {
+  font-size: 22rpx;
+}
+
+.summary-value {
+  font-size: 26rpx;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.diff-positive {
+  color: #dc2626;
+}
+
+.diff-negative {
+  color: #16a34a;
+}
+
+.push-time {
+  font-size: 22rpx;
+  margin-top: 16rpx;
+  display: block;
+}
+
+.divider {
+  height: 1rpx;
+  background: #e2e8f0;
+  margin: 16rpx 0;
+}
+
+.description-block {
+  display: flex;
+  flex-direction: column;
+  gap: 6rpx;
+  margin-bottom: 16rpx;
+}
+
+.description-text {
+  font-size: 26rpx;
+  color: #475569;
+  line-height: 1.6;
+  word-break: break-all;
+}
+
+.detail-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16rpx;
+}
+
+.detail-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6rpx;
+}
+
+.detail-label {
+  font-size: 22rpx;
+}
+
+.detail-value--risk {
+  font-weight: 600;
+}
+
+.chart-section {
+  margin-top: 20rpx;
+}
+
+.chart-container {
+  width: 100%;
+  height: 400rpx;
+  background: #fff;
+  border-radius: 12rpx;
+  padding: 16rpx;
+}
+
+.section-label {
+  font-size: 26rpx;
+  font-weight: 600;
+  color: #334155;
+  margin: 20rpx 0 12rpx;
+  display: block;
+}
+
+.risk-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 12rpx 0;
+  border-bottom: 1rpx solid #f1f5f9;
+}
+
+.risk-name {
+  font-size: 26rpx;
+  color: #475569;
+}
+
+.risk-score {
+  font-size: 26rpx;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.attachment-section {
+  margin-top: 20rpx;
+}
+
+.attachment-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12rpx 0;
+  border-bottom: 1rpx solid #f1f5f9;
+}
+
+.attachment-name {
+  flex: 1;
+  font-size: 26rpx;
+  color: #3b82f6;
+  margin-right: 16rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.link-btn {
+  padding: 0 16rpx;
+  font-size: 24rpx;
+  line-height: 48rpx;
+  height: 48rpx;
+  min-width: auto;
+  background: #3b82f6;
+  color: #fff;
+  border: none;
+}
+
+.link-btn::after {
+  border: none;
+}
+
+.subtle {
+  color: #94a3b8;
+}

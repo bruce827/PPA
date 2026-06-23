@@ -1,0 +1,15 @@
+{
+  "envId": "cloud1-9gf2hg9lbc3ff385",
+  "region": "ap-shanghai",
+  "functionRootPath": "./",
+  "functions": [
+    {
+      "name": "upsertInternalProject",
+      "runtime": "Nodejs18.15",
+      "handler": "index.main",
+      "envVariables": {
+        "MINIAPP_PUSH_SECRET_KEY": "ppa-miniapp-push-20260316-demo"
+      }
+    }
+  ]
+}

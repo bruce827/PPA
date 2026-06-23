@@ -110,6 +110,7 @@ const renderWeb3d = (formatted) => {
   workloadSheet.columns = [
     { header: '类别', key: 'category', width: 20 },
     { header: '工作项', key: 'item_name', width: 30 },
+    { header: '原因说明', key: 'reason', width: 48 },
     { header: '单位', key: 'unit', width: 10 },
     { header: '单元工时（天）', key: 'base_days', width: 16 },
     { header: '数量', key: 'quantity', width: 12 },
@@ -122,6 +123,7 @@ const renderWeb3d = (formatted) => {
     workloadSheet.addRow({
       category: item.category || '',
       item_name: item.item_name || '',
+      reason: item.reason || '',
       unit: item.unit || '',
       base_days: item.base_days != null ? item.base_days : '',
       quantity: item.quantity != null ? item.quantity : '',
@@ -133,6 +135,7 @@ const renderWeb3d = (formatted) => {
   const workloadTotalRow = workloadSheet.addRow({
     category: '总计',
     item_name: '',
+    reason: '',
     unit: '',
     base_days: '',
     quantity: '',

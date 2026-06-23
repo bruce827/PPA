@@ -1,0 +1,260 @@
+const fs = require('fs');
+const path = require('path');
+
+const db = require('../server/utils/db');
+const biddingSiteModel = require('../server/models/biddingSiteModel');
+const biddingSiteService = require('../server/services/biddingSiteService');
+
+const ROOT = path.resolve(__dirname, '..');
+const INPUT_CSV = path.join(ROOT, 'docs/csv/招标网站-xml-review-二轮分组.csv');
+
+function parseCsv(text) {
+  const rows = [];
+  let current = '';
+  let row = [];
+  let inQuotes = false;
+
+  for (let i = 0; i < text.length; i += 1) {
+    const char = text[i];
+    const next = text[i + 1];
+
+    if (char === '"') {
+      if (inQuotes && next === '"') {
+        current += '"';
+        i += 1;
+      } else {
+        inQuotes = !inQuotes;
+      }
+      continue;
+    }
+
+    if (char === ',' && !inQuotes) {
+      row.push(current);
+      current = '';
+      continue;
+    }
+
+    if ((char === '\n' || char === '\r') && !inQuotes) {
+      if (char === '\r' && next === '\n') {
+        i += 1;
+      }
+      row.push(current);
+      if (row.some((cell) => cell !== '')) {
+        rows.push(row);
+      }
+      row = [];
+      current = '';
+      continue;
+    }
+
+    current += char;
+  }
+
+  if (current !== '' || row.length > 0) {
+    row.push(current);
+    rows.push(row);
+  }
+
+  if (rows.length === 0) return [];
+  const [header, ...dataRows] = rows;
+
+  return dataRows.map((dataRow) => {
+    const record = {};
+    header.forEach((key, index) => {
+      record[key] = dataRow[index] ?? '';
+    });
+    return record;
+  });
+}
+
+function softKey(url) {
+  try {
+    const parsed = new URL(url);
+    const pathValue = parsed.pathname === '/' ? '' : parsed.pathname.replace(/\/+$/, '');
+    const hasDefaultPort =
+      (parsed.protocol === 'http:' && parsed.port === '80') ||
+      (parsed.protocol === 'https:' && parsed.port === '443');
+    const port = parsed.port && !hasDefaultPort ? `:${parsed.port}` : '';
+    return `${parsed.hostname.toLowerCase()}${port}${pathValue}${parsed.search}`;
+  } catch (_error) {
+    return String(url).toLowerCase().trim();
+  }
+}
+
+function scoreCandidate(name, url) {
+  let score = 0;
+
+  if (/^https:/.test(url)) score += 2;
+  if (/集团|有限责任公司|有限公司|公司/.test(name)) score += 2;
+  if (/电子交易平台|招标投标交易平台|电子招标平台/.test(name)) score += 2;
+  if (/国际招标/.test(name)) score -= 1;
+
+  return score + name.length / 100;
+}
+
+function buildImportNotes(row, aliasName = null) {
+  const parts = [
+    '来源: 招标网站.xml',
+    `栏目: ${row.source_section}`,
+    '导入批次: 企业招投标平台默认纳入',
+    `导入时间: ${new Date().toISOString()}`,
+  ];
+
+  if (aliasName) {
+    parts.push(`同 URL 归并别名: ${aliasName}`);
+  }
+
+  return parts.join('；');
+}
+
+async function main() {
+  const allRows = parseCsv(fs.readFileSync(INPUT_CSV, 'utf8'));
+  const sourceRows = allRows.filter((row) => row.review_bucket === 'enterprise_bidding_platform');
+
+  const edgeNamePatterns = [
+    /管理系统/,
+    /公共资源交易系统/,
+    /综合管理系统/,
+    /机电产品招标投标电子交易平台$/,
+    /中国电力设备信息网电子招标交易平台/,
+  ];
+  const edgeUrlPatterns = [/\b\d{1,3}(?:\.\d{1,3}){3}\b/];
+
+  const canonicalBySoftKey = new Map();
+  const pending = [];
+
+  for (const row of sourceRows) {
+    if (row.candidate_platform_type !== '企业招投标') {
+      pending.push({ name: row.site_name, url: row.url, reason: 'not-enterprise-bidding-type' });
+      continue;
+    }
+
+    if (row.site_name === '中国联通采购与招标网') {
+      pending.push({ name: row.site_name, url: row.url, reason: 'already-in-db-by-name' });
+      continue;
+    }
+
+    if (
+      edgeNamePatterns.some((pattern) => pattern.test(row.site_name)) ||
+      edgeUrlPatterns.some((pattern) => pattern.test(row.url))
+    ) {
+      pending.push({ name: row.site_name, url: row.url, reason: 'edge-pattern' });
+      continue;
+    }
+
+    const key = softKey(row.url);
+    const previous = canonicalBySoftKey.get(key);
+
+    if (!previous) {
+      canonicalBySoftKey.set(key, {
+        row,
+        aliasNames: [],
+      });
+      continue;
+    }
+
+    if (previous.row.site_name === row.site_name && previous.row.url === row.url) {
+      pending.push({ name: row.site_name, url: row.url, reason: 'duplicate-exact' });
+      continue;
+    }
+
+    if (scoreCandidate(row.site_name, row.url) > scoreCandidate(previous.row.site_name, previous.row.url)) {
+      previous.aliasNames.push(previous.row.site_name);
+      pending.push({
+        name: previous.row.site_name,
+        url: previous.row.url,
+        reason: `soft-duplicate-replaced-by:${row.site_name}`,
+      });
+      canonicalBySoftKey.set(key, {
+        row,
+        aliasNames: previous.aliasNames,
+      });
+    } else {
+      previous.aliasNames.push(row.site_name);
+      pending.push({
+        name: row.site_name,
+        url: row.url,
+        reason: `soft-duplicate-merged-into:${previous.row.site_name}`,
+      });
+    }
+  }
+
+  const candidates = [...canonicalBySoftKey.values()];
+
+  await db.init();
+  await biddingSiteModel.ensureSchema();
+
+  const beforeRow = await db.get('SELECT COUNT(1) AS total FROM opportunity_bidding_sites');
+
+  const created = [];
+  const skipped = [];
+
+  for (const candidate of candidates) {
+    const row = candidate.row;
+    const aliasName = candidate.aliasNames.length > 0 ? candidate.aliasNames.join(' / ') : null;
+    const normalized = biddingSiteService.normalizeUrl(row.url);
+    const existing = await biddingSiteModel.getBiddingSiteByNormalizedUrl(normalized.normalized_url);
+
+    if (existing) {
+      skipped.push({
+        name: row.site_name,
+        url: row.url,
+        reason: `normalized_url 已存在，id=${existing.id}`,
+      });
+      continue;
+    }
+
+    const createdRow = await biddingSiteService.createBiddingSite({
+      name: row.site_name,
+      alias_name: aliasName,
+      url: row.url,
+      source_level: '行业垂直',
+      province: '全国',
+      city: '全国',
+      platform_type: '企业招投标平台',
+      is_official: true,
+      enabled: true,
+      notes: buildImportNotes(row, aliasName),
+      validation_status: 'never_validated',
+    });
+
+    created.push({
+      id: createdRow.id,
+      name: createdRow.name,
+      url: createdRow.url,
+      alias_name: createdRow.alias_name,
+    });
+  }
+
+  const afterRow = await db.get('SELECT COUNT(1) AS total FROM opportunity_bidding_sites');
+
+  console.log(
+    JSON.stringify(
+      {
+        ok: true,
+        sourceCount: sourceRows.length,
+        candidateCount: candidates.length,
+        pendingCount: pending.length,
+        createdCount: created.length,
+        skippedCount: skipped.length,
+        beforeTotal: beforeRow?.total || 0,
+        afterTotal: afterRow?.total || 0,
+        created,
+        skipped,
+        pending,
+      },
+      null,
+      2
+    )
+  );
+
+  await db.close();
+}
+
+main().catch(async (error) => {
+  try {
+    await db.close();
+  } catch (_closeError) {}
+  console.error(error);
+  process.exit(1);
+});

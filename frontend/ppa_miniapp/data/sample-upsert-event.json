@@ -1,0 +1,24 @@
+{
+  "secretKey": "replace-with-your-push-secret",
+  "data": {
+    "source_item_id": "1483109627478446081-zhy",
+    "title": "海油发展-清洁能源公司珠海地区碳钢管热煨弯管加工服务专有协议",
+    "published_at": "2026-03-16T00:00:00+08:00",
+    "published_date": "2026-03-16",
+    "deadline_at": "2026-03-27T09:00:00+08:00",
+    "deadline_date": "2026-03-27",
+    "issuer": "中海油能源发展股份有限公司",
+    "budget_amount": null,
+    "region": "天津市/市辖区/滨海新区",
+    "source_platform": "中国海洋石油集团有限公司采办业务管理与交易系统",
+    "source_url": "https://buy.cnooc.com.cn/cbjyweb/001/001001/20260316/1483109627478446081-zhy.html",
+    "summary": "招标人提供没有防腐涂层的裸钢管作为弯管母材，投标人进行热煨弯管加工和检验等相关工作。",
+    "announcement_html": "<h3>招标公告</h3><p><strong>项目概况：</strong>招标人提供没有防腐涂层的裸钢管作为弯管母材，投标人进行热煨弯管加工和检验等相关工作。</p>",
+    "announcement_plain_text": "项目概况：招标人提供没有防腐涂层的裸钢管作为弯管母材，投标人进行热煨弯管加工和检验等相关工作。",
+    "detail_payload": {
+      "project_name": "海油发展-清洁能源公司珠海地区碳钢管热煨弯管加工服务专有协议",
+      "bid_package_no": "26-CNCCC-FW-GK-0786/01"
+    },
+    "last_pushed_at": "2026-03-16T00:00:00+08:00"
+  }
+}

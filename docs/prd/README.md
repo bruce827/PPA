@@ -2,119 +2,59 @@
 
 本目录包含软件项目评估系统（PPA）的完整产品需求文档。
 
-## 📋 文档结构
+## 文档结构
 
 ### 主文档
 
-**[PRD.md](../PRD.md)** - 产品需求文档主文件
-
-包含内容：
-
-- 产品概述与定位
-- 功能模块概览
-- 数据模型设计
-- 用户交互流程
-- 业务规则与计算公式
-- 非功能需求
-- 未来规划路线图
+**[PRD.md](../PRD.md)** - 产品需求文档总览（功能规格索引 + 架构/非功能需求）
 
 **[project-overview.md](./project-overview.md)** - 项目功能架构总览
 
-包含内容：
+### 详细功能规格（已实现）
 
-- 系统整体架构图
-- 核心功能模块详细说明
-- 数据模型与表结构
-- 计算结果字段定义
-- 评分因子机制说明
-- 核心特性与开发进度
-- 技术特点总结
+| 文档 | 功能模块 | 状态 |
+|------|---------|------|
+| [wiki-generation-spec.md](./wiki-generation-spec.md) | Wiki 生成（文档转换+脱敏+知识库） | ✅ V1.9 脚本已完成 |
+| [web3d-assessment-spec.md](./web3d-assessment-spec.md) | Web3D 项目评估 | ✅ |
+| [model-config-spec.md](./model-config-spec.md) | AI 模型与提示词管理 | ✅ 含 v1.2 update |
+| [business-pricing-spec.md](./business-pricing-spec.md) | 商务报价 | ✅ |
+| [attachment-push-spec.md](./attachment-push-spec.md) | 附件管理与项目推送 | ✅ |
+| [miniapp-internal-channel-spec.md](./miniapp-internal-channel-spec.md) | 小程序内部渠道 | ✅ |
+| [miniapp-membership-payment-spec.md](./miniapp-membership-payment-spec.md) | 小程序会员支付 | ✅ |
+| [miniapp-bidding-prd.md](./miniapp-bidding-prd.md) | 招标快报小程序 | ✅ |
+| [opportunity-bidding-sites-spec.md](./opportunity-bidding-sites-spec.md) | 招标网站 / 爬虫 / 全网检索 | ✅ 含 §12/§13 |
+| [opportunity-tender-staging-spec.md](./opportunity-tender-staging-spec.md) | 项目机会 / 待推送招标 | ✅ |
+| [risk-score-extended-sources-prd.md](./risk-score-extended-sources-prd.md) | 风险评分扩展（AI未匹配+自定义风险） | ✅ |
+| [template-refactor-prd.md](./template-refactor-prd.md) | 评估模板与一键填充 | ⚠️ 部分实现 |
+| [ai-risk-assessment-backend-step1.md](./ai-risk-assessment-backend-step1.md) | AI 风险评估后端 | ✅ |
+| [workload-one-click-evaluation-prd.md](./workload-one-click-evaluation-prd.md) | 一键工作量评估 | ✅ |
+| [AI-log-monitoring-prd.md](./AI-log-monitoring-prd.md) | AI 日志监控系统 | ✅ |
+| [ai-project-tags-and-contract-recommendation-prd.md](./ai-project-tags-and-contract-recommendation-prd.md) | AI 项目标签与业绩推荐 | ✅ |
+| [agent-data-metrics-api-spec.md](./agent-data-metrics-api-spec.md) | 大屏原型 Agent 协作 OpenAPI 规范 V2.0 | ✅ |
 
-### 详细功能规格
+### 未来功能（规划中）
 
-本目录下的文档提供各个功能模块的详细规格说明，按模块分类组织：
+暂无。
 
-#### 核心功能模块
+### 已废弃
 
-| 序号 | 文档名称 | 功能模块 | 状态 | 最后更新 |
-|------|----------|----------|------|----------|
-| 1 | **dashboard-spec.md** | 数据看板 | ✅ 已完成 | 2025-10-21 |
-| 2 | **assessment-spec.md** | 项目评估 | ✅ 已完成 | 2025-10-21 |
-| 3 | **config-spec.md** | 参数配置 | ✅ 已完成 | 2025-10-21 |
-| 4 | **export-spec.md** | 导出能力详细设计 | ✅ 已完成 | 2025-11-17 |
-
-#### AI功能模块
-
-| 序号 | 文档名称 | 功能模块 | 状态 | 最后更新 |
-|------|----------|----------|------|----------|
-| 5 | **ai-risk-assessment-backend-step1.md** | AI风险评估后端 | ✅ 已完成 | 2025-11-12 |
-| 6 | **workload-one-click-evaluation-prd.md** | 一键工作量评估 | ✅ 已完成 | 2025-11-14 |
-| 7 | **model-config-spec.md** | 模型配置 | ✅ 已完成 | 2025-10-21 |
-
-#### 辅助功能模块
-
-| 序号 | 文档名称 | 功能模块 | 状态 | 最后更新 |
-|------|----------|----------|------|----------|
-| 8 | **history-spec.md** | 历史项目管理 | ✅ 已完成 | 2025-10-21 |
-| 9 | **calculation-logic-spec.md** | 计算逻辑 | ✅ 已完成 | 2025-10-21 |
-
-#### 测试与修复
-
-| 序号 | 文档名称 | 功能模块 | 状态 | 最后更新 |
-|------|----------|----------|------|----------|
-| 10 | ~~automated-testing-prd.md~~ | ~~自动化测试~~ | ❌ 已删除 | 2025-11-15 |
-| 11 | ~~new-assessment-risk-step-fix.md~~ | ~~风险评估步骤修复~~ | ❌ 已删除 | 2025-11-15 |
-| 12 | ~~template-import-feature.md~~ | ~~模板导入功能~~ | ❌ 已删除 | 2025-11-15 |
-
-## 📖 阅读指南
-
-### 新成员上手
-
-1. 先阅读主 PRD 文档了解产品全貌
-2. 根据工作需要查阅对应的功能规格文档
-3. 参考 [用户手册](../user-manual.md) 了解实际使用方式
-4. 查看 [项目概览](../project-overview.md) 了解技术架构
-
-### 开发人员
-
-1. 从 PRD 主文档开始，了解业务规则
-2. 查看详细功能规格，理解交互流程
-3. 参考数据模型和 API 接口规范
-4. 查看 [技术文档](../../frontend/ppa_frontend/WARP.md)
-
-### 测试人员
-
-1. 阅读 PRD 主文档，理解功能需求
-2. 根据功能规格编写测试用例
-3. 参考 [测试文档](../tests/) 目录
-4. 查看自动化测试 PRD
-
-## 🔄 文档更新
-
-当功能发生变化时：
-
-1. 更新主 PRD 文档中的功能概览
-2. 更新对应的详细功能规格
-3. 记录版本变更历史
-4. 通知相关团队成员
-
-## ✅ 文档状态汇总
-
-- **总文档数**: 10 个
-- **已完成**: 10 个 ✅
-- **已删除**: 3 个 ❌
-- **待创建**: 0 个
-- **最近更新**: 2025-11-17
-
-### 按模块状态
-
-| 模块类型 | 文档数量 | 完成率 | 说明 |
-|----------|----------|--------|------|
-| 核心功能 | 4/4 | 100% | 数据看板、评估、配置、导出 |
-| AI功能 | 3/3 | 100% | 风险评估、工作量评估、模型配置 |
-| 辅助功能 | 2/2 | 100% | 历史管理、计算逻辑 |
-| 测试修复 | 0/3 | 0% | 已清理过时文档 |
+- ~~automated-testing-prd.md~~ → 并入各功能规格
+- ~~new-assessment-risk-step-fix.md~~ → 并入 assessment-spec（原已删除）
+- ~~template-import-feature.md~~ → 并入 template-refactor-prd.md
+- ~~push-confidence-report-prd.md~~ → 未实现，已删除
+- ~~contractor-risk-detection-prd.md~~ → 未实现，已删除
+- ~~industry-intelligence-prd.md~~ → 未实现，已删除
 
 ---
 
-**说明**: 所有PRD文档已按模块分类整理，每类模块有且仅有一个主文档。核心功能模块已稳定，AI功能模块正在快速发展中。
+## 阅读指南
+
+1. 先阅读 `PRD.md` 了解产品总览与功能索引
+2. 根据需要查阅对应功能规格文档
+3. 参考 `project-overview.md` 了解技术架构
+4. 参考 [AI-log-monitoring-prd.md](./AI-log-monitoring-prd.md) 了解 AI 日志监控
+
+---
+
+**最近更新**: 2026-04-25
+**文档总数**: 17 个（不含已废弃）

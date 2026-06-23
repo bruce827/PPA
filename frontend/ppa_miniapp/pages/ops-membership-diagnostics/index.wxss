@@ -1,0 +1,53 @@
+.ops-page {
+  display: flex;
+  flex-direction: column;
+  gap: 24rpx;
+}
+
+.ops-card {
+  padding: 32rpx;
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.ops-card__title {
+  font-size: 30rpx;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.ops-picker,
+.ops-input,
+.ops-textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 24rpx;
+  border-radius: 20rpx;
+  border: 2rpx solid #dbe3ef;
+  background: #f8fafc;
+  color: #0f172a;
+}
+
+.ops-textarea {
+  min-height: 180rpx;
+}
+
+.ops-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8rpx;
+}
+
+.ops-label {
+  font-size: 24rpx;
+}
+
+.ops-message {
+  line-height: 1.7;
+}
+
+.ops-warning {
+  color: #b45309;
+  line-height: 1.6;
+}

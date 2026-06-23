@@ -47,7 +47,48 @@ export async function updateProject(
   });
 }
 
-/** 导出项目为 PDF GET /api/projects/${id}/export/pdf */
+/** 获取项目商务报价上下文 GET /api/projects/${id}/business-quote */
+export async function getProjectBusinessQuote(
+  id: string | number,
+  options?: { [key: string]: any },
+) {
+  return request<{ data: API.BusinessQuoteContext }>(
+    `/api/projects/${id}/business-quote`,
+    {
+      method: 'GET',
+      ...(options || {}),
+    },
+  );
+}
+
+/** 保存项目商务报价快照 POST /api/projects/${id}/business-quote */
+export async function saveProjectBusinessQuote(
+  id: string | number,
+  data: API.BusinessQuoteFormValues,
+  options?: { [key: string]: any },
+) {
+  return request<{ data: API.BusinessQuoteSnapshot }>(
+    `/api/projects/${id}/business-quote`,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      data,
+      ...(options || {}),
+    },
+  );
+}
+
+/**
+ * @deprecated PDF 导出功能已被废弃。
+ * 调用链: 定义但从未被调用 — 前端无任何组件使用此函数。
+ * 后端状态: server/services/exportService.js generatePDF() 内容极简，非正式实现。
+ * PRD: FR-6 导出能力中 PDF 相关需求已从 PRD 中移除。
+ * 如需恢复，需同步实现后端 PDF formatter + 前端导出入口。
+ *
+ * 导出项目为 PDF GET /api/projects/${id}/export/pdf
+ */
 export function exportProjectToPDF(id: string | number) {
   return `/api/projects/${id}/export/pdf`;
 }

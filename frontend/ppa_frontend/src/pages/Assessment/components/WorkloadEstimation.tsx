@@ -1,19 +1,41 @@
 import { AI_PROVIDER_LABELS } from '@/constants';
-import { InfoCircleOutlined, SearchOutlined, RobotOutlined, SettingOutlined } from '@ant-design/icons';
-import type { ActionType, ProColumns } from '@ant-design/pro-components';
-import { EditableProTable } from '@ant-design/pro-components';
-import { App, Button, Col, Descriptions, Form, Input, InputNumber, Modal, Row, Space, Tabs, Tag, Tooltip } from 'antd';
-import type { Key } from 'react';
-import React, { useEffect, useState } from 'react';
-import ProjectModuleAnalyzer from './ProjectModuleAnalyzer';
-import WorkloadEvaluationModal from './WorkloadEvaluationModal';
-import WorkloadPromptSelectorModal from './WorkloadPromptSelectorModal';
 import {
   evaluateWorkload as aiEvaluateWorkload,
   getAllProjects,
   getProjectDetail,
   type AiPrompt,
 } from '@/services/assessment';
+import {
+  InfoCircleOutlined,
+  RobotOutlined,
+  SearchOutlined,
+  SettingOutlined,
+} from '@ant-design/icons';
+import type { ActionType, ProColumns } from '@ant-design/pro-components';
+import { EditableProTable } from '@ant-design/pro-components';
+import {
+  App,
+  Button,
+  Col,
+  Descriptions,
+  Form,
+  Input,
+  InputNumber,
+  Modal,
+  Row,
+  Space,
+  Tabs,
+  Tag,
+  Tooltip,
+} from 'antd';
+import type { Key } from 'react';
+import React, { useEffect, useState } from 'react';
+import IotPointIntegrationEstimator from './IotPointIntegrationEstimator';
+import ProjectModuleAnalyzer from './ProjectModuleAnalyzer';
+import WorkloadEvaluationModal from './WorkloadEvaluationModal';
+import WorkloadPromptSelectorModal from './WorkloadPromptSelectorModal';
+
+const IOT_MODULE_NAME = 'IoT点位对接';
 
 type WorkloadEstimationProps = {
   configData: {
@@ -23,10 +45,12 @@ type WorkloadEstimationProps = {
   initialValues: {
     dev: API.WorkloadRecord[];
     integration: API.WorkloadRecord[];
+    iot?: API.IotPointIntegration;
   };
   onWorkloadChange: (
     dev: API.WorkloadRecord[],
     integration: API.WorkloadRecord[],
+    iot?: API.IotPointIntegration,
   ) => void;
   onPrev: () => void;
   onNext: () => void;
@@ -78,12 +102,29 @@ const WorkloadEstimation: React.FC<WorkloadEstimationProps> = ({
   const normalizeList = (list: API.WorkloadRecord[]) =>
     list.map((row) => normalizeRow(row));
 
+  const hasIndependentIot = (iot?: API.IotPointIntegration) =>
+    Boolean(iot?.applied_at) &&
+    Array.isArray(iot?.generated_items) &&
+    iot.generated_items.length > 0;
+
+  const excludeIotIntegrationRows = (list: API.WorkloadRecord[]) =>
+    list.filter((row) => row.module1 !== IOT_MODULE_NAME);
+
   const [devWorkload, setDevWorkload] = useState<API.WorkloadRecord[]>(
     normalizeList(initialValues.dev || []),
   );
   const [integrationWorkload, setIntegrationWorkload] = useState<
     API.WorkloadRecord[]
-  >(normalizeList(initialValues.integration || []));
+  >(
+    normalizeList(
+      hasIndependentIot(initialValues.iot)
+        ? excludeIotIntegrationRows(initialValues.integration || [])
+        : initialValues.integration || [],
+    ),
+  );
+  const [iotPointIntegration, setIotPointIntegration] = useState<
+    API.IotPointIntegration | undefined
+  >(initialValues.iot);
   const [devEditableKeys, setDevEditableKeys] = useState<Key[]>([]);
   const [integrationEditableKeys, setIntegrationEditableKeys] = useState<Key[]>(
     [],
@@ -91,7 +132,8 @@ const WorkloadEstimation: React.FC<WorkloadEstimationProps> = ({
 
   // AI评估相关状态
   const [evaluationLoading, setEvaluationLoading] = useState(false);
-  const [currentEvaluatedRecord, setCurrentEvaluatedRecord] = useState<API.WorkloadRecord | null>(null);
+  const [currentEvaluatedRecord, setCurrentEvaluatedRecord] =
+    useState<API.WorkloadRecord | null>(null);
   const [evaluationResult, setEvaluationResult] = useState<any | null>(null);
   const [evaluationModalVisible, setEvaluationModalVisible] = useState(false);
 
@@ -106,9 +148,10 @@ const WorkloadEstimation: React.FC<WorkloadEstimationProps> = ({
   // 工作量评估提示词配置（共用一套）
   const [promptSelectorVisible, setPromptSelectorVisible] = useState(false);
   const [workloadPrompt, setWorkloadPrompt] = useState<AiPrompt | null>(null);
-  const [workloadPromptVariables, setWorkloadPromptVariables] = useState<Record<string, string>>({});
-  const [fillFromTemplateLoading, setFillFromTemplateLoading] =
-    useState(false);
+  const [workloadPromptVariables, setWorkloadPromptVariables] = useState<
+    Record<string, string>
+  >({});
+  const [fillFromTemplateLoading, setFillFromTemplateLoading] = useState(false);
 
   useEffect(() => {
     const normalizedDev = normalizeList(initialValues.dev || []);
@@ -116,11 +159,19 @@ const WorkloadEstimation: React.FC<WorkloadEstimationProps> = ({
     setDevEditableKeys([]);
 
     const normalizedIntegration = normalizeList(
-      initialValues.integration || [],
+      hasIndependentIot(initialValues.iot)
+        ? excludeIotIntegrationRows(initialValues.integration || [])
+        : initialValues.integration || [],
     );
     setIntegrationWorkload(normalizedIntegration);
     setIntegrationEditableKeys([]);
-  }, [initialValues.dev, initialValues.integration, roles.length]);
+    setIotPointIntegration(initialValues.iot);
+  }, [
+    initialValues.dev,
+    initialValues.integration,
+    initialValues.iot,
+    roles.length,
+  ]);
 
   const handleDevChange = (list: API.WorkloadRecord[]) => {
     const mergedList = list.map((row) => {
@@ -139,7 +190,7 @@ const WorkloadEstimation: React.FC<WorkloadEstimationProps> = ({
 
     const normalized = normalizeList(mergedList);
     setDevWorkload(normalized);
-    onWorkloadChange(normalized, integrationWorkload);
+    onWorkloadChange(normalized, integrationWorkload, iotPointIntegration);
   };
 
   const handleIntegrationChange = (list: API.WorkloadRecord[]) => {
@@ -159,7 +210,7 @@ const WorkloadEstimation: React.FC<WorkloadEstimationProps> = ({
 
     const normalized = normalizeList(mergedList);
     setIntegrationWorkload(normalized);
-    onWorkloadChange(devWorkload, normalized);
+    onWorkloadChange(devWorkload, normalized, iotPointIntegration);
   };
 
   const duplicateRow = (
@@ -211,8 +262,26 @@ const WorkloadEstimation: React.FC<WorkloadEstimationProps> = ({
     }
   };
 
+  const handleIotValueChange = (nextValue: API.IotPointIntegration) => {
+    setIotPointIntegration(nextValue);
+    onWorkloadChange(devWorkload, integrationWorkload, nextValue);
+  };
+
+  const handleApplyIotWorkload = (nextValue: API.IotPointIntegration) => {
+    const normalized = normalizeList(
+      excludeIotIntegrationRows(integrationWorkload),
+    );
+    setIntegrationWorkload(normalized);
+    setIotPointIntegration(nextValue);
+    onWorkloadChange(devWorkload, normalized, nextValue);
+    message.success('已确认 IoT 点位对接独立报价');
+  };
+
   // 处理单模块AI评估
-  const handleSingleEvaluation = async (record: API.WorkloadRecord, type: 'dev' | 'integration') => {
+  const handleSingleEvaluation = async (
+    record: API.WorkloadRecord,
+    type: 'dev' | 'integration',
+  ) => {
     try {
       // 检查是否已配置提示词模板
       if (!workloadPrompt) {
@@ -241,7 +310,7 @@ const WorkloadEstimation: React.FC<WorkloadEstimationProps> = ({
         module3: record.module3,
         description: record.description,
         variables: { ...workloadPromptVariables, desc: record.description },
-        roles: roles.map(r => r.role_name),
+        roles: roles.map((r) => r.role_name),
       });
 
       if (!res?.success || !res.data?.parsed) {
@@ -250,20 +319,27 @@ const WorkloadEstimation: React.FC<WorkloadEstimationProps> = ({
 
       const parsed = res.data.parsed;
       const workloads = parsed.role_workloads || {};
-      const flattened: Record<string, number> & { delivery_factor?: number; confidence?: number; complexity?: string } = {};
-      roles.forEach(role => {
+      const flattened: Record<string, number> & {
+        delivery_factor?: number;
+        confidence?: number;
+        complexity?: string;
+      } = {};
+      roles.forEach((role) => {
         flattened[role.role_name] = Number(workloads[role.role_name] || 0);
       });
-      if (parsed.delivery_factor !== undefined) flattened.delivery_factor = parsed.delivery_factor;
-      if (parsed.confidence !== undefined) flattened.confidence = parsed.confidence;
-      if (parsed.complexity !== undefined) flattened.complexity = parsed.complexity as any;
+      if (parsed.delivery_factor !== undefined)
+        flattened.delivery_factor = parsed.delivery_factor;
+      if (parsed.confidence !== undefined)
+        flattened.confidence = parsed.confidence;
+      if (parsed.complexity !== undefined)
+        flattened.complexity = parsed.complexity as any;
 
       setEvaluationResult(flattened);
       setEvaluationModalVisible(true);
-
     } catch (error) {
       console.error('评估失败:', error);
-      const msg = error instanceof Error ? error.message : '工作量评估失败，请重试';
+      const msg =
+        error instanceof Error ? error.message : '工作量评估失败，请重试';
       message.error(msg);
     } finally {
       // 重置评估状态
@@ -295,7 +371,7 @@ const WorkloadEstimation: React.FC<WorkloadEstimationProps> = ({
         module3: record.module3!,
         description: record.description!,
         variables: { ...workloadPromptVariables, desc: record.description! },
-        roles: roles.map(r => r.role_name),
+        roles: roles.map((r) => r.role_name),
       });
 
       if (!res?.success || !res.data?.parsed) {
@@ -304,19 +380,27 @@ const WorkloadEstimation: React.FC<WorkloadEstimationProps> = ({
 
       const parsed = res.data.parsed;
       const workloads = parsed.role_workloads || {};
-      const flattened: Record<string, number> & { delivery_factor?: number; confidence?: number; complexity?: string } = {};
-      roles.forEach(role => {
+      const flattened: Record<string, number> & {
+        delivery_factor?: number;
+        confidence?: number;
+        complexity?: string;
+      } = {};
+      roles.forEach((role) => {
         flattened[role.role_name] = Number(workloads[role.role_name] || 0);
       });
-      if (parsed.delivery_factor !== undefined) flattened.delivery_factor = parsed.delivery_factor;
-      if (parsed.confidence !== undefined) flattened.confidence = parsed.confidence;
-      if (parsed.complexity !== undefined) flattened.complexity = parsed.complexity as any;
+      if (parsed.delivery_factor !== undefined)
+        flattened.delivery_factor = parsed.delivery_factor;
+      if (parsed.confidence !== undefined)
+        flattened.confidence = parsed.confidence;
+      if (parsed.complexity !== undefined)
+        flattened.complexity = parsed.complexity as any;
 
       setEvaluationResult(flattened);
       setEvaluationModalVisible(true);
     } catch (error) {
       console.error('评估失败:', error);
-      const msg = error instanceof Error ? error.message : '工作量评估失败，请重试';
+      const msg =
+        error instanceof Error ? error.message : '工作量评估失败，请重试';
       message.error(msg);
     } finally {
       setEvaluationLoading(false);
@@ -324,7 +408,10 @@ const WorkloadEstimation: React.FC<WorkloadEstimationProps> = ({
   };
 
   // 处理应用评估结果
-  const handleApplyEvaluation = (workloads: Record<string, number>, factor: number) => {
+  const handleApplyEvaluation = (
+    workloads: Record<string, number>,
+    factor: number,
+  ) => {
     if (!currentEvaluatedRecord || !evaluationResult) {
       message.error('评估数据不存在');
       return;
@@ -337,7 +424,7 @@ const WorkloadEstimation: React.FC<WorkloadEstimationProps> = ({
       };
 
       // 更新所有角色的工作量
-      roles.forEach(role => {
+      roles.forEach((role) => {
         updatedRecord[role.role_name] = workloads[role.role_name] || 0;
       });
 
@@ -357,26 +444,32 @@ const WorkloadEstimation: React.FC<WorkloadEstimationProps> = ({
         modelName: 'AI-Assistant',
         modelProvider: AI_PROVIDER_LABELS.OPENAI,
         promptTemplate: 'workload-evaluation',
-        evaluatedRoles: roles.filter(role => (workloads[role.role_name] || 0) > 0).map(role => role.role_name),
+        evaluatedRoles: roles
+          .filter((role) => (workloads[role.role_name] || 0) > 0)
+          .map((role) => role.role_name),
         timestamp: new Date().toISOString(),
         confidence: evaluationResult.confidence || 0.85,
       };
 
       // 更新对应列表中的记录
       if (currentType === 'dev') {
-        const newList = devWorkload.map(item =>
-          item.id === currentEvaluatedRecord.id ? updatedRecord : item
+        const newList = devWorkload.map((item) =>
+          item.id === currentEvaluatedRecord.id ? updatedRecord : item,
         );
         handleDevChange(newList);
       } else {
-        const newList = integrationWorkload.map(item =>
-          item.id === currentEvaluatedRecord.id ? updatedRecord : item
+        const newList = integrationWorkload.map((item) =>
+          item.id === currentEvaluatedRecord.id ? updatedRecord : item,
         );
         handleIntegrationChange(newList);
       }
 
       // 若详情弹窗正在查看同一条记录，则同步更新表单显示
-      if (detailModalVisible && currentRecord && currentRecord.id === updatedRecord.id) {
+      if (
+        detailModalVisible &&
+        currentRecord &&
+        currentRecord.id === updatedRecord.id
+      ) {
         const formValues: Record<string, any> = {
           module1: updatedRecord.module1,
           module2: updatedRecord.module2,
@@ -398,7 +491,6 @@ const WorkloadEstimation: React.FC<WorkloadEstimationProps> = ({
       setEvaluationResult(null);
 
       message.success('工作量评估结果已应用');
-
     } catch (error) {
       console.error('应用评估结果失败:', error);
       message.error('应用评估结果失败，请重试');
@@ -493,9 +585,7 @@ const WorkloadEstimation: React.FC<WorkloadEstimationProps> = ({
       const listResult = await getAllProjects({
         params: { is_template: 1 },
       });
-      const projects = Array.isArray(listResult?.data)
-        ? listResult.data
-        : [];
+      const projects = Array.isArray(listResult?.data) ? listResult.data : [];
       const templateProject =
         projects.find((p) => p.is_template === 1) || projects[0];
 
@@ -507,9 +597,7 @@ const WorkloadEstimation: React.FC<WorkloadEstimationProps> = ({
       }
 
       // 2. 加载模板详情并解析评估数据
-      const detailResult = await getProjectDetail(
-        String(templateProject.id),
-      );
+      const detailResult = await getProjectDetail(String(templateProject.id));
       const rawJson = detailResult?.data?.assessment_details_json;
       if (!rawJson) {
         message.warning('当前模板没有可用的评估数据');
@@ -525,34 +613,32 @@ const WorkloadEstimation: React.FC<WorkloadEstimationProps> = ({
         return;
       }
 
-      const templateDev =
-        Array.isArray(parsed.development_workload)
-          ? parsed.development_workload
-          : [];
-      const templateIntegration =
-        Array.isArray(parsed.integration_workload)
-          ? parsed.integration_workload
-          : [];
+      const templateDev = Array.isArray(parsed.development_workload)
+        ? parsed.development_workload
+        : [];
+      const templateIntegration = Array.isArray(parsed.integration_workload)
+        ? parsed.integration_workload
+        : [];
 
-      if (
-        templateDev.length === 0 &&
-        templateIntegration.length === 0
-      ) {
+      if (templateDev.length === 0 && templateIntegration.length === 0) {
         message.warning('模板中没有工作量数据');
         return;
       }
 
       const normalizedDev = normalizeList(templateDev);
-      const normalizedIntegration =
-        normalizeList(templateIntegration);
+      const normalizedIntegration = normalizeList(templateIntegration);
+      const templateIot =
+        parsed.iot_point_integration &&
+        typeof parsed.iot_point_integration === 'object'
+          ? parsed.iot_point_integration
+          : undefined;
 
       setDevWorkload(normalizedDev);
       setIntegrationWorkload(normalizedIntegration);
-      onWorkloadChange(normalizedDev, normalizedIntegration);
+      setIotPointIntegration(templateIot);
+      onWorkloadChange(normalizedDev, normalizedIntegration, templateIot);
 
-      message.success(
-        `已根据模板“${detailResult.data.name}”填充工作量数据`,
-      );
+      message.success(`已根据模板“${detailResult.data.name}”填充工作量数据`);
     } catch (error) {
       console.error('从模板填充工作量失败:', error);
       const msg =
@@ -888,6 +974,18 @@ const WorkloadEstimation: React.FC<WorkloadEstimationProps> = ({
               </>
             ),
           },
+          {
+            key: 'iot-point-integration',
+            label: 'IoT点位对接',
+            children: (
+              <IotPointIntegrationEstimator
+                roles={roles}
+                value={iotPointIntegration}
+                onValueChange={handleIotValueChange}
+                onApplyWorkload={handleApplyIotWorkload}
+              />
+            ),
+          },
         ]}
       />
       <div style={{ marginTop: 24, textAlign: 'right' }}>
@@ -917,7 +1015,11 @@ const WorkloadEstimation: React.FC<WorkloadEstimationProps> = ({
           >
             AI评估
           </Button>,
-          <Button key="cancel" onClick={handleDetailCancel} disabled={evaluationLoading}>
+          <Button
+            key="cancel"
+            onClick={handleDetailCancel}
+            disabled={evaluationLoading}
+          >
             取消
           </Button>,
           <Button

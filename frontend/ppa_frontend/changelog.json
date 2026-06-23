@@ -1,5 +1,116 @@
 [
   {
+    "version": "V1.8.2",
+    "date": "2026-06-15",
+    "changes": [
+      { "type": "feat", "content": "项目Wiki知识库升级支持多项目，支持左侧栏多项目分类下拉切换与无刷新目录树联动" },
+      { "type": "opt", "content": "重构Wiki服务与路由，支持基于项目子目录的独立物理索引（INDEX.md）及物理文件递归扫描" },
+      { "type": "opt", "content": "升级Obsidian双链与图片解析语法转换器，拼入项目名作为相对路径前缀，完美实现跨项目兼容与防路径穿越校验" }
+    ]
+  },
+  {
+    "version": "V1.8.1",
+    "date": "2026-6-07",
+    "changes": [
+      { "type": "feat", "content": "新增表单设计模块，支持可视化编辑字段属性、实时校验（R1-R9 硬规则 + W1-W7 软规则）和表单预览" },
+      { "type": "feat", "content": "表单设计支持 Excel 模板导入和 AI Agent 辅助生成字段定义" },
+      { "type": "feat", "content": "新增表单设计相关 API（项目/应用/表单/字段 CRUD 共 20 个端点）" },
+      { "type": "opt", "content": "表单字段编辑支持行内编辑、批量更新（事务保护）和表单级校验" }
+    ]
+  },
+  {
+    "version": "V1.8.0",
+    "date": "2026-6-02",
+    "changes": [
+      { "type": "feat", "content": "新增 IoT 点位对接评估模块，支持按平台/网关能力手动规模评估并独立输出成本与人天" },
+      { "type": "feat", "content": "内部版 Excel 导出增加 IoT 点位对接概要与工作包明细 Sheet" },
+      { "type": "opt", "content": "废弃 PDF 导出功能，全面标准化为 Excel 导出" },
+      { "type": "opt", "content": "新增 IoT 算法研究资料库" }
+    ]
+  },
+  {
+    "version": "V1.7.2",
+    "date": "2026-5-05",
+    "changes": [
+      { "type": "feat", "content": "待推送招标增加数据完整性筛选与日期排序功能" },
+      { "type": "feat", "content": "新增 Playwright E2E 测试框架与 tender-push 冒烟测试" },
+      { "type": "opt", "content": "优化招标数据去重字段映射，支持更多来源格式" },
+      { "type": "opt", "content": "更新招标暂存功能 PRD 规格文档" }
+    ]
+  },{
+    "version": "V1.7.1",
+    "date": "2026-4-26",
+    "changes": [
+      { "type": "feat", "content": "提示词模板分类改为模块标签，支持自定义标签和API管理" },
+      { "type": "opt", "content": "清理废弃爬虫文件，保留通用工具模块" },
+      { "type": "opt", "content": "增强附件推送服务逻辑" }
+    ]
+  },{
+    "version": "V1.7.0",
+    "date": "2026-4-22",
+    "changes": [
+      { "type": "feat", "content": "增加招标网站运行服务" },
+      { "type": "opt", "content": "重构提示词管理功能" }
+    ]
+  },{
+    "version": "V1.6.3",
+    "date": "2026-4-10",
+    "changes": [
+      { "type": "feat", "content": "待推送招标增加字段解析与重复数据整理能力" },
+      { "type": "opt", "content": "优化招标数据同步与源文件归档流程" },
+      { "type": "bugfix", "content": "修复招标信息同步、解析及提示词选择逻辑" }
+    ]
+  },
+  {
+    "version": "V1.6.2-alpha",
+    "date": "2026-4-08",
+    "changes": [
+      { "type": "opt", "content": "3D评估增加剪切板上传图片" },
+      { "type": "feat", "content": "3D评估增加AI评估" }
+
+    ]
+  },
+    {
+    "version": "V1.6.1-alpha",
+    "date": "2026-3-30",
+    "changes": [
+      { "type": "bugfix", "content": "修改引用项目导致计算不更新" },
+      { "type": "feat", "content": "添加内部渠道推送" }
+
+    ]
+  },{
+    "version": "V1.5.0-alpha",
+    "date": "2026-3-30",
+    "changes": [
+      { "type": "feat", "content": "增加会员付费模块" },
+      { "type": "opt", "content": "招标网站增加上传简本功能" }
+
+    ]
+  },{
+    "version": "V1.4.7-alpha",
+    "date": "2026-3-25",
+    "changes": [
+      { "type": "feat", "content": "增加cherry供应商" },
+      { "type": "bugfix", "content": "修复模型应用bug" }
+
+    ]
+  },
+  {
+    "version": "V1.4.6-alpha",
+    "date": "2026-3-19",
+    "changes": [
+      { "type": "feat", "content": "增加招标信息全网检索功能" }
+    ]
+  },
+  {
+    "version": "V1.4.5-alpha",
+    "date": "2026-3-17",
+    "changes": [
+      { "type": "feat", "content": "增加招标网站管理" },
+      { "type": "feat", "content": "增加待推送招标" }
+    ]
+  },
+    {
     "version": "V1.3.0-beta",
     "date": "2026-1-16",
     "changes": [

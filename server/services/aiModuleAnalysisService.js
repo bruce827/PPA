@@ -477,6 +477,7 @@ async function analyzeProjectModules(payload) {
   let providerRaw = null;
   let providerContent = null;
   let providerModelUsed = null;
+  let serviceTimeoutHandle = null;
 
   try {
     const providerCall = providerImpl.createRiskAssessment({
@@ -487,7 +488,10 @@ async function analyzeProjectModules(payload) {
     const providerResult = await Promise.race([
       providerCall,
       new Promise((_, reject) => {
-        setTimeout(() => reject(timeoutError('AI 调用超时')), serviceTimeoutMs);
+        serviceTimeoutHandle = setTimeout(
+          () => reject(timeoutError('AI 调用超时')),
+          serviceTimeoutMs
+        );
       }),
     ]);
 
@@ -629,6 +633,10 @@ async function analyzeProjectModules(payload) {
 
     if (error.statusCode) throw error;
     throw internalError(error.message || 'AI 模块梳理失败');
+  } finally {
+    if (serviceTimeoutHandle) {
+      clearTimeout(serviceTimeoutHandle);
+    }
   }
 }
 

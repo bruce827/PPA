@@ -1,6 +1,5 @@
 import { request } from '@umijs/max';
 
-// 定义变量接口
 export interface PromptVariable {
   name: string;
   description: string;
@@ -9,27 +8,63 @@ export interface PromptVariable {
   required: boolean;
 }
 
+export interface PromptModuleTagOption {
+  value: string;
+  label: string;
+  description?: string;
+  is_recommended?: number;
+}
+
+// 查询推荐模块标签（用于前端下拉）
+export async function getPromptModuleTags() {
+  return request<{ success: boolean; data: PromptModuleTagOption[] }>(
+    '/api/config/prompt-module-tags',
+    { method: 'GET' }
+  );
+}
+
 // 定义提示词模板接口
 export interface PromptTemplate {
   id: number;
   template_name: string;
-  category:
-    | 'risk_analysis'
-    | 'cost_estimation'
-    | 'module_analysis'
-    | 'project_tagging'
-    | 'report_generation'
-    | '标签生成'
-    | 'custom';
+  module_tag: string;
   description?: string;
   system_prompt: string;
   user_prompt_template: string;
-  variables_json?: string; // 存储变量定义的 JSON 字符串
-  variables?: PromptVariable[]; // 解析后的变量数组
+  variables_json?: string;
+  variables?: PromptVariable[];
   is_system: boolean;
   is_active: boolean;
   created_at: string;
   updated_at: string;
+}
+
+// 模块标签 CRUD
+export async function createPromptModuleTag(data: {
+  value: string;
+  label: string;
+  description?: string;
+}) {
+  return request<PromptModuleTagOption>('/api/config/prompt-module-tags', {
+    method: 'POST',
+    data,
+  });
+}
+
+export async function updatePromptModuleTag(
+  id: number,
+  data: { label?: string; description?: string; sort_order?: number },
+) {
+  return request<PromptModuleTagOption>(`/api/config/prompt-module-tags/${id}`, {
+    method: 'PUT',
+    data,
+  });
+}
+
+export async function deletePromptModuleTag(id: number) {
+  return request(`/api/config/prompt-module-tags/${id}`, {
+    method: 'DELETE',
+  });
 }
 
 // 查询提示词模板列表
@@ -58,7 +93,7 @@ export async function createPromptTemplate(data: Partial<PromptTemplate>) {
 // 更新提示词模板
 export async function updatePromptTemplate(
   id: number,
-  data: Partial<PromptTemplate>,
+  data: Partial<PromptTemplate>
 ) {
   return request<PromptTemplate>(`/api/config/prompts/${id}`, {
     method: 'PUT',

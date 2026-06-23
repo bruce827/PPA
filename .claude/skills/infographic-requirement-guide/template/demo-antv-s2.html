@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Demo - AntV S2 Direction</title>
+  <style>
+    :root {
+      --bg: #f7fbff;
+      --card: #ffffff;
+      --line: #dce7f5;
+      --text: #0f172a;
+      --sub: #5b6b84;
+      --brand: #0ea5e9;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, -apple-system, Segoe UI, PingFang SC, Microsoft YaHei, sans-serif;
+      background: linear-gradient(180deg, #eaf4ff, #f7fbff 45%);
+      color: var(--text);
+    }
+    .wrap { max-width: 1220px; margin: 0 auto; padding: 24px; }
+    .head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+    }
+    h1 { margin: 0; font-size: 24px; }
+    .sub { margin-top: 6px; color: var(--sub); font-size: 14px; }
+    .back-link {
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 34px;
+      border-radius: 9px;
+      border: 1px solid #bae6fd;
+      padding: 0 12px;
+      font-weight: 600;
+      color: #0369a1;
+      background: #f0f9ff;
+      white-space: nowrap;
+    }
+    .toolbar {
+      margin-top: 12px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+    .policy {
+      margin-top: 10px;
+      font-size: 12px;
+      color: #334155;
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-radius: 10px;
+      padding: 8px 10px;
+      line-height: 1.6;
+    }
+    .boundary {
+      margin-top: 10px;
+      font-size: 12px;
+      color: #334155;
+      background: #f8fafc;
+      border: 1px solid #dce7f5;
+      border-radius: 10px;
+      padding: 8px 10px;
+      line-height: 1.6;
+    }
+    .btn {
+      border: 1px solid #bae6fd;
+      background: #f0f9ff;
+      color: #0369a1;
+      padding: 0 12px;
+      height: 34px;
+      border-radius: 9px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .btn.active { background: var(--brand); border-color: var(--brand); color: #fff; }
+    .state-box {
+      margin-top: 10px;
+      border-radius: 10px;
+      border: 1px solid;
+      padding: 10px 12px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+    .state-loading { color: #1e40af; background: #eff6ff; border-color: #bfdbfe; }
+    .state-empty { color: #92400e; background: #fffbeb; border-color: #fde68a; }
+    .state-error { color: #991b1b; background: #fef2f2; border-color: #fecaca; }
+    .hidden { display: none; }
+    .panel {
+      margin-top: 12px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      overflow: auto;
+      background: var(--card);
+      box-shadow: 0 10px 30px rgba(2, 132, 199, 0.08);
+    }
+    table { width: 100%; border-collapse: collapse; min-width: 980px; }
+    th, td {
+      border-bottom: 1px solid #edf2fa;
+      border-right: 1px solid #edf2fa;
+      padding: 10px;
+      text-align: right;
+      font-size: 13px;
+      white-space: nowrap;
+    }
+    th:first-child, td:first-child { text-align: left; }
+    tr:last-child td { border-bottom: none; }
+    td:last-child, th:last-child { border-right: none; }
+    thead th {
+      background: #f8fbff;
+      color: #334155;
+      position: sticky;
+      top: 0;
+      z-index: 2;
+    }
+    .row-head {
+      background: #f8fbff;
+      position: sticky;
+      left: 0;
+      z-index: 1;
+      font-weight: 700;
+    }
+    .legend {
+      margin-top: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #64748b;
+      font-size: 12px;
+    }
+    .grad {
+      width: 180px;
+      height: 10px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #ecfeff, #7dd3fc, #0284c7);
+      border: 1px solid #bae6fd;
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <div class="head">
+      <div>
+        <h1>AntV S2 方向 Demo</h1>
+        <div class="sub">侧重点：多维透视、交叉分析、热力矩阵表达</div>
+      </div>
+      <a href="index.html" class="back-link">返回总览</a>
+    </div>
+
+    <div id="baseInfo"></div>
+
+    <div class="toolbar">
+      <span>指标：</span>
+      <button class="btn active" data-metric="revenue">营收</button>
+      <button class="btn" data-metric="orders">订单数</button>
+      <button class="btn" data-metric="growth">增长率</button>
+      <button class="btn" id="mockLoading">加载态</button>
+      <button class="btn" id="mockEmpty">空态</button>
+      <button class="btn" id="mockError">错误态</button>
+      <button class="btn" id="mockRecover">恢复</button>
+      <span style="margin-left: 8px; color:#5b6b84">行维度：区域 / 列维度：月份</span>
+    </div>
+
+    <div id="stateBox" class="state-box hidden" role="status" aria-live="polite"></div>
+
+    <section class="panel">
+      <table>
+        <thead>
+          <tr id="thead"></tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </section>
+
+    <div class="legend">
+      <span>热力强度</span>
+      <span>低</span>
+      <div class="grad"></div>
+      <span>高</span>
+    </div>
+  </main>
+
+  <script src="table-demo-base.js"></script>
+  <script>
+    const months = ['2026-01', '2026-02', '2026-03', '2026-04', '2026-05', '2026-06'];
+    const regions = ['华东', '华南', '华北', '西南'];
+
+    const dataset = {
+      revenue: {
+        '华东': [132, 146, 151, 167, 158, 170],
+        '华南': [118, 121, 129, 136, 144, 149],
+        '华北': [96, 101, 95, 112, 120, 125],
+        '西南': [88, 94, 107, 110, 116, 123]
+      },
+      orders: {
+        '华东': [320, 341, 360, 378, 369, 390],
+        '华南': [280, 292, 301, 315, 329, 336],
+        '华北': [224, 239, 231, 246, 257, 269],
+        '西南': [198, 204, 221, 232, 245, 258]
+      },
+      growth: {
+        '华东': [0.08, 0.11, 0.03, 0.10, -0.05, 0.08],
+        '华南': [0.06, 0.03, 0.07, 0.05, 0.06, 0.03],
+        '华北': [0.04, 0.05, -0.06, 0.10, 0.07, 0.05],
+        '西南': [0.03, 0.04, 0.10, 0.03, 0.05, 0.06]
+      }
+    };
+
+    let metric = 'revenue';
+    let mockState = 'ready';
+    const base = window.TableDemoBase.create({
+      infoContainerId: 'baseInfo',
+      stateBoxId: 'stateBox',
+      unit: '单元格',
+      amountLabel: '当前单元格数量',
+      thresholds: [
+        { max: 500, label: '前端渲染' },
+        { max: 2000, label: '分页' },
+        { max: 10000, label: '虚拟渲染' },
+        { label: '服务端透视' }
+      ],
+      boundaryText: '图表负责宏观对比与故事化表达；本透视表负责多维交叉明细与口径核对。'
+    });
+
+    function formatValue(v) {
+      if (metric === 'growth') return (v * 100).toFixed(1) + '%';
+      if (metric === 'revenue') return v.toFixed(0) + ' 万';
+      return String(v.toFixed ? v.toFixed(0) : v);
+    }
+
+    function flattenValues() {
+      const values = [];
+      regions.forEach((r) => dataset[metric][r].forEach((v) => values.push(v)));
+      return values;
+    }
+
+    function heatColor(v, min, max) {
+      const ratio = max === min ? 0.5 : (v - min) / (max - min);
+      const alpha = 0.10 + ratio * 0.75;
+      return `rgba(2, 132, 199, ${alpha.toFixed(3)})`;
+    }
+
+    function render() {
+      const th = document.getElementById('thead');
+      const tb = document.getElementById('tbody');
+      base.updateScaleHint(regions.length * months.length);
+
+      if (mockState === 'loading') {
+        th.innerHTML = '';
+        tb.innerHTML = '';
+        base.setState('loading', '加载中：正在计算透视结果...');
+        return;
+      }
+      if (mockState === 'error') {
+        th.innerHTML = '';
+        tb.innerHTML = '';
+        base.setState('error', '透视计算失败：请稍后重试。');
+        return;
+      }
+      if (mockState === 'empty') {
+        th.innerHTML = '';
+        tb.innerHTML = '';
+        base.setState('empty', '暂无可展示数据，请切换指标或恢复数据。');
+        return;
+      }
+      base.setState('ready');
+
+      th.innerHTML = `<th class="row-head">区域 / 月份</th>${months.map((m) => `<th>${m}</th>`).join('')}<th>合计</th>`;
+
+      const all = flattenValues();
+      const min = Math.min(...all);
+      const max = Math.max(...all);
+
+      let bodyHtml = '';
+      regions.forEach((r) => {
+        const list = dataset[metric][r];
+        const total = metric === 'growth'
+          ? list.reduce((s, v) => s + v, 0) / list.length
+          : list.reduce((s, v) => s + v, 0);
+
+        bodyHtml += '<tr>';
+        bodyHtml += `<td class="row-head">${r}</td>`;
+        list.forEach((v) => {
+          bodyHtml += `<td style="background:${heatColor(v, min, max)}">${formatValue(v)}</td>`;
+        });
+        bodyHtml += `<td><strong>${formatValue(total)}</strong></td>`;
+        bodyHtml += '</tr>';
+      });
+
+      tb.innerHTML = bodyHtml;
+    }
+
+    document.querySelectorAll('[data-metric]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        mockState = 'ready';
+        metric = btn.dataset.metric;
+        document.querySelectorAll('[data-metric]').forEach((b) => b.classList.remove('active'));
+        btn.classList.add('active');
+        render();
+      });
+    });
+
+    document.getElementById('mockLoading').addEventListener('click', () => {
+      mockState = 'loading';
+      render();
+      setTimeout(() => {
+        if (mockState === 'loading') {
+          mockState = 'ready';
+          render();
+        }
+      }, 800);
+    });
+
+    document.getElementById('mockEmpty').addEventListener('click', () => {
+      mockState = 'empty';
+      render();
+    });
+
+    document.getElementById('mockError').addEventListener('click', () => {
+      mockState = 'error';
+      render();
+    });
+
+    document.getElementById('mockRecover').addEventListener('click', () => {
+      mockState = 'ready';
+      render();
+    });
+
+    render();
+  </script>
+</body>
+</html>

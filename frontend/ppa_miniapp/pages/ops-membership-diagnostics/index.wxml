@@ -1,0 +1,122 @@
+<view class="page ops-page">
+  <view class="card ops-card">
+    <view class="ops-card__title">查询异常对象</view>
+    <picker range="{{queryTypeOptions}}" range-key="label" value="{{queryTypeIndex}}" bindchange="handleQueryTypeChange">
+      <view class="ops-picker">查询方式：{{queryTypeOptions[queryTypeIndex].label}}</view>
+    </picker>
+
+    <input
+      wx:if="{{queryType === 'openid'}}"
+      class="ops-input"
+      placeholder="输入目标 openid"
+      value="{{queryOpenid}}"
+      bindinput="handleQueryOpenidInput"
+    />
+
+    <input
+      wx:if="{{queryType === 'order'}}"
+      class="ops-input"
+      placeholder="输入订单号 out_trade_no"
+      value="{{queryOutTradeNo}}"
+      bindinput="handleQueryOutTradeNoInput"
+    />
+
+    <button class="primary-button" bindtap="handleRunQuery" loading="{{querying}}" disabled="{{querying || submitting}}">
+      查询会员与订单状态
+    </button>
+    <text wx:if="{{queryMessage}}" class="ops-message subtle">{{queryMessage}}</text>
+  </view>
+
+  <view wx:if="{{diagnostics}}" class="card ops-card">
+    <view class="ops-card__title">当前诊断结果</view>
+    <view class="ops-section">
+      <text class="ops-label subtle">查询用户</text>
+      <text>{{diagnostics.query_openid}}</text>
+    </view>
+    <view class="ops-section">
+      <text class="ops-label subtle">会员状态</text>
+      <text>{{diagnostics.membership.membership_status || 'inactive'}}</text>
+    </view>
+    <view class="ops-section">
+      <text class="ops-label subtle">到期时间</text>
+      <text>{{diagnostics.membership.expires_at || '暂无'}}</text>
+    </view>
+    <view class="ops-section">
+      <text class="ops-label subtle">最近订单</text>
+      <text>{{diagnostics.latest_order ? diagnostics.latest_order.out_trade_no : '暂无'}}</text>
+    </view>
+    <view class="ops-section">
+      <text class="ops-label subtle">订单状态</text>
+      <text>{{diagnostics.latest_order ? diagnostics.latest_order.status : '暂无'}}</text>
+    </view>
+    <view class="ops-section">
+      <text class="ops-label subtle">最近修正记录</text>
+      <text>{{diagnostics.latest_ops_log ? diagnostics.latest_ops_log.action : '暂无'}}</text>
+    </view>
+    <view class="ops-section" wx:if="{{diagnostics.ops_log_query_state === 'unavailable'}}">
+      <text class="ops-warning">操作日志当前不可查询：{{diagnostics.ops_log_query_error}}</text>
+    </view>
+  </view>
+
+  <view class="card ops-card">
+    <view class="ops-card__title">执行人工修正</view>
+    <picker range="{{actionOptions}}" range-key="label" value="{{actionIndex}}" bindchange="handleActionChange">
+      <view class="ops-picker">修正动作：{{actionOptions[actionIndex].label}}</view>
+    </picker>
+
+    <picker
+      wx:if="{{selectedAction === 'update_membership_status'}}"
+      range="{{membershipStatusOptions}}"
+      range-key="label"
+      value="{{membershipStatusIndex}}"
+      bindchange="handleMembershipStatusChange"
+    >
+      <view class="ops-picker">目标会员状态：{{membershipStatusOptions[membershipStatusIndex].label}}</view>
+    </picker>
+
+    <picker
+      wx:if="{{selectedAction === 'update_order_status'}}"
+      range="{{orderStatusOptions}}"
+      range-key="label"
+      value="{{orderStatusIndex}}"
+      bindchange="handleOrderStatusChange"
+    >
+      <view class="ops-picker">目标订单状态：{{orderStatusOptions[orderStatusIndex].label}}</view>
+    </picker>
+
+    <textarea
+      class="ops-textarea"
+      placeholder="填写人工修正原因，例如：支付成功但未自动开通"
+      value="{{reason}}"
+      bindinput="handleReasonInput"
+      maxlength="200"
+    />
+
+    <button class="primary-button" bindtap="handleSubmitFix" loading="{{submitting}}" disabled="{{submitting || querying}}">
+      提交人工修正
+    </button>
+    <text wx:if="{{submitMessage}}" class="ops-message subtle">{{submitMessage}}</text>
+  </view>
+
+  <view wx:if="{{lastActionResult}}" class="card ops-card">
+    <view class="ops-card__title">最近一次处理结果</view>
+    <view class="ops-section">
+      <text class="ops-label subtle">处理结果</text>
+      <text>{{lastActionResult.result}}</text>
+    </view>
+    <view class="ops-section">
+      <text class="ops-label subtle">处理说明</text>
+      <text>{{lastActionResult.message}}</text>
+    </view>
+    <view class="ops-section" wx:if="{{lastActionResult.ops_log}}">
+      <text class="ops-label subtle">留痕动作</text>
+      <text>{{lastActionResult.ops_log.action}} / {{lastActionResult.ops_log.created_at}}</text>
+    </view>
+  </view>
+
+  <view class="card ops-card">
+    <view class="ops-card__title">会员经营分析</view>
+    <text class="ops-message subtle">查看付费、续费、完整详情使用和内容偏好等基础结果，帮助判断会员模式是否值得继续投入。</text>
+    <button class="secondary-button" bindtap="handleOpenInsights">查看会员经营分析</button>
+  </view>
+</view>

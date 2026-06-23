@@ -31,6 +31,26 @@ declare namespace API {
     updated_at?: string;
   };
 
+  /** 商务报价配置 */
+  type BusinessPricingConfig = {
+    tax_rate: number;
+    management_rate: number;
+    sales_rate: number;
+    profit_rate: number;
+  };
+
+  type EnterpriseProductPricingConfig = {
+    rd_rate: number;
+    cac_rate: number;
+    cogs_rate: number;
+    csm_rate: number;
+  };
+
+  type BusinessPricingSettings = {
+    custom_development: BusinessPricingConfig;
+    enterprise_product: EnterpriseProductPricingConfig;
+  };
+
   /** 角色配置列表响应 */
   type RoleListResponse = {
     data: RoleConfig[];

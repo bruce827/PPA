@@ -1,0 +1,88 @@
+<view class="page list-page">
+  <view wx:if="{{reminderBanner}}" class="card reminder-banner">
+    <view class="reminder-banner__header">
+      <text class="reminder-banner__title">{{reminderBanner.title}}</text>
+      <text class="status-chip status-chip--open">站内提醒</text>
+    </view>
+    <text class="reminder-banner__description">{{reminderBanner.description}}</text>
+    <button class="secondary-button reminder-banner__action" bindtap="handleReminderAction">
+      {{reminderBanner.actionText}}
+    </button>
+  </view>
+
+  <view class="card filter-card">
+    <view class="filter-header">
+      <view class="filter-header__top">
+        <text class="title">日期范围</text>
+        <button class="secondary-button filter-header__action" bindtap="openMembershipStatus">
+          会员状态
+        </button>
+      </view>
+      <text class="subtle">默认展示当天招标</text>
+    </view>
+
+    <view class="picker-row">
+      <view class="picker-field">
+        <text class="picker-label subtle">开始日期</text>
+        <picker mode="date" value="{{startDate}}" bindchange="onChangeStartDate">
+          <view class="picker-value">{{startDate}}</view>
+        </picker>
+      </view>
+
+      <view class="picker-field">
+        <text class="picker-label subtle">结束日期</text>
+        <picker mode="date" value="{{endDate}}" bindchange="onChangeEndDate">
+          <view class="picker-value">{{endDate}}</view>
+        </picker>
+      </view>
+    </view>
+
+    <button class="primary-button" bindtap="handleSearch" loading="{{loading}}">
+      查询招标信息
+    </button>
+  </view>
+
+  <view wx:if="{{loading && !list.length}}" class="empty">
+    <text>加载中...</text>
+  </view>
+
+  <view wx:elif="{{list.length}}" class="list-stack">
+    <view
+      wx:for="{{list}}"
+      wx:key="source_item_id"
+      class="card tender-card"
+      data-id="{{item.source_item_id}}"
+      bindtap="openDetail"
+    >
+      <view class="card-header">
+        <text class="tender-title">{{item.title}}</text>
+        <view class="status-chip {{item.adopt_status === 'adopted' ? 'status-chip--locked' : 'status-chip--open'}}">
+          {{item.adoptLabel}}
+        </view>
+      </view>
+
+      <view class="meta-grid">
+        <view class="meta-item">
+          <text class="meta-label subtle">发布日期</text>
+          <text>{{item.publishedDate}}</text>
+        </view>
+        <view class="meta-item">
+          <text class="meta-label subtle">截止日期</text>
+          <text>{{item.deadlineDate}}</text>
+        </view>
+        <view class="meta-item">
+          <text class="meta-label subtle">招标单位</text>
+          <text>{{item.issuerText}}</text>
+        </view>
+        <view class="meta-item">
+          <text class="meta-label subtle">预算金额</text>
+          <text>{{item.budgetText}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view wx:else class="empty">
+    <text>{{emptyText}}</text>
+  </view>
+</view>

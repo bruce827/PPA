@@ -3,6 +3,12 @@
  *       负责将角色/模块成本按比例分摊到各模块，生成对外报价 Excel 所需的数据结构。
  */
 const { HttpError } = require('../../../utils/errors');
+const {
+  IOT_MODULE_NAME,
+  buildIotWorkloadItems,
+  hasIotPointIntegrationItems,
+  isIotWorkloadItem
+} = require('../../../utils/iotPointIntegration');
 
 function formatExportedAtDisplay(value) {
   if (!value) return null;
@@ -141,10 +147,17 @@ function buildModulesFromLegacy(details) {
   const devItems = Array.isArray(details.development_workload)
     ? details.development_workload
     : [];
-  const integrationItems = Array.isArray(details.integration_workload)
+  const hasIndependentIot = hasIotPointIntegrationItems(
+    details.iot_point_integration
+  );
+  const rawIntegrationItems = Array.isArray(details.integration_workload)
     ? details.integration_workload
     : [];
-  const items = [...devItems, ...integrationItems];
+  const integrationItems = hasIndependentIot
+    ? rawIntegrationItems.filter((item) => !isIotWorkloadItem(item))
+    : rawIntegrationItems;
+  const iotItems = buildIotWorkloadItems(details.iot_point_integration, roles);
+  const items = [...devItems, ...integrationItems, ...iotItems];
   return aggregateModulesFromWorkloads(items, roles);
 }
 
@@ -167,11 +180,28 @@ exports.formatForExport = (project) => {
   let moduleListRaw;
   if (roleCosts.length > 0) {
     moduleListRaw = buildModulesFromRoleCosts(roleCosts);
-    const integrationModules = aggregateModulesFromWorkloads(
-      Array.isArray(details.integration_workload) ? details.integration_workload : [],
+    const hasIndependentIot = hasIotPointIntegrationItems(
+      details.iot_point_integration
+    );
+    const hasIotModuleInRoleCosts = moduleListRaw.some(
+      (moduleItem) => moduleItem.module1 === IOT_MODULE_NAME
+    );
+    const extraModules = aggregateModulesFromWorkloads(
+      [
+        ...(Array.isArray(details.integration_workload)
+          ? hasIndependentIot
+            ? details.integration_workload.filter(
+                (item) => !isIotWorkloadItem(item)
+              )
+            : details.integration_workload
+          : []),
+        ...(hasIotModuleInRoleCosts
+          ? []
+          : buildIotWorkloadItems(details.iot_point_integration, roles))
+      ],
       roles
     );
-    if (integrationModules.length) {
+    if (extraModules.length) {
       const moduleMap = new Map();
       const append = (list) => {
         list.forEach((m) => {
@@ -186,7 +216,7 @@ exports.formatForExport = (project) => {
         });
       };
       append(moduleListRaw);
-      append(integrationModules);
+      append(extraModules);
       moduleListRaw = Array.from(moduleMap.values());
     }
   } else {

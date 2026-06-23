@@ -1,0 +1,31 @@
+<view class="page login-page">
+  <view class="hero card">
+    <text class="title">PPA 招标快报</text>
+    <text class="hero-copy subtle">通过微信登录后即可查看当天招标信息，并对感兴趣的项目执行采纳。</text>
+  </view>
+
+  <view class="card form-card">
+    <view class="section">
+      <text class="label">展示名称</text>
+      <input
+        class="text-input"
+        maxlength="20"
+        placeholder="请输入页面显示名称"
+        value="{{displayName}}"
+        bindinput="onInputDisplayName"
+      />
+    </view>
+
+    <view class="section">
+      <text class="label">微信资料</text>
+      <button class="secondary-button" bindtap="handleGetProfile">
+        {{ profileReady ? '已同步微信资料' : '同步微信昵称和头像' }}
+      </button>
+      <text class="hint subtle">用于记录采纳人名称和头像，不采集手机号。</text>
+    </view>
+
+    <button class="primary-button" loading="{{submitting}}" bindtap="handleLogin">
+      进入招标快报
+    </button>
+  </view>
+</view>

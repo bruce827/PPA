@@ -9,7 +9,10 @@ const aiFileLogger = require('./aiFileLogger');
 const aiAssessmentLogModel = require('../models/aiAssessmentLogModel');
 const { validationError } = require('../utils/errors');
 
-const TEST_PROMPT = '你是什么模型？';
+const TEST_PROMPTS = {
+  default: '你是什么模型？',
+  tavily: 'Tavily Search API 是什么？',
+};
 
 function ensureTestPayload(config = {}) {
   const { api_host, api_key, model_name, timeout = 30, max_tokens } = config;
@@ -32,13 +35,15 @@ async function testConnection(config) {
   const payload = ensureTestPayload(config);
   const providerLabel = config.provider || 'openai-compatible';
   const { impl: providerImpl, key: providerKey } = selectProvider(providerLabel);
+  const testPrompt = TEST_PROMPTS[providerKey] || TEST_PROMPTS.default;
   const requestHash = crypto.createHash('sha256').update(`${payload.model}:${startedAt}`).digest('hex');
 
   let providerRaw = null;
 
   try {
     const providerResult = await providerImpl.createRiskAssessment({
-      prompt: TEST_PROMPT,
+      prompt: testPrompt,
+      query: testPrompt,
       model: payload.model,
       api_host: payload.api_host,
       api_key: payload.api_key,
@@ -54,6 +59,7 @@ async function testConnection(config) {
       Array.isArray(choices) && choices.length > 0
         ? choices[0]?.message?.content || choices[0]?.text || ''
         : '';
+    const providerAnswer = rawSource?.raw_tavily?.answer || content;
 
     const success = Boolean(content) || providerResult.statusCode < 300;
     const duration = providerResult.durationMs || Date.now() - startedAt;
@@ -81,8 +87,8 @@ async function testConnection(config) {
       durationMs: duration,
       providerTimeoutMs: payload.timeoutMs,
       serviceTimeoutMs: payload.timeoutMs ? payload.timeoutMs + 2000 : undefined,
-      request: {
-        prompt: TEST_PROMPT,
+        request: {
+        prompt: testPrompt,
         api_host: payload.api_host,
         model: payload.model,
       },
@@ -105,10 +111,10 @@ async function testConnection(config) {
 
     if (success) {
       const answerText =
-        typeof content === 'string'
-          ? content
-          : typeof content === 'object'
-            ? JSON.stringify(content)
+        typeof providerAnswer === 'string'
+          ? providerAnswer
+          : typeof providerAnswer === 'object'
+            ? JSON.stringify(providerAnswer)
             : '';
       const displayContent = answerText ? answerText.slice(0, 150) : '（无内容）';
 
@@ -158,7 +164,7 @@ async function testConnection(config) {
         providerTimeoutMs: payload.timeoutMs,
         serviceTimeoutMs: payload.timeoutMs ? payload.timeoutMs + 2000 : undefined,
         request: {
-          prompt: TEST_PROMPT,
+          prompt: testPrompt,
           api_host: payload.api_host,
           model: payload.model,
         },

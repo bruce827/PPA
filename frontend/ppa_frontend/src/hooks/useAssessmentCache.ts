@@ -3,13 +3,13 @@
  * 封装缓存管理器的 React 集成，简化组件使用
  */
 
-import { useState, useEffect, useCallback, useRef } from 'react';
-import { assessmentCache } from '@/utils/assessmentCache';
 import type {
-  AssessmentCacheRecord,
   AssessmentCacheData,
+  AssessmentCacheRecord,
   DataDiff,
 } from '@/types/cache';
+import { assessmentCache } from '@/utils/assessmentCache';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 interface UseAssessmentCacheOptions {
   /** 是否启用自动保存 */
@@ -33,7 +33,11 @@ interface UseAssessmentCacheReturn {
   lastSavedAt: number | null;
 
   /** 保存数据（立即） */
-  saveImmediate: (data: AssessmentCacheData, step: number, isManualSave?: boolean) => Promise<void>;
+  saveImmediate: (
+    data: AssessmentCacheData,
+    step: number,
+    isManualSave?: boolean,
+  ) => Promise<void>;
 
   /** 保存数据（debounce） */
   saveDebounced: (data: AssessmentCacheData, step: number) => void;
@@ -74,13 +78,9 @@ interface UseAssessmentCacheReturn {
  * ```
  */
 export function useAssessmentCache(
-  options: UseAssessmentCacheOptions = {}
+  options: UseAssessmentCacheOptions = {},
 ): UseAssessmentCacheReturn {
-  const {
-    enableAutoSave = true,
-    onDataChange,
-    onError,
-  } = options;
+  const { enableAutoSave = true, onDataChange, onError } = options;
 
   // 状态
   const [isSaving, setIsSaving] = useState(false);
@@ -128,7 +128,7 @@ export function useAssessmentCache(
         setIsSaving(false);
       }
     },
-    [enableAutoSave, onDataChange, onError]
+    [enableAutoSave, onDataChange, onError],
   );
 
   /**
@@ -143,7 +143,7 @@ export function useAssessmentCache(
       // 调用缓存管理器的 debounce 保存
       cacheRef.current.saveDebounced(data, step);
     },
-    [enableAutoSave]
+    [enableAutoSave],
   );
 
   /**
@@ -160,27 +160,30 @@ export function useAssessmentCache(
         return null;
       }
     },
-    [onError]
+    [onError],
   );
 
   /**
    * 获取最新缓存
    */
-  const handleGetLatest = useCallback(async (): Promise<AssessmentCacheRecord | null> => {
-    try {
-      return await cacheRef.current.getLatest();
-    } catch (error) {
-      const err = error instanceof Error ? error : new Error('获取失败');
-      onError?.(err);
-      console.error('获取最新缓存失败:', err);
-      return null;
-    }
-  }, [onError]);
+  const handleGetLatest =
+    useCallback(async (): Promise<AssessmentCacheRecord | null> => {
+      try {
+        return await cacheRef.current.getLatest();
+      } catch (error) {
+        const err = error instanceof Error ? error : new Error('获取失败');
+        onError?.(err);
+        console.error('获取最新缓存失败:', err);
+        return null;
+      }
+    }, [onError]);
 
   /**
    * 获取历史版本列表
    */
-  const handleGetHistory = useCallback(async (): Promise<AssessmentCacheRecord[]> => {
+  const handleGetHistory = useCallback(async (): Promise<
+    AssessmentCacheRecord[]
+  > => {
     try {
       return await cacheRef.current.getHistory();
     } catch (error) {
@@ -194,11 +197,14 @@ export function useAssessmentCache(
   /**
    * 获取所有缓存记录
    */
-  const handleGetAll = useCallback(async (): Promise<AssessmentCacheRecord[]> => {
+  const handleGetAll = useCallback(async (): Promise<
+    AssessmentCacheRecord[]
+  > => {
     try {
       return await cacheRef.current.getAll();
     } catch (error) {
-      const err = error instanceof Error ? error : new Error('获取所有缓存失败');
+      const err =
+        error instanceof Error ? error : new Error('获取所有缓存失败');
       onError?.(err);
       console.error('获取所有缓存失败:', err);
       return [];
@@ -219,7 +225,7 @@ export function useAssessmentCache(
         return 0;
       }
     },
-    [onError]
+    [onError],
   );
 
   /**
@@ -262,7 +268,7 @@ export function useAssessmentCache(
       // 对比数据
       return compareData(currentData, latestRecord.data);
     },
-    [handleGetLatest]
+    [handleGetLatest],
   );
 
   // 返回接口
@@ -319,6 +325,7 @@ export function compareData(current: any, cached: any): DataDiff {
     'risk_scores',
     'development_workload',
     'integration_workload',
+    'iot_point_integration',
     'travel_months',
     'travel_headcount',
     'maintenance_months',
@@ -364,6 +371,7 @@ export function getFieldLabel(field: string): string {
     risk_scores: '风险评分',
     development_workload: '开发工作量',
     integration_workload: '对接工作量',
+    iot_point_integration: 'IoT点位对接',
     travel_months: '差旅月数',
     travel_headcount: '差旅人数',
     maintenance_months: '运维月数',

@@ -21,7 +21,23 @@ const RISK = {
   }
 };
 
+const BUSINESS_PRICING = {
+  CUSTOM_DEVELOPMENT: {
+    tax_rate: { label: '税率', min: 6, max: 13, defaultValue: 6 },
+    management_rate: { label: '管理分摊率', min: 10, max: 15, defaultValue: 12 },
+    sales_rate: { label: '销售商务率', min: 10, max: 15, defaultValue: 12 },
+    profit_rate: { label: '利润率', min: 10, max: 20, defaultValue: 15 }
+  },
+  ENTERPRISE_PRODUCT: {
+    rd_rate: { label: '研发成本（R&D）', min: 30, max: 40, defaultValue: 35 },
+    cac_rate: { label: '营销与获客成本（CAC）', min: 30, max: 50, defaultValue: 40 },
+    cogs_rate: { label: '基础设施成本（COGS）', min: 10, max: 20, defaultValue: 15 },
+    csm_rate: { label: '客户成功与运维（CSM）', min: 10, max: 15, defaultValue: 10 }
+  }
+};
+
 module.exports = {
   DEFAULTS,
-  RISK
+  RISK,
+  BUSINESS_PRICING
 };

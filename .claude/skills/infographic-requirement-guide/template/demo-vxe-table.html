@@ -1,0 +1,390 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Demo - vxe-table Direction</title>
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --line: #dbe4f0;
+      --text: #0f172a;
+      --sub: #475569;
+      --brand: #2563eb;
+      --ok: #16a34a;
+      --warn: #d97706;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, -apple-system, Segoe UI, PingFang SC, Microsoft YaHei, sans-serif;
+      background: linear-gradient(180deg, #eef4ff, #f8fafc 40%);
+      color: var(--text);
+    }
+    .wrap { max-width: 1200px; margin: 0 auto; padding: 22px; }
+    .head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+    .title { margin: 0; font-size: 24px; }
+    .sub { color: var(--sub); font-size: 14px; }
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    .policy {
+      margin-bottom: 12px;
+      font-size: 12px;
+      color: #334155;
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-radius: 10px;
+      padding: 8px 10px;
+      line-height: 1.6;
+    }
+    .boundary {
+      margin-bottom: 12px;
+      font-size: 12px;
+      color: #334155;
+      background: #f8fafc;
+      border: 1px solid #dbe4f0;
+      border-radius: 10px;
+      padding: 8px 10px;
+      line-height: 1.6;
+    }
+    .state-box {
+      margin-bottom: 10px;
+      border-radius: 10px;
+      border: 1px solid;
+      padding: 10px 12px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+    .state-loading { color: #1e40af; background: #eff6ff; border-color: #bfdbfe; }
+    .state-empty { color: #92400e; background: #fffbeb; border-color: #fde68a; }
+    .state-error { color: #991b1b; background: #fef2f2; border-color: #fecaca; }
+    .hidden { display: none; }
+    button {
+      border: 1px solid #bfdbfe;
+      background: #eff6ff;
+      color: #1d4ed8;
+      height: 34px;
+      border-radius: 8px;
+      padding: 0 12px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    button.primary {
+      background: var(--brand);
+      border-color: var(--brand);
+      color: white;
+    }
+    .panel {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 14px 30px rgba(15, 23, 42, 0.06);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th, td {
+      border-bottom: 1px solid #eaf0f7;
+      border-right: 1px solid #eef3f9;
+      padding: 10px;
+      text-align: left;
+      font-size: 14px;
+      vertical-align: middle;
+    }
+    th:last-child, td:last-child { border-right: none; }
+    th {
+      background: #f8fafc;
+      font-weight: 700;
+      color: #334155;
+      position: sticky;
+      top: 0;
+      z-index: 1;
+    }
+    tbody tr:hover { background: #f8fbff; }
+    td[contenteditable="true"] {
+      outline: none;
+      background: #fcfdff;
+    }
+    td[contenteditable="true"]:focus {
+      background: #eff6ff;
+      box-shadow: inset 0 0 0 2px #93c5fd;
+    }
+    .status {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      padding: 2px 8px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .s-ok { background: #dcfce7; color: #166534; }
+    .s-warn { background: #fef3c7; color: #92400e; }
+    .foot {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-top: 12px;
+    }
+    .kpi {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 10px;
+    }
+    .kpi .k { color: #64748b; font-size: 12px; }
+    .kpi .v { margin-top: 4px; font-size: 20px; font-weight: 800; }
+    .toast {
+      margin-top: 10px;
+      font-size: 13px;
+      color: #1e3a8a;
+      background: #e0ecff;
+      border: 1px solid #bfdbfe;
+      border-radius: 8px;
+      padding: 8px 10px;
+      min-height: 34px;
+    }
+    @media (max-width: 900px) {
+      .foot { grid-template-columns: repeat(2, 1fr); }
+      .panel { overflow: auto; }
+      table { min-width: 900px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <div class="head">
+      <div>
+        <h1 class="title">vxe-table 方向 Demo</h1>
+        <div class="sub">侧重点：强编辑体验、批量操作、立即反馈（Excel 风格）</div>
+      </div>
+      <a href="index.html" class="sub">返回总览</a>
+    </div>
+
+    <div id="baseInfo"></div>
+
+    <div class="toolbar">
+      <button id="addRow">新增行</button>
+      <button id="duplicateTop">复制首行</button>
+      <button id="recalc">重新汇总</button>
+      <button class="primary" id="saveDraft">保存草稿</button>
+      <button id="mockLoading">模拟加载</button>
+      <button id="mockEmpty">模拟空态</button>
+      <button id="mockError">模拟错误</button>
+      <button id="mockRecover">恢复正常</button>
+    </div>
+
+    <div id="stateBox" class="state-box hidden" role="status" aria-live="polite"></div>
+
+    <section class="panel">
+      <table id="grid">
+        <thead>
+          <tr>
+            <th style="width: 50px">#</th>
+            <th>月份</th>
+            <th>区域</th>
+            <th>渠道</th>
+            <th>销售额</th>
+            <th>目标</th>
+            <th>达成率</th>
+            <th>状态</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
+
+    <section class="foot">
+      <div class="kpi"><div class="k">总销售额</div><div class="v" id="sumRevenue">-</div></div>
+      <div class="kpi"><div class="k">总目标</div><div class="v" id="sumTarget">-</div></div>
+      <div class="kpi"><div class="k">平均达成率</div><div class="v" id="avgRate">-</div></div>
+      <div class="kpi"><div class="k">预警行数</div><div class="v" id="warnCount">-</div></div>
+    </section>
+
+    <div class="toast" id="toast">提示：双击“销售额 / 目标”单元格可编辑，回车后自动重算。</div>
+  </main>
+
+  <script src="table-demo-base.js"></script>
+  <script>
+    const initialRows = [
+      { month: '2026-01', region: '华东', channel: '直营', revenue: 132000, target: 120000 },
+      { month: '2026-01', region: '华南', channel: '经销', revenue: 96000, target: 110000 },
+      { month: '2026-02', region: '华东', channel: '直营', revenue: 141000, target: 130000 },
+      { month: '2026-02', region: '华北', channel: '电商', revenue: 88000, target: 90000 },
+      { month: '2026-03', region: '华南', channel: '直营', revenue: 119000, target: 125000 }
+    ];
+
+    let rows = JSON.parse(JSON.stringify(initialRows));
+    const tbody = document.querySelector('#grid tbody');
+    let mockState = 'ready';
+    const base = window.TableDemoBase.create({
+      infoContainerId: 'baseInfo',
+      stateBoxId: 'stateBox',
+      unit: '行',
+      amountLabel: '当前数据量',
+      thresholds: [
+        { max: 500, label: '前端编辑' },
+        { max: 2000, label: '分页' },
+        { max: 10000, label: '虚拟化' },
+        { label: '服务端分片' }
+      ],
+      boundaryText: '图表负责讲趋势与异常故事；本表格负责精确值核对、批量编辑与结果回写。'
+    });
+
+    function fmtNum(n) {
+      return Number(n || 0).toLocaleString('zh-CN');
+    }
+
+    function calcRate(r) {
+      const target = Number(r.target || 0);
+      if (!target) return 0;
+      return Number(r.revenue || 0) / target;
+    }
+
+    function render() {
+      base.updateScaleHint(rows.length);
+      if (mockState === 'loading') {
+        tbody.innerHTML = '';
+        base.setState('loading', '加载中：正在同步编辑数据...');
+        recalc();
+        return;
+      }
+      if (mockState === 'error') {
+        tbody.innerHTML = '';
+        base.setState('error', '加载失败：请检查网络或重试。');
+        recalc();
+        return;
+      }
+      if (mockState === 'empty' || rows.length === 0) {
+        tbody.innerHTML = '';
+        base.setState('empty', '暂无可编辑数据，请新增行或恢复数据。');
+        recalc();
+        return;
+      }
+      base.setState('ready');
+      tbody.innerHTML = '';
+      rows.forEach((r, idx) => {
+        const rate = calcRate(r);
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${idx + 1}</td>
+          <td>${r.month}</td>
+          <td>${r.region}</td>
+          <td>${r.channel}</td>
+          <td contenteditable="true" data-key="revenue" data-idx="${idx}">${r.revenue}</td>
+          <td contenteditable="true" data-key="target" data-idx="${idx}">${r.target}</td>
+          <td>${(rate * 100).toFixed(1)}%</td>
+          <td><span class="status ${rate >= 1 ? 's-ok' : 's-warn'}">${rate >= 1 ? '达标' : '预警'}</span></td>
+        `;
+        tbody.appendChild(tr);
+      });
+      recalc();
+      bindEditEvents();
+    }
+
+    function recalc() {
+      const sumRevenue = rows.reduce((s, r) => s + Number(r.revenue || 0), 0);
+      const sumTarget = rows.reduce((s, r) => s + Number(r.target || 0), 0);
+      const avgRate = rows.length ? rows.reduce((s, r) => s + calcRate(r), 0) / rows.length : 0;
+      const warnCount = rows.filter((r) => calcRate(r) < 1).length;
+
+      document.getElementById('sumRevenue').textContent = fmtNum(sumRevenue);
+      document.getElementById('sumTarget').textContent = fmtNum(sumTarget);
+      document.getElementById('avgRate').textContent = (avgRate * 100).toFixed(1) + '%';
+      document.getElementById('warnCount').textContent = String(warnCount);
+    }
+
+    function bindEditEvents() {
+      tbody.querySelectorAll('[contenteditable="true"]').forEach((cell) => {
+        cell.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            cell.blur();
+          }
+        });
+        cell.addEventListener('blur', () => {
+          const idx = Number(cell.dataset.idx);
+          const key = cell.dataset.key;
+          const nextVal = Number(String(cell.textContent || '').replace(/,/g, ''));
+          if (Number.isFinite(nextVal) && rows[idx]) {
+            rows[idx][key] = nextVal;
+            render();
+          }
+        });
+      });
+    }
+
+    function toast(msg) {
+      document.getElementById('toast').textContent = msg;
+    }
+
+    document.getElementById('addRow').addEventListener('click', () => {
+      mockState = 'ready';
+      rows.push({ month: '2026-04', region: '华中', channel: '直营', revenue: 0, target: 100000 });
+      render();
+      toast('已新增一行，可直接编辑数值。');
+    });
+
+    document.getElementById('duplicateTop').addEventListener('click', () => {
+      mockState = 'ready';
+      rows.unshift({ ...rows[0], month: '2026-01(复制)' });
+      render();
+      toast('已复制首行，用于批量录入场景。');
+    });
+
+    document.getElementById('recalc').addEventListener('click', () => {
+      mockState = 'ready';
+      render();
+      toast('已重算汇总与达成率。');
+    });
+
+    document.getElementById('saveDraft').addEventListener('click', () => {
+      toast('模拟保存成功：已写入本地草稿（方向 demo）。');
+    });
+
+    document.getElementById('mockLoading').addEventListener('click', () => {
+      mockState = 'loading';
+      render();
+      setTimeout(() => {
+        if (mockState === 'loading') {
+          mockState = 'ready';
+          render();
+          toast('加载完成，已恢复数据。');
+        }
+      }, 800);
+    });
+
+    document.getElementById('mockEmpty').addEventListener('click', () => {
+      mockState = 'empty';
+      render();
+      toast('已切换为空态。');
+    });
+
+    document.getElementById('mockError').addEventListener('click', () => {
+      mockState = 'error';
+      render();
+      toast('已切换为错误态。');
+    });
+
+    document.getElementById('mockRecover').addEventListener('click', () => {
+      mockState = 'ready';
+      render();
+      toast('已恢复正常展示。');
+    });
+
+    render();
+  </script>
+</body>
+</html>
