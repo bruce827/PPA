@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "build:api": "node scripts/build-openapi.js",
+    "routes": "node scripts/list-routes.js"
   },
   "jest": {
     "testPathIgnorePatterns": [

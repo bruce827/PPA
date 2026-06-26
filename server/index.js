@@ -6,7 +6,7 @@ const db = require('./utils/db'); // Import db utility
 const serverConfig = require('./config/server');
 const errorHandler = require('./middleware/errorHandler'); // Global error handler
 const logger = require('./utils/logger');
-const { setupSwagger } = require('./swagger'); // Swagger API文档
+const { mountDocs } = require('./openapi/docs'); // 代码派生 OpenAPI 契约文档
 const biddingSiteModel = require('./models/biddingSiteModel');
 const tenderStagingModel = require('./models/tenderStagingModel');
 const schemaWarmupService = require('./services/schemaWarmupService');
@@ -39,8 +39,8 @@ loadEnvFile();
 
 app.use(express.json({ limit: '1mb' }));
 
-// 设置Swagger API文档
-setupSwagger(app);
+// 挂载代码派生的 OpenAPI 契约文档 (/api-docs.json + /api-docs)
+mountDocs(app);
 
 app.use(allRoutes);
 
