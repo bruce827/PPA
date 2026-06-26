@@ -5,6 +5,7 @@ const allRoutes = require('./routes');
 const db = require('./utils/db'); // Import db utility
 const serverConfig = require('./config/server');
 const errorHandler = require('./middleware/errorHandler'); // Global error handler
+const { mountDocs } = require('./openapi/docs');
 const logger = require('./utils/logger');
 const biddingSiteModel = require('./models/biddingSiteModel');
 const tenderStagingModel = require('./models/tenderStagingModel');
@@ -35,6 +36,7 @@ const wikiMigration = require('./migrations/016_create_wiki_project_relations');
 loadEnvFile();
 
 app.use(express.json({ limit: '1mb' }));
+mountDocs(app);
 app.use(allRoutes);
 
 // Global error handling middleware (must be last)
