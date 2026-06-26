@@ -38,7 +38,7 @@ V2 产品规划主入口见 [docs/prd2.0/prd.md](docs/prd2.0/prd.md)。
 - PostgreSQL/Supabase V2 数据底座模式
 - Jest + Supertest
 - PDFKit、ExcelJS
-- Swagger API 文档
+- OpenAPI 3.0 代码派生 API 契约（zod → openapi）
 - OpenAI / Doubao 等 AI Provider 统一封装
 
 ## 快速启动
@@ -132,15 +132,15 @@ PPA/
 ├── frontend/
 │   ├── ppa_frontend/              # V1/V2 Web 前端，UmiJS Max + React + Ant Design
 │   └── ppa_miniapp/               # 小程序相关前端目录
-├── server/                        # 后端 API、服务、模型、迁移、Swagger、测试
+├── server/                        # 后端 API、服务、模型、迁移、OpenAPI 契约、测试
 │   ├── controllers/               # HTTP Controller
 │   ├── routes/                    # API 路由：projects/config/dashboard/web3d/opportunity 等
 │   ├── services/                  # 业务服务、AI 服务、导出、监控、schema warmup
 │   ├── models/                    # 数据访问层，兼容 SQLite/PostgreSQL
 │   ├── migrations/                # 数据库迁移
-│   ├── scripts/                   # 迁移、文档、Swagger、数据处理脚本
+│   ├── scripts/                   # 迁移、文档、API 契约构建、数据处理脚本
 │   ├── tests/                     # 后端 Jest/Supertest 测试
-│   ├── swagger/                   # API 文档产物
+│   ├── openapi/                   # 代码派生 OpenAPI 契约（registry + paths）
 │   ├── logs/                      # AI/导出/运行日志，默认不应提交
 │   └── uploads/                   # 本地上传文件，V2 逐步迁移到云端 Storage
 ├── tests/                         # 项目级测试工作区：计划、脚本、报告、产物
@@ -171,7 +171,7 @@ PPA/
 - PostgreSQL 慢接口优化计划：[docs/postgresql-query-performance-optimization-plan.md](docs/postgresql-query-performance-optimization-plan.md)
 - 测试工作区说明：[tests/README.md](tests/README.md)
 - 后端说明：[server/README.md](server/README.md)
-- API 文档与 Swagger：启动后端后访问 `http://localhost:3001/api-docs`
+- API 文档：启动后端后访问 `http://localhost:3001/api-docs`（Swagger UI）或 `http://localhost:3001/api-docs.json`（OpenAPI JSON）
 - 开发/Agent 指南：[AGENTS.md](AGENTS.md)、[WARP.md](WARP.md)、[GEMINI.md](GEMINI.md)、[IFLOW.md](IFLOW.md)
 
 ## AI 日志与调试
