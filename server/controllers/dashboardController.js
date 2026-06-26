@@ -8,7 +8,7 @@ const dashboardService = require('../services/dashboardService');
 exports.getOverview = async (req, res, next) => {
   try {
     const data = await dashboardService.getOverview();
-    res.json({ data });
+    res.json({ success: true, data });
   } catch (error) {
     next(error);
   }
@@ -18,7 +18,7 @@ exports.getOverview = async (req, res, next) => {
 exports.getTrend = async (req, res, next) => {
   try {
     const data = await dashboardService.getTrend();
-    res.json({ data });
+    res.json({ success: true, data });
   } catch (error) {
     next(error);
   }
@@ -28,7 +28,7 @@ exports.getTrend = async (req, res, next) => {
 exports.getCostRange = async (req, res, next) => {
   try {
     const data = await dashboardService.getCostRange();
-    res.json({ data });
+    res.json({ success: true, data });
   } catch (error) {
     next(error);
   }
@@ -38,7 +38,7 @@ exports.getCostRange = async (req, res, next) => {
 exports.getKeywords = async (req, res, next) => {
   try {
     const data = await dashboardService.getKeywords();
-    res.json({ data });
+    res.json({ success: true, data });
   } catch (error) {
     next(error);
   }
@@ -48,7 +48,7 @@ exports.getKeywords = async (req, res, next) => {
 exports.getDNA = async (req, res, next) => {
   try {
     const data = await dashboardService.getDNA();
-    res.json({ data });
+    res.json({ success: true, data });
   } catch (error) {
     next(error);
   }
@@ -58,7 +58,7 @@ exports.getDNA = async (req, res, next) => {
 exports.getTopRoles = async (req, res, next) => {
   try {
     const data = await dashboardService.getTopRoles();
-    res.json({ data });
+    res.json({ success: true, data });
   } catch (error) {
     next(error);
   }
@@ -68,7 +68,7 @@ exports.getTopRoles = async (req, res, next) => {
 exports.getTopRisks = async (req, res, next) => {
   try {
     const data = await dashboardService.getTopRisks();
-    res.json({ data });
+    res.json({ success: true, data });
   } catch (error) {
     next(error);
   }

@@ -1,0 +1,950 @@
+{
+  "runId": "query-performance",
+  "generatedAt": "2026-06-25T06:32:23.165Z",
+  "totalRequests": 47,
+  "routes": [
+    {
+      "method": "GET",
+      "normalizedPath": "/api/dashboard/overview",
+      "count": 1,
+      "statuses": [
+        200
+      ],
+      "minMs": 32473.388,
+      "avgMs": 32473.388,
+      "p50Ms": 32473.388,
+      "p95Ms": 32473.388,
+      "maxMs": 32473.388
+    },
+    {
+      "method": "GET",
+      "normalizedPath": "/api/config/prompts",
+      "count": 1,
+      "statuses": [
+        200
+      ],
+      "minMs": 22554.451,
+      "avgMs": 22554.451,
+      "p50Ms": 22554.451,
+      "p95Ms": 22554.451,
+      "maxMs": 22554.451
+    },
+    {
+      "method": "GET",
+      "normalizedPath": "/api/config/all",
+      "count": 1,
+      "statuses": [
+        500
+      ],
+      "minMs": 18671.166,
+      "avgMs": 18671.166,
+      "p50Ms": 18671.166,
+      "p95Ms": 18671.166,
+      "maxMs": 18671.166
+    },
+    {
+      "method": "GET",
+      "normalizedPath": "/api/opportunity/bidding-sites",
+      "count": 1,
+      "statuses": [
+        200
+      ],
+      "minMs": 11037.999,
+      "avgMs": 11037.999,
+      "p50Ms": 11037.999,
+      "p95Ms": 11037.999,
+      "maxMs": 11037.999
+    },
+    {
+      "method": "GET",
+      "normalizedPath": "/api/health",
+      "count": 1,
+      "statuses": [
+        200
+      ],
+      "minMs": 10026.956,
+      "avgMs": 10026.956,
+      "p50Ms": 10026.956,
+      "p95Ms": 10026.956,
+      "maxMs": 10026.956
+    },
+    {
+      "method": "GET",
+      "normalizedPath": "/api/monitoring/logs",
+      "count": 1,
+      "statuses": [
+        200
+      ],
+      "minMs": 9237.513,
+      "avgMs": 9237.513,
+      "p50Ms": 9237.513,
+      "p95Ms": 9237.513,
+      "maxMs": 9237.513
+    },
+    {
+      "method": "GET",
+      "normalizedPath": "/api/dashboard/cost-range",
+      "count": 1,
+      "statuses": [
+        200
+      ],
+      "minMs": 6948.945,
+      "avgMs": 6948.945,
+      "p50Ms": 6948.945,
+      "p95Ms": 6948.945,
+      "maxMs": 6948.945
+    },
+    {
+      "method": "GET",
+      "normalizedPath": "/api/config/ai-models",
+      "count": 1,
+      "statuses": [
+        200
+      ],
+      "minMs": 5276.669,
+      "avgMs": 5276.669,
+      "p50Ms": 5276.669,
+      "p95Ms": 5276.669,
+      "maxMs": 5276.669
+    },
+    {
+      "method": "GET",
+      "normalizedPath": "/api/web3d/projects",
+      "count": 1,
+      "statuses": [
+        200
+      ],
+      "minMs": 4884.356,
+      "avgMs": 4884.356,
+      "p50Ms": 4884.356,
+      "p95Ms": 4884.356,
+      "maxMs": 4884.356
+    },
+    {
+      "method": "GET",
+      "normalizedPath": "/api/dashboard/top-risks",
+      "count": 1,
+      "statuses": [
+        200
+      ],
+      "minMs": 4570.233,
+      "avgMs": 4570.233,
+      "p50Ms": 4570.233,
+      "p95Ms": 4570.233,
+      "maxMs": 4570.233
+    },
+    {
+      "method": "GET",
+      "normalizedPath": "/api/dashboard/keywords",
+      "count": 1,
+      "statuses": [
+        200
+      ],
+      "minMs": 4479.979,
+      "avgMs": 4479.979,
+      "p50Ms": 4479.979,
+      "p95Ms": 4479.979,
+      "maxMs": 4479.979
+    },
+    {
+      "method": "GET",
+      "normalizedPath": "/api/web3d/ai/step4-prompts",
+      "count": 1,
+      "statuses": [
+        200
+      ],
+      "minMs": 4203.444,
+      "avgMs": 4203.444,
+      "p50Ms": 4203.444,
+      "p95Ms": 4203.444,
+      "maxMs": 4203.444
+    },
+    {
+      "method": "GET",
+      "normalizedPath": "/api/ai/module-prompts",
+      "count": 1,
+      "statuses": [
+        200
+      ],
+      "minMs": 3813.075,
+      "avgMs": 3813.075,
+      "p50Ms": 3813.075,
+      "p95Ms": 3813.075,
+      "maxMs": 3813.075
+    },
+    {
+      "method": "GET",
+      "normalizedPath": "/api/config/roles",
+      "count": 1,
+      "statuses": [
+        200
+      ],
+      "minMs": 3116.539,
+      "avgMs": 3116.539,
+      "p50Ms": 3116.539,
+      "p95Ms": 3116.539,
+      "maxMs": 3116.539
+    },
+    {
+      "method": "GET",
+      "normalizedPath": "/api/ai/workload-prompts",
+      "count": 1,
+      "statuses": [
+        200
+      ],
+      "minMs": 2818.008,
+      "avgMs": 2818.008,
+      "p50Ms": 2818.008,
+      "p95Ms": 2818.008,
+      "maxMs": 2818.008
+    },
+    {
+      "method": "GET",
+      "normalizedPath": "/api/web3d/config/workload-templates",
+      "count": 1,
+      "statuses": [
+        200
+      ],
+      "minMs": 2161.399,
+      "avgMs": 2161.399,
+      "p50Ms": 2161.399,
+      "p95Ms": 2161.399,
+      "maxMs": 2161.399
+    },
+    {
+      "method": "GET",
+      "normalizedPath": "/api/contracts/file",
+      "count": 1,
+      "statuses": [
+        200
+      ],
+      "minMs": 1693.22,
+      "avgMs": 1693.22,
+      "p50Ms": 1693.22,
+      "p95Ms": 1693.22,
+      "maxMs": 1693.22
+    },
+    {
+      "method": "GET",
+      "normalizedPath": "/api/ai/prompts",
+      "count": 1,
+      "statuses": [
+        200
+      ],
+      "minMs": 1594.857,
+      "avgMs": 1594.857,
+      "p50Ms": 1594.857,
+      "p95Ms": 1594.857,
+      "maxMs": 1594.857
+    },
+    {
+      "method": "GET",
+      "normalizedPath": "/api/ai/project-tag-prompts",
+      "count": 1,
+      "statuses": [
+        200
+      ],
+      "minMs": 1580.418,
+      "avgMs": 1580.418,
+      "p50Ms": 1580.418,
+      "p95Ms": 1580.418,
+      "maxMs": 1580.418
+    },
+    {
+      "method": "GET",
+      "normalizedPath": "/api/templates",
+      "count": 1,
+      "statuses": [
+        200
+      ],
+      "minMs": 1564.506,
+      "avgMs": 1564.506,
+      "p50Ms": 1564.506,
+      "p95Ms": 1564.506,
+      "maxMs": 1564.506
+    },
+    {
+      "method": "GET",
+      "normalizedPath": "/api/projects",
+      "count": 1,
+      "statuses": [
+        200
+      ],
+      "minMs": 1449.788,
+      "avgMs": 1449.788,
+      "p50Ms": 1449.788,
+      "p95Ms": 1449.788,
+      "maxMs": 1449.788
+    },
+    {
+      "method": "GET",
+      "normalizedPath": "/api/projects/:id/business-quote",
+      "count": 1,
+      "statuses": [
+        200
+      ],
+      "minMs": 1404.557,
+      "avgMs": 1404.557,
+      "p50Ms": 1404.557,
+      "p95Ms": 1404.557,
+      "maxMs": 1404.557
+    },
+    {
+      "method": "GET",
+      "normalizedPath": "/api/web3d/config/risk-items",
+      "count": 1,
+      "statuses": [
+        200
+      ],
+      "minMs": 1170.142,
+      "avgMs": 1170.142,
+      "p50Ms": 1170.142,
+      "p95Ms": 1170.142,
+      "maxMs": 1170.142
+    },
+    {
+      "method": "GET",
+      "normalizedPath": "/api/monitoring/stats",
+      "count": 1,
+      "statuses": [
+        200
+      ],
+      "minMs": 1064.865,
+      "avgMs": 1064.865,
+      "p50Ms": 1064.865,
+      "p95Ms": 1064.865,
+      "maxMs": 1064.865
+    },
+    {
+      "method": "GET",
+      "normalizedPath": "/api/config/travel-costs",
+      "count": 1,
+      "statuses": [
+        200
+      ],
+      "minMs": 1055.169,
+      "avgMs": 1055.169,
+      "p50Ms": 1055.169,
+      "p95Ms": 1055.169,
+      "maxMs": 1055.169
+    },
+    {
+      "method": "GET",
+      "normalizedPath": "/api/config/prompts/:id",
+      "count": 1,
+      "statuses": [
+        200
+      ],
+      "minMs": 958.364,
+      "avgMs": 958.364,
+      "p50Ms": 958.364,
+      "p95Ms": 958.364,
+      "maxMs": 958.364
+    },
+    {
+      "method": "GET",
+      "normalizedPath": "/api/templates/templates",
+      "count": 1,
+      "statuses": [
+        200
+      ],
+      "minMs": 933.175,
+      "avgMs": 933.175,
+      "p50Ms": 933.175,
+      "p95Ms": 933.175,
+      "maxMs": 933.175
+    },
+    {
+      "method": "GET",
+      "normalizedPath": "/api/opportunity/bidding-sites/:id",
+      "count": 1,
+      "statuses": [
+        200
+      ],
+      "minMs": 808.484,
+      "avgMs": 808.484,
+      "p50Ms": 808.484,
+      "p95Ms": 808.484,
+      "maxMs": 808.484
+    },
+    {
+      "method": "GET",
+      "normalizedPath": "/api/config/risk-items",
+      "count": 1,
+      "statuses": [
+        200
+      ],
+      "minMs": 557.707,
+      "avgMs": 557.707,
+      "p50Ms": 557.707,
+      "p95Ms": 557.707,
+      "maxMs": 557.707
+    },
+    {
+      "method": "GET",
+      "normalizedPath": "/api/monitoring/logs/:hash",
+      "count": 1,
+      "statuses": [
+        200
+      ],
+      "minMs": 548.169,
+      "avgMs": 548.169,
+      "p50Ms": 548.169,
+      "p95Ms": 548.169,
+      "maxMs": 548.169
+    },
+    {
+      "method": "GET",
+      "normalizedPath": "/api/dashboard/trend",
+      "count": 1,
+      "statuses": [
+        200
+      ],
+      "minMs": 537.776,
+      "avgMs": 537.776,
+      "p50Ms": 537.776,
+      "p95Ms": 537.776,
+      "maxMs": 537.776
+    },
+    {
+      "method": "GET",
+      "normalizedPath": "/api/wiki/relations",
+      "count": 1,
+      "statuses": [
+        200
+      ],
+      "minMs": 534.695,
+      "avgMs": 534.695,
+      "p50Ms": 534.695,
+      "p95Ms": 534.695,
+      "maxMs": 534.695
+    },
+    {
+      "method": "GET",
+      "normalizedPath": "/api/config/ai-models/current-vision",
+      "count": 1,
+      "statuses": [
+        404
+      ],
+      "minMs": 525.575,
+      "avgMs": 525.575,
+      "p50Ms": 525.575,
+      "p95Ms": 525.575,
+      "maxMs": 525.575
+    },
+    {
+      "method": "GET",
+      "normalizedPath": "/api/config/business-pricing",
+      "count": 1,
+      "statuses": [
+        200
+      ],
+      "minMs": 522.897,
+      "avgMs": 522.897,
+      "p50Ms": 522.897,
+      "p95Ms": 522.897,
+      "maxMs": 522.897
+    },
+    {
+      "method": "GET",
+      "normalizedPath": "/api/projects/:id/push-history",
+      "count": 1,
+      "statuses": [
+        200
+      ],
+      "minMs": 509.616,
+      "avgMs": 509.616,
+      "p50Ms": 509.616,
+      "p95Ms": 509.616,
+      "maxMs": 509.616
+    },
+    {
+      "method": "GET",
+      "normalizedPath": "/api/config/prompt-module-tags",
+      "count": 1,
+      "statuses": [
+        200
+      ],
+      "minMs": 507.075,
+      "avgMs": 507.075,
+      "p50Ms": 507.075,
+      "p95Ms": 507.075,
+      "maxMs": 507.075
+    },
+    {
+      "method": "GET",
+      "normalizedPath": "/api/config/ai-models/:id",
+      "count": 1,
+      "statuses": [
+        200
+      ],
+      "minMs": 488.268,
+      "avgMs": 488.268,
+      "p50Ms": 488.268,
+      "p95Ms": 488.268,
+      "maxMs": 488.268
+    },
+    {
+      "method": "GET",
+      "normalizedPath": "/api/projects/templates",
+      "count": 1,
+      "statuses": [
+        200
+      ],
+      "minMs": 476.303,
+      "avgMs": 476.303,
+      "p50Ms": 476.303,
+      "p95Ms": 476.303,
+      "maxMs": 476.303
+    },
+    {
+      "method": "GET",
+      "normalizedPath": "/api/config/ai-models/current",
+      "count": 1,
+      "statuses": [
+        200
+      ],
+      "minMs": 455.816,
+      "avgMs": 455.816,
+      "p50Ms": 455.816,
+      "p95Ms": 455.816,
+      "maxMs": 455.816
+    },
+    {
+      "method": "GET",
+      "normalizedPath": "/api/projects/:id",
+      "count": 1,
+      "statuses": [
+        200
+      ],
+      "minMs": 443.168,
+      "avgMs": 443.168,
+      "p50Ms": 443.168,
+      "p95Ms": 443.168,
+      "maxMs": 443.168
+    },
+    {
+      "method": "GET",
+      "normalizedPath": "/api/dashboard/top-roles",
+      "count": 1,
+      "statuses": [
+        200
+      ],
+      "minMs": 12.765,
+      "avgMs": 12.765,
+      "p50Ms": 12.765,
+      "p95Ms": 12.765,
+      "maxMs": 12.765
+    },
+    {
+      "method": "GET",
+      "normalizedPath": "/api/contracts/files",
+      "count": 1,
+      "statuses": [
+        200
+      ],
+      "minMs": 10.216,
+      "avgMs": 10.216,
+      "p50Ms": 10.216,
+      "p95Ms": 10.216,
+      "maxMs": 10.216
+    },
+    {
+      "method": "GET",
+      "normalizedPath": "/api/dashboard/dna",
+      "count": 1,
+      "statuses": [
+        200
+      ],
+      "minMs": 6.966,
+      "avgMs": 6.966,
+      "p50Ms": 6.966,
+      "p95Ms": 6.966,
+      "maxMs": 6.966
+    },
+    {
+      "method": "GET",
+      "normalizedPath": "/api/projects/:id/attachments/check",
+      "count": 1,
+      "statuses": [
+        200
+      ],
+      "minMs": 5.568,
+      "avgMs": 5.568,
+      "p50Ms": 5.568,
+      "p95Ms": 5.568,
+      "maxMs": 5.568
+    },
+    {
+      "method": "GET",
+      "normalizedPath": "/api/wiki",
+      "count": 1,
+      "statuses": [
+        200
+      ],
+      "minMs": 4.329,
+      "avgMs": 4.329,
+      "p50Ms": 4.329,
+      "p95Ms": 4.329,
+      "maxMs": 4.329
+    },
+    {
+      "method": "GET",
+      "normalizedPath": "/api/projects/:id/attachments",
+      "count": 1,
+      "statuses": [
+        200
+      ],
+      "minMs": 4.324,
+      "avgMs": 4.324,
+      "p50Ms": 4.324,
+      "p95Ms": 4.324,
+      "maxMs": 4.324
+    },
+    {
+      "method": "GET",
+      "normalizedPath": "/api/wiki/content",
+      "count": 1,
+      "statuses": [
+        200
+      ],
+      "minMs": 2.256,
+      "avgMs": 2.256,
+      "p50Ms": 2.256,
+      "p95Ms": 2.256,
+      "maxMs": 2.256
+    }
+  ],
+  "slowCalls": [
+    {
+      "method": "GET",
+      "path": "/api/dashboard/overview",
+      "normalizedPath": "/api/dashboard/overview",
+      "status": 200,
+      "ok": true,
+      "durationMs": 32473.388,
+      "testFile": "query-performance.test.js",
+      "testName": "PostgreSQL regression - query API performance only GET query endpoints respond successfully and record timings",
+      "timestamp": "2026-06-25T06:31:07.177Z"
+    },
+    {
+      "method": "GET",
+      "path": "/api/config/prompts",
+      "normalizedPath": "/api/config/prompts",
+      "status": 200,
+      "ok": true,
+      "durationMs": 22554.451,
+      "testFile": "query-performance.test.js",
+      "testName": "PostgreSQL regression - query API performance only GET query endpoints respond successfully and record timings",
+      "timestamp": "2026-06-25T06:30:26.432Z"
+    },
+    {
+      "method": "GET",
+      "path": "/api/config/all",
+      "normalizedPath": "/api/config/all",
+      "status": 500,
+      "ok": false,
+      "durationMs": 18671.166,
+      "testFile": "query-performance.test.js",
+      "testName": "PostgreSQL regression - query API performance only GET query endpoints respond successfully and record timings",
+      "timestamp": "2026-06-25T06:29:57.125Z"
+    },
+    {
+      "method": "GET",
+      "path": "/api/opportunity/bidding-sites",
+      "normalizedPath": "/api/opportunity/bidding-sites",
+      "status": 200,
+      "ok": true,
+      "durationMs": 11037.999,
+      "testFile": "query-performance.test.js",
+      "testName": "PostgreSQL regression - query API performance only GET query endpoints respond successfully and record timings",
+      "timestamp": "2026-06-25T06:32:10.111Z"
+    },
+    {
+      "method": "GET",
+      "path": "/api/health",
+      "normalizedPath": "/api/health",
+      "status": 200,
+      "ok": true,
+      "durationMs": 10026.956,
+      "testFile": "query-performance.test.js",
+      "testName": "PostgreSQL regression - query API performance only GET query endpoints respond successfully and record timings",
+      "timestamp": "2026-06-25T06:29:33.188Z"
+    },
+    {
+      "method": "GET",
+      "path": "/api/monitoring/logs",
+      "normalizedPath": "/api/monitoring/logs",
+      "status": 200,
+      "ok": true,
+      "durationMs": 9237.513,
+      "testFile": "query-performance.test.js",
+      "testName": "PostgreSQL regression - query API performance only GET query endpoints respond successfully and record timings",
+      "timestamp": "2026-06-25T06:31:55.206Z"
+    },
+    {
+      "method": "GET",
+      "path": "/api/dashboard/cost-range",
+      "normalizedPath": "/api/dashboard/cost-range",
+      "status": 200,
+      "ok": true,
+      "durationMs": 6948.945,
+      "testFile": "query-performance.test.js",
+      "testName": "PostgreSQL regression - query API performance only GET query endpoints respond successfully and record timings",
+      "timestamp": "2026-06-25T06:31:14.665Z"
+    },
+    {
+      "method": "GET",
+      "path": "/api/config/ai-models",
+      "normalizedPath": "/api/config/ai-models",
+      "status": 200,
+      "ok": true,
+      "durationMs": 5276.669,
+      "testFile": "query-performance.test.js",
+      "testName": "PostgreSQL regression - query API performance only GET query endpoints respond successfully and record timings",
+      "timestamp": "2026-06-25T06:30:02.403Z"
+    },
+    {
+      "method": "GET",
+      "path": "/api/web3d/projects",
+      "normalizedPath": "/api/web3d/projects",
+      "status": 200,
+      "ok": true,
+      "durationMs": 4884.356,
+      "testFile": "query-performance.test.js",
+      "testName": "PostgreSQL regression - query API performance only GET query endpoints respond successfully and record timings",
+      "timestamp": "2026-06-25T06:31:45.967Z"
+    },
+    {
+      "method": "GET",
+      "path": "/api/dashboard/top-risks",
+      "normalizedPath": "/api/dashboard/top-risks",
+      "status": 200,
+      "ok": true,
+      "durationMs": 4570.233,
+      "testFile": "query-performance.test.js",
+      "testName": "PostgreSQL regression - query API performance only GET query endpoints respond successfully and record timings",
+      "timestamp": "2026-06-25T06:31:23.736Z"
+    },
+    {
+      "method": "GET",
+      "path": "/api/dashboard/keywords",
+      "normalizedPath": "/api/dashboard/keywords",
+      "status": 200,
+      "ok": true,
+      "durationMs": 4479.979,
+      "testFile": "query-performance.test.js",
+      "testName": "PostgreSQL regression - query API performance only GET query endpoints respond successfully and record timings",
+      "timestamp": "2026-06-25T06:31:19.146Z"
+    },
+    {
+      "method": "GET",
+      "path": "/api/web3d/ai/step4-prompts",
+      "normalizedPath": "/api/web3d/ai/step4-prompts",
+      "status": 200,
+      "ok": true,
+      "durationMs": 4203.444,
+      "testFile": "query-performance.test.js",
+      "testName": "PostgreSQL regression - query API performance only GET query endpoints respond successfully and record timings",
+      "timestamp": "2026-06-25T06:31:41.082Z"
+    },
+    {
+      "method": "GET",
+      "path": "/api/ai/module-prompts",
+      "normalizedPath": "/api/ai/module-prompts",
+      "status": 200,
+      "ok": true,
+      "durationMs": 3813.075,
+      "testFile": "query-performance.test.js",
+      "testName": "PostgreSQL regression - query API performance only GET query endpoints respond successfully and record timings",
+      "timestamp": "2026-06-25T06:31:29.145Z"
+    },
+    {
+      "method": "GET",
+      "path": "/api/config/roles",
+      "normalizedPath": "/api/config/roles",
+      "status": 200,
+      "ok": true,
+      "durationMs": 3116.539,
+      "testFile": "query-performance.test.js",
+      "testName": "PostgreSQL regression - query API performance only GET query endpoints respond successfully and record timings",
+      "timestamp": "2026-06-25T06:29:36.307Z"
+    },
+    {
+      "method": "GET",
+      "path": "/api/ai/workload-prompts",
+      "normalizedPath": "/api/ai/workload-prompts",
+      "status": 200,
+      "ok": true,
+      "durationMs": 2818.008,
+      "testFile": "query-performance.test.js",
+      "testName": "PostgreSQL regression - query API performance only GET query endpoints respond successfully and record timings",
+      "timestamp": "2026-06-25T06:31:31.964Z"
+    },
+    {
+      "method": "GET",
+      "path": "/api/web3d/config/workload-templates",
+      "normalizedPath": "/api/web3d/config/workload-templates",
+      "status": 200,
+      "ok": true,
+      "durationMs": 2161.399,
+      "testFile": "query-performance.test.js",
+      "testName": "PostgreSQL regression - query API performance only GET query endpoints respond successfully and record timings",
+      "timestamp": "2026-06-25T06:31:36.878Z"
+    },
+    {
+      "method": "GET",
+      "path": "/api/contracts/file",
+      "normalizedPath": "/api/contracts/file",
+      "status": 200,
+      "ok": true,
+      "durationMs": 1693.22,
+      "testFile": "query-performance.test.js",
+      "testName": "PostgreSQL regression - query API performance only GET query endpoints respond successfully and record timings",
+      "timestamp": "2026-06-25T06:31:58.530Z"
+    },
+    {
+      "method": "GET",
+      "path": "/api/ai/prompts",
+      "normalizedPath": "/api/ai/prompts",
+      "status": 200,
+      "ok": true,
+      "durationMs": 1594.857,
+      "testFile": "query-performance.test.js",
+      "testName": "PostgreSQL regression - query API performance only GET query endpoints respond successfully and record timings",
+      "timestamp": "2026-06-25T06:31:25.332Z"
+    },
+    {
+      "method": "GET",
+      "path": "/api/ai/project-tag-prompts",
+      "normalizedPath": "/api/ai/project-tag-prompts",
+      "status": 200,
+      "ok": true,
+      "durationMs": 1580.418,
+      "testFile": "query-performance.test.js",
+      "testName": "PostgreSQL regression - query API performance only GET query endpoints respond successfully and record timings",
+      "timestamp": "2026-06-25T06:31:33.545Z"
+    },
+    {
+      "method": "GET",
+      "path": "/api/templates",
+      "normalizedPath": "/api/templates",
+      "status": 200,
+      "ok": true,
+      "durationMs": 1564.506,
+      "testFile": "query-performance.test.js",
+      "testName": "PostgreSQL regression - query API performance only GET query endpoints respond successfully and record timings",
+      "timestamp": "2026-06-25T06:30:33.769Z"
+    },
+    {
+      "method": "GET",
+      "path": "/api/projects",
+      "normalizedPath": "/api/projects",
+      "status": 200,
+      "ok": true,
+      "durationMs": 1449.788,
+      "testFile": "query-performance.test.js",
+      "testName": "PostgreSQL regression - query API performance only GET query endpoints respond successfully and record timings",
+      "timestamp": "2026-06-25T06:30:29.353Z"
+    },
+    {
+      "method": "GET",
+      "path": "/api/projects/138/business-quote",
+      "normalizedPath": "/api/projects/:id/business-quote",
+      "status": 200,
+      "ok": true,
+      "durationMs": 1404.557,
+      "testFile": "query-performance.test.js",
+      "testName": "PostgreSQL regression - query API performance only GET query endpoints respond successfully and record timings",
+      "timestamp": "2026-06-25T06:30:31.682Z"
+    },
+    {
+      "method": "GET",
+      "path": "/api/web3d/config/risk-items",
+      "normalizedPath": "/api/web3d/config/risk-items",
+      "status": 200,
+      "ok": true,
+      "durationMs": 1170.142,
+      "testFile": "query-performance.test.js",
+      "testName": "PostgreSQL regression - query API performance only GET query endpoints respond successfully and record timings",
+      "timestamp": "2026-06-25T06:31:34.716Z"
+    },
+    {
+      "method": "GET",
+      "path": "/api/monitoring/stats",
+      "normalizedPath": "/api/monitoring/stats",
+      "status": 200,
+      "ok": true,
+      "durationMs": 1064.865,
+      "testFile": "query-performance.test.js",
+      "testName": "PostgreSQL regression - query API performance only GET query endpoints respond successfully and record timings",
+      "timestamp": "2026-06-25T06:31:56.274Z"
+    },
+    {
+      "method": "GET",
+      "path": "/api/config/travel-costs",
+      "normalizedPath": "/api/config/travel-costs",
+      "status": 200,
+      "ok": true,
+      "durationMs": 1055.169,
+      "testFile": "query-performance.test.js",
+      "testName": "PostgreSQL regression - query API performance only GET query endpoints respond successfully and record timings",
+      "timestamp": "2026-06-25T06:29:37.926Z"
+    },
+    {
+      "method": "GET",
+      "path": "/api/config/prompts/41",
+      "normalizedPath": "/api/config/prompts/:id",
+      "status": 200,
+      "ok": true,
+      "durationMs": 958.364,
+      "testFile": "query-performance.test.js",
+      "testName": "PostgreSQL regression - query API performance only GET query endpoints respond successfully and record timings",
+      "timestamp": "2026-06-25T06:30:27.393Z"
+    },
+    {
+      "method": "GET",
+      "path": "/api/templates/templates",
+      "normalizedPath": "/api/templates/templates",
+      "status": 200,
+      "ok": true,
+      "durationMs": 933.175,
+      "testFile": "query-performance.test.js",
+      "testName": "PostgreSQL regression - query API performance only GET query endpoints respond successfully and record timings",
+      "timestamp": "2026-06-25T06:30:34.703Z"
+    },
+    {
+      "method": "GET",
+      "path": "/api/opportunity/bidding-sites/313",
+      "normalizedPath": "/api/opportunity/bidding-sites/:id",
+      "status": 200,
+      "ok": true,
+      "durationMs": 808.484,
+      "testFile": "query-performance.test.js",
+      "testName": "PostgreSQL regression - query API performance only GET query endpoints respond successfully and record timings",
+      "timestamp": "2026-06-25T06:32:10.920Z"
+    },
+    {
+      "method": "GET",
+      "path": "/api/config/risk-items",
+      "normalizedPath": "/api/config/risk-items",
+      "status": 200,
+      "ok": true,
+      "durationMs": 557.707,
+      "testFile": "query-performance.test.js",
+      "testName": "PostgreSQL regression - query API performance only GET query endpoints respond successfully and record timings",
+      "timestamp": "2026-06-25T06:29:36.867Z"
+    },
+    {
+      "method": "GET",
+      "path": "/api/monitoring/logs/69a292dbf7f370aae4e924367fb931e0ad84773c827bd8dd0b1b943a0daf8310",
+      "normalizedPath": "/api/monitoring/logs/:hash",
+      "status": 200,
+      "ok": true,
+      "durationMs": 548.169,
+      "testFile": "query-performance.test.js",
+      "testName": "PostgreSQL regression - query API performance only GET query endpoints respond successfully and record timings",
+      "timestamp": "2026-06-25T06:31:56.824Z"
+    }
+  ]
+}

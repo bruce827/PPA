@@ -7,6 +7,7 @@ const request = require('supertest');
 
 const { app } = require('../index');
 const db = require('../utils/db');
+const { initTestDatabase, cleanupTestDatabase, setupTransactionProtection } = require('./test-helper');;
 const {
   runMigration,
 } = require('../migrations/007_expand_prompt_template_categories');

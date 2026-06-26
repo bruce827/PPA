@@ -10,7 +10,7 @@ const CREATE_TABLES_SQL = `
       is_template BOOLEAN NOT NULL DEFAULT 0,
       project_type TEXT DEFAULT 'standard',
       final_total_cost REAL,
-      final_risk_score INTEGER,
+      final_risk_score REAL,
       final_workload_days REAL,
       assessment_details_json TEXT,
       tags_json TEXT,

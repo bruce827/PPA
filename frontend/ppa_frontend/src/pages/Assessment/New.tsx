@@ -928,7 +928,7 @@ const NewAssessmentPage = () => {
                 key: 'final_total_cost',
                 width: 120,
                 align: 'right',
-                render: (val: number) => (val ? (val / 10000).toFixed(2) : '—'),
+                render: (val: number) => (val ? Number(val).toFixed(2) : '—'),
               },
               {
                 title: '创建时间',

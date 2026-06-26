@@ -1,0 +1,26 @@
+{
+  "id": "conv-1782282419104-9duld26qs",
+  "providerId": "pi",
+  "title": "Locate database optimization plan",
+  "titleGenerationStatus": "success",
+  "createdAt": 1782282419105,
+  "updatedAt": 1782441145714,
+  "lastResponseAt": 1782441145713,
+  "sessionId": "019ef84f-7f6c-7a42-a2ac-3adf9a7e6ee4",
+  "providerState": {
+    "leafEntryId": "ea8d1bf4",
+    "sessionFile": "/Users/maylis/.pi/agent/sessions/--Users-maylis-Desktop-github上的项目-项目评估系统-PPA-docs--/2026-06-24T06-27-00-076Z_019ef84f-7f6c-7a42-a2ac-3adf9a7e6ee4.jsonl",
+    "sessionId": "019ef84f-7f6c-7a42-a2ac-3adf9a7e6ee4"
+  },
+  "currentNote": "prd2.0/prd.md",
+  "usage": {
+    "cacheCreationInputTokens": 0,
+    "cacheReadInputTokens": 0,
+    "contextTokens": 57089,
+    "contextWindow": 1048576,
+    "contextWindowIsAuthoritative": true,
+    "inputTokens": 57089,
+    "model": "pi:xiaomi/mimo-v2.5-pro",
+    "percentage": 5
+  }
+}

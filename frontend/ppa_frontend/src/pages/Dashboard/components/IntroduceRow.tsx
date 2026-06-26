@@ -17,10 +17,9 @@ const IntroduceRow = () => {
   const data = rawData?.data || rawData;
   const [responsive, setResponsive] = useState(false);
 
-  const totalAssets = (data?.knowledge_assets?.risk_count || 0) + 
-    (data?.knowledge_assets?.role_count || 0) + 
-    (data?.knowledge_assets?.web3d_risk_count || 0) +
-    (data?.knowledge_assets?.web3d_workload_template_count || 0);
+  // [Bugfix] 风险项资产仅统计「风险项评估管理(risk_count)」+「Web3D 风险配置(web3d_risk_count)」
+  const totalAssets = (data?.knowledge_assets?.risk_count || 0) +
+    (data?.knowledge_assets?.web3d_risk_count || 0);
 
   return (
     <RcResizeObserver

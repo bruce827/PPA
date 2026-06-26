@@ -1,0 +1,904 @@
+{
+  "info": {
+    "name": "PPA 项目评估系统 API",
+    "description": "PPA (Project Portfolio Assessment) 项目评估系统API集合\n\n## 使用说明\n1. 确保后端服务器运行在 http://localhost:3001\n2. 使用环境变量 `{{base_url}}` 和 `{{api_prefix}}` 配置请求地址\n3. 所有API响应格式统一为 `{success: boolean, data: any, error?: string}`",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "PPA-Team"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:3001",
+      "type": "string"
+    },
+    {
+      "key": "api_prefix",
+      "value": "/api",
+      "type": "string"
+    },
+    {
+      "key": "project_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "template_id",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "健康检查",
+      "description": "系统状态检查相关接口",
+      "item": [
+        {
+          "name": "系统健康检查",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}{{api_prefix}}/health",
+              "host": ["{{base_url}}"],
+              "path": ["{{api_prefix}}", "health"]
+            },
+            "description": "检查系统运行状态和数据库连接\n\n**响应字段:**\n- `status`: 系统状态 (healthy/degraded/unhealthy)\n- `uptime`: 运行时间（秒）\n- `database`: 数据库连接状态\n- `memory`: 内存使用情况"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "配置管理",
+      "description": "系统配置参数管理相关接口",
+      "item": [
+        {
+          "name": "角色配置",
+          "item": [
+            {
+              "name": "获取所有角色",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}{{api_prefix}}/config/roles",
+                  "host": ["{{base_url}}"],
+                  "path": ["{{api_prefix}}", "config", "roles"]
+                },
+                "description": "获取系统中所有角色的配置信息，包括角色名称和单价"
+              },
+              "response": []
+            },
+            {
+              "name": "创建角色",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"role_name\": \"前端工程师\",\n  \"unit_price\": 1800\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}{{api_prefix}}/config/roles",
+                  "host": ["{{base_url}}"],
+                  "path": ["{{api_prefix}}", "config", "roles"]
+                },
+                "description": "创建一个新的角色配置\n\n**必填字段:**\n- `role_name`: 角色名称\n- `unit_price`: 单价（元/人/天）"
+              },
+              "response": []
+            },
+            {
+              "name": "更新角色",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"role_name\": \"高级前端工程师\",\n  \"unit_price\": 2200\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}{{api_prefix}}/config/roles/1",
+                  "host": ["{{base_url}}"],
+                  "path": ["{{api_prefix}}", "config", "roles", "1"]
+                },
+                "description": "更新指定ID的角色配置信息"
+              },
+              "response": []
+            },
+            {
+              "name": "删除角色",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}{{api_prefix}}/config/roles/1",
+                  "host": ["{{base_url}}"],
+                  "path": ["{{api_prefix}}", "config", "roles", "1"]
+                },
+                "description": "删除指定ID的角色配置"
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "风险评估项",
+          "item": [
+            {
+              "name": "获取所有风险项",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}{{api_prefix}}/config/risk-items",
+                  "host": ["{{base_url}}"],
+                  "path": ["{{api_prefix}}", "config", "risk-items"]
+                },
+                "description": "获取系统中所有风险评估项的配置信息"
+              },
+              "response": []
+            },
+            {
+              "name": "创建风险项",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"item_name\": \"技术风险\",\n  \"description\": \"技术实现难度和复杂度\",\n  \"options_json\": \"[{\\\"score\\\":5,\\\"label\\\":\\\"低\\\",\\\"description\\\":\\\"技术难度低\\\"},{\\\"score\\\":10,\\\"label\\\":\\\"中\\\",\\\"description\\\":\\\"技术难度中等\\\"},{\\\"score\\\":15,\\\"label\\\":\\\"高\\\",\\\"description\\\":\\\"技术难度高\\\"}]\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}{{api_prefix}}/config/risk-items",
+                  "host": ["{{base_url}}"],
+                  "path": ["{{api_prefix}}", "config", "risk-items"]
+                },
+                "description": "创建一个新的风险评估项\n\n**必填字段:**\n- `item_name`: 风险项名称\n- `options_json`: 评分选项JSON字符串"
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "差旅成本",
+          "item": [
+            {
+              "name": "获取所有差旅成本",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}{{api_prefix}}/config/travel-costs",
+                  "host": ["{{base_url}}"],
+                  "path": ["{{api_prefix}}", "config", "travel-costs"]
+                },
+                "description": "获取系统中所有城市的差旅成本配置"
+              },
+              "response": []
+            },
+            {
+              "name": "创建差旅成本",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"city\": \"北京\",\n  \"cost_per_month\": 8000,\n  \"active\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}{{api_prefix}}/config/travel-costs",
+                  "host": ["{{base_url}}"],
+                  "path": ["{{api_prefix}}", "config", "travel-costs"]
+                },
+                "description": "创建一个新的城市差旅成本配置\n\n**必填字段:**\n- `city`: 城市名称\n- `cost_per_month`: 每月成本（元/人）"
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "AI模型配置",
+          "item": [
+            {
+              "name": "获取所有AI模型",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}{{api_prefix}}/config/ai-models",
+                  "host": ["{{base_url}}"],
+                  "path": ["{{api_prefix}}", "config", "ai-models"]
+                },
+                "description": "获取所有AI模型的配置信息，按创建时间倒序排列"
+              },
+              "response": []
+            },
+            {
+              "name": "获取当前AI模型",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}{{api_prefix}}/config/ai-models/current",
+                  "host": ["{{base_url}}"],
+                  "path": ["{{api_prefix}}", "config", "ai-models", "current"]
+                },
+                "description": "获取当前系统正在使用的AI模型配置"
+              },
+              "response": []
+            },
+            {
+              "name": "创建AI模型",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"provider\": \"openai\",\n  \"model_name\": \"gpt-4\",\n  \"api_host\": \"https://api.openai.com\",\n  \"api_key\": \"sk-your-api-key-here\",\n  \"supports_vision\": false,\n  \"supports_web_search\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}{{api_prefix}}/config/ai-models",
+                  "host": ["{{base_url}}"],
+                  "path": ["{{api_prefix}}", "config", "ai-models"]
+                },
+                "description": "创建一个新的AI模型配置\n\n**必填字段:**\n- `provider`: 提供商 (openai/doubao/gemini/minimax/cherry-studio)\n- `model_name`: 模型名称\n- `api_host`: API主机地址\n- `api_key`: API密钥"
+              },
+              "response": []
+            },
+            {
+              "name": "设置当前AI模型",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}{{api_prefix}}/config/ai-models/1/set-current",
+                  "host": ["{{base_url}}"],
+                  "path": ["{{api_prefix}}", "config", "ai-models", "1", "set-current"]
+                },
+                "description": "将指定ID的AI模型设置为当前使用的模型"
+              },
+              "response": []
+            },
+            {
+              "name": "测试AI模型连接",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}{{api_prefix}}/config/ai-models/1/test",
+                  "host": ["{{base_url}}"],
+                  "path": ["{{api_prefix}}", "config", "ai-models", "1", "test"]
+                },
+                "description": "测试指定ID的AI模型连接是否正常"
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "提示词模板",
+          "item": [
+            {
+              "name": "获取所有模板",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}{{api_prefix}}/config/prompts?page=1&pageSize=10",
+                  "host": ["{{base_url}}"],
+                  "path": ["{{api_prefix}}", "config", "prompts"],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "10"
+                    }
+                  ]
+                },
+                "description": "获取所有提示词模板，支持分页和筛选\n\n**可选参数:**\n- `page`: 页码（默认1）\n- `pageSize`: 每页数量（默认10）\n- `category`: 按分类筛选\n- `is_system`: 是否为系统模板\n- `is_active`: 是否启用\n- `search`: 搜索关键词"
+              },
+              "response": []
+            },
+            {
+              "name": "获取模板详情",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}{{api_prefix}}/config/prompts/1",
+                  "host": ["{{base_url}}"],
+                  "path": ["{{api_prefix}}", "config", "prompts", "1"]
+                },
+                "description": "获取指定ID的提示词模板详情"
+              },
+              "response": []
+            },
+            {
+              "name": "创建模板",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"风险评估模板\",\n  \"category\": \"risk_analysis\",\n  \"content\": \"请分析以下项目的风险：{{project_description}}\",\n  \"variables_json\": {\"project_description\": {\"type\": \"string\", \"required\": true}},\n  \"is_system\": false,\n  \"is_active\": true,\n  \"module_tag\": \"风险评估\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}{{api_prefix}}/config/prompts",
+                  "host": ["{{base_url}}"],
+                  "path": ["{{api_prefix}}", "config", "prompts"]
+                },
+                "description": "创建一个新的提示词模板\n\n**必填字段:**\n- `name`: 模板名称\n- `category`: 模板分类 (risk_analysis/module_analysis/workload_evaluation/project_tag)\n- `content`: 模板内容"
+              },
+              "response": []
+            },
+            {
+              "name": "预览模板",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"variable_values\": {\n    \"project_description\": \"这是一个示例项目，需要开发一个电商网站\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}{{api_prefix}}/config/prompts/1/preview",
+                  "host": ["{{base_url}}"],
+                  "path": ["{{api_prefix}}", "config", "prompts", "1", "preview"]
+                },
+                "description": "使用提供的变量值预览提示词模板渲染结果"
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "聚合配置",
+          "item": [
+            {
+              "name": "获取所有配置",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}{{api_prefix}}/config/all",
+                  "host": ["{{base_url}}"],
+                  "path": ["{{api_prefix}}", "config", "all"]
+                },
+                "description": "一次性获取所有配置数据，包括角色、风险项、差旅成本等"
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "项目管理",
+      "description": "项目和模板的CRUD操作",
+      "item": [
+        {
+          "name": "获取项目列表",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}{{api_prefix}}/projects",
+              "host": ["{{base_url}}"],
+              "path": ["{{api_prefix}}", "projects"]
+            },
+            "description": "获取所有项目列表（不包括模板）"
+          },
+          "response": []
+        },
+        {
+          "name": "获取模板列表",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}{{api_prefix}}/templates",
+              "host": ["{{base_url}}"],
+              "path": ["{{api_prefix}}", "templates"]
+            },
+            "description": "获取所有模板列表"
+          },
+          "response": []
+        },
+        {
+          "name": "创建项目",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"示例项目\",\n  \"description\": \"这是一个示例项目\",\n  \"is_template\": false,\n  \"assessment_details_json\": {}\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}{{api_prefix}}/projects",
+              "host": ["{{base_url}}"],
+              "path": ["{{api_prefix}}", "projects"]
+            },
+            "description": "创建一个新项目\n\n**必填字段:**\n- `name`: 项目名称\n\n**可选字段:**\n- `description`: 项目描述\n- `is_template`: 是否为模板（默认false）\n- `assessment_details_json`: 评估详情JSON"
+          },
+          "response": []
+        },
+        {
+          "name": "获取项目详情",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}{{api_prefix}}/projects/{{project_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["{{api_prefix}}", "projects", "{{project_id}}"]
+            },
+            "description": "获取指定ID的项目详情"
+          },
+          "response": []
+        },
+        {
+          "name": "更新项目",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"更新后的项目名称\",\n  \"description\": \"更新后的项目描述\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}{{api_prefix}}/projects/{{project_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["{{api_prefix}}", "projects", "{{project_id}}"]
+            },
+            "description": "更新指定ID的项目信息"
+          },
+          "response": []
+        },
+        {
+          "name": "删除项目",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}{{api_prefix}}/projects/{{project_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["{{api_prefix}}", "projects", "{{project_id}}"]
+            },
+            "description": "删除指定ID的项目"
+          },
+          "response": []
+        },
+        {
+          "name": "导出PDF",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}{{api_prefix}}/projects/{{project_id}}/export/pdf",
+              "host": ["{{base_url}}"],
+              "path": ["{{api_prefix}}", "projects", "{{project_id}}", "export", "pdf"]
+            },
+            "description": "导出项目评估报告为PDF格式"
+          },
+          "response": []
+        },
+        {
+          "name": "导出Excel",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}{{api_prefix}}/projects/{{project_id}}/export/excel?version=internal",
+              "host": ["{{base_url}}"],
+              "path": ["{{api_prefix}}", "projects", "{{project_id}}", "export", "excel"],
+              "query": [
+                {
+                  "key": "version",
+                  "value": "internal"
+                }
+              ]
+            },
+            "description": "导出项目评估报告为Excel格式\n\n**版本选项:**\n- `internal`: 内部版本（6个工作表，详细分解）\n- `external`: 外部版本（2个工作表，仅摘要）"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "实时计算",
+      "description": "基于评估数据的实时成本计算",
+      "item": [
+        {
+          "name": "计算项目成本",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"risk_scores\": {\n    \"架构\": 15,\n    \"流程\": 10\n  },\n  \"roles\": [\n    {\n      \"role_name\": \"前端工程师\",\n      \"unit_price\": 1800\n    },\n    {\n      \"role_name\": \"后端工程师\",\n      \"unit_price\": 2000\n    }\n  ],\n  \"development_workload\": [\n    {\n      \"delivery_factor\": 1,\n      \"前端工程师\": 20,\n      \"后端工程师\": 30\n    }\n  ],\n  \"integration_workload\": [\n    {\n      \"delivery_factor\": 1.1,\n      \"前端工程师\": 8,\n      \"后端工程师\": 12\n    }\n  ],\n  \"travel_months\": 2,\n  \"travel_headcount\": 3,\n  \"maintenance_months\": 1,\n  \"maintenance_headcount\": 2,\n  \"maintenance_daily_cost\": 1600,\n  \"risk_items\": [\n    {\n      \"cost\": 2.5\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}{{api_prefix}}/calculate",
+              "host": ["{{base_url}}"],
+              "path": ["{{api_prefix}}", "calculate"]
+            },
+            "description": "根据评估数据实时计算成本与工作量\n\n**请求字段:**\n- `risk_scores`: 风险评分对象\n- `roles`: 角色配置数组\n- `development_workload`: 开发工作量数组\n- `integration_workload`: 集成工作量数组\n- `travel_months`: 差旅月数\n- `travel_headcount`: 差旅人数\n- `maintenance_months`: 维护月数\n- `maintenance_headcount`: 维护人数\n- `maintenance_daily_cost`: 维护日成本\n- `risk_items`: 风险成本项数组\n\n**注意:** 角色单价单位为\"元\"，返回金额单位为\"万元\""
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "AI集成",
+      "description": "AI风险评估、模块分析、工作量评估",
+      "item": [
+        {
+          "name": "风险评估",
+          "item": [
+            {
+              "name": "AI风险评估",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"document\": \"项目描述文本，最多5000字符...\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}{{api_prefix}}/ai/assess-risk",
+                  "host": ["{{base_url}}"],
+                  "path": ["{{api_prefix}}", "ai", "assess-risk"]
+                },
+                "description": "AI分析项目风险并返回评分\n\n**必填字段:**\n- `document`: 项目文档内容（最多5000字符）\n\n**可选字段:**\n- `promptId`: 提示词模板ID\n- `variable_values`: 模板变量值"
+              },
+              "response": []
+            },
+            {
+              "name": "风险名称标准化",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"risk_names\": [\"技术难度\", \"人员变动\", \"需求变更\"]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}{{api_prefix}}/ai/normalize-risk-names",
+                  "host": ["{{base_url}}"],
+                  "path": ["{{api_prefix}}", "ai", "normalize-risk-names"]
+                },
+                "description": "将AI生成的风险名称映射到标准列表"
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "模块分析",
+          "item": [
+            {
+              "name": "AI模块分析",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"document\": \"项目描述文本，最多5000字符...\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}{{api_prefix}}/ai/analyze-project-modules",
+                  "host": ["{{base_url}}"],
+                  "path": ["{{api_prefix}}", "ai", "analyze-project-modules"]
+                },
+                "description": "AI分析项目模块结构（3级层次）\n\n**必填字段:**\n- `document`: 项目文档内容（最多5000字符）\n\n**可选字段:**\n- `promptId`: 提示词模板ID\n- `variable_values`: 模板变量值"
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "工作量评估",
+          "item": [
+            {
+              "name": "AI工作量评估",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"document\": \"项目描述文本，最多5000字符...\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}{{api_prefix}}/ai/evaluate-workload",
+                  "host": ["{{base_url}}"],
+                  "path": ["{{api_prefix}}", "ai", "evaluate-workload"]
+                },
+                "description": "AI评估项目工作量（按角色）\n\n**必填字段:**\n- `document`: 项目文档内容（最多5000字符）\n\n**可选字段:**\n- `promptId`: 提示词模板ID\n- `variable_values`: 模板变量值"
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "项目标签生成",
+          "item": [
+            {
+              "name": "AI生成项目标签",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"document\": \"项目描述文本，最多5000字符...\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}{{api_prefix}}/ai/generate-project-tags",
+                  "host": ["{{base_url}}"],
+                  "path": ["{{api_prefix}}", "ai", "generate-project-tags"]
+                },
+                "description": "AI生成项目标签\n\n**必填字段:**\n- `document`: 项目文档内容（最多5000字符）\n\n**可选字段:**\n- `promptId`: 提示词模板ID\n- `variable_values`: 模板变量值"
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "仪表盘",
+      "description": "数据可视化和趋势分析",
+      "item": [
+        {
+          "name": "获取概览数据",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}{{api_prefix}}/dashboard/overview",
+              "host": ["{{base_url}}"],
+              "path": ["{{api_prefix}}", "dashboard", "overview"]
+            },
+            "description": "获取仪表盘概览数据，包括最近项目、统计数据等"
+          },
+          "response": []
+        },
+        {
+          "name": "获取趋势数据",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}{{api_prefix}}/dashboard/trend",
+              "host": ["{{base_url}}"],
+              "path": ["{{api_prefix}}", "dashboard", "trend"]
+            },
+            "description": "获取12个月的趋势分析数据"
+          },
+          "response": []
+        },
+        {
+          "name": "获取成本分布",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}{{api_prefix}}/dashboard/cost-range",
+              "host": ["{{base_url}}"],
+              "path": ["{{api_prefix}}", "dashboard", "cost-range"]
+            },
+            "description": "获取成本分布统计数据"
+          },
+          "response": []
+        },
+        {
+          "name": "获取关键词云",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}{{api_prefix}}/dashboard/keywords",
+              "host": ["{{base_url}}"],
+              "path": ["{{api_prefix}}", "dashboard", "keywords"]
+            },
+            "description": "获取关键词云数据"
+          },
+          "response": []
+        },
+        {
+          "name": "获取DNA雷达图数据",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}{{api_prefix}}/dashboard/dna",
+              "host": ["{{base_url}}"],
+              "path": ["{{api_prefix}}", "dashboard", "dna"]
+            },
+            "description": "获取雷达图数据，包括成本、风险、工作量等维度"
+          },
+          "response": []
+        },
+        {
+          "name": "获取热门角色",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}{{api_prefix}}/dashboard/top-roles",
+              "host": ["{{base_url}}"],
+              "path": ["{{api_prefix}}", "dashboard", "top-roles"]
+            },
+            "description": "获取Top 5热门角色（按工作量排序）"
+          },
+          "response": []
+        },
+        {
+          "name": "获取热门风险",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}{{api_prefix}}/dashboard/top-risks",
+              "host": ["{{base_url}}"],
+              "path": ["{{api_prefix}}", "dashboard", "top-risks"]
+            },
+            "description": "获取Top 10热门风险（按出现次数排序）"
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

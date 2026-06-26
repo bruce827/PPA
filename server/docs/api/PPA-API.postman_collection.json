@@ -1,0 +1,3000 @@
+{
+  "info": {
+    "name": "PPA API",
+    "description": "PPA项目评估系统API集合（自动生成）",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:3001"
+    }
+  ],
+  "item": [
+    {
+      "name": "AI集成",
+      "item": [
+        {
+          "name": "GET /prompts",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/prompts",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "prompts"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /module-prompts",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/module-prompts",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "module-prompts"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /workload-prompts",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/workload-prompts",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "workload-prompts"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /project-tag-prompts",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/project-tag-prompts",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "project-tag-prompts"
+              ]
+            }
+          }
+        },
+        {
+          "name": "POST /assess-risk",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/assess-risk",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "assess-risk"
+              ]
+            }
+          }
+        },
+        {
+          "name": "POST /normalize-risk-names",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/normalize-risk-names",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "normalize-risk-names"
+              ]
+            }
+          }
+        },
+        {
+          "name": "POST /analyze-project-modules",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/analyze-project-modules",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "analyze-project-modules"
+              ]
+            }
+          }
+        },
+        {
+          "name": "POST /evaluate-workload",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/evaluate-workload",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "evaluate-workload"
+              ]
+            }
+          }
+        },
+        {
+          "name": "POST /generate-project-tags",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/generate-project-tags",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "generate-project-tags"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "附件管理",
+      "item": [
+        {
+          "name": "POST /:id/attachments/upload",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/:id/attachments/upload",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                ":id",
+                "attachments",
+                "upload"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /:id/attachments",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/:id/attachments",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                ":id",
+                "attachments"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /:id/attachments/download/:filename",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/:id/attachments/download/:filename",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                ":id",
+                "attachments",
+                "download",
+                ":filename"
+              ]
+            }
+          }
+        },
+        {
+          "name": "DELETE /:id/attachments/:filename",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/:id/attachments/:filename",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                ":id",
+                "attachments",
+                ":filename"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /:id/attachments/check",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/:id/attachments/check",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                ":id",
+                "attachments",
+                "check"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "实时计算",
+      "item": [
+        {
+          "name": "POST /",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "配置管理",
+      "item": [
+        {
+          "name": "GET /ai-models",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/ai-models",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "ai-models"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /ai-models/current",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/ai-models/current",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "ai-models",
+                "current"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /ai-models/current-vision",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/ai-models/current-vision",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "ai-models",
+                "current-vision"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /ai-models/:id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/ai-models/:id",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "ai-models",
+                ":id"
+              ]
+            }
+          }
+        },
+        {
+          "name": "POST /ai-models",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/ai-models",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "ai-models"
+              ]
+            }
+          }
+        },
+        {
+          "name": "PUT /ai-models/:id",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/ai-models/:id",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "ai-models",
+                ":id"
+              ]
+            }
+          }
+        },
+        {
+          "name": "DELETE /ai-models/:id",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/ai-models/:id",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "ai-models",
+                ":id"
+              ]
+            }
+          }
+        },
+        {
+          "name": "POST /ai-models/:id/set-current",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/ai-models/:id/set-current",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "ai-models",
+                ":id",
+                "set-current"
+              ]
+            }
+          }
+        },
+        {
+          "name": "POST /ai-models/:id/set-current-vision",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/ai-models/:id/set-current-vision",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "ai-models",
+                ":id",
+                "set-current-vision"
+              ]
+            }
+          }
+        },
+        {
+          "name": "POST /ai-models/:id/test",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/ai-models/:id/test",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "ai-models",
+                ":id",
+                "test"
+              ]
+            }
+          }
+        },
+        {
+          "name": "POST /ai-models/test-temp",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/ai-models/test-temp",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "ai-models",
+                "test-temp"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /prompts",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/prompts",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "prompts"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /prompts/:id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/prompts/:id",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "prompts",
+                ":id"
+              ]
+            }
+          }
+        },
+        {
+          "name": "POST /prompts",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/prompts",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "prompts"
+              ]
+            }
+          }
+        },
+        {
+          "name": "PUT /prompts/:id",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/prompts/:id",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "prompts",
+                ":id"
+              ]
+            }
+          }
+        },
+        {
+          "name": "DELETE /prompts/:id",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/prompts/:id",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "prompts",
+                ":id"
+              ]
+            }
+          }
+        },
+        {
+          "name": "POST /prompts/:id/copy",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/prompts/:id/copy",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "prompts",
+                ":id",
+                "copy"
+              ]
+            }
+          }
+        },
+        {
+          "name": "POST /prompts/:id/preview",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/prompts/:id/preview",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "prompts",
+                ":id",
+                "preview"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /prompt-module-tags",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/prompt-module-tags",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "prompt-module-tags"
+              ]
+            }
+          }
+        },
+        {
+          "name": "POST /prompt-module-tags",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/prompt-module-tags",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "prompt-module-tags"
+              ]
+            }
+          }
+        },
+        {
+          "name": "PUT /prompt-module-tags/:id",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/prompt-module-tags/:id",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "prompt-module-tags",
+                ":id"
+              ]
+            }
+          }
+        },
+        {
+          "name": "DELETE /prompt-module-tags/:id",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/prompt-module-tags/:id",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "prompt-module-tags",
+                ":id"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /roles",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/roles",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "roles"
+              ]
+            }
+          }
+        },
+        {
+          "name": "POST /roles",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/roles",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "roles"
+              ]
+            }
+          }
+        },
+        {
+          "name": "PUT /roles/:id",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/roles/:id",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "roles",
+                ":id"
+              ]
+            }
+          }
+        },
+        {
+          "name": "DELETE /roles/:id",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/roles/:id",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "roles",
+                ":id"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /risk-items",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/risk-items",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "risk-items"
+              ]
+            }
+          }
+        },
+        {
+          "name": "POST /risk-items",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/risk-items",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "risk-items"
+              ]
+            }
+          }
+        },
+        {
+          "name": "PUT /risk-items/:id",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/risk-items/:id",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "risk-items",
+                ":id"
+              ]
+            }
+          }
+        },
+        {
+          "name": "DELETE /risk-items/:id",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/risk-items/:id",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "risk-items",
+                ":id"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /travel-costs",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/travel-costs",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "travel-costs"
+              ]
+            }
+          }
+        },
+        {
+          "name": "POST /travel-costs",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/travel-costs",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "travel-costs"
+              ]
+            }
+          }
+        },
+        {
+          "name": "PUT /travel-costs/:id",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/travel-costs/:id",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "travel-costs",
+                ":id"
+              ]
+            }
+          }
+        },
+        {
+          "name": "DELETE /travel-costs/:id",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/travel-costs/:id",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "travel-costs",
+                ":id"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /business-pricing",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/business-pricing",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "business-pricing"
+              ]
+            }
+          }
+        },
+        {
+          "name": "PUT /business-pricing",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/business-pricing",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "business-pricing"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /all",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/all",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "all"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "合同管理",
+      "item": [
+        {
+          "name": "GET /files",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/files",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "files"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /file",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/file",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "file"
+              ]
+            }
+          }
+        },
+        {
+          "name": "POST /recommend",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/recommend",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "recommend"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "仪表盘",
+      "item": [
+        {
+          "name": "GET /overview",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/overview",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "overview"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /trend",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/trend",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "trend"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /cost-range",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/cost-range",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "cost-range"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /keywords",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/keywords",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "keywords"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /dna",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/dna",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "dna"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /top-roles",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/top-roles",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "top-roles"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /top-risks",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/top-risks",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "top-risks"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "数据指标",
+      "item": [
+        {
+          "name": "获取项目列表",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/projects",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "projects"
+              ]
+            }
+          }
+        },
+        {
+          "name": "获取项目详情",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/projects/:id",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "projects",
+                ":id"
+              ]
+            }
+          }
+        },
+        {
+          "name": "创建项目",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/projects",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "projects"
+              ]
+            }
+          }
+        },
+        {
+          "name": "更新项目",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/projects/:id",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "projects",
+                ":id"
+              ]
+            }
+          }
+        },
+        {
+          "name": "删除项目",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/projects/:id",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "projects",
+                ":id"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /stats",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/stats",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "stats"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /filter-options",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/filter-options",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "filter-options"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /linked-projects",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/linked-projects",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "linked-projects"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /:id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/:id",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                ":id"
+              ]
+            }
+          }
+        },
+        {
+          "name": "POST /",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api"
+              ]
+            }
+          }
+        },
+        {
+          "name": "PUT /:id",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/:id",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                ":id"
+              ]
+            }
+          }
+        },
+        {
+          "name": "DELETE /:id",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/:id",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                ":id"
+              ]
+            }
+          }
+        },
+        {
+          "name": "POST /batch",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/batch",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "batch"
+              ]
+            }
+          }
+        },
+        {
+          "name": "POST /import/preview",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/import/preview",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "import",
+                "preview"
+              ]
+            }
+          }
+        },
+        {
+          "name": "POST /import",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/import",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "import"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /export",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/export",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "export"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /categories/tree",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/categories/tree",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "categories",
+                "tree"
+              ]
+            }
+          }
+        },
+        {
+          "name": "POST /categories",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/categories",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "categories"
+              ]
+            }
+          }
+        },
+        {
+          "name": "PUT /categories/:id",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/categories/:id",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "categories",
+                ":id"
+              ]
+            }
+          }
+        },
+        {
+          "name": "DELETE /categories/:id",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/categories/:id",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "categories",
+                ":id"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /projects/:id/agent-context",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/projects/:id/agent-context",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "projects",
+                ":id",
+                "agent-context"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /projects/:id/agent-layout",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/projects/:id/agent-layout",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "projects",
+                ":id",
+                "agent-layout"
+              ]
+            }
+          }
+        },
+        {
+          "name": "POST /projects/:id/agent-feedback",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/projects/:id/agent-feedback",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "projects",
+                ":id",
+                "agent-feedback"
+              ]
+            }
+          }
+        },
+        {
+          "name": "POST /projects/:id/convert-to-ppa-template",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/projects/:id/convert-to-ppa-template",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "projects",
+                ":id",
+                "convert-to-ppa-template"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /projects/:id/export/json",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/projects/:id/export/json",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "projects",
+                ":id",
+                "export",
+                "json"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "表单设计",
+      "item": [
+        {
+          "name": "GET /stats",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/stats",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "stats"
+              ]
+            }
+          }
+        },
+        {
+          "name": "POST /validate/field",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/validate/field",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "validate",
+                "field"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /validate/form/:formId",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/validate/form/:formId",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "validate",
+                "form",
+                ":formId"
+              ]
+            }
+          }
+        },
+        {
+          "name": "获取项目列表",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/projects",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "projects"
+              ]
+            }
+          }
+        },
+        {
+          "name": "获取项目详情",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/projects/:id",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "projects",
+                ":id"
+              ]
+            }
+          }
+        },
+        {
+          "name": "创建项目",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/projects",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "projects"
+              ]
+            }
+          }
+        },
+        {
+          "name": "更新项目",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/projects/:id",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "projects",
+                ":id"
+              ]
+            }
+          }
+        },
+        {
+          "name": "删除项目",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/projects/:id",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "projects",
+                ":id"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /projects/:projectId/apps",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/projects/:projectId/apps",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "projects",
+                ":projectId",
+                "apps"
+              ]
+            }
+          }
+        },
+        {
+          "name": "POST /apps",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/apps",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "apps"
+              ]
+            }
+          }
+        },
+        {
+          "name": "PUT /apps/:id",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/apps/:id",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "apps",
+                ":id"
+              ]
+            }
+          }
+        },
+        {
+          "name": "DELETE /apps/:id",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/apps/:id",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "apps",
+                ":id"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /apps/:appId/forms",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/apps/:appId/forms",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "apps",
+                ":appId",
+                "forms"
+              ]
+            }
+          }
+        },
+        {
+          "name": "POST /forms",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/forms",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "forms"
+              ]
+            }
+          }
+        },
+        {
+          "name": "PUT /forms/:id",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/forms/:id",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "forms",
+                ":id"
+              ]
+            }
+          }
+        },
+        {
+          "name": "DELETE /forms/:id",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/forms/:id",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "forms",
+                ":id"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /forms/:formId/fields",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/forms/:formId/fields",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "forms",
+                ":formId",
+                "fields"
+              ]
+            }
+          }
+        },
+        {
+          "name": "POST /fields",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/fields",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "fields"
+              ]
+            }
+          }
+        },
+        {
+          "name": "PUT /fields/:id",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/fields/:id",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "fields",
+                ":id"
+              ]
+            }
+          }
+        },
+        {
+          "name": "DELETE /fields/:id",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/fields/:id",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "fields",
+                ":id"
+              ]
+            }
+          }
+        },
+        {
+          "name": "POST /fields/batch",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/fields/batch",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "fields",
+                "batch"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "健康检查",
+      "item": [
+        {
+          "name": "检查系统健康状态",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/health",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "health"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "监控",
+      "item": [
+        {
+          "name": "GET /logs",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/logs",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "logs"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /stats",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/stats",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "stats"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /logs/:requestHash",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/logs/:requestHash",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "logs",
+                ":requestHash"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "商机管理",
+      "item": [
+        {
+          "name": "GET /bidding-sites",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/bidding-sites",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "bidding-sites"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /bidding-sites/:id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/bidding-sites/:id",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "bidding-sites",
+                ":id"
+              ]
+            }
+          }
+        },
+        {
+          "name": "POST /bidding-sites",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/bidding-sites",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "bidding-sites"
+              ]
+            }
+          }
+        },
+        {
+          "name": "PUT /bidding-sites/:id",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/bidding-sites/:id",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "bidding-sites",
+                ":id"
+              ]
+            }
+          }
+        },
+        {
+          "name": "DELETE /bidding-sites/:id",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/bidding-sites/:id",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "bidding-sites",
+                ":id"
+              ]
+            }
+          }
+        },
+        {
+          "name": "POST /bidding-sites/:id/script",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/bidding-sites/:id/script",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "bidding-sites",
+                ":id",
+                "script"
+              ]
+            }
+          }
+        },
+        {
+          "name": "POST /bidding-sites/:id/validate",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/bidding-sites/:id/validate",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "bidding-sites",
+                ":id",
+                "validate"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /tender-staging",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/tender-staging",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "tender-staging"
+              ]
+            }
+          }
+        },
+        {
+          "name": "POST /tender-staging/dedupe/preview",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/tender-staging/dedupe/preview",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "tender-staging",
+                "dedupe",
+                "preview"
+              ]
+            }
+          }
+        },
+        {
+          "name": "POST /tender-staging/dedupe/execute",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/tender-staging/dedupe/execute",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "tender-staging",
+                "dedupe",
+                "execute"
+              ]
+            }
+          }
+        },
+        {
+          "name": "POST /tender-staging/archive-source-files",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/tender-staging/archive-source-files",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "tender-staging",
+                "archive-source-files"
+              ]
+            }
+          }
+        },
+        {
+          "name": "POST /tender-staging/:id/parse-fields",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/tender-staging/:id/parse-fields",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "tender-staging",
+                ":id",
+                "parse-fields"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /tender-staging/:id/web-search",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/tender-staging/:id/web-search",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "tender-staging",
+                ":id",
+                "web-search"
+              ]
+            }
+          }
+        },
+        {
+          "name": "POST /tender-staging/:id/web-search",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/tender-staging/:id/web-search",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "tender-staging",
+                ":id",
+                "web-search"
+              ]
+            }
+          }
+        },
+        {
+          "name": "POST /tender-staging/sync",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/tender-staging/sync",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "tender-staging",
+                "sync"
+              ]
+            }
+          }
+        },
+        {
+          "name": "POST /tender-staging/:id/push",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/tender-staging/:id/push",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "tender-staging",
+                ":id",
+                "push"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "项目管理",
+      "item": [
+        {
+          "name": "获取模板列表",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/templates",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "templates"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /:id/export/pdf",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/:id/export/pdf",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                ":id",
+                "export",
+                "pdf"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /:id/export/excel",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/:id/export/excel",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                ":id",
+                "export",
+                "excel"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /:id/business-quote",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/:id/business-quote",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                ":id",
+                "business-quote"
+              ]
+            }
+          }
+        },
+        {
+          "name": "POST /:id/business-quote",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/:id/business-quote",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                ":id",
+                "business-quote"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /:id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/:id",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                ":id"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api"
+              ]
+            }
+          }
+        },
+        {
+          "name": "POST /",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api"
+              ]
+            }
+          }
+        },
+        {
+          "name": "PUT /:id",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/:id",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                ":id"
+              ]
+            }
+          }
+        },
+        {
+          "name": "DELETE /:id",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/:id",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                ":id"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "推送管理",
+      "item": [
+        {
+          "name": "POST /:id/push/validate",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/:id/push/validate",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                ":id",
+                "push",
+                "validate"
+              ]
+            }
+          }
+        },
+        {
+          "name": "POST /:id/push",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/:id/push",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                ":id",
+                "push"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /:id/push-history",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/:id/push-history",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                ":id",
+                "push-history"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Web3D评估",
+      "item": [
+        {
+          "name": "获取风险评估项",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/config/risk-items",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "config",
+                "risk-items"
+              ]
+            }
+          }
+        },
+        {
+          "name": "创建风险评估项",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/config/risk-items",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "config",
+                "risk-items"
+              ]
+            }
+          }
+        },
+        {
+          "name": "更新风险评估项",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/config/risk-items/:id",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "config",
+                "risk-items",
+                ":id"
+              ]
+            }
+          }
+        },
+        {
+          "name": "删除风险评估项",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/config/risk-items/:id",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "config",
+                "risk-items",
+                ":id"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /config/workload-templates",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/config/workload-templates",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "config",
+                "workload-templates"
+              ]
+            }
+          }
+        },
+        {
+          "name": "POST /config/workload-templates",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/config/workload-templates",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "config",
+                "workload-templates"
+              ]
+            }
+          }
+        },
+        {
+          "name": "PUT /config/workload-templates/:id",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/config/workload-templates/:id",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "config",
+                "workload-templates",
+                ":id"
+              ]
+            }
+          }
+        },
+        {
+          "name": "DELETE /config/workload-templates/:id",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/config/workload-templates/:id",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "config",
+                "workload-templates",
+                ":id"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /ai/step4-prompts",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/ai/step4-prompts",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "ai",
+                "step4-prompts"
+              ]
+            }
+          }
+        },
+        {
+          "name": "POST /ai/step4-analyze",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/ai/step4-analyze",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "ai",
+                "step4-analyze"
+              ]
+            }
+          }
+        },
+        {
+          "name": "POST /projects/calculate",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/projects/calculate",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "projects",
+                "calculate"
+              ]
+            }
+          }
+        },
+        {
+          "name": "POST /projects/:id/calculate",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/projects/:id/calculate",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "projects",
+                ":id",
+                "calculate"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /projects/:id/export",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/projects/:id/export",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "projects",
+                ":id",
+                "export"
+              ]
+            }
+          }
+        },
+        {
+          "name": "获取项目详情",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/projects/:id",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "projects",
+                ":id"
+              ]
+            }
+          }
+        },
+        {
+          "name": "获取项目列表",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/projects",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "projects"
+              ]
+            }
+          }
+        },
+        {
+          "name": "创建项目",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/projects",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "projects"
+              ]
+            }
+          }
+        },
+        {
+          "name": "更新项目",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/projects/:id",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "projects",
+                ":id"
+              ]
+            }
+          }
+        },
+        {
+          "name": "删除项目",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/projects/:id",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "projects",
+                ":id"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "知识库",
+      "item": [
+        {
+          "name": "GET /",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /content",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/content",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "content"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /relations",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/relations",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "relations"
+              ]
+            }
+          }
+        },
+        {
+          "name": "POST /relations",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/relations",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "relations"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

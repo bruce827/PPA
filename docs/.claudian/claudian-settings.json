@@ -30,8 +30,8 @@
       "loadUserSettings": true,
       "enableChrome": false,
       "enableBangBash": false,
-      "enableOpus1M": false,
-      "enableSonnet1M": false,
+      "enableOpus1M": true,
+      "enableSonnet1M": true,
       "customModels": "",
       "lastModel": "haiku",
       "environmentVariables": "",
@@ -70,14 +70,116 @@
         {
           "api": "openai-completions",
           "contextWindow": 262144,
-          "encodedId": "pi:xiaomi-token-plan-cn/mimo-v2-flash",
+          "encodedId": "pi:xiaomi/mimo-v2-flash",
           "id": "mimo-v2-flash",
           "input": [
             "text"
           ],
           "label": "MiMo-V2-Flash",
           "maxTokens": 65536,
-          "provider": "xiaomi-token-plan-cn",
+          "provider": "xiaomi",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-completions",
+          "contextWindow": 262144,
+          "encodedId": "pi:xiaomi/mimo-v2-omni",
+          "id": "mimo-v2-omni",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "MiMo-V2-Omni",
+          "maxTokens": 131072,
+          "provider": "xiaomi",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-completions",
+          "contextWindow": 1048576,
+          "encodedId": "pi:xiaomi/mimo-v2-pro",
+          "id": "mimo-v2-pro",
+          "input": [
+            "text"
+          ],
+          "label": "MiMo-V2-Pro",
+          "maxTokens": 131072,
+          "provider": "xiaomi",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-completions",
+          "contextWindow": 1048576,
+          "encodedId": "pi:xiaomi/mimo-v2.5",
+          "id": "mimo-v2.5",
+          "input": [
+            "text",
+            "image"
+          ],
+          "label": "MiMo-V2.5",
+          "maxTokens": 131072,
+          "provider": "xiaomi",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-completions",
+          "contextWindow": 1048576,
+          "encodedId": "pi:xiaomi/mimo-v2.5-pro",
+          "id": "mimo-v2.5-pro",
+          "input": [
+            "text"
+          ],
+          "label": "MiMo-V2.5-Pro",
+          "maxTokens": 131072,
+          "provider": "xiaomi",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "api": "openai-completions",
+          "contextWindow": 1048576,
+          "encodedId": "pi:xiaomi/mimo-v2.5-pro-ultraspeed",
+          "id": "mimo-v2.5-pro-ultraspeed",
+          "input": [
+            "text"
+          ],
+          "label": "MiMo-V2.5-Pro-UltraSpeed",
+          "maxTokens": 131072,
+          "provider": "xiaomi",
           "reasoning": true,
           "thinkingLevels": [
             "off",
@@ -168,35 +270,53 @@
             "medium",
             "high"
           ]
+        },
+        {
+          "api": "openai-completions",
+          "contextWindow": 1048576,
+          "encodedId": "pi:xiaomi-token-plan-cn/mimo-v2.5-pro-ultraspeed",
+          "id": "mimo-v2.5-pro-ultraspeed",
+          "input": [
+            "text"
+          ],
+          "label": "MiMo-V2.5-Pro-UltraSpeed",
+          "maxTokens": 131072,
+          "provider": "xiaomi-token-plan-cn",
+          "reasoning": true,
+          "thinkingLevels": [
+            "off",
+            "minimal",
+            "low",
+            "medium",
+            "high"
+          ]
         }
       ],
       "enabled": true,
       "environmentHash": "",
       "environmentVariables": "",
       "modelAliases": {},
-      "preferredThinkingByModel": {
-        "pi:xiaomi-token-plan-cn/mimo-v2.5-pro": "high"
-      },
-      "toolMode": "all",
+      "preferredThinkingByModel": {},
+      "toolMode": "readonly",
       "visibleModels": [
-        "pi:xiaomi-token-plan-cn/mimo-v2.5-pro"
+        "pi:xiaomi/mimo-v2.5-pro"
       ]
     }
   },
   "settingsProvider": "claude",
   "savedProviderModel": {
     "claude": "haiku",
-    "pi": "pi:xiaomi-token-plan-cn/mimo-v2.5-pro"
+    "pi": "pi:xiaomi/mimo-v2.5-pro"
   },
   "savedProviderEffort": {
     "claude": "high",
-    "pi": "high"
+    "pi": "medium"
   },
   "savedProviderServiceTier": {},
   "savedProviderThinkingBudget": {},
   "savedProviderPermissionMode": {
     "claude": "yolo",
-    "pi": "yolo"
+    "pi": "normal"
   },
   "lastCustomModel": "",
   "maxTabs": 3,

@@ -299,6 +299,7 @@ const getTravelCostPerMonth = async () => {
 };
 
 module.exports = {
+  ensureSchema,
   // 角色
   getAllRoles,
   createRole,

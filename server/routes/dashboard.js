@@ -17,6 +17,8 @@ router.get('/keywords', dashboardController.getKeywords);
 router.get('/dna', dashboardController.getDNA);
 // GET /api/dashboard/top-roles - 获取 Top 角色
 router.get('/top-roles', dashboardController.getTopRoles);
+// GET /api/dashboard/top-role - 兼容历史/误写的单数路径
+router.get('/top-role', dashboardController.getTopRoles);
 // GET /api/dashboard/top-risks - 获取 Top 风险
 router.get('/top-risks', dashboardController.getTopRisks);
 

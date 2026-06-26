@@ -7,6 +7,7 @@ const request = require('supertest');
 
 const { app } = require('../index');
 const db = require('../utils/db');
+const { initTestDatabase, cleanupTestDatabase, setupTransactionProtection } = require('./test-helper');;
 
 describe('Projects API - tags update (PUT /api/projects/:id)', () => {
   const TEST_DB_PATH = path.join(os.tmpdir(), `ppa.project.tags.${process.pid}.${Date.now()}.db`);

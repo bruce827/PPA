@@ -45,14 +45,33 @@ async function getConfigCounts() {
 
 // [Dashboard Refactor] AI 模型统计（总数 + 当前模型名）
 async function getAIModelCount() {
-  const [totalRow, currentRow] = await Promise.all([
-    db.get('SELECT COUNT(*) AS count FROM ai_model_configs'),
-    db.get("SELECT model_name FROM ai_model_configs WHERE is_current = 1"),
-  ]);
+  const row = await db.get(`
+    SELECT
+      COUNT(*) AS count,
+      MAX(CASE WHEN is_current = 1 THEN model_name ELSE NULL END) AS current_name
+    FROM ai_model_configs
+  `);
   return {
-    total: totalRow?.count || 0,
-    current_name: currentRow?.model_name || null,
+    total: row?.count || 0,
+    current_name: row?.current_name || null,
   };
+}
+
+async function getOverviewMetrics(days = 30) {
+  const safeDays = Number.isFinite(Number(days)) ? Math.max(0, Math.floor(Number(days))) : 30;
+  return db.get(
+    `SELECT
+       (SELECT COUNT(*) FROM projects WHERE is_template = 0 AND datetime(updated_at) >= datetime('now', ?)) AS recent_30d,
+       (SELECT COUNT(*) FROM projects WHERE ${STANDARD_WHERE}) AS saas_count,
+       (SELECT COUNT(*) FROM projects WHERE ${WEB3D_WHERE}) AS web3d_count,
+       (SELECT COUNT(*) FROM config_roles) AS role_count,
+       (SELECT COUNT(*) FROM config_risk_items) AS risk_count,
+       (SELECT COUNT(*) FROM web3d_risk_items) AS web3d_risk_count,
+       (SELECT COUNT(*) FROM web3d_workload_templates) AS web3d_workload_template_count,
+       (SELECT COUNT(*) FROM ai_model_configs) AS ai_model_total,
+       (SELECT model_name FROM ai_model_configs WHERE is_current = 1 LIMIT 1) AS ai_model_current_name`,
+    [`-${safeDays} days`]
+  );
 }
 
 async function getAssessmentDetails() {
@@ -64,8 +83,7 @@ async function getAllAssessmentDetails() {
   return db.all(
     `SELECT assessment_details_json, final_total_cost, final_risk_score, final_workload_days
      FROM projects
-     WHERE ${STANDARD_WHERE}
-     ORDER BY created_at DESC`
+     WHERE ${STANDARD_WHERE}`
   );
 }
 
@@ -74,8 +92,7 @@ async function getAllProjectTextData() {
   return db.all(
     `SELECT name, description
      FROM projects
-     WHERE ${STANDARD_WHERE}
-     ORDER BY created_at DESC`
+     WHERE ${STANDARD_WHERE}`
   );
 }
 
@@ -88,9 +105,22 @@ async function getProjectCosts() {
   );
 }
 
+async function getCostRangeBuckets() {
+  return db.get(
+    `SELECT
+       SUM(CASE WHEN final_total_cost < 50 THEN 1 ELSE 0 END) AS lt_50,
+       SUM(CASE WHEN final_total_cost >= 50 AND final_total_cost < 100 THEN 1 ELSE 0 END) AS range_50_100,
+       SUM(CASE WHEN final_total_cost >= 100 AND final_total_cost < 300 THEN 1 ELSE 0 END) AS range_100_300,
+       SUM(CASE WHEN final_total_cost >= 300 THEN 1 ELSE 0 END) AS gt_300
+     FROM projects
+     WHERE ${STANDARD_WHERE}
+       AND final_total_cost IS NOT NULL`
+  );
+}
+
 async function getCostTrend() {
   return db.all(
-    "SELECT STRFTIME('%Y-%m', created_at) as month, SUM(final_total_cost) as totalCost FROM projects GROUP BY month ORDER BY month"
+    "SELECT STRFTIME('%Y-%m', created_at) as month, SUM(final_total_cost) as totalCost FROM projects GROUP BY STRFTIME('%Y-%m', created_at) ORDER BY month"
   );
 }
 
@@ -109,7 +139,10 @@ async function getTrendLast12Months() {
      FROM projects
      WHERE is_template = 0
        AND datetime(updated_at) >= datetime('now', '-12 months')
-     GROUP BY month, project_type
+     GROUP BY STRFTIME('%Y-%m', updated_at), CASE 
+         WHEN project_type = 'web3d' THEN 'Web3D'
+         ELSE 'SaaS/平台'
+       END
      ORDER BY month, project_type`
   );
 }
@@ -120,17 +153,36 @@ async function getRiskCostCorrelation() {
   );
 }
 
+// [Dashboard Refactor] 合并查询：一次性获取所有 dashboard 需要的项目数据
+// 替代 getAllAssessmentDetails + getAllProjectTextData + getProjectCosts 三次查询
+async function getAllDashboardProjectData() {
+  return db.all(
+    `SELECT 
+       name,
+       description,
+       assessment_details_json,
+       final_total_cost,
+       final_risk_score,
+       final_workload_days
+     FROM projects
+     WHERE ${STANDARD_WHERE}`
+  );
+}
+
 module.exports = {
   getRecentProjectCount,
   getProjectCountStandard,
   getProjectCountWeb3d,
   getConfigCounts,
   getAIModelCount,
+  getOverviewMetrics,
   getAssessmentDetails,
   getAllAssessmentDetails,
   getAllProjectTextData,
   getProjectCosts,
+  getCostRangeBuckets,
   getCostTrend,
   getTrendLast12Months,
   getRiskCostCorrelation,
+  getAllDashboardProjectData,
 };

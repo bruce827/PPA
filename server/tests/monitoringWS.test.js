@@ -8,6 +8,7 @@ const WebSocket = require('ws');
 
 const { app } = require('../index');
 const db = require('../utils/db');
+const { initTestDatabase, cleanupTestDatabase, setupTransactionProtection } = require('./test-helper');;
 const aiAssessmentLogModel = require('../models/aiAssessmentLogModel');
 const monitoringWsService = require('../services/monitoringWsService');
 

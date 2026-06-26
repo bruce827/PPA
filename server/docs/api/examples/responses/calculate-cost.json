@@ -1,0 +1,107 @@
+{
+  "success": true,
+  "data": {
+    "software_dev_cost": 45.60,
+    "system_integration_cost": 8.25,
+    "travel_cost": 6.48,
+    "maintenance_cost": 2.88,
+    "risk_cost": 4.30,
+    "total_cost_exact": 67.51,
+    "total_cost": 68,
+    "software_dev_workload_days": 230,
+    "system_integration_workload_days": 45,
+    "role_costs": [
+      {
+        "role_name": "前端工程师",
+        "unit_price": 1800,
+        "development_days": 60,
+        "integration_days": 15,
+        "total_days": 75,
+        "development_cost": 10.80,
+        "integration_cost": 2.70,
+        "total_cost": 13.50
+      },
+      {
+        "role_name": "后端工程师",
+        "unit_price": 2000,
+        "development_days": 80,
+        "integration_days": 20,
+        "total_days": 100,
+        "development_cost": 16.00,
+        "integration_cost": 4.00,
+        "total_cost": 20.00
+      },
+      {
+        "role_name": "测试工程师",
+        "unit_price": 1500,
+        "development_days": 40,
+        "integration_days": 10,
+        "total_days": 50,
+        "development_cost": 6.00,
+        "integration_cost": 1.50,
+        "total_cost": 7.50
+      },
+      {
+        "role_name": "UI设计师",
+        "unit_price": 1600,
+        "development_days": 30,
+        "integration_days": 0,
+        "total_days": 30,
+        "development_cost": 4.80,
+        "integration_cost": 0.00,
+        "total_cost": 4.80
+      },
+      {
+        "role_name": "项目经理",
+        "unit_price": 2500,
+        "development_days": 20,
+        "integration_days": 0,
+        "total_days": 20,
+        "development_cost": 5.00,
+        "integration_cost": 0.00,
+        "total_cost": 5.00
+      }
+    ],
+    "travel_costs": {
+      "months": 2,
+      "headcount": 3,
+      "cost_per_month": 8000,
+      "total_cost": 6.48
+    },
+    "maintenance_costs": {
+      "months": 3,
+      "headcount": 2,
+      "daily_cost": 1600,
+      "total_days": 60,
+      "total_cost": 2.88
+    },
+    "risk_items": [
+      {
+        "cost": 2.50,
+        "description": "技术风险成本"
+      },
+      {
+        "cost": 1.80,
+        "description": "进度风险成本"
+      }
+    ],
+    "calculation_details": {
+      "delivery_factors": {
+        "development": 1.0,
+        "integration": 1.1
+      },
+      "workload_distribution": {
+        "development": 230,
+        "integration": 45,
+        "total": 275
+      },
+      "cost_distribution": {
+        "software_dev": 67.5,
+        "system_integration": 12.2,
+        "travel": 9.6,
+        "maintenance": 4.3,
+        "risk": 6.4
+      }
+    }
+  }
+}

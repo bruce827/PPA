@@ -1,26 +1,26 @@
 installation:
-  version: 6.8.0
+  version: 6.9.0
   installDate: 2026-03-11T02:31:26.283Z
-  lastUpdated: 2026-06-08T01:19:49.723Z
+  lastUpdated: 2026-06-24T02:54:58.721Z
 modules:
   - name: core
-    version: 6.8.0
+    version: 6.9.0
     installDate: 2026-03-11T02:31:25.810Z
-    lastUpdated: 2026-06-08T01:19:49.717Z
+    lastUpdated: 2026-06-24T02:54:58.715Z
     source: built-in
     npmPackage: null
     repoUrl: null
   - name: bmm
-    version: 6.8.0
+    version: 6.9.0
     installDate: 2026-03-11T02:31:18.778Z
-    lastUpdated: 2026-06-08T01:19:49.717Z
+    lastUpdated: 2026-06-24T02:54:58.716Z
     source: built-in
     npmPackage: null
     repoUrl: null
   - name: tea
     version: main
     installDate: 2026-03-11T02:31:22.901Z
-    lastUpdated: 2026-06-08T01:19:49.719Z
+    lastUpdated: 2026-06-24T02:54:58.717Z
     source: external
     npmPackage: bmad-method-test-architecture-enterprise
     repoUrl: https://github.com/bmad-code-org/bmad-method-test-architecture-enterprise
@@ -29,16 +29,16 @@ modules:
   - name: bmb
     version: main
     installDate: 2026-04-05T13:06:16.556Z
-    lastUpdated: 2026-06-08T01:19:49.720Z
+    lastUpdated: 2026-06-24T02:54:58.717Z
     source: external
     npmPackage: bmad-builder
     repoUrl: https://github.com/bmad-code-org/bmad-builder
     channel: next
-    sha: 7cfa7711778f04c5df56f7ae895fabc942fd920c
+    sha: e6935f2776c34ffd9b18f4ef1e334584ef10a50f
   - name: wds
     version: main
     installDate: 2026-04-05T13:06:20.944Z
-    lastUpdated: 2026-06-08T01:19:49.721Z
+    lastUpdated: 2026-06-24T02:54:58.718Z
     source: external
     npmPackage: bmad-wds
     repoUrl: https://github.com/bmad-code-org/bmad-method-wds-expansion
@@ -48,7 +48,7 @@ modules:
   - name: automator
     version: main
     installDate: 2026-06-08T01:19:49.662Z
-    lastUpdated: 2026-06-08T01:19:49.722Z
+    lastUpdated: 2026-06-24T02:54:58.720Z
     source: external
     npmPackage: bmad-story-automator
     repoUrl: https://github.com/bmad-code-org/bmad-automator
@@ -57,7 +57,7 @@ modules:
   - name: skills
     version: null
     installDate: 2026-04-22T01:22:24.249Z
-    lastUpdated: 2026-06-08T01:19:49.723Z
+    lastUpdated: 2026-06-24T02:54:58.721Z
     source: unknown
     npmPackage: null
     repoUrl: null

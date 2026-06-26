@@ -74,6 +74,8 @@ web_modules/
 
 # dotenv environment variable files
 .env
+.env.*
+!.env.example
 .env.development.local
 .env.test.local
 .env.production.local
@@ -114,6 +116,15 @@ dist
 .docusaurus
 
 server/logs/
+server/**/*.db
+server/**/*.sqlite
+server/**/*.sqlite3
+server/backups/
+server/uploads/project-attachments/
+server/scripts/migration/*.sql
+server/scripts/migration/*.dump
+server/scripts/migration/*.log
+server/scripts/migration/output/
 
 # Serverless directories
 .serverless/

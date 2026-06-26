@@ -5,6 +5,105 @@ const contractsService = require('./contractsService');
 const fs = require('fs');
 const path = require('path');
 
+// ---------------------------------------------------------------------------
+// Dashboard 项目数据内存缓存
+// 用途：Dashboard 聚合接口短缓存，避免并发请求重复加载项目文本、
+//       assessment_details_json 和风险配置白名单。
+// TTL：5 秒（短缓存，用户几乎无感知，无需手动清除）
+// 可通过环境变量 DASHBOARD_CACHE_TTL 自定义（单位：毫秒）
+// ---------------------------------------------------------------------------
+const CACHE_TTL_MS = parseInt(process.env.DASHBOARD_CACHE_TTL || '5000', 10);
+let dashboardTextCache = { data: null, timestamp: 0 };
+let dashboardTextCachePromise = null;
+let assessmentDetailsCache = { data: null, timestamp: 0 };
+let assessmentDetailsCachePromise = null;
+let riskWhitelistCache = { data: null, timestamp: 0 };
+let riskWhitelistCachePromise = null;
+let dashboardDbReadQueue = Promise.resolve();
+
+const runDashboardDbRead = (readTask) => {
+  const queuedRead = dashboardDbReadQueue.catch(() => {}).then(readTask);
+  dashboardDbReadQueue = queuedRead.catch(() => {});
+  return queuedRead;
+};
+
+const getCachedDashboardTextData = async () => {
+  const now = Date.now();
+  if (dashboardTextCache.data && (now - dashboardTextCache.timestamp) < CACHE_TTL_MS) {
+    return dashboardTextCache.data;
+  }
+
+  if (dashboardTextCachePromise) {
+    return dashboardTextCachePromise;
+  }
+
+  dashboardTextCachePromise = (async () => {
+    const data = await runDashboardDbRead(() => dashboardModel.getAllProjectTextData());
+    dashboardTextCache.data = data;
+    dashboardTextCache.timestamp = Date.now();
+    return data;
+  })();
+
+  try {
+    return await dashboardTextCachePromise;
+  } finally {
+    dashboardTextCachePromise = null;
+  }
+};
+
+const getCachedAssessmentDetails = async () => {
+  const now = Date.now();
+  if (assessmentDetailsCache.data && (now - assessmentDetailsCache.timestamp) < CACHE_TTL_MS) {
+    return assessmentDetailsCache.data;
+  }
+
+  if (assessmentDetailsCachePromise) {
+    return assessmentDetailsCachePromise;
+  }
+
+  assessmentDetailsCachePromise = (async () => {
+    const data = await runDashboardDbRead(() => dashboardModel.getAllAssessmentDetails());
+    assessmentDetailsCache.data = data;
+    assessmentDetailsCache.timestamp = Date.now();
+    return data;
+  })();
+
+  try {
+    return await assessmentDetailsCachePromise;
+  } finally {
+    assessmentDetailsCachePromise = null;
+  }
+};
+
+const getCachedRiskWhitelist = async () => {
+  const now = Date.now();
+  if (riskWhitelistCache.data && (now - riskWhitelistCache.timestamp) < CACHE_TTL_MS) {
+    return riskWhitelistCache.data;
+  }
+
+  if (riskWhitelistCachePromise) {
+    return riskWhitelistCachePromise;
+  }
+
+  riskWhitelistCachePromise = (async () => {
+    const riskConfigs = await runDashboardDbRead(() => configModel.getAllRiskItems());
+    const whitelist = new Set(
+      (riskConfigs || [])
+        .map((ri) => String(ri?.item_name || '').trim())
+        .filter(Boolean)
+    );
+    riskWhitelistCache.data = whitelist;
+    riskWhitelistCache.timestamp = Date.now();
+    return whitelist;
+  })();
+
+  try {
+    return await riskWhitelistCachePromise;
+  } finally {
+    riskWhitelistCachePromise = null;
+  }
+};
+
 const NON_ROLE_KEYS = new Set([
   'id',
   'index',
@@ -365,18 +464,11 @@ const collectFromLegacyWorkload = (roleCosts, workload = {}, rolePriceMap) => {
 // ------------------------------
 // [Dashboard Refactor] /api/dashboard/overview
 exports.getOverview = async () => {
-  const [recentRow, standardRow, web3dRow, configCounts] = await Promise.all([
-    dashboardModel.getRecentProjectCount(30),
-    dashboardModel.getProjectCountStandard(),
-    dashboardModel.getProjectCountWeb3d(),
-    dashboardModel.getConfigCounts(),
-  ]);
-
-  let aiModels = { total: 0, current_name: null };
+  let metrics = {};
   try {
-    aiModels = await dashboardModel.getAIModelCount();
+    metrics = await runDashboardDbRead(() => dashboardModel.getOverviewMetrics(30));
   } catch (error) {
-    logger.warn('Failed to query ai_model_configs for dashboard overview', {
+    logger.warn('Failed to query dashboard overview metrics', {
       error: error?.message,
     });
   }
@@ -391,27 +483,29 @@ exports.getOverview = async () => {
     contractsCount = 0;
   }
 
+  // [Bugfix] PostgreSQL 的 COUNT(*) 经 node-postgres 返回字符串，会导致前端 saas_count + web3d_count
+  // 变成字符串拼接（如 "43"+"9"="439"）。此处统一转为数字，保证所有消费方拿到的都是数值。
   return {
-    recent_30d: recentRow?.count || 0,
-    saas_count: standardRow?.count || 0,
-    web3d_count: web3dRow?.count || 0,
-    contracts_count: contractsCount || 0,
+    recent_30d: toNumber(metrics?.recent_30d),
+    saas_count: toNumber(metrics?.saas_count),
+    web3d_count: toNumber(metrics?.web3d_count),
+    contracts_count: toNumber(contractsCount),
     knowledge_assets: {
-      risk_count: configCounts?.risk_count || 0,
-      role_count: configCounts?.role_count || 0,
-      web3d_risk_count: configCounts?.web3d_risk_count || 0,
-      web3d_workload_template_count: configCounts?.web3d_workload_template_count || 0,
+      risk_count: toNumber(metrics?.risk_count),
+      role_count: toNumber(metrics?.role_count),
+      web3d_risk_count: toNumber(metrics?.web3d_risk_count),
+      web3d_workload_template_count: toNumber(metrics?.web3d_workload_template_count),
     },
     ai_models: {
-      total: aiModels?.total || 0,
-      current_name: aiModels?.current_name || null,
+      total: toNumber(metrics?.ai_model_total),
+      current_name: metrics?.ai_model_current_name || null,
     },
   };
 };
 
 // [Dashboard Refactor] /api/dashboard/trend
 exports.getTrend = async () => {
-  const rows = await dashboardModel.getTrendLast12Months();
+  const rows = await runDashboardDbRead(() => dashboardModel.getTrendLast12Months());
   return (rows || []).map((row) => {
     const avgCost = toNumber(row?.avg_total_cost_wan);
     const avgRisk = toNumber(row?.avg_risk_score);
@@ -427,34 +521,19 @@ exports.getTrend = async () => {
 
 // [Dashboard Refactor] /api/dashboard/cost-range
 exports.getCostRange = async () => {
-  const rows = await dashboardModel.getProjectCosts();
-  const buckets = {
-    '<50': 0,
-    '50-100': 0,
-    '100-300': 0,
-    '>300': 0,
-  };
-
-  (rows || []).forEach((row) => {
-    const cost = toNumber(row?.final_total_cost);
-    if (!Number.isFinite(cost)) return;
-    if (cost < 50) buckets['<50'] += 1;
-    else if (cost < 100) buckets['50-100'] += 1;
-    else if (cost < 300) buckets['100-300'] += 1;
-    else buckets['>300'] += 1;
-  });
+  const buckets = await runDashboardDbRead(() => dashboardModel.getCostRangeBuckets());
 
   return [
-    { range: '<50', count: buckets['<50'] },
-    { range: '50-100', count: buckets['50-100'] },
-    { range: '100-300', count: buckets['100-300'] },
-    { range: '>300', count: buckets['>300'] },
+    { range: '<50', count: toNumber(buckets?.lt_50) },
+    { range: '50-100', count: toNumber(buckets?.range_50_100) },
+    { range: '100-300', count: toNumber(buckets?.range_100_300) },
+    { range: '>300', count: toNumber(buckets?.gt_300) },
   ];
 };
 
 // [Dashboard Refactor] /api/dashboard/keywords
 exports.getKeywords = async () => {
-  const rows = await dashboardModel.getAllProjectTextData();
+  const rows = await getCachedDashboardTextData();
   const joined = (rows || [])
     .map((r) => `${r?.name || ''} ${r?.description || ''}`.trim())
     .filter(Boolean)
@@ -513,7 +592,7 @@ const extractProjectFactors = (details) => {
 
 // [Dashboard Refactor] /api/dashboard/dna
 exports.getDNA = async () => {
-  const rows = await dashboardModel.getAllAssessmentDetails();
+  const rows = await getCachedAssessmentDetails();
   const costs = [];
   const risks = [];
   const workloads = [];
@@ -588,7 +667,7 @@ const collectRoleDaysFromLegacyWorkload = (roleDays, workload = {}) => {
 
 // [Dashboard Refactor] /api/dashboard/top-roles
 exports.getTopRoles = async () => {
-  const rows = await dashboardModel.getAllAssessmentDetails();
+  const rows = await getCachedAssessmentDetails();
   const roleDays = {};
 
   (rows || []).forEach((row) => {
@@ -607,20 +686,15 @@ exports.getTopRoles = async () => {
 
 // [Dashboard Refactor] /api/dashboard/top-risks
 exports.getTopRisks = async () => {
-  let riskConfigs = [];
+  let whitelist;
   try {
-    riskConfigs = await configModel.getAllRiskItems();
+    whitelist = await getCachedRiskWhitelist();
   } catch (error) {
     logger.warn('Failed to load config_risk_items for top-risks', { error: error?.message });
     return [];
   }
-  const whitelist = new Set(
-    (riskConfigs || [])
-      .map((ri) => String(ri?.item_name || '').trim())
-      .filter(Boolean)
-  );
 
-  const rows = await dashboardModel.getAllAssessmentDetails();
+  const rows = await getCachedAssessmentDetails();
   const counts = {};
 
   (rows || []).forEach((row) => {

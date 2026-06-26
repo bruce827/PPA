@@ -68,6 +68,8 @@ const parseBooleanFlag = (value) => {
   return undefined;
 };
 
+const normalizeBooleanFlagForDb = (value) => (parseBooleanFlag(value) ? 1 : 0);
+
 const extractDatePrefix = (value) => {
   if (typeof value !== 'string') return undefined;
   const trimmed = value.trim();
@@ -182,7 +184,7 @@ const createProject = async (projectData) => {
   const params = [
     name,
     description,
-    is_template || 0,
+    normalizeBooleanFlagForDb(is_template),
     final_total_cost,
     final_risk_score,
     final_workload_days,
@@ -289,7 +291,7 @@ const updateProjectFields = async (id, fields) => {
   allowed.forEach((key) => {
     if (typeof fields[key] === 'undefined') return;
     setParts.push(`${key} = ?`);
-    params.push(fields[key]);
+    params.push(key === 'is_template' ? normalizeBooleanFlagForDb(fields[key]) : fields[key]);
   });
 
   if (!setParts.length) {
@@ -322,6 +324,7 @@ const deleteProject = async (id) => {
 };
 
 module.exports = {
+  ensureSchema,
   createProject,
   getProjectById,
   getAllProjects,

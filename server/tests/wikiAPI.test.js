@@ -7,6 +7,7 @@ const request = require('supertest');
 
 const { app } = require('../index');
 const db = require('../utils/db');
+const { initTestDatabase, cleanupTestDatabase, setupTransactionProtection } = require('./test-helper');;
 const { initDatabase } = require('../init-db');
 
 describe('Wiki API - Full Integration Test Suite', () => {

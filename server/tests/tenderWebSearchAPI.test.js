@@ -12,6 +12,7 @@ const openaiProvider = require('../providers/ai/openaiProvider');
 const tavilyProvider = require('../providers/ai/tavilyProvider');
 const tenderStagingModel = require('../models/tenderStagingModel');
 const db = require('../utils/db');
+const { initTestDatabase, cleanupTestDatabase, setupTransactionProtection } = require('./test-helper');;
 const { timeoutError } = require('../utils/errors');
 
 async function createTenderRecord(overrides = {}) {

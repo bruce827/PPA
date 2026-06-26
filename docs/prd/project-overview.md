@@ -24,6 +24,20 @@
 - 项目总体成本构成（开发 / 集成 / 差旅 / 维护 / 风险）占比
 - 风险评分与评分因子 (Rating Factor) 概览
 - 历史评估统计与模板使用频率（规划中）
+- **接口列表**：
+  - `GET /api/dashboard/overview` — 概览统计（项目数、配置资产、AI 模型）
+  - `GET /api/dashboard/trend` — 近 12 个月趋势（按月+项目类型）
+  - `GET /api/dashboard/cost-range` — 成本分桶分布（<50 / 50-100 / 100-300 / >300 万）
+  - `GET /api/dashboard/keywords` — 项目关键词词云
+  - `GET /api/dashboard/dna` — 项目 DNA（平均成本、风险、工作量、技术/交付因子）
+  - `GET /api/dashboard/top-roles` — Top 5 角色工作量
+  - `GET /api/dashboard/top-risks` — Top 10 风险项出现次数
+- **服务端内存缓存**（2026-06-24 新增）：
+  - 位置：Node.js 进程内存（`dashboardService.js`）
+  - 用途：合并 `getAllAssessmentDetails` / `getAllProjectTextData` / `getProjectCosts` 三次查询为一次，避免重复加载 ~850KB JSON 数据
+  - TTL：5 秒（可通过环境变量 `DASHBOARD_CACHE_TTL` 自定义，单位毫秒）
+  - 效果：首次加载 ~450ms，缓存命中 ~12ms，提升 97%
+  - 注意：缓存仅对 `/cost-range`、`/keywords`、`/dna`、`/top-roles`、`/top-risks` 生效
 
 ### 2. **项目评估** (`/assessment`)
 

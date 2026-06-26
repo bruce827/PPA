@@ -1,14 +1,277 @@
 ---
 title: "PPA 2.0 PRD"
-version: "v0.1"
+version: "v0.2"
+status: "draft"
 created: "2026-04-11"
-updated: "2026-04-11"
+updated: "2026-06-24"
 inputs:
   - "docs/prd2.0/product-brief.md"
+  - "docs/prd2.0/PLANNING-PAUSED.md"
+  - "docs/database/postgresql-migration-plan.md"
+  - "docs/database/static-files-recommendations.md"
+  - "docs/database/ppa-static-files-optimization-plan.md"
   - "docs/prd/ 下的 PPA 1.0 现有文档"
 ---
 
 # PPA 2.0 产品需求文档
+
+> 当前更新范围（2026-06-24）：本 PRD 先补齐 `PPA 2.0` 的三大方向结构，并优先展开方向一“数据与存储底座迁移”。方向二保留并承接原有 SaaS 平台规划内容；方向三作为 `docs/prd2.0/` 其它商业、融资、定价、奖励文档的整合入口。
+
+## 0. 文档结构与三大方向
+
+### 0.1 三大方向
+
+| 方向 | 定义 | 当前状态 | 主要输入 |
+|------|------|----------|----------|
+| 方向一：数据与存储底座迁移 | 将 `PPA 1.0` 的本地 SQLite、项目附件、爬虫数据、AI 日志与备份策略迁移到可在线运行、可备份、可回滚的云端数据/存储底座。 | 本次优先展开，作为 V2 后续功能建设前置条件。 | `docs/database/postgresql-migration-plan.md`、`docs/database/static-files-recommendations.md`、`docs/database/ppa-static-files-optimization-plan.md` |
+| 方向二：SaaS 平台规划及补充 | 将现有单人项目评估工具升级为基于公开招标项目的多人群体评估平台，覆盖公开项目池、多人评估、聚合结果、奖励、付费报告与运营后台。 | 原 PRD 主体已覆盖，后续需补齐账户、权限、订单、报告、运营后台的开发级 FR。 | `docs/prd2.0/product-brief.md`、本文件第 1-14 节 |
+| 方向三：文件夹中其它内容整合 | 将商业模式、投资人叙事、定价与奖励实验、问答材料等内容沉淀为 V2 的商业验证、融资叙事和后续版本输入。 | 本次只建立入口，暂不展开为开发需求。 | `docs/prd2.0/business-model.md`、`investor-narrative.md`、`pricing-and-reward-experiments.md`、`reward-and-judgment-mechanism.md` 等 |
+
+### 0.2 当前优先级判断
+
+方向一必须先做，因为它解决的是 V2 平台化的底座约束，而不是普通技术债：
+
+- `server/ppa.db` 已进入 Git 历史，存在数据泄露和仓库膨胀风险。
+- SQLite 本地文件不适合 V2 的在线服务、Agent 调用、多用户访问和云端备份。
+- 项目附件、爬虫数据、AI 日志和备份文件当前分散在本地，缺少稳定备份、权限控制与访问策略。
+- 后续 SaaS 用户体系、付费报告、附件下载、连续项目筛选都依赖可在线访问的数据和文件服务。
+
+### 0.3 已采用的阶段性决策
+
+- 数据库方向采用“迁移到 Supabase 托管 PostgreSQL”的口径；PRD 不再把它描述为泛泛的 PostgreSQL 自建迁移。
+- 文件服务方向采用“本地项目附件迁移到 Supabase Storage”的口径，且 P0 范围只覆盖项目附件。
+- Supabase Auth 不在方向一启用；它属于方向二的 SaaS 用户体系。
+- 多租户/组织架构、Supabase 升级计划暂不在方向一决策，只保留扩展约束。
+- Supabase 免费容量以实施当天官方价格页/计费文档为准。2026-06-24 查阅官方文档时，Free 计划显示每项目 `500 MB Database Size`、`1 GB Storage Size`、`2` 个免费项目；现有决策文档中“10 GB/36 个月免费”的口径需在实施前修正。官方文档入口：https://supabase.com/docs/guides/platform/org-based-billing
+
+### 0.4 详细设计文件索引
+
+本节是 `docs/prd2.0/` 的主索引。原则是：`prd.md` 定义产品范围、阶段和开发优先级；其它文件作为详细设计、商业验证或对外叙事材料被引用，不重复塞进 PRD 主体。
+
+#### 0.4.1 推荐阅读路径
+
+1. 先读本文件：确认 V2 的三大方向、方向一迁移 PRD、SaaS 平台主体需求。
+2. 再读 `product-brief.md`：确认为什么做 V2、服务谁、第一阶段验证什么。
+3. 如果准备实施方向一，读 `docs/database/` 下三个迁移/存储决策文档。
+4. 如果准备细化方向二，读 `business-model.md`、`reward-and-judgment-mechanism.md`、`pricing-and-reward-experiments.md`。
+5. 如果准备对外融资或找资源，读 `investor-narrative.md`、`pitch-one-liner.md`、`pitch-deck-*`、`qa-investor-questions.md`、`investor-dealflow-channels.md`。
+
+#### 0.4.2 产品与需求主线
+
+| 文件 | 角色 | 何时使用 | 与本 PRD 的关系 |
+|------|------|----------|----------------|
+| [`product-brief.md`](./product-brief.md) | 产品简报 | 需要快速理解 V2 定位、目标用户、商业化路径时 | 本 PRD 的上游输入；不放开发级 FR |
+| [`prd.md`](./prd.md) | V2 主 PRD 与目录索引 | 规划、拆故事、检查范围、对齐实施优先级时 | 唯一主索引；其它文件必须回链到这里 |
+| [`PLANNING-PAUSED.md`](./PLANNING-PAUSED.md) | 规划恢复备注 | 中断后恢复 BMad 规划或确认旧状态时 | 状态记录，不作为需求来源本身 |
+| [`README.md`](./README.md) | 目录说明 | 新读者进入 `docs/prd2.0/` 时 | 只做入口，不维护第二套完整索引 |
+
+#### 0.4.3 方向二：SaaS 平台商业与机制设计
+
+| 文件 | 角色 | 何时使用 | 已沉淀到本 PRD 的内容 |
+|------|------|----------|------------------------|
+| [`business-model.md`](./business-model.md) | 商业模式说明 | 判断谁付费、怎么收费、成本和商业飞轮时 | 付费用户、单项目报告、连续筛选服务、奖励成本约束 |
+| [`pricing-and-reward-experiments.md`](./pricing-and-reward-experiments.md) | 定价与奖励实验设计 | 需要验证价格带、奖励强度、单位经济性时 | 成功指标、收费规则、奖励预算和开放问题 |
+| [`reward-and-judgment-mechanism.md`](./reward-and-judgment-mechanism.md) | 奖励与研判机制草案 | 设计评估提交、分歧、少数派洞察、长期校准时 | 群体聚合、分歧度、可信度、奖励原则 |
+
+#### 0.4.4 方向三：融资叙事与对外沟通资产
+
+| 文件 | 角色 | 何时使用 | 是否影响产品范围 |
+|------|------|----------|------------------|
+| [`investor-narrative.md`](./investor-narrative.md) | 投资人口径底稿 | 准备和投资人、资源方解释项目时 | 不直接定义功能；校准商业叙事 |
+| [`investor-dealflow-channels.md`](./investor-dealflow-channels.md) | 投资人触达渠道 | 规划融资、路演、创业社区进入路径时 | 不影响 MVP 功能 |
+| [`pitch-one-liner.md`](./pitch-one-liner.md) | 一句话/30 秒/1 分钟话术 | 对外介绍 PPA 2.0 时 | 不影响 MVP 功能；统一表达口径 |
+| [`pitch-deck-outline.md`](./pitch-deck-outline.md) | 融资 deck 大纲 | 准备 10 页左右融资材料结构时 | 不影响 MVP 功能 |
+| [`pitch-deck-draft.md`](./pitch-deck-draft.md) | 融资 deck 正文初稿 | 需要把 deck 转成 PPT/Keynote/PDF 时 | 不影响 MVP 功能 |
+| [`pitch-deck-speaker-notes.md`](./pitch-deck-speaker-notes.md) | 逐页演讲稿 | 准备 5-8 分钟 pitch 讲述时 | 不影响 MVP 功能 |
+| [`qa-investor-questions.md`](./qa-investor-questions.md) | 投资人问答底稿 | 准备高频追问和反驳时 | 不影响 MVP 功能；可反向发现商业风险 |
+
+#### 0.4.5 归档与维护规则
+
+- 新增 V2 详细设计文档时，必须在本节登记；不要只放在目录里。
+- 如果某文档产生新的产品范围、功能要求或非功能要求，必须同步回写到本 PRD 的对应章节。
+- 融资、话术、问答类文档不直接改变产品范围；它们只能提出风险或验证假设，再由 PRD 决定是否纳入。
+- `.decision-log.md` 是 PRD 决策审计日志，默认不作为公开阅读路径，但所有重大范围取舍都应记录在那里。
+
+## A. 方向一：数据与存储底座迁移 PRD
+
+### A.1 目标
+
+方向一的目标是把 PPA 从“本地 SQLite + 本地文件”的开发型形态，升级为“云端 PostgreSQL + 云端对象存储 + 可回滚切换”的 V2 数据底座。
+
+这个方向不直接交付 SaaS 终端功能，但它必须让后续 SaaS 平台规划具备三个条件：
+
+1. 生产数据不再依赖仓库内数据库文件。
+2. 后端服务可通过环境配置连接云端数据库并支持在线访问。
+3. 项目附件和关键静态文件具备云端存储、备份和受控下载能力。
+
+### A.2 非目标
+
+方向一明确不做以下内容：
+
+- 不上线完整用户注册、登录、组织和权限系统。
+- 不实现 SaaS 会员、订单、支付或报告购买流程。
+- 不改造评估业务规则、风险评分算法或报价计算模型。
+- 不做双写迁移，除非停机迁移验证失败且停机时间不可接受。
+- 不一次性迁移所有历史 docs、AI 日志和备份文件到 Storage；它们按 P1/P2 治理。
+
+### A.3 目标用户与利益相关方
+
+- **系统维护者 bruce**：需要消除数据库入库风险，降低本地文件丢失风险，并保留可回滚能力。
+- **后续开发 Agent/开发者**：需要稳定的数据库访问抽象，不再直接绑定 SQLite API 和本地文件路径。
+- **V2 SaaS 规划负责人**：需要确认数据、附件、备份和在线访问能力足以支撑多人评估、报告和 Agent 接口。
+- **未来运营人员**：需要知道哪些数据可长期保留，哪些数据应定期清理。
+
+### A.4 关键用户旅程
+
+- **UJ-DB-1. bruce 将生产数据移出代码仓库。** bruce 发现 `ppa.db` 已进入 Git 历史后，先完成备份和迁移验证，再让服务通过 `DB_TYPE=postgres` 连接 Supabase PostgreSQL。价值交付时刻是：后端核心 API 在云端数据库上正常运行，仓库不再需要提交数据库文件。
+- **UJ-DB-2. 开发者在本地和云端之间切换数据库。** 开发者调试时可使用 SQLite，验证 V2 或在线服务时可切换到 PostgreSQL。价值交付时刻是：同一套 Model/Service 通过数据库适配层工作，失败时能在 5 分钟内切回 SQLite。
+- **UJ-DB-3. 用户下载历史项目附件。** 项目附件迁移到私有 Storage 后，后端生成短期签名链接，前端仍能下载附件。价值交付时刻是：附件不再依赖本地磁盘，同时避免公开裸链。
+- **UJ-DB-4. 维护者控制日志和 staging 增长。** 维护者按保留策略清理 AI 日志和已处理 staging 数据，避免免费容量被低价值历史数据挤满。价值交付时刻是：数据库与 Storage 占用可观测、可预警、可控。
+
+### A.5 术语
+
+- **Supabase 托管 PostgreSQL**：PPA V2 方向一选定的云端关系数据库服务。
+- **SQLite 回滚源**：迁移前保留的 `server/ppa.db` 备份与本地 SQLite 运行路径。
+- **数据库适配层**：统一封装 SQLite/PostgreSQL 的查询、事务、关闭连接与返回值差异的后端模块。
+- **项目附件**：`server/uploads/project-attachments/` 下与项目记录关联的上传文件。
+- **签名链接**：由后端按权限和有效期生成的 Storage 私有文件下载 URL。
+- **Staging 数据**：公开招标抓取、清洗和候选项目中转过程中产生的临时或半临时数据。
+- **AI 日志**：`server/logs/ai/` 下的 AI 请求、响应、解析结果和 notes 文件。
+
+### A.6 功能需求
+
+#### DB-FR-1：迁移前备份与基线确认
+
+系统维护者必须能在迁移前创建 SQLite 数据库备份、导出 Schema，并记录迁移前核心表行数。
+
+**可验收结果：**
+- `server/backups/` 中存在带时间戳的迁移前数据库备份和 Schema 导出。
+- 至少记录 `projects`、`config_roles`、`config_risk_items`、`opportunity_tender_staging`、`ai_assessment_logs` 的迁移前行数。
+- 迁移前明确 `ai_assessment_logs` 和 `opportunity_tender_staging` 是完整迁移、清理后迁移，还是暂不迁移。
+
+#### DB-FR-2：Supabase PostgreSQL Schema 与数据迁移
+
+系统必须能将 SQLite 中的核心业务表结构和数据迁移到 Supabase 托管 PostgreSQL。
+
+**可验收结果：**
+- PostgreSQL 中创建所有目标表、主键、外键和索引。
+- 所有 P0 核心数据表行数与迁移策略一致。
+- `projects.assessment_details_json` 等 JSON 大字段完整迁移且可读取。
+- 迁移脚本失败时必须中断并输出失败表名和错误原因。
+
+#### DB-FR-3：数据库适配层与环境切换
+
+后端必须通过统一数据库适配层访问数据库，并通过环境变量选择 SQLite 或 PostgreSQL。
+
+**可验收结果：**
+- `DB_TYPE=sqlite` 时系统仍可使用本地 SQLite。
+- `DB_TYPE=postgres` 时系统连接 Supabase PostgreSQL。
+- 数据库连接状态可通过健康检查或日志确认。
+- 除适配层外，新增代码不得直接依赖 `sqlite3` 或 `pg` 客户端细节。
+
+#### DB-FR-4：Model 层 SQL 兼容改造
+
+所有后端 Model 必须完成 SQLite 与 PostgreSQL 查询差异处理，避免占位符、事务、时间类型、返回值差异导致运行错误。
+
+**可验收结果：**
+- 所有 Model 查询使用参数化输入，不新增字符串拼接 SQL 风险。
+- `?` 与 `$1/$2` 占位符差异由适配层或明确转换策略处理。
+- PostgreSQL 返回的 Date 类型在 API 输出前保持与前端兼容。
+- 现有后端测试和核心 API 手动验证通过。
+
+#### DB-FR-5：项目附件迁移到 Supabase Storage
+
+系统必须将 P0 项目附件迁移到私有 Supabase Storage，并保留项目记录到文件对象的可追溯关系。
+
+**可验收结果：**
+- 创建私有 bucket：`project-attachments`。
+- 现有 4 个项目附件全部迁移并完成大小/数量校验。
+- 数据库中保存 Storage 对象 key 或等价稳定路径。
+- 附件下载接口返回带有效期的签名链接。
+- 前端项目详情中的附件下载不因迁移中断。
+
+#### DB-FR-6：Git 与本地文件安全治理
+
+系统必须阻止数据库、环境变量、上传文件和运行日志再次进入 Git。
+
+**可验收结果：**
+- `.gitignore` 覆盖 `ppa.db`、数据库备份、`.env`、上传附件、AI 日志和临时迁移产物。
+- 是否清理 Git 历史中的 `ppa.db` 必须形成明确决策。
+- 清理 Git 历史前必须确认团队同步和远端影响；未清理时必须在风险登记中保留。
+
+#### DB-FR-7：数据保留与容量治理
+
+系统必须定义 AI 日志、Staging 数据、爬虫数据、备份文件的保留策略，避免免费容量被低价值历史数据耗尽。
+
+**可验收结果：**
+- AI 日志至少具备“定期清理 >30 天日志”的执行方案。
+- Staging 数据至少具备“已处理数据按时间清理”的执行方案。
+- 数据库容量接近 400 MB 时有人工或脚本告警。
+- 爬虫数据是否迁移到 Storage 被标记为 P1，不阻塞方向一 P0 上线。
+
+#### DB-FR-8：验证、上线与回滚
+
+系统必须在切换到 PostgreSQL 后验证核心业务流程，并保留快速回滚到 SQLite 的路径。
+
+**可验收结果：**
+- 数据一致性验证脚本输出所有目标表对比结果。
+- `GET /api/health`、`GET /api/projects`、`POST /api/calculate` 在 PostgreSQL 下验证通过。
+- 项目列表、项目详情、评估计算、Excel 导出、附件下载完成手动验证。
+- 出现 API 500、数据库连接超时、行数不一致或核心功能失效时，可按回滚步骤在 5 分钟内切回 SQLite。
+
+#### DB-FR-9：V2 SaaS 扩展预留
+
+方向一交付的数据库和 Storage 方案必须为方向二预留用户体系、报告、奖励和 Agent 接口能力，但不得提前实现复杂 SaaS 功能。
+
+**可验收结果：**
+- Supabase Auth、Realtime、Edge Functions 在文档中作为后续能力保留，不作为方向一完成条件。
+- 当前数据模型改造不阻碍后续加入 `users`、评估提交、奖励流水、订单和报告文件。
+- 项目附件 Storage 权限策略可扩展到未来用户鉴权。
+
+### A.7 MVP 范围
+
+方向一 MVP 必须包含：
+
+- SQLite 到 Supabase PostgreSQL 的核心数据迁移。
+- 后端数据库适配层与环境变量切换。
+- 项目附件迁移到 Supabase Storage。
+- Git 和本地文件安全治理。
+- 迁移验证脚本、核心 API 验证和回滚方案。
+
+方向一 MVP 可以延后：
+
+- 爬虫数据迁移到 Storage。
+- AI 日志迁移到 Storage。
+- Docs 文档和备份文件迁移到 Storage。
+- Supabase Auth、Realtime、Edge Functions 的实际接入。
+- 多租户、组织、权限和计费模型。
+
+### A.8 成功指标
+
+- **DB-SM-1：数据安全基线达成。** `ppa.db` 不再作为生产运行依赖提交到仓库；后续提交不再包含数据库文件。
+- **DB-SM-2：迁移完整性达成。** P0 表行数和关键 JSON 字段验证通过；差异项必须有书面解释。
+- **DB-SM-3：核心 API 可运行。** PostgreSQL 环境下健康检查、项目列表、评估计算和导出流程可用。
+- **DB-SM-4：附件访问不中断。** 迁移后历史项目附件仍可通过前端正常下载。
+- **DB-SM-5：回滚可执行。** 按文档步骤可在 5 分钟内切回 SQLite。
+- **DB-SM-C1：不要为了“全部上云”牺牲上线稳定性。** P1/P2 文件治理不得阻塞 P0 数据库和附件迁移完成。
+
+### A.9 风险与缓解
+
+| 风险 | 影响 | 缓解 |
+|------|------|------|
+| 迁移计划中对 AI 日志、Staging 数据是否迁移存在口径不一致 | 迁移范围不清，可能导致遗漏或容量超限 | 在 DB-FR-1 前置决策中先确定完整迁移、清理后迁移或暂不迁移 |
+| Supabase 免费容量口径在现有文档中不一致 | 成本预估失真 | 实施前以官方文档重新核对 Database Size、Storage Size 和项目数限制 |
+| SQL 占位符和事务差异改造遗漏 | API 500 或数据写入失败 | 建立适配层、逐 Model 验证、保留 SQLite 回滚 |
+| Git 历史清理影响协作 | 远端分支和本地 clone 需要重写历史 | 先记录风险，实施前单独确认清理窗口和同步方式 |
+| 附件签名链接策略不完整 | 文件泄露或下载失效 | bucket 私有化、签名链接短期有效、后端统一生成 |
+
+### A.10 开放问题
+
+1. AI 评估日志是完整迁移、清理后迁移，还是只保留最近 30 天？
+2. `opportunity_tender_staging` 是完整迁移、清理已处理历史后迁移，还是只迁移当前可用项目？
+3. Git 历史中的 `ppa.db` 是否立即清理？如果清理，谁负责通知和同步所有本地仓库？
+4. Supabase Storage 免费额度能否覆盖爬虫数据 791 MB + 附件 + 备份的首阶段需求？
+5. P0 阶段是否需要把 `server/uploads/project-attachments/` 的本地旧路径做兼容读取，还是迁移后直接改为 Storage key？
 
 ## 1. 版本定义
 

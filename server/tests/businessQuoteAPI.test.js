@@ -9,6 +9,7 @@ const ExcelJS = require('exceljs');
 
 const { app } = require('../index');
 const db = require('../utils/db');
+const { initTestDatabase, cleanupTestDatabase, setupTransactionProtection } = require('./test-helper');;
 
 const binaryParser = (res, callback) => {
   const data = [];

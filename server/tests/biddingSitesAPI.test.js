@@ -10,6 +10,7 @@ const request = require('supertest');
 
 const { app } = require('../index');
 const db = require('../utils/db');
+const { initTestDatabase, cleanupTestDatabase, setupTransactionProtection } = require('./test-helper');;
 
 function startServer(handler) {
   return new Promise((resolve, reject) => {

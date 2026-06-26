@@ -5,6 +5,7 @@ const os = require('os');
 const path = require('path');
 
 const db = require('../utils/db');
+const { initTestDatabase, cleanupTestDatabase, setupTransactionProtection } = require('./test-helper');;
 const tenderDedupeService = require('../services/tenderDedupeService');
 const tenderStagingModel = require('../models/tenderStagingModel');
 const tenderWebSearchResultModel = require('../models/tenderWebSearchResultModel');

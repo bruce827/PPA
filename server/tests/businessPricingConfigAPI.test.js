@@ -7,6 +7,7 @@ const request = require('supertest');
 
 const { app } = require('../index');
 const db = require('../utils/db');
+const { initTestDatabase, cleanupTestDatabase, setupTransactionProtection } = require('./test-helper');;
 
 describe('Business Pricing Config API - Integration Tests', () => {
   const TEST_DB_PATH = path.join(

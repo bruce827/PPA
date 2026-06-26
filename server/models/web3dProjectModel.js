@@ -4,6 +4,15 @@ const db = require('../utils/db');
  * Web3D 项目相关的数据库操作
  */
 
+const normalizeBooleanFlagForDb = (value) => {
+  if (typeof value === 'boolean') return value ? 1 : 0;
+  if (typeof value === 'number') return value === 1 ? 1 : 0;
+  if (typeof value === 'string') {
+    return ['1', 'true', 'yes'].includes(value.trim().toLowerCase()) ? 1 : 0;
+  }
+  return 0;
+};
+
 const createProject = async (data) => {
   const {
     name,
@@ -22,7 +31,7 @@ const createProject = async (data) => {
     [
       name,
       description,
-      is_template || 0,
+      normalizeBooleanFlagForDb(is_template),
       final_total_cost,
       final_risk_score,
       final_workload_days,
@@ -50,7 +59,7 @@ const updateProject = async (id, data) => {
     [
       name,
       description,
-      is_template || 0,
+      normalizeBooleanFlagForDb(is_template),
       final_total_cost,
       final_risk_score,
       final_workload_days,

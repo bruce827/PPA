@@ -8,6 +8,7 @@ const request = require('supertest');
 
 const { app } = require('../index');
 const db = require('../utils/db');
+const { initTestDatabase, cleanupTestDatabase, setupTransactionProtection } = require('./test-helper');;
 
 describe('Monitoring API - Integration Tests', () => {
   const TEST_DB_PATH = path.join(os.tmpdir(), `ppa.monitoring.${process.pid}.${Date.now()}.db`);

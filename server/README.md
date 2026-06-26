@@ -9,7 +9,7 @@ server/
 ├── index.js              # 应用入口：加载中间件、路由、错误处理、启动服务
 ├── index.js.backup       # 应用入口备份文件
 ├── init-db.js            # 数据库表结构初始化脚本
-├── ppa.db                # 主 SQLite 数据库文件（首次连接自动生成）
+├── ppa.db                # 旧 SQLite 数据库文件 / 迁移兼容产物
 ├── package.json          # 依赖配置
 ├── config/               # 配置层
 │   ├── server.js         # 端口 & 环境变量读取（PORT / NODE_ENV）

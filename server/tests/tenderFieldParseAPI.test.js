@@ -11,6 +11,7 @@ const { app } = require('../index');
 const openaiProvider = require('../providers/ai/openaiProvider');
 const tenderStagingModel = require('../models/tenderStagingModel');
 const db = require('../utils/db');
+const { initTestDatabase, cleanupTestDatabase, setupTransactionProtection } = require('./test-helper');;
 
 async function createTenderRecord(overrides = {}) {
   const timestamp = String(Date.now());

@@ -30,6 +30,15 @@ const safeParseJsonObject = (raw) => {
   }
 };
 
+const normalizeBooleanFlagForDb = (value) => {
+  if (typeof value === 'boolean') return value ? 1 : 0;
+  if (typeof value === 'number') return value === 1 ? 1 : 0;
+  if (typeof value === 'string') {
+    return ['1', 'true', 'yes'].includes(value.trim().toLowerCase()) ? 1 : 0;
+  }
+  return 0;
+};
+
 const normalizeAssessmentData = (assessmentData) => {
   if (!assessmentData || typeof assessmentData !== 'object') {
     throw new HttpError(400, 'assessmentData 必须是对象', 'ValidationError');
@@ -156,7 +165,7 @@ const updateProject = async (id, projectData) => {
       assessment_details_json: JSON.stringify(details)
     };
     if (typeof is_template !== 'undefined') {
-      updateFields.is_template = is_template || 0;
+      updateFields.is_template = normalizeBooleanFlagForDb(is_template);
     }
 
     return await projectModel.updateProjectFields(id, updateFields);

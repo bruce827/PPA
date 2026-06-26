@@ -1,150 +1,199 @@
-# 软件项目评估系统 (PPA - Project Portfolio Assessment)
+# PPA V2 - Project Portfolio Assessment
 
-一个Web应用，用于替代传统的Excel表格，对软件项目进行系统化、在线化的成本和风险评估。
+PPA（Project Portfolio Assessment，软件项目评估系统）最初用于替代 Excel 评估表，完成软件项目的风险、工作量、成本与报价评估。当前项目已进入 **V2**：在保留 V1 单项目评估能力的基础上，正在向云端数据底座、机会情报、多人评估和 SaaS 平台化方向演进。
 
-## ✨ 核心亮点
+## 当前定位
 
-- **AI 模型深度集成**  
-  - 内置风险 AI 自动评估、模块分析与一键工作量评估能力，覆盖“风险评分→模块梳理→工时建议”的完整链路。  
-  - 通过 `/model-config` 页面管理模型配置与提示词模板，支持多模型、多场景的提示词精细调优，并在 `docs/prd/` 中为每个 AI 功能提供独立 PRD 与调试说明。  
-  - 后端统一封装 `ai*Service`，配合 AI 请求/响应文件级日志（`server/services/aiFileLogger.js`、`server/logs/ai/**`），方便问题回放与效果对比。
+- **V1 基础能力**：标准项目评估、Web3D 项目评估、AI 辅助风险/模块/工作量分析、PDF/Excel 导出、Dashboard 可视化。
+- **V2 当前重点**：SQLite 到 Supabase PostgreSQL 的数据底座迁移、项目附件与静态文件治理、公开机会/招标数据处理、性能与回归测试体系建设。
+- **V2 后续方向**：公开项目池、多人参与评估、群体判断聚合、奖励机制、付费报告和运营后台。
 
-- **独有的项目评估与报价算法**  
-  - 将传统 Excel 里的人工估算拆解为结构化模型：风险评分、角色工作量、差旅与运维、风险成本等输入，通过统一 API `POST /api/calculate` 计算报价。  
-  - 核心算法将角色单价（元/人/天）统一换算为万元，再叠加交付系数 (`delivery_factor`)、范围系数 (`scope_factor`)、技术系数 (`tech_factor`) 以及动态评分因子 (`ratingFactor`)，形成可解释、可追踪的报价因子体系。  
-  - 差旅、运维、风险成本均来自配置与表单数据（如 `config_travel_costs`、`maintenance_*` 字段），最终生成“软件研发 / 系统对接 / 差旅 / 运维 / 风险”五大成本构成与总报价，并在保存项目时于后端再次完整重算，保证数据一致性与防篡改。  
-  - 详细公式推导、样例数据与边界用例见 `docs/prd/calculation-logic-spec.md`。
+V2 产品规划主入口见 [docs/prd2.0/prd.md](docs/prd2.0/prd.md)。
 
-## 💻 功能概览
+## 核心能力
 
-- **分步式评估向导**: 清晰地引导用户完成风险、工作量、其他成本的录入。
-- **动态参数配置**: 支持用户在UI上自定义评估模型所需的所有核心参数（角色单价、风险项等）。
-- **模板化**: 支持将评估保存为模板，并能从模板快速创建新评估，提升效率。
-- **数据可视化**: 提供Dashboard，直观展示项目成本构成、风险分布等关键指标。
-- **AI 辅助评估**: 结合上述 AI 能力，在关键步骤给出辅助结论与建议，减少纯手工输入与主观偏差。
-- **增强报告导出**: 支持 PDF 与 Excel 导出，Excel 提供内部版 / 外部版两种模板，并记录导出日志便于审计与排查。
+- **标准项目评估**：分步录入项目基础信息、风险评分、角色工作量、差旅/运维/风险成本，并通过统一计算引擎生成报价。
+- **Web3D 专项评估**：独立的 Web3D 风险项、工作量模板、项目创建、详情和历史记录流程。
+- **AI 辅助评估**：支持风险自动评估、风险名称归一、模块拆解、工作量建议、项目标签生成与提示词模板管理。
+- **模型与 Prompt 管理**：通过配置页面维护 AI 模型、视觉模型、提示词模板、模块标签和 Web3D 场景提示词。
+- **机会情报与招标数据**：支持招标网站配置、候选项目暂存、字段解析、去重、联网搜索、推送记录和数据质量验证。
+- **Dashboard 与监控**：展示项目数量、成本区间、趋势、关键词、DNA 雷达、Top 角色、Top 风险、AI 调用日志与统计。
+- **导出与文档资产**：支持 PDF、内部版/外部版 Excel 导出；支持合同 CSV 检索、Wiki 关系和表单设计相关能力。
+- **测试与性能治理**：新增项目级 `tests/` 测试工作区，用于集中存放测试计划、脚本、报告和测试产物。
 
-## 🚀 技术栈
+## 技术栈
 
-- **前端**: React (Ant Design Pro)
-- **后端**: Node.js (Express)
-- **数据库**: SQLite3
+### 前端
 
-## 📦 快速启动
+- UmiJS Max 4 + React 18 + TypeScript
+- Ant Design 5 + ProComponents
+- @ant-design/charts
+- Yarn 作为前端包管理器
+- Playwright 用于 E2E/Smoke 测试
 
-### 1. 后端
+### 后端
+
+- Node.js + Express 5
+- SQLite3 本地兼容模式
+- PostgreSQL/Supabase V2 数据底座模式
+- Jest + Supertest
+- PDFKit、ExcelJS
+- Swagger API 文档
+- OpenAI / Doubao 等 AI Provider 统一封装
+
+## 快速启动
+
+### 后端
 
 ```bash
-# 进入后端目录
 cd server
-
-# 安装依赖
 npm install
 
-# 初始化数据库表结构
+# SQLite 本地模式首次初始化
 node init-db.js
-
-# 初始化基础数据（角色、差旅成本等）
 cd seed-data
 node seed-all.js
 cd ..
 
-# 启动后端服务器 (运行于 http://localhost:3001)
+# 启动后端，默认 http://localhost:3001
 node index.js
 ```
 
-### 2. 前端
+如果使用 V2 PostgreSQL/Supabase 模式，请先配置 `server/.env`：
 
 ```bash
-# 进入前端目录
-cd frontend/ppa_frontend
-
-# 安装依赖
-yarn
-
-# 启动前端开发服务器 (运行于 http://localhost:8000)
-yarn start
+DB_TYPE=postgres
+DATABASE_URL=postgresql://...
+PORT=3001
 ```
 
-## 🛠 自定义 Skills
+SQLite 本地模式可使用：
 
-本项目包含两个基于 BMad 方法构建的自定义 Skill，为 PPA 业务场景定制：
+```bash
+DB_TYPE=sqlite
+```
 
-### ppa-research-focus（项目调研重点生成）
+### 前端
 
-根据已完成的项目评估数据，结合 Personal Knowledge Base，自动生成针对性的调研建议清单。
+```bash
+cd frontend/ppa_frontend
+yarn install
+yarn dev
+```
 
-**功能：**
-- 读取 ppa.db 中的项目评估数据（风险评分、模块工作量、商务报价等）
-- 结合 Personal Knowledge Base（个人能力、团队能力、公司偏好）
-- 生成个性化调研建议（必查项/建议查/可选）
+默认前端地址为 `http://localhost:8000`，API 代理到后端 `http://localhost:3001`。
 
-**调用方式：** `/ppa-research-focus`
+## 测试目录说明
 
-**输入：** 项目 ID（如 `19`、`94`）
+项目现在新增根目录 [tests/](tests)，作为 **项目级测试工作区**。以后新的测试专题应优先在这里建立独立目录，把测试计划、复测脚本、测试报告和测试产物集中归档。
 
-**示例场景：** 评估完成后，想知道"这个项目还需要调研什么"→ AI 结合你的历史案例和能力给出建议
+目录约定：
 
-**文件位置：** `.claude/skills/ppa-research-focus/`
+- `tests/<topic>/plan.md`：测试计划或修复计划。
+- `tests/<topic>/scripts/`：可重复执行的测试、验证或采样脚本。
+- `tests/<topic>/reports/`：人工可读的测试报告、基线报告和复测结论。
+- `tests/<topic>/artifacts/`：机器生成的 JSON、原始采样结果或较大的测试产物。
 
----
+当前已有专题：
 
-### infographic-requirement-guide（图表需求引导）
+- [tests/postgresql-query-performance/](tests/postgresql-query-performance)：PostgreSQL 慢接口优化测试包，包含计划、索引脚本入口、只读性能采样脚本、基线报告和本次修复测试报告。
 
-将模糊的数据可视化需求转化为可执行的图表需求文档，支持意图驱动、数据驱动、DB 引导、Owner 引导四种模式。
+`tests/` 不替代框架自身的测试目录：
 
-**功能：**
-- 自然语言查询项目数据库（ppa.db）
-- 生成统计报告和图表方案
-- 支持多轮追问深入分析
+- `server/tests/`：后端 Jest/Supertest 自动化测试源码仍放在这里，避免破坏 Jest 的现有发现规则。
+- `frontend/ppa_frontend/tests/`：前端 Playwright/E2E 测试目录。
+- `_bmad-output/test-artifacts/`：历史或自动化运行生成的测试产物目录。
+- `docs/test/`、`docs/testing/`：测试过程文档和测试策略文档。
 
-**调用方式：** `/infographic-requirement-guide`
+常用测试命令：
 
-**示例场景：**
-- "招标文件一共推送了多少？"
-- "最近三个月项目评分趋势如何？"
+```bash
+# 后端全部 Jest 测试
+cd server
+npm test
 
-**文件位置：** `.claude/skills/infographic-requirement-guide/`
+# PostgreSQL 慢接口优化聚焦验证
+tests/postgresql-query-performance/scripts/run-focused-verification.sh
 
----
+# Dashboard 只读性能采样
+node tests/postgresql-query-performance/scripts/run-dashboard-readonly-sampling.js
 
-## 📚 文档导航
+# 前端 smoke E2E
+cd frontend/ppa_frontend
+yarn test:e2e:smoke
+```
 
-- **产品需求与设计**: `docs/PRD.md`、`docs/prd/` 下的详细特性说明（含 AI 风险评估、工作量一键评估等扩展能力）。
-- **技术架构与后端 API**: `server/README.md`、`server/ARCHITECTURE.md`。
-- **项目整体分析与操作指南**: `IFLOW.md`（中文版项目分析）、`GEMINI.md`（英文项目概览）。
-- **开发者与代理工具指南**: `WARP.md`、`AGENTS.md` 以及 `bmad/` 目录（BMM workflows 与辅助工具配置）。
-- **缺陷与修复记录**: `docs/bugfix/` 目录（含各 Sprint 的后端/前端问题与修复说明，以及 AI 相关 bugfix 记录）。
+注意：完整 PostgreSQL regression 可能会写入和清理测试数据；如果只有一个真实业务库，不要直接在该库执行完整回归。
 
-## 📝 里程碑
+## 项目结构
 
-- ✅ **M0: 数据初始化**
-- ✅ **M1: 地基与环境搭建**
-- ✅ **M2: 核心评估流程实现 (参数配置)**
-- ✅ **M3 & M4: 核心评估流程实现 (评估主流程)**
-- ✅ **M5: 支撑模块与效率功能完善**
-- ✅ **M6 & M7: Bug修复、测试与优化**
+```text
+PPA/
+├── frontend/
+│   ├── ppa_frontend/              # V1/V2 Web 前端，UmiJS Max + React + Ant Design
+│   └── ppa_miniapp/               # 小程序相关前端目录
+├── server/                        # 后端 API、服务、模型、迁移、Swagger、测试
+│   ├── controllers/               # HTTP Controller
+│   ├── routes/                    # API 路由：projects/config/dashboard/web3d/opportunity 等
+│   ├── services/                  # 业务服务、AI 服务、导出、监控、schema warmup
+│   ├── models/                    # 数据访问层，兼容 SQLite/PostgreSQL
+│   ├── migrations/                # 数据库迁移
+│   ├── scripts/                   # 迁移、文档、Swagger、数据处理脚本
+│   ├── tests/                     # 后端 Jest/Supertest 测试
+│   ├── swagger/                   # API 文档产物
+│   ├── logs/                      # AI/导出/运行日志，默认不应提交
+│   └── uploads/                   # 本地上传文件，V2 逐步迁移到云端 Storage
+├── tests/                         # 项目级测试工作区：计划、脚本、报告、产物
+├── docs/                          # 产品、PRD、数据库、API、测试、Bugfix 文档
+│   ├── prd/                       # V1 历史需求与功能说明
+│   ├── prd2.0/                    # V2 主 PRD、商业模式、奖励、融资叙事等
+│   ├── prd3.0/                    # 后续版本规划
+│   ├── database/                  # PostgreSQL/Supabase/静态文件治理文档
+│   ├── api/                       # API 盘点与文档
+│   ├── bugfix/                    # 缺陷与修复记录
+│   ├── test/                      # 测试过程文档
+│   └── testing/                   # 测试策略和相关说明
+├── _bmad/                         # BMad 配置、流程和 Agent 工作流
+├── _bmad-output/                  # BMad 生成的计划、实施、测试产物
+├── design-artifacts/              # WDS/设计流程产物
+├── spider/                        # 爬虫、招标数据抓取和报告相关脚本
+├── scripts/                       # 项目级工具脚本
+├── data/                          # 表单、静态数据等辅助数据
+└── output/                        # 本地输出产物
+```
 
-## 🧪 AI 日志与调试
+## 文档导航
 
-为便于后续回放与对比，后端会在调用 AI 模型（风险评分、名称归一、模块梳理）时将完整的请求/响应/解析结果写入文件。
+- V2 主 PRD：[docs/prd2.0/prd.md](docs/prd2.0/prd.md)
+- V2 文档目录：[docs/prd2.0/README.md](docs/prd2.0/README.md)
+- V1/历史需求：[docs/prd/](docs/prd)
+- 数据库与存储迁移：[docs/database/](docs/database)
+- PostgreSQL 慢接口优化计划：[docs/postgresql-query-performance-optimization-plan.md](docs/postgresql-query-performance-optimization-plan.md)
+- 测试工作区说明：[tests/README.md](tests/README.md)
+- 后端说明：[server/README.md](server/README.md)
+- API 文档与 Swagger：启动后端后访问 `http://localhost:3001/api-docs`
+- 开发/Agent 指南：[AGENTS.md](AGENTS.md)、[WARP.md](WARP.md)、[GEMINI.md](GEMINI.md)、[IFLOW.md](IFLOW.md)
 
-- 默认开启，无需配置。
-- 日志目录：`server/logs/ai/{step}/YYYY-MM-DD/{HHmmss}_{requestHash}/`
-- 文件包含：`index.json`、`request.json`、`response.raw.txt`、`response.parsed.json`、`notes.log`
+## AI 日志与调试
+
+后端会在调用 AI 模型时记录完整请求、响应和解析结果，便于回放、对比和排障。
+
+- 默认目录：`server/logs/ai/{step}/YYYY-MM-DD/{HHmmss}_{requestHash}/`
+- 常见文件：`index.json`、`request.json`、`response.raw.txt`、`response.parsed.json`、`notes.log`
 - 成功写入后控制台会打印：`[AI File Logger] saved to: ...`
 
-可选环境变量（启动后端时传入）：
+可选环境变量：
 
 ```bash
-# 显式开启/关闭
-AI_LOG_ENABLED=true node index.js
-
-# 自定义日志目录
-AI_LOG_ENABLED=true AI_LOG_DIR=/absolute/path/to/logs node index.js
-
-# 导出日志开关与目录（详见 server/README.md）
-EXPORT_LOG_ENABLED=true EXPORT_LOG_DIR=/absolute/path/to/export/logs node index.js
+AI_LOG_ENABLED=true
+AI_LOG_DIR=/absolute/path/to/logs
+EXPORT_LOG_ENABLED=true
+EXPORT_LOG_DIR=/absolute/path/to/export/logs
 ```
 
-更多说明见：`docs/bugfix/AI-LOGGING-NOTES.md`
+## 版本里程碑
+
+- ✅ V1：标准项目评估、配置、计算、模板、导出、AI 辅助、Dashboard。
+- ✅ V1.x：Web3D 评估、AI 模型/Prompt 管理、监控日志、导出增强。
+- 🚧 V2 方向一：Supabase PostgreSQL 数据底座、文件治理、性能优化、回归测试体系。
+- 🧭 V2 方向二：公开项目池、多人评估、聚合判断、奖励机制、付费报告和运营后台。

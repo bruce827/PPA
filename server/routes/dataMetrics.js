@@ -82,11 +82,6 @@ router.get('/', [
   query('pageSize').optional().isInt({ min: 1, max: 10000 }).withMessage('pageSize必须是1-10000的整数'),
 ], validate, dataMetricsController.getList);
 
-// 获取单个指标
-router.get('/:id', [
-  param('id').isInt().withMessage('id必须是整数'),
-], validate, dataMetricsController.getById);
-
 // 新增指标
 router.post('/', [
   body('dm_project_id').isInt().withMessage('项目ID不能为空'),
@@ -96,21 +91,6 @@ router.post('/', [
   body('metric_name').notEmpty().withMessage('指标名称不能为空'),
   body('display_type').notEmpty().withMessage('展示方式不能为空'),
 ], validate, dataMetricsController.create);
-
-// 更新指标
-router.put('/:id', [
-  param('id').isInt().withMessage('id必须是整数'),
-  body('module_name').optional().isString(),
-  body('scene_l1').optional().isString(),
-  body('scene_l2').optional().isString(),
-  body('metric_name').optional().isString(),
-  body('display_type').optional().isString(),
-], validate, dataMetricsController.update);
-
-// 删除指标
-router.delete('/:id', [
-  param('id').isInt().withMessage('id必须是整数'),
-], validate, dataMetricsController.remove);
 
 // 批量操作
 router.post('/batch', [
@@ -162,6 +142,26 @@ router.put('/categories/:id', [
 router.delete('/categories/:id', [
   param('id').isInt().withMessage('id必须是整数'),
 ], validate, dataMetricsController.removeCategory);
+
+// 获取单个指标
+router.get('/:id', [
+  param('id').isInt().withMessage('id必须是整数'),
+], validate, dataMetricsController.getById);
+
+// 更新指标
+router.put('/:id', [
+  param('id').isInt().withMessage('id必须是整数'),
+  body('module_name').optional().isString(),
+  body('scene_l1').optional().isString(),
+  body('scene_l2').optional().isString(),
+  body('metric_name').optional().isString(),
+  body('display_type').optional().isString(),
+], validate, dataMetricsController.update);
+
+// 删除指标
+router.delete('/:id', [
+  param('id').isInt().withMessage('id必须是整数'),
+], validate, dataMetricsController.remove);
 
 // =========================================================================
 // ========== Agent 接口安全网关与路由注册 (Antigravity 改造版) ==========

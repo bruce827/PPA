@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 
 const db = require('../utils/db');
+const { initTestDatabase, cleanupTestDatabase, setupTransactionProtection } = require('./test-helper');;
 const web3dProjectService = require('../services/web3dProjectService');
 
 const TEST_DB = path.join(__dirname, '..', 'ppa.test.db');

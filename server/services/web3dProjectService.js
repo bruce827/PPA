@@ -22,6 +22,15 @@ const roundToDecimals = (value, decimals = 2) => {
   return Math.round((numericValue + Number.EPSILON) * factor) / factor;
 };
 
+const normalizeBooleanFlagForDb = (value) => {
+  if (typeof value === 'boolean') return value ? 1 : 0;
+  if (typeof value === 'number') return value === 1 ? 1 : 0;
+  if (typeof value === 'string') {
+    return ['1', 'true', 'yes'].includes(value.trim().toLowerCase()) ? 1 : 0;
+  }
+  return 0;
+};
+
 const parseOptions = (optionsJson) => {
   if (!optionsJson) return [];
   try {
@@ -254,7 +263,7 @@ const createProject = async (payload) => {
   const dbData = {
     name: payload.name,
     description: payload.description || '',
-    is_template: payload.is_template || 0,
+    is_template: normalizeBooleanFlagForDb(payload.is_template),
     final_total_cost: calculation.cost.total_cost_wan,
     final_risk_score: calculation.risk_score,
     final_workload_days: calculation.workload.total_days,
@@ -277,7 +286,7 @@ const updateProject = async (id, payload) => {
   const dbData = {
     name: payload.name,
     description: payload.description || '',
-    is_template: payload.is_template || 0,
+    is_template: normalizeBooleanFlagForDb(payload.is_template),
     final_total_cost: calculation.cost.total_cost_wan,
     final_risk_score: calculation.risk_score,
     final_workload_days: calculation.workload.total_days,

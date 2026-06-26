@@ -94,7 +94,22 @@
       "Bash(timeout 30 yarn start)",
       "Bash(mkdir -p /Users/maylis/Desktop/github上的项目/项目评估系统/PPA/.claude/skills/form-design-assistant/_memory)",
       "Bash(cp /Users/maylis/Desktop/github上的项目/项目评估系统/PPA/.claude/skills/form-design-preview/_memory/learnings.md /Users/maylis/Desktop/github上的项目/项目评估系统/PPA/.claude/skills/form-design-assistant/_memory/learnings.md)",
-      "Bash(gh repo *)"
+      "Bash(gh repo *)",
+      "Bash(awk '{print $5, $9}')",
+      "Bash(claude mcp *)",
+      "mcp__supabase__execute_sql",
+      "Bash(tee /tmp/test-output.log)",
+      "Bash(tee /tmp/full-test.log)",
+      "Bash(tee /tmp/test-run.log)",
+      "Bash(DB_TYPE=postgres npm test -- dashboardAPI.test.js --verbose)",
+      "Bash(chmod +x *)",
+      "Bash(tests/run-postgresql-tests.sh)",
+      "Bash(tests/backup-tests.sh)",
+      "Bash(/tmp/migrate-all-tests.sh)"
     ]
-  }
+  },
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "supabase"
+  ]
 }

@@ -1,6 +1,6 @@
 # 后端 Bug 修复记录（整合版）
 
-> **最后更新**: 2026-04-03  
+> **最后更新**: 2026-06-24  
 > **适用范围**: PPA 项目后端 (server/)  
 > **架构版本**: 当前三层架构（Controller-Service-Model）
 
@@ -14,6 +14,7 @@
 4. [服务器重启与开发流程](#4-服务器重启与开发流程)
 5. [数据查询与字段映射问题](#5-数据查询与字段映射问题)
 6. [项目推送小程序功能](#6-项目推送小程序功能)
+7. [PostgreSQL 兼容性问题](#7-postgresql-兼容性问题)
 
 ---
 
@@ -1377,3 +1378,67 @@ originalname: fixEncoding(file.originalname),
 
 **涉及文件**:
 - `server/services/attachmentService.js` — `fixEncoding`、`generateUniqueFilename`、`saveAttachment`
+
+---
+
+## 7. PostgreSQL 兼容性问题
+
+### 7.1 Dashboard STRFTIME 函数不存在（2026-06-24）
+
+**故障现象**:  
+Dashboard 页面打开时报错：
+```
+Error: function strftime(unknown, timestamp without time zone) does not exist
+```
+
+**根本原因**:  
+项目同时支持 SQLite 和 PostgreSQL 两种数据库，但 Dashboard 的 SQL 查询使用了 SQLite 专有函数 `STRFTIME`，PostgreSQL 不识别该函数。
+
+**SQLite vs PostgreSQL 语法差异**:
+
+| SQLite 语法 | PostgreSQL 等价语法 |
+|---|---|
+| `STRFTIME('%Y-%m', column)` | `TO_CHAR(column, 'YYYY-MM')` |
+| `datetime('now', '-12 months')` | `CURRENT_TIMESTAMP - INTERVAL '12 months'` |
+| `GROUP BY month` (使用别名) | `GROUP BY TO_CHAR(...)` (必须重复完整表达式) |
+
+**解决方案**:  
+1. 在 `convertSqliteSyntaxForPostgres()` 中添加 STRFTIME 转换规则
+2. 修复 GROUP BY 使用别名的问题（PostgreSQL 不支持）
+
+```javascript
+// db.js - 添加 STRFTIME 转换
+const convertSqliteSyntaxForPostgres = (sql) => {
+  // ...
+  // STRFTIME('%Y-%m', column) -> TO_CHAR(column, 'YYYY-MM')
+  text = text.replace(
+    /\bSTRFTIME\s*\(\s*'([^']*)'\s*,\s*([^)]+)\s*\)/gi,
+    (_match, format, column) => {
+      const pgFormat = format
+        .replace(/%Y/g, 'YYYY')
+        .replace(/%m/g, 'MM')
+        .replace(/%d/g, 'DD')
+        .replace(/%H/g, 'HH24')
+        .replace(/%M/g, 'MI')
+        .replace(/%S/g, 'SS');
+      return `TO_CHAR(${column.trim()}, '${pgFormat}')`;
+    }
+  );
+  // ...
+};
+```
+
+**格式映射表**:
+
+| SQLite 格式 | PostgreSQL 格式 | 说明 |
+|---|---|---|
+| `%Y` | `YYYY` | 四位年份 |
+| `%m` | `MM` | 两位月份 |
+| `%d` | `DD` | 两位日期 |
+| `%H` | `HH24` | 24小时制小时 |
+| `%M` | `MI` | 分钟 |
+| `%S` | `SS` | 秒 |
+
+**涉及文件**:
+- `server/utils/db.js` — `convertSqliteSyntaxForPostgres()` 函数
+- `server/models/dashboardModel.js` — `getCostTrend()`、`getTrendLast12Months()`
