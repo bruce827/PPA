@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "database/postgresql-migration-plan.md",
+                "file": "prd/agent-driven-api-contract-plan.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "postgresql-migration-plan"
+              "title": "agent-driven-api-contract-plan"
             }
           }
         ]
@@ -197,9 +197,9 @@
   },
   "active": "cf57334f4f4f4bf5",
   "lastOpenFiles": [
+    "database/postgresql-migration-plan.md",
     "database/static-files-recommendations.md",
     "database/ppa-static-files-optimization-plan.md",
-    "database/postgresql-migration-plan.md",
     "wiki Roadmap.md",
     "tts-prompt-template.md",
     "V2.0回归测试需求.md",

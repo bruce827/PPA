@@ -1,15 +1,11 @@
-# Server 目录说明（更新版）
-
-> 分支：`feat_cal` 已新增实时计算、导出、模板路由复用与评分因子算法。本文档同步这些实现，提供更完整的 API 与使用指引。
+# Server 目录说明
 
 ## 📦 目录结构
 
 ```text
 server/
 ├── index.js              # 应用入口：加载中间件、路由、错误处理、启动服务
-├── index.js.backup       # 应用入口备份文件
 ├── init-db.js            # 数据库表结构初始化脚本
-├── ppa.db                # 旧 SQLite 数据库文件 / 迁移兼容产物
 ├── package.json          # 依赖配置
 ├── config/               # 配置层
 │   ├── server.js         # 端口 & 环境变量读取（PORT / NODE_ENV）
@@ -102,235 +98,70 @@ Environment: development
 - 计算集中：实时成本与工作量计算在 `services/calculationService.js`，评分因子算法在 `utils/rating.js`。
 - 模板复用：项目与模板共用一张 `projects` 表，通过 `is_template` 区分。
 
-## 📑 API 总览
+## 📖 API 文档
 
-所有接口均挂载于 `/api` 前缀下，默认返回 JSON；错误由全局中间件统一处理（`ValidationError` → 400）。
+### 自动获取接口文档
 
-### 健康检查
+本项目采用 **zod + OpenAPI 3.0** 自动生成接口文档，确保文档与代码永远同步。
 
-| 方法 | 路径 | 描述 |
-| ---- | ---- | ---- |
-| GET | /api/health | 返回服务健康状态及数据库连接检查结果 |
+#### 方式 1：在线获取（推荐）
 
-### 配置（Config）
+Server 启动后，直接访问：
 
-**角色 / 风险项 / 差旅**
+```bash
+# OpenAPI JSON 规范（机器可读，供 agent/代码使用）
+curl http://localhost:3001/api-docs.json
 
-| 方法 | 路径 | 描述 |
-| ---- | ---- | ---- |
-| GET | /api/config/roles | 获取角色配置列表 |
-| POST | /api/config/roles | 创建角色 |
-| PUT | /api/config/roles/:id | 更新角色 |
-| DELETE | /api/config/roles/:id | 删除角色 |
-| GET | /api/config/risk-items | 获取风险评估项 |
-| POST | /api/config/risk-items | 创建风险评估项（支持 `options_json` 字符串） |
-| PUT | /api/config/risk-items/:id | 更新风险评估项 |
-| DELETE | /api/config/risk-items/:id | 删除风险评估项 |
-| GET | /api/config/travel-costs | 获取差旅成本配置 |
-| POST | /api/config/travel-costs | 创建差旅成本条目 |
-| PUT | /api/config/travel-costs/:id | 更新差旅成本条目 |
-| DELETE | /api/config/travel-costs/:id | 删除差旅成本条目 |
-
-**聚合**
-
-| 方法 | 路径 | 描述 |
-| ---- | ---- | ---- |
-| GET | /api/config/all | 一次性获取 roles / risk_items / travel_costs |
-
-**AI 模型配置**
-
-| 方法 | 路径 | 描述 |
-| ---- | ---- | ---- |
-| GET | /api/config/ai-models | 获取模型配置列表（当前优先，按创建时间倒序） |
-| GET | /api/config/ai-models/current | 获取当前启用模型 |
-| GET | /api/config/ai-models/:id | 获取模型详情 |
-| POST | /api/config/ai-models | 新增模型配置（需提供 provider/api_host/api_key/model_name 等必填字段） |
-| PUT | /api/config/ai-models/:id | 更新模型配置 |
-| DELETE | /api/config/ai-models/:id | 删除模型（当前启用的模型不能删除） |
-| POST | /api/config/ai-models/:id/set-current | 将指定模型设为当前使用 |
-| POST | /api/config/ai-models/:id/test | 使用数据库中的配置进行连通性测试，并记录状态 |
-| POST | /api/config/ai-models/test-temp | 使用请求体中的临时配置测试，不落库 |
-
-**提示词模板**
-
-| 方法 | 路径 | 描述 |
-| ---- | ---- | ---- |
-| GET | /api/config/prompts | 获取提示词模板列表（支持 `current/pageSize/category/is_system/is_active/search` 过滤） |
-| GET | /api/config/prompts/:id | 获取单个模板详情 |
-| POST | /api/config/prompts | 创建模板 |
-| PUT | /api/config/prompts/:id | 更新模板 |
-| DELETE | /api/config/prompts/:id | 删除模板（系统模板禁止删除） |
-| POST | /api/config/prompts/:id/copy | 复制模板（名称追加“(副本)”） |
-| POST | /api/config/prompts/:id/preview | 传入 `variable_values` 预览渲染后的提示词 |
-
-### 实时计算（Calculation）
-
-- `POST /api/calculate`：根据评估数据实时计算成本与工作量。请求体与项目保存时的 `assessmentData` 结构一致（角色单价单位为“元”），返回值包装在 `data` 字段中。
-
-请求示例（简化）：
-
-```json
-{
-  "risk_scores": {"架构": 15, "流程": 10},
-  "roles": [{"role_name": "前端", "unit_price": 1800}],
-  "development_workload": [{"delivery_factor": 1, "前端": 20}],
-  "integration_workload": [{"delivery_factor": 1.1, "前端": 8}],
-  "travel_months": 2,
-  "travel_headcount": 3,
-  "maintenance_months": 1,
-  "maintenance_headcount": 2,
-  "maintenance_daily_cost": 1600,
-  "risk_items": [{"cost": 2.5}]
-}
+# Swagger UI（人工查看）
+open http://localhost:3001/api-docs
 ```
 
-响应示例（金额单位为“万元”）：
+**运行时保证**：`GET /api-docs.json` 由 `server/index.js:43` 的 `mountDocs(app)` 挂载，每次服务启动时自动生成最新契约。
 
-```json
-{
-  "data": {
-    "software_dev_cost": 12.35,
-    "system_integration_cost": 3.27,
-    "travel_cost": 6.48,
-    "maintenance_cost": 0.69,
-    "risk_cost": 2.5,
-    "total_cost_exact": 25.29,
-    "total_cost": 25,
-    "software_dev_workload_days": 20,
-    "system_integration_workload_days": 8,
-    "maintenance_workload_days": 43,
-    "total_workload_days": 71,
-    "risk_score": 25,
-    "rating_factor": 1.08,
-    "rating_ratio": 0.25,
-    "risk_max_score": 100
-  }
-}
-```
-
-### 项目 / 模板（Projects & Templates）
-
-| 方法 | 路径 | 描述 |
-| ---- | ---- | ---- |
-| GET | /api/projects | 获取项目与模板列表（未传 `is_template` 时返回全部） |
-| GET | /api/projects?is_template=true | 仅获取模板列表（`is_template=false` 仅返回正式项目，非法值返回 400） |
-| GET | /api/templates | 模板列表别名路由，等价于上方 `is_template=true` |
-| GET | /api/projects/:id | 获取单个项目/模板详情 |
-| POST | /api/projects | 创建项目或模板（服务端会重新计算成本并持久化） |
-| PUT | /api/projects/:id | 更新项目或模板（会重新计算并覆盖） |
-| DELETE | /api/projects/:id | 删除项目或模板 |
-| GET | /api/projects/:id/export/pdf | 导出 PDF 报告 |
-| GET | /api/projects/:id/export/excel | 导出 Excel，`version=internal | external`（默认 internal） |
-
-请求体说明（创建/更新）：
-
-```json
-{
-  "name": "Demo评估A",
-  "description": "用于报价初步评估",
-  "is_template": 0,
-  "assessmentData": { "...实时评估入参，与 /api/calculate 相同结构..." }
-}
-```
-
-- 当 `is_template` 为真时，会先清除其他记录的模板标记，保持唯一模板。
-- 成功返回 `{"id": number}` 或更新/删除的变更计数；成本、风险分等最终值由后端计算后写入数据库。
-
-导出 Excel（FR-6）：
-
-- `GET /api/projects/:id/export/excel?version=internal|external`，成功返回文件流（`Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet`，`Content-Disposition: attachment; filename={项目名称}_{version}_{YYYYMMDD_HHmmss}.xlsx`）。
-- 失败示例：不存在 → 404 `{ "error": "Project not found", "project_id": ":id" }`；非法版本 → 400 `{ "error": "Invalid export version", ... }`。
-- 数据源：`assessment_details_json`（包含 `calculation_snapshot/role_costs/travel_costs/maintenance/risk_items` 等）；内部版 6 个工作表，外部版 2 个工作表；导出日志落地 `server/logs/export/{YYYY-MM-DD}/{HHmmss}_{projectId}/`。
-
-### Dashboard 分析
-
-| 方法 | 路径 | 描述 / 返回结构 |
-| ---- | ---- | ---- |
-| GET | /api/dashboard/overview | 概览数据 `{ recent_30d, saas_count, web3d_count, knowledge_assets, ai_models }` |
-| GET | /api/dashboard/trend | 12个月趋势数组 `[{ month, project_type, project_count, avg_total_cost_wan, avg_risk_score }]` |
-| GET | /api/dashboard/cost-range | 成本分桶统计 `[{ range, count }]`（<50, 50-100, 100-300, >300） |
-| GET | /api/dashboard/keywords | 词云数据 `[{ word, weight }]`，前50个关键词 |
-| GET | /api/dashboard/dna | 雷达图数据 `{ avg_total_cost_wan, avg_risk_score, avg_workload_days, avg_tech_factor, avg_delivery_factor }` |
-| GET | /api/dashboard/top-roles | Top5角色 `[{ role_name, workload_days }]` |
-| GET | /api/dashboard/top-risks | Top10风险 `[{ risk_name, count }]` |
-
-### AI 能力
-
-所有 AI 相关接口依赖已启用的当前模型（由 `/api/config/ai-models` 设置），响应统一包装为 `{ success: boolean, data: ... }`。
-
-**提示词查询**
-
-| 方法 | 路径 | 描述 |
-| ---- | ---- | ---- |
-| GET | /api/ai/prompts | 获取风险分析类提示词（category=`risk_analysis`） |
-| GET | /api/ai/module-prompts | 获取模块梳理提示词（category=`module_analysis`） |
-| GET | /api/ai/workload-prompts | 获取工作量评估提示词（category=`workload_evaluation` 或等价别名） |
-
-**风险评估 / 名称归一**
-
-| 方法 | 路径 | 请求体要点 |
-| ---- | ---- | ---- |
-| POST | /api/ai/assess-risk | `{ promptId, document, variables? }`，`document` 最长 5000 字符，返回建议打分列表 |
-| POST | /api/ai/normalize-risk-names | `{ allowed_item_names: string[], risk_scores: [{ item_name, suggested_score, reason? }] }`，基于当前模型将名称对齐到允许列表 |
-
-**模块梳理 / 工作量评估**
-
-| 方法 | 路径 | 请求体要点 |
-| ---- | ---- | ---- |
-| POST | /api/ai/analyze-project-modules | `{ promptId, description, variables? }`，返回三级模块拆分、复杂度与信心度 |
-| POST | /api/ai/evaluate-workload | `{ promptId, module1, module2, module3, description, variables?, roles? }`，返回各角色工作量、交付系数等 |
-
-### 评分因子逻辑（Rating Factor）
-
-风险得分与最大风险分值比值 (ratio) 经分段线性插值 → 因子：
-
-- ratio ≤ 0.8 → 1.0
-- 0.8 < ratio ≤ 1.0 → 线性提升到 1.2
-- 1.0 < ratio ≤ 1.2 → 继续提升到封顶 1.5
-
-实现位置：`utils/rating.js`；最大分值通过已配置风险项选项 JSON 动态计算。
-
-### 成本计算要点
-
-1. 所有角色单价以“元/人/天”存储，计算时统一换算为“万元”。
-2. 工作量计算：各角色天数汇总 × `delivery_factor` → 工作量；成本 = 角色天数 × 单价（万元） × 各倍率（delivery/scope/tech） × rating_factor。
-3. 差旅成本：`travel_months * travel_headcount * SUM(active travel_cost_per_month)` （转换万元）。
-4. 维护成本：`maintenance_months * maintenance_headcount * WORK_DAYS_PER_MONTH * daily_cost`。
-5. 风险成本：直接累加 `risk_items.cost`（万元）。
-
-### 错误处理
-
-- 统一错误处理中间件：`middleware/errorHandler.js`（未显示于本文，但在入口注册）。
-- 非法查询参数（例：`is_template=abc`）返回 400。通过在 `projectController.getAllProjects` 中校验。
-
-## ⚠️ 注意事项
-
-- 初始化脚本会清空相关表数据，生产环境慎用 `seed-all.js`。
-- 模板与项目共享表结构，扩展新字段时需评估是否对模板/项目都适用。
-- `assessment_details_json` 建议保持结构稳定以支持未来回放 / 导出增强。
-- 单价与成本的单位换算要一致：前端提交保留“元”，后端输出“万元”字段已四舍五入或保留两位。
-- 导出接口可能对大数据量评估耗时增大，可考虑后续生成异步任务与缓存。
-
-## 🔮 后续改进建议
-
-- 增加分页与筛选（当前列表无分页，如果项目多可能性能下降）
-- 添加认证与权限（区分模板维护者与评估执行者）
-- 使用参数化查询与输入验证增强安全性（当前直接拼接有限参数，需审查风险）
-- 引入测试用内存数据库（便于 CI 快速回归）
-- 增强导出：加封面页、计算公式说明、风险分布图表
-- 增加 `/api/projects/:id/recalculate` 便于旧评估按最新参数重算差异
-
-## ✅ 快速验证步骤
+#### 方式 2：本地构建离线文档
 
 ```bash
 cd server
-node init-db.js
-cd seed-data && node seed-all.js && cd ..
-node index.js
-curl http://localhost:3001/api/health
-curl http://localhost:3001/api/config/all
+npm run build:api
 ```
 
-## 📝 版本信息
+产出文件：
+- `docs/api/openapi.json` — 完整 OpenAPI 3.0 规范（提交进 git，供离线 agent / 版本对比）
+- `docs/api-inventory.md` — 人类可读接口清单（自动生成，请勿手工编辑）
 
-最后更新日期：2025-11-25
+#### 方式 3：代码中直接获取
+
+```js
+const { buildSpec } = require('./openapi/generate');
+const spec = buildSpec();
+console.log(spec.paths); // 所有接口定义
+```
+
+### API 实现架构
+
+| 组件 | 说明 | 文件 |
+|------|------|------|
+| **zod schema 定义** | 一处定义，同时用于运行时校验和契约生成 | `schemas/*.schema.js` |
+| **OpenAPI Registry** | 单例收集所有接口契约 | `openapi/registry.js` |
+| **统一注册函数** | `registerRoute()` 简化契约登记 | `openapi/registry.js` |
+| **契约登记文件** | 按模块分文件登记接口 | `openapi/paths/*.js` |
+| **契约生成器** | 从 registry 生成 OpenAPI 3.0 文档 | `openapi/generate.js` |
+| **在线文档端点** | 挂载 `/api-docs.json` 和 `/api-docs` | `openapi/docs.js` |
+
+**关键流程**：
+```
+Server 启动
+  └─> mountDocs(app)
+        └─> buildSpec()
+              └─> require('./paths')  // 触发所有 registerRoute 执行
+                    └─> registry 收集所有契约
+              └─> OpenApiGeneratorV3 生成 OpenAPI 文档
+        └─> 挂载 GET /api-docs.json 和 GET /api-docs
+```
+
+**核心优势**：
+- zod schema 一处定义，同时用于运行时校验和契约生成，物理上无法不一致
+- 消费方是 agent，需精确 response 才能正确解析返回结构
+- OpenAPI 3.0 是 agent 工具调用的事实标准格式，可直接转成 function-calling 的 tool schema
+
+## ⚠️ 注意事项

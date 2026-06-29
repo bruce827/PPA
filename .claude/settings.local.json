@@ -105,7 +105,8 @@
       "Bash(chmod +x *)",
       "Bash(tests/run-postgresql-tests.sh)",
       "Bash(tests/backup-tests.sh)",
-      "Bash(/tmp/migrate-all-tests.sh)"
+      "Bash(/tmp/migrate-all-tests.sh)",
+      "Bash(awk '{print $2}')"
     ]
   },
   "enableAllProjectMcpServers": true,

@@ -1,111 +1,99 @@
-# CLAUDE.md
+# CLAUDE.md - AI 开发协作指南
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+## 🎯 个人指令
 
-## 项目概述
+- **用中文回答**：所有回复必须使用中文
+- **审视潜在问题**：仔细分析用户输入的潜在问题，指出问题的本质
+- **超出预期建议**：提供明显超出用户思考框架之外的建议
+- **偏离项目目标的提醒**：如果用户要求过于脱离项目目标，需要提醒并建议调整预期
 
-PPA (Project Portfolio Assessment) 是一个 Web 应用，用于替代 Excel 表格对软件项目进行系统化的成本和风险评估。核心功能包括分步评估向导、AI 辅助风险评分与工作量估算、独有的报价算法、模板复用、数据看板和 PDF/Excel 导出。
+---
 
-## 技术栈
+## 🚨 强制约定
 
-| 层 | 技术 |
-|---|---|
-| 前端 | React + UmiJS Max 4 + TypeScript + Ant Design 5 + ProComponents |
-| 后端 | Node.js + Express 5 |
-| 数据库 | SQLite3 (单文件 `server/ppa.db`) |
-| 测试 | Jest + Supertest |
-| 包管理 | **前端必须用 yarn**，后端用 npm |
-| AI | OpenAI API、豆包(Doubao) API |
-| 爬虫 | Python 3 (spider/ 目录) |
+### 包管理
+- **前端必须用 yarn**，禁止用 npm（前端已有 `yarn.lock`）
+- **后端用 npm**
 
-## 开发命令
+### 数据库
+- SQL 字符串拼接（未参数化），存在注入风险 ⚠️
+- 当前支持两种模式：
+  - SQLite 本地开发（`server/ppa.db`）
+  - PostgreSQL/Supabase V2 云端模式
 
-### 后端 (server/)
-```bash
-cd server
-npm install
-node init-db.js                 # 初始化表结构（幂等）
-cd seed-data && node seed-all.js && cd ..   # 初始化基础数据
-node index.js                   # 启动服务 http://localhost:3001
-npm test                        # 运行所有测试
-npm test -- <test-file>         # 运行单个测试
-```
+---
 
-### 前端 (frontend/ppa_frontend/)
-```bash
-cd frontend/ppa_frontend
-yarn install                    # 必须用 yarn，不要用 npm
-yarn start                      # 启动开发服务器 http://localhost:8000
-yarn build                      # 生产构建
-yarn format                     # Prettier 格式化
-```
+## 🏗️ 架构约束
 
-前端通过 UmiJS proxy 将 `/api` 请求代理到后端 `localhost:3001`。两个服务需同时运行。
-
-## 项目结构
+### 后端三层架构（必须遵守）
 
 ```
-PPA/
-├── server/                     # 后端
-│   ├── index.js                # 入口
-│   ├── config/                 # 数据库单例、服务器配置、环境变量
-│   ├── routes/                 # 路由定义 (ai, projects, config, dashboard 等)
-│   ├── controllers/            # HTTP 请求处理
-│   ├── services/               # 业务逻辑 (计算引擎、AI 集成、导出、监控等)
-│   ├── models/                 # 数据访问层 (SQLite 操作)
-│   ├── providers/ai/           # AI 提供商实现 (OpenAI, 豆包)
-│   ├── migrations/             # 数据库迁移脚本 (001-008)
-│   ├── seed-data/              # 初始数据 (角色、风险项、差旅成本)
-│   └── tests/                  # Jest 测试
-├── frontend/ppa_frontend/      # 前端 (React + UmiJS)
-│   ├── .umirc.ts               # 路由、代理、构建配置
-│   └── src/pages/              # 页面组件
-├── spider/                     # Python 爬虫 (招标网站数据采集)
-└── docs/                       # 产品文档 (PRD、bugfix、架构等)
+Routes（路由层）→ Controllers（控制器）→ Services（业务层）→ Models（数据层）
 ```
 
-## 后端架构
+**规则**：
+- ✅ Routes：只定义 URL 路由，不写业务逻辑
+- ✅ Controllers：参数提取、响应格式化
+- ✅ Services：核心业务逻辑（计算引擎、AI 服务、导出等）
+- ✅ Models：数据访问层（SQL 封装）
+- ❌ 禁止在 Routes 层直接写业务逻辑
+- ❌ 禁止在 Controllers 层写复杂计算
 
-采用三层架构：
-1. **Routes** → 定义 URL 路由
-2. **Controllers** → 参数提取、响应格式化
-3. **Services** → 核心业务逻辑（计算引擎、AI 服务、导出服务等）
-4. **Models** → 直接 SQLite 操作
+### 前端架构
+- UmiJS Max 4 + React 18 + TypeScript
+- Ant Design 5 + ProComponents
+- 页面组件放在 `src/pages/` 下
 
-11 个路由模块：ai、calculation、config、contracts、dashboard、health、monitoring、opportunity、projects、web3d、templates
+---
 
-**报价计算核心**：`POST /api/calculate`，将角色单价（元/人/天）换算为万元，叠加交付系数、范围系数、技术系数和动态评分因子，生成软件研发/系统对接/差旅/运维/风险五大成本构成。详细公式见 `docs/prd/calculation-logic-spec.md`。
+## 📍 关键路径
 
-## 前端路由
+### 后端入口
+- **应用入口**：`server/index.js`
+- **数据库配置**：`server/config/database.js`
+- **计算引擎**：`server/services/calculation.js`
+- **AI 服务**：`server/services/aiService.js`
+- **环境变量**：`server/.env`
 
-- `/dashboard` — 数据看板
-- `/assessment/new|history|detail/:id|contracts` — 标准项目评估
-- `/web3d/new|history|detail/:id` — Web3D 项目评估
-- `/config` — 参数配置
-- `/model-config` — AI 模型与提示词管理
-- `/opportunity/bidding-sites|tender-push` — 项目机会（招标网站与推送）
-- `/monitoring/ai-logs` — AI 日志监控
+### 前端入口
+- **路由配置**：`frontend/ppa_frontend/.umirc.ts`
+- **页面组件**：`frontend/ppa_frontend/src/pages/`
 
-## 已知限制
+### 数据库
+- **SQLite 本地**：`server/ppa.db`（单文件数据库）
+- **PostgreSQL V2**：通过 `DATABASE_URL` 环境变量配置
 
+### 核心接口
+- **报价计算**：`POST /api/calculate`
+- **AI 风险评分**：`POST /api/ai/assess`
+- **项目 CRUD**：`/api/projects`
+- **数据看板**：`/api/dashboard`
+
+---
+
+## ⚠️ 已知技术债
+
+### 功能限制
 - **无身份认证/授权** — 单用户系统
 - **无分页** — 数据量大时可能影响性能
-- **SQL 字符串拼接** — 未使用参数化查询，存在注入风险
+- **SQL 注入风险** — 未使用参数化查询
 
-## 关键文件
+### V2 迁移状态
+- V2 重点：SQLite 到 Supabase PostgreSQL 的数据底座迁移
+- V2 后续：公开项目池、多人评估、群体判断聚合、奖励机制
 
-| 文件 | 用途 |
-|---|---|
-| `server/.env` | 后端环境变量（含 API Key） |
-| `server/utils/constants.js` | 系统常量定义 |
-| `server/services/calculation.js` | 核心报价计算引擎 |
-| `server/services/aiService.js` | AI 服务入口 |
-| `frontend/ppa_frontend/.umirc.ts` | 前端路由与代理配置 |
+---
 
-## AI 日志
+## 📚 详细文档
 
-AI 调用日志自动保存到 `server/logs/ai/{step}/YYYY-MM-DD/{HHmmss}_{requestHash}/`，包含请求、响应、解析结果。通过 `AI_LOG_ENABLED=true` 控制。
+- **项目介绍与技术栈**：[README.md](./README.md)
+- **详细开发指南**：[docs/development-guide.md](./docs/development-guide.md)
+- **技术架构详解**：[docs/architecture.md](./docs/architecture.md)
+- **V2 产品规划**：[docs/prd2.0/prd.md](./docs/prd2.0/prd.md)
+- **后端 README**：[server/README.md](./server/README.md)
 
-## BMAD 方法
+---
+
+## 🧩 BMAD 方法
 
 项目使用 BMAD (Business-Model-Agile-Design) 方法框架，配置在 `_bmad/` 目录。可通过 `/bmad-*` 技能调用相关工作流。
