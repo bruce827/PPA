@@ -7,8 +7,15 @@ exports.checkHealth = (req, res, next) => {
   db.get('SELECT 1')
     .then(() => {
       res.json({
+        success: true,
         status: 'ok',
-        message: 'Backend is healthy and connected to database'
+        message: 'Backend is healthy and connected to database',
+        data: {
+          database: {
+            connected: true,
+            type: db.getDbType()
+          }
+        }
       });
     })
     .catch((err) => {

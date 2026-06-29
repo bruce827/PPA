@@ -465,8 +465,13 @@ const getInsertTableName = (sql) => (
     .match(/^insert\s+into\s+"?([a-z_][a-z0-9_]*)"?\b/i)?.[1] || null
 );
 
+const _tableIdCache = new Map();
+
 const tableHasIdColumn = async (tableName) => {
   if (!tableName) return false;
+  if (_tableIdCache.has(tableName)) {
+    return _tableIdCache.get(tableName);
+  }
   const result = await queryPostgres(
     `
       SELECT 1
@@ -478,7 +483,9 @@ const tableHasIdColumn = async (tableName) => {
     `,
     [tableName]
   );
-  return result.rows.length > 0;
+  const hasId = result.rows.length > 0;
+  _tableIdCache.set(tableName, hasId);
+  return hasId;
 };
 
 const isTransactionSql = (sql) => /^\s*(BEGIN|COMMIT|ROLLBACK)(?:\s+TRANSACTION)?\s*;?\s*$/i.test(String(sql || ''));

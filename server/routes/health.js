@@ -7,13 +7,22 @@ router.get('/health', async (req, res) => {
     // 使用已初始化的连接执行轻量探活；不要在请求热路径重建连接池。
     await db.get('SELECT 1 AS test');
     res.json({
+      success: true,
       status: 'ok',
       message: 'Backend is healthy and connected to database',
+      data: {
+        database: {
+          connected: true,
+          type: db.getDbType()
+        }
+      }
     });
   } catch (error) {
     res.status(500).json({
+      success: false,
       status: 'error',
       message: 'Database connection failed',
+      error: error.message
     });
   }
 });
