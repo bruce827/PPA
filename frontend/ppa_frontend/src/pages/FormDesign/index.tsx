@@ -185,8 +185,14 @@ const FormDesign: React.FC = () => {
       const res = await getFormsByAppId(appId);
       if (res.code === 200) {
         setForms(res.data);
-        if (res.data.length > 0 && !selectedFormId) {
-          setSelectedFormId(res.data[0].id);
+        if (res.data.length > 0) {
+          const isSelectedFormInNewForms = res.data.some((f: FormDefinition) => f.id === selectedFormId);
+          if (!selectedFormId || !isSelectedFormInNewForms) {
+            setSelectedFormId(res.data[0].id);
+          }
+        } else {
+          setSelectedFormId(undefined);
+          setFields([]);
         }
       }
     } catch (error) {
@@ -238,6 +244,10 @@ const FormDesign: React.FC = () => {
   useEffect(() => {
     if (apps.length > 0) {
       loadForms(apps[0].id);
+    } else {
+      setForms([]);
+      setSelectedFormId(undefined);
+      setFields([]);
     }
   }, [apps, loadForms]);
 

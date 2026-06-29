@@ -140,6 +140,23 @@ export async function syncTenderStaging(
   );
 }
 
+export async function cleanupTenderStaging(
+  data: { publishedDateBefore?: string; createdAtBefore?: string; statusFilter?: 'all' | 'processed_only' },
+  options?: { [key: string]: any },
+) {
+  return request<{ success: boolean; data: { deletedCount: number } }>(
+    '/api/opportunity/tender-staging/cleanup',
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      data,
+      ...(options || {}),
+    },
+  );
+}
+
 export async function archiveTenderSourceFiles(
   data?: { directoryPath?: string },
   options?: { [key: string]: any },

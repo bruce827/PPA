@@ -41,6 +41,7 @@ router.post(
 router.get('/tender-staging/:id/web-search', tenderWebSearchController.getTenderWebSearch);
 router.post('/tender-staging/:id/web-search', tenderWebSearchController.searchTenderWebSearch);
 router.post('/tender-staging/sync', tenderStagingController.syncTenderStaging);
+router.post('/tender-staging/cleanup', tenderStagingController.cleanupTenderStaging);
 router.post('/tender-staging/:id/push', tenderStagingController.pushTenderStaging);
 
 module.exports = router;

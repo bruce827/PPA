@@ -1337,10 +1337,26 @@ async function getRequiredTenderStaging(id) {
   return record;
 }
 
+async function cleanupTenderStaging(payload) {
+  const { publishedDateBefore, createdAtBefore, statusFilter } = payload;
+  if (!publishedDateBefore && !createdAtBefore) {
+    throw validationError('请至少指定一种时间清理条件');
+  }
+
+  const deletedCount = await tenderStagingModel.cleanupTenderStaging({
+    publishedDateBefore,
+    createdAtBefore,
+    statusFilter,
+  });
+
+  return { deletedCount };
+}
+
 module.exports = {
   getDefaultSpiderDataDir,
   archiveTenderSourceFiles,
   listTenderStaging,
   getRequiredTenderStaging,
   syncTenderFiles,
+  cleanupTenderStaging,
 };

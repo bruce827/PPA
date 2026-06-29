@@ -5,14 +5,16 @@ import {
   previewTenderDedupe,
   pushTenderStaging,
   syncTenderStaging,
+  cleanupTenderStaging,
 } from '@/services/opportunity';
 import TenderFieldParseModal from '@/pages/Opportunity/components/TenderFieldParseModal';
 import TenderWebSearchModal from '@/pages/Opportunity/components/TenderWebSearchModal';
 import { PageContainer, ProTable } from '@ant-design/pro-components';
 import { Link } from '@umijs/max';
-import { Button, Card, Col, message, Modal, Row, Space, Tag } from 'antd';
+import { Button, Card, Col, message, Modal, Row, Space, Tag, Form, DatePicker, Radio } from 'antd';
 import type { ActionType, ProColumns } from '@ant-design/pro-components';
 import React, { useRef, useState } from 'react';
+import dayjs from 'dayjs';
 
 const pushStatusMap: Record<
   API_OPPORTUNITY.TenderPushStatus,
@@ -103,6 +105,9 @@ const TenderPushPage: React.FC = () => {
   const [archiveLoading, setArchiveLoading] = useState(false);
   const [dedupeLoading, setDedupeLoading] = useState(false);
   const [dedupeExecuting, setDedupeExecuting] = useState(false);
+  const [cleanupModalOpen, setCleanupModalOpen] = useState(false);
+  const [cleanupExecuting, setCleanupExecuting] = useState(false);
+  const [cleanupForm] = Form.useForm();
   const [pushingId, setPushingId] = useState<number | null>(null);
   const [dedupePreview, setDedupePreview] =
     useState<API_OPPORTUNITY.TenderDedupePreviewResult | null>(null);
@@ -211,6 +216,32 @@ const TenderPushPage: React.FC = () => {
       message.error(error?.message || '整理数据失败');
     } finally {
       setDedupeExecuting(false);
+    }
+  };
+
+  const handleExecuteCleanup = async () => {
+    try {
+      const values = await cleanupForm.validateFields();
+      if (!values.publishedDateBefore && !values.createdAtBefore) {
+        message.warning('请至少指定一种时间清理条件');
+        return;
+      }
+      setCleanupExecuting(true);
+      const payload = {
+        publishedDateBefore: values.publishedDateBefore ? values.publishedDateBefore.format('YYYY-MM-DD') : undefined,
+        createdAtBefore: values.createdAtBefore ? values.createdAtBefore.format('YYYY-MM-DD') : undefined,
+        statusFilter: values.statusFilter,
+      };
+      const response = await cleanupTenderStaging(payload);
+      message.success(`清理完成，共删除了 ${response?.data?.deletedCount || 0} 条数据（已推送到小程序的数据不会被删除）`);
+      setCleanupModalOpen(false);
+      cleanupForm.resetFields();
+      actionRef.current?.reload();
+    } catch (error: any) {
+      if (error?.errorFields) return; // Validation error
+      message.error(error?.message || '清理数据失败');
+    } finally {
+      setCleanupExecuting(false);
     }
   };
 
@@ -461,6 +492,9 @@ const TenderPushPage: React.FC = () => {
             <Button loading={dedupeLoading} onClick={handlePreviewDedupe}>
               整理数据
             </Button>
+            <Button danger onClick={() => setCleanupModalOpen(true)}>
+              清理数据
+            </Button>
           </Space>,
         ]}
         request={async (params, sorter) => {
@@ -612,6 +646,56 @@ const TenderPushPage: React.FC = () => {
             </Card>
           ))}
         </div>
+      </Modal>
+
+      <Modal
+        title="清理数据 (硬删除)"
+        open={cleanupModalOpen}
+        onCancel={() => {
+          if (cleanupExecuting) return;
+          setCleanupModalOpen(false);
+          cleanupForm.resetFields();
+        }}
+        onOk={handleExecuteCleanup}
+        confirmLoading={cleanupExecuting}
+        okText="确认清理"
+        okButtonProps={{ danger: true }}
+        cancelText="取消"
+        width={560}
+      >
+        <div style={{ marginBottom: 24, color: '#d4380d', fontWeight: 500 }}>
+          注意：此操作将直接从数据库物理删除相关数据，以释放存储空间，且无法恢复。已推送到小程序的招标数据始终受保护，不会被删除。
+        </div>
+        <Form
+          form={cleanupForm}
+          layout="vertical"
+          initialValues={{ statusFilter: 'all' }}
+        >
+          <Form.Item
+            name="publishedDateBefore"
+            label="1. 发布日期早于"
+            tooltip="建议仅保留近1～3个月内发布的数据"
+            rules={[{ required: true, message: '请选择清理截止发布时间' }]}
+          >
+            <DatePicker style={{ width: '100%' }} />
+          </Form.Item>
+          <Form.Item
+            name="createdAtBefore"
+            label="2. 入库/抓取日期早于 (可选)"
+            tooltip="如果是非常早之前抓取的数据，且长期未处理，也可一并清理"
+          >
+            <DatePicker style={{ width: '100%' }} />
+          </Form.Item>
+          <Form.Item
+            name="statusFilter"
+            label="3. 推送状态范围"
+          >
+            <Radio.Group>
+              <Radio value="all">清理符合条件的所有数据 (跳过已推送)</Radio>
+              <Radio value="processed_only">仅清理处理失败的数据 (保留待推送)</Radio>
+            </Radio.Group>
+          </Form.Item>
+        </Form>
       </Modal>
 
       <Modal

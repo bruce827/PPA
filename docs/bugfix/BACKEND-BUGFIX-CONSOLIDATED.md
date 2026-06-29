@@ -1442,3 +1442,34 @@ const convertSqliteSyntaxForPostgres = (sql) => {
 **涉及文件**:
 - `server/utils/db.js` — `convertSqliteSyntaxForPostgres()` 函数
 - `server/models/dashboardModel.js` — `getCostTrend()`、`getTrendLast12Months()`
+
+---
+
+## 12. 数据库性能与存储占用优化
+
+### 12.1 `opportunity_tender_staging` 表索引过度膨胀问题
+
+**问题描述**:  
+在 PostgreSQL 数据库中，`opportunity_tender_staging` 表出现了极严重的存储占用不均衡：
+- 数据本体占用 (Data Size)：约 `80-1000 kB`
+- 索引占用 (Index Size)：高达 **`35 MB`**
+导致该表长期占据数据库磁盘使用量的榜首。
+
+**根本原因**:  
+由于 `opportunity_tender_staging` 表负责作为中转区暂存由爬虫抓取到的招标数据，日常会经历极大量的高频同步（Insert/Update），以及软删除（标记 `deleted_at`）。
+PostgreSQL 在这种高频覆写场景下，会导致索引页大量碎片化和产生大量死元组（Dead Tuples），即使自动的 Autovacuum 也会因为数据变化太快而无法完全压制这种“索引膨胀”（Index Bloat）。
+
+**解决方案**:
+1. **执行 VACUUM FULL 回收空间**：
+   手动针对该表执行了 `VACUUM FULL opportunity_tender_staging` 后，总表空间占用从 `36 MB` 骤降至 `2.4 MB`，成功回收了 90% 以上的无用索引体积。
+   *(注意：`VACUUM FULL` 会持有排他锁，大型生产库请谨慎操作或选择 `REINDEX TABLE`。)*
+
+2. **新增物理“清理数据”功能**：
+   - 之前的数据主要采用“软删除”（Soft Delete），导致无效数据越来越多。
+   - 在前端 `/opportunity/tender-push` 页面增加了一个“清理数据”入口，允许管理员按照发布时间或入库时间做**物理硬删除**。
+   - 底层强制加了安全过滤条件 `push_status != 'pushed'`，保证已经推送至小程序的有价值数据绝对不被删除。
+
+**相关文件**:
+- `frontend/ppa_frontend/src/pages/Opportunity/TenderPush.tsx` - 前端清理面板
+- `server/services/tenderStagingService.js` - `cleanupTenderStaging` 接口
+- `server/models/tenderStagingModel.js` - 物理硬删除 SQL 实现

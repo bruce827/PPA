@@ -106,7 +106,8 @@
       "Bash(tests/run-postgresql-tests.sh)",
       "Bash(tests/backup-tests.sh)",
       "Bash(/tmp/migrate-all-tests.sh)",
-      "Bash(awk '{print $2}')"
+      "Bash(awk '{print $2}')",
+      "WebFetch(domain:docs.railway.app)"
     ]
   },
   "enableAllProjectMcpServers": true,

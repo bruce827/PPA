@@ -224,7 +224,14 @@ async function getModelById(id) {
 }
 
 async function createModel(payload) {
-  const normalized = normalizePayload(payload);
+  // 新建配置不允许直接设为当前 / 当前视觉模型，
+  // 全局唯一状态只能通过 setCurrentModel / setCurrentVisionModel 设置。
+  const editablePayload = {
+    ...(payload || {}),
+    is_current: 0,
+    is_current_vision: 0,
+  };
+  const normalized = normalizePayload(editablePayload);
   validateRequiredFields(normalized);
 
   try {
@@ -241,7 +248,29 @@ async function updateModel(id, payload) {
     throw toNotFoundError('未找到指定的 AI 模型配置');
   }
 
-  const normalized = normalizePayload(payload, existing);
+  // 全局唯一状态（当前模型 / 当前视觉模型）只能通过 setCurrentModel /
+  // setCurrentVisionModel 切换，编辑配置时一律忽略请求体中的这两个字段，
+  // 回退到 existing，避免误清空全局状态（防止 API 直连篡改）。
+  const { is_current: _ignoredCurrent, is_current_vision: _ignoredVision, ...editablePayload } =
+    payload || {};
+
+  // 当前模型受保护：不能在编辑中禁用或撤销其能力，需先在列表页切换。
+  // 提前用 existing 兜底单独归一化，确保更友好的提示优先于底层校验。
+  const nextIsActive = normalizeFlag('is_active', editablePayload.is_active, existing.is_active);
+  const nextSupportsVision = normalizeFlag(
+    'supports_vision',
+    editablePayload.supports_vision,
+    existing.supports_vision
+  );
+
+  if (existing.is_current === 1 && nextIsActive === 0) {
+    throw validationError('无法禁用当前使用的模型，请先在列表页切换到其他模型');
+  }
+  if (existing.is_current_vision === 1 && nextSupportsVision === 0) {
+    throw validationError('该模型为当前视觉模型，请先在列表页取消后再关闭图片识别');
+  }
+
+  const normalized = normalizePayload(editablePayload, existing);
   validateRequiredFields(normalized);
 
   try {

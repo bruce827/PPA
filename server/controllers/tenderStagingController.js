@@ -56,6 +56,15 @@ async function executeTenderDedupe(req, res, next) {
   }
 }
 
+async function cleanupTenderStaging(req, res, next) {
+  try {
+    const result = await tenderStagingService.cleanupTenderStaging(req.body || {});
+    res.json({ success: true, data: result });
+  } catch (error) {
+    next(error);
+  }
+}
+
 module.exports = {
   archiveTenderSourceFiles,
   executeTenderDedupe,
@@ -63,4 +72,5 @@ module.exports = {
   previewTenderDedupe,
   syncTenderStaging,
   pushTenderStaging,
+  cleanupTenderStaging,
 };

@@ -679,6 +679,41 @@ async function deleteTenderStagingByIds(ids = []) {
   return deletedCount;
 }
 
+async function cleanupTenderStaging(filters = {}) {
+  await ensureSchema();
+  const conditions = [];
+  const params = [];
+
+  if (filters.publishedDateBefore) {
+    conditions.push('published_date < ?');
+    params.push(filters.publishedDateBefore);
+  }
+
+  if (filters.createdAtBefore) {
+    conditions.push('created_at < ?');
+    params.push(filters.createdAtBefore);
+  }
+
+  // Ensure 'pushed' status is NOT deleted
+  // And maybe 'success' if there's any. The requirement is: "已推送的数据不允许删除"
+  conditions.push("push_status != 'pushed'");
+
+  if (filters.statusFilter === 'processed_only') {
+    // Only delete failed or not-pending but not-pushed
+    conditions.push("push_status != 'pending'");
+  }
+
+  if (conditions.length === 0) {
+    return 0; // No valid filter provided to prevent wiping out entire table
+  }
+
+  const whereClause = `WHERE ${conditions.join(' AND ')}`;
+  const sql = `DELETE FROM ${TABLE_NAME} ${whereClause}`;
+
+  const result = await db.run(sql, params);
+  return result.changes || 0;
+}
+
 module.exports = {
   ensureSchema,
   listTenderStaging,
@@ -695,4 +730,5 @@ module.exports = {
   softDeleteTenderStagingByIds,
   deleteTenderStagingByIds,
   deleteTenderStagingBySourceItemIds,
+  cleanupTenderStaging,
 };

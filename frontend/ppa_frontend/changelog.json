@@ -1,4 +1,12 @@
 [
+    {
+    "version": "V2.0.1",
+    "date": "2026-06-26",
+    "changes": [
+      { "type": "opt", "content": "招标数据库瘦身，并添加删除控制" },
+      { "type": "bugfix", "content": "修复模型配置弹窗交互bug" }
+    ]
+  },
   {
     "version": "V2.0",
     "date": "2026-06-26",
