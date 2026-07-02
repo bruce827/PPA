@@ -1,4 +1,5 @@
 const path = require('path');
+const { buildPostgresConnectionConfig } = require('../../utils/postgresConfig');
 
 const TABLES_IN_ORDER = [
   'config_roles',
@@ -33,20 +34,9 @@ const getSqlitePath = () => path.resolve(
 );
 
 const getPostgresConfig = () => {
-  if (!process.env.DATABASE_URL) {
-    throw new Error('DATABASE_URL is required');
-  }
-
-  const shouldUseSsl =
-    /[?&]sslmode=require/i.test(process.env.DATABASE_URL) ||
-    process.env.PGSSLMODE === 'require';
-
-  const config = { connectionString: process.env.DATABASE_URL };
-  if (shouldUseSsl) {
-    config.ssl = { rejectUnauthorized: false };
-  }
-
-  return config;
+  return buildPostgresConnectionConfig(process.env.DATABASE_URL, {
+    missingMessage: 'DATABASE_URL is required',
+  });
 };
 
 const quoteIdentifier = (identifier) => `"${String(identifier).replace(/"/g, '""')}"`;

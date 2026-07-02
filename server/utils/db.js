@@ -1,5 +1,6 @@
 const path = require('path');
 const sqlite3 = require('sqlite3').verbose();
+const { buildPostgresConnectionConfig } = require('./postgresConfig');
 
 const DEFAULT_SQLITE_DB_PATH = path.resolve(__dirname, '../ppa.db');
 
@@ -197,21 +198,12 @@ const convertSqlForPostgres = (sql, params = []) => (
 
 const buildPgConfig = () => {
   const connectionString = process.env.DATABASE_URL;
-  if (!connectionString) {
-    throw new Error('DATABASE_URL is required when DB_TYPE=postgres');
-  }
-
-  const shouldUseSsl = /[?&]sslmode=require/i.test(connectionString) || process.env.PGSSLMODE === 'require';
   const config = {
-    connectionString,
+    ...buildPostgresConnectionConfig(connectionString),
     max: parseInt(process.env.PG_POOL_MAX || '20', 10),
     idleTimeoutMillis: parseInt(process.env.PG_IDLE_TIMEOUT || '30000', 10),
     connectionTimeoutMillis: parseInt(process.env.PG_CONNECT_TIMEOUT || '30000', 10),
   };
-
-  if (shouldUseSsl) {
-    config.ssl = { rejectUnauthorized: false };
-  }
 
   return config;
 };
@@ -729,5 +721,6 @@ module.exports = {
     usesPostgres,
     getPostgresInitConfigKey,
     getSqliteInitConfigKey,
+    buildPgConfig,
   },
 };

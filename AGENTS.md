@@ -211,6 +211,14 @@ yarn format
 
 **Important**: Frontend MUST use Yarn, not npm. The project uses Yarn-specific features and lock file.
 
+### Frontend Generated Files Rule
+
+- `frontend/ppa_frontend/src/.umi/` and `frontend/ppa_frontend/src/.umi-production/` are UmiJS generated directories.
+- Do not treat changes under these directories as source-code changes during normal frontend work.
+- Do not inspect, diff, or validate these files unless the task is specifically about Umi route generation, plugin generation, or generated type/runtime output.
+- `yarn dev` and `yarn build` may rewrite these files; keep verification focused on source files such as `src/pages`, `src/components`, `src/services`, `.umirc.ts`, and package/config files.
+- If generated-file changes appear only because you ran frontend build/dev commands, exclude or restore those generated changes before summarizing the work.
+
 ### Backend Development
 ```bash
 cd server

@@ -1,4 +1,5 @@
 const loadEnvFile = require('../../config/loadEnv');
+const { buildPostgresConnectionConfig } = require('../../utils/postgresConfig');
 
 loadEnvFile();
 
@@ -150,19 +151,12 @@ function normalizeSql(sql) {
 
 function buildPgConfig() {
   const connectionString = process.env.DATABASE_URL;
-  if (!connectionString) {
-    throw new Error('DATABASE_URL is required to apply PostgreSQL slow-query indexes');
-  }
-
-  const shouldUseSsl = /[?&]sslmode=require/i.test(connectionString) || process.env.PGSSLMODE === 'require';
   const config = {
-    connectionString,
+    ...buildPostgresConnectionConfig(connectionString, {
+      missingMessage: 'DATABASE_URL is required to apply PostgreSQL slow-query indexes',
+    }),
     connectionTimeoutMillis: parseInt(process.env.PG_CONNECT_TIMEOUT || '30000', 10),
   };
-
-  if (shouldUseSsl) {
-    config.ssl = { rejectUnauthorized: false };
-  }
 
   return config;
 }

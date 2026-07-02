@@ -1,5 +1,19 @@
 [
-    {
+  {
+    "version": "V2.0.2",
+    "date": "2026-07-01",
+    "changes": [
+      { "type": "feat", "content": "表单设计升级为日常维护 / Excel 全量双模式，支持完整字段属性分组展示、字段详情抽屉和 Excel 全量批量暂存保存" },
+      { "type": "feat", "content": "表单设计新增字段新增、复制、删除能力，并支持选项配置（输入参数）的字典、枚举和原始配置结构化编辑" },
+      { "type": "feat", "content": "表单设计新增数据权限入口，将表单级过滤条件作为全局数据范围约束维护，并在弹窗中补充业务说明" },
+      { "type": "opt", "content": "表单设计筛选按产品经理视角简化为字段名称、卡片分组、控件类型、必填、查询条件和校验状态" },
+      { "type": "opt", "content": "Dashboard 接口调用增加后端健康检查与重试等待，降低服务启动阶段接口失败概率" },
+      { "type": "bugfix", "content": "修复 Supabase PostgreSQL 连接串 SSL 解析问题，统一后端运行时、迁移脚本和慢查询索引脚本的 PostgreSQL 连接配置" },
+      { "type": "test", "content": "新增 PostgreSQL 连接配置单元测试，覆盖 sslmode 清理、PGSSLMODE 覆盖和 SSL 模式解析" },
+      { "type": "docs", "content": "补充 Supabase PostgreSQL 连接修复文档，并新增前端 Umi 生成目录处理规则" }
+    ]
+  },
+  {
     "version": "V2.0.1",
     "date": "2026-06-26",
     "changes": [
